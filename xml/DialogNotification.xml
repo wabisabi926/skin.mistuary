@@ -6,14 +6,14 @@
 			<depth>DepthMax</depth>
 			<top>85</top>
 			<right>0</right>
-			<width>400</width>
+			<width>340</width>
 			<include>OpenClose_Right</include>
 			<visible>String.IsEmpty(Window(Home).Property(script.cinemavision.running))</visible>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>400</width>
-				<height>92</height>
+				<width>340</width>
+				<height>80</height>
 				<include condition="$EXP[nara_dialog_glass]">NaraDialogGlassTexture</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
 					<param name="texture" value="dialogs/dialog-bg-nobo.png" />
@@ -22,17 +22,17 @@
 			</control>
 			<control type="image" id="400">
 				<description>avatar</description>
-				<left>16</left>
-				<top>17</top>
-				<width>58</width>
-				<height>58</height>
+				<left>14</left>
+				<top>16</top>
+				<width>48</width>
+				<height>48</height>
 				<aspectratio>stretch</aspectratio>
 			</control>
 			<control type="fadelabel" id="401">
 				<description>Line 1 Label</description>
-				<left>88</left>
-				<top>12</top>
-				<width>296</width>
+				<left>74</left>
+				<top>8</top>
+				<width>252</width>
 				<height>32</height>
 				<font>font24</font>
 				<aligny>center</aligny>
@@ -41,10 +41,10 @@
 			</control>
 			<control type="fadelabel" id="402">
 				<description>Line 2 Label</description>
-				<left>89</left>
-				<top>46</top>
-				<width>296</width>
-				<height>32</height>
+				<left>75</left>
+				<top>40</top>
+				<width>252</width>
+				<height>30</height>
 				<font>font22</font>
 				<aligny>center</aligny>
 				<scrollout>false</scrollout>

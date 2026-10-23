@@ -315,10 +315,10 @@
 		<param name="progress_visible_condition">true</param>
 		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
 		<param name="focus_border">2</param>
-		<param name="focus_left">-5.830189</param>
-		<param name="focus_top">-13.830189</param>
-		<param name="focus_width">271.660378</param>
-		<param name="focus_height">379.660378</param>
+		<param name="focus_left">5</param>
+		<param name="focus_top">-3</param>
+		<param name="focus_width">250</param>
+		<param name="focus_height">358</param>
 		<definition>
 			<control type="group">
 				<visible>String.IsEmpty(ListItem.Art(poster))</visible>
@@ -430,10 +430,10 @@
 		<param name="caption_year_color">text_secondary</param>
 		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
 		<param name="focus_border">2</param>
-		<param name="focus_left">-5.830189</param>
-		<param name="focus_top">-13.830189</param>
-		<param name="focus_width">271.660378</param>
-		<param name="focus_height">379.660378</param>
+		<param name="focus_left">5</param>
+		<param name="focus_top">-3</param>
+		<param name="focus_width">250</param>
+		<param name="focus_height">358</param>
 		<definition>
 			<control type="image">
 				<left>8</left>
