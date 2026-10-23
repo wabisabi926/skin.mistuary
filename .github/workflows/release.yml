@@ -1,0 +1,94 @@
+name: Build skin zip
+
+# 每次推送到 main 就重新打包，并把 zip 传到对应版本的 Release。
+# 版本号取自 addon.xml，所以改版本号 = 发新 Release。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Read addon id / version / name
+        id: meta
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import xml.etree.ElementTree as ET
+          root = ET.parse("addon.xml").getroot()
+          print(f"id={root.get('id')}")
+          print(f"version={root.get('version')}")
+          print(f"name={root.get('name')}")
+          PY
+
+      - name: Install Pillow
+        run: pip install --quiet pillow
+
+      # 把 media/ 里的松散 PNG 打成 Textures.xbt，这样发布包里不用塞 80+ MB 图片
+      - name: Pack textures
+        run: python xbt_tool.py pack
+
+      # 只保留"能装进 Kodi 的东西"：开发脚本、文档、CI 配置都不进包
+      - name: Stage addon
+        env:
+          ADDON_ID: ${{ steps.meta.outputs.id }}
+        run: |
+          set -euo pipefail
+          mkdir -p "build/${ADDON_ID}"
+          rsync -a \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.workbuddy-ai/' \
+            --exclude='.gitignore' \
+            --exclude='docs/' \
+            --exclude='__pycache__/' \
+            --exclude='*.pyc' \
+            --exclude='xbt_tool.py' \
+            --exclude='extras/*.py' \
+            --exclude='extras/*.ps1' \
+            --exclude='extras/*.html' \
+            ./ "build/${ADDON_ID}/"
+          # 贴图已经进了 Textures.xbt，松散图片不必随包发布
+          find "build/${ADDON_ID}/media" -type f ! -name 'Textures.xbt' -delete
+          echo "--- 包内容预览 ---"
+          du -sh "build/${ADDON_ID}"
+          find "build/${ADDON_ID}" -maxdepth 1 -mindepth 1 | sort
+
+      - name: Create zip
+        id: zip
+        env:
+          ADDON_ID: ${{ steps.meta.outputs.id }}
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          cd build
+          ZIP="${ADDON_ID}-${VERSION}.zip"
+          zip -r -q "${ZIP}" "${ADDON_ID}"
+          ls -lh "${ZIP}"
+          echo "path=build/${ZIP}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.meta.outputs.version }}
+          name: ${{ steps.meta.outputs.name }} ${{ steps.meta.outputs.version }}
+          files: ${{ steps.zip.outputs.path }}
+          generate_release_notes: true
+          make_latest: true
+          fail_on_unmatched_files: true
