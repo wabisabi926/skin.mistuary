@@ -1057,15 +1057,16 @@
 				<!-- 通用版：grouplist 无 texturebackground，改为独立背景层。
 				     注意坐标系：标签组固定 left=0 width=1920，内容居中于设计坐标 x=960，
 				     5 个标签总宽约 609（实测自渲染截图，换算回设计坐标）。
-				     因此条的范围是 960±304.5 = 655~1264，两端各留 18px 内边距。
+				     条的范围严格等于标签内容 655~1264，不加内边距 ——
+				     这样首尾标签的焦点胶囊（round26）与条的圆角端完全重合。
 				     该位置与设计分辨率无关（16:9 与 17:9 下标签位置相同），
 				     但改标签文字或隐藏标签后需重新测量。 -->
 				<control type="image">
-					<left>637</left>
+					<left>655</left>
 					<top>20</top>
-					<width>645</width>
+					<width>609</width>
 					<height>60</height>
-					<texture colordiffuse="$VAR[GlassTint_regular]" border="30">shapes/round30.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="26">shapes/round26.png</texture>
 				</control>
 				<control type="grouplist" id="9000">
 					<left>0</left>
