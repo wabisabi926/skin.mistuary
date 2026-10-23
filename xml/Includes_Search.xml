@@ -268,10 +268,10 @@
 					<texture colordiffuse="selection_surface">$PARAM[poster_background]</texture>
 				</control>
 				<control type="image">
-					<left>-4</left>
-					<top>-3</top>
-					<width>242</width>
-					<height>349</height>
+					<left>7</left>
+					<top>8</top>
+					<width>220</width>
+					<height>327</height>
 					<texture colordiffuse="$PARAM[focus_color]" border="14">shapes/ring14_2.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
