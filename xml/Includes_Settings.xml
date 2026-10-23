@@ -4,11 +4,30 @@
 	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(narapekasettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(1115) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
 	<include name="NaraSettingsBackground">
 		<definition>
+			<include>DefaultBackground</include>
+			<!-- 通用版：与文件管理一致 —— 用随机影片 fanart 作背景，
+			     让上层的半透明面板（GlassTint_*）能看出层次。
+			     隐藏的 1x1 列表只在首页没有传递 fanart 时才去库里取一张。 -->
+			<control type="list" id="16090">
+				<left>-2</left>
+				<top>-2</top>
+				<width>1</width>
+				<height>1</height>
+				<itemlayout width="1" height="1" />
+				<focusedlayout width="1" height="1" />
+				<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
+				<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))</visible>
+			</control>
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
-				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<include>FullScreenDimensions</include>
+				<aspectratio align="right">scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true" colordiffuse="B3FFFFFF">$VAR[NaraFileManagerRandomFanartVar]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</visible>
+			</control>
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<texture colordiffuse="1A000000">colors/black.png</texture>
 			</control>
 		</definition>
 	</include>
