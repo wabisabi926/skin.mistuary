@@ -417,22 +417,28 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+							</control>
+							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
+							<control type="image">
+								<width>320</width>
+								<height>180</height>
+								<texture>shapes/corner_320x180_r9.png</texture>
 							</control>
 							<control type="progress">
 								<top>177</top>
@@ -518,22 +524,28 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+							</control>
+							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
+							<control type="image">
+								<width>320</width>
+								<height>180</height>
+								<texture>shapes/corner_320x180_r9.png</texture>
 							</control>
 							<control type="image">
 								<left>-3</left>
@@ -745,6 +757,12 @@
 									<param name="bg_cond" value="$PARAM[background_art_condition]" />
 								</include>
 							</control>
+							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
+							<control type="image">
+								<width>320</width>
+								<height>180</height>
+								<texture>shapes/corner_320x180_r9.png</texture>
+							</control>
 							<control type="label">
 								<top>190</top>
 								<width>320</width>
@@ -788,6 +806,12 @@
 								<include content="HomeMediaLibraryArtwork">
 									<param name="bg_cond" value="$PARAM[background_art_condition]" />
 								</include>
+							</control>
+							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
+							<control type="image">
+								<width>320</width>
+								<height>180</height>
+								<texture>shapes/corner_320x180_r9.png</texture>
 							</control>
 							<!-- 通用版：焦点统一用描边环，与「正在观看」等卡片保持一致，
 							     不再用 glass_focus_light 白色蒙版（那会让封面整体发白） -->

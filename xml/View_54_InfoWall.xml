@@ -344,23 +344,31 @@
 			<control type="group">
 				<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
 				<control type="image">
-					<left>$PARAM[focus_left]</left>
-					<top>$PARAM[focus_top]</top>
-					<width>$PARAM[focus_width]</width>
-					<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/ring_card_250x358_r14.png</texture>
+					<left>8</left>
+					<top>0</top>
+					<width>244</width>
+					<height>352</height>
+					<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+					<aspectratio>scale</aspectratio>
 					<bordersize>14</bordersize>
-					<visible>$PARAM[focused]</visible>
-					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
+				<!-- 圆角：用实色角部遮盖贴图盖住方角，露出圆角（必须在描边环之前绘制） -->
 				<control type="image">
 					<left>8</left>
 					<top>0</top>
 					<width>244</width>
 					<height>352</height>
-					<texture background="true" diffuse="shapes/mask_244x352.png">$INFO[ListItem.Art(poster)]</texture>
-					<aspectratio>scale</aspectratio>
+					<texture>shapes/corner_244x352_r11.png</texture>
+				</control>
+				<control type="image">
+					<left>$PARAM[focus_left]</left>
+					<top>$PARAM[focus_top]</top>
+					<width>$PARAM[focus_width]</width>
+					<height>$PARAM[focus_height]</height>
+					<texture colordiffuse="focus_media">shapes/ring_card_250x358_r14.png</texture>
 					<bordersize>14</bordersize>
+					<visible>$PARAM[focused]</visible>
+					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
 			</control>
 			<control type="group">
@@ -444,24 +452,6 @@
 				<bordersize>14</bordersize>
 			</control>
 			<control type="image">
-				<left>$PARAM[focus_left]</left>
-				<top>$PARAM[focus_top]</top>
-				<width>$PARAM[focus_width]</width>
-				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media">shapes/ring_card_250x358_r14.png</texture>
-				<bordersize>14</bordersize>
-				<visible>$PARAM[focused] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
-			</control>
-			<control type="image">
-				<left>$PARAM[focus_left]</left>
-				<top>$PARAM[focus_top]</top>
-				<width>$PARAM[focus_width]</width>
-				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_card_surface">shapes/ring_card_250x358_r14.png</texture>
-				<bordersize>14</bordersize>
-				<visible>$PARAM[focused] + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
-			</control>
-			<control type="image">
 				<left>8</left>
 				<top>0</top>
 				<width>244</width>
@@ -480,6 +470,32 @@
 				<aspectratio>keep</aspectratio>
 				<bordersize>14</bordersize>
 				<visible>String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
+			</control>
+				<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
+				<control type="image">
+					<left>8</left>
+					<top>0</top>
+					<width>244</width>
+					<height>352</height>
+					<texture>shapes/corner_244x352_r11.png</texture>
+				</control>
+			<control type="image">
+				<left>$PARAM[focus_left]</left>
+				<top>$PARAM[focus_top]</top>
+				<width>$PARAM[focus_width]</width>
+				<height>$PARAM[focus_height]</height>
+				<texture colordiffuse="focus_media">shapes/ring_card_250x358_r14.png</texture>
+				<bordersize>14</bordersize>
+				<visible>$PARAM[focused] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
+			</control>
+			<control type="image">
+				<left>$PARAM[focus_left]</left>
+				<top>$PARAM[focus_top]</top>
+				<width>$PARAM[focus_width]</width>
+				<height>$PARAM[focus_height]</height>
+				<texture colordiffuse="focus_card_surface">shapes/ring_card_250x358_r14.png</texture>
+				<bordersize>14</bordersize>
+				<visible>$PARAM[focused] + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
 			<include content="PosterCardCaption">
 				<param name="focused" value="$PARAM[focused]" />
