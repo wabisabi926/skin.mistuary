@@ -536,10 +536,10 @@
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
-								<left>-12.923077</left>
-								<top>-12.923077</top>
-								<width>345.846154</width>
-								<height>205.846154</height>
+								<left>-3</left>
+								<top>-3</top>
+								<width>326</width>
+								<height>186</height>
 								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
@@ -555,10 +555,10 @@
 								<visible>!Integer.IsEqual($PARAM[progress_info],0) + [!Control.HasFocus($PARAM[list_id]) | !Integer.IsEqual(ListItem.CurrentItem,Container($PARAM[list_id]).CurrentItem)]</visible>
 							</control>
 							<control type="image">
-								<left>-12.923077</left>
-								<top>-12.923077</top>
-								<width>345.846154</width>
-								<height>205.846154</height>
+								<left>-3</left>
+								<top>-3</top>
+								<width>326</width>
+								<height>186</height>
 								<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_2.png</texture>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
@@ -740,10 +740,10 @@
 								<include>Animation_FocusTextureFade</include>
 							</control>
 							<control type="image">
-								<left>-12.923077</left>
-								<top>-12.923077</top>
-								<width>345.846154</width>
-								<height>205.846154</height>
+								<left>-3</left>
+								<top>-3</top>
+								<width>326</width>
+								<height>186</height>
 								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 								<visible>$PARAM[background_art_condition]</visible>
 								<include>Animation_FocusTextureFade</include>
