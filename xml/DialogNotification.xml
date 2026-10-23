@@ -6,13 +6,13 @@
 			<depth>DepthMax</depth>
 			<top>85</top>
 			<right>0</right>
-			<width>340</width>
+			<width>400</width>
 			<include>OpenClose_Right</include>
 			<visible>String.IsEmpty(Window(Home).Property(script.cinemavision.running))</visible>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>340</width>
+				<width>400</width>
 				<height>80</height>
 				<include condition="$EXP[nara_dialog_glass]">NaraDialogGlassTexture</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
@@ -28,11 +28,13 @@
 				<height>48</height>
 				<aspectratio>stretch</aspectratio>
 			</control>
+			<!-- 340 宽时「Emby for Kodi Next Gen」这类标题会被截断，
+			     加宽到 400 并让文字放不下时滚动，而不是硬切 -->
 			<control type="fadelabel" id="401">
 				<description>Line 1 Label</description>
 				<left>74</left>
 				<top>8</top>
-				<width>252</width>
+				<width>314</width>
 				<height>32</height>
 				<font>font24</font>
 				<aligny>center</aligny>
@@ -43,7 +45,7 @@
 				<description>Line 2 Label</description>
 				<left>75</left>
 				<top>40</top>
-				<width>252</width>
+				<width>314</width>
 				<height>30</height>
 				<font>font22</font>
 				<aligny>center</aligny>
