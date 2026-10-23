@@ -85,8 +85,8 @@
 			<top>174</top>
 			<height>54</height>
 			<control type="label">
-				<left>1200</left>
-				<width>220</width>
+				<left>1180</left>
+				<width>200</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>left</align>
@@ -95,7 +95,7 @@
 				<label>$LOCALIZE[31676]</label>
 			</control>
 			<control type="label">
-				<left>1450</left>
+				<left>1410</left>
 				<width>160</width>
 				<height>54</height>
 				<font>font12_large</font>
@@ -105,8 +105,8 @@
 				<label>$LOCALIZE[467]</label>
 			</control>
 			<control type="label">
-				<left>1630</left>
-				<width>140</width>
+				<left>1600</left>
+				<width>110</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>right</align>
@@ -171,8 +171,8 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>1200</left>
-						<width>220</width>
+						<left>1180</left>
+						<width>200</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -181,7 +181,7 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1450</left>
+						<left>1410</left>
 						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -191,8 +191,8 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1630</left>
-						<width>140</width>
+						<left>1600</left>
+						<width>110</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>right</align>
@@ -203,18 +203,20 @@
 					<control type="image">
 						<left>20</left>
 						<bottom>0</bottom>
-						<width>1665</width>
+						<width>1670</width>
 						<height>1</height>
 						<texture colordiffuse="border_subtle">colors/white.png</texture>
 					</control>
 				</itemlayout>
 				<focusedlayout width="1710" height="78">
+					<!-- 通用版：lists/focus.png 是 1x1 纯白，border 不生效导致直角；
+					     改用圆角贴图，宽度铺满整行 -->
 					<control type="image">
 						<left>0</left>
 						<top>3</top>
-						<width>1700</width>
+						<width>1710</width>
 						<height>72</height>
-						<texture colordiffuse="glass_focus_medium" border="27">lists/focus.png</texture>
+						<texture colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texture>
 					</control>
 					<control type="image">
 						<left>25</left>
@@ -254,8 +256,8 @@
 						<scroll>true</scroll>
 					</control>
 					<control type="label">
-						<left>1200</left>
-						<width>220</width>
+						<left>1180</left>
+						<width>200</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -264,7 +266,7 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1450</left>
+						<left>1410</left>
 						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -274,8 +276,8 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1630</left>
-						<width>140</width>
+						<left>1600</left>
+						<width>110</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>right</align>
