@@ -81,11 +81,11 @@
 			<texture colordiffuse="$VAR[GlassTint_frosted]" border="42">shapes/round42.png</texture>
 		</control>
 		<control type="group">
-			<left>85</left>
+			<left>105</left>
 			<top>174</top>
 			<height>54</height>
 			<control type="label">
-				<left>1190</left>
+				<left>1170</left>
 				<width>200</width>
 				<height>54</height>
 				<font>font12_large</font>
@@ -95,7 +95,7 @@
 				<label>$LOCALIZE[31676]</label>
 			</control>
 			<control type="label">
-				<left>1420</left>
+				<left>1400</left>
 				<width>160</width>
 				<height>54</height>
 				<font>font12_large</font>
@@ -105,7 +105,7 @@
 				<label>$LOCALIZE[467]</label>
 			</control>
 			<control type="label">
-				<left>1610</left>
+				<left>1580</left>
 				<width>110</width>
 				<height>54</height>
 				<font>font12_large</font>
@@ -123,7 +123,7 @@
 			<width>1750</width>
 			<height>780</height>
 			<control type="list" id="20">
-				<left>0</left>
+				<left>20</left>
 				<top>0</top>
 				<width>1710</width>
 				<height>780</height>
@@ -171,7 +171,7 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>1190</left>
+						<left>1170</left>
 						<width>200</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -181,7 +181,7 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1420</left>
+						<left>1400</left>
 						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -191,7 +191,7 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1610</left>
+						<left>1580</left>
 						<width>110</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -203,7 +203,7 @@
 					<control type="image">
 						<left>20</left>
 						<bottom>0</bottom>
-						<width>1700</width>
+						<width>1670</width>
 						<height>1</height>
 						<texture colordiffuse="border_subtle">colors/white.png</texture>
 					</control>
@@ -212,10 +212,10 @@
 					<!-- 通用版：lists/focus.png 是 1x1 纯白，border 不生效导致直角；
 					     改用圆角贴图，宽度铺满整行 -->
 					<control type="image">
-						<!-- 面板宽 1750，选中条铺满整行；内容右边缘收到 1720 避开滚动条 -->
+						<!-- 列表宽 1710，条必须等于列表宽度：超出部分会被列表裁剪，右侧变直角 -->
 						<left>0</left>
 						<top>3</top>
-						<width>1750</width>
+						<width>1710</width>
 						<height>72</height>
 						<texture colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texture>
 					</control>
@@ -257,7 +257,7 @@
 						<scroll>true</scroll>
 					</control>
 					<control type="label">
-						<left>1190</left>
+						<left>1170</left>
 						<width>200</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -267,7 +267,7 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1420</left>
+						<left>1400</left>
 						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -277,7 +277,7 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1610</left>
+						<left>1580</left>
 						<width>110</width>
 						<height>78</height>
 						<font>font12_large</font>
@@ -289,7 +289,7 @@
 				</focusedlayout>
 			</control>
 			<control type="scrollbar" id="60">
-				<left>1725</left>
+				<left>1740</left>
 				<top>0</top>
 				<width>6</width>
 				<height>780</height>
