@@ -2,11 +2,18 @@
 <includes>
 	<include name="VideoInfoActionGlass">
 		<param name="button_id">0</param>
+		<param name="ring">shapes/ring_btn_70x70_r35.png</param>
 		<definition>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
 				<texture colordiffuse="$VAR[GlassTint_regular]" border="35">shapes/round35.png</texture>
+			</control>
+			<!-- 通用版：深色底板在暗背景上会隐形，加一圈 12% 白的描边定义边界 -->
+			<control type="image">
+				<width>100%</width>
+				<height>100%</height>
+				<texture colordiffuse="border_subtle">$PARAM[ring]</texture>
 			</control>
 			<control type="image">
 				<width>100%</width>
@@ -38,6 +45,7 @@
 					<height>70</height>
 					<include content="VideoInfoActionGlass">
 						<param name="button_id" value="5000" />
+						<param name="ring" value="shapes/ring_btn_220x70_r35.png" />
 					</include>
 					<control type="button" id="5000">
 						<width>220</width>
