@@ -1,6 +1,6 @@
 # Mistuary（雾汐）
 
-雾汐｜轻量透明皮肤，基于 Estuary，支持透黑、透白双模式
+雾汐｜轻量透明皮肤，基于 Estuary N，支持透黑、透白双模式
 
 Mistuary 是衍生自 Estuary 的视频优先皮肤，面向**未做任何修改的官方 Kodi 21 Omega 及以上版本**，
 CoreELEC 设备同样可用。原分支依赖魔改内核的玻璃、圆角、slot 列表与稳定选中项扩展，
