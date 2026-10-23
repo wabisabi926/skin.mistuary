@@ -142,24 +142,6 @@
 				<!-- TV seasons, episodes and playback-target preview remain in this
 				     viewport; the cast shelf becomes their final tab. -->
 				<include>VideoInfoTvContent</include>
-				<!-- 通用版：电影的演员栏默认收起，这里给一个展开/收起按钮 -->
-				<control type="radiobutton" id="5107">
-					<left>80</left>
-					<top>742</top>
-					<width>200</width>
-					<height>56</height>
-					<font>font13</font>
-					<label>$LOCALIZE[206]</label>
-					<visible>!String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(Container(50).NumItems,0)</visible>
-					<onclick condition="Window.Property(NaraInfoCastOpen)">ClearProperty(NaraInfoCastOpen)</onclick>
-					<onclick condition="!Window.Property(NaraInfoCastOpen)">SetProperty(NaraInfoCastOpen,true)</onclick>
-					<selected>Window.Property(NaraInfoCastOpen)</selected>
-					<textcolor>text_secondary</textcolor>
-					<focusedcolor>text_primary</focusedcolor>
-					<selectedcolor>text_primary</selectedcolor>
-					<texturefocus colordiffuse="glass_focus_medium" border="28">shapes/round28.png</texturefocus>
-					<texturenofocus />
-				</control>
 				<include>VideoInfoCastShelf</include>
 			</control>
 		</control>

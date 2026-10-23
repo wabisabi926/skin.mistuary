@@ -282,6 +282,42 @@
 					</control>
 				</control>
 			</control>
+			<!-- 通用版：电影的演员栏默认收起，这里给一个展开/收起开关（电视剧用底部标签） -->
+			<control type="group">
+				<width>120</width>
+				<height>94</height>
+				<visible>!String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(Container(50).NumItems,0)</visible>
+				<control type="group">
+					<left>16</left>
+					<top>12</top>
+					<width>120</width>
+					<height>70</height>
+					<include content="VideoInfoActionGlass">
+						<param name="button_id" value="5107" />
+						<param name="ring" value="shapes/ring_btn_120x70_r35.png" />
+					</include>
+					<control type="radiobutton" id="5107">
+						<width>120</width>
+						<height>70</height>
+						<font>font13</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$LOCALIZE[206]</label>
+						<textcolor>text_secondary</textcolor>
+						<focusedcolor>text_primary</focusedcolor>
+						<selectedcolor>text_primary</selectedcolor>
+						<texturefocus />
+						<texturenofocus />
+						<onclick condition="Window.Property(NaraInfoCastOpen)">ClearProperty(NaraInfoCastOpen)</onclick>
+						<onclick condition="!Window.Property(NaraInfoCastOpen)">SetProperty(NaraInfoCastOpen,true)</onclick>
+						<selected>Window.Property(NaraInfoCastOpen)</selected>
+						<onleft>5003</onleft>
+						<onright>5003</onright>
+						<onup>138</onup>
+						<ondown>50</ondown>
+					</control>
+				</control>
+			</control>
 		</control>
 	</include>
 </includes>
