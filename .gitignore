@@ -1,2 +1,11 @@
 .DS_Store
 media/Textures.xbt
+
+# 本地工具与缓存
+.workbuddy-ai/
+__pycache__/
+*.pyc
+
+# 用户自备的媒体库封面（按库名命名，体积较大，不入库；保留说明文件）
+libraryart/*.jpg
+libraryart/*.png
