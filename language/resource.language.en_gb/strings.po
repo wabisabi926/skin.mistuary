@@ -1383,3 +1383,11 @@ msgstr ""
 msgctxt "#31718"
 msgid "Light glass panels (off: dark)"
 msgstr "Light glass panels (off: dark)"
+
+msgctxt "#31719"
+msgid "Media library cover folder"
+msgstr "Media library cover folder"
+
+msgctxt "#31720"
+msgid "Not set"
+msgstr "Not set"

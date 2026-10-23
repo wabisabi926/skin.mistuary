@@ -33,6 +33,12 @@
 					<onclick>Skin.ToggleSetting(nara_glass_light)</onclick>
 					<selected>Skin.HasSetting(nara_glass_light)</selected>
 				</control>
+				<control type="button" id="710">
+					<label>$LOCALIZE[31719]</label>
+					<include>NaraSettingsRow</include>
+					<onclick>Skin.SetPath(library_art_folder)</onclick>
+					<label2>$VAR[LibraryArtFolderLabel]</label2>
+				</control>
 				<control type="radiobutton" id="705">
 					<label>$LOCALIZE[31160]</label>
 					<include>NaraSettingsRow</include>

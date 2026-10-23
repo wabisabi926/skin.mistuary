@@ -1552,4 +1552,9 @@
 		<value condition="Skin.HasSetting(nara_glass_light)">40FFFFFF</value>
 		<value>99141418</value>
 	</variable>
+	<!-- 通用版：媒体库封面文件夹的显示文本 -->
+	<variable name="LibraryArtFolderLabel">
+		<value condition="String.IsEmpty(Skin.String(library_art_folder))">$LOCALIZE[31720]</value>
+		<value>$INFO[Skin.String(library_art_folder)]</value>
+	</variable>
 </includes>

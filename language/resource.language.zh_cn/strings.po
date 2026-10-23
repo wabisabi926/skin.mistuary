@@ -1210,6 +1210,14 @@ msgctxt "#31718"
 msgid "Light glass panels (off: dark)"
 msgstr "玻璃面板透白（关闭则透黑）"
 
+msgctxt "#31719"
+msgid "Media library cover folder"
+msgstr "媒体库封面文件夹"
+
+msgctxt "#31720"
+msgid "Not set"
+msgstr "未设置"
+
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."
 #~ msgstr "未找到收藏。你可以从媒体浏览使用上下文菜单添加收藏项目。"

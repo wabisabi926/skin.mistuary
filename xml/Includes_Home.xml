@@ -625,6 +625,7 @@
 	<include name="HomeMediaLibraryArtwork">
 		<param name="texture">$INFO[ListItem.Art(thumb)]</param>
 		<param name="fallback">$INFO[ListItem.Icon]</param>
+		<param name="bg_cond">false</param>
 		<definition>
 			<control type="image">
 				<left>0</left>
@@ -633,6 +634,29 @@
 				<height>180</height>
 				<aspectratio>scale</aspectratio>
 				<texture background="true" fallback="$PARAM[fallback]">$PARAM[texture]</texture>
+				<visible>$PARAM[bg_cond]</visible>
+			</control>
+			<!-- 通用版：自定义媒体库封面。在设置里指定一个文件夹，
+			     里面放与库名完全同名的图片（如「华语电影.jpg」）即可按库自动匹配。
+			     png 先绘制、jpg 后绘制，两种扩展名都支持；都没有时不绘制，
+			     下方的文件夹图标会露出来。 -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>320</width>
+				<height>180</height>
+				<aspectratio>scale</aspectratio>
+				<texture background="true">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].png</texture>
+				<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>320</width>
+				<height>180</height>
+				<aspectratio>scale</aspectratio>
+				<texture background="true">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
+				<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
 			</control>
 		</definition>
 	</include>
@@ -687,10 +711,7 @@
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 							</control>
-							<control type="group">
-								<visible>$PARAM[background_art_condition]</visible>
-								<include>HomeMediaLibraryArtwork</include>
-							</control>
+							<!-- 文件夹图标先绘制，自定义库封面若存在会盖住它 -->
 							<control type="image">
 								<left>110</left>
 								<top>42</top>
@@ -699,6 +720,12 @@
 								<aspectratio>keep</aspectratio>
 								<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
 								<visible>!$PARAM[background_art_condition]</visible>
+							</control>
+							<control type="group">
+								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
+								<include content="HomeMediaLibraryArtwork">
+									<param name="bg_cond" value="$PARAM[background_art_condition]" />
+								</include>
 							</control>
 							<control type="label">
 								<top>190</top>
@@ -728,26 +755,7 @@
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 							</control>
-							<control type="group">
-								<visible>$PARAM[background_art_condition]</visible>
-								<include>HomeMediaLibraryArtwork</include>
-							</control>
-							<control type="image">
-								<width>320</width>
-								<height>180</height>
-								<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
-								<visible>!$PARAM[background_art_condition]</visible>
-								<include>Animation_FocusTextureFade</include>
-							</control>
-							<control type="image">
-								<left>-3</left>
-								<top>-3</top>
-								<width>326</width>
-								<height>186</height>
-								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
-								<visible>$PARAM[background_art_condition]</visible>
-								<include>Animation_FocusTextureFade</include>
-							</control>
+							<!-- 文件夹图标先绘制，自定义库封面若存在会盖住它 -->
 							<control type="image">
 								<left>110</left>
 								<top>42</top>
@@ -757,6 +765,28 @@
 								<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
 								<colordiffuse>focus_card_foreground</colordiffuse>
 								<visible>!$PARAM[background_art_condition]</visible>
+							</control>
+							<control type="group">
+								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
+								<include content="HomeMediaLibraryArtwork">
+									<param name="bg_cond" value="$PARAM[background_art_condition]" />
+								</include>
+							</control>
+							<control type="image">
+								<width>320</width>
+								<height>180</height>
+								<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
+								<visible>!$PARAM[background_art_condition] + String.IsEmpty(Skin.String(library_art_folder))</visible>
+								<include>Animation_FocusTextureFade</include>
+							</control>
+							<control type="image">
+								<left>-3</left>
+								<top>-3</top>
+								<width>326</width>
+								<height>186</height>
+								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
+								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
+								<include>Animation_FocusTextureFade</include>
 							</control>
 							<control type="label">
 								<top>190</top>
