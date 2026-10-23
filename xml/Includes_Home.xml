@@ -540,7 +540,7 @@
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_media" border="14">shapes/ring14_3.png</texture>
+								<texture colordiffuse="focus_media" border="12">shapes/ring12_3.png</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -559,7 +559,7 @@
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_3.png</texture>
+								<texture colordiffuse="focus_card_surface" border="12">shapes/ring12_3.png</texture>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -796,7 +796,7 @@
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_media" border="14">shapes/ring14_3.png</texture>
+								<texture colordiffuse="focus_media" border="12">shapes/ring12_3.png</texture>
 								<include>Animation_FocusTextureFade</include>
 							</control>
 							<control type="label">
