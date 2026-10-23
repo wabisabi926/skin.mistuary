@@ -540,7 +540,7 @@
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
+								<texture colordiffuse="focus_media" border="14">shapes/ring14_3.png</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -559,7 +559,7 @@
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_2.png</texture>
+								<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_3.png</texture>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -789,20 +789,14 @@
 									<param name="bg_cond" value="$PARAM[background_art_condition]" />
 								</include>
 							</control>
-							<control type="image">
-								<width>320</width>
-								<height>180</height>
-								<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
-								<visible>!$PARAM[background_art_condition] + String.IsEmpty(Skin.String(library_art_folder))</visible>
-								<include>Animation_FocusTextureFade</include>
-							</control>
+							<!-- 通用版：焦点统一用描边环，与「正在观看」等卡片保持一致，
+							     不再用 glass_focus_light 白色蒙版（那会让封面整体发白） -->
 							<control type="image">
 								<left>-3</left>
 								<top>-3</top>
 								<width>326</width>
 								<height>186</height>
-								<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
-								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
+								<texture colordiffuse="focus_media" border="14">shapes/ring14_3.png</texture>
 								<include>Animation_FocusTextureFade</include>
 							</control>
 							<control type="label">

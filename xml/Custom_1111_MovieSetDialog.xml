@@ -112,7 +112,7 @@
 								<width>237.600000</width>
 								<height>345.600000</height>
 								<aspectratio>stretch</aspectratio>
-								<texture colordiffuse="focus_media" border="12">shapes/ring12_2.png</texture>
+								<texture colordiffuse="focus_media" border="12">shapes/ring12_3.png</texture>
 								<include>Animation_FocusTextureFade</include>
 							</control>
 						</control>
