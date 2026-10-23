@@ -60,9 +60,9 @@
 				<haspath>true</haspath>
 			</control>
 			<control type="label">
-				<left>1760</left>
+				<right>40</right>
 				<top>0</top>
-				<width>120</width>
+				<width>240</width>
 				<height>100</height>
 				<font>font_home_clock</font>
 				<align>right</align>
@@ -85,8 +85,8 @@
 			<top>174</top>
 			<height>54</height>
 			<control type="label">
-				<left>1190</left>
-				<width>160</width>
+				<left>1200</left>
+				<width>220</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>left</align>
@@ -95,8 +95,8 @@
 				<label>$LOCALIZE[31676]</label>
 			</control>
 			<control type="label">
-				<left>1370</left>
-				<width>150</width>
+				<left>1450</left>
+				<width>160</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>left</align>
@@ -105,8 +105,8 @@
 				<label>$LOCALIZE[467]</label>
 			</control>
 			<control type="label">
-				<left>1535</left>
-				<width>150</width>
+				<left>1630</left>
+				<width>140</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>right</align>
@@ -171,8 +171,8 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>1190</left>
-						<width>160</width>
+						<left>1200</left>
+						<width>220</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -181,8 +181,8 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1370</left>
-						<width>150</width>
+						<left>1450</left>
+						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -191,8 +191,8 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1535</left>
-						<width>150</width>
+						<left>1630</left>
+						<width>140</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>right</align>
@@ -254,8 +254,8 @@
 						<scroll>true</scroll>
 					</control>
 					<control type="label">
-						<left>1190</left>
-						<width>160</width>
+						<left>1200</left>
+						<width>220</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -264,8 +264,8 @@
 						<label>$INFO[ListItem.Date]</label>
 					</control>
 					<control type="label">
-						<left>1370</left>
-						<width>150</width>
+						<left>1450</left>
+						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -274,8 +274,8 @@
 						<label>$VAR[FileManagerTypeVar]</label>
 					</control>
 					<control type="label">
-						<left>1535</left>
-						<width>150</width>
+						<left>1630</left>
+						<width>140</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>right</align>
