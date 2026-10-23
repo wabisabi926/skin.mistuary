@@ -15,6 +15,7 @@
 				<param name="header_id" value="1" />
 			</include>
 			<control type="textbox" id="9">
+				<textcolor>text_primary</textcolor>
 				<left>30</left>
 				<top>82</top>
 				<width>855</width>

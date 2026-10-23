@@ -1,13 +1,49 @@
-# 皮肤 XML 扩展参数说明
+# Mistuary（雾汐）
 
-> **通用版分支（universal / 4.2.0）**
+雾汐｜轻量透明皮肤，基于 Estuary，支持透黑、透白双模式
+
+Mistuary 是衍生自 Estuary 的视频优先皮肤，面向**未做任何修改的官方 Kodi 21 Omega 及以上版本**，
+CoreELEC 设备同样可用。原分支依赖魔改内核的玻璃、圆角、slot 列表与稳定选中项扩展，
+均已换成普通贴图和标准控件，因此不需要定制内核即可运行。
+
+- 电影与剧集详情页：全屏沉浸式布局，演员栏默认收起、点图标展开
+- 首页顶部导航、媒体库视图：统一海报标题与年份排版
+- 设置中心：把 Kodi 原生设置与皮肤选项放在一起
+- 省略天气、电台与游戏浏览界面，仅维护英文和简体中文
+
+## 安装
+
+1. 下载本仓库，把整个目录放到 Kodi 的 `addons/` 下，目录名改为 `skin.mistuary`
+2. 重启 Kodi
+3. 设置 → 界面 → 皮肤 → 皮肤 → 选择 **Mistuary**
+
+## 透黑 / 透白
+
+两套主题都在「设置 → 界面 → 皮肤 → 颜色」里切换：
+
+- `SKINDEFAULT` = 透黑（玻璃压黑，默认）
+- `light` = 透白（玻璃提白）
+
+面板统一使用与文件管理器同款的磨砂玻璃（`glass_frosted`），文字在两种模式下都是白色。
+
+## 打包贴图
+
+改动 `media/` 里的图片后需要重新打包（Kodi 优先读 `Textures.xbt`）：
+
+```bash
+python xbt_tool.py pack
+```
+
+## 皮肤 XML 扩展参数说明（历史文档）
+
+> **通用版分支（universal）**
 >
 > 本分支面向官方 Kodi 21 Omega 及以上版本，不再依赖魔改内核。下列扩展标签在此分支中
 > **已全部移除或降级**，仅作历史说明保留：
 >
 > | 扩展 | 通用版替代方案 |
 > | --- | --- |
-> | `material="glass"` / `glassstyle` | 半透明纯色 + `shapes/round*.png` 圆角贴图，颜色由 `$VAR[GlassTint_*]` 提供，外观设置里可切换透黑/透白 |
+> | `material="glass"` / `glassstyle` | 半透明纯色 + `shapes/round*.png` 圆角贴图，颜色由 `colors/*.xml` 的颜色名提供 |
 > | `cornerradius` / `cornerinset` / `cornerborder` / `cornerglow` | 9-slice 圆角贴图（`border` = 半径）；图片类纹理不再支持圆角 |
 > | `<texturebackground>` | 改为 grouplist 前的独立 `image` 控件 |
 > | `slotlist` / `<slots>` | 降级为 `fixedlist` |

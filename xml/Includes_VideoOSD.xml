@@ -1,78 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<include name="NaraPgsSuccessContent">
-		<param name="font">font12</param>
-		<param name="message">$LOCALIZE[70198]</param>
-		<param name="id_prefix">7010</param>
-		<definition>
-			<animation type="Conditional" reversible="false" condition="String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])">
-				<effect type="slide" start="360,0" end="0,0" time="280" tween="cubic" easing="out" />
-				<effect type="fade" start="0" end="100" time="100" />
-			</animation>
-			<animation effect="fade" start="100" end="0" time="250" reversible="false" condition="String.IsEmpty(VideoPlayer.PgsAutoSelectionStatus)">Hidden</animation>
-			<control type="label" id="$PARAM[id_prefix]1">
-				<width>900</width>
-				<height>36</height>
-				<font>$PARAM[font]</font>
-				<align>right</align>
-				<aligny>center</aligny>
-				<textcolor>text_secondary</textcolor>
-				<label>$PARAM[message]</label>
-				<visible>String.IsEmpty(VideoPlayer.PgsAutoSelectionStatus) | String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])</visible>
-			</control>
-			<control type="label" id="$PARAM[id_prefix]2">
-				<width>900</width>
-				<height>36</height>
-				<font>$PARAM[font]</font>
-				<align>right</align>
-				<aligny>center</aligny>
-				<textcolor>80EDEDED</textcolor>
-				<label>$PARAM[message]</label>
-				<visible>String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])</visible>
-				<animation type="Conditional" reversible="false" condition="String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])">
-					<effect type="fade" start="0" end="100" delay="420" time="100" />
-					<effect type="fade" start="100" end="0" delay="560" time="140" />
-				</animation>
-			</control>
-			<control type="label" id="$PARAM[id_prefix]3">
-				<width>900</width>
-				<height>36</height>
-				<font>$PARAM[font]</font>
-				<align>right</align>
-				<aligny>center</aligny>
-				<textcolor>80EDEDED</textcolor>
-				<label>$PARAM[message]</label>
-				<visible>String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])</visible>
-				<animation type="Conditional" reversible="false" condition="String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$PARAM[message])">
-					<effect type="fade" start="0" end="100" delay="820" time="100" />
-					<effect type="fade" start="100" end="0" delay="960" time="140" />
-				</animation>
-			</control>
-		</definition>
-	</include>
-	<include name="NaraPgsSuccessNotifications">
-		<param name="font">font12</param>
-		<definition>
-			<control type="group" id="70110">
-				<width>900</width>
-				<height>36</height>
-				<include content="NaraPgsSuccessContent">
-					<param name="font" value="$PARAM[font]" />
-					<param name="message" value="$LOCALIZE[70199]" />
-					<param name="id_prefix" value="7011" />
-				</include>
-				<visible>String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$LOCALIZE[70199])</visible>
-			</control>
-			<control type="group" id="70100">
-				<width>900</width>
-				<height>36</height>
-				<include content="NaraPgsSuccessContent">
-					<param name="font" value="$PARAM[font]" />
-				</include>
-				<visible>String.IsEqual(VideoPlayer.PgsAutoSelectionStatus,$LOCALIZE[70198])</visible>
-			</control>
-		</definition>
-	</include>
 	<variable name="VideoOSDButtonFocusSurfaceVar">
 		<value condition="Window.IsVisible(1116)">00FFFFFF</value>
 		<value>focus_surface</value>
@@ -217,13 +144,6 @@
 				<param name="foreground" value="00000000" />
 			</include>
 			<include content="VideoOSDInfoBadgeRow" />
-			<control type="group">
-				<right>30</right>
-				<top>78</top>
-				<width>900</width>
-				<height>36</height>
-				<include content="NaraPgsSuccessNotifications" />
-			</control>
 		</control>
 	</include>
 	<include name="VideoOSDPlaylistCard">

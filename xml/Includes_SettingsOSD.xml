@@ -34,10 +34,12 @@
 					<ondown>5</ondown>
 				</control>
 				<control type="button" id="7">
+					<textcolor>text_primary</textcolor>
 					<description>Default Button</description>
 					<include>DefaultSettingButton</include>
 				</control>
 				<control type="radiobutton" id="8">
+					<textcolor>text_primary</textcolor>
 					<description>Default RadioButton</description>
 					<include>DefaultSettingButton</include>
 				</control>
@@ -59,6 +61,7 @@
 					<textwidth>800</textwidth>
 				</control>
 				<control type="label" id="14">
+					<textcolor>text_primary</textcolor>
 					<description>Default Label</description>
 					<include>DefaultSettingLabel</include>
 				</control>

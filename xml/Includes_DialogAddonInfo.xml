@@ -38,6 +38,7 @@
 		<param name="selected">false</param>
 		<definition>
 			<control type="radiobutton" id="$PARAM[id]">
+				<textcolor>text_primary</textcolor>
 				<radioposx>63</radioposx>
 				<radioposy>24</radioposy>
 				<radiowidth>36</radiowidth>

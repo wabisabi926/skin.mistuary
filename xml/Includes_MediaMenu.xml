@@ -3,7 +3,7 @@
 	<include name="NaraGlassMediaMenuItemStyle">
 		<textcolor>text_primary</textcolor>
 		<focusedcolor>text_primary</focusedcolor>
-		<selectedcolor>selection_foreground</selectedcolor>
+		<selectedcolor>text_primary</selectedcolor>
 		<disabledcolor>text_disabled</disabledcolor>
 		<texturefocus colordiffuse="glass_focus_light" border="4">shapes/round4.png</texturefocus>
 		<texturenofocus />
@@ -41,7 +41,7 @@
 				<!-- A quiet translucent fill remains legible over changing artwork without
 				     turning the four view choices into heavy black tiles. -->
 				<texturefocus colordiffuse="glass_focus_light" border="4">shapes/round4.png</texturefocus>
-				<texturenofocus colordiffuse="surface_subtle" border="4">shapes/round4.png</texturenofocus>
+				<texturenofocus colordiffuse="28FFFFFF" border="4">shapes/round4.png</texturenofocus>
 				<onclick>$PARAM[onclick]</onclick>
 				<onback>50</onback>
 			</control>
@@ -68,7 +68,7 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<texturefocus colordiffuse="glass_focus_light">colors/white.png</texturefocus>
 				<texturenofocus />
-				<textureradioonfocus colordiffuse="selection_foreground">$PARAM[icon]</textureradioonfocus>
+				<textureradioonfocus colordiffuse="text_primary">$PARAM[icon]</textureradioonfocus>
 				<textureradioonnofocus colordiffuse="text_primary">$PARAM[icon]</textureradioonnofocus>
 				<textureradioofffocus colordiffuse="text_secondary">$PARAM[icon]</textureradioofffocus>
 				<textureradiooffnofocus colordiffuse="text_secondary">$PARAM[icon]</textureradiooffnofocus>
@@ -102,8 +102,8 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<texturefocus colordiffuse="glass_focus_light">colors/white.png</texturefocus>
 				<texturenofocus />
-				<textureradioonfocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonfocus>
-				<textureradioonnofocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonnofocus>
+				<textureradioonfocus colordiffuse="text_primary" border="7">shapes/round7.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="text_primary" border="7">shapes/round7.png</textureradioonnofocus>
 				<textureradioofffocus colordiffuse="55FFFFFF" border="7">shapes/round7.png</textureradioofffocus>
 				<textureradiooffnofocus colordiffuse="28FFFFFF" border="7">shapes/round7.png</textureradiooffnofocus>
 				<label>$PARAM[label]</label>
@@ -142,7 +142,7 @@
 					<top>5</top>
 					<width>364</width>
 					<height>1</height>
-					<texture colordiffuse="33FFFFFF">colors/white.png</texture>
+					<texture colordiffuse="28FFFFFF">colors/white.png</texture>
 				</control>
 			</control>
 		</definition>
@@ -162,7 +162,7 @@
 					<itemlayout width="384" height="48">
 						<control type="image">
 							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture colordiffuse="selection_foreground" border="7">shapes/round7.png</texture>
+							<texture colordiffuse="text_primary" border="7">shapes/round7.png</texture>
 							<visible>ListItem.IsSelected</visible>
 						</control>
 						<control type="label">
@@ -179,7 +179,7 @@
 						</control>
 						<control type="image">
 							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture colordiffuse="selection_foreground" border="7">shapes/round7.png</texture>
+							<texture colordiffuse="text_primary" border="7">shapes/round7.png</texture>
 							<visible>ListItem.IsSelected</visible>
 						</control>
 						<control type="label">
@@ -210,8 +210,8 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<texturefocus colordiffuse="glass_focus_light">colors/white.png</texturefocus>
 				<texturenofocus />
-				<textureradioonfocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonfocus>
-				<textureradioonnofocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonnofocus>
+				<textureradioonfocus colordiffuse="text_primary" border="7">shapes/round7.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="text_primary" border="7">shapes/round7.png</textureradioonnofocus>
 				<textureradioofffocus colordiffuse="55FFFFFF" border="7">shapes/round7.png</textureradioofffocus>
 				<textureradiooffnofocus colordiffuse="28FFFFFF" border="7">shapes/round7.png</textureradiooffnofocus>
 				<label>$PARAM[label]</label>
@@ -253,12 +253,14 @@
 			<!-- Control 10 is the real Kodi watched-mode controller. It stays
 			     off-screen, while the visible three-state group drives it. -->
 			<control type="button" id="10">
+				<textcolor>text_primary</textcolor>
 				<include>HiddenObject</include>
 				<visible>true</visible>
 			</control>
 			<!-- The window uses this hidden message target to restore the root of the blade whenever
 			     menucontrol re-enters it after focus previously left from a nested filter list. -->
 			<control type="button" id="9160">
+				<textcolor>text_primary</textcolor>
 				<include>HiddenObject</include>
 				<visible>true</visible>
 			</control>
@@ -275,6 +277,7 @@
 				<visible>Control.HasFocus(9151)</visible>
 			</control>
 			<control type="radiobutton" id="9151">
+				<textcolor>text_primary</textcolor>
 				<left>330</left><top>8</top><width>42</width><height>42</height>
 				<font></font>
 				<label>$LOCALIZE[31691]</label>
@@ -285,9 +288,9 @@
 				<radiowidth>28</radiowidth><radioheight>28</radioheight>
 				<texturefocus />
 				<texturenofocus />
-				<textureradioonfocus colordiffuse="selection_foreground">icons/mediamenu/clear-filters.png</textureradioonfocus>
-				<textureradioonnofocus colordiffuse="selection_foreground">icons/mediamenu/clear-filters.png</textureradioonnofocus>
-				<textureradioofffocus colordiffuse="selection_foreground">icons/mediamenu/clear-filters.png</textureradioofffocus>
+				<textureradioonfocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioofffocus>
 				<textureradiooffnofocus colordiffuse="text_secondary">icons/mediamenu/clear-filters.png</textureradiooffnofocus>
 				<selected>[$EXP[nara_video_library_advanced_filters] + [!String.IsEmpty(Window.Property(NaraMediaMenu.Genre)) | !String.IsEmpty(Window.Property(NaraMediaMenu.Decade)) | !String.IsEmpty(Window.Property(NaraMediaMenu.Rating))]] | !String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100]) | !$EXP[nara_video_library_title_sort] | !Container.SortDirection(ascending)</selected>
 				<onclick>noop</onclick>
@@ -354,6 +357,7 @@
 	<include name="PVRQuickNavItemsCommon">
 		<definition>
 			<control type="radiobutton" id="$PARAM[control_id]">
+				<textcolor>text_primary</textcolor>
 				<width>56</width>
 				<height>56</height>
 				<align>center</align>
@@ -379,6 +383,7 @@
 		<param name="group_label2">$INFO[Control.GetLabel(29)]</param>
 		<definition>
 			<control type="button" id="28">
+				<textcolor>text_primary</textcolor>
 				<label></label>
 				<include>HiddenObject</include>
 			</control>
@@ -395,6 +400,7 @@
 				<control type="group" id="60520">
 					<height>58</height>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<include>MediaMenuTitleCommon</include>
 						<label>$LOCALIZE[31148]</label>
 					</control>
@@ -455,10 +461,12 @@
 					</control>
 				</control>
 				<control type="label" id="200">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuLabelCommon</include>
 					<label>$LOCALIZE[14018]</label>
 				</control>
 				<control type="button" id="6051">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[31023]</label>
 					<label2>$INFO[Container.Viewmode]</label2>
@@ -466,6 +474,7 @@
 					<visible>Window.IsActive(MyPVRGuide.xml)</visible>
 				</control>
 				<control type="button" id="6054">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[19141]</label>
 					<label2>$PARAM[group_label2]</label2>
@@ -473,6 +482,7 @@
 					<visible>Window.IsActive(MyPVRChannels.xml) | Window.IsActive(MyPVRGuide.xml)</visible>
 				</control>
 				<control type="radiobutton" id="6060">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[31127]</label>
 					<selected>Control.IsVisible(50)</selected>
@@ -480,18 +490,21 @@
 					<visible>Window.IsActive(MyPVRChannels.xml)</visible>
 				</control>
 				<control type="button" id="6053">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[31022]</label>
 					<label2>$INFO[Container.SortMethod]</label2>
 					<onclick>SendClick(3)</onclick>
 				</control>
 				<control type="button" id="6055">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[31032]</label>
 					<label2>$INFO[Container.SortOrder]</label2>
 					<onclick>Container.SetSortDirection</onclick>
 				</control>
 				<control type="button" id="10">
+					<textcolor>text_primary</textcolor>
 					<description>Watched Toggle</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[20367]</label>
@@ -499,11 +512,13 @@
 					<visible>Window.IsActive(MyPVRRecordings.xml)</visible>
 				</control>
 				<control type="label" id="300">
+					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31021]</label>
 					<include>MediaMenuLabelCommon</include>
 					<visible>Control.IsVisible(31) | Control.IsVisible(5) | Control.IsVisible(6) | Control.IsVisible(7) | Control.IsVisible(8)</visible>
 				</control>
 				<control type="radiobutton" id="31">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[587]</label>
 					<selected>Container.Filtered</selected>
@@ -511,35 +526,41 @@
 					<visible>Window.IsActive(MyPVRChannels.xml)</visible>
 				</control>
 				<control type="radiobutton" id="5">
+					<textcolor>text_primary</textcolor>
 					<description>Group recording items by folder structure</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[19270]</label>
 					<visible>Window.IsActive(MyPVRRecordings.xml)</visible>
 				</control>
 				<control type="radiobutton" id="6">
+					<textcolor>text_primary</textcolor>
 					<description>Show hidden channels</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[19051]</label>
 					<visible>Window.IsActive(MyPVRChannels.xml)</visible>
 				</control>
 				<control type="radiobutton" id="7">
+					<textcolor>text_primary</textcolor>
 					<description>Show deleted recordings</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[19184]</label>
 					<visible>Window.IsActive(MyPVRRecordings.xml)</visible>
 				</control>
 				<control type="radiobutton" id="8">
+					<textcolor>text_primary</textcolor>
 					<description>Hide disabled timers</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[19077]</label>
 					<visible>Window.IsActive(MyPVRTimers.xml)</visible>
 				</control>
 				<control type="label" id="301">
+					<textcolor>text_primary</textcolor>
 					<include>MediaMenuLabelCommon</include>
 					<label>$LOCALIZE[31020]</label>
 					<visible>Control.IsVisible(302)</visible>
 				</control>
 				<control type="button" id="302">
+					<textcolor>text_primary</textcolor>
 					<description>Go to playlist</description>
 					<include>MediaMenuItemsCommon</include>
 					<label>$LOCALIZE[31056]</label>
@@ -637,9 +658,10 @@
 			<top>0</top>
 			<width>432</width>
 			<height>100%</height>
-			<texture colordiffuse="$VAR[GlassTint_dialog_strong]">colors/white.png</texture>
+			<texture colordiffuse="glass_frosted">colors/white.png</texture>
 		</control>
 		<control type="button" id="6131">
+			<textcolor>text_primary</textcolor>
 			<left>0</left>
 			<top>0</top>
 			<width>432</width>
@@ -649,10 +671,12 @@
 			<texturenofocus />
 		</control>
 		<control type="button" id="3">
+			<textcolor>text_primary</textcolor>
 			<description>Viewtype Toggle</description>
 			<include>HiddenObject</include>
 		</control>
 		<control type="button" id="4">
+			<textcolor>text_primary</textcolor>
 			<description>Order Toggle</description>
 			<include>HiddenObject</include>
 		</control>
@@ -720,10 +744,12 @@
 			<ondown>9000</ondown>
 			<onback>50</onback>
 			<control type="label" id="200">
+				<textcolor>text_primary</textcolor>
 				<include>MediaMenuTitleCommon</include>
 				<label>$LOCALIZE[14018]</label>
 			</control>
 			<control type="button" id="6051">
+				<textcolor>text_primary</textcolor>
 				<include>MediaMenuItemsCommon</include>
 				<label>$LOCALIZE[31023]</label>
 				<label2>$INFO[Container.Viewmode]</label2>
@@ -731,6 +757,7 @@
 				<onclick>Container.NextViewMode</onclick>
 			</control>
 			<control type="button" id="6053">
+				<textcolor>text_primary</textcolor>
 				<include>MediaMenuItemsCommon</include>
 				<label>$LOCALIZE[31022]</label>
 				<label2>$INFO[Container.SortMethod]</label2>
@@ -738,6 +765,7 @@
 				<onclick>SendClick(3)</onclick>
 			</control>
 			<control type="button" id="6052">
+				<textcolor>text_primary</textcolor>
 				<include>MediaMenuItemsCommon</include>
 				<label>$LOCALIZE[31032]</label>
 				<label2>$INFO[Container.SortOrder]</label2>
@@ -746,12 +774,14 @@
 			</control>
 			<include condition="Window.IsVisible(Videos) | Window.IsVisible(Music)">MediaMenuSearchButton</include>
 			<control type="button" id="19">
+				<textcolor>text_primary</textcolor>
 				<visible>Container.CanFilter + !Container.CanFilterAdvanced</visible>
 				<include>MediaMenuItemsCommon</include>
 				<onclick>right</onclick>
 				<label>$LOCALIZE[587]</label>
 			</control>
 			<control type="button" id="199">
+				<textcolor>text_primary</textcolor>
 				<visible>Container.CanFilterAdvanced</visible>
 				<include>MediaMenuItemsCommon</include>
 				<label>$LOCALIZE[587]</label>
@@ -762,12 +792,14 @@
 	</include>
 	<include name="MediaMenuSearchButton">
 		<control type="button" id="8">
+			<textcolor>text_primary</textcolor>
 			<include>MediaMenuItemsCommon</include>
 			<label>$LOCALIZE[137]</label>
 		</control>
 	</include>
 	<include name="MediaMenuMouseOverlay">
 		<control type="button" id="6130">
+			<textcolor>text_primary</textcolor>
 			<label></label>
 			<left>-50</left>
 			<top>200</top>

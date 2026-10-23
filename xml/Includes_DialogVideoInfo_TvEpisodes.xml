@@ -67,13 +67,17 @@
 				<top>788</top>
 				<width>1760</width>
 				<height>58</height>
+				<visible>!Skin.HasSetting(nara_cast_open)</visible>
 				<orientation>horizontal</orientation>
 				<scrolltime>180</scrolltime>
 				<preloaditems>2</preloaditems>
 				<onleft>5100</onleft>
 				<onright>5100</onright>
 				<onup>5000</onup>
+				<!-- 焦点回到季度标签行就收起演员栏，避免和剧集面板打架 -->
+				<onfocus>Skin.Reset(nara_cast_open)</onfocus>
 				<ondown condition="String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)">50</ondown>
+				<ondown condition="Skin.HasSetting(nara_cast_open)">50</ondown>
 				<ondown>5101</ondown>
 				<itemlayout width="250" height="58">
 					<control type="label">
@@ -116,6 +120,7 @@
 				<orientation>horizontal</orientation>
 				<itemgap>36</itemgap>
 				<hitrect x="0" y="0" w="0" h="0" />
+				<visible>!Skin.HasSetting(nara_cast_open)</visible>
 				<include content="VideoInfoTvTabVisualItem">
 					<param name="position">0</param>
 				</include>
@@ -150,7 +155,7 @@
 				<orientation>horizontal</orientation>
 				<scrolltime>220</scrolltime>
 				<preloaditems>1</preloaditems>
-				<visible>!String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)</visible>
+				<visible>!String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast) + !Skin.HasSetting(nara_cast_open)</visible>
 				<onleft>5101</onleft>
 				<onright>5101</onright>
 				<onup>5100</onup>

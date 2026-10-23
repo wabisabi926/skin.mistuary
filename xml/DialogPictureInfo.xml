@@ -89,6 +89,7 @@
 								<textcolor>text_secondary</textcolor>
 							</control>
 							<control type="label">
+								<textcolor>text_primary</textcolor>
 								<left>10</left>
 								<height>50</height>
 								<width>430</width>
@@ -109,6 +110,7 @@
 								<textcolor>text_secondary</textcolor>
 							</control>
 							<control type="label">
+								<textcolor>text_primary</textcolor>
 								<left>10</left>
 								<height>50</height>
 								<width>430</width>

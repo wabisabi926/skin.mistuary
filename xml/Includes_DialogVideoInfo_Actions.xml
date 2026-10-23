@@ -3,11 +3,13 @@
 	<include name="VideoInfoActionGlass">
 		<param name="button_id">0</param>
 		<param name="ring">shapes/ring_btn_70x70_r35.png</param>
+		<param name="base">glass_regular</param>
+		<param name="focus">glass_focus_medium</param>
 		<definition>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="35">shapes/round35.png</texture>
+				<texture colordiffuse="$PARAM[base]" border="35">shapes/round35.png</texture>
 			</control>
 			<!-- 通用版：深色底板在暗背景上会隐形，加一圈 12% 白的描边定义边界 -->
 			<control type="image">
@@ -18,7 +20,7 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="glass_focus_medium" border="35">shapes/round35.png</texture>
+				<texture colordiffuse="$PARAM[focus]" border="35">shapes/round35.png</texture>
 				<visible>Control.HasFocus($PARAM[button_id])</visible>
 				<animation effect="fade" start="0" end="100" time="180" tween="sine" easing="out">VisibleChange</animation>
 			</control>
@@ -43,9 +45,12 @@
 					<top>12</top>
 					<width>220</width>
 					<height>70</height>
+					<!-- 播放键是整页唯一的主动作：实心浅底 + 深色文字，和右侧四个图标按钮拉开层级 -->
 					<include content="VideoInfoActionGlass">
 						<param name="button_id" value="5000" />
 						<param name="ring" value="shapes/ring_btn_220x70_r35.png" />
+						<param name="base" value="E6FFFFFF" />
+						<param name="focus" value="33000000" />
 					</include>
 					<control type="button" id="5000">
 						<width>220</width>
@@ -54,8 +59,8 @@
 						<align>center</align>
 						<aligny>center</aligny>
 						<label>$VAR[VideoInfoPlayButtonLabelVar]</label>
-						<textcolor>text_primary</textcolor>
-						<focusedcolor>text_primary</focusedcolor>
+						<textcolor>ink_primary</textcolor>
+						<focusedcolor>ink_primary</focusedcolor>
 						<texturefocus />
 						<texturenofocus />
 						<onup>138</onup>
@@ -269,6 +274,7 @@
 						<onleft condition="String.IsEmpty(ListItem.SetID) + ListItem.HasVideoVersions">5004</onleft>
 						<onleft condition="String.IsEmpty(ListItem.SetID) + !ListItem.HasVideoVersions + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,movie)] + Integer.IsGreater(ListItem.DBID,0)">5006</onleft>
 						<onleft>5001</onleft>
+						<onright condition="!String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(Container(50).NumItems,0)">5107</onright>
 						<onright>5000</onright>
 						<onclick>SetProperty(VideoInfo.More,True,home)</onclick>
 						<onclick>AlarmClock(VideoInfoMoreFocus,SetFocus(5199,0,absolute),00:00,silent)</onclick>
@@ -282,38 +288,52 @@
 					</control>
 				</control>
 			</control>
-			<!-- 通用版：电影的演员栏默认收起，这里给一个展开/收起开关（电视剧用底部标签） -->
+			<!-- 演员栏默认收起，这里给一个图标开关；电影和电视剧通用 -->
 			<control type="group">
-				<width>120</width>
+				<width>70</width>
 				<height>94</height>
-				<visible>!String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(Container(50).NumItems,0)</visible>
+				<!-- 电影和电视剧共用同一个开关（电视剧原来只有底部标签） -->
+				<visible>Integer.IsGreater(Container(50).NumItems,0)</visible>
 				<control type="group">
 					<left>16</left>
 					<top>12</top>
-					<width>120</width>
+					<width>70</width>
 					<height>70</height>
 					<include content="VideoInfoActionGlass">
 						<param name="button_id" value="5107" />
-						<param name="ring" value="shapes/ring_btn_120x70_r35.png" />
+						<param name="ring" value="shapes/ring_btn_70x70_r35.png" />
 					</include>
-					<!-- 用普通 button：radiobutton 会预留单选指示器位置，把标签挤偏 -->
+					<!-- 已展开：比焦点态更淡的一层底色，提示当前状态 -->
+					<control type="image">
+						<width>100%</width>
+						<height>100%</height>
+						<texture colordiffuse="glass_focus_light" border="35">shapes/round35.png</texture>
+						<visible>Skin.HasSetting(nara_cast_open)</visible>
+						<animation effect="fade" start="0" end="100" time="160" tween="sine">Visible</animation>
+						<animation effect="fade" start="100" end="0" time="120">Hidden</animation>
+					</control>
 					<control type="button" id="5107">
-						<width>120</width>
+						<description>Cast toggle</description>
+						<width>70</width>
 						<height>70</height>
-						<font>font13</font>
-						<align>center</align>
-						<aligny>center</aligny>
-						<label>$LOCALIZE[206]</label>
-						<textcolor>text_primary</textcolor>
-						<focusedcolor>text_primary</focusedcolor>
+						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onclick condition="Window.Property(NaraInfoCastOpen)">ClearProperty(NaraInfoCastOpen)</onclick>
-						<onclick condition="!Window.Property(NaraInfoCastOpen)">SetProperty(NaraInfoCastOpen,true)</onclick>
-						<onleft>5003</onleft>
-						<onright>5003</onright>
 						<onup>138</onup>
-						<ondown>50</ondown>
+						<ondown condition="Skin.HasSetting(nara_cast_open)">50</ondown>
+						<ondown>5107</ondown>
+						<onleft>5003</onleft>
+						<onright>5000</onright>
+						<!-- 用皮肤设置存状态：Window.Property 在这套皮肤里验证不通，
+						     Skin.HasSetting 是确定可用的（透白开关就靠它）。 -->
+						<onclick>Skin.ToggleSetting(nara_cast_open)</onclick>
+					</control>
+					<control type="image">
+						<left>12</left>
+						<top>12</top>
+						<width>46</width>
+						<height>46</height>
+						<texture colordiffuse="text_primary">icons/infodialogs/cast.png</texture>
 					</control>
 				</control>
 			</control>

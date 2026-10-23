@@ -23,7 +23,7 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
 				<visible>$EXP[nara_dialog_glass]</visible>
 			</control>
 			<control type="image">

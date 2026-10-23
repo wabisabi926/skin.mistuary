@@ -4,77 +4,80 @@
 	<include name="VideoInfoCastShelf">
 		<control type="group">
 			<left>80</left>
-			<top>816</top>
+			<top>846</top>
 			<width>1760</width>
-			<height>270</height>
-			<!-- 通用版：电影默认收起演员栏，点「演员」按钮展开；电视剧仍由底部标签控制 -->
-			<visible>Integer.IsGreater(Container(50).NumItems,0) + [[!String.IsEqual(ListItem.DBType,tvshow) + Window.Property(NaraInfoCastOpen)] | [String.IsEqual(ListItem.DBType,tvshow) + String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)]]</visible>
+			<height>200</height>
+			<!-- 默认收起演员栏：点「演员」图标展开；电视剧保留底部演员标签这条老路径 -->
+			<visible>Integer.IsGreater(Container(50).NumItems,0) + [Skin.HasSetting(nara_cast_open) | [String.IsEqual(ListItem.DBType,tvshow) + String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)]]</visible>
 			<animation effect="slide" start="0,70" end="0,0" time="400" delay="100" tween="cubic" easing="out">WindowOpen</animation>
 			<!-- 通用版：演员栏原本完全没有底板，与动作栏（GlassTint_regular）不一致 -->
 			<control type="image">
 				<width>1760</width>
-				<height>270</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="28">shapes/round28.png</texture>
+				<height>200</height>
+				<texture colordiffuse="glass_regular" border="28">shapes/round28.png</texture>
 			</control>
 			<control type="image">
 				<width>1760</width>
-				<height>270</height>
-				<texture colordiffuse="border_subtle">shapes/ring_card_1760x270_r28.png</texture>
+				<height>200</height>
+				<texture colordiffuse="border_subtle">shapes/ring_card_1760x200_r28.png</texture>
 			</control>
 			<control type="label">
 				<width>500</width>
-				<height>32</height>
+				<height>28</height>
 				<font>font20_title</font>
 				<label>$LOCALIZE[20457]</label>
 				<visible>Container.Content(Sets)</visible>
 			</control>
 			<control type="panel" id="50">
-				<top>34</top>
+				<top>24</top>
 				<width>1760</width>
-				<height>232</height>
+				<height>176</height>
 				<orientation>horizontal</orientation>
 				<scrolltime>220</scrolltime>
 				<preloaditems>2</preloaditems>
 				<onleft>50</onleft>
 				<onright>50</onright>
+				<!-- 展开时一律回到打开它的图标开关（电视剧的标签行这时已隐藏） -->
+				<onup condition="Skin.HasSetting(nara_cast_open)">5107</onup>
 				<onup condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</onup>
 				<onup>5000</onup>
 				<ondown>50</ondown>
 				<onclick condition="System.AddonIsEnabled(script.embuary.info) + !String.IsEqual(ListItem.DBType,set)">RunScript(script.embuary.info,call=person,query='$ESCINFO[Container(50).ListItem.Label]')</onclick>
 				<onclick condition="System.HasAddon(script.embuary.info) + !System.AddonIsEnabled(script.embuary.info) + !String.IsEqual(ListItem.DBType,set)">EnableAddon(script.embuary.info)</onclick>
 				<onclick condition="!System.HasAddon(script.embuary.info) + !String.IsEqual(ListItem.DBType,set)">InstallAddon(script.embuary.info)</onclick>
-				<itemlayout height="206" width="160" condition="!Container.Content(Sets)">
+				<!-- 每项 176 宽，1760 正好 10 个；头像 104，剩下的空间全部留给留白 -->
+				<itemlayout height="152" width="176" condition="!Container.Content(Sets)">
 					<control type="group">
 						<left>0</left>
-						<top>4</top>
+						<top>0</top>
 						<control type="image">
-							<left>15</left>
-							<width>130</width>
-							<height>130</height>
+							<left>36</left>
+							<width>104</width>
+							<height>104</height>
 							<aspectratio>stretch</aspectratio>
 							<texture colordiffuse="28FFFFFF">masks/circle.png</texture>
 						</control>
 						<control type="image">
-							<left>19</left>
-							<top>4</top>
-							<width>122</width>
-							<height>122</height>
+							<left>39</left>
+							<top>3</top>
+							<width>98</width>
+							<height>98</height>
 							<aspectratio scalediffuse="false">scale</aspectratio>
 							<texture diffuse="masks/circle.png" fallback="DefaultActorSolid.png" background="true">$INFO[ListItem.Thumb]</texture>
 						</control>
 						<control type="label">
-							<top>134</top>
-							<width>160</width>
-							<height>28</height>
+							<top>108</top>
+							<width>176</width>
+							<height>22</height>
 							<font>font12</font>
 							<align>center</align>
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Label]</label>
 						</control>
 						<control type="label">
-							<top>166</top>
-							<width>160</width>
-							<height>26</height>
+							<top>130</top>
+							<width>176</width>
+							<height>20</height>
 							<font>font10</font>
 							<align>center</align>
 							<textcolor>text_secondary</textcolor>
@@ -82,30 +85,30 @@
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout height="206" width="160" condition="!Container.Content(Sets)">
+				<focusedlayout height="152" width="176" condition="!Container.Content(Sets)">
 					<control type="group">
 						<left>0</left>
-						<top>4</top>
-						<animation center="80,65" effect="zoom" start="100" end="104" time="150" tween="sine">Focus</animation>
+						<top>0</top>
+						<animation center="88,52" effect="zoom" start="100" end="104" time="150" tween="sine">Focus</animation>
 						<control type="image">
-							<left>15</left>
-							<width>130</width>
-							<height>130</height>
+							<left>36</left>
+							<width>104</width>
+							<height>104</height>
 							<aspectratio>stretch</aspectratio>
 							<texture colordiffuse="focus_media">masks/circle.png</texture>
 						</control>
 						<control type="image">
-							<left>19</left>
-							<top>4</top>
-							<width>122</width>
-							<height>122</height>
+							<left>39</left>
+							<top>3</top>
+							<width>98</width>
+							<height>98</height>
 							<aspectratio scalediffuse="false">scale</aspectratio>
 							<texture diffuse="masks/circle.png" fallback="DefaultActorSolid.png" background="true">$INFO[ListItem.Thumb]</texture>
 						</control>
 						<control type="label">
-							<top>134</top>
-							<width>160</width>
-							<height>28</height>
+							<top>108</top>
+							<width>176</width>
+							<height>22</height>
 							<font>font12</font>
 							<align>center</align>
 							<aligny>center</aligny>
@@ -113,9 +116,9 @@
 							<label>$INFO[ListItem.Label]</label>
 						</control>
 						<control type="label">
-							<top>166</top>
-							<width>160</width>
-							<height>26</height>
+							<top>130</top>
+							<width>176</width>
+							<height>20</height>
 							<font>font10</font>
 							<align>center</align>
 							<textcolor>text_secondary</textcolor>
@@ -124,64 +127,64 @@
 						</control>
 					</control>
 				</focusedlayout>
-				<itemlayout height="230" width="168" condition="Container.Content(Sets)">
+				<itemlayout height="174" width="120" condition="Container.Content(Sets)">
 					<control type="group">
-						<left>6</left>
-						<top>4</top>
+						<left>5</left>
+						<top>0</top>
 						<control type="image">
-							<width>146</width>
-							<height>204</height>
+							<width>110</width>
+							<height>150</height>
 							<aspectratio>scale</aspectratio>
 							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
 						</control>
 						<control type="image">
-							<top>144</top>
-							<width>146</width>
-							<height>60</height>
+							<top>105</top>
+							<width>110</width>
+							<height>45</height>
 							<aspectratio>stretch</aspectratio>
 							<texture>overlays/overlayfade.png</texture>
 						</control>
 						<control type="label">
-							<left>8</left>
-							<top>172</top>
-							<width>130</width>
-							<height>28</height>
+							<left>6</left>
+							<top>126</top>
+							<width>98</width>
+							<height>24</height>
 							<font>font10</font>
 							<align>center</align>
 							<label>$INFO[ListItem.Label]</label>
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout height="230" width="168" condition="Container.Content(Sets)">
+				<focusedlayout height="174" width="120" condition="Container.Content(Sets)">
 					<control type="group">
-						<left>6</left>
-						<top>4</top>
-						<animation center="73,102" effect="zoom" start="100" end="104" time="160" tween="sine">Focus</animation>
+						<left>5</left>
+						<top>0</top>
+						<animation center="55,75" effect="zoom" start="100" end="104" time="160" tween="sine">Focus</animation>
 						<control type="image">
-							<width>146</width>
-							<height>204</height>
+							<width>110</width>
+							<height>150</height>
 							<aspectratio>scale</aspectratio>
 							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(poster)]</texture>
 						</control>
 						<control type="image">
-							<left>-2.884615</left>
-							<top>-2.884615</top>
-							<width>151.769230</width>
-							<height>209.769230</height>
+							<left>-2.2</left>
+							<top>-2.2</top>
+							<width>114.4</width>
+							<height>154.4</height>
 							<texture border="3" infill="false" colordiffuse="focus_media">colors/white.png</texture>
 						</control>
 						<control type="image">
-							<top>144</top>
-							<width>146</width>
-							<height>60</height>
+							<top>105</top>
+							<width>110</width>
+							<height>45</height>
 							<aspectratio>stretch</aspectratio>
 							<texture>overlays/overlayfade.png</texture>
 						</control>
 						<control type="label">
-							<left>8</left>
-							<top>172</top>
-							<width>130</width>
-							<height>28</height>
+							<left>6</left>
+							<top>126</top>
+							<width>98</width>
+							<height>24</height>
 							<font>font10</font>
 							<align>center</align>
 							<scroll>true</scroll>

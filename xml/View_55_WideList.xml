@@ -259,7 +259,7 @@
 				<control type="image">
 					<width>510</width>
 					<height>884</height>
-					<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
+					<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
 				</control>
 				<control type="image">
 					<left>36</left>
@@ -319,7 +319,7 @@
 					<font>font32_title</font>
 					<textcolor>text_primary</textcolor>
 					<label>$VAR[WideListPreviewTitleVar]</label>
-					<autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(AutoScroll)</autoscroll>
+					<autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(autoscroll)</autoscroll>
 				</control>
 				<control type="textbox">
 					<left>32</left>
@@ -350,7 +350,7 @@
 						<font>font12</font>
 						<textcolor>text_secondary</textcolor>
 						<label>$VAR[WideListPreviewDescriptionVar]</label>
-						<autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(AutoScroll)</autoscroll>
+						<autoscroll time="3000" delay="7000" repeat="5000">!System.HasModalDialog + Skin.HasSetting(autoscroll)</autoscroll>
 					</control>
 					<control type="group">
 						<visible>String.IsEmpty(Control.GetLabel(55401))</visible>

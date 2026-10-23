@@ -78,7 +78,7 @@
 			<top>160</top>
 			<width>1750</width>
 			<height>870</height>
-			<texture colordiffuse="$VAR[GlassTint_frosted]" border="42">shapes/round42.png</texture>
+			<texture colordiffuse="glass_frosted" border="42">shapes/round42.png</texture>
 		</control>
 		<control type="group">
 			<left>105</left>

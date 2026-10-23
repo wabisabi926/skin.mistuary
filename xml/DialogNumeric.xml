@@ -23,6 +23,7 @@
 				<texture colordiffuse="selection_surface" border="2">colors/white.png</texture>
 			</control>
 			<control type="label" id="4">
+				<textcolor>text_primary</textcolor>
 				<description>Edit Text</description>
 				<left>34</left>
 				<top>170</top>
@@ -48,6 +49,7 @@
 				<orientation>vertical</orientation>
 				<itemgap>-20</itemgap>
 				<control type="button" id="23">
+					<textcolor>text_primary</textcolor>
 					<description>Backspace button</description>
 					<width>170</width>
 					<height>223</height>
@@ -63,6 +65,7 @@
 					<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 				</control>
 				<control type="button" id="21">
+					<textcolor>text_primary</textcolor>
 					<description>Done button</description>
 					<onleft>19</onleft>
 					<onright>17</onright>
@@ -92,18 +95,21 @@
 					<itemgap>-20</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="button" id="11">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12311]</label>
 						<onup>20</onup>
 						<ondown>14</ondown>
 					</control>
 					<control type="button" id="12">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12312]</label>
 						<onup>10</onup>
 						<ondown>15</ondown>
 					</control>
 					<control type="button" id="13">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12313]</label>
 						<onup>22</onup>
@@ -116,18 +122,21 @@
 					<itemgap>-20</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="button" id="14">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12314]</label>
 						<onup>11</onup>
 						<ondown>17</ondown>
 					</control>
 					<control type="button" id="15">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12315]</label>
 						<onup>12</onup>
 						<ondown>18</ondown>
 					</control>
 					<control type="button" id="16">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12316]</label>
 						<onup>13</onup>
@@ -142,18 +151,21 @@
 					<itemgap>-20</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="button" id="17">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12317]</label>
 						<onup>14</onup>
 						<ondown>20</ondown>
 					</control>
 					<control type="button" id="18">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12318]</label>
 						<onup>15</onup>
 						<ondown>10</ondown>
 					</control>
 					<control type="button" id="19">
+						<textcolor>text_primary</textcolor>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12319]</label>
 						<onup>16</onup>
@@ -167,6 +179,7 @@
 					<itemgap>-20</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="radiobutton" id="20">
+						<textcolor>text_primary</textcolor>
 						<description>prev button</description>
 						<width>125</width>
 						<height>125</height>
@@ -184,6 +197,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="button" id="10">
+						<textcolor>text_primary</textcolor>
 						<description>0 button</description>
 						<include>KeyboardButton</include>
 						<label>$LOCALIZE[12310]</label>
@@ -191,6 +205,7 @@
 						<ondown>12</ondown>
 					</control>
 					<control type="radiobutton" id="22">
+						<textcolor>text_primary</textcolor>
 						<description>next button</description>
 						<width>125</width>
 						<height>125</height>

@@ -9,7 +9,7 @@
 			<top>145</top>
 			<width>1355</width>
 			<height>740</height>
-			<texture colordiffuse="$VAR[GlassTint_dialog]" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
 		</control>
 		<control type="grouplist" id="3">
 			<left>76</left>
@@ -24,6 +24,7 @@
 			<ondown>20</ondown>
 		</control>
 		<control type="togglebutton" id="10">
+			<textcolor>text_primary</textcolor>
 			<include>NaraSettingsCategoryButton</include>
 		</control>
 		<control type="grouplist" id="5">
@@ -39,19 +40,31 @@
 			<ondown>5</ondown>
 		</control>
 		<control type="button" id="7">
-			<include>NaraSettingsRow</include>
+			<textcolor>text_primary</textcolor>
+			<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
 		</control>
 		<control type="radiobutton" id="8">
-			<include>NaraSettingsRow</include>
+			<textcolor>text_primary</textcolor>
+			<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
 		</control>
 		<control type="spincontrolex" id="9">
-			<include>NaraSettingsRow</include>
+			<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
 		</control>
 		<control type="sliderex" id="13">
-			<include>NaraSettingsRow</include>
+			<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
 		</control>
 		<control type="colorbutton" id="15">
-			<include>NaraSettingsRow</include>
+			<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
 		</control>
 		<control type="image" id="11">
 			<height>22</height>
@@ -125,6 +138,7 @@
 			<param name="show_status_in_title" value="false" />
 		</include>
 		<control type="label" id="2">
+			<textcolor>text_primary</textcolor>
 			<visible>false</visible>
 		</control>
 	</controls>

@@ -3,6 +3,15 @@
 	<defaultcontrol always="true">95</defaultcontrol>
 	<controls>
 		<include>NaraSettingsBackground</include>
+		<!-- 内容面板：这三页原本没有自己的底板，文字直接压在背景图上；
+		     补一块和文件管理器同款的磨砂玻璃，文字仍是白色 -->
+		<control type="image">
+			<left>470</left>
+			<top>130</top>
+			<width>1400</width>
+			<height>570</height>
+			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+		</control>
 		<control type="group">
 			<left>40</left>
 			<top>103</top>
@@ -102,7 +111,7 @@
 				<top>-3</top>
 				<right>0</right>
 				<height>3</height>
-				<texture colordiffuse="border_default" border="2">dialogs/separator-grey.png</texture>
+				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
 			</control>
 			<control type="group" id="102">
 				<description>System Info page that shows a QR code linking to https://kodi.tv/donate/</description>
@@ -149,6 +158,7 @@
 					<description>Button Summary Values</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[20037]</label>
 					<width>348</width>
@@ -157,6 +167,7 @@
 					<description>Button Storage</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13277]</label>
 					<width>348</width>
@@ -165,6 +176,7 @@
 					<description>Button Network</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13279]</label>
 					<width>348</width>
@@ -173,6 +185,7 @@
 					<description>Button Video</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13280]</label>
 					<width>348</width>
@@ -181,6 +194,7 @@
 					<description>Button Hardware</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13281]</label>
 					<width>348</width>
@@ -189,6 +203,7 @@
 					<description>Button PVR</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[19191]</label>
 					<width>348</width>
@@ -197,6 +212,7 @@
 					<description>Button Privacy policy</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[12389]</label>
 					<width>348</width>
@@ -205,6 +221,7 @@
 					<description>Button "Thank you!"</description>
 					<include content="NaraSettingsRow">
 						<param name="height" value="85" />
+						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[12396]</label>
 					<width>348</width>
@@ -229,7 +246,7 @@
 				<top>30</top>
 				<right>0</right>
 				<height>3</height>
-				<texture colordiffuse="border_default" border="2">dialogs/separator-grey.png</texture>
+				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
 			</control>
 			<control type="grouplist">
 				<left>420</left>

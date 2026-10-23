@@ -48,6 +48,7 @@
 			<control type="group">
 				<top>255</top>
 				<control type="label">
+					<textcolor>text_primary</textcolor>
 					<left>800</left>
 					<top>70</top>
 					<width>315</width>
@@ -72,6 +73,7 @@
 				<orientation>horizontal</orientation>
 				<onup>87</onup>
 				<control type="radiobutton" id="600">
+					<textcolor>text_primary</textcolor>
 					<include content="OSDButton">
 						<param name="texture" value="osd/fullscreen/buttons/previous.png"/>
 						<param name="focuscolor" value="$VAR[NaraDialogFocusSurfaceVar]" />
@@ -81,6 +83,7 @@
 					<visible>!VideoPlayer.Content(livetv)</visible>
 				</control>
 				<control type="radiobutton" id="602">
+					<textcolor>text_primary</textcolor>
 					<textureradioonfocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">osd/fullscreen/buttons/play.png</textureradioonfocus>
 					<textureradioonnofocus>osd/fullscreen/buttons/play.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">osd/fullscreen/buttons/pause.png</textureradioofffocus>
@@ -100,6 +103,7 @@
 					<visible>Player.PauseEnabled</visible>
 				</control>
 				<control type="radiobutton" id="603">
+					<textcolor>text_primary</textcolor>
 					<include content="OSDButton">
 						<param name="texture" value="osd/fullscreen/buttons/stop.png"/>
 						<param name="focuscolor" value="$VAR[NaraDialogFocusSurfaceVar]" />
@@ -108,6 +112,7 @@
 					<onclick>PlayerControl(Stop)</onclick>
 				</control>
 				<control type="radiobutton" id="605">
+					<textcolor>text_primary</textcolor>
 					<include content="OSDButton">
 						<param name="texture" value="osd/fullscreen/buttons/next.png"/>
 						<param name="focuscolor" value="$VAR[NaraDialogFocusSurfaceVar]" />
@@ -121,6 +126,7 @@
 					<height>76</height>
 					<visible>Player.HasAudio + !MusicPlayer.Content(LiveTV)</visible>
 					<control type="button" id="704">
+						<textcolor>text_primary</textcolor>
 						<left>40</left>
 						<top>0</top>
 						<width>74</width>
@@ -155,6 +161,7 @@
 					</control>
 				</control>
 				<control type="radiobutton" id="607">
+					<textcolor>text_primary</textcolor>
 					<textureradioonfocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">osd/fullscreen/buttons/random-on.png</textureradioonfocus>
 					<textureradioonnofocus>osd/fullscreen/buttons/random-on.png</textureradioonnofocus>
 					<textureradioofffocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">osd/fullscreen/buttons/random-off.png</textureradioofffocus>

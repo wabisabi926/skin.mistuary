@@ -8,6 +8,7 @@
 			<width>1640</width>
 			<height>890</height>
 			<include content="NaraSettingsDialogFrame">
+				<param name="tint" value="glass_frosted" />
 				<param name="width" value="1640" />
 				<param name="height" value="890" />
 				<param name="header_id" value="2" />
@@ -24,10 +25,12 @@
 				<ondown>20</ondown>
 			</control>
 			<control type="togglebutton" id="10">
+				<textcolor>text_primary</textcolor>
 				<include content="NaraSettingsCategoryButton">
 					<param name="width" value="350" />
 					<param name="focuscolor" value="glass_focus_medium" />
 					<param name="selectedfocuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="button" id="20">
@@ -67,39 +70,47 @@
 				<ondown>9000</ondown>
 			</control>
 			<control type="button" id="7">
+				<textcolor>text_primary</textcolor>
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="radiobutton" id="8">
+				<textcolor>text_primary</textcolor>
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="spincontrolex" id="9">
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="edit" id="12">
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="sliderex" id="13">
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="colorbutton" id="15">
 				<include content="NaraSettingsRow">
 					<param name="height" value="72" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 			<control type="image" id="11">
@@ -146,14 +157,17 @@
 				<include content="NaraSettingsActionButton">
 					<param name="id" value="28" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 				<include content="NaraSettingsActionButton">
 					<param name="id" value="29" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 				<include content="NaraSettingsActionButton">
 					<param name="id" value="30" />
 					<param name="focuscolor" value="glass_focus_medium" />
+					<param name="text" value="text_primary" />
 				</include>
 			</control>
 		</control>

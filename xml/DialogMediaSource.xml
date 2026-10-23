@@ -15,6 +15,7 @@
 				<param name="header_id" value="2" />
 			</include>
 			<control type="label">
+				<textcolor>text_primary</textcolor>
 				<description>path label</description>
 				<left>32</left>
 				<top>90</top>
@@ -120,6 +121,7 @@
 				<height>286</height>
 			</control>
 			<control type="label">
+				<textcolor>text_primary</textcolor>
 				<description>Name label</description>
 				<left>32</left>
 				<top>398</top>

@@ -1066,7 +1066,7 @@
 					<top>20</top>
 					<width>609</width>
 					<height>60</height>
-					<texture colordiffuse="$VAR[GlassTint_regular]" border="26">shapes/round26.png</texture>
+					<texture colordiffuse="glass_regular" border="26">shapes/round26.png</texture>
 				</control>
 				<control type="grouplist" id="9000">
 					<left>0</left>
@@ -1245,7 +1245,7 @@
 						<control type="image">
 							<width>54</width>
 							<height>54</height>
-							<texture colordiffuse="$VAR[GlassTint_regular]" border="27">shapes/round27.png</texture>
+							<texture colordiffuse="glass_regular" border="27">shapes/round27.png</texture>
 						</control>
 						<control type="image">
 							<width>54</width>
@@ -1299,7 +1299,7 @@
 							<control type="image">
 								<width>220</width>
 								<height>220</height>
-								<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
+								<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
 							</control>
 							<control type="image">
 								<left>6</left>

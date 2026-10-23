@@ -91,6 +91,7 @@
 				<orientation>vertical</orientation>
 			</control>
 			<control type="label">
+				<textcolor>text_primary</textcolor>
 				<left>28</left>
 				<top>740</top>
 				<width>880</width>

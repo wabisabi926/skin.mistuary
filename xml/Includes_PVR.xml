@@ -479,7 +479,7 @@
 					<width>830</width>
 					<bottom>$PARAM[bottom]</bottom>
 					<label>$VAR[PVRInstanceName,,[CR]]$INFO[ListItem.MediaProviders,[COLOR grey]$LOCALIZE[19334]:[/COLOR] ,[CR]]$VAR[FlagLabel,,[CR]]$INFO[ListItem.Genre,[COLOR grey]$LOCALIZE[515]:[/COLOR] ,[CR]]$INFO[ListItem.ParentalRatingCode,[COLOR grey]$LOCALIZE[31017]: [/COLOR],[CR]]$INFO[ListItem.TimerType,[COLOR grey]$LOCALIZE[803]:[/COLOR] ,[CR]]$VAR[RecordingSizeLabel]$VAR[ExpirationDateTimeLabel]$INFO[ListItem.Plot,[CR]]</label>
-					<autoscroll delay="10000" time="3000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+					<autoscroll delay="10000" time="3000" repeat="10000">Skin.HasSetting(autoscroll)</autoscroll>
 				</control>
 			</control>
 			<control type="group">
@@ -605,7 +605,7 @@
 				<height>130</height>
 				<align>justify</align>
 				<label>$INFO[ListItem.Plot]</label>
-				<autoscroll delay="10000" time="3000" repeat="10000">Skin.HasSetting(AutoScroll)</autoscroll>
+				<autoscroll delay="10000" time="3000" repeat="10000">Skin.HasSetting(autoscroll)</autoscroll>
 			</control>
 			<control type="group">
 				<top>220</top>

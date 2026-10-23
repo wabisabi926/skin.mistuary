@@ -20,12 +20,13 @@
 				<texture colordiffuse="B3000000">colors/black.png</texture>
 			</control>
 			<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
+			<!-- 与插件设置页（NaraSettingsDialogFrame）共用 GlassTint_dialog，两页观感一致 -->
 			<control type="image">
 				<left>240</left>
 				<top>140</top>
 				<width>1440</width>
 				<height>800</height>
-				<texture colordiffuse="$VAR[GlassTint_dialog_strong]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="glass_frosted" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="grouplist" id="9001">
 				<left>240</left>
@@ -280,6 +281,7 @@
 							<param name="selected" value="!String.StartsWith(Control.GetLabel(7),$LOCALIZE[24022]) | !Window.IsActive(addonbrowser)" />
 						</include>
 						<control type="radiobutton" id="13">
+							<textcolor>text_primary</textcolor>
 							<radioposx>35</radioposx>
 							<radioposy>12</radioposy>
 							<radiowidth>92</radiowidth>
@@ -301,6 +303,7 @@
 							<param name="selected" value="false" />
 						</include>
 						<control type="radiobutton" id="5000">
+							<textcolor>text_primary</textcolor>
 							<label>$LOCALIZE[31141]</label>
 							<visible>!String.IsEmpty(ListItem.AddonNews)</visible>
 							<enable>!String.IsEmpty(ListItem.AddonNews)</enable>

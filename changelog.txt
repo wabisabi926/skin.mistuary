@@ -1,3 +1,25 @@
+1.0.0 Mistuary（改名 + 通用版收尾）
+[改名]
+- 皮肤更名为 Mistuary（skin.mistuary），版本号重新起算
+- addon.xml 描述、README、仓库地址同步更新
+
+[新增]
+- 透黑 / 透白两套颜色主题（colors/light.xml），在「设置 → 界面 → 皮肤 → 颜色」切换
+- 演员栏整体压缩：200 高、10 个可见，其余滚动；电影和电视剧共用同一个图标开关
+- 首页播放键改为实心浅底 + 深色文字，与右侧图标按钮拉开层级
+
+[修复]
+- 演员开关点击无效（状态改用皮肤设置保存，Window.Property 方案在对话框里不生效）
+- 动作栏「演员」开关焦点不可达（grouplist 匿名包装导致自动导航链失效）
+- 「自动滚动」设置无效（写入 autoscroll、读取 AutoScroll，大小写不一致）
+- 透白模式下插件详情页 / 上下文菜单白屏看不见字
+- 插件详情页 90% 黑过暗、插件设置页 60% 过透，统一到同一档
+
+[清理]
+- 删除 PGS 自动选择提示（依赖魔改内核的 VideoPlayer.PgsAutoSelectionStatus）
+- 删除孤儿窗口 MyWeather.xml
+- 颜色体系收敛为 glass_regular / glass_frosted / glass_dialog 三档
+
 4.2.0 通用版（官方 Kodi 21+ 兼容）
 [通用化]
 - 玻璃面板不再依赖魔改内核的 material="glass"，改为半透明纯色 + 圆角贴图

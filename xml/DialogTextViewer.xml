@@ -14,6 +14,7 @@
 				<param name="header_id" value="1" />
 			</include>
 			<control type="textbox" id="5">
+				<textcolor>text_primary</textcolor>
 				<left>1%</left>
 				<top>85</top>
 				<width>82%</width>
@@ -29,12 +30,14 @@
 			</control>
 		</control>
 		<control type="button" id="1000">
+			<textcolor>text_primary</textcolor>
 			<include>HiddenObject</include>
 			<onclick>Action(Close)</onclick>
 			<onup>PageUp(3000)</onup>
 			<ondown>PageDown(3000)</ondown>
 		</control>
 		<control type="button">
+			<textcolor>text_primary</textcolor>
 			<centerleft>50%</centerleft>
 			<top>113</top>
 			<width>48</width>
@@ -45,6 +48,7 @@
 			<onclick>Up</onclick>
 		</control>
 		<control type="button">
+			<textcolor>text_primary</textcolor>
 			<centerleft>50%</centerleft>
 			<top>940</top>
 			<width>48</width>

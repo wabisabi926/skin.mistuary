@@ -32,6 +32,7 @@
 				<textcolor>text_primary</textcolor>
 			</control>
 			<control type="label" id="12">
+				<textcolor>text_primary</textcolor>
 				<description>Slider Value</description>
 				<left>0</left>
 				<top>10</top>
@@ -76,6 +77,7 @@
 			<control type="group">
 				<visible>System.GetBool(input.enablemouse)</visible>
 				<control type="button" id="13">
+					<textcolor>text_primary</textcolor>
 					<left>0</left>
 					<top>65</top>
 					<width>28</width>
@@ -89,6 +91,7 @@
 					<animation effect="zoom" start="100,100" end="0,100" center="auto" time="200">WindowClose</animation>
 				</control>
 				<control type="button" id="14">
+					<textcolor>text_primary</textcolor>
 					<left>770</left>
 					<top>65</top>
 					<width>28</width>

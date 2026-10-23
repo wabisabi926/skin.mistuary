@@ -2,16 +2,6 @@
 <window>
 	<defaultcontrol></defaultcontrol>
 	<controls>
-		<control type="group" id="100">
-			<right>20</right>
-			<bottom>20</bottom>
-			<width>900</width>
-			<height>36</height>
-			<include content="NaraPgsSuccessNotifications">
-				<param name="font" value="font12_large" />
-			</include>
-			<visible>!Window.IsVisible(videoosd)</visible>
-		</control>
 		<control type="group" id="0">
 			<control type="label" id="10">
 				<left>45</left>

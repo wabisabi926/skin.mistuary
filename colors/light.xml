@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 透白主题：只覆盖与 defaults.xml 不同的颜色，其余自动继承。
+     切换入口：设置 → 界面 → 皮肤 → 颜色 → light / SKINDEFAULT。
+     设计：两套主题都是「磨砂玻璃 + 白色文字」，区别只在玻璃是压黑还是提白。
+     面板统一用 glass_frosted（与文件管理器同款），透黑 50% 黑 / 透白 20% 白。 -->
+<colors>
+	<color name="glass_regular">26FFFFFF</color>
+	<color name="glass_frosted">33FFFFFF</color>
+	<color name="glass_dialog">40FFFFFF</color>
+</colors>

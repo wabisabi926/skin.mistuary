@@ -43,6 +43,7 @@
 					<visible>Integer.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Control.GetLabel(400))</visible>
 					<top>455</top>
 					<control type="button" id="130">
+						<textcolor>text_primary</textcolor>
 						<left>-36</left>
 						<width>720</width>
 						<height>430</height>
@@ -73,6 +74,7 @@
 							<texture colordiffuse="overlay_medium">colors/black.png</texture>
 						</control>
 						<control type="textbox">
+							<textcolor>text_primary</textcolor>
 							<left>16</left>
 							<top>20</top>
 							<width>680</width>
@@ -88,6 +90,7 @@
 					<visible>!Integer.IsEqual(Container(50).NumItems,0) | !String.IsEmpty(Control.GetLabel(400))</visible>
 					<top>454</top>
 					<control type="button" id="130">
+						<textcolor>text_primary</textcolor>
 						<onleft>41</onleft>
 						<onright>41</onright>
 						<onup>50</onup>
@@ -124,6 +127,7 @@
 								<texture colordiffuse="overlay_medium">colors/black.png</texture>
 							</control>
 							<control type="textbox">
+								<textcolor>text_primary</textcolor>
 								<left>-14</left>
 								<top>20</top>
 								<width>670</width>
@@ -157,6 +161,7 @@
 								<texture colordiffuse="overlay_medium">colors/black.png</texture>
 							</control>
 							<control type="textbox">
+								<textcolor>text_primary</textcolor>
 								<left>-14</left>
 								<top>20</top>
 								<width>670</width>
@@ -200,6 +205,7 @@
 							<texture border="21">buttons/button-nofo.png</texture>
 						</control>
 						<control type="label">
+							<textcolor>text_primary</textcolor>
 							<left>40</left>
 							<top>10</top>
 							<width>522</width>
@@ -237,6 +243,7 @@
 							<texture border="21">buttons/button-nofo.png</texture>
 						</control>
 							<control type="label">
+								<textcolor>text_primary</textcolor>
 								<left>40</left>
 								<top>10</top>
 								<width>522</width>
@@ -247,6 +254,7 @@
 								<visible>![Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)] | [Skin.HasSetting(circle_userrating) + String.IsEmpty(ListItem.UserRating)] | [Skin.HasSetting(circle_rating) + String.IsEmpty(ListItem.Rating)]</visible>
 							</control>
 							<control type="label">
+								<textcolor>text_primary</textcolor>
 								<left>40</left>
 								<top>10</top>
 								<width>470</width>
@@ -321,6 +329,7 @@
 							<bordersize>4</bordersize>
 						</control>
 						<control type="textbox">
+							<textcolor>text_primary</textcolor>
 							<left>28</left>
 							<top>212</top>
 							<width>196</width>
@@ -357,6 +366,7 @@
 								<bordersize>4</bordersize>
 							</control>
 							<control type="textbox">
+								<textcolor>text_primary</textcolor>
 								<left>28</left>
 								<top>212</top>
 								<width>196</width>
@@ -399,6 +409,7 @@
 						<width>264</width>
 						<visible>String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)</visible>
 						<control type="button" id="7">
+							<textcolor>text_primary</textcolor>
 							<include content="VideoInfoButtonsCommon">
 								<param name="icon" value="" />
 							</include>
@@ -410,6 +421,7 @@
 							<onup condition="!Integer.IsGreater(Container(5000).CurrentItem,3)">138</onup>
 						</control>
 						<control type="label">
+							<textcolor>text_primary</textcolor>
 							<label>$INFO[ListItem.UserRating]</label>
 							<font>font45_title</font>
 							<left>0</left>
@@ -428,6 +440,7 @@
 						</control>
 					</control>
 					<control type="radiobutton" id="120">
+						<textcolor>text_primary</textcolor>
 						<include content="VideoInfoButtonsCommon">
 							<param name="icon" value="icons/infodialogs/image.png" />
 						</include>
@@ -490,6 +503,7 @@
 							<scrolltime>200</scrolltime>
 							<itemlayout height="35">
 								<control type="label">
+									<textcolor>text_primary</textcolor>
 									<left>10</left>
 									<top>0</top>
 									<width>410</width>
@@ -520,6 +534,7 @@
 									<visible>Control.HasFocus(41)</visible>
 								</control>
 								<control type="label">
+									<textcolor>text_primary</textcolor>
 									<left>10</left>
 									<top>0</top>
 								<width>410</width>

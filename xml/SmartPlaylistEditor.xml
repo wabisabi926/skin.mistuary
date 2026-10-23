@@ -23,49 +23,58 @@
 					<param name="legacy" value="-20" />
 				</include>
 				<control type="button" id="22">
+					<textcolor>text_primary</textcolor>
 					<description>Set Playlist type</description>
 					<width>660</width>
 					<include>SettingsItemCommon</include>
 					<label>$LOCALIZE[467]</label>
 				</control>
 				<control type="button" id="12">
+					<textcolor>text_primary</textcolor>
 					<description>Name Button</description>
 					<label>$LOCALIZE[21433]</label>
 					<width>660</width>
 					<include>SettingsItemCommon</include>
 				</control>
 				<control type="label" id="1101">
+					<textcolor>text_primary</textcolor>
 					<description>Name Label</description>
 					<width>660</width>
 					<label>$LOCALIZE[31042]</label>
 					<include>SettingsLabelCommon</include>
 				</control>
 				<control type="button" id="16">
+					<textcolor>text_primary</textcolor>
 					<width>660</width>
 					<label>$LOCALIZE[21424]</label>
 					<include>SettingsItemCommon</include>
 				</control>
 				<control type="button" id="17">
+					<textcolor>text_primary</textcolor>
 					<width>660</width>
 					<label>$LOCALIZE[21427]</label>
 					<include>SettingsItemCommon</include>
 				</control>
 				<control type="button" id="18">
+					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[21429]</label>
 					<width>660</width>
 					<include>SettingsItemCommon</include>
 				</control>
 				<control type="button" id="19">
+					<textcolor>text_primary</textcolor>
 					<width>660</width>
 					<include>SettingsItemCommon</include>
 					<label>$LOCALIZE[31032]</label>
 				</control>
 				<control type="button" id="23">
+					<textcolor>text_primary</textcolor>
 					<width>660</width>
 					<label>$LOCALIZE[21458]</label>
 					<include>SettingsItemCommon</include>
 				</control>
 				<control type="radiobutton" id="24">
+					<textcolor>text_primary</textcolor>
 					<width>660</width>
 					<include>SettingsItemCommon</include>
 					<label>$LOCALIZE[467]: $LOCALIZE[21459]</label>

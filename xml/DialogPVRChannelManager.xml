@@ -78,6 +78,7 @@
 								<visible>ListItem.Property(ParentalLocked)</visible>
 							</control>
 							<control type="label">
+								<textcolor>text_primary</textcolor>
 								<left>85</left>
 								<right>40</right>
 								<bottom>0</bottom>
@@ -167,6 +168,7 @@
 						<textcolor>text_secondary</textcolor>
 					</control>
 					<control type="radiobutton" id="7">
+						<textcolor>text_primary</textcolor>
 						<description>Channel activated</description>
 						<width>700</width>
 						<include>SettingsItemCommon</include>
@@ -181,6 +183,7 @@
 					<control type="group">
 						<include>NaraDialogSettingsRowHeight</include>
 						<control type="button" id="9">
+							<textcolor>text_primary</textcolor>
 							<description>Channel logo Button</description>
 							<width>700</width>
 							<include>SettingsItemCommon</include>
@@ -196,6 +199,7 @@
 						</control>
 					</control>
 					<control type="radiobutton" id="12">
+						<textcolor>text_primary</textcolor>
 						<description>EPG activated</description>
 						<width>700</width>
 						<include>SettingsItemCommon</include>
@@ -208,6 +212,7 @@
 						<label>$LOCALIZE[19200]</label>
 					</control>
 					<control type="radiobutton" id="14">
+						<textcolor>text_primary</textcolor>
 						<description>Parental locked</description>
 						<width>700</width>
 						<include>SettingsItemCommon</include>
@@ -235,6 +240,7 @@
 						<textcolor>text_secondary</textcolor>
 					</control>
 					<control type="button" id="35">
+						<textcolor>text_primary</textcolor>
 						<description>Refresh channel logos Button</description>
 						<width>700</width>
 						<include>NaraDialogButtonRowHeight</include>
@@ -244,6 +250,7 @@
 						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
 					</control>
 					<control type="button" id="31">
+						<textcolor>text_primary</textcolor>
 						<description>New channel Button</description>
 						<width>700</width>
 						<include>NaraDialogButtonRowHeight</include>
@@ -253,6 +260,7 @@
 						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
 					</control>
 					<control type="button" id="30">
+						<textcolor>text_primary</textcolor>
 						<description>Group Manager Button</description>
 						<width>700</width>
 						<include>NaraDialogButtonRowHeight</include>

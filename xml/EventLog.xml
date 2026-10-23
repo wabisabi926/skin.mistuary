@@ -5,6 +5,15 @@
 	<views>50</views>
 	<controls>
 		<include>NaraSettingsBackground</include>
+		<!-- 内容面板：这三页原本没有自己的底板，文字直接压在背景图上；
+		     补一块和文件管理器同款的磨砂玻璃，文字仍是白色 -->
+		<control type="image">
+			<left>470</left>
+			<top>70</top>
+			<width>1400</width>
+			<height>880</height>
+			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+		</control>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<control type="group">
@@ -160,7 +169,7 @@
 						<focusedcolor>text_primary</focusedcolor>
 						<label></label>
 						<onclick></onclick>
-						<selectedcolor>selection_foreground</selectedcolor>
+						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<control type="radiobutton" id="22">
 						<height>110</height>
@@ -185,7 +194,7 @@
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[192]</label>
 						<onclick></onclick>
-						<selectedcolor>selection_foreground</selectedcolor>
+						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<control type="button" id="501">
 						<width>100%</width>
@@ -200,7 +209,7 @@
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[5]</label>
 						<onclick>ActivateWindow(systemsettings,logging)</onclick>
-						<selectedcolor>selection_foreground</selectedcolor>
+						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<left>56</left>
 					<top>145</top>

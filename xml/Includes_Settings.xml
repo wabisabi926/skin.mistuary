@@ -48,7 +48,7 @@
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="28">shapes/round28.png</texture>
+				<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
 			</control>
 		</definition>
 	</include>
@@ -56,6 +56,7 @@
 		<param name="height">76</param>
 		<param name="textoffsetx">28</param>
 		<param name="focuscolor">glass_focus_light</param>
+		<param name="text">text_primary</param>
 		<definition>
 			<top>0</top>
 			<height>$PARAM[height]</height>
@@ -63,9 +64,9 @@
 			<textoffsety>0</textoffsety>
 			<font>font26</font>
 			<aligny>center</aligny>
-			<textcolor>text_primary</textcolor>
-			<focusedcolor>text_primary</focusedcolor>
-			<selectedcolor>text_primary</selectedcolor>
+			<textcolor>$PARAM[text]</textcolor>
+			<focusedcolor>$PARAM[text]</focusedcolor>
+			<selectedcolor>$PARAM[text]</selectedcolor>
 			<disabledcolor>text_disabled</disabledcolor>
 			<invalidcolor>status_error</invalidcolor>
 			<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
@@ -88,6 +89,7 @@
 		<param name="height">78</param>
 		<param name="focuscolor">glass_focus_heavy</param>
 		<param name="selectedfocuscolor">glass_focus_light</param>
+		<param name="text">text_primary</param>
 		<definition>
 			<left>0</left>
 			<width>$PARAM[width]</width>
@@ -95,9 +97,9 @@
 			<textoffsetx>24</textoffsetx>
 			<aligny>center</aligny>
 			<font>font26</font>
-			<textcolor>text_primary</textcolor>
-			<focusedcolor>text_primary</focusedcolor>
-			<selectedcolor>text_primary</selectedcolor>
+			<textcolor>$PARAM[text]</textcolor>
+			<focusedcolor>$PARAM[text]</focusedcolor>
+			<selectedcolor>$PARAM[text]</selectedcolor>
 			<texturefocus colordiffuse="$PARAM[focuscolor]" border="20">shapes/round20.png</texturefocus>
 			<texturenofocus />
 			<alttexturefocus colordiffuse="$PARAM[selectedfocuscolor]" border="20">shapes/round20.png</alttexturefocus>
@@ -106,6 +108,7 @@
 	</include>
 	<include name="NaraSettingsDialogFrame">
 		<param name="glass_style">dialog</param>
+		<param name="tint">glass_dialog</param>
 		<param name="width">1000</param>
 		<param name="height">700</param>
 		<param name="header_id">1</param>
@@ -132,7 +135,7 @@
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
 				<visible>!Window.IsActive(fullscreenvideo) + !Window.IsActive(visualisation)</visible>
-				<texture colordiffuse="$VAR[GlassTint_dialog]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="$PARAM[tint]" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="image">
 				<width>$PARAM[width]</width>
@@ -166,6 +169,7 @@
 		<param name="label" />
 		<param name="width">250</param>
 		<param name="focuscolor">glass_focus_light</param>
+		<param name="text">text_primary</param>
 		<definition>
 			<control type="button" id="$PARAM[id]">
 				<width>$PARAM[width]</width>
@@ -176,9 +180,9 @@
 				<aligny>center</aligny>
 				<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
 				<texturenofocus />
-				<focusedcolor>text_primary</focusedcolor>
-				<textcolor>text_primary</textcolor>
-				<selectedcolor>text_primary</selectedcolor>
+				<focusedcolor>$PARAM[text]</focusedcolor>
+				<textcolor>$PARAM[text]</textcolor>
+				<selectedcolor>$PARAM[text]</selectedcolor>
 			</control>
 		</definition>
 	</include>
@@ -275,6 +279,7 @@
 				<height>560</height>
 				<include content="NaraSettingsDialogFrame">
 					<param name="glass_style" value="frosted" />
+					<param name="tint" value="glass_frosted" />
 					<param name="width" value="1400" />
 					<param name="height" value="560" />
 					<param name="header_label" value="$LOCALIZE[5]" />
@@ -648,6 +653,7 @@
 				<width>1280</width>
 				<height>890</height>
 				<include content="NaraSettingsDialogFrame">
+					<param name="tint" value="glass_frosted" />
 					<param name="width" value="1280" />
 					<param name="height" value="890" />
 					<param name="header_id" value="2" />

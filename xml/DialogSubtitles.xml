@@ -33,6 +33,7 @@
 						</include>
 					</control>
 					<control type="label" id="140">
+						<textcolor>text_primary</textcolor>
 						<description>textarea</description>
 						<top>280</top>
 						<width>380</width>
@@ -54,6 +55,7 @@
 							<texture>DefaultIconInfo.png</texture>
 						</control>
 						<control type="label">
+							<textcolor>text_primary</textcolor>
 							<description>notification</description>
 							<width>380</width>
 							<height>30</height>
@@ -136,6 +138,7 @@
 							<visible>ListItem.property(sync)</visible>
 						</control>
 						<control type="textbox">
+							<textcolor>text_primary</textcolor>
 							<left>130</left>
 							<width>645</width>
 							<height>100</height>

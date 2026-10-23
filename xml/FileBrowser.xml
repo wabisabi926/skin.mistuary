@@ -94,6 +94,7 @@
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>75</left>
 						<top>0</top>
 						<right>20</right>
@@ -153,6 +154,7 @@
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>75</left>
 						<top>0</top>
 						<right>20</right>

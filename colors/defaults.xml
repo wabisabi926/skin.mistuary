@@ -75,6 +75,17 @@
 	<color name="control_unfocused">71FFFFFF</color>
 	<color name="separator">AAFFFFFF</color>
 
+	<!-- ===== 玻璃底色（随颜色主题切换）=====
+	     defaults.xml = 透黑；colors/light.xml 覆盖成透白。
+	     两套主题都是「磨砂玻璃 + 白色文字」，面板统一用 glass_frosted
+	     （与文件管理器同款），只有玻璃本身是压黑还是提白。 -->
+	<color name="glass_regular">66000000</color>
+	<color name="glass_frosted">800F0F12</color>
+	<color name="glass_dialog">BF141418</color>
+
+	<!-- 实心浅底上的深色文字（目前只有详情页的播放键在用） -->
+	<color name="ink_primary">FF14141A</color>
+
 	<!-- Existing names retained as compatibility aliases -->
 	<color name="secondary_background">1FFFFFFF</color>
 	<color name="dialog_tint">FF18171E</color>

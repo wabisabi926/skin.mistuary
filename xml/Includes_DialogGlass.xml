@@ -5,7 +5,7 @@
 		<param name="radius">32</param>
 		<param name="style">frosted</param>
 		<definition>
-			<texture colordiffuse="$VAR[GlassTint_dialog]" border="32">shapes/round32.png</texture>
+			<texture colordiffuse="glass_frosted" border="32">shapes/round32.png</texture>
 		</definition>
 	</include>
 	<include name="NaraDialogGlassSurface">
@@ -143,7 +143,7 @@
 			<top>180</top>
 			<width>600</width>
 			<height>176</height>
-			<texture colordiffuse="$VAR[GlassTint_frosted]" border="32">shapes/round32.png</texture>
+			<texture colordiffuse="glass_frosted" border="32">shapes/round32.png</texture>
 		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>103</defaultcontrol>

@@ -2,7 +2,7 @@
 <window>
 	<defaultcontrol always="true">5000</defaultcontrol>
 	<onload>ClearProperty(VideoInfo.More,home)</onload>
-	<onload>ClearProperty(NaraInfoCastOpen)</onload>
+	<onload>Skin.Reset(nara_cast_open)</onload>
 	<onload>SetFocus(5000)</onload>
 	<onload>SetProperty(infobackground,$ESCINFO[ListItem.Art(fanart)],home)</onload>
 	<!-- Keep the backdrop owner stable while other modal dialogs are open. -->
@@ -172,7 +172,7 @@
 				<centertop>50%</centertop>
 				<width>480</width>
 				<height>349</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
+				<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
 			</control>
 			<control type="list" id="5199">
 				<centerleft>50%</centerleft>

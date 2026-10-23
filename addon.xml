@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.estuary.nara" version="4.2.0" name="Estuary N" provider-name="phil65, Ichabod Fletchman">
+<addon id="skin.mistuary" name="Mistuary" version="1.0.0" provider-name="wabisabi926">
 	<requires>
 		<import addon="xbmc.gui" version="5.17.0"/>
 	</requires>
@@ -17,15 +17,15 @@
 		<platform>all</platform>
 		<license>CC BY-SA 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0, MIT</license>
 		<forum>http://forum.kodi.tv/</forum>
-		<source>https://github.com/xbmc/skin.estuary/</source>
+		<source>https://github.com/wabisabi926/skin.mistuary</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<summary lang="en_GB">A streamlined Estuary skin focused on fast, clear video browsing.</summary>
-		<summary lang="zh_CN">专注于快速、清晰的视频浏览体验的精简版 Estuary 皮肤。</summary>
-		<description lang="en_GB">Estuary N is a performance-conscious Estuary variant for focused video browsing and playback. It standardises poster titles and years, improves media backdrop visibility, and puts subtitle and audio-track selection directly on the video OSD. Nonessential weather, radio and game browsing surfaces, alternate themes and colours, custom backgrounds, and unused localisations have been removed. English and Simplified Chinese are maintained, and the original Estuary remains bundled as a safe fallback.</description>
-		<description lang="zh_CN">Estuary N 是面向视频浏览与播放、注重性能的精简版 Estuary。它统一显示海报标题和年份，提高媒体背景图的可见度，并在视频 OSD 中提供直接的字幕与音轨选择。皮肤已移除非必要的天气、电台和游戏浏览界面、额外主题与配色、自定义背景及未维护的本地化资源，仅维护英文和简体中文；原版 Estuary 仍随应用保留，作为安全回退。</description>
+		<summary lang="zh">雾汐｜轻量透明皮肤，基于 Estuary，支持透黑、透白双模式</summary>
+		<summary lang="en">Mistuary - Lightweight transparent skin based on Estuary, with dark &amp; light transparent mode</summary>
+		<description lang="zh">简约透明UI，低资源占用，画面优先，内置透黑/透白主题切换</description>
+		<description lang="en">Simple transparent UI, lightweight, video-first, built-in transparent dark / light theme switch</description>
 		<disclaimer lang="en_GB">Weather, radio and game browsing surfaces are intentionally omitted. The original Estuary skin remains available as a fallback.</disclaimer>
 		<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面；原版 Estuary 仍可作为备用皮肤。</disclaimer>
 	</extension>

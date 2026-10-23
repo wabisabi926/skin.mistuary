@@ -94,6 +94,7 @@
 						<visible>ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>135</left>
 						<top>0</top>
 						<right>20</right>
@@ -224,6 +225,7 @@
 	<include name="NaraStreamDialogBackground">
 		<definition>
 			<control type="button">
+				<textcolor>text_primary</textcolor>
 				<left>-2000</left>
 				<top>-2000</top>
 				<width>6000</width>
@@ -316,6 +318,7 @@
 					<visible>Integer.IsGreater(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="label" id="$PARAM[header_id]">
+					<textcolor>text_primary</textcolor>
 					<left>40</left>
 					<top>0</top>
 					<right>100</right>
@@ -326,6 +329,7 @@
 					<include>NaraStreamDialogVerticalOffset</include>
 				</control>
 				<control type="button" id="22002">
+					<textcolor>text_primary</textcolor>
 					<description>button overlay to avoid closing in dialog area</description>
 					<left>0</left>
 					<top>0</top>
@@ -421,6 +425,7 @@
 						<visible>ListItem.IsSelected</visible>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>50</left>
 						<top>5</top>
 						<right>50</right>
@@ -619,6 +624,7 @@
 						<visible>ListItem.IsSelected</visible>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>56</left>
 						<top>0</top>
 						<width>180</width>
@@ -834,6 +840,7 @@
 						<visible>ListItem.IsSelected</visible>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>56</left>
 						<top>0</top>
 						<width>180</width>
@@ -982,6 +989,7 @@
 			<centertop>50%</centertop>
 			<centerleft>50%</centerleft>
 			<include content="NaraSettingsDialogFrame">
+				<param name="tint" value="glass_frosted" />
 				<param name="height" value="760" />
 			</include>
 			<control type="list" id="3">
@@ -1045,6 +1053,7 @@
 						<visible>ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<left>135</left>
 						<top>0</top>
 						<right>20</right>

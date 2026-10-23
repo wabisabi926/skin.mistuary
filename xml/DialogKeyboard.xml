@@ -30,6 +30,7 @@
 				</include>
 			</control>
 			<control type="label" id="311">
+				<textcolor>text_primary</textcolor>
 				<centerleft>50%</centerleft>
 				<top>50</top>
 				<width>1542</width>
@@ -81,6 +82,7 @@
 					<orientation>horizontal</orientation>
 					<onright>95200</onright>
 					<control type="button" id="100">
+						<textcolor>text_primary</textcolor>
 						<description>(0,0) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">304</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -88,6 +90,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="101">
+						<textcolor>text_primary</textcolor>
 						<description>(0,1) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">303</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -95,6 +98,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="102">
+						<textcolor>text_primary</textcolor>
 						<description>(0,2) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">302</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -102,6 +106,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="103">
+						<textcolor>text_primary</textcolor>
 						<description>(0,3) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">32</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -109,6 +114,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="104">
+						<textcolor>text_primary</textcolor>
 						<description>(0,4) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">32</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -116,6 +122,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="105">
+						<textcolor>text_primary</textcolor>
 						<description>(0,5) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">32</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -123,6 +130,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="106">
+						<textcolor>text_primary</textcolor>
 						<description>(0,6) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">32</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -130,6 +138,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="107">
+						<textcolor>text_primary</textcolor>
 						<description>(0,7) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">305</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -137,6 +146,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="108">
+						<textcolor>text_primary</textcolor>
 						<description>(0,8) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">306</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -144,6 +154,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="109">
+						<textcolor>text_primary</textcolor>
 						<description>(0,9) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">8</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -151,6 +162,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="110">
+						<textcolor>text_primary</textcolor>
 						<description>(0,10) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">170</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -158,6 +170,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="111">
+						<textcolor>text_primary</textcolor>
 						<description>(0,11) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">171</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -165,6 +178,7 @@
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="112">
+						<textcolor>text_primary</textcolor>
 						<description>(0,12) key button</description>
 						<onup condition="!Integer.IsGreater(Container(9010).NumItems,0)">172</onup>
 						<onup condition="Integer.IsGreater(Container(9010).NumItems,0)">9010</onup>
@@ -180,78 +194,91 @@
 					<orientation>horizontal</orientation>
 					<onright>95200</onright>
 					<control type="button" id="120">
+						<textcolor>text_primary</textcolor>
 						<description>(1,0) key button</description>
 						<onup>100</onup>
 						<ondown>140</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="121">
+						<textcolor>text_primary</textcolor>
 						<description>(1,1) key button</description>
 						<onup>101</onup>
 						<ondown>141</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="122">
+						<textcolor>text_primary</textcolor>
 						<description>(1,2) key button</description>
 						<onup>102</onup>
 						<ondown>142</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="123">
+						<textcolor>text_primary</textcolor>
 						<description>(1,3) key button</description>
 						<onup>103</onup>
 						<ondown>143</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="124">
+						<textcolor>text_primary</textcolor>
 						<description>(1,4) key button</description>
 						<onup>104</onup>
 						<ondown>144</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="125">
+						<textcolor>text_primary</textcolor>
 						<description>(1,5) key button</description>
 						<onup>105</onup>
 						<ondown>145</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="126">
+						<textcolor>text_primary</textcolor>
 						<description>(1,6) key button</description>
 						<onup>106</onup>
 						<ondown>146</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="127">
+						<textcolor>text_primary</textcolor>
 						<description>(1,7) key button</description>
 						<onup>107</onup>
 						<ondown>147</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="128">
+						<textcolor>text_primary</textcolor>
 						<description>(1,8) key button</description>
 						<onup>108</onup>
 						<ondown>148</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="129">
+						<textcolor>text_primary</textcolor>
 						<description>(1,9) key button</description>
 						<onup>109</onup>
 						<ondown>149</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="130">
+						<textcolor>text_primary</textcolor>
 						<description>(1,10) key button</description>
 						<onup>110</onup>
 						<ondown>150</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="131">
+						<textcolor>text_primary</textcolor>
 						<description>(1,11) key button</description>
 						<onup>111</onup>
 						<ondown>151</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="132">
+						<textcolor>text_primary</textcolor>
 						<description>(1,12) key button</description>
 						<onup>112</onup>
 						<ondown>152</ondown>
@@ -266,78 +293,91 @@
 					<onright>95200</onright>
 					<itemgap>-30</itemgap>
 					<control type="button" id="140">
+						<textcolor>text_primary</textcolor>
 						<description>(2,0) key button</description>
 						<onup>120</onup>
 						<ondown>160</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="141">
+						<textcolor>text_primary</textcolor>
 						<description>(2,1) key button</description>
 						<onup>121</onup>
 						<ondown>161</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="142">
+						<textcolor>text_primary</textcolor>
 						<description>(2,2) key button</description>
 						<onup>122</onup>
 						<ondown>162</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="143">
+						<textcolor>text_primary</textcolor>
 						<description>(2,3) key button</description>
 						<onup>123</onup>
 						<ondown>163</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="144">
+						<textcolor>text_primary</textcolor>
 						<description>(2,4) key button</description>
 						<onup>124</onup>
 						<ondown>164</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="145">
+						<textcolor>text_primary</textcolor>
 						<description>(2,5) key button</description>
 						<onup>125</onup>
 						<ondown>165</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="146">
+						<textcolor>text_primary</textcolor>
 						<description>(2,6) key button</description>
 						<onup>126</onup>
 						<ondown>166</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="147">
+						<textcolor>text_primary</textcolor>
 						<description>(2,7) key button</description>
 						<onup>127</onup>
 						<ondown>167</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="148">
+						<textcolor>text_primary</textcolor>
 						<description>(2,8) key button</description>
 						<onup>128</onup>
 						<ondown>168</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="149">
+						<textcolor>text_primary</textcolor>
 						<description>(2,9) key button</description>
 						<onup>129</onup>
 						<ondown>169</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="150">
+						<textcolor>text_primary</textcolor>
 						<description>(2,10) key button</description>
 						<onup>130</onup>
 						<ondown>170</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="151">
+						<textcolor>text_primary</textcolor>
 						<description>(2,11) key button</description>
 						<onup>131</onup>
 						<ondown>171</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="152">
+						<textcolor>text_primary</textcolor>
 						<description>(2,12) key button</description>
 						<onup>132</onup>
 						<ondown>172</ondown>
@@ -352,78 +392,91 @@
 					<orientation>horizontal</orientation>
 					<onright>95200</onright>
 					<control type="button" id="160">
+						<textcolor>text_primary</textcolor>
 						<description>(3,0) key button</description>
 						<onup>140</onup>
 						<ondown>304</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="161">
+						<textcolor>text_primary</textcolor>
 						<description>(3,1) key button</description>
 						<onup>141</onup>
 						<ondown>303</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="162">
+						<textcolor>text_primary</textcolor>
 						<description>(3,2) key button</description>
 						<onup>142</onup>
 						<ondown>302</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="163">
+						<textcolor>text_primary</textcolor>
 						<description>(3,3) key button</description>
 						<onup>143</onup>
 						<ondown>32</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="164">
+						<textcolor>text_primary</textcolor>
 						<description>(3,4) key button</description>
 						<onup>144</onup>
 						<ondown>32</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="165">
+						<textcolor>text_primary</textcolor>
 						<description>(3,5) key button</description>
 						<onup>145</onup>
 						<ondown>32</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="166">
+						<textcolor>text_primary</textcolor>
 						<description>(3,6) key button</description>
 						<onup>146</onup>
 						<ondown>32</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="167">
+						<textcolor>text_primary</textcolor>
 						<description>(3,7) key button</description>
 						<onup>147</onup>
 						<ondown>305</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="168">
+						<textcolor>text_primary</textcolor>
 						<description>(3,8) key button</description>
 						<onup>148</onup>
 						<ondown>306</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="169">
+						<textcolor>text_primary</textcolor>
 						<description>(3,9) key button</description>
 						<onup>149</onup>
 						<ondown>8</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="170">
+						<textcolor>text_primary</textcolor>
 						<description>(3,10) key button</description>
 						<onup>150</onup>
 						<ondown>110</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="171">
+						<textcolor>text_primary</textcolor>
 						<description>(3,11) key button</description>
 						<onup>151</onup>
 						<ondown>111</ondown>
 						<include>KeyboardButton</include>
 					</control>
 					<control type="button" id="172">
+						<textcolor>text_primary</textcolor>
 						<description>(3,12) key button</description>
 						<onup>152</onup>
 						<ondown>112</ondown>
@@ -438,6 +491,7 @@
 					<orientation>horizontal</orientation>
 					<onright>95200</onright>
 					<control type="radiobutton" id="304">
+						<textcolor>text_primary</textcolor>
 						<description>Symbols button</description>
 						<width>120</width>
 						<height>120</height>
@@ -455,6 +509,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="radiobutton" id="303">
+						<textcolor>text_primary</textcolor>
 						<description>CAPS LOCK button</description>
 						<width>120</width>
 						<height>120</height>
@@ -473,6 +528,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="radiobutton" id="302">
+						<textcolor>text_primary</textcolor>
 						<description>SHIFT button</description>
 						<width>120</width>
 						<height>120</height>
@@ -490,6 +546,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="radiobutton" id="32">
+						<textcolor>text_primary</textcolor>
 						<description>SPACE button</description>
 						<width>390</width>
 						<height>120</height>
@@ -506,6 +563,7 @@
 						<radioheight>36</radioheight>
 					</control>
 					<control type="radiobutton" id="305">
+						<textcolor>text_primary</textcolor>
 						<description>previous button</description>
 						<width>120</width>
 						<height>120</height>
@@ -523,6 +581,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="radiobutton" id="306">
+						<textcolor>text_primary</textcolor>
 						<description>next button</description>
 						<width>120</width>
 						<height>120</height>
@@ -540,6 +599,7 @@
 						<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 					</control>
 					<control type="radiobutton" id="8">
+						<textcolor>text_primary</textcolor>
 						<description>BACKSPACE button</description>
 						<width>120</width>
 						<height>120</height>
@@ -623,6 +683,7 @@
 						</include>
 					</control>
 					<control type="label">
+						<textcolor>text_primary</textcolor>
 						<textoffsetx>30</textoffsetx>
 						<top>0</top>
 						<width>500</width>
@@ -667,6 +728,7 @@
 				<content>$VAR[AutoCompletionContentVar]</content>
 			</control>
 			<control type="label" id="313">
+				<textcolor>text_primary</textcolor>
 				<centerleft>50%</centerleft>
 				<top>290</top>
 				<width>1480</width>
@@ -691,6 +753,7 @@
 					<texture border="40">buttons/dialogbutton-nofo.png</texture>
 				</control>
 				<control type="label" id="314">
+					<textcolor>text_primary</textcolor>
 					<centerleft>50%</centerleft>
 					<top>370</top>
 					<width>1480</width>

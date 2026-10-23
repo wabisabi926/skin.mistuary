@@ -12,7 +12,7 @@
 				<top>145</top>
 				<width>1355</width>
 				<height>830</height>
-				<texture colordiffuse="$VAR[GlassTint_dialog]" border="28">shapes/round28.png</texture>
+				<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
 			</control>
 		<!-- Focused addon detail in left sidebar: icon / version / description -->
 			<control type="group">
@@ -65,6 +65,7 @@
 				<onup>9000</onup>
 				<ondown>9000</ondown>
 				<control type="radiobutton" id="7">
+					<textcolor>text_primary</textcolor>
 					<description>Hide foreign</description>
 					<visible>Control.IsEnabled(7)</visible>
 					<include>NaraSettingsCategoryButton</include>
@@ -79,6 +80,7 @@
 					<label>$LOCALIZE[25001]</label>
 				</control>
 				<control type="radiobutton" id="8">
+					<textcolor>text_primary</textcolor>
 					<description>Hide incompatible</description>
 					<visible>Control.IsEnabled(8)</visible>
 					<include>NaraSettingsCategoryButton</include>
@@ -115,6 +117,7 @@
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="label">
+					<textcolor>text_primary</textcolor>
 					<left>80</left>
 					<top>0</top>
 					<right>140</right>
