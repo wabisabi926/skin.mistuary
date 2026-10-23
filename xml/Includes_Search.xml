@@ -281,7 +281,7 @@
 					<width>214</width>
 					<height>321</height>
 					<aspectratio>scale</aspectratio>
-					<texture background="true" fallback="$PARAM[poster_fallback]">$PARAM[poster_texture]</texture>
+					<texture background="true" fallback="$PARAM[poster_fallback]" diffuse="shapes/mask_214x321.png">$PARAM[poster_texture]</texture>
 				</control>
 				<control type="image">
 					<right>17</right>

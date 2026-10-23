@@ -417,21 +417,21 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="progress">
@@ -518,21 +518,21 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true" diffuse="shapes/mask_320x180.png">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">

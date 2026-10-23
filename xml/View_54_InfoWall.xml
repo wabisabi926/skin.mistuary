@@ -358,7 +358,7 @@
 					<top>0</top>
 					<width>244</width>
 					<height>352</height>
-					<texture background="true">$INFO[ListItem.Art(poster)]</texture>
+					<texture background="true" diffuse="shapes/mask_244x352.png">$INFO[ListItem.Art(poster)]</texture>
 					<aspectratio>scale</aspectratio>
 					<bordersize>14</bordersize>
 				</control>
