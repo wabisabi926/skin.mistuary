@@ -13,9 +13,10 @@
 			<animation effect="fade" start="100" end="0" time="180">WindowClose</animation>
 			<!-- 通用版：背景现在是随机 fanart，40% 遮罩 + 50% 面板会透出太多，
 			     遮罩加到 70%，面板保持玻璃质感 -->
+			<!-- 全屏遮罩：用 FullScreenDimensions 而不是写死 1920，
+			     否则 17:9 等宽屏分辨率下右侧会漏出一条没压暗的边 -->
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<texture colordiffuse="B3000000">colors/black.png</texture>
 			</control>
 			<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
@@ -24,7 +25,7 @@
 				<top>140</top>
 				<width>1440</width>
 				<height>800</height>
-				<texture colordiffuse="$VAR[GlassTint_frosted]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_dialog_strong]" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="grouplist" id="9001">
 				<left>240</left>

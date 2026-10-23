@@ -1552,6 +1552,11 @@
 		<value condition="Skin.HasSetting(nara_glass_light)">40FFFFFF</value>
 		<value>99141418</value>
 	</variable>
+	<!-- 通用版：详情类对话框用的高不透明度面板（避免底层内容透出） -->
+	<variable name="GlassTint_dialog_strong">
+		<value condition="Skin.HasSetting(nara_glass_light)">E6FFFFFF</value>
+		<value>E6141418</value>
+	</variable>
 	<!-- 通用版：媒体库封面文件夹的显示文本 -->
 	<variable name="LibraryArtFolderLabel">
 		<value condition="String.IsEmpty(Skin.String(library_art_folder))">$LOCALIZE[31720]</value>
