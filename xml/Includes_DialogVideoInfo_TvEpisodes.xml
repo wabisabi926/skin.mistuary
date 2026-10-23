@@ -329,7 +329,7 @@
 							<top>-14</top>
 							<width>364</width>
 							<height>217</height>
-							<texture colordiffuse="focus_media" border="6">shapes/round6.png</texture>
+							<texture colordiffuse="focus_media" border="6">shapes/ring6_2.png</texture>
 						</control>
 						<control type="image">
 							<top>123</top>

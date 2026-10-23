@@ -272,7 +272,7 @@
 					<top>-3</top>
 					<width>242</width>
 					<height>349</height>
-					<texture colordiffuse="$PARAM[focus_color]" border="14">shapes/round14.png</texture>
+					<texture colordiffuse="$PARAM[focus_color]" border="14">shapes/ring14_2.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">

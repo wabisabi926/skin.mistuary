@@ -1054,11 +1054,13 @@
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<!-- Auto-width buttons use their rendered label widths, so optional
 				     sections collapse without any width or position bookkeeping. -->
-				<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
+				<!-- 通用版：grouplist 无 texturebackground，改为独立背景层。
+				     几何按 5 个默认标签实测：内容区 x 613~1185，宽 572。
+				     若修改标签文字/隐藏标签，需同步调整 left 与 width。 -->
 				<control type="image">
-					<left>0</left>
+					<left>613</left>
 					<top>20</top>
-					<width>1920</width>
+					<width>572</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[GlassTint_regular]" border="30">shapes/round30.png</texture>
 				</control>

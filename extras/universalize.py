@@ -94,7 +94,28 @@ def make_round_png(radius, path):
     img.save(path)
 
 
-def transform_tag(match, stats, radii):
+def make_ring_png(radius, stroke, path):
+    """生成 9-slice 用的空心圆角描边：外沿半径 R、描边宽 T、尺寸 2R+2。"""
+    r, t = radius, stroke
+    size = 2 * r + 2
+    ss = 4
+
+    def rrect(x0, y0, x1, y1, rad):
+        m = Image.new('L', (size * ss, size * ss), 0)
+        ImageDraw.Draw(m).rounded_rectangle([x0, y0, x1, y1], radius=rad, fill=255)
+        return m
+
+    outer = rrect(0, 0, size * ss - 1, size * ss - 1, r * ss)
+    inner = rrect(t * ss, t * ss, size * ss - 1 - t * ss, size * ss - 1 - t * ss, (r - t) * ss)
+    inner = inner.point(lambda v: 255 if v > 127 else 0)
+    mask = Image.composite(Image.new('L', outer.size, 0), outer, inner)
+    mask = mask.resize((size, size), Image.LANCZOS)
+    img = Image.new('RGBA', (size, size), (255, 255, 255, 0))
+    img.putalpha(mask)
+    img.save(path)
+
+
+def transform_tag(match, stats, radii, rings):
     """处理单个纹理标签，返回替换后的文本。"""
     name = match.group('name')
     raw_attrs = match.group('attrs') or ''
@@ -117,6 +138,15 @@ def transform_tag(match, stats, radii):
     tint = None
     shape = None
 
+    # cornerborder 大于 0 且小于半径时，原引擎只画描边（空心），需要用空心贴图复刻
+    border_w = 0
+    if 'cornerborder' in adict and not adict['cornerborder'].startswith('$PARAM['):
+        try:
+            border_w = int(round(float(adict['cornerborder'])))
+        except ValueError:
+            border_w = 0
+    stroke = border_w if 0 < border_w < radius else 0
+
     if is_glass:
         style = adict.get('glassstyle', 'regular')
         if style.startswith('$PARAM['):
@@ -132,9 +162,14 @@ def transform_tag(match, stats, radii):
     elif radius > 0 and content is not None:
         path = content.strip()
         if path in SOLID_TEXTURES:
-            shape = 'shapes/round%d.png' % radius
-            radii.add(radius)
-            stats['corner_solid'] += 1
+            if stroke:
+                shape = 'shapes/ring%d_%d.png' % (radius, stroke)
+                rings.add((radius, stroke))
+                stats['corner_ring'] += 1
+            else:
+                shape = 'shapes/round%d.png' % radius
+                radii.add(radius)
+                stats['corner_solid'] += 1
         else:
             stats['corner_artwork'] += 1
     elif radius > 0:
@@ -173,6 +208,7 @@ def main():
     files = sorted(f for f in os.listdir(XML_DIR) if f.endswith('.xml'))
     stats = collections.defaultdict(int)
     radii = set()
+    rings = set()
     changed = []
 
     # 第一遍：只收集半径并统计
@@ -180,7 +216,7 @@ def main():
         path = os.path.join(XML_DIR, fn)
         with open(path, encoding='utf-8') as f:
             text = f.read()
-        TAG_RE.sub(lambda m: transform_tag(m, stats, radii), text)
+        TAG_RE.sub(lambda m: transform_tag(m, stats, radii, rings), text)
 
     print('=== 统计 ===')
     for k in sorted(stats):
@@ -195,13 +231,16 @@ def main():
     for r in sorted(radii):
         make_round_png(r, os.path.join(SHAPE_DIR, 'round%d.png' % r))
     print('已生成 %d 张圆角贴图 -> %s' % (len(radii), SHAPE_DIR))
+    for r, t in sorted(rings):
+        make_ring_png(r, t, os.path.join(SHAPE_DIR, 'ring%d_%d.png' % (r, t)))
+    print('已生成 %d 张空心描边贴图' % len(rings))
 
     # 第二遍：实际改写
     for fn in files:
         path = os.path.join(XML_DIR, fn)
         with open(path, encoding='utf-8') as f:
             text = f.read()
-        new = TAG_RE.sub(lambda m: transform_tag(m, collections.defaultdict(int), set()), text)
+        new = TAG_RE.sub(lambda m: transform_tag(m, collections.defaultdict(int), set(), set()), text)
         if new != text:
             with open(path, 'w', encoding='utf-8', newline='') as f:
                 f.write(new)

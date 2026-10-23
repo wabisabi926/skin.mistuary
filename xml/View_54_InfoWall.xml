@@ -22,7 +22,7 @@
 				<left>$PARAM[focus_left]</left>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 				<bordersize>20</bordersize>
 				<visible>$PARAM[focused]</visible>
 				<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
@@ -83,7 +83,7 @@
 				<left>$PARAM[focus_left]</left>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 				<bordersize>20</bordersize>
 				<visible>$PARAM[focused]</visible>
 				<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
@@ -175,7 +175,7 @@
 				<left>$PARAM[focus_left]</left>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 				<bordersize>20</bordersize>
 				<visible>$PARAM[focused]</visible>
 				<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
@@ -335,7 +335,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_card_surface" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_2.png</texture>
 					<bordersize>14</bordersize>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
@@ -348,7 +348,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 					<bordersize>14</bordersize>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
@@ -448,7 +448,7 @@
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_media" border="14">shapes/ring14_2.png</texture>
 				<bordersize>14</bordersize>
 				<visible>$PARAM[focused] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
 			</control>
@@ -457,7 +457,7 @@
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_card_surface" border="14">shapes/round14.png</texture>
+				<texture colordiffuse="focus_card_surface" border="14">shapes/ring14_2.png</texture>
 				<bordersize>14</bordersize>
 				<visible>$PARAM[focused] + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
