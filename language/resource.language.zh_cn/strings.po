@@ -1216,7 +1216,7 @@ msgstr "媒体库封面文件夹"
 
 msgctxt "#31720"
 msgid "Not set"
-msgstr "未设置"
+msgstr "使用皮肤内置 libraryart 目录"
 
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."

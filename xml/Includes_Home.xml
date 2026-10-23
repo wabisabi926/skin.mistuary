@@ -636,10 +636,29 @@
 				<texture background="true" fallback="$PARAM[fallback]">$PARAM[texture]</texture>
 				<visible>$PARAM[bg_cond]</visible>
 			</control>
-			<!-- 通用版：自定义媒体库封面。在设置里指定一个文件夹，
-			     里面放与库名完全同名的图片（如「华语电影.jpg」）即可按库自动匹配。
-			     png 先绘制、jpg 后绘制，两种扩展名都支持；都没有时不绘制，
-			     下方的文件夹图标会露出来。 -->
+			<!-- 通用版：自定义媒体库封面。
+			     默认读皮肤内置的 libraryart 目录；若在「设置-外观-媒体库封面文件夹」
+			     指定了目录，则改用该目录。文件名必须与库名完全一致（如「华语电影.jpg」）。
+			     每个目录下 png 先绘制、jpg 后绘制，两种扩展名都支持；
+			     都没有时不绘制，下方的文件夹图标会露出来。 -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>320</width>
+				<height>180</height>
+				<aspectratio>scale</aspectratio>
+				<texture background="true">special://skin/libraryart/$INFO[ListItem.Label].png</texture>
+				<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
+			</control>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>320</width>
+				<height>180</height>
+				<aspectratio>scale</aspectratio>
+				<texture background="true">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
+				<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
+			</control>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
@@ -722,7 +741,6 @@
 								<visible>!$PARAM[background_art_condition]</visible>
 							</control>
 							<control type="group">
-								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
 								<include content="HomeMediaLibraryArtwork">
 									<param name="bg_cond" value="$PARAM[background_art_condition]" />
 								</include>
@@ -767,7 +785,6 @@
 								<visible>!$PARAM[background_art_condition]</visible>
 							</control>
 							<control type="group">
-								<visible>$PARAM[background_art_condition] | !String.IsEmpty(Skin.String(library_art_folder))</visible>
 								<include content="HomeMediaLibraryArtwork">
 									<param name="bg_cond" value="$PARAM[background_art_condition]" />
 								</include>
