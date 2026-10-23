@@ -1218,6 +1218,10 @@ msgctxt "#31720"
 msgid "Not set"
 msgstr "使用皮肤内置 libraryart 目录"
 
+msgctxt "#31721"
+msgid "Skin settings"
+msgstr "皮肤设置"
+
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."
 #~ msgstr "未找到收藏。你可以从媒体浏览使用上下文菜单添加收藏项目。"

@@ -1391,3 +1391,7 @@ msgstr "Media library cover folder"
 msgctxt "#31720"
 msgid "Not set"
 msgstr "Using skin's built-in libraryart folder"
+
+msgctxt "#31721"
+msgid "Skin settings"
+msgstr "Skin settings"

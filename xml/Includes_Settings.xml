@@ -471,6 +471,27 @@
 					<textcolor>text_primary</textcolor>
 					<selectedcolor>text_primary</selectedcolor>
 				</control>
+				<!-- 通用版：既非 LibreELEC 也非 CoreELEC（Windows/Android/普通 Linux 等）时，
+				     退回到皮肤自己的设置入口，任何环境都成立 -->
+				<control type="button" id="25">
+					<left>1110</left>
+					<top>32</top>
+					<width>170</width>
+					<height>48</height>
+					<font>font24</font>
+					<label>$LOCALIZE[31721]</label>
+					<visible>!System.AddonIsEnabled(service.libreelec.settings) + !System.AddonIsEnabled(service.coreelec.settings)</visible>
+					<onclick>ActivateWindow(skinsettings)</onclick>
+					<onleft>104</onleft>
+					<onright>104</onright>
+					<onup>104</onup>
+					<ondown>104</ondown>
+					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+					<texturenofocus />
+					<focusedcolor>text_primary</focusedcolor>
+					<textcolor>text_primary</textcolor>
+					<selectedcolor>text_primary</selectedcolor>
+				</control>
 			</control>
 		</definition>
 	</include>
