@@ -5,6 +5,12 @@
 	<include name="NaraSettingsBackground">
 		<definition>
 			<include>DefaultBackground</include>
+			<!-- 兜底层：皮肤全局默认背景图。没有 fanart 时由它顶上，不会退回纯黑。 -->
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+			</control>
 			<!-- 通用版：与文件管理一致 —— 用随机影片 fanart 作背景，
 			     让上层的半透明面板（GlassTint_*）能看出层次。
 			     隐藏的 1x1 列表只在首页没有传递 fanart 时才去库里取一张。 -->
