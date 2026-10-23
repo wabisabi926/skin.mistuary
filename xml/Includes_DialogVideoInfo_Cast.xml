@@ -9,6 +9,12 @@
 			<height>270</height>
 			<visible>Integer.IsGreater(Container(50).NumItems,0) + [!String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)]</visible>
 			<animation effect="slide" start="0,70" end="0,0" time="400" delay="100" tween="cubic" easing="out">WindowOpen</animation>
+			<!-- 通用版：演员栏原本完全没有底板，与动作栏（GlassTint_regular）不一致 -->
+			<control type="image">
+				<width>1760</width>
+				<height>270</height>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="28">shapes/round28.png</texture>
+			</control>
 			<control type="label">
 				<width>500</width>
 				<height>32</height>
