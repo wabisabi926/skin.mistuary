@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Estuary N 通用版 · 玻璃面板配色预览</title>
+<style>
+  :root{
+    --ink:#0f1013; --panel:#18171e; --line:rgba(255,255,255,.14);
+    --text:#ededed; --text2:rgba(237,237,237,.70);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;padding:36px 40px 56px;background:#0b0b0e;color:var(--text);
+    font:14px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  }
+  h1{font-size:19px;font-weight:600;margin:0 0 6px;letter-spacing:.2px}
+  .sub{color:var(--text2);font-size:13px;margin-bottom:28px}
+  .sub code{background:rgba(255,255,255,.08);padding:1px 6px;border-radius:4px;font-size:12px}
+  h2{font-size:14px;font-weight:600;margin:34px 0 14px;color:var(--text2);letter-spacing:.5px}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .card{
+    position:relative;width:232px;height:132px;border-radius:20px;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px;
+  }
+  /* 模拟真实 fanart 背景 */
+  .bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 22% 28%, rgba(255,214,120,.95), transparent 42%),
+      radial-gradient(circle at 76% 22%, rgba(96,182,255,.85), transparent 46%),
+      radial-gradient(circle at 58% 88%, rgba(255,96,150,.75), transparent 48%),
+      linear-gradient(135deg,#2b2a44,#141420 70%);
+    filter:blur(1px) saturate(1.05);
+  }
+  .veil{position:absolute;inset:0}
+  .card .t{position:relative;font-weight:600;font-size:15px}
+  .card .m{position:relative;font-size:12px;color:rgba(237,237,237,.78)}
+  .hex{position:absolute;top:12px;right:14px;font-size:11px;letter-spacing:.4px;
+       font-family:ui-monospace,Consolas,monospace;color:rgba(255,255,255,.62)}
+  .label{font-size:12px;color:var(--text2);margin-top:8px;width:232px}
+  .label b{color:var(--text);font-weight:600}
+
+  .radii{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;
+         background:#15151b;border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .chip{text-align:center}
+  .chip img{display:block;image-rendering:auto}
+  .chip span{display:block;margin-top:8px;font-size:11px;color:var(--text2);
+             font-family:ui-monospace,Consolas,monospace}
+
+  .note{margin-top:34px;border-left:3px solid rgba(255,180,60,.65);
+        background:rgba(255,180,60,.07);padding:14px 18px;border-radius:0 10px 10px 0;
+        font-size:13px;color:var(--text2);max-width:900px}
+  .note b{color:#ffd08a}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+</style>
+</head>
+<body>
+  <h1>Estuary N 通用版 · 玻璃面板配色预览</h1>
+  <div class="sub">
+    每个面板的底色 = 圆角贴图 <code>shapes/round*.png</code> × <code>colordiffuse</code>。
+    下面是四档 <code>GlassTint_*</code> 在真实 fanart 背景上的效果。
+  </div>
+
+  <h2>透黑（默认，Skin.HasSetting(nara_glass_light) 关闭）</h2>
+  <div class="row">
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(0,0,0,.30)"></div>
+        <div class="hex">4D000000</div><div class="t">clear</div><div class="m">最清透，背景细节保留最多</div></div>
+      <div class="label"><b>GlassTint_clear</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(0,0,0,.40)"></div>
+        <div class="hex">66000000</div><div class="t">regular</div><div class="m">默认档，通透镜面</div></div>
+      <div class="label"><b>GlassTint_regular</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(15,15,18,.50)"></div>
+        <div class="hex">800F0F12</div><div class="t">frosted</div><div class="m">烟灰感，背景更柔</div></div>
+      <div class="label"><b>GlassTint_frosted</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(20,20,24,.60)"></div>
+        <div class="hex">99141418</div><div class="t">dialog</div><div class="m">对话框主用，最不透明</div></div>
+      <div class="label"><b>GlassTint_dialog</b></div>
+    </div>
+  </div>
+
+  <h2>透白（开启 nara_glass_light）</h2>
+  <div class="row">
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(255,255,255,.10)"></div>
+        <div class="hex">1AFFFFFF</div><div class="t">clear</div><div class="m">白色薄雾</div></div>
+      <div class="label"><b>GlassTint_clear</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(255,255,255,.15)"></div>
+        <div class="hex">26FFFFFF</div><div class="t">regular</div><div class="m">默认档</div></div>
+      <div class="label"><b>GlassTint_regular</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(255,255,255,.20)"></div>
+        <div class="hex">33FFFFFF</div><div class="t">frosted</div><div class="m">雾面磨砂</div></div>
+      <div class="label"><b>GlassTint_frosted</b></div>
+    </div>
+    <div>
+      <div class="card"><div class="bg"></div><div class="veil" style="background:rgba(255,255,255,.25)"></div>
+        <div class="hex">40FFFFFF</div><div class="t">dialog</div><div class="m">最亮，对比度最吃紧</div></div>
+      <div class="label"><b>GlassTint_dialog</b></div>
+    </div>
+  </div>
+
+  <h2>圆角贴图（22 档，9-slice：border = 半径）</h2>
+  <div class="radii">
+    <div class="chip"><img src="../media/shapes/round2.png" width="30" height="30" alt=""><span>R2</span></div>
+    <div class="chip"><img src="../media/shapes/round4.png" width="36" height="36" alt=""><span>R4</span></div>
+    <div class="chip"><img src="../media/shapes/round7.png" width="40" height="40" alt=""><span>R7</span></div>
+    <div class="chip"><img src="../media/shapes/round12.png" width="48" height="48" alt=""><span>R12</span></div>
+    <div class="chip"><img src="../media/shapes/round16.png" width="52" height="52" alt=""><span>R16</span></div>
+    <div class="chip"><img src="../media/shapes/round20.png" width="56" height="56" alt=""><span>R20</span></div>
+    <div class="chip"><img src="../media/shapes/round26.png" width="62" height="62" alt=""><span>R26</span></div>
+    <div class="chip"><img src="../media/shapes/round32.png" width="70" height="70" alt=""><span>R32</span></div>
+    <div class="chip"><img src="../media/shapes/round42.png" width="88" height="88" alt=""><span>R42</span></div>
+    <div class="chip"><img src="../media/shapes/round48.png" width="98" height="98" alt=""><span>R48</span></div>
+    <div class="chip"><img src="../media/shapes/round65.png" width="110" height="110" alt=""><span>R65</span></div>
+  </div>
+
+  <h2>空心描边贴图（焦点框用，复刻原 cornerborder）</h2>
+  <div class="radii">
+    <div class="chip"><img src="../media/shapes/ring6_2.png" width="56" height="56" alt=""><span>ring6_2</span></div>
+    <div class="chip"><img src="../media/shapes/ring12_2.png" width="76" height="76" alt=""><span>ring12_2</span></div>
+    <div class="chip"><img src="../media/shapes/ring14_2.png" width="86" height="86" alt=""><span>ring14_2</span></div>
+    <div class="chip"><img src="../media/shapes/round14.png" width="86" height="86" alt=""><span>round14（实心，对比）</span></div>
+  </div>
+
+  <div class="note">
+    <b>实机验证要点</b>
+    <ul>
+      <li>透白档面板变浅，文字仍是 <code>text_primary</code>(#EDEDED)，亮 fanart 上对比度可能不足 —— 需要的话再加一套配套深色文字变量。</li>
+      <li>9-slice 依赖 <code>border</code> 等于半径；控件短边小于 2×半径 时（如 R65 配 130 高）依赖 Kodi 自身钳制。</li>
+      <li>海报/缩略图类纹理无法在官方 Kodi 做圆角，已直接改为直角。</li>
+      <li>原焦点框的 <code>cornerglow</code> 外发光官方 Kodi 无法实现，现只保留 2px 描边。</li>
+    </ul>
+  </div>
+</body>
+</html>

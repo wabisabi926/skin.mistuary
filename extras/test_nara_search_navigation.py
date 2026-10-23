@@ -366,8 +366,9 @@ class SearchDrawerTests(unittest.TestCase):
         self.assertLess(int(letters.findtext('top')) + int(letters.findtext('height')), int(digits.findtext('top')))
         self.assertLessEqual(int(digits.findtext('top')) + int(digits.findtext('height')), height - 24)
         self.assertEqual(drawer.findtext('bottom'), '0')
-        self.assertEqual(drawer.find('control/texture').get('glassstyle'), 'regular')
-        self.assertEqual(drawer.find('control/texture').get('glassedge'), 'soft')
+        # 通用版：玻璃属性已移除，改为半透明纯色 + 圆角贴图
+        self.assertEqual(drawer.find('control/texture').get('colordiffuse'),
+                         '$VAR[GlassTint_regular]')
         lift = int(INCLUDES['NaraSearchResultsLift'].find('animation').get('end').split(',')[1])
         for id in (16101, 16102):
             row = CONTROLS[id]

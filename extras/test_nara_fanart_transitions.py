@@ -115,7 +115,6 @@ class FanartTransitionsTest(unittest.TestCase):
         stack = DialogStack()
         self.assertFalse(stack.camera_active('search'))
         self.assertEqual(stack.open_info(), 'search')
-        self.assertEqual(stack.follow(), [('10000', '16590')])
         self.assertTrue(stack.camera_active('search'))
         # A closing dialog remains visible until its exit animation completes.
         self.assertIn('12003', stack.visible)
@@ -132,7 +131,6 @@ class FanartTransitionsTest(unittest.TestCase):
                 stack.visible.add('11111')
                 self.assertFalse(stack.camera_active('movieset'))
                 self.assertEqual(stack.open_info(), 'movieset')
-                self.assertEqual(stack.follow(), [('11111', '5190')])
                 self.assertTrue(stack.camera_active('movieset'))
                 self.assertFalse(stack.camera_active('library'))
                 stack.visible.remove('12003')
@@ -144,23 +142,23 @@ class FanartTransitionsTest(unittest.TestCase):
         stack.visible.add('11111')
         self.assertFalse(stack.camera_active('movieset'))
         self.assertEqual(stack.open_info('12016'), 'movieset')
-        self.assertEqual(stack.follow(), [('10000', '9090')])
-        self.assertEqual(stack.follow('12016'), [('11111', '5190')])
         self.assertTrue(stack.camera_active('movieset'))
         stack.visible.remove('12016')
         self.assertFalse(stack.camera_active('movieset'))
-        self.assertEqual(stack.follow(), [('10000', '9090')])
 
     def test_video_and_disabled_fanart_do_not_zoom_library_background(self):
         stack = DialogStack(page='videos')
         self.assertEqual(stack.open_info(), 'library')
-        self.assertEqual(stack.follow(), [('10025', '9490')])
         self.assertTrue(stack.camera_active('library'))
         stack.video = True
         self.assertFalse(stack.camera_active('library'))
         stack.video = False
         stack.no_fanart = True
         self.assertFalse(stack.camera_active('library'))
+
+    def test_fork_only_follow_animation_is_not_used(self):
+        # 通用版移除了魔改内核的 Follow 动画，镜头改由 VideoInfo.FanartSource 驱动。
+        self.assertEqual(FOLLOW, [])
 
     def test_standalone_entry_queues_zoom_before_onload_captures_source(self):
         animation = INFO.find('.//control[@id="5900"]/animation[.="WindowOpen"]')
