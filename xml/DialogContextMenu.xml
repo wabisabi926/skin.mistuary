@@ -33,7 +33,7 @@
 				<top>0</top>
 				<width>450</width>
 				<height>780</height>
-				<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_dialog_strong]" border="42">shapes/round42.png</texture>
 			</control>
 			<control type="grouplist" id="996">
 				<description>grouplist for context buttons</description>
@@ -57,7 +57,7 @@
 			<width>426</width>
 			<height>65</height>
 			<align>center</align>
-			<texturefocus colordiffuse="glass_focus_light" border="30">shapes/round30.png</texturefocus>
+			<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 			<texturenofocus />
 			<focusedcolor>text_primary</focusedcolor>
 		</control>

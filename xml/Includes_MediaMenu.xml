@@ -637,7 +637,7 @@
 			<top>0</top>
 			<width>432</width>
 			<height>100%</height>
-			<texture colordiffuse="$VAR[GlassTint_frosted]">colors/white.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_dialog_strong]">colors/white.png</texture>
 		</control>
 		<control type="button" id="6131">
 			<left>0</left>
