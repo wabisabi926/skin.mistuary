@@ -451,6 +451,26 @@
 					<textcolor>text_primary</textcolor>
 					<selectedcolor>text_primary</selectedcolor>
 				</control>
+				<!-- 通用版：CoreELEC 系统上显示对应的设置入口（与 LibreELEC 按钮互斥） -->
+				<control type="button" id="24">
+					<left>1110</left>
+					<top>32</top>
+					<width>170</width>
+					<height>48</height>
+					<font>font24</font>
+					<label>CoreELEC</label>
+					<visible>System.AddonIsEnabled(service.coreelec.settings)</visible>
+					<onclick>RunAddon(service.coreelec.settings)</onclick>
+					<onleft>104</onleft>
+					<onright>104</onright>
+					<onup>104</onup>
+					<ondown>104</ondown>
+					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+					<texturenofocus />
+					<focusedcolor>text_primary</focusedcolor>
+					<textcolor>text_primary</textcolor>
+					<selectedcolor>text_primary</selectedcolor>
+				</control>
 			</control>
 		</definition>
 	</include>
