@@ -12,7 +12,7 @@
 				<top>145</top>
 				<width>1355</width>
 				<height>830</height>
-				<texture colordiffuse="18FFFFFF" border="28">shapes/round28.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_dialog]" border="28">shapes/round28.png</texture>
 			</control>
 		<!-- Focused addon detail in left sidebar: icon / version / description -->
 			<control type="group">

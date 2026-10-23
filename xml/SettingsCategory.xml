@@ -9,7 +9,7 @@
 			<top>145</top>
 			<width>1355</width>
 			<height>740</height>
-			<texture colordiffuse="18FFFFFF" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_dialog]" border="28">shapes/round28.png</texture>
 		</control>
 		<control type="grouplist" id="3">
 			<left>76</left>
