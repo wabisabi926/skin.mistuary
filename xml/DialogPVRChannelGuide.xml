@@ -53,7 +53,7 @@
 							<left>0</left>
 							<width>780</width>
 							<bottom>0</bottom>
-							<texture cornerradius="4" colordiffuse="glass_focus_medium">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_medium" border="4">shapes/round4.png</texture>
 							<visible>Control.HasFocus(11)</visible>
 							<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
 						</control>

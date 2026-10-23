@@ -10,7 +10,7 @@
 			<top>145</top>
 			<width>1355</width>
 			<height>740</height>
-			<texture colordiffuse="18FFFFFF" cornerradius="28">colors/white.png</texture>
+			<texture colordiffuse="18FFFFFF" border="28">shapes/round28.png</texture>
 		</control>
 		<control type="group" id="10000">
 			<include>OpenClose_Right</include>
@@ -26,6 +26,12 @@
 					<include>NaraSettingsRow</include>
 					<onclick>Skin.ToggleSetting(autoscroll)</onclick>
 					<selected>Skin.HasSetting(autoscroll)</selected>
+				</control>
+				<control type="radiobutton" id="709">
+					<label>$LOCALIZE[31718]</label>
+					<include>NaraSettingsRow</include>
+					<onclick>Skin.ToggleSetting(nara_glass_light)</onclick>
+					<selected>Skin.HasSetting(nara_glass_light)</selected>
 				</control>
 				<control type="radiobutton" id="705">
 					<label>$LOCALIZE[31160]</label>
@@ -212,7 +218,7 @@
 					<control type="image">
 						<width>368</width>
 						<height>78</height>
-						<texture cornerradius="20" colordiffuse="$VAR[NaraSettingsSidebarFocus]">colors/white.png</texture>
+						<texture colordiffuse="$VAR[NaraSettingsSidebarFocus]" border="20">shapes/round20.png</texture>
 					</control>
 					<control type="label">
 						<textoffsetx>30</textoffsetx>

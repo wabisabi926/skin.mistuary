@@ -72,7 +72,7 @@
 		<textureradiooffnofocus colordiffuse="text_primary">$PARAM[texture]</textureradiooffnofocus>
 		<textureradioondisabled colordiffuse="text_disabled">$PARAM[texture]</textureradioondisabled>
 		<textureradiooffdisabled colordiffuse="text_disabled">$PARAM[texture]</textureradiooffdisabled>
-		<texturefocus border="0" cornerradius="30.5" colordiffuse="glass_focus_medium">colors/white.png</texturefocus>
+		<texturefocus border="30" colordiffuse="glass_focus_medium">shapes/round30.png</texturefocus>
 		<texturenofocus />
 		<width>61</width>
 		<height>61</height>
@@ -90,7 +90,7 @@
 		<control type="image">
 			<width>61</width>
 			<height>61</height>
-			<texture material="glass" glassstyle="regular" cornerradius="30.5">colors/white.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_regular]" border="30">shapes/round30.png</texture>
 		</control>
 	</include>
 	<include name="NaraMusicPlayerControls">
@@ -340,7 +340,7 @@
 					<right>0</right>
 					<top>252</top>
 					<height>166</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>!Integer.IsGreater(Container(6).NumItems,1)</visible>
 				</control>
 				<control type="image">
@@ -348,7 +348,7 @@
 					<right>0</right>
 					<top>224</top>
 					<height>222</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,2)</visible>
 				</control>
 				<control type="image">
@@ -356,7 +356,7 @@
 					<right>0</right>
 					<top>196</top>
 					<height>278</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,3)</visible>
 				</control>
 				<control type="image">
@@ -364,7 +364,7 @@
 					<right>0</right>
 					<top>168</top>
 					<height>334</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,4)</visible>
 				</control>
 				<control type="image">
@@ -372,7 +372,7 @@
 					<right>0</right>
 					<top>140</top>
 					<height>390</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,5)</visible>
 				</control>
 				<control type="image">
@@ -380,7 +380,7 @@
 					<right>0</right>
 					<top>112</top>
 					<height>446</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,6)</visible>
 				</control>
 				<control type="image">
@@ -388,7 +388,7 @@
 					<right>0</right>
 					<top>84</top>
 					<height>502</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,7)</visible>
 				</control>
 				<control type="image">
@@ -396,7 +396,7 @@
 					<right>0</right>
 					<top>56</top>
 					<height>558</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,8)</visible>
 				</control>
 				<control type="image">
@@ -404,7 +404,7 @@
 					<right>0</right>
 					<top>28</top>
 					<height>614</height>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="image">
@@ -412,7 +412,7 @@
 					<right>0</right>
 					<top>0</top>
 					<bottom>0</bottom>
-					<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 					<visible>Integer.IsGreater(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="label" id="$PARAM[header_id]">

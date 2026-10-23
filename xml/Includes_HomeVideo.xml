@@ -49,8 +49,8 @@
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
-					<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Year]$INFO[Container($PARAM[list_id]).ListItemSettled.Mpaa,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItemSettled.Duration,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItemSettled.Genre,  &#183;  ]</label>
-					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItemSettled.DBType,tvshow)</visible>
+					<label>$INFO[Container($PARAM[list_id]).ListItem.Year]$INFO[Container($PARAM[list_id]).ListItem.Mpaa,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Duration,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Genre,  &#183;  ]</label>
+					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 				</control>
 				<control type="label">
 					<width>820</width>
@@ -58,16 +58,16 @@
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
-					<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Year]$INFO[Container($PARAM[list_id]).ListItemSettled.Mpaa,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItemSettled.Genre,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItemSettled.Season,  &#183;  , $LOCALIZE[36905]]$INFO[Container($PARAM[list_id]).ListItemSettled.Episode,  &#183;  , $LOCALIZE[36907]]</label>
-					<visible>String.IsEqual(Container($PARAM[list_id]).ListItemSettled.DBType,tvshow)</visible>
+					<label>$INFO[Container($PARAM[list_id]).ListItem.Year]$INFO[Container($PARAM[list_id]).ListItem.Mpaa,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Genre,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Season,  &#183;  , $LOCALIZE[36905]]$INFO[Container($PARAM[list_id]).ListItem.Episode,  &#183;  , $LOCALIZE[36907]]</label>
+					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 				</control>
 				<include content="NaraOnlineRatingsRow">
 					<param name="top" value="42" />
-					<param name="item_prefix" value="Container($PARAM[list_id]).ListItemSettled" />
+					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 				</include>
 				<include content="VideoTechnicalFlagsRow">
 					<param name="top" value="84" />
-					<param name="item_prefix" value="Container($PARAM[list_id]).ListItemSettled" />
+					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 				</include>
 				<control type="textbox">
 					<top>126</top>
@@ -75,7 +75,7 @@
 					<height>105</height>
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
-					<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Plot]</label>
+					<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 				</control>
 			</control>
 		</definition>
@@ -93,7 +93,7 @@
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
-					<label>$LOCALIZE[20457]$INFO[Container(5600).ListItemSettled.Property(total),  &#183;  $LOCALIZE[31705]: ]$INFO[Container(5600).ListItemSettled.Year,  &#183;  $LOCALIZE[31707]: ]</label>
+					<label>$LOCALIZE[20457]$INFO[Container(5600).ListItem.Property(total),  &#183;  $LOCALIZE[31705]: ]$INFO[Container(5600).ListItem.Year,  &#183;  $LOCALIZE[31707]: ]</label>
 				</control>
 				<control type="label">
 					<top>44</top>
@@ -102,7 +102,7 @@
 					<font>font13</font>
 					<textcolor>text_primary</textcolor>
 					<scroll>true</scroll>
-					<label>$INFO[Container(5600).ListItemSettled.Property(watched),$LOCALIZE[16102]: ]$INFO[Container(5600).ListItemSettled.Property(unwatched),  &#183;  $LOCALIZE[16101]: ]$INFO[Container(5600).ListItemSettled.Property(inprogress),  &#183;  $LOCALIZE[31709]: ]$INFO[Container(5600).ListItemSettled.Rating,  &#183;  $LOCALIZE[31706]: ]</label>
+					<label>$INFO[Container(5600).ListItem.Property(watched),$LOCALIZE[16102]: ]$INFO[Container(5600).ListItem.Property(unwatched),  &#183;  $LOCALIZE[16101]: ]$INFO[Container(5600).ListItem.Property(inprogress),  &#183;  $LOCALIZE[31709]: ]$INFO[Container(5600).ListItem.Rating,  &#183;  $LOCALIZE[31706]: ]</label>
 				</control>
 				<control type="textbox">
 					<top>96</top>
@@ -110,8 +110,8 @@
 					<height>105</height>
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
-					<label>$INFO[Container(5600).ListItemSettled.Plot]</label>
-					<visible>!String.IsEmpty(Container(5600).ListItemSettled.Plot)</visible>
+					<label>$INFO[Container(5600).ListItem.Plot]</label>
+					<visible>!String.IsEmpty(Container(5600).ListItem.Plot)</visible>
 				</control>
 				<control type="list" id="5602">
 					<enable>false</enable>
@@ -121,8 +121,8 @@
 					<height>1</height>
 					<itemlayout width="1" height="1" />
 					<focusedlayout width="1" height="1" />
-					<visible>String.IsEqual(Window(home).Property(Home.movies.Hero),5600) + String.IsEmpty(Container(5600).ListItemSettled.Plot) + !String.IsEmpty(Container(5600).ListItemSettled.DBID) + !String.IsEqual(Container(5600).ListItemSettled.Property(node.type),target_folder)</visible>
-					<content sortby="year" sortorder="ascending" limit="5" browse="never" loaditemdetails="false">videodb://movies/sets/$INFO[Container(5600).ListItemSettled.DBID]/?setid=$INFO[Container(5600).ListItemSettled.DBID]</content>
+					<visible>String.IsEqual(Window(home).Property(Home.movies.Hero),5600) + String.IsEmpty(Container(5600).ListItem.Plot) + !String.IsEmpty(Container(5600).ListItem.DBID) + !String.IsEqual(Container(5600).ListItem.Property(node.type),target_folder)</visible>
+					<content sortby="year" sortorder="ascending" limit="5" browse="never">videodb://movies/sets/$INFO[Container(5600).ListItem.DBID]/?setid=$INFO[Container(5600).ListItem.DBID]</content>
 				</control>
 				<control type="textbox">
 					<top>96</top>
@@ -131,7 +131,7 @@
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<label>$LOCALIZE[31708]: $INFO[Container(5602).ListItemAbsolute(0).Title]$INFO[Container(5602).ListItemAbsolute(1).Title,  &#183;  ]$INFO[Container(5602).ListItemAbsolute(2).Title,  &#183;  ]$INFO[Container(5602).ListItemAbsolute(3).Title,  &#183;  ]$INFO[Container(5602).ListItemAbsolute(4).Title,  &#183;  ]</label>
-					<visible>String.IsEmpty(Container(5600).ListItemSettled.Plot) + !Container(5602).IsUpdating + String.IsEqual(Container(5602).ListItemAbsolute(0).SetID,Container(5600).ListItemSettled.DBID)</visible>
+					<visible>String.IsEmpty(Container(5600).ListItem.Plot) + !Container(5602).IsUpdating + String.IsEqual(Container(5602).ListItemAbsolute(0).SetID,Container(5600).ListItem.DBID)</visible>
 				</control>
 			</control>
 		</definition>
@@ -163,8 +163,8 @@
 			<onright>noop</onright>
 			<onup>$PARAM[onup]</onup>
 			<ondown>$PARAM[ondown]</ondown>
-			<onfocus condition="!String.IsEqual(Window(home).Property(Home.movies.Page),first) + Control.HasFocus(5700) + !String.IsEmpty(Container(5100).ListItemSettled.Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container(5100).ListItemSettled.Art(fanart)],home)</onfocus>
-			<onfocus condition="!String.IsEqual(Window(home).Property(Home.tvshows.Page),first) + Control.HasFocus(6600) + !String.IsEmpty(Container(6100).ListItemSettled.Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container(6100).ListItemSettled.Art(fanart)],home)</onfocus>
+			<onfocus condition="!String.IsEqual(Window(home).Property(Home.movies.Page),first) + Control.HasFocus(5700) + !String.IsEmpty(Container(5100).ListItem.Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container(5100).ListItem.Art(fanart)],home)</onfocus>
+			<onfocus condition="!String.IsEqual(Window(home).Property(Home.tvshows.Page),first) + Control.HasFocus(6600) + !String.IsEmpty(Container(6100).ListItem.Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container(6100).ListItem.Art(fanart)],home)</onfocus>
 			<onfocus>SetProperty(Home.$PARAM[section].Page,$PARAM[page],home)</onfocus>
 			<onfocus>SetProperty(Home.$PARAM[section].Row,$PARAM[list_id],home)</onfocus>
 			<onfocus condition="$PARAM[update_hero]">SetProperty(Home.$PARAM[section].Hero,$PARAM[hero_id],home)</onfocus>
@@ -177,27 +177,27 @@
 		</definition>
 	</include>
 	<variable name="HomeVideoHeroFanartVar">
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5100) + String.IsEqual(Container(5100).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5100).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5100)">$INFO[Container(5100).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5200) + String.IsEqual(Container(5200).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5200).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5200)">$INFO[Container(5200).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5300) + String.IsEqual(Container(5300).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5300).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5300)">$INFO[Container(5300).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5800) + String.IsEqual(Container(5800).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5800).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5800)">$INFO[Container(5800).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5400) + String.IsEqual(Container(5400).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5400).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5400)">$INFO[Container(5400).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5600) + String.IsEqual(Container(5600).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(5600).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5600)">$INFO[Container(5600).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100) + String.IsEqual(Container(6100).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(6100).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100)">$INFO[Container(6100).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200) + String.IsEqual(Container(6200).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(6200).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)">$INFO[Container(6200).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300) + String.IsEqual(Container(6300).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(6300).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300)">$INFO[Container(6300).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700) + String.IsEqual(Container(6700).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(6700).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)">$INFO[Container(6700).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800) + String.IsEqual(Container(6800).ListItemSettled.Property(node.type),target_folder)">$INFO[Container(6800).ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800)">$INFO[Container(6800).ListItemSettled.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5100) + String.IsEqual(Container(5100).ListItem.Property(node.type),target_folder)">$INFO[Container(5100).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5100)">$INFO[Container(5100).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5200) + String.IsEqual(Container(5200).ListItem.Property(node.type),target_folder)">$INFO[Container(5200).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5200)">$INFO[Container(5200).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5300) + String.IsEqual(Container(5300).ListItem.Property(node.type),target_folder)">$INFO[Container(5300).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5300)">$INFO[Container(5300).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5800) + String.IsEqual(Container(5800).ListItem.Property(node.type),target_folder)">$INFO[Container(5800).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5800)">$INFO[Container(5800).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5400) + String.IsEqual(Container(5400).ListItem.Property(node.type),target_folder)">$INFO[Container(5400).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5400)">$INFO[Container(5400).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5600) + String.IsEqual(Container(5600).ListItem.Property(node.type),target_folder)">$INFO[Container(5600).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Hero),5600)">$INFO[Container(5600).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100) + String.IsEqual(Container(6100).ListItem.Property(node.type),target_folder)">$INFO[Container(6100).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100)">$INFO[Container(6100).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200) + String.IsEqual(Container(6200).ListItem.Property(node.type),target_folder)">$INFO[Container(6200).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)">$INFO[Container(6200).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300) + String.IsEqual(Container(6300).ListItem.Property(node.type),target_folder)">$INFO[Container(6300).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300)">$INFO[Container(6300).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700) + String.IsEqual(Container(6700).ListItem.Property(node.type),target_folder)">$INFO[Container(6700).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)">$INFO[Container(6700).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800) + String.IsEqual(Container(6800).ListItem.Property(node.type),target_folder)">$INFO[Container(6800).ListItem(-1).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800)">$INFO[Container(6800).ListItem.Art(fanart)]</value>
 	</variable>
 </includes>

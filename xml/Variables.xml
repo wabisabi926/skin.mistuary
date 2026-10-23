@@ -439,103 +439,103 @@
 	</variable>
 	<!-- View 50 keeps its detail copy settled while the compact list continues to move. -->
 	<variable name="NaraList50TitleVar">
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.TVShowTitle)">$INFO[Container(50).ListItemSettled.TVShowTitle]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Title)">$INFO[Container(50).ListItemSettled.Title]</value>
-		<value>$INFO[Container(50).ListItemSettled.Label]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.TVShowTitle)">$INFO[Container(50).ListItem.TVShowTitle]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Title)">$INFO[Container(50).ListItem.Title]</value>
+		<value>$INFO[Container(50).ListItem.Label]</value>
 	</variable>
 	<variable name="NaraList50EpisodeLabelVar">
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,episode)">$INFO[Container(50).ListItemSettled.Season,S]$INFO[Container(50).ListItemSettled.Episode,E]$INFO[Container(50).ListItemSettled.Title,  •  ]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,season)">$INFO[Container(50).ListItemSettled.Label]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,episode)">$INFO[Container(50).ListItem.Season,S]$INFO[Container(50).ListItem.Episode,E]$INFO[Container(50).ListItem.Title,  •  ]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,season)">$INFO[Container(50).ListItem.Label]</value>
 	</variable>
 	<variable name="NaraList50ClearLogoVar">
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Art(tvshow.clearlogo))">$INFO[Container(50).ListItemSettled.Art(tvshow.clearlogo)]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Art(clearlogo))">$INFO[Container(50).ListItemSettled.Art(clearlogo)]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Art(tvshow.clearlogo))">$INFO[Container(50).ListItem.Art(tvshow.clearlogo)]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Art(clearlogo))">$INFO[Container(50).ListItem.Art(clearlogo)]</value>
 	</variable>
 	<variable name="NaraList50MetadataVar">
-		<value condition="Container.Content(addons)">$INFO[Container(50).ListItemSettled.AddonVersion]$INFO[Container(50).ListItemSettled.AddonCreator,  •  ]</value>
-		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItemSettled.PictureDateTime]$INFO[Container(50).ListItemSettled.PictureResolution,  •  ]</value>
-		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItemSettled.Property(favourite.provider)]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,song)">$INFO[Container(50).ListItemSettled.Artist]$INFO[Container(50).ListItemSettled.Album,  •  ]$INFO[Container(50).ListItemSettled.Duration,  •  ]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,album)">$INFO[Container(50).ListItemSettled.Year]$INFO[Container(50).ListItemSettled.Artist,  •  ]$INFO[Container(50).ListItemSettled.Genre,  •  ]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,artist)">$INFO[Container(50).ListItemSettled.Genre]$INFO[Container(50).ListItemSettled.Property(Artist_YearsActive),  •  ]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,tvshow)">$INFO[Container(50).ListItemSettled.Year]$INFO[Container(50).ListItemSettled.Mpaa,  •  ]$INFO[Container(50).ListItemSettled.Genre,  •  ]$INFO[Container(50).ListItemSettled.Season,  •  , $LOCALIZE[36905]]$INFO[Container(50).ListItemSettled.Episode,  •  , $LOCALIZE[36907]]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,movie) | String.IsEqual(Container(50).ListItemSettled.DBType,set) | String.IsEqual(Container(50).ListItemSettled.DBType,season) | String.IsEqual(Container(50).ListItemSettled.DBType,episode) | String.IsEqual(Container(50).ListItemSettled.DBType,musicvideo) | String.IsEqual(Container(50).ListItemSettled.DBType,video)">$INFO[Container(50).ListItemSettled.Year]$INFO[Container(50).ListItemSettled.Mpaa,  •  ]$INFO[Container(50).ListItemSettled.Duration,  •  ]$INFO[Container(50).ListItemSettled.Genre,  •  ]</value>
-		<value>$INFO[Container(50).ListItemSettled.Label2]</value>
+		<value condition="Container.Content(addons)">$INFO[Container(50).ListItem.AddonVersion]$INFO[Container(50).ListItem.AddonCreator,  •  ]</value>
+		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItem.PictureDateTime]$INFO[Container(50).ListItem.PictureResolution,  •  ]</value>
+		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItem.Property(favourite.provider)]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,song)">$INFO[Container(50).ListItem.Artist]$INFO[Container(50).ListItem.Album,  •  ]$INFO[Container(50).ListItem.Duration,  •  ]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,album)">$INFO[Container(50).ListItem.Year]$INFO[Container(50).ListItem.Artist,  •  ]$INFO[Container(50).ListItem.Genre,  •  ]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,artist)">$INFO[Container(50).ListItem.Genre]$INFO[Container(50).ListItem.Property(Artist_YearsActive),  •  ]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,tvshow)">$INFO[Container(50).ListItem.Year]$INFO[Container(50).ListItem.Mpaa,  •  ]$INFO[Container(50).ListItem.Genre,  •  ]$INFO[Container(50).ListItem.Season,  •  , $LOCALIZE[36905]]$INFO[Container(50).ListItem.Episode,  •  , $LOCALIZE[36907]]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,movie) | String.IsEqual(Container(50).ListItem.DBType,set) | String.IsEqual(Container(50).ListItem.DBType,season) | String.IsEqual(Container(50).ListItem.DBType,episode) | String.IsEqual(Container(50).ListItem.DBType,musicvideo) | String.IsEqual(Container(50).ListItem.DBType,video)">$INFO[Container(50).ListItem.Year]$INFO[Container(50).ListItem.Mpaa,  •  ]$INFO[Container(50).ListItem.Duration,  •  ]$INFO[Container(50).ListItem.Genre,  •  ]</value>
+		<value>$INFO[Container(50).ListItem.Label2]</value>
 	</variable>
 	<variable name="NaraList50SynopsisVar">
-		<value condition="String.IsEqual(Container.FolderPath,addons://outdated/) + !String.IsEmpty(Container(50).ListItemSettled.AddonNews)">$INFO[Container(50).ListItemSettled.AddonNews]</value>
-		<value condition="Container.Content(addons)">$INFO[Container(50).ListItemSettled.AddonDescription]</value>
-		<value condition="Window.IsActive(pictures) + !String.IsEmpty(Container(50).ListItemSettled.Property(description))">$INFO[Container(50).ListItemSettled.Property(description)]</value>
-		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItemSettled.PictureCamMake]$INFO[Container(50).ListItemSettled.PictureCamModel, ]</value>
-		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItemSettled.Property(favourite.action),$LOCALIZE[15217]: ]$INFO[Container(50).ListItemSettled.Property(favourite.provider),[CR]$LOCALIZE[15225]: ]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,album)">$INFO[Container(50).ListItemSettled.Property(album_description)]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,artist)">$INFO[Container(50).ListItemSettled.Property(artist_description)]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,song) + !String.IsEmpty(Container(50).ListItemSettled.Comment)">$INFO[Container(50).ListItemSettled.Comment]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Plot)">$INFO[Container(50).ListItemSettled.Plot]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,season)">$INFO[Container.ShowPlot]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.PlotOutline)">$INFO[Container(50).ListItemSettled.PlotOutline]</value>
-		<value>$INFO[Container(50).ListItemSettled.Label2]</value>
+		<value condition="String.IsEqual(Container.FolderPath,addons://outdated/) + !String.IsEmpty(Container(50).ListItem.AddonNews)">$INFO[Container(50).ListItem.AddonNews]</value>
+		<value condition="Container.Content(addons)">$INFO[Container(50).ListItem.AddonDescription]</value>
+		<value condition="Window.IsActive(pictures) + !String.IsEmpty(Container(50).ListItem.Property(description))">$INFO[Container(50).ListItem.Property(description)]</value>
+		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItem.PictureCamMake]$INFO[Container(50).ListItem.PictureCamModel, ]</value>
+		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItem.Property(favourite.action),$LOCALIZE[15217]: ]$INFO[Container(50).ListItem.Property(favourite.provider),[CR]$LOCALIZE[15225]: ]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,album)">$INFO[Container(50).ListItem.Property(album_description)]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,artist)">$INFO[Container(50).ListItem.Property(artist_description)]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,song) + !String.IsEmpty(Container(50).ListItem.Comment)">$INFO[Container(50).ListItem.Comment]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Plot)">$INFO[Container(50).ListItem.Plot]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,season)">$INFO[Container.ShowPlot]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.PlotOutline)">$INFO[Container(50).ListItem.PlotOutline]</value>
+		<value>$INFO[Container(50).ListItem.Label2]</value>
 	</variable>
 	<variable name="NaraList50PreviewTitleVar">
-		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItemSettled.AddonName]</value>
+		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItem.AddonName]</value>
 		<value>$VAR[NaraList50TitleVar]</value>
 	</variable>
 	<variable name="NaraList50PreviewKindVar">
-		<value condition="Container(50).ListItemSettled.IsParentFolder">$LOCALIZE[19076]</value>
-		<value condition="Container.Content(directors) | String.IsEqual(Container(50).ListItemSettled.DBType,director)">$LOCALIZE[20339]</value>
-		<value condition="Container.Content(writers) | String.IsEqual(Container(50).ListItemSettled.DBType,writer)">$LOCALIZE[20417]</value>
+		<value condition="Container(50).ListItem.IsParentFolder">$LOCALIZE[19076]</value>
+		<value condition="Container.Content(directors) | String.IsEqual(Container(50).ListItem.DBType,director)">$LOCALIZE[20339]</value>
+		<value condition="Container.Content(writers) | String.IsEqual(Container(50).ListItem.DBType,writer)">$LOCALIZE[20417]</value>
 		<value condition="$EXP[nara_list50_person]">$LOCALIZE[20337]</value>
-		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItemSettled.AddonType]</value>
+		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItem.AddonType]</value>
 		<value condition="Container.Content(years)">$LOCALIZE[345]</value>
 		<value condition="Container.Content(genres)">$LOCALIZE[515]</value>
 		<value condition="Container.Content(studios)">$LOCALIZE[20388]</value>
 		<value condition="Container.Content(countries)">$LOCALIZE[574]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,album)">$LOCALIZE[558]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,song)">$LOCALIZE[179]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,artist)">$LOCALIZE[557]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,album)">$LOCALIZE[558]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,song)">$LOCALIZE[179]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,artist)">$LOCALIZE[557]</value>
 		<value condition="Container.Content(favourites)">$LOCALIZE[1036]</value>
-		<value condition="Container(50).ListItemSettled.IsFolder">$LOCALIZE[19076]</value>
+		<value condition="Container(50).ListItem.IsFolder">$LOCALIZE[19076]</value>
 		<value condition="Window.IsActive(pictures)">$LOCALIZE[1]</value>
 	</variable>
 	<variable name="NaraList50PreviewMetadataVar">
-		<value condition="Container(50).ListItemSettled.IsParentFolder" />
-		<value condition="$EXP[nara_list50_person]">$INFO[Container(50).ListItemSettled.Appearances,$LOCALIZE[38026]: ]</value>
-		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItemSettled.AddonVersion) + !String.IsEmpty(Container(50).ListItemSettled.AddonCreator)">$INFO[Container(50).ListItemSettled.AddonVersion,v]$INFO[Container(50).ListItemSettled.AddonCreator,  ·  ]</value>
-		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItemSettled.AddonVersion)">$INFO[Container(50).ListItemSettled.AddonVersion,v]</value>
-		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItemSettled.AddonCreator]</value>
+		<value condition="Container(50).ListItem.IsParentFolder" />
+		<value condition="$EXP[nara_list50_person]">$INFO[Container(50).ListItem.Appearances,$LOCALIZE[38026]: ]</value>
+		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItem.AddonVersion) + !String.IsEmpty(Container(50).ListItem.AddonCreator)">$INFO[Container(50).ListItem.AddonVersion,v]$INFO[Container(50).ListItem.AddonCreator,  ·  ]</value>
+		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItem.AddonVersion)">$INFO[Container(50).ListItem.AddonVersion,v]</value>
+		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItem.AddonCreator]</value>
 		<value>$VAR[NaraList50MetadataVar]</value>
 	</variable>
 	<variable name="NaraList50PreviewThumbVar">
-		<value condition="Container(50).ListItemSettled.IsParentFolder">DefaultFolderBackSquare.png</value>
-		<value condition="Container.Content(studios) + System.AddonIsEnabled(resource.images.studios.white)">$INFO[Container(50).ListItemSettled.Label,resource://resource.images.studios.white/,.png]</value>
-		<value condition="Container.Content(genres) + System.AddonIsEnabled(resource.images.moviegenreicons.transparent)">$INFO[Container(50).ListItemSettled.Label,resource://resource.images.moviegenreicons.transparent/,.png]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Art(thumb))">$INFO[Container(50).ListItemSettled.Art(thumb)]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Thumb)">$INFO[Container(50).ListItemSettled.Thumb]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Art(poster))">$INFO[Container(50).ListItemSettled.Art(poster)]</value>
+		<value condition="Container(50).ListItem.IsParentFolder">DefaultFolderBackSquare.png</value>
+		<value condition="Container.Content(studios) + System.AddonIsEnabled(resource.images.studios.white)">$INFO[Container(50).ListItem.Label,resource://resource.images.studios.white/,.png]</value>
+		<value condition="Container.Content(genres) + System.AddonIsEnabled(resource.images.moviegenreicons.transparent)">$INFO[Container(50).ListItem.Label,resource://resource.images.moviegenreicons.transparent/,.png]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Art(thumb))">$INFO[Container(50).ListItem.Art(thumb)]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Thumb)">$INFO[Container(50).ListItem.Thumb]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Art(poster))">$INFO[Container(50).ListItem.Art(poster)]</value>
 		<value condition="$EXP[nara_list50_person]">DefaultActor.png</value>
-		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItemSettled.Icon)">$INFO[Container(50).ListItemSettled.Icon]</value>
+		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItem.Icon)">$INFO[Container(50).ListItem.Icon]</value>
 		<value condition="$EXP[nara_list50_addon]">DefaultAddon.png</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,artist)">DefaultArtist.png</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,album) | String.IsEqual(Container(50).ListItemSettled.DBType,song)">DefaultAudio.png</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Icon)">$INFO[Container(50).ListItemSettled.Icon]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,artist)">DefaultArtist.png</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,album) | String.IsEqual(Container(50).ListItem.DBType,song)">DefaultAudio.png</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Icon)">$INFO[Container(50).ListItem.Icon]</value>
 		<value>DefaultFolder.png</value>
 	</variable>
 	<variable name="NaraList50PreviewDescriptionVar">
-		<value condition="Container(50).ListItemSettled.IsParentFolder" />
-		<value condition="$EXP[nara_list50_addon] + String.IsEqual(Container.FolderPath,addons://outdated/) + !String.IsEmpty(Container(50).ListItemSettled.AddonNews)">$INFO[Container(50).ListItemSettled.AddonNews]</value>
-		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItemSettled.AddonDescription)">$INFO[Container(50).ListItemSettled.AddonDescription]</value>
-		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItemSettled.AddonSummary]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,album)">$INFO[Container(50).ListItemSettled.Property(album_description)]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,artist)">$INFO[Container(50).ListItemSettled.Property(artist_description)]</value>
-		<value condition="String.IsEqual(Container(50).ListItemSettled.DBType,song)">$INFO[Container(50).ListItemSettled.Comment]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Property(description))">$INFO[Container(50).ListItemSettled.Property(description)]</value>
-		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItemSettled.PictureCamMake,, ]$INFO[Container(50).ListItemSettled.PictureCamModel]</value>
-		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItemSettled.Property(favourite.action),$LOCALIZE[15217]: ]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.Plot)">$INFO[Container(50).ListItemSettled.Plot]</value>
-		<value condition="!String.IsEmpty(Container(50).ListItemSettled.PlotOutline)">$INFO[Container(50).ListItemSettled.PlotOutline]</value>
+		<value condition="Container(50).ListItem.IsParentFolder" />
+		<value condition="$EXP[nara_list50_addon] + String.IsEqual(Container.FolderPath,addons://outdated/) + !String.IsEmpty(Container(50).ListItem.AddonNews)">$INFO[Container(50).ListItem.AddonNews]</value>
+		<value condition="$EXP[nara_list50_addon] + !String.IsEmpty(Container(50).ListItem.AddonDescription)">$INFO[Container(50).ListItem.AddonDescription]</value>
+		<value condition="$EXP[nara_list50_addon]">$INFO[Container(50).ListItem.AddonSummary]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,album)">$INFO[Container(50).ListItem.Property(album_description)]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,artist)">$INFO[Container(50).ListItem.Property(artist_description)]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.DBType,song)">$INFO[Container(50).ListItem.Comment]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Property(description))">$INFO[Container(50).ListItem.Property(description)]</value>
+		<value condition="Window.IsActive(pictures)">$INFO[Container(50).ListItem.PictureCamMake,, ]$INFO[Container(50).ListItem.PictureCamModel]</value>
+		<value condition="Container.Content(favourites)">$INFO[Container(50).ListItem.Property(favourite.action),$LOCALIZE[15217]: ]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.Plot)">$INFO[Container(50).ListItem.Plot]</value>
+		<value condition="!String.IsEmpty(Container(50).ListItem.PlotOutline)">$INFO[Container(50).ListItem.PlotOutline]</value>
 	</variable>
 	<variable name="NaraList50AddonWarningVar">
-		<value condition="String.IsEqual(Container(50).ListItemSettled.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(Container(50).ListItemSettled.AddonLifecycleType,$LOCALIZE[24171])">$INFO[Container(50).ListItemSettled.AddonLifecycleType]$INFO[Container(50).ListItemSettled.AddonLifecycleDesc,[CR]]</value>
+		<value condition="String.IsEqual(Container(50).ListItem.AddonLifecycleType,$LOCALIZE[24170]) | String.IsEqual(Container(50).ListItem.AddonLifecycleType,$LOCALIZE[24171])">$INFO[Container(50).ListItem.AddonLifecycleType]$INFO[Container(50).ListItem.AddonLifecycleDesc,[CR]]</value>
 	</variable>
 	<!-- These two values form the aligned data columns in each compact row. -->
 	<variable name="NaraList50PrimaryMetaVar">
@@ -563,49 +563,49 @@
 		<value>text_secondary</value>
 	</variable>
 	<variable name="NaraPosterHeroPosterVar">
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Art(poster))">$INFO[Container(501).ListItemSettled.Art(poster)]</value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Art(season.poster))">$INFO[Container(501).ListItemSettled.Art(season.poster)]</value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Art(tvshow.poster))">$INFO[Container(501).ListItemSettled.Art(tvshow.poster)]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Art(poster))">$INFO[Container(501).ListItem.Art(poster)]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Art(season.poster))">$INFO[Container(501).ListItem.Art(season.poster)]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Art(tvshow.poster))">$INFO[Container(501).ListItem.Art(tvshow.poster)]</value>
 	</variable>
 	<variable name="NaraPosterDeckTitleVar">
-		<value condition="String.IsEqual(Container(51).ListItemSettled.DBType,season)">$INFO[Container(51).ListItemSettled.Label]</value>
-		<value condition="!String.IsEmpty(Container(51).ListItemSettled.Title)">$INFO[Container(51).ListItemSettled.Title]</value>
-		<value>$INFO[Container(51).ListItemSettled.Label]</value>
+		<value condition="String.IsEqual(Container(51).ListItem.DBType,season)">$INFO[Container(51).ListItem.Label]</value>
+		<value condition="!String.IsEmpty(Container(51).ListItem.Title)">$INFO[Container(51).ListItem.Title]</value>
+		<value>$INFO[Container(51).ListItem.Label]</value>
 	</variable>
 	<variable name="NaraPosterHeroClearLogoVar">
-		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItemSettled.Art(tvshow.clearlogo))">$INFO[Container(51).ListItemSettled.Art(tvshow.clearlogo)]</value>
-		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItemSettled.Art(clearlogo))">$INFO[Container(51).ListItemSettled.Art(clearlogo)]</value>
+		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItem.Art(tvshow.clearlogo))">$INFO[Container(51).ListItem.Art(tvshow.clearlogo)]</value>
+		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItem.Art(clearlogo))">$INFO[Container(51).ListItem.Art(clearlogo)]</value>
 		<value condition="Control.IsVisible(51)"></value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Art(tvshow.clearlogo))">$INFO[Container(501).ListItemSettled.Art(tvshow.clearlogo)]</value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Art(clearlogo))">$INFO[Container(501).ListItemSettled.Art(clearlogo)]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Art(tvshow.clearlogo))">$INFO[Container(501).ListItem.Art(tvshow.clearlogo)]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Art(clearlogo))">$INFO[Container(501).ListItem.Art(clearlogo)]</value>
 	</variable>
 	<variable name="NaraPosterHeroTitleVar">
-		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItemSettled.TVShowTitle)">$INFO[Container(51).ListItemSettled.TVShowTitle]</value>
-		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItemSettled.Title)">$INFO[Container(51).ListItemSettled.Title]</value>
-		<value condition="Control.IsVisible(51)">$INFO[Container(51).ListItemSettled.Label]</value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.TVShowTitle)">$INFO[Container(501).ListItemSettled.TVShowTitle]</value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Title)">$INFO[Container(501).ListItemSettled.Title]</value>
-		<value>$INFO[Container(501).ListItemSettled.Label]</value>
+		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItem.TVShowTitle)">$INFO[Container(51).ListItem.TVShowTitle]</value>
+		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItem.Title)">$INFO[Container(51).ListItem.Title]</value>
+		<value condition="Control.IsVisible(51)">$INFO[Container(51).ListItem.Label]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.TVShowTitle)">$INFO[Container(501).ListItem.TVShowTitle]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Title)">$INFO[Container(501).ListItem.Title]</value>
+		<value>$INFO[Container(501).ListItem.Label]</value>
 	</variable>
 	<variable name="NaraPosterHeroSynopsisVar">
-		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItemSettled.Plot)">$INFO[Container(51).ListItemSettled.Plot]</value>
-		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItemSettled.DBType,season)">$INFO[Container.ShowPlot]</value>
+		<value condition="Control.IsVisible(51) + !String.IsEmpty(Container(51).ListItem.Plot)">$INFO[Container(51).ListItem.Plot]</value>
+		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItem.DBType,season)">$INFO[Container.ShowPlot]</value>
 		<value condition="Control.IsVisible(51)"></value>
-		<value condition="!String.IsEmpty(Container(501).ListItemSettled.Plot)">$INFO[Container(501).ListItemSettled.Plot]</value>
-		<value condition="String.IsEqual(Container(501).ListItemSettled.DBType,season)">$INFO[Container.ShowPlot]</value>
+		<value condition="!String.IsEmpty(Container(501).ListItem.Plot)">$INFO[Container(501).ListItem.Plot]</value>
+		<value condition="String.IsEqual(Container(501).ListItem.DBType,season)">$INFO[Container.ShowPlot]</value>
 	</variable>
 	<variable name="NaraPosterHeroMetadataVar">
-		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItemSettled.DBType,tvshow)">$INFO[Container(51).ListItemSettled.Year]$INFO[Container(51).ListItemSettled.Mpaa,  •  ]$INFO[Container(51).ListItemSettled.Genre,  •  ]$INFO[Container(51).ListItemSettled.Season,  •  , $LOCALIZE[36905]]$INFO[Container(51).ListItemSettled.Episode,  •  , $LOCALIZE[36907]]</value>
-		<value condition="Control.IsVisible(51)">$INFO[Container(51).ListItemSettled.Year]$INFO[Container(51).ListItemSettled.Mpaa,  •  ]$INFO[Container(51).ListItemSettled.Duration,  •  ]$INFO[Container(51).ListItemSettled.Genre,  •  ]</value>
-		<value condition="String.IsEqual(Container(501).ListItemSettled.DBType,tvshow)">$INFO[Container(501).ListItemSettled.Year]$INFO[Container(501).ListItemSettled.Mpaa,  •  ]$INFO[Container(501).ListItemSettled.Genre,  •  ]$INFO[Container(501).ListItemSettled.Season,  •  , $LOCALIZE[36905]]$INFO[Container(501).ListItemSettled.Episode,  •  , $LOCALIZE[36907]]</value>
-		<value>$INFO[Container(501).ListItemSettled.Year]$INFO[Container(501).ListItemSettled.Mpaa,  •  ]$INFO[Container(501).ListItemSettled.Duration,  •  ]$INFO[Container(501).ListItemSettled.Genre,  •  ]</value>
+		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItem.DBType,tvshow)">$INFO[Container(51).ListItem.Year]$INFO[Container(51).ListItem.Mpaa,  •  ]$INFO[Container(51).ListItem.Genre,  •  ]$INFO[Container(51).ListItem.Season,  •  , $LOCALIZE[36905]]$INFO[Container(51).ListItem.Episode,  •  , $LOCALIZE[36907]]</value>
+		<value condition="Control.IsVisible(51)">$INFO[Container(51).ListItem.Year]$INFO[Container(51).ListItem.Mpaa,  •  ]$INFO[Container(51).ListItem.Duration,  •  ]$INFO[Container(51).ListItem.Genre,  •  ]</value>
+		<value condition="String.IsEqual(Container(501).ListItem.DBType,tvshow)">$INFO[Container(501).ListItem.Year]$INFO[Container(501).ListItem.Mpaa,  •  ]$INFO[Container(501).ListItem.Genre,  •  ]$INFO[Container(501).ListItem.Season,  •  , $LOCALIZE[36905]]$INFO[Container(501).ListItem.Episode,  •  , $LOCALIZE[36907]]</value>
+		<value>$INFO[Container(501).ListItem.Year]$INFO[Container(501).ListItem.Mpaa,  •  ]$INFO[Container(501).ListItem.Duration,  •  ]$INFO[Container(501).ListItem.Genre,  •  ]</value>
 	</variable>
 	<variable name="NaraPosterHeroEpisodeLabelVar">
-		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItemSettled.DBType,episode)">$INFO[Container(51).ListItemSettled.Season,S]$INFO[Container(51).ListItemSettled.Episode,E]$INFO[Container(51).ListItemSettled.Title,  •  ]</value>
-		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItemSettled.DBType,season)">$INFO[Container(51).ListItemSettled.Label]</value>
+		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItem.DBType,episode)">$INFO[Container(51).ListItem.Season,S]$INFO[Container(51).ListItem.Episode,E]$INFO[Container(51).ListItem.Title,  •  ]</value>
+		<value condition="Control.IsVisible(51) + String.IsEqual(Container(51).ListItem.DBType,season)">$INFO[Container(51).ListItem.Label]</value>
 		<value condition="Control.IsVisible(51)"></value>
-		<value condition="String.IsEqual(Container(501).ListItemSettled.DBType,episode)">$INFO[Container(501).ListItemSettled.Season,S]$INFO[Container(501).ListItemSettled.Episode,E]$INFO[Container(501).ListItemSettled.Title,  •  ]</value>
-		<value condition="String.IsEqual(Container(501).ListItemSettled.DBType,season)">$INFO[Container(501).ListItemSettled.Label]</value>
+		<value condition="String.IsEqual(Container(501).ListItem.DBType,episode)">$INFO[Container(501).ListItem.Season,S]$INFO[Container(501).ListItem.Episode,E]$INFO[Container(501).ListItem.Title,  •  ]</value>
+		<value condition="String.IsEqual(Container(501).ListItem.DBType,season)">$INFO[Container(501).ListItem.Label]</value>
 	</variable>
 	<variable name="VideoInfoPlotVar">
 		<value condition="!String.IsEmpty(ListItem.Tagline) | !String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Tagline,[I],[/I][CR]]$INFO[ListItem.Plot]</value>
@@ -703,13 +703,13 @@
 	<variable name="HomeFanartVar">
 		<value condition="Skin.HasSetting(no_fanart)"></value>
 		<value condition="Window.IsActive(musicinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo)">$INFO[Window(home).Property(infobackground)]</value>
-		<value condition="$EXP[NaraHomeFanartSettledRow] + String.IsEqual(Container.ListItemSettled.Property(node.type),target_folder)">$INFO[Container.ListItemSettled(-1).Art(fanart)]</value>
-		<value condition="$EXP[NaraHomeFanartSettledRow]">$INFO[Container.ListItemSettled.Art(fanart)]</value>
+		<value condition="$EXP[NaraHomeFanartSettledRow] + String.IsEqual(Container.ListItem.Property(node.type),target_folder)">$INFO[Container.ListItem(-1).Art(fanart)]</value>
+		<value condition="$EXP[NaraHomeFanartSettledRow]">$INFO[Container.ListItem.Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + ControlGroup(5001).HasFocus() + String.IsEqual(Container.ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container.ListItemNoWrap(-1).Art(fanart))">$INFO[Container.ListItemNoWrap(-1).Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + ControlGroup(6001).HasFocus() + String.IsEqual(Container.ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container.ListItemNoWrap(-1).Art(fanart))">$INFO[Container.ListItemNoWrap(-1).Art(fanart)]</value>
 		<value condition="[Control.HasFocus(9012) + !String.IsEmpty(Window(home).Property(Home.movies.Hero))] | [Control.HasFocus(9013) + !String.IsEmpty(Window(home).Property(Home.tvshows.Hero))]">$VAR[HomeVideoHeroFanartVar]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + Control.HasFocus(9012) + !String.IsEmpty(Container(5100).ListItemSettled.Art(fanart))">$INFO[Container(5100).ListItemSettled.Art(fanart)]</value>
-		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + Control.HasFocus(9013) + !String.IsEmpty(Container(6100).ListItemSettled.Art(fanart))">$INFO[Container(6100).ListItemSettled.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + Control.HasFocus(9012) + !String.IsEmpty(Container(5100).ListItem.Art(fanart))">$INFO[Container(5100).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + Control.HasFocus(9013) + !String.IsEmpty(Container(6100).ListItem.Art(fanart))">$INFO[Container(6100).ListItem.Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + [Control.HasFocus(5500) | Control.HasFocus(5700) | Control.HasFocus(5900)] + !String.IsEmpty(Window(home).Property(Home.LastMovieFanart))">$INFO[Window(home).Property(Home.LastMovieFanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + [Control.HasFocus(6400) | Control.HasFocus(6600) | Control.HasFocus(6900)] + !String.IsEmpty(Window(home).Property(Home.LastTVShowFanart))">$INFO[Window(home).Property(Home.LastTVShowFanart)]</value>
 		<value condition="Container.ListItem.Property(emby.library.art) + !String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
@@ -717,7 +717,7 @@
 		<value condition="!String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
 	</variable>
 	<variable name="NaraWallFanartVar">
-		<value condition="!String.IsEmpty(Container(500).ListItemSettled.Art(fanart))">$INFO[Container(500).ListItemSettled.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(Container(500).ListItem.Art(fanart))">$INFO[Container(500).ListItem.Art(fanart)]</value>
 		<value condition="!String.IsEmpty(Container.Art(tvshow.fanart))">$INFO[Container.Art(tvshow.fanart)]</value>
 		<value condition="!String.IsEmpty(Container.Art(artist.fanart))">$INFO[Container.Art(artist.fanart)]</value>
 		<value>$INFO[Container.Art(fanart)]</value>
@@ -1535,4 +1535,21 @@
   <value condition="Control.HasFocus(9000)">glass_focus_heavy</value>
   <value>glass_focus_light</value>
 </variable>
+	<!-- 通用版：玻璃面板底色。默认透黑，开启 nara_glass_light 后为透白 -->
+	<variable name="GlassTint_clear">
+		<value condition="Skin.HasSetting(nara_glass_light)">1AFFFFFF</value>
+		<value>4D000000</value>
+	</variable>
+	<variable name="GlassTint_regular">
+		<value condition="Skin.HasSetting(nara_glass_light)">26FFFFFF</value>
+		<value>66000000</value>
+	</variable>
+	<variable name="GlassTint_frosted">
+		<value condition="Skin.HasSetting(nara_glass_light)">33FFFFFF</value>
+		<value>800F0F12</value>
+	</variable>
+	<variable name="GlassTint_dialog">
+		<value condition="Skin.HasSetting(nara_glass_light)">40FFFFFF</value>
+		<value>99141418</value>
+	</variable>
 </includes>

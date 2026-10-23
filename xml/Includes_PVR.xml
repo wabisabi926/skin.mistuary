@@ -141,7 +141,7 @@
 					<top>0</top>
 					<right>0</right>
 					<animation effect="fade" start="100" end="0" time="0">UnFocus</animation>
-					<texture cornerradius="$PARAM[focus_radius]" colordiffuse="$PARAM[focus_surface]">lists/focus.png</texture>
+					<texture colordiffuse="$PARAM[focus_surface]">lists/focus.png</texture>
 					<visible>Control.HasFocus($PARAM[list_id])</visible>
 				</control>
 				<control type="progress">

@@ -35,7 +35,7 @@
 						<top>5</top>
 						<width>320</width>
 						<height>380</height>
-						<texture colordiffuse="surface_raised" cornerradius="24">colors/white.png</texture>
+						<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 					</control>
 					<control type="image">
 						<left>51</left>
@@ -85,13 +85,13 @@
 							<top>5</top>
 							<width>320</width>
 							<height>380</height>
-							<texture colordiffuse="surface_raised" cornerradius="24">colors/white.png</texture>
+							<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 						</control>
 						<control type="image">
 							<top>5</top>
 							<width>320</width>
 							<height>380</height>
-							<texture colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
@@ -192,7 +192,7 @@
 					<control type="image">
 						<right>0</right>
 						<bottom>0</bottom>
-						<texture colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texture>
+						<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
 						<animation effect="fade" start="100" end="50" time="40" condition="!Control.HasFocus(9000)">Conditional</animation>
 					</control>
 					<control type="label">

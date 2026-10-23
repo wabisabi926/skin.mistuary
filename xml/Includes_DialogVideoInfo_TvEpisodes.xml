@@ -70,7 +70,7 @@
 				<visible>String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)</visible>
 				<itemlayout width="1" height="1" />
 				<focusedlayout width="1" height="1" />
-				<content playbacktarget="true" browse="never">videodb://tvshows/titles/$INFO[ListItem.DBID]/</content>
+				<content browse="never">videodb://tvshows/titles/$INFO[ListItem.DBID]/</content>
 			</control>
 
 			<!-- The card is deliberately informational: activating it would only
@@ -85,7 +85,7 @@
 				<control type="image">
 					<width>620</width>
 					<height>180</height>
-					<texture material="glass" glassstyle="regular" glassedge="soft" cornerradius="4">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="4">shapes/round4.png</texture>
 				</control>
 				<!-- The provider intentionally retains its previous item during an
 				     asynchronous refresh. Reveal only the newly completed snapshot. -->
@@ -152,7 +152,7 @@
 						<width>270</width>
 						<height>180</height>
 						<aspectratio>scale</aspectratio>
-						<texture background="true" cornerradius="4">$INFO[Container(59).ListItem.Art(thumb)]</texture>
+						<texture background="true">$INFO[Container(59).ListItem.Art(thumb)]</texture>
 						<visible>!String.IsEmpty(Container(59).ListItem.Art(thumb))</visible>
 					</control>
 				</control>
@@ -195,7 +195,7 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</focusedlayout>
-				<content sortby="season" sortorder="ascending" target="videos" browse="never" loaditemdetails="false">videodb://tvshows/titles/$INFO[ListItem.DBID]/</content>
+				<content sortby="season" sortorder="ascending" target="videos" browse="never">videodb://tvshows/titles/$INFO[ListItem.DBID]/</content>
 				<content>
 					<item>
 						<label>$LOCALIZE[206]</label>
@@ -264,14 +264,14 @@
 							<width>336</width>
 							<height>189</height>
 							<aspectratio>scale</aspectratio>
-							<texture fallback="DefaultVideo.png" background="true" cornerradius="4">$INFO[ListItem.Art(thumb)]</texture>
+							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 						</control>
 						<control type="image">
 							<top>123</top>
 							<width>336</width>
 							<height>66</height>
 							<aspectratio>stretch</aspectratio>
-							<texture cornerradius="4" colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+							<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
 						</control>
 						<control type="label">
 							<left>12</left>
@@ -322,21 +322,21 @@
 							<width>336</width>
 							<height>189</height>
 							<aspectratio>scale</aspectratio>
-							<texture fallback="DefaultVideo.png" background="true" cornerradius="4">$INFO[ListItem.Art(thumb)]</texture>
+							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 						</control>
 						<control type="image">
 							<left>-14</left>
 							<top>-14</top>
 							<width>364</width>
 							<height>217</height>
-							<texture cornerradius="6" cornerborder="2" cornerglow="12" colordiffuse="focus_media">colors/white.png</texture>
+							<texture colordiffuse="focus_media" border="6">shapes/round6.png</texture>
 						</control>
 						<control type="image">
 							<top>123</top>
 							<width>336</width>
 							<height>66</height>
 							<aspectratio>stretch</aspectratio>
-							<texture cornerradius="4" colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+							<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
 						</control>
 						<control type="label">
 							<left>12</left>
@@ -379,7 +379,7 @@
 				</focusedlayout>
 				<!-- Let Action(Play) honor Settings > Player > Videos > Play next video
 				     automatically for episodes instead of forcing single-item playback. -->
-				<content sortby="episode" sortorder="ascending" target="videos" browse="never" checkautoplaynextitem="true">$INFO[Container(5100).ListItem.FolderPath]</content>
+				<content sortby="episode" sortorder="ascending" target="videos" browse="never">$INFO[Container(5100).ListItem.FolderPath]</content>
 			</control>
 			</control>
 		</definition>

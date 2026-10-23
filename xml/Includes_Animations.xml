@@ -20,14 +20,6 @@
 				<height>2160</height>
 				<aspectratio>stretch</aspectratio>
 				<texture>overlays/fanart-stage-mask.png</texture>
-				<animation type="ImageChange" source="$PARAM[source]" condition="$PARAM[enabled]" reversible="false">
-					<effect type="fade" start="20" end="100" time="80" tween="sine" easing="out" />
-					<effect type="fade" start="100" end="$PARAM[resting_opacity]" delay="80" time="520" tween="sine" easing="inout" />
-					<!-- Expand across the beam axis while keeping the light source fixed. -->
-					<effect type="rotate" start="28.64789" end="28.64789" center="-160,1180" time="0" />
-					<effect type="zoom" start="100,100" end="100,600" center="-160,1180" time="600" tween="sine" easing="in" />
-					<effect type="rotate" start="-28.64789" end="-28.64789" center="-160,1180" time="0" />
-				</animation>
 				<visible>$PARAM[visible]</visible>
 			</control>
 		</definition>

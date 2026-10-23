@@ -586,7 +586,7 @@
 						<top>0</top>
 						<right>0</right>
 						<bottom>0</bottom>
-						<texture cornerradius="4" colordiffuse="glass_focus_medium">colors/white.png</texture>
+						<texture colordiffuse="glass_focus_medium" border="4">shapes/round4.png</texture>
 						<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus($PARAM[list_id])">Conditional</animation>
 					</control>
 					<control type="image">
@@ -1268,7 +1268,7 @@
 		<param name="flipx">false</param>
 		<definition>
 			<control type="image">
-				<texture flipx="$PARAM[flipx]" material="glass" glassstyle="frosted">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_frosted]" flipx="$PARAM[flipx]">colors/white.png</texture>
 				<width>$PARAM[width]</width>
 				<left>$PARAM[left]</left>
 				<right>$PARAM[right]</right>

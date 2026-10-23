@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<expression name="nara_list50_video_hero">Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(seasons) | Container.Content(sets) | Container.Content(musicvideos) | $EXP[videoasset_true] | [!$EXP[nara_list50_person] + !$EXP[nara_list50_addon] + !$EXP[nara_list50_category] + [String.IsEqual(Container(50).ListItemSettled.DBType,movie) | String.IsEqual(Container(50).ListItemSettled.DBType,tvshow) | String.IsEqual(Container(50).ListItemSettled.DBType,episode) | String.IsEqual(Container(50).ListItemSettled.DBType,season) | String.IsEqual(Container(50).ListItemSettled.DBType,set) | String.IsEqual(Container(50).ListItemSettled.DBType,musicvideo) | String.IsEqual(Container(50).ListItemSettled.DBType,video)]]</expression>
-	<expression name="nara_list50_person">!Container(50).ListItemSettled.IsParentFolder + [Container.Content(actors) | Container.Content(directors) | Container.Content(writers) | String.IsEqual(Container(50).ListItemSettled.DBType,actor) | String.IsEqual(Container(50).ListItemSettled.DBType,director) | String.IsEqual(Container(50).ListItemSettled.DBType,writer)]</expression>
-	<expression name="nara_list50_addon">!Container(50).ListItemSettled.IsParentFolder + !String.IsEmpty(Container(50).ListItemSettled.AddonName)</expression>
+	<expression name="nara_list50_video_hero">Container.Content(movies) | Container.Content(tvshows) | Container.Content(episodes) | Container.Content(seasons) | Container.Content(sets) | Container.Content(musicvideos) | $EXP[videoasset_true] | [!$EXP[nara_list50_person] + !$EXP[nara_list50_addon] + !$EXP[nara_list50_category] + [String.IsEqual(Container(50).ListItem.DBType,movie) | String.IsEqual(Container(50).ListItem.DBType,tvshow) | String.IsEqual(Container(50).ListItem.DBType,episode) | String.IsEqual(Container(50).ListItem.DBType,season) | String.IsEqual(Container(50).ListItem.DBType,set) | String.IsEqual(Container(50).ListItem.DBType,musicvideo) | String.IsEqual(Container(50).ListItem.DBType,video)]]</expression>
+	<expression name="nara_list50_person">!Container(50).ListItem.IsParentFolder + [Container.Content(actors) | Container.Content(directors) | Container.Content(writers) | String.IsEqual(Container(50).ListItem.DBType,actor) | String.IsEqual(Container(50).ListItem.DBType,director) | String.IsEqual(Container(50).ListItem.DBType,writer)]</expression>
+	<expression name="nara_list50_addon">!Container(50).ListItem.IsParentFolder + !String.IsEmpty(Container(50).ListItem.AddonName)</expression>
 	<expression name="nara_list50_category">Container.Content(years) | Container.Content(genres) | Container.Content(studios) | Container.Content(countries) | Container.Content(tags) | Container.Content(roles) | Container.Content(sources)</expression>
-	<expression name="nara_list50_has_art">!String.IsEmpty(Container(50).ListItemSettled.Art(thumb)) | !String.IsEmpty(Container(50).ListItemSettled.Art(poster)) | !String.IsEmpty(Container(50).ListItemSettled.Thumb)</expression>
-	<expression name="nara_list50_large_preview">!Container(50).ListItemSettled.IsParentFolder + !$EXP[nara_list50_category] + [$EXP[nara_list50_has_art] | String.IsEqual(Container(50).ListItemSettled.DBType,album) | String.IsEqual(Container(50).ListItemSettled.DBType,song) | String.IsEqual(Container(50).ListItemSettled.DBType,artist)]</expression>
+	<expression name="nara_list50_has_art">!String.IsEmpty(Container(50).ListItem.Art(thumb)) | !String.IsEmpty(Container(50).ListItem.Art(poster)) | !String.IsEmpty(Container(50).ListItem.Thumb)</expression>
+	<expression name="nara_list50_large_preview">!Container(50).ListItem.IsParentFolder + !$EXP[nara_list50_category] + [$EXP[nara_list50_has_art] | String.IsEqual(Container(50).ListItem.DBType,album) | String.IsEqual(Container(50).ListItem.DBType,song) | String.IsEqual(Container(50).ListItem.DBType,artist)]</expression>
 	<include name="View_50_List">
 		<control type="group">
 			<include>OpenClose_Right</include>
@@ -43,7 +43,6 @@
 				<movement>5</movement>
 				<focusposition>1</focusposition>
 				<scrolltime tween="cubic" easing="out">360</scrolltime>
-				<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 				<orientation>vertical</orientation>
 				<preloaditems>2</preloaditems>
 				<pagecontrol>50600</pagecontrol>
@@ -60,7 +59,7 @@
 						<right>0</right>
 						<top>4</top>
 						<bottom>4</bottom>
-						<texture cornerradius="12" colordiffuse="focus_surface">colors/white.png</texture>
+						<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>
 						<visible>Control.HasFocus(50)</visible>
 					</control>
 					<control type="image">
@@ -68,7 +67,7 @@
 						<right>0</right>
 						<top>4</top>
 						<bottom>4</bottom>
-						<texture cornerradius="12" colordiffuse="selection_surface">colors/white.png</texture>
+						<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 						<visible>!Control.HasFocus(50)</visible>
 					</control>
 					<control type="image">
@@ -76,7 +75,7 @@
 						<top>17</top>
 						<width>50</width>
 						<height>50</height>
-						<texture cornerradius="25" colordiffuse="focus_foreground_muted">colors/white.png</texture>
+						<texture colordiffuse="focus_foreground_muted" border="25">shapes/round25.png</texture>
 					</control>
 					<control type="image">
 						<left>22</left>
@@ -84,7 +83,7 @@
 						<width>50</width>
 						<height>50</height>
 						<aspectratio>scale</aspectratio>
-						<texture background="true" cornerradius="25">$VAR[IconWallThumbVar]</texture>
+						<texture background="true">$VAR[IconWallThumbVar]</texture>
 					</control>
 					<control type="label">
 						<left>96</left>
@@ -129,7 +128,7 @@
 						<top>17</top>
 						<width>50</width>
 						<height>50</height>
-						<texture cornerradius="25" colordiffuse="selection_surface">colors/white.png</texture>
+						<texture colordiffuse="selection_surface" border="25">shapes/round25.png</texture>
 					</control>
 					<control type="image">
 						<left>22</left>
@@ -137,7 +136,7 @@
 						<width>50</width>
 						<height>50</height>
 						<aspectratio>scale</aspectratio>
-						<texture background="true" cornerradius="25" colordiffuse="opacity_medium">$VAR[IconWallThumbVar]</texture>
+						<texture background="true" colordiffuse="opacity_medium">$VAR[IconWallThumbVar]</texture>
 					</control>
 					<control type="label">
 						<left>96</left>
@@ -199,20 +198,20 @@
 					<param name="tv_synopsis_height" value="134" />
 					<param name="clearlogo_width" value="700" />
 					<param name="clearlogo_height" value="140" />
-					<param name="item_dbtype" value="Container(50).ListItemSettled.DBType" />
+					<param name="item_dbtype" value="Container(50).ListItem.DBType" />
 					<param name="clearlogo_texture" value="$VAR[NaraList50ClearLogoVar]" />
-					<param name="clearlogo_visible" value="!String.IsEmpty(Container(50).ListItemSettled.Art(clearlogo)) | !String.IsEmpty(Container(50).ListItemSettled.Art(tvshow.clearlogo))" />
-					<param name="clearlogo_missing" value="String.IsEmpty(Container(50).ListItemSettled.Art(clearlogo)) + String.IsEmpty(Container(50).ListItemSettled.Art(tvshow.clearlogo))" />
+					<param name="clearlogo_visible" value="!String.IsEmpty(Container(50).ListItem.Art(clearlogo)) | !String.IsEmpty(Container(50).ListItem.Art(tvshow.clearlogo))" />
+					<param name="clearlogo_missing" value="String.IsEmpty(Container(50).ListItem.Art(clearlogo)) + String.IsEmpty(Container(50).ListItem.Art(tvshow.clearlogo))" />
 					<param name="hero_title" value="$VAR[NaraList50TitleVar]" />
 					<param name="episode_label" value="$VAR[NaraList50EpisodeLabelVar]" />
-					<param name="episode_visible" value="String.IsEqual(Container(50).ListItemSettled.DBType,episode) | String.IsEqual(Container(50).ListItemSettled.DBType,season)" />
+					<param name="episode_visible" value="String.IsEqual(Container(50).ListItem.DBType,episode) | String.IsEqual(Container(50).ListItem.DBType,season)" />
 					<param name="metadata_label" value="$VAR[NaraList50MetadataVar]" />
-					<param name="rating_item_prefix" value="Container(50).ListItemSettled" />
+					<param name="rating_item_prefix" value="Container(50).ListItem" />
 					<param name="technical_visible" value="true" />
-					<param name="technical_item_prefix" value="Container(50).ListItemSettled" />
-					<param name="tagline_visible" value="!String.IsEqual(Container(50).ListItemSettled.DBType,tvshow) + !String.IsEmpty(Container(50).ListItemSettled.Tagline)" />
-					<param name="tagline_missing" value="String.IsEqual(Container(50).ListItemSettled.DBType,tvshow) | String.IsEmpty(Container(50).ListItemSettled.Tagline)" />
-					<param name="tagline_label" value="[I]$INFO[Container(50).ListItemSettled.Tagline][/I]" />
+					<param name="technical_item_prefix" value="Container(50).ListItem" />
+					<param name="tagline_visible" value="!String.IsEqual(Container(50).ListItem.DBType,tvshow) + !String.IsEmpty(Container(50).ListItem.Tagline)" />
+					<param name="tagline_missing" value="String.IsEqual(Container(50).ListItem.DBType,tvshow) | String.IsEmpty(Container(50).ListItem.Tagline)" />
+					<param name="tagline_label" value="[I]$INFO[Container(50).ListItem.Tagline][/I]" />
 					<param name="synopsis_label" value="$VAR[NaraList50SynopsisVar]" />
 				</include>
 				<control type="label">
@@ -232,13 +231,13 @@
 			<control type="image">
 				<width>802</width>
 				<height>$PARAM[height]</height>
-				<texture material="glass" glassstyle="regular" cornerradius="32">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 			</control>
 		</definition>
 	</include>
 	<include name="NaraList50ContextPreview">
 		<control type="group">
-			<visible>!$EXP[nara_list50_video_hero] + Integer.IsGreater(Container(50).NumItems,0) + !String.IsEmpty(Container(50).ListItemSettled.Label)</visible>
+			<visible>!$EXP[nara_list50_video_hero] + Integer.IsGreater(Container(50).NumItems,0) + !String.IsEmpty(Container(50).ListItem.Label)</visible>
 			<left>1018</left>
 			<width>802</width>
 			<height>1080</height>
@@ -258,7 +257,7 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<visible>$EXP[nara_list50_has_art]</visible>
-					<texture background="true" cornerradius="16" fallback="DefaultActor.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" fallback="DefaultActor.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="image">
 					<left>84</left>
@@ -268,7 +267,7 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<visible>!$EXP[nara_list50_has_art]</visible>
-					<texture background="true" cornerradius="16" fallback="DefaultActor.png">DefaultActor.png</texture>
+					<texture background="true" fallback="DefaultActor.png">DefaultActor.png</texture>
 				</control>
 				<control type="textbox">
 					<left>292</left>
@@ -323,7 +322,7 @@
 					<height>160</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" cornerradius="16" fallback="DefaultAddon.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" fallback="DefaultAddon.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="grouplist">
 					<left>232</left>
@@ -401,7 +400,7 @@
 					<height>318</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" cornerradius="16" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="textbox">
 					<left>36</left>
@@ -466,7 +465,7 @@
 					<height>184</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" cornerradius="16" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="textbox">
 					<left>256</left>

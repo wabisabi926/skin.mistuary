@@ -77,7 +77,7 @@
 						<top>3</top>
 						<right>0</right>
 						<bottom>3</bottom>
-						<texture colordiffuse="glass_focus_medium" cornerradius="4">colors/white.png</texture>
+						<texture colordiffuse="glass_focus_medium" border="4">shapes/round4.png</texture>
 					</control>
 					<control type="image">
 						<left>0</left>
@@ -114,7 +114,7 @@
 				</focusedlayout>
 				<onclick condition="!ListItem.IsPlaying">Playlist.PlayPosition(music,$INFO[ListItem.Property(playlistposition)])</onclick>
 				<onclick>Dialog.Close(1114)</onclick>
-				<content browse="never" loaditemdetails="false" focusplaying="true">playlistmusic://?reload=$INFO[Playlist.Position(music)]</content>
+				<content browse="never">playlistmusic://?reload=$INFO[Playlist.Position(music)]</content>
 			</control>
 			<control type="scrollbar" id="61">
 				<right>10</right>

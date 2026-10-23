@@ -41,7 +41,7 @@
 				<onright>5</onright>
 				<onup>3</onup>
 				<ondown>3</ondown>
-				<texturefocus cornerradius="18" colordiffuse="glass_focus_medium">colors/white.png</texturefocus>
+				<texturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texturefocus>
 				<texturenofocus />
 				<focusedcolor>text_primary</focusedcolor>
 				<textcolor>text_primary</textcolor>

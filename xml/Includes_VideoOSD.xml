@@ -111,8 +111,8 @@
 				<textoffsetx>18</textoffsetx>
 				<textcolor>$PARAM[foreground]</textcolor>
 				<disabledcolor>$PARAM[foreground]</disabledcolor>
-				<texturefocus cornerradius="4" cornerinset="0.5" colordiffuse="$PARAM[surface]">colors/white.png</texturefocus>
-				<texturenofocus cornerradius="4" cornerinset="0.5" colordiffuse="$PARAM[surface]">colors/white.png</texturenofocus>
+				<texturefocus colordiffuse="$PARAM[surface]" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="$PARAM[surface]" border="4">shapes/round4.png</texturenofocus>
 				<enable>false</enable>
 				<visible>$PARAM[visible]</visible>
 			</control>
@@ -238,14 +238,14 @@
 					<width>356</width>
 					<height>200</height>
 					<aspectratio>scale</aspectratio>
-					<texture fallback="DefaultVideo.png" background="true" cornerradius="4">$VAR[VideoOSDPlaylistThumbVar]</texture>
+					<texture fallback="DefaultVideo.png" background="true">$VAR[VideoOSDPlaylistThumbVar]</texture>
 				</control>
 				<control type="image">
 					<left>-14</left>
 					<top>-14</top>
 					<width>384</width>
 					<height>228</height>
-					<texture cornerradius="6" cornerborder="2" cornerglow="12" colordiffuse="focus_media">colors/white.png</texture>
+					<texture colordiffuse="focus_media" border="6">shapes/round6.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">
@@ -253,7 +253,7 @@
 					<width>356</width>
 					<height>66</height>
 					<aspectratio>stretch</aspectratio>
-					<texture cornerradius="4" colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+					<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
 				</control>
 				<control type="label">
 					<left>12</left>

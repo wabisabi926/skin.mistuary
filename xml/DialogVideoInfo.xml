@@ -73,10 +73,6 @@
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
-				<animation source="9090" sourcewindow="10000" animation="fanart-focus" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),home)">Follow</animation>
-				<animation source="16590" sourcewindow="10000" animation="fanart-detail" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),search)">Follow</animation>
-				<animation source="9490" sourcewindow="10025" animation="fanart-detail" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),library)">Follow</animation>
-				<animation source="5190" sourcewindow="11111" animation="fanart-detail" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),movieset)">Follow</animation>
 				<animation effect="zoom" start="100" end="104" center="80%,35%" time="500" tween="sine" easing="inout" condition="!Window.IsVisible(11111) + !$EXP[NaraVideoInfoFromHome] + !Window.IsVisible(videos)">WindowOpen</animation>
 				<!-- Preserve the completed entry zoom while the page fades out. -->
 				<animation effect="zoom" start="104" end="104" center="80%,35%" time="0" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),fallback)">WindowClose</animation>
@@ -175,7 +171,7 @@
 				<centertop>50%</centertop>
 				<width>480</width>
 				<height>349</height>
-				<texture material="glass" glassstyle="regular" cornerradius="42">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="42">shapes/round42.png</texture>
 			</control>
 			<control type="list" id="5199">
 				<centerleft>50%</centerleft>
@@ -201,7 +197,7 @@
 					<control type="image">
 						<width>456</width>
 						<height>65</height>
-						<texture cornerradius="30" colordiffuse="glass_focus_light">colors/white.png</texture>
+						<texture colordiffuse="glass_focus_light" border="30">shapes/round30.png</texture>
 					</control>
 					<control type="label">
 						<width>456</width>

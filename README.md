@@ -1,5 +1,22 @@
 # 皮肤 XML 扩展参数说明
 
+> **通用版分支（universal / 4.2.0）**
+>
+> 本分支面向官方 Kodi 21 Omega 及以上版本，不再依赖魔改内核。下列扩展标签在此分支中
+> **已全部移除或降级**，仅作历史说明保留：
+>
+> | 扩展 | 通用版替代方案 |
+> | --- | --- |
+> | `material="glass"` / `glassstyle` | 半透明纯色 + `shapes/round*.png` 圆角贴图，颜色由 `$VAR[GlassTint_*]` 提供，外观设置里可切换透黑/透白 |
+> | `cornerradius` / `cornerinset` / `cornerborder` / `cornerglow` | 9-slice 圆角贴图（`border` = 半径）；图片类纹理不再支持圆角 |
+> | `<texturebackground>` | 改为 grouplist 前的独立 `image` 控件 |
+> | `slotlist` / `<slots>` | 降级为 `fixedlist` |
+> | `<selectionsettledelay>` / `ListItemSettled` | 回退为实时跟随的 `ListItem` |
+> | `ImageChange` / `Follow` 动画 | 已移除 |
+> | `SkinExtended.xml` 扩展交互 | 已删除，回退 Kodi 原生行为 |
+>
+> 下文描述的是魔改内核的完整能力，供对照参考。
+
 本文列出本分支在 Kodi 基线上新增的皮肤 XML 标签、属性及用法。尺寸使用皮肤坐标，时间使用毫秒。
 
 ## 玻璃

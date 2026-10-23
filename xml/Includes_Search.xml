@@ -33,12 +33,12 @@
 	<expression name="NaraSearchHasResults">!String.IsEmpty(Control.GetLabel(16999).index(1)) + [Integer.IsGreater(Container(16101).NumItems,0) | Integer.IsGreater(Container(16102).NumItems,0)]</expression>
 	<expression name="NaraSearchKeyboardHidden">!String.IsEqual(Window(home).Property(Home.Section),search) | System.HasActiveModalDialog | !String.IsEmpty(Window(home).Property(Search.SettingsTransition)) | [!ControlGroup(16010).HasFocus() + !String.IsEmpty(Window(home).Property(Search.KeyboardHidden))]</expression>
 	<variable name="NaraSearchFanartVar">
-		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItemSettled.Art(fanart)]</value>
-		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItemSettled.Art(fanart)]</value>
+		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(fanart)]</value>
+		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(fanart)]</value>
 	</variable>
 	<variable name="NaraSearchPosterVar">
-		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItemSettled.Art(poster)]</value>
-		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItemSettled.Art(poster)]</value>
+		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(poster)]</value>
+		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(poster)]</value>
 	</variable>
 	<!-- Fuse 2 search keyboard input mapping. Kodi's Number actions provide the
 	     multi-tap letter entry while focus briefly sits on the hidden edit. -->
@@ -98,7 +98,7 @@
 		<definition>
 			<control type="image">
 				<left>6</left><top>6</top><width>60</width><height>52</height>
-				<texture cornerradius="14" colordiffuse="glass_focus_light">colors/white.png</texture>
+				<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 				<visible>$PARAM[focused]</visible>
 			</control>
 			<control type="label">
@@ -265,14 +265,14 @@
 					<top>11</top>
 					<width>214</width>
 					<height>321</height>
-					<texture cornerradius="12" colordiffuse="selection_surface">$PARAM[poster_background]</texture>
+					<texture colordiffuse="selection_surface">$PARAM[poster_background]</texture>
 				</control>
 				<control type="image">
 					<left>-4</left>
 					<top>-3</top>
 					<width>242</width>
 					<height>349</height>
-					<texture cornerradius="14" cornerborder="2" cornerglow="12" colordiffuse="$PARAM[focus_color]">colors/white.png</texture>
+					<texture colordiffuse="$PARAM[focus_color]" border="14">shapes/round14.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">
@@ -281,7 +281,7 @@
 					<width>214</width>
 					<height>321</height>
 					<aspectratio>scale</aspectratio>
-					<texture background="true" fallback="$PARAM[poster_fallback]" cornerradius="12">$PARAM[poster_texture]</texture>
+					<texture background="true" fallback="$PARAM[poster_fallback]">$PARAM[poster_texture]</texture>
 				</control>
 				<control type="image">
 					<right>17</right>
@@ -352,22 +352,22 @@
 				<animation effect="slide" start="-70,0" end="0,0" time="360" tween="cubic" easing="out">WindowOpen</animation>
 				<control type="group">
 					<animation effect="slide" start="0,-28" end="0,-28" condition="$PARAM[is_tv]">Conditional</animation>
-					<animation effect="slide" start="0,38" end="0,38" condition="String.IsEqual(Container($PARAM[container_id]).ListItemSettled.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Tagline)">Conditional</animation>
+					<animation effect="slide" start="0,38" end="0,38" condition="String.IsEqual(Container($PARAM[container_id]).ListItem.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
 					<control type="image">
 						<top>25</top>
 						<width>624</width>
 						<height>134</height>
 						<aspectratio align="left" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container($PARAM[container_id]).ListItemSettled.Art(tvshow.clearlogo)]</texture>
-						<visible>!String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Art(tvshow.clearlogo))</visible>
+						<texture background="true">$INFO[Container($PARAM[container_id]).ListItem.Art(tvshow.clearlogo)]</texture>
+						<visible>!String.IsEmpty(Container($PARAM[container_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
 					<control type="image">
 						<top>25</top>
 						<width>624</width>
 						<height>134</height>
 						<aspectratio align="left" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container($PARAM[container_id]).ListItemSettled.Art(clearlogo)]</texture>
-						<visible>String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Art(tvshow.clearlogo)) + !String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Art(clearlogo))</visible>
+						<texture background="true">$INFO[Container($PARAM[container_id]).ListItem.Art(clearlogo)]</texture>
+						<visible>String.IsEmpty(Container($PARAM[container_id]).ListItem.Art(tvshow.clearlogo)) + !String.IsEmpty(Container($PARAM[container_id]).ListItem.Art(clearlogo))</visible>
 					</control>
 					<control type="label">
 						<top>33</top>
@@ -376,8 +376,8 @@
 						<font>font60</font>
 						<aligny>center</aligny>
 						<scroll>true</scroll>
-						<label>$INFO[Container($PARAM[container_id]).ListItemSettled.Title]</label>
-						<visible>String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Art(clearlogo)) + String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Art(tvshow.clearlogo))</visible>
+						<label>$INFO[Container($PARAM[container_id]).ListItem.Title]</label>
+						<visible>String.IsEmpty(Container($PARAM[container_id]).ListItem.Art(clearlogo)) + String.IsEmpty(Container($PARAM[container_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
 					<control type="label">
 						<top>190</top>
@@ -390,12 +390,12 @@
 					</control>
 					<include content="NaraOnlineRatingsRow">
 						<param name="top" value="232" />
-						<param name="item_prefix" value="Container($PARAM[container_id]).ListItemSettled" />
+						<param name="item_prefix" value="Container($PARAM[container_id]).ListItem" />
 					</include>
 					<include content="VideoTechnicalFlagsRow">
 						<param name="top" value="273" />
 						<param name="visible" value="$PARAM[flags_visible]" />
-						<param name="item_prefix" value="Container($PARAM[container_id]).ListItemSettled" />
+						<param name="item_prefix" value="Container($PARAM[container_id]).ListItem" />
 					</include>
 					<control type="label">
 						<top>316</top>
@@ -404,8 +404,8 @@
 						<font>font25</font>
 						<textcolor>text_secondary</textcolor>
 						<scroll>true</scroll>
-						<label>[I]$INFO[Container($PARAM[container_id]).ListItemSettled.Tagline][/I]</label>
-						<visible>!String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Tagline)</visible>
+						<label>[I]$INFO[Container($PARAM[container_id]).ListItem.Tagline][/I]</label>
+						<visible>!String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)</visible>
 						<animation effect="slide" start="0,-2" end="0,-2" condition="$PARAM[is_tv]">Conditional</animation>
 					</control>
 					<control type="textbox">
@@ -416,9 +416,9 @@
 						<height>100</height>
 						<font>font13</font>
 						<textcolor>text_secondary</textcolor>
-						<label fallback="19055">$INFO[Container($PARAM[container_id]).ListItemSettled.Plot]</label>
-						<animation effect="slide" start="0,-38" end="0,-38" condition="String.IsEqual(Container($PARAM[container_id]).ListItemSettled.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Tagline)">Conditional</animation>
-						<animation effect="slide" start="0,-32" end="0,-32" condition="$PARAM[is_tv] + String.IsEmpty(Container($PARAM[container_id]).ListItemSettled.Tagline)">Conditional</animation>
+						<label fallback="19055">$INFO[Container($PARAM[container_id]).ListItem.Plot]</label>
+						<animation effect="slide" start="0,-38" end="0,-38" condition="String.IsEqual(Container($PARAM[container_id]).ListItem.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
+						<animation effect="slide" start="0,-32" end="0,-32" condition="$PARAM[is_tv] + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
 					</control>
 				</control>
 			</control>
@@ -508,7 +508,7 @@
 			<include content="Animation_NaraFanartDetail">
 				<param name="source" value="search" />
 			</include>
-			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + [[$EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItemSettled.Art(fanart))] | [$EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItemSettled.Art(fanart))]]</visible>
+			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + [[$EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [$EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]]</visible>
 			<animation effect="fade" time="400">VisibleChange</animation>
 		</control>
 		<control type="image">
@@ -520,14 +520,14 @@
 		<include content="NaraFanartReveal">
 			<param name="source" value="16590" />
 			<param name="enabled" value="[Control.HasFocus(16101) | Control.HasFocus(16102)] + !System.HasActiveModalDialog" />
-			<param name="visible" value="!Skin.HasSetting(no_fanart) + [[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItemSettled.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItemSettled.Art(fanart))]]" />
+			<param name="visible" value="!Skin.HasSetting(no_fanart) + [[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]]" />
 		</include>
 		<control type="image">
 			<width>1200</width>
 			<height>1080</height>
 			<aspectratio>stretch</aspectratio>
 			<texture>overlays/detail-left-scrim.png</texture>
-			<visible>[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16101).ListItemSettled.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16102).ListItemSettled.Art(fanart))]</visible>
+			<visible>[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]</visible>
 			<animation effect="fade" time="400">VisibleChange</animation>
 		</control>
 		<control type="image">
@@ -544,7 +544,7 @@
 		<control type="group">
 			<left>1250</left>
 			<top>100</top>
-			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + [[$EXP[NaraSearchMoviesActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16101).ListItemSettled.Art(fanart))]] | [$EXP[NaraSearchTVShowsActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16102).ListItemSettled.Art(fanart))]]]</visible>
+			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + [[$EXP[NaraSearchMoviesActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16101).ListItem.Art(fanart))]] | [$EXP[NaraSearchTVShowsActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16102).ListItem.Art(fanart))]]]</visible>
 			<animation effect="fade" time="400">VisibleChange</animation>
 			<control type="image">
 				<left>-24</left><top>-24</top><width>500</width><height>720</height>
@@ -563,12 +563,12 @@
 			<include content="NaraSearchHero">
 				<param name="container_id" value="16101" />
 				<param name="visible" value="!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + $EXP[NaraSearchKeyboardHidden]" />
-				<param name="metadata" value="$INFO[Container(16101).ListItemSettled.Year]$INFO[Container(16101).ListItemSettled.Mpaa,  &#183;  ]$INFO[Container(16101).ListItemSettled.Duration,  &#183;  ]$INFO[Container(16101).ListItemSettled.Genre,  &#183;  ]" />
+				<param name="metadata" value="$INFO[Container(16101).ListItem.Year]$INFO[Container(16101).ListItem.Mpaa,  &#183;  ]$INFO[Container(16101).ListItem.Duration,  &#183;  ]$INFO[Container(16101).ListItem.Genre,  &#183;  ]" />
 			</include>
 			<include content="NaraSearchHero">
 				<param name="container_id" value="16102" />
 				<param name="visible" value="!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + $EXP[NaraSearchKeyboardHidden]" />
-				<param name="metadata" value="$INFO[Container(16102).ListItemSettled.Year]$INFO[Container(16102).ListItemSettled.Mpaa,  &#183;  ]$INFO[Container(16102).ListItemSettled.Genre,  &#183;  ]$INFO[Container(16102).ListItemSettled.Season,  &#183;  , $LOCALIZE[36905]]$INFO[Container(16102).ListItemSettled.Episode,  &#183;  , $LOCALIZE[36907]]" />
+				<param name="metadata" value="$INFO[Container(16102).ListItem.Year]$INFO[Container(16102).ListItem.Mpaa,  &#183;  ]$INFO[Container(16102).ListItem.Genre,  &#183;  ]$INFO[Container(16102).ListItem.Season,  &#183;  , $LOCALIZE[36905]]$INFO[Container(16102).ListItem.Episode,  &#183;  , $LOCALIZE[36907]]" />
 				<param name="is_tv" value="true" />
 			</include>
 
@@ -645,7 +645,6 @@
 				<orientation>horizontal</orientation>
 				<movement>6</movement>
 				<scrolltime tween="quadratic">350</scrolltime>
-				<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 				<preloaditems>2</preloaditems>
 				<onfocus>SetProperty(Search.KeyboardHidden,true,home)</onfocus>
 				<onleft>16101</onleft>
@@ -669,7 +668,6 @@
 				<orientation>horizontal</orientation>
 				<movement>6</movement>
 				<scrolltime tween="quadratic">350</scrolltime>
-				<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 				<preloaditems>2</preloaditems>
 				<onfocus>SetProperty(Search.KeyboardHidden,true,home)</onfocus>
 				<onleft>16102</onleft>
@@ -704,7 +702,7 @@
 			<animation effect="slide" start="0,0" end="0,360" time="280" tween="cubic" easing="inout" reversible="true" condition="$EXP[NaraSearchKeyboardHidden]">Conditional</animation>
 			<control type="image">
 				<width>1920</width><height>100%</height>
-				<texture material="glass" glassstyle="regular" glassedge="soft">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]">colors/white.png</texture>
 			</control>
 			<include>NaraSearchKeyboard</include>
 		</control>

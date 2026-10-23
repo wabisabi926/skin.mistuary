@@ -1379,3 +1379,7 @@ msgstr ""
 msgctxt "#31717"
 msgid "No subtitles available"
 msgstr ""
+
+msgctxt "#31718"
+msgid "Light glass panels (off: dark)"
+msgstr "Light glass panels (off: dark)"

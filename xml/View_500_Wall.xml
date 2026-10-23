@@ -22,7 +22,6 @@
 				<preloaditems>2</preloaditems>
 				<pagecontrol>531</pagecontrol>
 				<scrolltime tween="cubic" easing="out">350</scrolltime>
-				<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 				<visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(artists) | Container.Content(albums) | Container.Content(musicvideos) | Container.Content(addons) | Container.Content(images) | Container.Content(videos) | Container.Content(favourites) | $EXP[videoasset_true]</visible>
 				<itemlayout height="430" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">

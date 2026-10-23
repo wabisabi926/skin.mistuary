@@ -6,12 +6,12 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture material="glass" glassstyle="regular" cornerradius="35">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="35">shapes/round35.png</texture>
 			</control>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture cornerradius="35" colordiffuse="glass_focus_medium">colors/white.png</texture>
+				<texture colordiffuse="glass_focus_medium" border="35">shapes/round35.png</texture>
 				<visible>Control.HasFocus($PARAM[button_id])</visible>
 				<animation effect="fade" start="0" end="100" time="180" tween="sine" easing="out">VisibleChange</animation>
 			</control>

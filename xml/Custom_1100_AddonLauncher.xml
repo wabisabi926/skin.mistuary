@@ -89,7 +89,7 @@
 							<left>0</left>
 							<right>0</right>
 							<bottom>0</bottom>
-							<texture cornerradius="16" colordiffuse="glass_focus_medium">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_medium" border="16">shapes/round16.png</texture>
 							<animation effect="fade" start="100" end="0" time="0" condition="!Control.HasFocus(9000)">Conditional</animation>
 						</control>
 						<control type="image">

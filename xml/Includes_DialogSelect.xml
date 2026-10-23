@@ -1069,7 +1069,7 @@
 						<top>0</top>
 						<right>0</right>
 						<bottom>0</bottom>
-						<texture colordiffuse="glass_focus_medium" cornerradius="18">colors/white.png</texture>
+						<texture colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texture>
 						<animation effect="fade" start="100" end="50" time="0">UnFocus</animation>
 					</control>
 					<control type="image">

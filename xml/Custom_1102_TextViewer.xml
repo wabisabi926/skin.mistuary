@@ -23,13 +23,13 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture material="glass" glassstyle="regular" cornerradius="32">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 				<visible>$EXP[nara_dialog_glass]</visible>
 			</control>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="F02A2D32" cornerradius="32">colors/white.png</texture>
+				<texture colordiffuse="F02A2D32" border="32">shapes/round32.png</texture>
 				<visible>!$EXP[nara_dialog_glass]</visible>
 			</control>
 			<control type="button" id="22002">
@@ -68,9 +68,9 @@
 				<onright>1000</onright>
 				<onup>3000</onup>
 				<ondown>3000</ondown>
-				<texturesliderbackground colordiffuse="border_subtle" cornerradius="3">colors/white.png</texturesliderbackground>
-				<texturesliderbar colordiffuse="text_muted" cornerradius="3">colors/white.png</texturesliderbar>
-				<texturesliderbarfocus colordiffuse="text_primary" cornerradius="3">colors/white.png</texturesliderbarfocus>
+				<texturesliderbackground colordiffuse="border_subtle" border="3">shapes/round3.png</texturesliderbackground>
+				<texturesliderbar colordiffuse="text_muted" border="3">shapes/round3.png</texturesliderbar>
+				<texturesliderbarfocus colordiffuse="text_primary" border="3">shapes/round3.png</texturesliderbarfocus>
 				<visible>Integer.IsGreater(Container(2000).NumPages,1)</visible>
 			</control>
 		</control>

@@ -94,16 +94,14 @@
 				<onup>9000</onup>
 				<ondown>9000</ondown>
 				<visible>$PARAM[visible] + Integer.IsGreater(Container($PARAM[textbox]).NumPages,1)</visible>
-				<texturesliderbackground colordiffuse="border_subtle" cornerradius="4">colors/white.png</texturesliderbackground>
-				<texturesliderbar colordiffuse="text_muted" cornerradius="4">colors/white.png</texturesliderbar>
-				<texturesliderbarfocus colordiffuse="text_primary" cornerradius="4">colors/white.png</texturesliderbarfocus>
+				<texturesliderbackground colordiffuse="border_subtle" border="4">shapes/round4.png</texturesliderbackground>
+				<texturesliderbar colordiffuse="text_muted" border="4">shapes/round4.png</texturesliderbar>
+				<texturesliderbarfocus colordiffuse="text_primary" border="4">shapes/round4.png</texturesliderbarfocus>
 			</control>
 		</definition>
 	</include>
 	<include name="NaraAddonInfoGlassBackground">
-		<texturebackground material="glass" glassstyle="frosted" cornerradius="32">colors/white.png</texturebackground>
-	</include>
-	<include name="NaraAddonInfoLegacyBackground">
-		<texturebackground colordiffuse="surface_dialog" cornerradius="32">colors/white.png</texturebackground>
+		<!-- 通用版：官方 Kodi 的 grouplist 不支持 texturebackground，
+		     背景已改由 DialogAddonInfo.xml 中的独立 image 控件绘制。 -->
 	</include>
 </includes>

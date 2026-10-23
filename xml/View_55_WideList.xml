@@ -6,7 +6,7 @@
 			<right>0</right>
 			<top>4</top>
 			<bottom>4</bottom>
-			<texture cornerradius="12" colordiffuse="focus_surface">colors/white.png</texture>
+			<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>
 			<visible>Control.HasFocus(55)</visible>
 		</control>
 		<control type="image">
@@ -14,7 +14,7 @@
 			<right>0</right>
 			<top>4</top>
 			<bottom>4</bottom>
-			<texture cornerradius="12" colordiffuse="selection_surface">colors/white.png</texture>
+			<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 			<visible>!Control.HasFocus(55)</visible>
 		</control>
 	</include>
@@ -190,7 +190,7 @@
 							<centertop>50%</centertop>
 							<width>50</width>
 							<height>50</height>
-							<texture cornerradius="25" colordiffuse="$VAR[WideListIconSurfaceVar]">colors/white.png</texture>
+							<texture colordiffuse="$VAR[WideListIconSurfaceVar]" border="25">shapes/round25.png</texture>
 						</control>
 						<control type="image">
 							<left>28</left>
@@ -198,7 +198,7 @@
 							<width>50</width>
 							<height>50</height>
 							<aspectratio>keep</aspectratio>
-							<texture background="true" cornerradius="25">$INFO[ListItem.Icon]</texture>
+							<texture background="true">$INFO[ListItem.Icon]</texture>
 						</control>
 						<control type="label">
 							<left>105</left>
@@ -219,7 +219,7 @@
 							<centertop>50%</centertop>
 							<width>50</width>
 							<height>50</height>
-							<texture cornerradius="25" colordiffuse="selection_surface">colors/white.png</texture>
+							<texture colordiffuse="selection_surface" border="25">shapes/round25.png</texture>
 						</control>
 						<control type="image">
 							<left>28</left>
@@ -227,7 +227,7 @@
 							<width>50</width>
 							<height>50</height>
 							<aspectratio>keep</aspectratio>
-							<texture background="true" cornerradius="25" colordiffuse="opacity_medium">$INFO[ListItem.Icon]</texture>
+							<texture background="true" colordiffuse="opacity_medium">$INFO[ListItem.Icon]</texture>
 						</control>
 						<control type="label">
 							<left>105</left>
@@ -259,7 +259,7 @@
 				<control type="image">
 					<width>510</width>
 					<height>884</height>
-					<texture material="glass" glassstyle="regular" cornerradius="32">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 				</control>
 				<control type="image">
 					<left>36</left>
@@ -268,7 +268,7 @@
 					<height>366</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture fallback="$PARAM[fallback_image]" background="true" cornerradius="12">$VAR[IconWallThumbVar]</texture>
+					<texture fallback="$PARAM[fallback_image]" background="true">$VAR[IconWallThumbVar]</texture>
 					<visible>!Container.Content(addons) + !String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,episode) + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
 				</control>
 				<control type="image">
@@ -288,7 +288,7 @@
 					<height>240</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture fallback="DefaultAddon.png" background="true" cornerradius="12">$VAR[IconWallThumbVar]</texture>
+					<texture fallback="DefaultAddon.png" background="true">$VAR[IconWallThumbVar]</texture>
 					<visible>Container.Content(addons)</visible>
 				</control>
 				<control type="image">
@@ -298,7 +298,7 @@
 					<height>340</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture fallback="DefaultAudio.png" background="true" cornerradius="12">$VAR[MusicInfoThumbVar]</texture>
+					<texture fallback="DefaultAudio.png" background="true">$VAR[MusicInfoThumbVar]</texture>
 					<visible>!Container.Content(addons) + String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="image">
@@ -308,7 +308,7 @@
 					<height>246</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture fallback="DefaultVideo.png" background="true" cornerradius="12">$VAR[ShiftThumbVar]</texture>
+					<texture fallback="DefaultVideo.png" background="true">$VAR[ShiftThumbVar]</texture>
 					<visible>!Container.Content(addons) + String.IsEqual(ListItem.DBType,episode)</visible>
 				</control>
 				<control type="textbox">

@@ -23,7 +23,7 @@
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<texture cornerradius="28" material="glass" glassstyle="regular">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="28">shapes/round28.png</texture>
 			</control>
 		</definition>
 	</include>
@@ -43,7 +43,7 @@
 			<selectedcolor>text_primary</selectedcolor>
 			<disabledcolor>text_disabled</disabledcolor>
 			<invalidcolor>status_error</invalidcolor>
-			<texturefocus cornerradius="18" colordiffuse="$PARAM[focuscolor]">colors/white.png</texturefocus>
+			<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
 			<texturenofocus />
 			<radiowidth>72</radiowidth>
 			<radioheight>40</radioheight>
@@ -73,10 +73,10 @@
 			<textcolor>text_primary</textcolor>
 			<focusedcolor>text_primary</focusedcolor>
 			<selectedcolor>text_primary</selectedcolor>
-			<texturefocus cornerradius="20" colordiffuse="$PARAM[focuscolor]">colors/white.png</texturefocus>
+			<texturefocus colordiffuse="$PARAM[focuscolor]" border="20">shapes/round20.png</texturefocus>
 			<texturenofocus />
-			<alttexturefocus cornerradius="20" colordiffuse="$PARAM[selectedfocuscolor]">colors/white.png</alttexturefocus>
-			<alttexturenofocus cornerradius="20" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+			<alttexturefocus colordiffuse="$PARAM[selectedfocuscolor]" border="20">shapes/round20.png</alttexturefocus>
+			<alttexturenofocus colordiffuse="glass_focus_light" border="20">shapes/round20.png</alttexturenofocus>
 		</definition>
 	</include>
 	<include name="NaraSettingsDialogFrame">
@@ -107,13 +107,13 @@
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
 				<visible>!Window.IsActive(fullscreenvideo) + !Window.IsActive(visualisation)</visible>
-				<texture cornerradius="32" material="glass" glassstyle="$PARAM[glass_style]">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_dialog]" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="image">
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
 				<visible>Window.IsActive(fullscreenvideo) | Window.IsActive(visualisation)</visible>
-				<texture colordiffuse="F02A2D32" cornerradius="32">colors/white.png</texture>
+				<texture colordiffuse="F02A2D32" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="button" id="22002">
 				<width>$PARAM[width]</width>
@@ -149,7 +149,7 @@
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
-				<texturefocus cornerradius="18" colordiffuse="$PARAM[focuscolor]">colors/white.png</texturefocus>
+				<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
 				<texturenofocus />
 				<focusedcolor>text_primary</focusedcolor>
 				<textcolor>text_primary</textcolor>
@@ -190,7 +190,7 @@
 					<focusedcolor>text_primary</focusedcolor>
 					<textcolor>text_primary</textcolor>
 					<selectedcolor>text_primary</selectedcolor>
-					<texturefocus cornerradius="26" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+					<texturefocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</texturefocus>
 					<onclick condition="$PARAM[modal]">SetProperty(SettingsHub.Target,$PARAM[target],1115)</onclick>
 					<!-- Keep the drawer hidden through the dialog and Home close animations. -->
 					<onclick condition="$PARAM[modal] + Window.IsActive(home) + String.IsEqual(Window(home).Property(Home.Section),search)">SetProperty(Search.SettingsTransition,true,home)</onclick>
@@ -445,7 +445,7 @@
 					<onright>104</onright>
 					<onup>104</onup>
 					<ondown>104</ondown>
-					<texturefocus cornerradius="18" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 					<texturenofocus />
 					<focusedcolor>text_primary</focusedcolor>
 					<textcolor>text_primary</textcolor>
@@ -528,7 +528,7 @@
 					<top>0</top>
 					<right>0</right>
 					<bottom>0</bottom>
-					<texture colordiffuse="$PARAM[focuscolor]" cornerradius="18">colors/white.png</texture>
+					<texture colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texture>
 					<animation effect="fade" start="100" end="50" time="0">UnFocus</animation>
 				</control>
 				<control type="group">

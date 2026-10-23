@@ -5,7 +5,7 @@
 		<param name="radius">32</param>
 		<param name="style">frosted</param>
 		<definition>
-			<texture material="glass" glassstyle="$PARAM[style]" cornerradius="$PARAM[radius]">colors/white.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_dialog]" border="32">shapes/round32.png</texture>
 		</definition>
 	</include>
 	<include name="NaraDialogGlassSurface">
@@ -21,11 +21,11 @@
 		</definition>
 	</include>
 	<include name="NaraDialogInsetTexture">
-		<texture cornerradius="16" colordiffuse="18FFFFFF">colors/white.png</texture>
+		<texture colordiffuse="18FFFFFF" border="16">shapes/round16.png</texture>
 	</include>
 	<include name="NaraDialogButtonInsetTexture">
-		<texturenofocus cornerradius="16" colordiffuse="18FFFFFF">colors/white.png</texturenofocus>
-		<texturefocus cornerradius="16" colordiffuse="glass_focus_medium">colors/white.png</texturefocus>
+		<texturenofocus colordiffuse="18FFFFFF" border="16">shapes/round16.png</texturenofocus>
+		<texturefocus colordiffuse="glass_focus_medium" border="16">shapes/round16.png</texturefocus>
 		<focusedcolor>text_primary</focusedcolor>
 		<selectedcolor>text_primary</selectedcolor>
 	</include>
@@ -47,7 +47,7 @@
 		<bordersize>20</bordersize>
 	</include>
 	<include name="NaraDialogActionTextures">
-		<texturefocus cornerradius="18" colordiffuse="glass_focus_medium">colors/white.png</texturefocus>
+		<texturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texturefocus>
 		<texturenofocus />
 		<textcolor>text_primary</textcolor>
 		<focusedcolor>text_primary</focusedcolor>
@@ -137,6 +137,14 @@
 			<texturefocus />
 			<texturenofocus />
 		</control>
+		<!-- 通用版：grouplist 无 texturebackground，改为独立背景层（高度按内容估算） -->
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>600</width>
+			<height>176</height>
+			<texture colordiffuse="$VAR[GlassTint_frosted]" border="32">shapes/round32.png</texture>
+		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>103</defaultcontrol>
 			<centerleft>50%</centerleft>
@@ -147,7 +155,6 @@
 			<onup>9000</onup>
 			<ondown>9000</ondown>
 			<height max="780">auto</height>
-			<texturebackground material="glass" glassstyle="frosted" cornerradius="32">colors/white.png</texturebackground>
 			<control type="group">
 				<height>88</height>
 				<control type="label" id="2">
@@ -192,11 +199,11 @@
 		</include>
 	</include>
 	<include name="NaraDialogGlassFocusTexture">
-		<texture cornerradius="16" colordiffuse="glass_focus_medium">colors/white.png</texture>
+		<texture colordiffuse="glass_focus_medium" border="16">shapes/round16.png</texture>
 	</include>
 	<include name="NaraDialogControlTextures">
 		<include>NaraDialogActionTextures</include>
-		<alttexturefocus cornerradius="18" colordiffuse="glass_focus_medium">colors/white.png</alttexturefocus>
+		<alttexturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</alttexturefocus>
 		<alttexturenofocus />
 	</include>
 	<include name="NaraDialogButtonRowHeight">

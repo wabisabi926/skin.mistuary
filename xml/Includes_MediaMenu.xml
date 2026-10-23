@@ -5,9 +5,9 @@
 		<focusedcolor>text_primary</focusedcolor>
 		<selectedcolor>selection_foreground</selectedcolor>
 		<disabledcolor>text_disabled</disabledcolor>
-		<texturefocus cornerradius="4" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+		<texturefocus colordiffuse="glass_focus_light" border="4">shapes/round4.png</texturefocus>
 		<texturenofocus />
-		<alttexturefocus cornerradius="4" colordiffuse="glass_focus_light">colors/white.png</alttexturefocus>
+		<alttexturefocus colordiffuse="glass_focus_light" border="4">shapes/round4.png</alttexturefocus>
 		<alttexturenofocus />
 		<textureradioonfocus colordiffuse="text_primary">buttons/radio-button-on.png</textureradioonfocus>
 		<textureradioofffocus colordiffuse="text_secondary">buttons/radio-button-off.png</textureradioofffocus>
@@ -40,8 +40,8 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<!-- A quiet translucent fill remains legible over changing artwork without
 				     turning the four view choices into heavy black tiles. -->
-				<texturefocus cornerradius="4" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
-				<texturenofocus cornerradius="4" colordiffuse="surface_subtle">colors/white.png</texturenofocus>
+				<texturefocus colordiffuse="glass_focus_light" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="surface_subtle" border="4">shapes/round4.png</texturenofocus>
 				<onclick>$PARAM[onclick]</onclick>
 				<onback>50</onback>
 			</control>
@@ -102,10 +102,10 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<texturefocus colordiffuse="glass_focus_light">colors/white.png</texturefocus>
 				<texturenofocus />
-				<textureradioonfocus cornerradius="7" colordiffuse="selection_foreground">colors/white.png</textureradioonfocus>
-				<textureradioonnofocus cornerradius="7" colordiffuse="selection_foreground">colors/white.png</textureradioonnofocus>
-				<textureradioofffocus cornerradius="7" colordiffuse="55FFFFFF">colors/white.png</textureradioofffocus>
-				<textureradiooffnofocus cornerradius="7" colordiffuse="28FFFFFF">colors/white.png</textureradiooffnofocus>
+				<textureradioonfocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="55FFFFFF" border="7">shapes/round7.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="28FFFFFF" border="7">shapes/round7.png</textureradiooffnofocus>
 				<label>$PARAM[label]</label>
 				<selected>$PARAM[selected]</selected>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick]</onclick>
@@ -162,7 +162,7 @@
 					<itemlayout width="384" height="48">
 						<control type="image">
 							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture cornerradius="7" colordiffuse="selection_foreground">colors/white.png</texture>
+							<texture colordiffuse="selection_foreground" border="7">shapes/round7.png</texture>
 							<visible>ListItem.IsSelected</visible>
 						</control>
 						<control type="label">
@@ -179,7 +179,7 @@
 						</control>
 						<control type="image">
 							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture cornerradius="7" colordiffuse="selection_foreground">colors/white.png</texture>
+							<texture colordiffuse="selection_foreground" border="7">shapes/round7.png</texture>
 							<visible>ListItem.IsSelected</visible>
 						</control>
 						<control type="label">
@@ -210,10 +210,10 @@
 				<focusedcolor>text_primary</focusedcolor>
 				<texturefocus colordiffuse="glass_focus_light">colors/white.png</texturefocus>
 				<texturenofocus />
-				<textureradioonfocus cornerradius="7" colordiffuse="selection_foreground">colors/white.png</textureradioonfocus>
-				<textureradioonnofocus cornerradius="7" colordiffuse="selection_foreground">colors/white.png</textureradioonnofocus>
-				<textureradioofffocus cornerradius="7" colordiffuse="55FFFFFF">colors/white.png</textureradioofffocus>
-				<textureradiooffnofocus cornerradius="7" colordiffuse="28FFFFFF">colors/white.png</textureradiooffnofocus>
+				<textureradioonfocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonfocus>
+				<textureradioonnofocus colordiffuse="selection_foreground" border="7">shapes/round7.png</textureradioonnofocus>
+				<textureradioofffocus colordiffuse="55FFFFFF" border="7">shapes/round7.png</textureradioofffocus>
+				<textureradiooffnofocus colordiffuse="28FFFFFF" border="7">shapes/round7.png</textureradiooffnofocus>
 				<label>$PARAM[label]</label>
 				<selected>String.IsEqual(Control.GetLabel(10),$PARAM[label])</selected>
 				<onclick condition="$PARAM[one_click_from]">SendClick(10)</onclick>
@@ -271,7 +271,7 @@
 			     shader. This avoids minifying the padded 120 px round-button bitmap. -->
 			<control type="image">
 				<left>337</left><top>15</top><width>28</width><height>28</height>
-				<texture cornerradius="14" colordiffuse="glass_focus_light">colors/white.png</texture>
+				<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 				<visible>Control.HasFocus(9151)</visible>
 			</control>
 			<control type="radiobutton" id="9151">
@@ -359,7 +359,7 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<font></font>
-				<texturefocus cornerradius="28" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+				<texturefocus colordiffuse="glass_focus_light" border="28">shapes/round28.png</texturefocus>
 				<texturenofocus />
 				<radioposx>16</radioposx>
 				<radioposy>16</radioposy>
@@ -637,7 +637,7 @@
 			<top>0</top>
 			<width>432</width>
 			<height>100%</height>
-			<texture material="glass" glassstyle="frosted">colors/white.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_frosted]">colors/white.png</texture>
 		</control>
 		<control type="button" id="6131">
 			<left>0</left>

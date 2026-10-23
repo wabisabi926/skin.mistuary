@@ -69,7 +69,7 @@
 							<top>0</top>
 							<right>0</right>
 							<bottom>0</bottom>
-							<texture colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
 							<visible>Control.HasFocus(50)</visible>
 						</control>
 						<control type="image">
@@ -138,9 +138,9 @@
 						<aligny>top</aligny>
 						<textoffsetx>40</textoffsetx>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 						<alttexturenofocus />
-						<alttexturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</alttexturefocus>
+						<alttexturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</alttexturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<textoffsety>35</textoffsety>
@@ -155,7 +155,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label></label>
@@ -166,7 +166,7 @@
 						<height>110</height>
 						<aligny>top</aligny>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<textoffsetx>40</textoffsetx>
@@ -180,7 +180,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[192]</label>
@@ -195,7 +195,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" cornerradius="18">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[5]</label>

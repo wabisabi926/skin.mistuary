@@ -6,12 +6,12 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture material="glass" glassstyle="regular" cornerradius="32">colors/white.png</texture>
+				<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture cornerradius="32" colordiffuse="glass_focus_light">colors/white.png</texture>
+				<texture colordiffuse="glass_focus_light" border="32">shapes/round32.png</texture>
 				<visible>$PARAM[focused]</visible>
 				<include>Animation_FocusTextureFade</include>
 			</control>

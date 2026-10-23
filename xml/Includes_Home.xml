@@ -22,12 +22,12 @@
 				<control type="image">
 					<width>380</width>
 					<height>130</height>
-					<texture material="glass" glassstyle="regular" cornerradius="65">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="65">shapes/round65.png</texture>
 				</control>
 				<control type="image">
 					<width>380</width>
 					<height>130</height>
-					<texture cornerradius="65" colordiffuse="glass_focus_light">colors/white.png</texture>
+					<texture colordiffuse="glass_focus_light" border="65">shapes/round65.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">
@@ -65,12 +65,12 @@
 				<control type="image">
 					<width>265</width>
 					<height>265</height>
-					<texture material="glass" glassstyle="regular" cornerradius="48">colors/white.png</texture>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="48">shapes/round48.png</texture>
 				</control>
 				<control type="image">
 					<width>265</width>
 					<height>265</height>
-					<texture cornerradius="48" colordiffuse="glass_focus_light">colors/white.png</texture>
+					<texture colordiffuse="glass_focus_light" border="48">shapes/round48.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">
@@ -223,10 +223,10 @@
 	     rail. No-art rails can then keep that exact backdrop, regardless of
 	     which video row it came from. -->
 	<include name="HomeRememberFanartOnUnfocus">
-		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),movies) + !String.IsEqual(Container($PARAM[list_id]).ListItemSettled.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container($PARAM[list_id]).ListItemSettled.Art(fanart)],home)</onunfocus>
-		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Container($PARAM[list_id]).ListItemSettled.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItemSettled(-1).Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container($PARAM[list_id]).ListItemSettled(-1).Art(fanart)],home)</onunfocus>
-		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + !String.IsEqual(Container($PARAM[list_id]).ListItemSettled.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container($PARAM[list_id]).ListItemSettled.Art(fanart)],home)</onunfocus>
-		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Container($PARAM[list_id]).ListItemSettled.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItemSettled(-1).Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container($PARAM[list_id]).ListItemSettled(-1).Art(fanart)],home)</onunfocus>
+		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),movies) + !String.IsEqual(Container($PARAM[list_id]).ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container($PARAM[list_id]).ListItem.Art(fanart)],home)</onunfocus>
+		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Container($PARAM[list_id]).ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItem(-1).Art(fanart))">SetProperty(Home.LastMovieFanart,$ESCINFO[Container($PARAM[list_id]).ListItem(-1).Art(fanart)],home)</onunfocus>
+		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + !String.IsEqual(Container($PARAM[list_id]).ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container($PARAM[list_id]).ListItem.Art(fanart)],home)</onunfocus>
+		<onunfocus condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Container($PARAM[list_id]).ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container($PARAM[list_id]).ListItem(-1).Art(fanart))">SetProperty(Home.LastTVShowFanart,$ESCINFO[Container($PARAM[list_id]).ListItem(-1).Art(fanart)],home)</onunfocus>
 	</include>
 	<include name="CategoryLabel">
 		<param name="left">55</param>
@@ -266,7 +266,7 @@
 				<animation effect="fade" start="0" end="100" time="180">Visible</animation>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0)</visible>
 				<control type="group">
-					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItemSettled.Property(node.type),target_folder)</visible>
+					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItem.Property(node.type),target_folder)</visible>
 					<animation effect="fade" time="140">VisibleChange</animation>
 					<animation effect="slide" start="0,0" end="0,38" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoExpanded]">Conditional</animation>
 					<animation effect="slide" start="0,0" end="0,112" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoSingleRow]">Conditional</animation>
@@ -276,8 +276,8 @@
 						<width>720</width>
 						<height>145</height>
 						<aspectratio align="left" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container($PARAM[list_id]).ListItemSettled.Art(tvshow.clearlogo)]</texture>
-						<visible>!String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(tvshow.clearlogo))</visible>
+						<texture background="true">$INFO[Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo)]</texture>
+						<visible>!String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo))</visible>
 						<animation effect="zoom" start="100" end="112" center="80,40" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoSingleRow]">Conditional</animation>
 					</control>
 					<control type="image">
@@ -286,8 +286,8 @@
 						<width>720</width>
 						<height>145</height>
 						<aspectratio align="left" aligny="center">keep</aspectratio>
-						<texture background="true">$INFO[Container($PARAM[list_id]).ListItemSettled.Art(clearlogo)]</texture>
-						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(tvshow.clearlogo)) + !String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(clearlogo))</visible>
+						<texture background="true">$INFO[Container($PARAM[list_id]).ListItem.Art(clearlogo)]</texture>
+						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo)) + !String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(clearlogo))</visible>
 						<animation effect="zoom" start="100" end="112" center="80,40" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoSingleRow]">Conditional</animation>
 					</control>
 					<control type="label">
@@ -298,8 +298,8 @@
 						<font>font68_home_hero</font>
 						<aligny>center</aligny>
 						<scroll>true</scroll>
-						<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Title]</label>
-						<visible>!String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(tvshow.clearlogo))</visible>
+						<label>$INFO[Container($PARAM[list_id]).ListItem.Title]</label>
+						<visible>!String.IsEmpty(Container($PARAM[list_id]).ListItem.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
 					<control type="label">
 						<left>80</left>
@@ -309,8 +309,8 @@
 						<font>font68_home_hero</font>
 						<aligny>center</aligny>
 						<scroll>true</scroll>
-						<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Label]</label>
-						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItemSettled.Art(tvshow.clearlogo))</visible>
+						<label>$INFO[Container($PARAM[list_id]).ListItem.Label]</label>
+						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItem.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
 					<control type="label">
 						<left>80</left>
@@ -332,7 +332,7 @@
 						<height>91</height>
 						<font>font12_large</font>
 						<textcolor>text_secondary</textcolor>
-						<label>$INFO[Container($PARAM[list_id]).ListItemSettled.Plot]</label>
+						<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 					</control>
 					<include content="HomeVideoHeroDetails" condition="!$PARAM[collection]">
 						<param name="list_id" value="$PARAM[list_id]" />
@@ -391,7 +391,6 @@
 					<include content="HomeRememberFanartOnUnfocus">
 						<param name="list_id" value="$PARAM[list_id]"/>
 					</include>
-					<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 					<itemlayout width="347" height="250">
 						<control type="group">
 							<left>80</left>
@@ -399,7 +398,7 @@
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
-								<texture cornerradius="12">dialogs/dialog-bg-nobo.png</texture>
+								<texture>dialogs/dialog-bg-nobo.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
@@ -409,7 +408,7 @@
 								<top>-14</top>
 								<width>348</width>
 								<height>208</height>
-								<texture cornerradius="12" colordiffuse="selection_surface">colors/black.png</texture>
+								<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>14</bordersize>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
@@ -418,21 +417,21 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" cornerradius="12">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" cornerradius="12">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true" cornerradius="12">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="progress">
@@ -500,7 +499,7 @@
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
-								<texture cornerradius="12">dialogs/dialog-bg-nobo.png</texture>
+								<texture>dialogs/dialog-bg-nobo.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
@@ -510,7 +509,7 @@
 								<top>-14</top>
 								<width>348</width>
 								<height>208</height>
-								<texture cornerradius="12" colordiffuse="selection_surface">colors/black.png</texture>
+								<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>14</bordersize>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
@@ -519,21 +518,21 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" cornerradius="12">$INFO[ListItem.Art(landscape)]</texture>
+								<texture background="true">$INFO[ListItem.Art(landscape)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + !String.IsEmpty(ListItem.Art(landscape))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture background="true" cornerradius="12">$INFO[ListItem.Art(fanart)]</texture>
+								<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true" cornerradius="12">$INFO[ListItem.Art(thumb)]</texture>
+								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<control type="image">
@@ -541,7 +540,7 @@
 								<top>-12.923077</top>
 								<width>345.846154</width>
 								<height>205.846154</height>
-								<texture cornerradius="14" cornerborder="2" cornerglow="12" colordiffuse="focus_media">colors/white.png</texture>
+								<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -560,7 +559,7 @@
 								<top>-12.923077</top>
 								<width>345.846154</width>
 								<height>205.846154</height>
-								<texture cornerradius="14" cornerborder="2" cornerglow="12" colordiffuse="focus_card_surface">colors/white.png</texture>
+								<texture colordiffuse="focus_card_surface" border="14">shapes/round14.png</texture>
 								<visible>String.IsEqual(ListItem.Property(node.type),target_folder)</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -633,7 +632,7 @@
 				<width>320</width>
 				<height>180</height>
 				<aspectratio>scale</aspectratio>
-				<texture background="true" cornerradius="12" fallback="$PARAM[fallback]">$PARAM[texture]</texture>
+				<texture background="true" fallback="$PARAM[fallback]">$PARAM[texture]</texture>
 			</control>
 		</definition>
 	</include>
@@ -684,7 +683,7 @@
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
-								<texture cornerradius="12" colordiffuse="3318171E">colors/white.png</texture>
+								<texture colordiffuse="3318171E" border="12">shapes/round12.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 							</control>
@@ -725,7 +724,7 @@
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
-								<texture cornerradius="12" colordiffuse="3318171E">colors/white.png</texture>
+								<texture colordiffuse="3318171E" border="12">shapes/round12.png</texture>
 								<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 								<bordersize>20</bordersize>
 							</control>
@@ -736,7 +735,7 @@
 							<control type="image">
 								<width>320</width>
 								<height>180</height>
-								<texture cornerradius="12" colordiffuse="glass_focus_light">colors/white.png</texture>
+								<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
 								<visible>!$PARAM[background_art_condition]</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -745,7 +744,7 @@
 								<top>-12.923077</top>
 								<width>345.846154</width>
 								<height>205.846154</height>
-								<texture cornerradius="14" cornerborder="2" cornerglow="12" colordiffuse="focus_media">colors/white.png</texture>
+								<texture colordiffuse="focus_media" border="14">shapes/round14.png</texture>
 								<visible>$PARAM[background_art_condition]</visible>
 								<include>Animation_FocusTextureFade</include>
 							</control>
@@ -845,7 +844,6 @@
 				<include content="HomeRememberFanartOnUnfocus">
 					<param name="list_id" value="$PARAM[list_id]"/>
 				</include>
-				<selectionsettledelay mode="adaptive">150</selectionsettledelay>
 				<itemlayout width="240" height="410">
 					<include content="NaraSearchPosterLayout">
 						<param name="show_year" value="true" />
@@ -1051,7 +1049,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture material="glass" glassstyle="regular" cornerradius="$PARAM[glass_corner_radius]">colors/white.png</texture>
+							<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
@@ -1059,7 +1057,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture background="true" cornerradius="12">$INFO[ListItem.Art(thumb)]</texture>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
 							<aspectratio>scale</aspectratio>
 							<visible>$PARAM[background_art_condition]</visible>
 						</control>
@@ -1111,7 +1109,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture material="glass" glassstyle="regular" cornerradius="$PARAM[glass_corner_radius]">colors/white.png</texture>
+							<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
@@ -1119,7 +1117,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture background="true" cornerradius="12">$INFO[ListItem.Art(thumb)]</texture>
+							<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
 							<aspectratio>scale</aspectratio>
 							<visible>$PARAM[background_art_condition]</visible>
 						</control>
@@ -1128,7 +1126,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture cornerradius="$PARAM[glass_corner_radius]" colordiffuse="glass_focus_light">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_light" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
@@ -1136,7 +1134,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture cornerradius="12" colordiffuse="glass_focus_light">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
 							<visible>$PARAM[background_art_condition]</visible>
 							<include>Animation_FocusTextureFade</include>
 						</control>
@@ -1293,7 +1291,7 @@
 						<control type="image">
 							<width>319</width>
 							<height>340</height>
-							<texture cornerradius="12">dialogs/dialog-bg-nobo.png</texture>
+							<texture>dialogs/dialog-bg-nobo.png</texture>
 							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 							<bordersize>20</bordersize>
 						</control>
@@ -1381,14 +1379,14 @@
 						<control type="image">
 							<width>319</width>
 							<height>340</height>
-							<texture cornerradius="12">dialogs/dialog-bg-nobo.png</texture>
+							<texture>dialogs/dialog-bg-nobo.png</texture>
 							<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 							<bordersize>20</bordersize>
 						</control>
 						<control type="image">
 							<width>319</width>
 							<height>340</height>
-							<texture cornerradius="12" colordiffuse="focus_card_surface">colors/white.png</texture>
+							<texture colordiffuse="focus_card_surface" border="12">shapes/round12.png</texture>
 							<bordersize>20</bordersize>
 							<include>Animation_FocusTextureFade</include>
 						</control>

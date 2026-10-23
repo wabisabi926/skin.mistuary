@@ -141,8 +141,8 @@
 				<focusedcolor>white</focusedcolor>
 				<disabledcolor>white</disabledcolor>
 				<label>[B][UPPERCASE]$PARAM[flag_label][/UPPERCASE][/B]</label>
-				<texturefocus cornerradius="4" colordiffuse="33FFFFFF">colors/white.png</texturefocus>
-				<texturenofocus cornerradius="4" colordiffuse="33FFFFFF">colors/white.png</texturenofocus>
+				<texturefocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturenofocus>
 				<visible>$PARAM[flag_visible]</visible>
 			</control>
 		</definition>

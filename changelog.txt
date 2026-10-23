@@ -1,3 +1,14 @@
+4.2.0 通用版（官方 Kodi 21+ 兼容）
+[通用化]
+- 玻璃面板不再依赖魔改内核的 material="glass"，改为半透明纯色 + 圆角贴图
+- 新增外观设置「玻璃面板透白」，默认关闭即透黑
+- 圆角改用 9-slice 贴图 shapes/round*.png 实现，替代内核级 cornerradius
+- grouplist 背景改为独立 image 控件，替代 texturebackground
+- slotlist 降级为 fixedlist；移除 ImageChange / Follow 动画与 content 扩展属性
+- ListItemSettled 回退为 ListItem，移除 selectionsettledelay
+- 移除 SkinExtended.xml，扩展交互回退到 Kodi 原生行为
+- xbmc.gui 依赖调整为 5.17.0（Kodi 21 Omega）
+
 Unreleased
 [魔改]
 - 设置-插件界面全面玻璃化：启动器焦点样式、浏览器设置式布局改单一列表、详情页浮动面板对齐截图网格

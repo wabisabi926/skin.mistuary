@@ -78,7 +78,7 @@
 			<top>160</top>
 			<width>1750</width>
 			<height>870</height>
-			<texture material="glass" glassstyle="frosted" cornerradius="42">colors/white.png</texture>
+			<texture colordiffuse="$VAR[GlassTint_frosted]" border="42">shapes/round42.png</texture>
 		</control>
 		<control type="group">
 			<left>85</left>

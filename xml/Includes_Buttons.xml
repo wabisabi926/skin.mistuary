@@ -236,7 +236,7 @@
 				<onclick condition="$PARAM[onclick_3_condition]">$PARAM[onclick_3]</onclick>
 				<font></font>
 				<label>$PARAM[label]</label>
-				<texturefocus cornerradius="28" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+				<texturefocus colordiffuse="glass_focus_light" border="28">shapes/round28.png</texturefocus>
 				<texturenofocus />
 				<radioposx>$PARAM[radio_pos_x]</radioposx>
 				<radioposy>$PARAM[radio_pos_y]</radioposy>
@@ -261,7 +261,7 @@
 				<onclick>$PARAM[onclick]</onclick>
 				<font></font>
 				<label>$PARAM[label]</label>
-				<texturefocus cornerradius="28" colordiffuse="glass_focus_light">colors/white.png</texturefocus>
+				<texturefocus colordiffuse="glass_focus_light" border="28">shapes/round28.png</texturefocus>
 				<texturenofocus />
 				<radioposx>16</radioposx>
 				<radioposy>16</radioposy>

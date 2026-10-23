@@ -149,39 +149,39 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_inprogress_widget)">
 						<param name="id" value="5001001"/>
 						<param name="list_id" value="5100"/>
-						<param name="metadata" value="$INFO[Container(5100).ListItemSettled.Year]$INFO[Container(5100).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5100).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5100).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5100).ListItem.Year]$INFO[Container(5100).ListItem.Rating,  &#183;  ]$INFO[Container(5100).ListItem.Duration,  &#183;  ]$INFO[Container(5100).ListItem.Genre,  &#183;  ]"/>
 						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.movies.Hero)) | String.IsEqual(Window(home).Property(Home.movies.Hero),5100)"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
 						<param name="id" value="5200001"/>
 						<param name="list_id" value="5200"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5200)"/>
-						<param name="metadata" value="$INFO[Container(5200).ListItemSettled.Year]$INFO[Container(5200).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5200).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5200).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5200).ListItem.Year]$INFO[Container(5200).ListItem.Rating,  &#183;  ]$INFO[Container(5200).ListItem.Duration,  &#183;  ]$INFO[Container(5200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_premieres_widget)">
 						<param name="id" value="5800001"/>
 						<param name="list_id" value="5800"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5800)"/>
-						<param name="metadata" value="$INFO[Container(5800).ListItemSettled.Year]$INFO[Container(5800).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5800).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5800).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5800).ListItem.Year]$INFO[Container(5800).ListItem.Rating,  &#183;  ]$INFO[Container(5800).ListItem.Duration,  &#183;  ]$INFO[Container(5800).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_highrated_widget)">
 						<param name="id" value="5300001"/>
 						<param name="list_id" value="5300"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5300)"/>
-						<param name="metadata" value="$INFO[Container(5300).ListItemSettled.Year]$INFO[Container(5300).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5300).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5300).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5300).ListItem.Year]$INFO[Container(5300).ListItem.Rating,  &#183;  ]$INFO[Container(5300).ListItem.Duration,  &#183;  ]$INFO[Container(5300).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_random_widget)">
 						<param name="id" value="5400001"/>
 						<param name="list_id" value="5400"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5400)"/>
-						<param name="metadata" value="$INFO[Container(5400).ListItemSettled.Year]$INFO[Container(5400).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5400).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5400).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5400).ListItem.Year]$INFO[Container(5400).ListItem.Rating,  &#183;  ]$INFO[Container(5400).ListItem.Duration,  &#183;  ]$INFO[Container(5400).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_sets_widget)">
 						<param name="id" value="5600001"/>
 						<param name="list_id" value="5600"/>
 						<param name="collection" value="true"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5600)"/>
-						<param name="metadata" value="$INFO[Container(5600).ListItemSettled.Year]$INFO[Container(5600).ListItemSettled.Rating,  &#183;  ]$INFO[Container(5600).ListItemSettled.Duration,  &#183;  ]$INFO[Container(5600).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(5600).ListItem.Year]$INFO[Container(5600).ListItem.Rating,  &#183;  ]$INFO[Container(5600).ListItem.Duration,  &#183;  ]$INFO[Container(5600).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<control type="grouplist" id="5001">
 						<include>HomeVideoGroupListCommon</include>
@@ -457,32 +457,32 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_inprogress_widget)">
 						<param name="id" value="6001001"/>
 						<param name="list_id" value="6100"/>
-						<param name="metadata" value="$INFO[Container(6100).ListItemSettled.Year]$INFO[Container(6100).ListItemSettled.Rating,  &#183;  ]$INFO[Container(6100).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(6100).ListItem.Year]$INFO[Container(6100).ListItem.Rating,  &#183;  ]$INFO[Container(6100).ListItem.Genre,  &#183;  ]"/>
 						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.tvshows.Hero)) | String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100)"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
 						<param name="id" value="6200001"/>
 						<param name="list_id" value="6200"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)"/>
-						<param name="metadata" value="$INFO[Container(6200).ListItemSettled.Year]$INFO[Container(6200).ListItemSettled.Rating,  &#183;  ]$INFO[Container(6200).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(6200).ListItem.Year]$INFO[Container(6200).ListItem.Rating,  &#183;  ]$INFO[Container(6200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_premieres_widget)">
 						<param name="id" value="6700001"/>
 						<param name="list_id" value="6700"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)"/>
-						<param name="metadata" value="$INFO[Container(6700).ListItemSettled.Year]$INFO[Container(6700).ListItemSettled.Rating,  &#183;  ]$INFO[Container(6700).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(6700).ListItem.Year]$INFO[Container(6700).ListItem.Rating,  &#183;  ]$INFO[Container(6700).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_highrated_widget)">
 						<param name="id" value="6300001"/>
 						<param name="list_id" value="6300"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300)"/>
-						<param name="metadata" value="$INFO[Container(6300).ListItemSettled.Year]$INFO[Container(6300).ListItemSettled.Rating,  &#183;  ]$INFO[Container(6300).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(6300).ListItem.Year]$INFO[Container(6300).ListItem.Rating,  &#183;  ]$INFO[Container(6300).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_random_widget)">
 						<param name="id" value="6800001"/>
 						<param name="list_id" value="6800"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800)"/>
-						<param name="metadata" value="$INFO[Container(6800).ListItemSettled.Year]$INFO[Container(6800).ListItemSettled.Rating,  &#183;  ]$INFO[Container(6800).ListItemSettled.Genre,  &#183;  ]"/>
+						<param name="metadata" value="$INFO[Container(6800).ListItem.Year]$INFO[Container(6800).ListItem.Rating,  &#183;  ]$INFO[Container(6800).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<control type="grouplist" id="6001">
 						<include>HomeVideoGroupListCommon</include>
@@ -1054,6 +1054,14 @@
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<!-- Auto-width buttons use their rendered label widths, so optional
 				     sections collapse without any width or position bookkeeping. -->
+				<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
+				<control type="image">
+					<left>0</left>
+					<top>20</top>
+					<width>1920</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[GlassTint_regular]" border="30">shapes/round30.png</texture>
+				</control>
 				<control type="grouplist" id="9000">
 					<left>0</left>
 					<top>20</top>
@@ -1062,7 +1070,6 @@
 					<orientation>horizontal</orientation>
 					<align>center</align>
 					<itemgap>0</itemgap>
-					<texturebackground material="glass" glassstyle="regular" cornerradius="30">colors/white.png</texturebackground>
 					<renderfocusedlast>true</renderfocusedlast>
 					<onfocus>ClearProperty(Search.NumbersVisible,home)</onfocus>
 					<onleft>804</onleft>
@@ -1077,10 +1084,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavSearchTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),search) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + !$EXP[NaraSearchHasResults]">ClearProperty(Search.KeyboardHidden,home)</onfocus>
 						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + $EXP[NaraSearchHasResults]">SetProperty(Search.KeyboardHidden,true,home)</onfocus>
@@ -1101,10 +1108,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavMoviesTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),movies) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,movies,home)</onfocus>
 						<onup>noop</onup>
@@ -1125,10 +1132,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavTVShowsTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),tvshows) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,tvshows,home)</onfocus>
 						<onup>noop</onup>
@@ -1149,10 +1156,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavMusicTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),music) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,music,home)</onfocus>
 						<onup>noop</onup>
@@ -1170,10 +1177,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavLiveTVTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),livetv) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,livetv,home)</onfocus>
 						<onup>noop</onup>
@@ -1191,10 +1198,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavFavoritesTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),favorites) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,favorites,home)</onfocus>
 						<onup>noop</onup>
@@ -1211,10 +1218,10 @@
 						<textoffsetx>30</textoffsetx>
 						<textcolor>$VAR[HomeNavFilesTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<texturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
-						<alttexturefocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_heavy">colors/white.png</alttexturefocus>
-						<alttexturenofocus cornerradius="26" cornerinset="4" colordiffuse="glass_focus_light">colors/white.png</alttexturenofocus>
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),files) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,files,home)</onfocus>
 						<onup>noop</onup>
@@ -1232,12 +1239,12 @@
 						<control type="image">
 							<width>54</width>
 							<height>54</height>
-							<texture material="glass" glassstyle="regular" cornerradius="27">colors/white.png</texture>
+							<texture colordiffuse="$VAR[GlassTint_regular]" border="27">shapes/round27.png</texture>
 						</control>
 						<control type="image">
 							<width>54</width>
 							<height>54</height>
-							<texture cornerradius="27" colordiffuse="glass_focus_heavy">colors/white.png</texture>
+							<texture colordiffuse="glass_focus_heavy" border="27">shapes/round27.png</texture>
 							<visible>Control.HasFocus(804) | ControlGroup(8100).HasFocus</visible>
 							<animation effect="fade" start="0" end="100" time="180" tween="sine" easing="out">VisibleChange</animation>
 						</control>
@@ -1286,14 +1293,14 @@
 							<control type="image">
 								<width>220</width>
 								<height>220</height>
-								<texture material="glass" glassstyle="regular" cornerradius="32">colors/white.png</texture>
+								<texture colordiffuse="$VAR[GlassTint_regular]" border="32">shapes/round32.png</texture>
 							</control>
 							<control type="image">
 								<left>6</left>
 								<top>6</top>
 								<width>208</width>
 								<height>52</height>
-								<texture cornerradius="26" colordiffuse="glass_focus_light">colors/white.png</texture>
+								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
 								<visible>Control.HasFocus(8101)</visible>
 							</control>
 							<control type="image">
@@ -1301,7 +1308,7 @@
 								<top>58</top>
 								<width>208</width>
 								<height>52</height>
-								<texture cornerradius="26" colordiffuse="glass_focus_light">colors/white.png</texture>
+								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
 								<visible>Control.HasFocus(8102)</visible>
 							</control>
 							<control type="image">
@@ -1309,7 +1316,7 @@
 								<top>110</top>
 								<width>208</width>
 								<height>52</height>
-								<texture cornerradius="26" colordiffuse="glass_focus_light">colors/white.png</texture>
+								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
 								<visible>Control.HasFocus(8106)</visible>
 							</control>
 							<control type="image">
@@ -1317,7 +1324,7 @@
 								<top>162</top>
 								<width>208</width>
 								<height>52</height>
-								<texture cornerradius="26" colordiffuse="glass_focus_light">colors/white.png</texture>
+								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
 								<visible>Control.HasFocus(8105)</visible>
 							</control>
 							<!-- Match the original independent tick implementation, using a
@@ -1327,7 +1334,7 @@
 								<top>132</top>
 								<width>8</width>
 								<height>8</height>
-								<texture cornerradius="2" colordiffuse="E6FFFFFF">colors/white.png</texture>
+								<texture colordiffuse="E6FFFFFF" border="2">shapes/round2.png</texture>
 								<visible>!String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath))</visible>
 							</control>
 							<control type="button" id="8101">

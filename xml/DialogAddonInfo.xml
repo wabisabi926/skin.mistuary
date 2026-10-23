@@ -16,6 +16,14 @@
 				<height>1080</height>
 				<texture colordiffuse="66000000">colors/black.png</texture>
 			</control>
+			<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
+			<control type="image">
+				<left>240</left>
+				<top>140</top>
+				<width>1440</width>
+				<height>800</height>
+				<texture colordiffuse="$VAR[GlassTint_frosted]" border="32">shapes/round32.png</texture>
+			</control>
 			<control type="grouplist" id="9001">
 				<left>240</left>
 				<top>140</top>
@@ -25,8 +33,6 @@
 				<align>center</align>
 				<itemgap>0</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
-				<include condition="$EXP[nara_dialog_glass]">NaraAddonInfoGlassBackground</include>
-				<include condition="!$EXP[nara_dialog_glass]">NaraAddonInfoLegacyBackground</include>
 				<control type="group">
 					<width>1440</width>
 					<height>168</height>
@@ -35,7 +41,7 @@
 						<top>24</top>
 						<width>128</width>
 						<height>128</height>
-						<texture background="true" fallback="DefaultAddon.png" cornerradius="24">$INFO[ListItem.Art(thumb)]</texture>
+						<texture background="true" fallback="DefaultAddon.png">$INFO[ListItem.Art(thumb)]</texture>
 						<aspectratio>keep</aspectratio>
 						<fadetime>200</fadetime>
 					</control>
@@ -150,14 +156,14 @@
 								<top>0</top>
 								<width>672</width>
 								<height>328</height>
-								<texture cornerradius="24" colordiffuse="66000000">colors/black.png</texture>
+								<texture colordiffuse="66000000" border="24">shapes/round24.png</texture>
 							</control>
 							<control type="image">
 								<left>8</left>
 								<top>8</top>
 								<width>656</width>
 								<height>312</height>
-								<texture background="true" cornerradius="20">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<aspectratio>keep</aspectratio>
 								<fadetime>200</fadetime>
 							</control>
@@ -168,14 +174,14 @@
 								<top>0</top>
 								<width>672</width>
 								<height>328</height>
-								<texture cornerradius="24" colordiffuse="66000000">colors/black.png</texture>
+								<texture colordiffuse="66000000" border="24">shapes/round24.png</texture>
 							</control>
 							<control type="image">
 								<left>8</left>
 								<top>8</top>
 								<width>656</width>
 								<height>312</height>
-								<texture background="true" cornerradius="20">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
 								<aspectratio>keep</aspectratio>
 								<fadetime>200</fadetime>
 							</control>
