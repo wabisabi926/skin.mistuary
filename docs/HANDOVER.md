@@ -171,7 +171,8 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 ## 7. 交接注意
 
-- 本轮改动**没有 commit，也没有 push**。`git status` 里 19 个修改 + 6 个新增待提交。
+- 本轮改动已在 `universal` 分支提交为 **`4f7d90e`**（27 个文件，+1744/−407），
+  **没有 push**。接手后先 `git log -1 --stat` 看一眼，确认要不要合到 `main`。
   提交时注意 `fonts/*.ttf` 是二进制（4.94 MB），`libraryart/*.jpg` 被 `.gitignore` 排除（用户自备封面）。
 - **不要删 `.workbuddy-ai/`**：里面是项目记忆（`memory/MEMORY.md` 是长期约定，
   `memory/2026-10-26.md` 是本轮全过程），下一个人接手先读这两个文件能省很多时间。
