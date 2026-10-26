@@ -51,11 +51,32 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | 数据 | `Nara.MusicBackground`、`Nara.SharedRandomFanart.LockedPath`、`library_art_folder` | 字符串型；`LockedPath` 表示"用户手动锁定的背景" |
 | 一次性标记 | `NaraHomeMenuDefaultsMusicTVOff` | `onload` 里判断后立刻 SetBool，避免重复初始化 |
 
-**只读设置（有读取、全仓库无写入入口）**：
-`circle_rating`、`circle_userrating`、`album_onclick_{browse,play,playnext,queue}`、
-`tvshow_onclick_{...}`、`movieset_onclick_{...}`、`OriginalTitleFormat_{1st,2nd,Only}`、
-`OSDAutoCloseTime`、`library_art_folder`、`LyricScript_Path`。
-这些目前恒为默认值——要么补设置入口，要么按死功能清理（和已删除的"常用文件夹"同类问题）。
+**写入内置函数有 11 个，判断"有没有写入入口"时必须搜全**：
+`Skin.SetBool` / `SetString` / `SetNumeric` / `SetPath` / `SetAddon` / `SetImage` /
+`SetFile` / `SetColor` / `ToggleSetting` / `Reset`，以及
+**`Skin.SelectBool(header, 标签|设置名, …)`**——单选互斥，选中项置真、同组其余全部置假。
+
+`SelectBool` 最容易漏：设置名藏在 `数字|设置名` 的配对里，按 `Skin.Set` 前缀搜不到。
+**2026-10-26 就因此把 15 个设置误判成"只读"**，实际它们全都有入口：
+
+| 设置 | 写入点 | 内置函数 |
+|---|---|---|
+| `circle_rating` / `circle_userrating` | `SkinSettings.xml:59` | `SelectBool` |
+| `movieset_onclick_*` | `SkinSettings.xml:138` | `SelectBool` |
+| `tvshow_onclick_*` | `SkinSettings.xml:168` | `SelectBool` |
+| `album_onclick_*` | `SkinSettings.xml:198` | `SelectBool` |
+| `OriginalTitleFormat_*` | `SkinSettings.xml:68` | `SelectBool` |
+| `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
+| `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
+| `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
+
+入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
+
+`circle_none` 和 `OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项：
+选中它等于把同组其它开关全置假，**自己永远不会被读取**，所以它们在
+`audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
+
+现状（`python extras/audit_skin.py` 输出）：**66 读 / 68 写，有读无写 0、有写无读 0**。
 
 ---
 

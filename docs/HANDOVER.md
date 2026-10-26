@@ -1,7 +1,8 @@
 # 交接说明（2026-10-26）
 
 > 给接手的人看。这一轮把外部审查报告（`docs/skin.mistuary.md`）里的问题全部修完，
-> 另外补了三个报告没发现的缺陷。代码已同步到实机目录，**尚未提交 git、尚未发版**。
+> 另外补了三个报告没发现的缺陷。代码已提交在 `universal`（**未 push、未合 main**），
+> 已同步实机并在 Kodi 22.0-RC1 上验证通过（见 §5），**尚未发版**。
 
 ---
 
@@ -20,10 +21,13 @@
 |---|---|
 | 源码 | `D:\下载\AI\skin.mistuary`（分支 `universal`，与 `origin/main` 同源） |
 | 实机皮肤目录 | `C:\Users\liwl\AppData\Roaming\Kodi\addons\skin.mistuary` |
-| 实机 Kodi | **22.0-BETA2**（build 20260831），`xbmc.gui 5.18.0` |
+| 实机 Kodi | **22.0-RC1**（build version code `21.90.901`，build 20260927） |
 | 日志 | `C:\Users\liwl\AppData\Roaming\Kodi\kodi.log` |
 | Python（带 Pillow） | `C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe` |
 | 贴图打包 | `python xbt_tool.py pack`（662 张 → 7.6 MB） |
+
+> 实机 Kodi 会随用户升级而变（BETA2 → RC1 就是一次）。看版本别看本文档，
+> 看 `kodi.log` 首行：`Starting Kodi (22.0-RC1 (21.90.901) Git:...)`。
 
 **部署命令**（改完代码必须同步，用户靠这个实机验证）：
 
@@ -49,6 +53,7 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 | `fonts/OFL.txt` | 上面字体的授权全文 |
 | `extras/gen_techflag_vars.py` | 从 `<map>` 生成 Kodi 21 可用的条件 `<variable>`；`--check` 供 CI |
 | `extras/test_xbt_tool.py` | XBT 解包边界测试（10 条：路径穿越/绝对路径/畸形容器） |
+| `extras/test_skin_settings.py` | 皮肤设置读写配对测试（7 条），锁住"11 个写入内置函数都算写入" |
 | `docs/fix-plan.md` | 审查报告的核验结论 + 全部修复方案与实施记录（**主文档**） |
 | `docs/skin-contracts.md` | 窗口属性 / 皮肤设置 / 控件 ID 的隐式契约清单 |
 | `docs/HANDOVER.md` | 本文件 |
@@ -67,7 +72,7 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 | `xml/DialogPlayerProcessInfo.xml` | `System.CurrentDisplayMode`（不存在的标签）→ `System.ScreenMode` |
 | `xml/Home.xml` | 删掉文件源卡片的失效 `onclick`；整块删除「常用文件夹」8 槽位（panel 15020 + 标题 + 导航 + 返回焦点分支） |
 | `xml/Includes_Home.xml` | 删除 `HomeFileShortcutItems`、`HomeFolderCardLayout`；`HomeFocusedFilePathVar` 去掉 15020 分支 |
-| `extras/audit_skin.py` | 重写：注释不再误报、字符串只查 31000–31999、真错误返回 1、新增 22 专属写法检查 |
+| `extras/audit_skin.py` | 重写：注释不再误报、字符串只查 31000–31999、真错误返回 1、新增 22 专属写法检查；**新增皮肤设置读写配对统计**（覆盖 11 个写入内置函数） |
 | `extras/test_nara_search_navigation.py` | 过时断言 `$VAR[GlassTint_regular]` → `glass_regular` |
 | `extras/test_nara_settings_navigation.py` | 焦点回归用例去掉已删除的 15020 |
 | `xbt_tool.py` | 加 `_safe_target()` + `_need()` 边界检查 + 尺寸/解压量上限 |
@@ -105,6 +110,13 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 - `String.IsEqual` 用的是 `EqualsNoCase`，**大小写不敏感**。
 - `System.BuildVersionCode` 在 22 里**被删了**，只能用 `System.BuildVersion`（字符串）。
   22 新增的标签在没数据时也是空，**无法用"标签是否为空"探测版本**，只能用主版本号。
+- **别被 `21.90.901` 骗了**：22.0-RC1 的日志首行是
+  `Starting Kodi (22.0-RC1 (21.90.901) Git:...)`，那个 `21.90.901` 是
+  `CCompileInfo::GetVersionCode()`（构建版本号），只出现在括号里。
+  `System.BuildVersion` 取的是 `GetVersionShort()`，返回 **`22.0-RC1`**——
+  以 `22` 开头，所以 `String.StartsWith(System.BuildVersion,21)` 在 22 上判为假，
+  双轨渲染走 `$MAP` 分支，**判断是对的**。（`GetVersion()` 才是
+  `短版本 + " (" + code + ")" + " Git:" + hash`，同样以 `22.0-RC1` 开头。）
 
 ### 4.3 为什么 21 兼容要用"双轨渲染"
 
@@ -124,6 +136,37 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
   那是普通插件的位置）。皮肤自有字符串区间是 **31000–31999**。
 - 皮肤设置名**大小写敏感**（踩过 `autoscroll` / `AutoScroll`）。
 - 对话框里的开关用 `Skin.ToggleSetting` / `Skin.HasSetting`，不要用 `Window.Property`。
+
+### 4.5 皮肤设置：写入内置函数有 11 个，别只认 SetString
+
+**判断"某个设置有没有写入入口"时，必须搜全下面这一组**，否则会得出错误结论：
+
+| 写入内置函数 | 说明 |
+|---|---|
+| `Skin.SetBool(name[,value])` | 置真/置假 |
+| `Skin.SetString(name[,value])` | 无 value 时弹键盘输入 |
+| `Skin.SetNumeric(name)` | 弹数字输入框 |
+| `Skin.SetPath(name[,value])` | 选目录 |
+| `Skin.SetAddon(name,type)` | 选附加组件 |
+| `Skin.SetImage` / `SetFile` / `SetColor` | 选图 / 选文件 / 选颜色（v20+） |
+| `Skin.ToggleSetting(name)` | 取反 |
+| `Skin.Reset(name)` | 恢复默认（**没有 `Skin.Unset`**，用这个） |
+| `Skin.SelectBool(header, 标签\|设置名, …)` | **单选互斥**：选中项置真、同组其余全部置假；取消则全不变 |
+
+`Skin.SelectBool` 特别容易漏——它把设置名藏在 `数字\|设置名` 的配对里，
+按 `Skin.Set` 前缀搜是搜不到的。2026-10-26 的交接就是因此把 15 个设置
+误判成"只读、永远停在默认值"，实际它们全都能改。
+
+两个容易踩的实现细节：
+
+- **`Skin.SetNumeric` 在源码里没有调 `Settings()->Save()`**（其它写函数都调了）。
+  目前只影响 `OSDAutoCloseTime`：值会进内存，正常退出 Kodi 时照样落盘，
+  但**非正常结束（崩溃/强杀）可能丢**。介意的话可以在设置项后面接一个
+  `Skin.ToggleSetting(...)` 之类的调用触发保存。
+- 选择器类函数（`SetImage`/`SetFile`/`SetColor`/`SetNumeric`）都是同样情况。
+
+`extras/audit_skin.py` 现在会统计读写配对并打印"有读无写 / 有写无读"，
+`extras/test_skin_settings.py` 把"每种写入内置函数都算写入"钉成了用例。
 
 ---
 
@@ -146,6 +189,30 @@ grep -c "LoadTTF: Couldn't load" %APPDATA%\Kodi\kodi.log        # 期望 0（改
 grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 ```
 
+> **陷阱：同步完必须重启 Kodi，否则日志骗人。**
+> 2026-10-26 那次部署（10:51）时 Kodi 从 09:59 就在跑，`kodi.log` 里一直是旧的
+> 94 条字体错误 + 2 条 include 错误，看起来像"没修好"，其实只是运行时还在用旧皮肤。
+> 11:35 重启后两项立刻归零。
+> 判断方法：`kodi.log` 首行的 `Starting Kodi` 时间必须**晚于**部署时间。
+
+**实测结果（2026-10-26 11:35 重启，Kodi 22.0-RC1）**：
+
+| 检查项 | 结果 |
+|---|---|
+| `LoadTTF: Couldn't load` | **0**（修复前 3525） |
+| `invalid include definition` | **0**（修复前 2，均为 `ChannelManagerList`） |
+| 单元测试 | **42 项全绿** |
+| `audit_skin.py --strict` | 退出码 **0**；缺失 include/变量/字体/贴图/字符串全 0；皮肤设置 66 读 / 68 写，有读无写 0、有写无读 0 |
+| `gen_techflag_vars.py --check` | 与 map 同步 |
+
+日志里剩余的无害噪声（不用管）：
+
+- `libraryart/<分类名>.png` 加载失败 —— 皮肤按"先 png 后 jpg"试两种扩展名，
+  而 `libraryart/` 里只有 jpg，所以每个分类必然报一条 png 缺失，jpg 正常。
+  只有 `临时` 是连 jpg 都没有（用户自己的分类没配封面）。
+- `special://masterprofile/Thumbnails/...` 失败 —— Emby 插件缩略图，与皮肤无关。
+- `EMBY.emby.http: Websocket receive interrupted` —— 网络，与皮肤无关。
+
 1. 字体变成 Inter（中文正常、粗体正常）
 2. PVR → 分组管理，左右两个频道列表都能出频道
 3. 首页「文件」里点不同文件源卡片，进对应目录（配两个源测）
@@ -160,12 +227,42 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 ## 6. 待办 / 需要决策
 
+### 6.1 已澄清：不存在"15 个只读设置"
+
+上一版交接留了一个待决策项，说 `circle_rating`、`album_onclick_*`、`tvshow_onclick_*`、
+`movieset_onclick_*`、`OriginalTitleFormat_*`、`OSDAutoCloseTime`、`library_art_folder`、
+`LyricScript_Path` 这些"有读取、全仓库无写入入口，永远停在默认值"。
+
+**这个结论是错的**，2026-10-26 已核实推翻。它们全都有写入入口：
+
+| 设置 | 写入点 | 内置函数 |
+|---|---|---|
+| `circle_rating` / `circle_userrating` | `SkinSettings.xml:59` | `Skin.SelectBool` |
+| `movieset_onclick_*` | `SkinSettings.xml:138` | `Skin.SelectBool` |
+| `tvshow_onclick_*` | `SkinSettings.xml:168` | `Skin.SelectBool` |
+| `album_onclick_*` | `SkinSettings.xml:198` | `Skin.SelectBool` |
+| `OriginalTitleFormat_*` | `SkinSettings.xml:68` | `Skin.SelectBool` |
+| `OSDAutoCloseTime` | `SkinSettings.xml:250` | `Skin.SetNumeric` |
+| `library_art_folder` | `SkinSettings.xml:41` | `Skin.SetPath` |
+| `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `Skin.SetAddon` |
+
+入口也都在可达 UI 里：设置中心（`skinsettings`）的 4 个侧边栏页面
+（第 1/2/4 页），歌词插件在设置对话框里。
+
+误判原因只有一个：**排查时只搜了 `Skin.SetString` / `Skin.ToggleSetting`**，
+漏了 `SelectBool`（设置名藏在 `数字|设置名` 配对里）、`SetNumeric`、`SetPath`、`SetAddon`。
+完整的 11 个写入内置函数见 §4.5——以后判断"有没有写入入口"照那张表搜。
+
+现状：`audit_skin.py` 报 **66 读 / 68 写，有读无写 0、有写无读 0**。
+
+### 6.2 剩余待办
+
 | 项 | 说明 | 建议 |
 |---|---|---|
-| **15 个只读设置** | `circle_rating`、`circle_userrating`、`album_onclick_*`、`tvshow_onclick_*`、`movieset_onclick_*`、`OriginalTitleFormat_*`、`OSDAutoCloseTime`、`library_art_folder`、`LyricScript_Path` —— 有读取、全仓库无写入入口，永远停在默认值 | 要么在设置中心补 UI（约半天），要么先删读数恢复固定行为。**这是功能取舍，需用户拍板** |
-| action 钉 SHA | `release.yml` 里 action 仍用 `@v4`/`@v5`/`@v2` 大版本标签 | 查 SHA 的接口当天取不到可信值，没敢手写。下次用 `gh api` 或 GitHub 页面确认后再钉 |
-| Kodi 21 实机验收 | 本轮只做了静态核对，没在 21 上跑过 | 按 §5 装便携版验一遍 |
-| git 提交 / 发版 | 本轮改动**尚未提交** | 见 §7 |
+| action 钉 SHA | `release.yml` 里 `actions/checkout@v4`、`actions/setup-python@v5`、`softprops/action-gh-release@v2` 仍用大版本标签 | 用 `gh api repos/<owner>/<repo>/git/ref/tags/<tag>` 取 SHA 再钉；不建议凭记忆手写 |
+| Kodi 21 实机验收 | 本轮只做了静态核对 + 22.0-RC1 实机，**没在 21 上跑过** | 按 §5 装便携版验一遍 |
+| git 提交 / 发版 | 改动在 `universal` 上，**未 push、未合 main** | 等 21 验收通过再合 main 发 1.0.0 |
+| `OSDAutoCloseTime` 落盘 | `Skin.SetNumeric` 不调 `Save()`，非正常退出可能丢值 | 低优先，见 §4.5 |
 
 ---
 

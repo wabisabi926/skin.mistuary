@@ -1,0 +1,96 @@
+"""皮肤设置的读写配对检查。
+
+这组用例存在的理由：2026-10-26 的交接把 15 个设置判成"只读、永远停在默认值"，
+实际它们全都有写入入口——只是写入用的是 Skin.SelectBool / SetNumeric /
+SetPath / SetAddon，而当时的排查只 grep 了 SetString / ToggleSetting。
+下面用合成用例把"每种写入内置函数都算写入"钉住，再用真仓库兜底。
+"""
+
+import sys
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from audit_skin import RESET_ONLY_SETTINGS, collect_skin_settings  # noqa: E402
+
+XML_DIR = Path(__file__).resolve().parents[1] / "xml"
+
+
+class SkinSettingWriteBuiltinsTest(unittest.TestCase):
+    def test_selectbool_pairs_count_as_writes(self):
+        """SelectBool 是单选互斥，每个 name|setting 对都是写入点。"""
+        text = (
+            '<onclick>Skin.SelectBool(31024, 38018|circle_userrating, '
+            "563|circle_rating, 16018|circle_none)</onclick>"
+            "<visible>Skin.HasSetting(circle_rating)</visible>"
+        )
+        reads, writes = collect_skin_settings([("SkinSettings.xml", text)])
+        for key in ("circle_userrating", "circle_rating", "circle_none"):
+            self.assertIn(key, writes)
+        self.assertIn("circle_rating", reads)
+
+    def test_other_write_builtins_count_as_writes(self):
+        text = (
+            "<onclick>Skin.SetNumeric(OSDAutoCloseTime)</onclick>"
+            "<onclick>Skin.SetPath(library_art_folder)</onclick>"
+            "<onclick>Skin.SetAddon(LyricScript_Path,xbmc.python.lyrics)</onclick>"
+            "<onclick>Skin.ToggleSetting(nara_cast_open)</onclick>"
+            "<onclick>Skin.SetBool(some_flag,false)</onclick>"
+            "<onclick>Skin.Reset(Nara.MusicBackground)</onclick>"
+        )
+        _, writes = collect_skin_settings([("x.xml", text)])
+        for key in (
+            "OSDAutoCloseTime",
+            "library_art_folder",
+            "LyricScript_Path",
+            "nara_cast_open",
+            "some_flag",
+            "Nara.MusicBackground",
+        ):
+            self.assertIn(key, writes, f"{key} 应被识别为写入点")
+
+    def test_read_forms_are_detected(self):
+        text = (
+            "<visible>Skin.HasSetting(no_fanart)</visible>"
+            "<label>$INFO[Skin.String(library_art_folder)]</label>"
+            "<visible>Skin.Numeric(OSDAutoCloseTime)</visible>"
+        )
+        reads, _ = collect_skin_settings([("y.xml", text)])
+        for key in ("no_fanart", "library_art_folder", "OSDAutoCloseTime"):
+            self.assertIn(key, reads)
+
+    def test_dynamic_setting_name_is_not_truncated(self):
+        """Skin.SetBool(home_no_$PARAM[s]_widget) 不能被截成 home_no_。"""
+        _, writes = collect_skin_settings(
+            [("z.xml", "Skin.SetBool(home_no_$PARAM[section]_$PARAM[widget]_widget)")]
+        )
+        self.assertEqual({k for k in writes if not k.startswith("$")}, set())
+
+    def test_reset_only_options_are_declared(self):
+        """恢复默认选项必须留在白名单里，否则会一直被报成有写无读。"""
+        self.assertEqual(RESET_ONLY_SETTINGS, {"circle_none", "OriginalTitleFormat_Default"})
+
+
+class RepoSkinSettingsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.texts = [
+            (p.name, p.read_text(encoding="utf-8", errors="replace"))
+            for p in sorted(XML_DIR.glob("*.xml"))
+        ]
+        cls.reads, cls.writes = collect_skin_settings(cls.texts)
+
+    def test_no_read_only_setting(self):
+        """有读取但全仓库没有写入入口 = 永远停在默认值，属于缺陷。"""
+        readonly = sorted(set(self.reads) - set(self.writes))
+        self.assertEqual(readonly, [], f"这些设置只读，没有写入入口: {readonly}")
+
+    def test_no_orphan_write(self):
+        """写入了却没人读 = 功能没接上（恢复默认选项除外）。"""
+        orphan = sorted(set(self.writes) - set(self.reads) - RESET_ONLY_SETTINGS)
+        self.assertEqual(orphan, [], f"这些设置写了没人读: {orphan}")
+
+
+if __name__ == "__main__":
+    unittest.main()
