@@ -60,7 +60,7 @@
 						<width>660</width>
 						<height>370</height>
 						<aspectratio aligny="top">scale</aspectratio>
-						<texture fallback="special://skin/extras/home-images/music.jpg">$INFO[ListItem.Art(fanart)]</texture>
+						<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
 						<visible>String.IsEmpty(Control.GetLabel(400))</visible>
 					</control>
 					<control type="group">
@@ -114,7 +114,7 @@
 							<width>660</width>
 							<height>370</height>
 							<aspectratio aligny="top">scale</aspectratio>
-							<texture fallback="special://skin/extras/home-images/music.jpg">$INFO[ListItem.Art(fanart)]</texture>
+							<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
 						</control>
 						<control type="group">
 							<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
@@ -148,7 +148,7 @@
 							<width>1154</width>
 							<height>277</height>
 							<aspectratio aligny="top">scale</aspectratio>
-							<texture fallback="special://skin/extras/home-images/music.jpg">$INFO[ListItem.Art(fanart)]</texture>
+							<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
 						</control>
 						<control type="group">
 							<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
@@ -323,7 +323,7 @@
 							<top>21</top>
 							<width>190</width>
 							<height>190</height>
-							<texture border="2" fallback="DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
+							<texture border="2" background="true">$VAR[NaraImgListItemThumbDefDefaultAudio]</texture>
 							<aspectratio>keep</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
@@ -360,7 +360,7 @@
 								<top>21</top>
 								<width>190</width>
 								<height>190</height>
-								<texture border="2" fallback="DefaultAudio.png" background="true">$INFO[ListItem.Thumb]</texture>
+								<texture border="2" background="true">$VAR[NaraImgListItemThumbDefDefaultAudio]</texture>
 								<aspectratio>keep</aspectratio>
 								<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 								<bordersize>4</bordersize>

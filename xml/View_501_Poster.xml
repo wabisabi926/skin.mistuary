@@ -129,7 +129,6 @@
 				<itemlayout width="240" height="410">
 					<include content="NaraSearchPosterLayout">
 						<param name="show_year" value="true" />
-						<param name="poster_fallback" value="" />
 						<param name="poster_background" value="colors/black.png" />
 					</include>
 				</itemlayout>
@@ -137,7 +136,6 @@
 					<include content="NaraSearchPosterLayout">
 						<param name="focused" value="Control.HasFocus(501)" />
 						<param name="show_year" value="true" />
-						<param name="poster_fallback" value="" />
 						<param name="poster_background" value="colors/black.png" />
 						<param name="focus_color" value="$VAR[PosterCardFocusColorVar]" />
 					</include>

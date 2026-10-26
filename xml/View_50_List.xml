@@ -257,7 +257,7 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<visible>$EXP[nara_list50_has_art]</visible>
-					<texture background="true" fallback="DefaultActor.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="image">
 					<left>84</left>
@@ -267,7 +267,7 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<visible>!$EXP[nara_list50_has_art]</visible>
-					<texture background="true" fallback="DefaultActor.png">DefaultActor.png</texture>
+					<texture background="true">DefaultActor.png</texture>
 				</control>
 				<control type="textbox">
 					<left>292</left>
@@ -322,7 +322,7 @@
 					<height>160</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" fallback="DefaultAddon.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="grouplist">
 					<left>232</left>
@@ -400,7 +400,7 @@
 					<height>318</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="textbox">
 					<left>36</left>
@@ -465,7 +465,7 @@
 					<height>184</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" fallback="DefaultFolder.png">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="textbox">
 					<left>256</left>
@@ -539,7 +539,7 @@
 						<bottom>124</bottom>
 						<fadetime>200</fadetime>
 						<aspectratio aligny="bottom">keep</aspectratio>
-						<texture fallback="DefaultVideo.png" background="true">$VAR[InfoWallThumbVar]</texture>
+						<texture background="true">$VAR[InfoWallThumbVar]</texture>
 					</control>
 					<control type="group">
 						<left>291</left>
@@ -558,7 +558,7 @@
 						<height>470</height>
 						<aspectratio aligny="bottom">keep</aspectratio>
 						<fadetime>300</fadetime>
-						<texture fallback="DefaultAudio.png" background="true">$INFO[Player.Icon]</texture>
+						<texture background="true">$VAR[NaraImgPlayerIconDefDefaultAudio]</texture>
 					</control>
 					<control type="group">
 						<left>301</left>
@@ -718,7 +718,7 @@
 					<height>470</height>
 					<aspectratio aligny="bottom">keep</aspectratio>
 					<fadetime>300</fadetime>
-					<texture fallback="$PARAM[fallback_image]" background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true">$VAR[IconWallThumbVar]</texture>
 					<visible>!String.IsEqual(ListItem.DbType,episode) + !String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="image">
@@ -738,7 +738,7 @@
 					<height>470</height>
 					<aspectratio aligny="bottom">keep</aspectratio>
 					<fadetime>300</fadetime>
-					<texture fallback="DefaultAudio.png" background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true">$VAR[IconWallThumbVar]</texture>
 					<visible>String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="group">

@@ -14,8 +14,12 @@ error，多试一个 .png 就等于每次启动多刷一屏假错误。需要 .p
 Note: only .jpg is picked up from this built-in folder. To use .png, point the
 "Media library cover folder" setting at your own folder - both formats work there.
 
-建议尺寸：320 × 180（16:9）。其它比例会被拉伸填满卡片。
-Recommended size: 320 x 180 (16:9). Other ratios will be stretched.
+建议尺寸：640 × 360（16:9）。卡片本身是 320 × 180，用 2 倍图是为了焦点放大时不糊；
+再大就是浪费——1920 × 1080 的图在这里只会让皮肤体积涨 15 倍。
+其它比例会被裁成 16:9 再缩放填满卡片。
+Recommended size: 640 x 360 (16:9). The card itself is 320 x 180; 2x keeps it sharp
+when the focused card scales up. Larger is wasted - a 1920x1080 image just makes the
+skin 15x bigger. Other ratios are centre-cropped to 16:9, then scaled to fill.
 
 示例 / Examples
 --------------

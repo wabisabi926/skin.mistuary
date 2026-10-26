@@ -39,6 +39,7 @@
 	<variable name="NaraSearchPosterVar">
 		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(poster)]</value>
 		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(poster)]</value>
+		<value>DefaultVideo.png</value>
 	</variable>
 	<!-- Fuse 2 search keyboard input mapping. Kodi's Number actions provide the
 	     multi-tap letter entry while focus briefly sits on the hidden edit. -->
@@ -255,7 +256,6 @@
 		<param name="titlecolor">text_primary</param>
 		<param name="show_year">false</param>
 		<param name="poster_texture">$VAR[PosterVar]</param>
-		<param name="poster_fallback">DefaultVideo.png</param>
 		<param name="poster_background"></param>
 		<param name="focus_color">focus_media</param>
 		<definition>
@@ -273,7 +273,7 @@
 					<width>214</width>
 					<height>321</height>
 					<aspectratio>scale</aspectratio>
-					<texture background="true" fallback="$PARAM[poster_fallback]">$PARAM[poster_texture]</texture>
+					<texture background="true">$PARAM[poster_texture]</texture>
 				</control>
 				<!-- 圆角：用实色角部遮盖贴图盖住方角，露出圆角（必须在描边环之前绘制） -->
 				<control type="image">
@@ -562,7 +562,7 @@
 				<width>452</width><height>672</height>
 				<aspectratio>scale</aspectratio>
 				<fadetime>350</fadetime>
-				<texture fallback="DefaultVideo.png" background="true">$VAR[NaraSearchPosterVar]</texture>
+				<texture background="true">$VAR[NaraSearchPosterVar]</texture>
 			</control>
 		</control>
 

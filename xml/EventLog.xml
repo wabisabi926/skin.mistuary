@@ -39,7 +39,7 @@
 							<top>10</top>
 							<width>120</width>
 							<height>120</height>
-							<texture fallback="DefaultAddon.png">$INFO[Listitem.Icon]</texture>
+							<texture>$VAR[NaraImgListitemIconDefDefaultAddon]</texture>
 							<aspectratio>scale</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
@@ -86,7 +86,7 @@
 							<top>10</top>
 							<width>120</width>
 							<height>120</height>
-							<texture fallback="DefaultAddon.png">$INFO[Listitem.Icon]</texture>
+							<texture>$VAR[NaraImgListitemIconDefDefaultAddon]</texture>
 							<aspectratio>scale</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
@@ -223,7 +223,7 @@
 					<height>300</height>
 					<fadetime>300</fadetime>
 					<aspectratio aligny="bottom">keep</aspectratio>
-					<texture fallback="DefaultAddon.png">$INFO[ListItem.Icon]</texture>
+					<texture>$VAR[NaraImgListItemIconDefDefaultAddon]</texture>
 					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 					<bordersize>20</bordersize>
 				</control>

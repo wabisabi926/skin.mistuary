@@ -423,7 +423,7 @@
 					<width>200</width>
 					<height>200</height>
 					<aspectratio align="center" aligny="center">keep</aspectratio>
-					<texture fallback="DefaultTVShows.png">$VAR[ChannelListEPGIconVar]</texture>
+					<texture>$VAR[ChannelListEPGIconVar]</texture>
 					<visible>!String.IsEmpty(ListItem.ChannelName)</visible>
 					<fadetime>200</fadetime>
 				</control>
@@ -724,7 +724,7 @@
 					<control type="image" id="2">
 						<width>58</width>
 						<height>58</height>
-						<texture border="3" fallback="windows/pvr/epg-genres/0.png">$INFO[ListItem.Property(GenreType),windows/pvr/epg-genres/,.png]</texture>
+						<texture border="3">$VAR[NaraImgListItemPropertyGenreTypeDef0]</texture>
 					</control>
 					<control type="label" id="1">
 						<left>6</left>
@@ -772,7 +772,7 @@
 						<width>58</width>
 						<height>58</height>
 						<top>0</top>
-						<texture border="3" fallback="windows/pvr/epg-genres/0.png">$INFO[ListItem.Property(GenreType),windows/pvr/epg-genres/,.png]</texture>
+						<texture border="3">$VAR[NaraImgListItemPropertyGenreTypeDef0]</texture>
 						<visible>!Control.HasFocus($PARAM[control_id])</visible>
 					</control>
 					<control type="label" id="1">

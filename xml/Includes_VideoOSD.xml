@@ -158,7 +158,7 @@
 					<width>356</width>
 					<height>200</height>
 					<aspectratio>scale</aspectratio>
-					<texture fallback="DefaultVideo.png" background="true">$VAR[VideoOSDPlaylistThumbVar]</texture>
+					<texture background="true">$VAR[VideoOSDPlaylistThumbVar]</texture>
 				</control>
 				<control type="image">
 					<left>-14</left>

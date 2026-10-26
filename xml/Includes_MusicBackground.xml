@@ -4,7 +4,7 @@
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio>scale</aspectratio>
-			<texture background="true" fallback="osd/nara/music-background.png">$INFO[Skin.String(Nara.MusicBackground)]</texture>
+			<texture background="true">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</texture>
 		</control>
 	</include>
 </includes>

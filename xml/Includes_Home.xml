@@ -10,7 +10,7 @@
 	</variable>
 	<include name="HomeSourceCardLayout">
 		<param name="focused">false</param>
-		<param name="icon">$INFO[ListItem.Icon]</param>
+		<param name="icon">$VAR[NaraImgIconOrFolder]</param>
 		<param name="icon_color">FFFFFFFF</param>
 		<param name="text_color">text_primary</param>
 		<definition>
@@ -34,7 +34,7 @@
 					<width>108</width>
 					<height>100</height>
 					<aspectratio>keep</aspectratio>
-					<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
+					<texture>$PARAM[icon]</texture>
 					<colordiffuse>$PARAM[icon_color]</colordiffuse>
 				</control>
 				<control type="label">
@@ -292,7 +292,7 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
@@ -399,7 +399,7 @@
 								<width>320</width>
 								<height>180</height>
 								<aspectratio>scale</aspectratio>
-								<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 								<visible>!String.IsEqual(ListItem.Property(node.type),target_folder) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 							</control>
 							<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
@@ -496,8 +496,7 @@
 	     fills the card while preserving the source aspect ratio, and cornerradius applies
 	     rounded corners without an additional crop mask. -->
 	<include name="HomeMediaLibraryArtwork">
-		<param name="texture">$INFO[ListItem.Art(thumb)]</param>
-		<param name="fallback">$INFO[ListItem.Icon]</param>
+		<param name="texture">$VAR[NaraImgArtThumbOrIcon]</param>
 		<param name="bg_cond">false</param>
 		<definition>
 			<control type="image">
@@ -506,7 +505,7 @@
 				<width>320</width>
 				<height>180</height>
 				<aspectratio>scale</aspectratio>
-				<texture background="true" fallback="$PARAM[fallback]">$PARAM[texture]</texture>
+				<texture background="true">$PARAM[texture]</texture>
 				<visible>$PARAM[bg_cond]</visible>
 			</control>
 			<!-- 通用版：自定义媒体库封面。
@@ -556,7 +555,7 @@
 		<param name="update_hero">false</param>
 		<param name="hero_id"></param>
 		<param name="item_limit">20</param>
-		<param name="icon">$INFO[ListItem.Icon]</param>
+		<param name="icon">$VAR[NaraImgIconOrFolder]</param>
 		<param name="background_art_condition">false</param>
 		<param name="browse_mode">auto</param>
 		<definition>
@@ -603,7 +602,7 @@
 								<width>100</width>
 								<height>80</height>
 								<aspectratio>keep</aspectratio>
-								<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
+								<texture>$PARAM[icon]</texture>
 								<visible>!$PARAM[background_art_condition]</visible>
 							</control>
 							<control type="group">
@@ -652,7 +651,7 @@
 								<width>100</width>
 								<height>80</height>
 								<aspectratio>keep</aspectratio>
-								<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
+								<texture>$PARAM[icon]</texture>
 								<colordiffuse>focus_card_foreground</colordiffuse>
 								<visible>!$PARAM[background_art_condition]</visible>
 							</control>
@@ -767,7 +766,6 @@
 					<include content="NaraSearchPosterLayout">
 						<param name="show_year" value="true" />
 						<param name="poster_texture" value="$INFO[ListItem.Art(poster)]" />
-						<param name="poster_fallback" value="" />
 						<param name="poster_background" value="colors/black.png" />
 					</include>
 				</itemlayout>
@@ -776,7 +774,6 @@
 						<param name="focused" value="Control.HasFocus($PARAM[list_id])" />
 						<param name="show_year" value="true" />
 						<param name="poster_texture" value="$INFO[ListItem.Art(poster)]" />
-						<param name="poster_fallback" value="" />
 						<param name="poster_background" value="colors/black.png" />
 						<param name="focus_color" value="$VAR[HomeVideoPosterFocusColorVar]" />
 					</include>
@@ -918,7 +915,7 @@
 		<param name="update_hero">false</param>
 		<param name="hero_id"></param>
 		<param name="item_limit">20</param>
-		<param name="icon">$INFO[ListItem.Icon]</param>
+		<param name="icon">$VAR[NaraImgIconOrFolder]</param>
 		<param name="icon_height">84</param>
 		<param name="background_art_condition">false</param>
 		<param name="additional_movie_items">false</param>
@@ -985,7 +982,7 @@
 							<left>58</left>
 							<width>200</width>
 							<height>$PARAM[icon_height]</height>
-							<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
+							<texture>$PARAM[icon]</texture>
 							<aspectratio>keep</aspectratio>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
@@ -1062,7 +1059,7 @@
 							<left>58</left>
 							<width>200</width>
 							<height>$PARAM[icon_height]</height>
-							<texture fallback="DefaultFolder.png">$PARAM[icon]</texture>
+							<texture>$PARAM[icon]</texture>
 							<colordiffuse>focus_card_foreground</colordiffuse>
 							<aspectratio>keep</aspectratio>
 							<visible>!$PARAM[background_art_condition]</visible>
@@ -1180,7 +1177,7 @@
 	</include>
 	<include name="WidgetListPVR">
 		<param name="item_treshold">0</param>
-		<param name="icon">$INFO[ListItem.Icon]</param>
+		<param name="icon">$VAR[NaraImgIconOrTvShows]</param>
 		<param name="label">$INFO[ListItem.Label]</param>
 		<param name="label2">$INFO[ListItem.Title]</param>
 		<param name="info_update">0</param>
@@ -1219,7 +1216,7 @@
 							<left>38</left>
 							<width>245</width>
 							<height>190</height>
-							<texture fallback="DefaultTVShows.png">$PARAM[icon]</texture>
+							<texture>$PARAM[icon]</texture>
 							<aspectratio>keep</aspectratio>
 						</control>
 						<control type="group">
@@ -1314,7 +1311,7 @@
 							<left>38</left>
 							<width>245</width>
 							<height>190</height>
-							<texture fallback="DefaultTVShows.png">$PARAM[icon]</texture>
+							<texture>$PARAM[icon]</texture>
 							<aspectratio>keep</aspectratio>
 						</control>
 						<control type="group">

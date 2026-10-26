@@ -45,7 +45,7 @@
 						<top>24</top>
 						<width>128</width>
 						<height>128</height>
-						<texture background="true" fallback="DefaultAddon.png">$INFO[ListItem.Art(thumb)]</texture>
+						<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultAddon]</texture>
 						<aspectratio>keep</aspectratio>
 						<fadetime>200</fadetime>
 					</control>

@@ -93,7 +93,7 @@
 								<width>320</width>
 								<height>280</height>
 								<aspectratio align="center" aligny="center">keep</aspectratio>
-								<texture fallback="DefaultTVShows.png" >$INFO[Listitem.Icon]</texture>
+								<texture>$VAR[NaraImgListitemIconDefDefaultTVShows]</texture>
 							</control>
 							<control type="textbox">
 								<left>1135</left>

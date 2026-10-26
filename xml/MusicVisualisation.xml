@@ -63,7 +63,7 @@
 				<height>450</height>
 				<aspectratio>keep</aspectratio>
 				<fadetime>320</fadetime>
-				<texture background="true" fallback="osd/nara/music-cover.png">$VAR[NaraMusicCoverVar]</texture>
+				<texture background="true">$VAR[NaraMusicCoverVar]</texture>
 				<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.Cover)) | PVR.IsPlayingRadio</visible>
 			</control>
 			<control type="grouplist" id="432">

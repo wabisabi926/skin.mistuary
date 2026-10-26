@@ -32,7 +32,7 @@
 						<height>655</height>
 						<aligny>center</aligny>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="DefaultTVShows.png">$INFO[ListItem.ChannelLogo]</texture>
+						<texture>$VAR[NaraImgListItemChannelLogoDefDefaultTVShows]</texture>
 						<visible>!String.IsEmpty(ListItem.ChannelLogo) + String.IsEmpty(ListItem.Art(thumb)) + String.IsEmpty(ListItem.EpgEventIcon)</visible>
 					</control>
 					<control type="image">
@@ -41,7 +41,7 @@
 						<height>655</height>
 						<aligny>center</aligny>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="DefaultMovies.png">$INFO[ListItem.EpgEventIcon]</texture>
+						<texture>$VAR[NaraImgListItemEpgEventIconDefDefaultMovies]</texture>
 						<visible>String.IsEmpty(ListItem.ChannelLogo) + String.IsEmpty(ListItem.Art(thumb)) + !String.IsEmpty(ListItem.EpgEventIcon)</visible>
 					</control>
 					<control type="image">
@@ -50,7 +50,7 @@
 						<height>655</height>
 						<aspectratio>keep</aspectratio>
 						<aligny>center</aligny>
-						<texture fallback="DefaultMovies.png">$INFO[ListItem.Art(thumb)]</texture>
+						<texture>$VAR[NaraImgListItemArtThumbDefDefaultMovies]</texture>
 						<visible>String.IsEmpty(ListItem.ChannelLogo) + !String.IsEmpty(ListItem.Art(thumb)) + String.IsEmpty(ListItem.EpgEventIcon)</visible>
 					</control>
 					<control type="image">
@@ -59,7 +59,7 @@
 						<width>505</width>
 						<height>315</height>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="DefaultTVShows.png">$INFO[ListItem.ChannelLogo]</texture>
+						<texture>$VAR[NaraImgListItemChannelLogoDefDefaultTVShows]</texture>
 						<visible>!String.IsEmpty(ListItem.ChannelLogo) + [!String.IsEmpty(ListItem.Art(thumb)) | !String.IsEmpty(ListItem.EpgEventIcon)]</visible>
 					</control>
 					<control type="image">
@@ -68,7 +68,7 @@
 						<width>505</width>
 						<height>315</height>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="DefaultMovies.png">$INFO[ListItem.EpgEventIcon]</texture>
+						<texture>$VAR[NaraImgListItemEpgEventIconDefDefaultMovies]</texture>
 						<visible>!String.IsEmpty(ListItem.ChannelLogo) + String.IsEmpty(ListItem.Art(thumb)) + !String.IsEmpty(ListItem.EpgEventIcon)</visible>
 					</control>
 					<control type="image">
@@ -77,7 +77,7 @@
 						<width>505</width>
 						<height>315</height>
 						<aspectratio>keep</aspectratio>
-						<texture fallback="DefaultMovies.png">$INFO[ListItem.Art(thumb)]</texture>
+						<texture>$VAR[NaraImgListItemArtThumbDefDefaultMovies]</texture>
 						<visible>!String.IsEmpty(ListItem.ChannelLogo) + !String.IsEmpty(ListItem.Art(thumb)) + String.IsEmpty(ListItem.EpgEventIcon)</visible>
 					</control>
 				</control>

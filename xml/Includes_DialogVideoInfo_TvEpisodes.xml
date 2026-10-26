@@ -171,7 +171,7 @@
 							<width>336</width>
 							<height>189</height>
 							<aspectratio>scale</aspectratio>
-							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="image">
 							<top>123</top>
@@ -229,7 +229,7 @@
 							<width>336</width>
 							<height>189</height>
 							<aspectratio>scale</aspectratio>
-							<texture fallback="DefaultVideo.png" background="true">$INFO[ListItem.Art(thumb)]</texture>
+							<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="image">
 							<left>-14</left>

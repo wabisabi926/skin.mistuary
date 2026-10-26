@@ -4,7 +4,8 @@
 		<value condition="PVR.IsPlayingRadio + [String.IsEmpty(MusicPlayer.Cover) | String.IsEqual(MusicPlayer.Cover,DefaultAlbumCover.png)]">osd/nara/music-cover.png</value>
 		<value condition="PVR.IsPlayingRadio">$INFO[MusicPlayer.Cover]</value>
 		<value condition="String.IsEqual(Window(visualisation).Property(NaraMusic.Cover),DefaultAlbumCover.png)">osd/nara/music-cover.png</value>
-		<value>$INFO[Window(visualisation).Property(NaraMusic.Cover)]</value>
+		<value condition="!String.IsEmpty(Window(visualisation).Property(NaraMusic.Cover))">$INFO[Window(visualisation).Property(NaraMusic.Cover)]</value>
+		<value>osd/nara/music-cover.png</value>
 	</variable>
 	<variable name="NaraMusicAlbumYearVar">
 		<value condition="String.IsEmpty(MusicPlayer.Album)">$INFO[MusicPlayer.Year]</value>
