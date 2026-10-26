@@ -4,7 +4,8 @@
 > 保留是为了留决策过程。当前状态请看 `README.md` 与 `docs/fix-plan.md`。
 > 已解决（2026-10-26 复核）：`autoscroll` 大小写（现写入/读取均为小写）、
 > `$VAR` 做文字颜色（已改为颜色名 + 主题）、海报圆角蒙版（已改为实色角部遮盖）、
-> 字体缺失（已补 `fonts/Inter-Unicode-Regular.ttf`）、`ChannelManagerList` 缺 `<definition>`。
+> 字体缺失（已补 `fonts/Inter-Unicode-Regular.ttf`）、`ChannelManagerList` 缺 `<definition>`、
+> **首页文件快捷方式 8 槽位（已删）**、**`MyWeather.xml`（已删）**、**PGS 自动选择提示（已删）**。
 > 日期：2026-10-23（2026-10-26 标注状态）
 
 ---
@@ -78,19 +79,21 @@ license、assets 路径。
 | 音乐电视显示海报 `show_musicvideoposter` | 艺术图片 | ✅ 可用 | 保留 |
 | 自动关闭视频 OSD + 时间 | 屏幕菜单式调节 | ✅ 可用 | 保留 |
 
-### 需要清理的
+### 需要清理的（三项均已完成，2026-10-26 复核）
 
-1. **首页文件快捷方式 `Home.FileShortcut.1..8`** —— 只读不写。
+1. ✅ **已删除** ~~首页文件快捷方式 `Home.FileShortcut.1..8`~~ —— 只读不写。
    `Includes_Home.xml` 里 8 个槽位读 `Skin.String(Home.FileShortcut.N.Label/Path/DisplayPath)`，
    全皮肤**没有任何写入入口**（只有右键 `Skin.Reset(...Path)` 能清空）。
    结果：首页这一行永远是空的，功能等于不存在。
-   → 二选一：补"添加文件快捷方式"（`Skin.SetFile` + 自动填 Label），或者整段删掉。
-2. **`MyWeather.xml`** —— 天气已从导航移除，窗口文件还留在包里（1000+ 行死代码）。
-   → 删。
-3. **PGS 自动选择提示**（`Includes_VideoOSD.xml` 的 `NaraPgsSuccessContent` /
+   → 2026-10-26 选择"整段删掉"：移除 `HomeFileShortcutItems`、`HomeFolderCardLayout`、
+   `Home.xml` 的 panel `15020` 及其标题/导航/返回焦点分支。
+   全仓库已无 `Home.FileShortcut` 引用（只剩本文档的历史记录）。
+2. ✅ **已删除** ~~`MyWeather.xml`~~ —— 天气已从导航移除，窗口文件还留在包里（1000+ 行死代码）。
+   → 文件已不存在，也没有任何 XML 引用它。
+3. ✅ **已删除** ~~PGS 自动选择提示~~（原 `Includes_VideoOSD.xml` 的 `NaraPgsSuccessContent` /
    `NaraPgsSuccessNotifications`）—— 依赖魔改内核的 `VideoPlayer.PgsAutoSelectionStatus`，
    官方 Kodi 里这个 info 不存在，两个文案 70198/70199 也不存在。
-   → 整块删（10 处引用）。
+   → 已整块删除；全仓库搜不到这三个名字，`70198`/`70199` 也无引用。
 
 ### 透白模式怎么办
 

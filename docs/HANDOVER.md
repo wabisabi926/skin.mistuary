@@ -259,10 +259,31 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 | 项 | 说明 | 建议 |
 |---|---|---|
-| action 钉 SHA | `release.yml` 里 `actions/checkout@v4`、`actions/setup-python@v5`、`softprops/action-gh-release@v2` 仍用大版本标签 | 用 `gh api repos/<owner>/<repo>/git/ref/tags/<tag>` 取 SHA 再钉；不建议凭记忆手写 |
-| Kodi 21 实机验收 | 本轮只做了静态核对 + 22.0-RC1 实机，**没在 21 上跑过** | 按 §5 装便携版验一遍 |
-| git 提交 / 发版 | 改动在 `universal` 上，**未 push、未合 main** | 等 21 验收通过再合 main 发 1.0.0 |
+| **action 钉 SHA** | `release.yml` 用 `checkout@v4`、`setup-python@v5`、`action-gh-release@v2`，**三个都是 node20 运行时**，而 GitHub 已弃用 node20 | 不只是钉 SHA，建议直接升到 node24 的 `v7.0.1` / `v7.1.0` / `v3.0.3` 再钉（输入参数已核对完全一致，见 §6.3） |
+| Kodi 21 实机验收 | 用户决定**暂不测试** | 已做静态核对 + 22.0-RC1 实机；21 上的结论仍是"推断"，README 里的兼容声明未实机验证 |
+| git 提交 / 发版 | 改动在 `universal` 上，**未 push、未合 main** | 21 验收不再是阻塞项，可合 main 发 1.0.0 |
 | `OSDAutoCloseTime` 落盘 | `Skin.SetNumeric` 不调 `Save()`，非正常退出可能丢值 | 低优先，见 §4.5 |
+| `libraryart` 日志噪声 | 皮肤按"先 png 后 jpg"试两种扩展名，而内置目录只有 jpg → 每次启动约 12 条 `Direct texture file loading failed` | 可选：内置目录只留 jpg 分支（用户目录仍保留双扩展名），噪声归零 |
+
+### 6.3 action 版本核查结果（2026-10-26）
+
+| action | 现用 | 运行时 | 最新 | 运行时 | 关键输入是否兼容 |
+|---|---|---|---|---|---|
+| `actions/checkout` | `v4` | node20 | **v7.0.1** | node24 | `fetch-depth`/`ref`/`repository`/`persist-credentials` 均在 |
+| `actions/setup-python` | `v5` | node20 | **v7.1.0** | node24 | `python-version`/`cache`/`architecture` 均在 |
+| `softprops/action-gh-release` | `v2` | node20 | **v3.0.3** | node24 | 输入参数表**逐项一致**（18 个全同名） |
+
+钉 SHA 用的 commit（`git ls-remote` 取，`--refs` 之外再取 peeled 避免拿到 tag 对象）：
+
+```
+actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1              # v7.0.1
+actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0           # v7.1.0
+softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64    # v3.0.3
+```
+
+> `action-gh-release` 的 v3.0.3 是 **annotated tag**：`refs/tags/v3.0.3` 指向 tag 对象
+> `e598afbe…`，真正的 commit 是 peeled 的 `efb35369…`。Actions 要用后者。
+> 另外两个是轻量 tag，`--refs` 拿到的就是 commit。
 
 ---
 
