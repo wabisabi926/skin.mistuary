@@ -285,6 +285,38 @@ softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64    # v3.0.3
 > `e598afbe…`，真正的 commit 是 peeled 的 `efb35369…`。Actions 要用后者。
 > 另外两个是轻量 tag，`--refs` 拿到的就是 commit。
 
+### 6.4 待修：`<texture fallback="...">` 在官方 Kodi 上完全无效（69 处）
+
+**事实**：`CGUIControlFactory::GetTexture`（`GUIControlFactory.cpp:424-455`）只解析
+`border` / `infill` / `flipx` / `flipy` / `diffuse` / `colordiffuse` / `background` /
+`mipmap` / `subpixel`。**没有 `fallback`**。
+
+全仓库搜 `fallback` 只有两处是真的：
+- `<label fallback="...">`（`GUIControlFactory.cpp:690`，信息标签取不到值时的兜底文字）——有效；
+- `CTextureManager` 里 "check all fallbacks" 指的是**贴图搜索目录**，不是占位图。
+
+官方 wiki 的 [Texture Attributes](https://kodi.wiki/view/Texture_Attributes) 也只列了上面那几个。
+
+**后果**：`<texture fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>`
+在取不到图时**什么也不画**，占位图不会出现。
+
+**现状**：69 处、40 种 `(主标签, 占位图)` 组合、跨 24 个文件。
+`extras/audit_skin.py` 已加检查，会打印 `## Kodi 不解析的 <texture> 属性`。
+（`fallback` 很可能是原魔改内核的扩展属性，官方版没有。）
+
+**修复路线（按性价比排序）**：
+
+| 路线 | 做法 | 覆盖 | 代价 |
+|---|---|---|---|
+| **A. 修变量**（先做） | `IconWallThumbVar` / `ShiftThumbVar` / `InfoWallThumbVar` / `ChannelListEPGIconVar` 等变量的最后一条 `<value>` 是 `$INFO[...]`（可能为空），末尾补一条占位图 `<value>DefaultX.png</value>` | 变量自身的**所有**调用点，不止这 69 处 | 每个变量 +1 行 |
+| **B. 换标签** | 固定标签的组合（如 `ListItem.Art(thumb)` → `DefaultVideo.png`）新建 `<variable>` 做"空则占位"，`<texture>` 改引用 `$VAR[...]` | 约 20 种组合 | 每个组合建 1 个变量 + 替换若干行 |
+| **C. 垫底控件** | 在原 `<control type="image">` 前插一个同几何的占位图控件，主图不渲染时露出来 | 任何情况都能用 | 每处要复制几何，69×6 行，易错 |
+| D. 不修 | 只保留自检报告，防止继续增加 | — | 缺图时仍然空白 |
+
+推荐 A → B，C 只在个别无法变量化的地方（如 `$PARAM[icon]`）用。
+`$PARAM` 型的（`$PARAM[icon]` 7 处、`$PARAM[texture]` / `$PARAM[poster_texture]` 各 1 处）
+要在**调用点**传一个带兜底的变量进去，或改用 C。
+
 ---
 
 ## 7. 交接注意

@@ -48,6 +48,14 @@ FORK_ATTRS = [
 # 只在 Kodi 22 才有的写法（21 上会原样显示成表达式文本）
 KODI22_ONLY = ["$MAP[", "$ESCMAP["]
 
+# Kodi 的 GUIControlFactory::GetTexture 只解析这些属性，其余一律静默忽略。
+# 尤其是 fallback=：整个 guilib 里没有贴图级的 fallback（只有 <label fallback>），
+# 写了等于没写，缺图时不会出现占位图。
+TEXTURE_ATTRS_OK = {
+    "border", "infill", "flipx", "flipy", "diffuse",
+    "colordiffuse", "background", "mipmap", "subpixel",
+}
+
 # 皮肤设置的读取 / 写入内置函数。
 # 写入端必须列全：2026-10-26 那次判断"15 个设置只读"，就是因为只搜了
 # SetString / ToggleSetting，漏掉了 SelectBool / SetNumeric / SetPath / SetAddon。
@@ -112,6 +120,7 @@ def main() -> int:
     textures_used: dict[str, list[str]] = defaultdict(list)
     fork_hits: dict[str, list[str]] = defaultdict(list)
     kodi22_hits: dict[str, list[str]] = defaultdict(list)
+    texture_attr_hits: dict[str, list[str]] = defaultdict(list)
     parse_errors: list[str] = []
     has_kodi21_guard = False
     raw_texts: list[tuple[str, str]] = []
@@ -141,6 +150,8 @@ def main() -> int:
             for attr_name in node.attrib:
                 if attr_name in FORK_ATTRS:
                     fork_hits[attr_name].append(path.name)
+                if tag == "texture" and attr_name not in TEXTURE_ATTRS_OK:
+                    texture_attr_hits[attr_name].append(path.name)
             for value in list(node.attrib.values()) + ([node.text] if node.text else []):
                 for token in KODI22_ONLY:
                     if token in value:
@@ -219,6 +230,14 @@ def main() -> int:
         print(f"  - {token}  ← {', '.join(sorted(set(where)))}")
     if kodi22_hits and not has_kodi21_guard:
         print("  ! 用了 $MAP 却没有 nara_kodi21 表达式，Kodi 21 上会原样显示表达式文本")
+
+    print(f"\n## Kodi 不解析的 <texture> 属性：{len(texture_attr_hits)} 类")
+    if texture_attr_hits:
+        print(f"  （合法属性只有 {', '.join(sorted(TEXTURE_ATTRS_OK))}）")
+    for attr, where in sorted(texture_attr_hits.items()):
+        files_txt = ", ".join(sorted(set(where))[:4])
+        more = "" if len(set(where)) <= 4 else f" …(+{len(set(where)) - 4})"
+        print(f"  - {attr}=  ← {len(where)} 处，{files_txt}{more}")
 
     settings_read, settings_written = collect_skin_settings(raw_texts)
     readonly = {k: v for k, v in settings_read.items() if k not in settings_written}

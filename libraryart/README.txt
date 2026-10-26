@@ -8,6 +8,12 @@ Put images here. The file name must exactly match the library name shown in Kodi
 支持 .png 和 .jpg（同名时 png 优先）。
 Both .png and .jpg are supported (png wins if both exist).
 
+注意：放在本目录（皮肤内置目录）的图片**只认 .jpg**——Kodi 对加载不到的贴图会打一条
+error，多试一个 .png 就等于每次启动多刷一屏假错误。需要 .png 的话，请在
+「设置 - 外观 - 媒体库封面文件夹」里指定一个自定义目录，那个目录 png / jpg 都支持。
+Note: only .jpg is picked up from this built-in folder. To use .png, point the
+"Media library cover folder" setting at your own folder - both formats work there.
+
 建议尺寸：320 × 180（16:9）。其它比例会被拉伸填满卡片。
 Recommended size: 320 x 180 (16:9). Other ratios will be stretched.
 

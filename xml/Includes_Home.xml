@@ -512,17 +512,10 @@
 			<!-- 通用版：自定义媒体库封面。
 			     默认读皮肤内置的 libraryart 目录；若在「设置-外观-媒体库封面文件夹」
 			     指定了目录，则改用该目录。文件名必须与库名完全一致（如「华语电影.jpg」）。
-			     每个目录下 png 先绘制、jpg 后绘制，两种扩展名都支持；
+			     内置目录只认 .jpg：仓库里那 24 张封面全是 jpg，而 Kodi 对加载不到的贴图
+			     会打一条 error，多试一个 .png 就等于每次启动多刷一屏假错误。
+			     自定义目录仍支持 png/jpg 双扩展名（png 先绘制）。
 			     都没有时不绘制，下方的文件夹图标会露出来。 -->
-			<control type="image">
-				<left>0</left>
-				<top>0</top>
-				<width>320</width>
-				<height>180</height>
-				<aspectratio>scale</aspectratio>
-				<texture background="true">special://skin/libraryart/$INFO[ListItem.Label].png</texture>
-				<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
-			</control>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>

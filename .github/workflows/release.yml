@@ -2,6 +2,13 @@ name: Build skin zip
 
 # 只有 addon.xml 里的版本号变了才打包发布；改代码不升版本不会产生新 Release。
 # 需要强制重打包时，在 Actions 页面手动运行并勾选 force。
+#
+# action 一律钉 commit SHA，不用 @v4 这种浮动标签（标签可被上游改写，
+# 等于把供应链交给别人）。升级时先核对 action.yml 的 inputs 没改名，
+# 再换 SHA 并更新行尾注释里的版本号。
+#   actions/checkout           v7.0.1  node24
+#   actions/setup-python       v7.1.0  node24
+#   softprops/action-gh-release v3.0.3  node24（annotated tag，SHA 取 peeled commit）
 on:
   push:
     branches: [main]
@@ -25,10 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
 
@@ -46,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # 需要历史才能和上一次的 addon.xml 比较版本号
 
@@ -94,7 +101,7 @@ jobs:
 
       - name: Setup Python
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: '3.12'
 
@@ -152,7 +159,7 @@ jobs:
 
       - name: Upload to release
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           tag_name: v${{ steps.meta.outputs.version }}
           name: ${{ steps.meta.outputs.name }} ${{ steps.meta.outputs.version }}
