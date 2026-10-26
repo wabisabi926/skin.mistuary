@@ -126,9 +126,13 @@
 		<entry key="wmav2">WMA</entry>
 	</map>
 
-	<!-- A 36px-high rounded surface reproduces the reference capsule without a dedicated asset. -->
+	<!-- A 36px-high rounded surface reproduces the reference capsule without a dedicated asset.
+	     Two buttons share the same surface: Kodi 22+ uses the $MAP lookup (friendly names),
+	     Kodi 21 has no $MAP and falls back to the raw stream value. grouplist skips the hidden
+	     one when laying out (GUIControlGroupList checks IsVisible), so only one capsule shows. -->
 	<include name="NaraTechnicalTextPill">
 		<param name="flag_visible">true</param>
+		<param name="flag_label_raw"></param>
 		<definition>
 			<control type="button">
 				<width>auto</width>
@@ -143,7 +147,22 @@
 				<label>[B][UPPERCASE]$PARAM[flag_label][/UPPERCASE][/B]</label>
 				<texturefocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturefocus>
 				<texturenofocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturenofocus>
-				<visible>$PARAM[flag_visible]</visible>
+				<visible>$PARAM[flag_visible] + !$EXP[nara_kodi21]</visible>
+			</control>
+			<control type="button">
+				<width>auto</width>
+				<height>36</height>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx>18</textoffsetx>
+				<font>font_flag</font>
+				<textcolor>white</textcolor>
+				<focusedcolor>white</focusedcolor>
+				<disabledcolor>white</disabledcolor>
+				<label>[B][UPPERCASE]$PARAM[flag_label_raw][/UPPERCASE][/B]</label>
+				<texturefocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturenofocus>
+				<visible>$PARAM[flag_visible] + $EXP[nara_kodi21]</visible>
 			</control>
 		</definition>
 	</include>
@@ -155,10 +174,12 @@
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail])" />
 				<param name="flag_label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
+				<param name="flag_label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 			</include>
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + [!String.IsEqual($PARAM[hdr_type],dolbyvision) | String.IsEmpty($PARAM[hdr_detail])]" />
 				<param name="flag_label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]" />
+				<param name="flag_label_raw" value="$INFO[$PARAM[hdr_type]]" />
 			</include>
 		</definition>
 	</include>
@@ -171,6 +192,7 @@
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[resolution])" />
 				<param name="flag_label" value="$MAP[NaraTechnicalResolutionTextMap,$PARAM[resolution]]" />
+				<param name="flag_label_raw" value="$INFO[$PARAM[resolution]]" />
 			</include>
 
 			<!-- Primary HDR: prefer stream 1, then the base value, then stream 2. -->
@@ -205,10 +227,12 @@
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[video_codec])" />
 				<param name="flag_label" value="$MAP[NaraTechnicalVideoCodecTextMap,$PARAM[video_codec]]" />
+				<param name="flag_label_raw" value="$INFO[$PARAM[video_codec]]" />
 			</include>
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_codec])" />
 				<param name="flag_label" value="$MAP[NaraTechnicalAudioCodecTextMap,$PARAM[audio_codec]]" />
+				<param name="flag_label_raw" value="$INFO[$PARAM[audio_codec]]" />
 			</include>
 			<!-- Language is intentionally omitted. -->
 			<include content="NaraTechnicalTextPill">

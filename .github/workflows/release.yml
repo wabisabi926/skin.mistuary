@@ -20,7 +20,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 先跑静态检查：XML 结构、缺失引用、生成变量是否与 map 同步、22 专属写法是否有 21 守卫
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Unit tests
+        run: python -m unittest discover -s extras -p 'test_*.py' -v
+
+      - name: Static audit
+        run: python extras/audit_skin.py --strict
+
+      - name: Generated variables in sync
+        run: python extras/gen_techflag_vars.py --check
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,21 +63,30 @@ jobs:
 
       - name: Check version change
         id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           NEW="${{ steps.meta.outputs.version }}"
-          # 上一次改动 addon.xml 的提交（跳过当前这次）
-          PREV_COMMIT="$(git log -1 --skip=1 --format=%H -- addon.xml || true)"
-          if [ -z "${PREV_COMMIT}" ]; then
-            echo "没有历史版本，视为首次发布"
-            OLD=""
-          else
-            OLD="$(git show "${PREV_COMMIT}:addon.xml" | python -c \
-              'import sys,xml.etree.ElementTree as ET; print(ET.fromstring(sys.stdin.read()).get("version"))')"
+          # 和"本次 push 之前"的 addon.xml 比，而不是"上一次改 addon.xml 的提交"：
+          # 后者在"升版本后又提交了别的文件"时会取到升版前的版本号，导致重复发布。
+          BASE="${{ github.event.before }}"
+          if [ -z "${BASE}" ] || [ "${BASE}" = "0000000000000000000000000000000000000000" ] \
+             || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+            # workflow_dispatch / 首个提交：退回上一个提交
+            BASE="$(git rev-parse HEAD^ 2>/dev/null || true)"
           fi
-          echo "旧版本: ${OLD:-<无>} / 新版本: ${NEW}"
+          OLD=""
+          if [ -n "${BASE}" ]; then
+            OLD="$(git show "${BASE}:addon.xml" 2>/dev/null | python -c \
+              'import sys,xml.etree.ElementTree as ET; print(ET.fromstring(sys.stdin.read()).get("version"))' || true)"
+          fi
+          echo "基线版本: ${OLD:-<无>} / 本次版本: ${NEW}"
           if [ "${OLD}" = "${NEW}" ]; then
             echo "版本号未变化，跳过打包"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          elif gh release view "v${NEW}" >/dev/null 2>&1; then
+            echo "v${NEW} 已发布过，跳过（避免同名附件被覆盖）"
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -69,7 +100,7 @@ jobs:
 
       - name: Install Pillow
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
-        run: pip install --quiet pillow
+        run: pip install --quiet "pillow==11.3.0"
 
       # Textures.xbt 已入库；这里再跑一次是防止有人改了图忘了打包
       - name: Pack textures
@@ -90,6 +121,7 @@ jobs:
             --exclude='.workbuddy-ai/' \
             --exclude='.gitignore' \
             --exclude='docs/' \
+            --exclude='build/' \
             --exclude='__pycache__/' \
             --exclude='*.pyc' \
             --exclude='xbt_tool.py' \

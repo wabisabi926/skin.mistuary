@@ -387,25 +387,69 @@ def pack(input_dir, output_file, verify=True):
           % (len(entries), total_raw / 1048576.0, os.path.getsize(output_file) / 1048576.0))
 
 
+# 解包输入的上限：畸形容器要给出可控错误，而不是把内存吃光或写到目录外
+MAX_ENTRIES = 10000
+MAX_DIM = 8192
+MAX_UNPACKED = 64 * 1024 * 1024
+
+
+def _need(data, off, size, what):
+    if off < 0 or size < 0 or off + size > len(data):
+        raise ValueError('XBT 结构越界：%s（偏移 %d，长度 %d，文件 %d）'
+                         % (what, off, size, len(data)))
+
+
+def _safe_target(root, rel):
+    """把容器里的相对路径解析成输出目录内的绝对路径，越界直接拒绝。"""
+    if not rel:
+        raise ValueError('XBT 条目路径为空')
+    if rel.startswith(('/','\\')) or (len(rel) > 1 and rel[1] == ':'):
+        raise ValueError('拒绝绝对路径条目: %r' % rel)
+    parts = [p for p in rel.replace('\\', '/').split('/') if p not in ('', '.')]
+    if any(p == '..' for p in parts):
+        raise ValueError('拒绝父目录跳转条目: %r' % rel)
+    root_real = os.path.realpath(root)
+    target = os.path.realpath(os.path.join(root_real, *parts))
+    if os.path.commonpath([target, root_real]) != root_real:
+        raise ValueError('条目越出输出目录: %r' % rel)
+    return target
+
+
 def unpack(xbt_file, output_dir):
-    data = open(xbt_file, 'rb').read()
+    with open(xbt_file, 'rb') as f:
+        data = f.read()
     if data[:4] != b'XBTF':
         raise ValueError('不是有效的 XBT 文件')
+    _need(data, 0, 9, '头部')
     version = data[4:5]
     count = struct.unpack_from('<I', data, 5)[0]
+    if count > MAX_ENTRIES:
+        raise ValueError('条目数量异常: %d' % count)
     os.makedirs(output_dir, exist_ok=True)
     off = 9
     ok = 0
     for _ in range(count):
-        path = data[off:off + 256].split(b'\x00')[0].decode('utf-8')
+        _need(data, off, 264, '条目头')
+        path = data[off:off + 256].split(b'\x00')[0].decode('utf-8', 'replace')
         loop, nframes = struct.unpack_from('<II', data, off + 256)
+        if nframes > MAX_ENTRIES:
+            raise ValueError('%s: 帧数量异常 (%d)' % (path, nframes))
         off += 264
+        out_path = _safe_target(output_dir, path)
         for _f in range(nframes):
+            _need(data, off, 40, '%s 帧头' % path)
             w, h, fmt = struct.unpack_from('<III', data, off)
             packed_size, unpacked_size = struct.unpack_from('<QQ', data, off + 12)
             duration, = struct.unpack_from('<I', data, off + 28)
             data_off, = struct.unpack_from('<Q', data, off + 32)
             off += 40
+            if w > MAX_DIM or h > MAX_DIM:
+                raise ValueError('%s: 尺寸异常 (%dx%d)' % (path, w, h))
+            if unpacked_size > MAX_UNPACKED:
+                raise ValueError('%s: 单帧解压上限超出 (%d)' % (path, unpacked_size))
+            if w and h and w * h * 4 != unpacked_size:
+                raise ValueError('%s: 尺寸与数据量不符 (%dx%d vs %d)' % (path, w, h, unpacked_size))
+            _need(data, data_off, packed_size, '%s 帧数据' % path)
             frame = data[data_off:data_off + packed_size]
             if packed_size < unpacked_size:
                 raw = lzo1x_decompress(frame)
@@ -418,7 +462,6 @@ def unpack(xbt_file, output_dir):
                 print('  跳过不支持的格式 0x%x: %s' % (fmt, path))
                 continue
             im = Image.frombytes('RGBA', (w, h), raw, 'raw', 'BGRA')
-            out_path = os.path.join(output_dir, *path.split('/'))
             os.makedirs(os.path.dirname(out_path) or output_dir, exist_ok=True)
             im.save(out_path)
             ok += 1

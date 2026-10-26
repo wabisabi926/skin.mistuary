@@ -11,7 +11,6 @@
 	<onload condition="String.IsEmpty(Window(home).Property(Home.Section)) + !Skin.HasSetting(HomeMenuNoMovieButton)">SetFocus(9012)</onload>
 	<onload condition="String.IsEmpty(Window(home).Property(Home.Section)) + Skin.HasSetting(HomeMenuNoMovieButton)">SetFocus(9011)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),15010)">SetFocus(15010)</onload>
-	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),15020)">SetFocus(15020)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),9017)">SetFocus(9017)</onload>
 	<onload>ClearProperty(Home.FileReturnControl,home)</onload>
 	<!-- Keep the drawer hidden during the initial visibility pass when returning from settings. -->
@@ -19,7 +18,6 @@
 	<!-- Record file-entry focus at departure; opening settings must not reuse an old file selection. -->
 	<onunload>ClearProperty(Home.FileReturnControl,home)</onunload>
 	<onunload condition="Window.Next(filemanager) + Control.HasFocus(15010)">SetProperty(Home.FileReturnControl,15010,home)</onunload>
-	<onunload condition="Window.Next(filemanager) + Control.HasFocus(15020)">SetProperty(Home.FileReturnControl,15020,home)</onunload>
 	<onunload condition="Window.Next(filemanager) + Control.HasFocus(9017)">SetProperty(Home.FileReturnControl,9017,home)</onunload>
 	<!-- Carry the exact shared fanart used by Search, Favorites and Files into the
 	     standalone file manager. This includes locked and just-unlocked paths. -->
@@ -955,10 +953,8 @@
 						<onleft>noop</onleft>
 						<onright>noop</onright>
 						<onup>9000</onup>
-						<ondown condition="Integer.IsGreater(Container(15020).NumItems,0)">15020</ondown>
-						<ondown condition="!Integer.IsGreater(Container(15020).NumItems,0)">noop</ondown>
+						<ondown>noop</ondown>
 						<onback>9000</onback>
-						<onclick>ActivateWindow(filemanager,$ESCINFO[ListItem.Property(homepath)],return)</onclick>
 						<scrolltime tween="cubic" easing="out">350</scrolltime>
 						<preloaditems>2</preloaditems>
 						<itemlayout width="295" height="281">
@@ -982,58 +978,12 @@
 						</focusedlayout>
 						<content target="filemanager">sources://files/</content>
 					</control>
-					<control type="label">
-						<left>80</left>
-						<top>430</top>
-						<width>900</width>
-						<height>50</height>
-						<font>font27</font>
-						<label>$LOCALIZE[13398]</label>
-					</control>
-					<control type="panel" id="15020">
-						<left>0</left>
-						<top>500</top>
-						<right>0</right>
-						<height>320</height>
-						<orientation>vertical</orientation>
-						<onleft>noop</onleft>
-						<onright>noop</onright>
-						<onup condition="Integer.IsGreater(Container(15010).NumItems,0)">15010</onup>
-						<onup condition="!Integer.IsGreater(Container(15010).NumItems,0)">9000</onup>
-						<ondown>noop</ondown>
-						<onback>9000</onback>
-						<scrolltime tween="cubic" easing="out">350</scrolltime>
-						<preloaditems>2</preloaditems>
-						<itemlayout width="410" height="160">
-							<control type="group">
-								<left>90</left>
-								<top>12</top>
-								<include content="HomeFolderCardLayout">
-									<param name="icon" value="DefaultFolder.png" />
-								</include>
-							</control>
-						</itemlayout>
-						<focusedlayout width="410" height="160">
-							<control type="group">
-								<depth>DepthContentPopout</depth>
-								<left>90</left>
-								<top>12</top>
-								<animation effect="zoom" start="100" end="104" time="200" tween="sine" easing="inout" center="190,65">Focus</animation>
-								<animation effect="zoom" start="104" end="100" time="80" tween="sine" easing="inout" center="190,65">UnFocus</animation>
-								<include content="HomeFolderCardLayout">
-									<param name="focused" value="true" />
-									<param name="icon" value="DefaultFolder.png" />
-								</include>
-							</control>
-						</focusedlayout>
-						<include>HomeFileShortcutItems</include>
-					</control>
 					<control type="group">
 						<left>90</left>
 						<bottom>15</bottom>
 						<width>1740</width>
 						<height>30</height>
-						<visible>Control.HasFocus(15010) | Control.HasFocus(15020)</visible>
+						<visible>Control.HasFocus(15010)</visible>
 						<include>Visible_Fade</include>
 						<control type="label">
 							<width>1740</width>
@@ -1232,8 +1182,7 @@
 						<onfocus>SetProperty(Home.Section,files,home)</onfocus>
 						<onup>noop</onup>
 						<ondown condition="Integer.IsGreater(Container(15010).NumItems,0)">15010</ondown>
-						<ondown condition="!Integer.IsGreater(Container(15010).NumItems,0) + Integer.IsGreater(Container(15020).NumItems,0)">15020</ondown>
-						<ondown condition="!Integer.IsGreater(Container(15010).NumItems,0) + !Integer.IsGreater(Container(15020).NumItems,0)">noop</ondown>
+						<ondown condition="!Integer.IsGreater(Container(15010).NumItems,0)">noop</ondown>
 						<onclick>ActivateWindow(filemanager,$ROOT,return)</onclick>
 					</control>
 				</control>

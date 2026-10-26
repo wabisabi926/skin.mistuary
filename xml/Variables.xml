@@ -1540,4 +1540,128 @@
 		<value condition="String.IsEmpty(Skin.String(library_art_folder))">$LOCALIZE[31720]</value>
 		<value>$INFO[Skin.String(library_art_folder)]</value>
 	</variable>
+	<!-- BEGIN generated: technical flag maps (Kodi 21 compatible) -->
+	<variable name="NaraTechResolutionPlayer">
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,480)">480 SD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,540)">540 SD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,576)">576 SD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,720)">720 HD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,1080)">1080 HD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">4K UHD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,8K)">8K UHD</value>
+		<value>$INFO[VideoPlayer.VideoResolution]</value>
+	</variable>
+	<variable name="NaraTechHdrPlayer">
+		<value condition="String.IsEqual(VideoPlayer.HdrType,dolbyvision)">DOLBY VISION</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrType,hdr10plus)">HDR10+</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrType,hdr10)">HDR10</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrType,hdrvivid)">HDR VIVID</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrType,hdr_vivid)">HDR VIVID</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrType,hlg)">HLG</value>
+		<value>$INFO[VideoPlayer.HdrType]</value>
+	</variable>
+	<variable name="NaraTechDvPlayer">
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,4)">P4</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,5)">P5</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,6)">P6</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,7)">P7</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,7fel)">P7 FEL</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,7mel)">P7 MEL</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,8)">P8</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,8.1)">P8.1</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,8.2)">P8.2</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,8.4)">P8.4</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,9)">P9</value>
+		<value condition="String.IsEqual(VideoPlayer.HdrDetail,10)">P10</value>
+		<value>$INFO[VideoPlayer.HdrDetail]</value>
+	</variable>
+	<variable name="NaraTechVideoPlayer">
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,av1)">AV1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,avc1)">H.264</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,bluray)">BLU-RAY</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,div3)">DIVX</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,divx)">DIVX</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,dvd)">DVD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,dx50)">DIVX</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,flv)">FLV</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,h264)">H.264</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,h265)">H.265</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hddvd)">HD DVD</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hdmv)">HDMV</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hev1)">H.265</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hevc)">H.265</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hvc1)">H.265</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mp4v)">MPEG-4</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg1)">MPEG-1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg1video)">MPEG-1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg2)">MPEG-2</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg2video)">MPEG-2</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg4)">MPEG-4</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,prores)">PRORES</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,theora)">THEORA</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,tv)">TV</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,vc-1)">VC-1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,vc1)">VC-1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,vhs)">VHS</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,vp8)">VP8</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,vp9)">VP9</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,wmv)">WMV</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,wmv3)">WMV</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,wvc1)">VC-1</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,xvid)">XVID</value>
+		<value>$INFO[VideoPlayer.VideoCodec]</value>
+	</variable>
+	<variable name="NaraTechAudioPlayer">
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aac)">AAC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aac_latm)">AAC LATM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aac_lc)">AAC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aac_ltp)">AAC LTP</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aac_ssr)">AAC SSR</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,ac3)">DOLBY DIGITAL</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aif)">AIFF</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aifc)">AIFF</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,aiff)">AIFF</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,alac)">ALAC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,ape)">APE</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,av3a)">AV3A</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,avc)">AVC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,cdda)">CDDA</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dca)">DTS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dolbydigital)">DOLBY DIGITAL</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dts)">DTS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dts_96_24)">DTS 96/24</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dts_es)">DTS-ES</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dts_express)">DTS EXPRESS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_hra)">DTS-HD HRA</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma)">DTS-HD MA</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma_x)">DTS-HD MA • DTS:X</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dtshd_ma_x_imax)">DTS-HD MA • DTS:X IMAX</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dtsma)">DTS-HD MA</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3)">DOLBY DIGITAL+</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,eac3_ddp_atmos)">DOLBY DIGITAL+ • ATMOS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,flac)">FLAC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,he_aac)">HE-AAC</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,he_aac_v2)">HE-AAC V2</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,mp1)">MP1</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,mp2)">MP2</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,mp3)">MP3</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,mp3float)">MP3</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,ogg)">OGG</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,opus)">OPUS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm)">PCM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm_bluray)">PCM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm_s16le)">PCM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm_s24le)">PCM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,pcm_s32le)">PCM</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,truehd)">TRUEHD</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,truehd_atmos)">TRUEHD • ATMOS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,vorbis)">VORBIS</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wav)">WAV</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wavpack)">WAVPACK</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wma)">WMA</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wmapro)">WMA PRO</value>
+		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wmav2)">WMA</value>
+		<value>$INFO[VideoPlayer.AudioCodec]</value>
+	</variable>
+	<!-- END generated: technical flag maps (Kodi 21 compatible) -->
 </includes>

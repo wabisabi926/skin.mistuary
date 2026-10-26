@@ -58,7 +58,8 @@ class HomeFileReturnTests(unittest.TestCase):
         run_home_actions(self.root, 'onload', state)
 
     def test_file_entries_restore_the_actual_launch_focus(self):
-        for focus in (15010, 15020, 9017):
+        # 常用文件夹面板（15020）已移除，只剩文件源网格和顶部按钮
+        for focus in (15010, 9017):
             with self.subTest(focus=focus):
                 state = {'Home.Section': 'files', 'focus': focus, 'Next': 'filemanager',
                          'Home.FileReturnControl': '15020'}

@@ -38,6 +38,8 @@
 	<include condition="Integer.IsLessOrEqual(System.ScreenHeight,720)" file="Constants_720.xml" />
 	<include condition="Integer.IsGreater(System.ScreenHeight,720)" file="Constants_1080.xml" />
 	<expression name="infodialog_active">Window.IsActive(musicinformation) | Window.IsActive(songinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo) | Window.IsVisible(script-embuary-video.xml) | Window.IsVisible(script-embuary-person.xml) | Window.IsVisible(script-embuary-image.xml)</expression>
+	<!-- Kodi 21 没有 $MAP[] 标签查表（22 才加），技术标识胶囊在 21 上退化为原始值。 -->
+	<expression name="nara_kodi21">String.StartsWith(System.BuildVersion,21)</expression>
 	<expression name="nara_tv_hierarchy_sidebar_locked">Window.IsActive(Videos) + [Container.Content(seasons) | Container.Content(episodes)]</expression>
 	<expression name="sidebar_visible">!$EXP[nara_tv_hierarchy_sidebar_locked] + [ControlGroup(9000).HasFocus | [Window.IsActive(Videos) + [Control.HasFocus(9000) | ControlGroup(9001).HasFocus | ControlGroup(9101).HasFocus]] | Control.HasFocus(6130) | Control.HasFocus(6131)]</expression>
 	<expression name="videoasset_true">Container.Content(videoassets) | Container.Content(videoversions) | Container.Content(videoextras)</expression>

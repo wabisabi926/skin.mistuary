@@ -20,7 +20,7 @@
 	</variable>
 	<variable name="VideoOSDHdrTypeVar">
 		<value condition="!String.IsEmpty(Player.Process(hdrsource))">$INFO[Player.Process(hdrsource)]</value>
-		<value condition="!String.IsEmpty(VideoPlayer.HdrType)">$MAP[NaraTechnicalHdrTextMap,VideoPlayer.HdrType]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.HdrType)">$VAR[NaraTechHdrPlayer]</value>
 		<value>SDR</value>
 	</variable>
 	<include name="VideoOSDInfoBadge">
@@ -79,7 +79,7 @@
 					<param name="foreground" value="$PARAM[foreground]" />
 				</include>
 				<include content="VideoOSDInfoBadge">
-					<param name="label" value="$MAP[NaraTechnicalAudioCodecTextMap,VideoPlayer.AudioCodec]" />
+					<param name="label" value="$VAR[NaraTechAudioPlayer]" />
 					<param name="maxwidth" value="305" />
 					<param name="visible" value="!String.IsEmpty(VideoPlayer.AudioCodec)" />
 					<param name="surface" value="$PARAM[surface]" />

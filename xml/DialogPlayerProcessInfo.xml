@@ -73,7 +73,7 @@
 				<include content="NaraProcessInfoRow">
 					<param name="width" value="600" />
 					<param name="label" value="$LOCALIZE[31626]" />
-					<param name="value" value="$INFO[System.CurrentDisplayMode]" />
+					<param name="value" value="$INFO[System.ScreenMode]" />
 				</include>
 				<include content="NaraProcessInfoRow">
 					<param name="width" value="600" />

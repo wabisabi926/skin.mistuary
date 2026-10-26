@@ -14,10 +14,21 @@
 - 「自动滚动」设置无效（写入 autoscroll、读取 AutoScroll，大小写不一致）
 - 透白模式下插件详情页 / 上下文菜单白屏看不见字
 - 插件详情页 90% 黑过暗、插件设置页 60% 过透，统一到同一档
+- 字体文件缺失，全部 47 个字体定义回退 arial.ttf（补 fonts/Inter-Unicode-Regular.ttf，Inter + 16502 汉字，OFL）
+- PVR 分组管理器左右两个频道列表不渲染（ChannelManagerList 缺 <definition>，被 Kodi 整条丢弃）
+- 首页文件源卡片跳到错误目录（读取不存在的 ListItem.Property(homepath)，改回 content target 的官方导航）
+- 播放器进程信息「显示输出」永远为空（System.CurrentDisplayMode 不是有效标签，改为 System.ScreenMode）
+- Kodi 21 上技术标识显示 $MAP[...] 原文（改为 22/21 双轨渲染，21 退化为原始值）
+- Kodi 21 上 OSD 的 HDR / 音频编码名称缺失（改用生成的 NaraTechHdrPlayer / NaraTechAudioPlayer 变量）
+
+[发布]
+- 打包只在「本次 push 真的升了版本」时进行，且同一版本不会重复发布
+- 新增 test 检查：单元测试、静态自检、生成变量是否与 map 同步
 
 [清理]
 - 删除 PGS 自动选择提示（依赖魔改内核的 VideoPlayer.PgsAutoSelectionStatus）
 - 删除孤儿窗口 MyWeather.xml
+- 删除首页「常用文件夹」8 个空槽位（只有读取和清空、没有写入入口的死功能）
 - 颜色体系收敛为 glass_regular / glass_frosted / glass_dialog 三档
 
 4.2.0 通用版（官方 Kodi 21+ 兼容）

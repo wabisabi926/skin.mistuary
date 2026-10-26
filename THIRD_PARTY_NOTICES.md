@@ -41,6 +41,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## Inter (with CJK coverage) — `fonts/Inter-Unicode-Regular.ttf`
+
+The skin's UI font is `fonts/Inter-Unicode-Regular.ttf`, a build of Inter that also carries CJK
+glyphs, so Latin and Chinese share one set of metrics. It is the same
+`Inter-Unicode-Regular.ttf` file shipped by the `resource.font.robotocjksc`
+addon, used unmodified.
+
+- Family / version (from the font's name table): `Inter` / `Version 4.000`
+- Glyph coverage: 49 833 glyphs, 16 502 CJK ideographs, full Latin + CJK punctuation
+- License: SIL Open Font License 1.1 — full text in `fonts/OFL.txt`
+- Inter upstream: https://github.com/rsms/inter
+- The CJK-merged build is distributed by
+  https://github.com/jurialmunkey/resource.font.robotocjksc (Apache-2.0 addon
+  packaging; the font itself carries the OFL notice above)
+
+If you prefer to rebuild the file yourself, merge Inter (OFL) with Noto Sans SC
+(OFL) using `fontTools.merge`; the result stays OFL and can replace
+`fonts/Inter-Unicode-Regular.ttf` without touching `xml/Font.xml`.
+
 ## Arctic Fuse 2 genre icons
 
 The 27 PNG images in `media/genres/` are copied without modification from
