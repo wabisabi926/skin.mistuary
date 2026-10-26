@@ -8,3 +8,5 @@ __pycache__/
 # 用户自备的媒体库封面（按库名命名，体积较大，不入库；保留说明文件）
 libraryart/*.jpg
 libraryart/*.png
+# 例外：default.jpg 是"没配封面的分类"统一使用的通用图，必须随包发布
+!libraryart/default.jpg

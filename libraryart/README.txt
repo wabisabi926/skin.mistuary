@@ -34,8 +34,15 @@ skin 15x bigger. Other ratios are centre-cropped to 16:9, then scaled to fill.
   国漫.jpg
   日番.jpg
 
+通用兜底图 / Default cover
+-------------------------
+default.jpg 是"没有对应封面"的分类统一显示的那张图，它随皮肤发布，不需要你提供。
+想换掉它，直接用同名文件覆盖即可（建议同样 640 × 360）。
+default.jpg is the image shown for any library that has no matching cover. It ships
+with the skin. To change it, just overwrite this file (640 x 360 recommended).
+
 说明
 ----
 - 本目录是默认位置；在「设置 - 外观 - 媒体库封面文件夹」里指定了其它目录时，
   会优先使用设置里的目录。
-- 文件名对不上、或没有对应图片时，卡片会显示原来的文件夹图标，不会出现空白。
+- 文件名对不上、或没有对应图片时，卡片会显示 default.jpg，不会出现空白。
