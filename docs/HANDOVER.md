@@ -259,11 +259,12 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 | 项 | 说明 | 建议 |
 |---|---|---|
-| **action 钉 SHA** | `release.yml` 用 `checkout@v4`、`setup-python@v5`、`action-gh-release@v2`，**三个都是 node20 运行时**，而 GitHub 已弃用 node20 | 不只是钉 SHA，建议直接升到 node24 的 `v7.0.1` / `v7.1.0` / `v3.0.3` 再钉（输入参数已核对完全一致，见 §6.3） |
 | Kodi 21 实机验收 | 用户决定**暂不测试** | 已做静态核对 + 22.0-RC1 实机；21 上的结论仍是"推断"，README 里的兼容声明未实机验证 |
-| git 提交 / 发版 | 改动在 `universal` 上，**未 push、未合 main** | 21 验收不再是阻塞项，可合 main 发 1.0.0 |
+| git 提交 / 发版 | 改动在 `universal` 上，**未 push、未合 main** | 21 验收不再是阻塞项，可合 main 发 1.0.0（需先升版本号，见 §6.3 末尾） |
 | `OSDAutoCloseTime` 落盘 | `Skin.SetNumeric` 不调 `Save()`，非正常退出可能丢值 | 低优先，见 §4.5 |
-| `libraryart` 日志噪声 | 皮肤按"先 png 后 jpg"试两种扩展名，而内置目录只有 jpg → 每次启动约 12 条 `Direct texture file loading failed` | 可选：内置目录只留 jpg 分支（用户目录仍保留双扩展名），噪声归零 |
+| ~~action 钉 SHA~~ | 已完成（2026-10-26） | 见 §6.3 |
+| ~~`<texture fallback>` 69 处~~ | 已完成（2026-10-26） | 见 §6.4 |
+| ~~`libraryart` 日志噪声~~ | 已完成（2026-10-26） | 内置目录只留 jpg；封面压到 640×360 |
 
 ### 6.3 action 版本核查结果（2026-10-26）
 
@@ -285,7 +286,7 @@ softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64    # v3.0.3
 > `e598afbe…`，真正的 commit 是 peeled 的 `efb35369…`。Actions 要用后者。
 > 另外两个是轻量 tag，`--refs` 拿到的就是 commit。
 
-### 6.4 待修：`<texture fallback="...">` 在官方 Kodi 上完全无效（69 处）
+### 6.4 已修：`<texture fallback="...">` 在官方 Kodi 上完全无效（原 69 处）
 
 **事实**：`CGUIControlFactory::GetTexture`（`GUIControlFactory.cpp:424-455`）只解析
 `border` / `infill` / `flipx` / `flipy` / `diffuse` / `colordiffuse` / `background` /
@@ -300,24 +301,37 @@ softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64    # v3.0.3
 **后果**：`<texture fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>`
 在取不到图时**什么也不画**，占位图不会出现。
 
-**现状**：69 处、40 种 `(主标签, 占位图)` 组合、跨 24 个文件。
-`extras/audit_skin.py` 已加检查，会打印 `## Kodi 不解析的 <texture> 属性`。
+**现状：69 处已全部改写（2026-10-26），`audit_skin.py` 报 0 类。**
 （`fallback` 很可能是原魔改内核的扩展属性，官方版没有。）
 
-**修复路线（按性价比排序）**：
+改法分三条路线，以后再加新图控件照这个来：
 
-| 路线 | 做法 | 覆盖 | 代价 |
-|---|---|---|---|
-| **A. 修变量**（先做） | `IconWallThumbVar` / `ShiftThumbVar` / `InfoWallThumbVar` / `ChannelListEPGIconVar` 等变量的最后一条 `<value>` 是 `$INFO[...]`（可能为空），末尾补一条占位图 `<value>DefaultX.png</value>` | 变量自身的**所有**调用点，不止这 69 处 | 每个变量 +1 行 |
-| **B. 换标签** | 固定标签的组合（如 `ListItem.Art(thumb)` → `DefaultVideo.png`）新建 `<variable>` 做"空则占位"，`<texture>` 改引用 `$VAR[...]` | 约 20 种组合 | 每个组合建 1 个变量 + 替换若干行 |
-| **C. 垫底控件** | 在原 `<control type="image">` 前插一个同几何的占位图控件，主图不渲染时露出来 | 任何情况都能用 | 每处要复制几何，69×6 行，易错 |
-| D. 不修 | 只保留自检报告，防止继续增加 | — | 缺图时仍然空白 |
+| 路线 | 用在哪 | 做法 |
+|---|---|---|
+| **A. 修变量** | 标签本身是 `$VAR[X]` 的 22 处 | 把变量末尾那条**无条件** `<value>` 改成 `condition="!String.IsEmpty(...)"`，后面补一条占位图 |
+| **B. 建变量** | 标签是固定 `$INFO[...]` 的 37 处（20 种组合） | 按 (主标签, 占位图) 建 `NaraImg*` 变量，`<texture>` 改引用 `$VAR[...]` |
+| **C. 改参数默认值** | 标签是 `$PARAM[...]` 的 9 处 | 把 include 的默认参数指向带兜底的变量（`NaraImgIconOrFolder` / `NaraImgIconOrTvShows` / `NaraImgArtThumbOrIcon`） |
 
-推荐 A → B，C 只在个别无法变量化的地方（如 `$PARAM[icon]`）用。
-`$PARAM` 型的（`$PARAM[icon]` 7 处、`$PARAM[texture]` / `$PARAM[poster_texture]` 各 1 处）
-要在**调用点**传一个带兜底的变量进去，或改用 C。
+**踩坑提醒**：
+- 变量是**自上而下取第一条成立的 `<value>`**。无条件值放在中间或末尾会挡住后面的兜底，
+  必须先把最后那条改成条件式再补兜底。
+- 带格式参数的标签（`$INFO[ListItem.ActualIcon,flags/...,.png]`）要用**第一个参数**
+  做空值判断，不能把整串塞进 `String.IsEmpty()`。
+- `$PARAM[...]` 没法判断空值，所以只能在参数默认值/调用点做兜底，不要试图加垫底控件——
+  这些控件的 `aspectratio` 多是 `keep`，垫底图会从四周露出来。
 
 ---
+
+### 6.5 素材规格：`libraryart/` 分类封面
+
+- **推荐 640 × 360（16:9）**。卡片本身是 320 × 180，用 2 倍是为了焦点放大时不糊；
+  再大纯属浪费——2026-10-26 之前那批是 1920 × 1080，24 张共 19.16 MB，
+  压到 640 × 360 后只有 1.24 MB（JPEG q86 + progressive，等比居中裁剪不变形）。
+- 原图备份在 `.workbuddy-ai/backup/libraryart-originals/`（该目录被 git 忽略，
+  也不会同步到实机之外的地方）。
+- 这批图**不入库**（`.gitignore` 里排除 `libraryart/*.jpg|png`），发布包里也没有，
+  所以终端用户装上后看到的是文件夹图标——这是设计如此，`libraryart/README.txt` 已说明。
+- 内置目录**只认 .jpg**（自定义封面目录 png/jpg 都支持）。
 
 ## 7. 交接注意
 
