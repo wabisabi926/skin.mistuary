@@ -396,17 +396,8 @@
 						<scroll>true</scroll>
 						<label>$PARAM[metadata]</label>
 					</control>
-					<include content="NaraOnlineRatingsRow">
-						<param name="top" value="232" />
-						<param name="item_prefix" value="Container($PARAM[container_id]).ListItem" />
-					</include>
-					<include content="VideoTechnicalFlagsRow">
-						<param name="top" value="273" />
-						<param name="visible" value="$PARAM[flags_visible]" />
-						<param name="item_prefix" value="Container($PARAM[container_id]).ListItem" />
-					</include>
 					<control type="label">
-						<top>316</top>
+						<top>232</top>
 						<width>800</width>
 						<height>38</height>
 						<font>font25</font>
@@ -418,7 +409,7 @@
 					</control>
 					<control type="textbox">
 						<left>2</left>
-						<top>356</top>
+						<top>294</top>
 						<width>790</width>
 						<!-- font13 fits at most three lines in this 100 px viewport. -->
 						<height>100</height>
@@ -427,6 +418,19 @@
 						<label fallback="19055">$INFO[Container($PARAM[container_id]).ListItem.Plot]</label>
 						<animation effect="slide" start="0,-38" end="0,-38" condition="String.IsEqual(Container($PARAM[container_id]).ListItem.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
 						<animation effect="slide" start="0,-32" end="0,-32" condition="$PARAM[is_tv] + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
+					</control>
+					<!-- 必须跟简介框用同一组上滑条件，否则 tagline 缺失时简介上移、这行不动，间距会撑大。 -->
+					<control type="group">
+						<top>418</top>
+						<animation effect="slide" start="0,-38" end="0,-38" condition="String.IsEqual(Container($PARAM[container_id]).ListItem.DBType,movie) + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
+						<animation effect="slide" start="0,-32" end="0,-32" condition="$PARAM[is_tv] + String.IsEmpty(Container($PARAM[container_id]).ListItem.Tagline)">Conditional</animation>
+						<include content="NaraOnlineRatingsRow">
+							<param name="top" value="0" />
+							<param name="item_prefix" value="Container($PARAM[container_id]).ListItem" />
+							<param name="inline_flags" value="true" />
+							<param name="technical_visible" value="$PARAM[flags_visible]" />
+							<param name="technical_item_prefix" value="Container($PARAM[container_id]).ListItem" />
+						</include>
 					</control>
 				</control>
 			</control>

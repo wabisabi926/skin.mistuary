@@ -239,30 +239,9 @@
 					<label>$VAR[NaraPosterHeroMetadataVar]</label>
 					<animation effect="slide" start="0,32" end="0,32" condition="String.IsEqual(Container(51).ListItem.DBType,season)">Conditional</animation>
 				</control>
-				<control type="group">
-					<top>262</top>
-					<width>725</width>
-					<height>34</height>
-					<animation effect="slide" start="0,32" end="0,32" condition="String.IsEqual(Container(51).ListItem.DBType,season)">Conditional</animation>
-					<include content="NaraOnlineRatingsRow">
-						<param name="item_prefix" value="Container(51).ListItem" />
-						<param name="width" value="725" />
-					</include>
-				</control>
-				<control type="group">
-					<top>305</top>
-					<width>725</width>
-					<height>36</height>
-					<animation effect="slide" start="0,32" end="0,32" condition="String.IsEqual(Container(51).ListItem.DBType,season)">Conditional</animation>
-					<include content="VideoTechnicalFlagsRow">
-						<param name="width" value="725" />
-						<param name="visible" value="true" />
-						<param name="item_prefix" value="Container(51).ListItem" />
-					</include>
-				</control>
 			</control>
 			<control type="label">
-				<top>354</top>
+				<top>262</top>
 				<width>700</width>
 				<height>38</height>
 				<font>font25</font>
@@ -274,7 +253,7 @@
 			</control>
 			<control type="textbox">
 				<left>2</left>
-				<top>392</top>
+				<top>324</top>
 				<width>690</width>
 				<height>134</height>
 				<font>font13</font>
@@ -282,6 +261,21 @@
 				<label fallback="19055">$VAR[NaraPosterHeroSynopsisVar]</label>
 				<animation effect="slide" start="0,-57" end="0,-57" condition="String.IsEqual(Container(51).ListItem.DBType,tvshow)">Conditional</animation>
 				<animation effect="slide" start="0,-64" end="0,-64" condition="String.IsEqual(Container(51).ListItem.DBType,season)">Conditional</animation>
+			</control>
+			<!-- 评分 + 技术标识同一行，放在简介下方。
+			     位移必须和上面的简介框一致（tvshow -57 / season -64），否则间距会撑大。 -->
+			<control type="group">
+				<top>482</top>
+				<width>725</width>
+				<height>36</height>
+				<animation effect="slide" start="0,-57" end="0,-57" condition="String.IsEqual(Container(51).ListItem.DBType,tvshow)">Conditional</animation>
+				<animation effect="slide" start="0,-64" end="0,-64" condition="String.IsEqual(Container(51).ListItem.DBType,season)">Conditional</animation>
+				<include content="NaraOnlineRatingsRow">
+					<param name="item_prefix" value="Container(51).ListItem" />
+					<param name="width" value="725" />
+					<param name="inline_flags" value="true" />
+					<param name="technical_item_prefix" value="Container(51).ListItem" />
+				</include>
 			</control>
 		</control>
 	</include>

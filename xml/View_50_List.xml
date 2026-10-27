@@ -196,6 +196,8 @@
 				<include content="VideoInfoHeroContent">
 					<param name="synopsis_height" value="134" />
 					<param name="tv_synopsis_height" value="134" />
+							<param name="ratings_top" value="160" />
+							<param name="ratings_top_tv" value="160" />
 					<param name="clearlogo_width" value="700" />
 					<param name="clearlogo_height" value="140" />
 					<param name="item_dbtype" value="Container(50).ListItem.DBType" />

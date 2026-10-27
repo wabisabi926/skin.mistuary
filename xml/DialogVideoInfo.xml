@@ -143,6 +143,8 @@
 							<param name="synopsis_navigation" value="5000" />
 							<param name="synopsis_height" value="105" />
 							<param name="tv_synopsis_height" value="105" />
+							<param name="ratings_top" value="131" />
+							<param name="ratings_top_tv" value="131" />
 							<param name="synopsis_focus_height" value="98" />
 						</include>
 					</control>

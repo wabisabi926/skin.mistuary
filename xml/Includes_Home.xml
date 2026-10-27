@@ -201,7 +201,7 @@
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
 						<animation effect="fade" time="180">VisibleChange</animation>
 						<left>80</left>
-						<top>245</top>
+						<top>266</top>
 						<width>820</width>
 						<height>91</height>
 						<font>font12_large</font>

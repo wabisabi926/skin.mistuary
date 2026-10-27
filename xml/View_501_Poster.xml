@@ -84,6 +84,8 @@
 				<include content="VideoInfoHeroContent">
 					<param name="synopsis_height" value="100" />
 					<param name="tv_synopsis_height" value="134" />
+							<param name="ratings_top" value="126" />
+							<param name="ratings_top_tv" value="160" />
 					<param name="tv_synopsis_no_tagline_offset" value="-38" />
 					<param name="tv_content_no_tagline_offset" value="9" />
 					<param name="clearlogo_width" value="720" />

@@ -61,22 +61,21 @@
 					<label>$INFO[Container($PARAM[list_id]).ListItem.Year]$INFO[Container($PARAM[list_id]).ListItem.Mpaa,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Genre,  &#183;  ]$INFO[Container($PARAM[list_id]).ListItem.Season,  &#183;  , $LOCALIZE[36905]]$INFO[Container($PARAM[list_id]).ListItem.Episode,  &#183;  , $LOCALIZE[36907]]</label>
 					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 				</control>
-				<include content="NaraOnlineRatingsRow">
-					<param name="top" value="42" />
-					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
-				</include>
-				<include content="VideoTechnicalFlagsRow">
-					<param name="top" value="84" />
-					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
-				</include>
 				<control type="textbox">
-					<top>126</top>
+					<top>62</top>
 					<width>820</width>
 					<height>105</height>
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 				</control>
+				<!-- 评分 + 技术标识同一行，放在简介下方。 -->
+				<include content="NaraOnlineRatingsRow">
+					<param name="top" value="191" />
+					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+					<param name="inline_flags" value="true" />
+					<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+				</include>
 			</control>
 		</definition>
 	</include>

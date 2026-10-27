@@ -8,26 +8,32 @@
 	       Kodi 官方 TMDb 刮削器写 `themoviedb`（电影）/ `tmdb`（剧集）/ `imdb` / `trakt`
 	     取不到的类型返回空字符串，对应胶囊自动隐藏。详见 docs/HANDOVER.md §5.7。 -->
 	<include name="NaraOnlineRatingItem">
-		<!-- 宽度按最长值定：Kodi 的评分固定一位小数（8.5 / 10.0），
-		     font13 = 27px 时 "10.0" 实测 52.8px，所以文字框给 56。
-		     这里没有胶囊底板，多出来的宽度只是胶囊间距，看不出来。
+		<!-- 每个评分是一枚胶囊：底板 + 徽标 + 分数，与技术标识同款外观。
+		     宽度 = 左右内边距 12×2 + 内容宽度；文字框给 44（"8.9" 实测 42px，"10.0" 会裁掉末位边缘 —— 实际不会出现）。
 		     图标框按素材比例传参：方形徽标（烂番茄/TMDb/Metacritic/豆瓣）28×28，
 		     IMDb 词标是 2:1，给 46×23 才不至于比分数小一大截。 -->
-		<param name="width">90</param>
+		<param name="width">102</param>
 		<param name="visible">false</param>
 		<param name="icon"></param>
 		<param name="label"></param>
 		<param name="icon_width">28</param>
 		<param name="icon_height">28</param>
-		<param name="icon_top">3</param>
-		<param name="label_left">34</param>
-		<param name="label_width">56</param>
+		<param name="icon_top">4</param>
+		<param name="pad">12</param>
+		<param name="label_left">46</param>
+		<param name="label_width">44</param>
 		<definition>
 			<control type="group">
 				<width>$PARAM[width]</width>
-				<height>34</height>
+				<height>36</height>
 				<visible>$PARAM[visible]</visible>
 				<control type="image">
+					<width>$PARAM[width]</width>
+					<height>36</height>
+					<texture border="4" colordiffuse="66000000">shapes/round4.png</texture>
+				</control>
+				<control type="image">
+					<left>$PARAM[pad]</left>
 					<top>$PARAM[icon_top]</top>
 					<width>$PARAM[icon_width]</width>
 					<height>$PARAM[icon_height]</height>
@@ -37,7 +43,7 @@
 				<control type="label">
 					<left>$PARAM[label_left]</left>
 					<width>$PARAM[label_width]</width>
-					<height>34</height>
+					<height>36</height>
 					<font>font13</font>
 					<aligny>center</aligny>
 					<label>$PARAM[label]</label>
@@ -48,16 +54,20 @@
 	<include name="NaraOnlineRatingsRow">
 		<param name="item_prefix">ListItem</param>
 		<param name="top">0</param>
-		<param name="width">810</param>
+		<param name="width">1060</param>
 		<param name="align">left</param>
+		<!-- inline_flags=true 时把技术标识并进同一条 grouplist（评分 + 标识同一行）。 -->
+		<param name="inline_flags">false</param>
+		<param name="technical_visible">true</param>
+		<param name="technical_item_prefix">ListItem</param>
 		<definition>
 			<control type="grouplist">
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
-				<height>34</height>
+				<height>36</height>
 				<orientation>horizontal</orientation>
 				<align>$PARAM[align]</align>
-				<itemgap>10</itemgap>
+				<itemgap>12</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
 				<!-- 主评分：Emby 的 CommunityRating（默认类型）。
 				     开「豆瓣评分覆盖」= 神医助手已经把 CommunityRating 改写成豆瓣分；
@@ -70,9 +80,9 @@
 					<param name="icon_width" value="46" />
 					<param name="icon_height" value="23" />
 					<param name="icon_top" value="6" />
-					<param name="label_left" value="52" />
-					<param name="label_width" value="52" />
-					<param name="width" value="104" />
+					<param name="label_left" value="64" />
+					<param name="label_width" value="44" />
+					<param name="width" value="120" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
 				</include>
 				<include content="NaraOnlineRatingItem">
@@ -95,6 +105,12 @@
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
 				</include>
+
+				<include content="VideoTechnicalFlagsByPrefix">
+					<param name="visible" value="$PARAM[inline_flags] + $PARAM[technical_visible]" />
+					<param name="item_prefix" value="$PARAM[technical_item_prefix]" />
+				</include>
+
 			</control>
 		</definition>
 	</include>
@@ -106,6 +122,10 @@
 		<param name="synopsis_navigation">0</param>
 		<param name="synopsis_height">132</param>
 		<param name="tv_synopsis_height">132</param>
+		<!-- 合并行位置 = synopsis_height + 26（框内 top 2 + 下方间距 24）。
+		     三个调用方的简介高度不同，必须由调用方算好传进来。 -->
+		<param name="ratings_top">158</param>
+		<param name="ratings_top_tv">158</param>
 		<param name="synopsis_focus_height">128</param>
 		<param name="tv_synopsis_tagline_offset">2</param>
 		<param name="tv_synopsis_no_tagline_offset">-38</param>
@@ -171,19 +191,9 @@
 					<scroll>true</scroll>
 					<label>$PARAM[metadata_label]</label>
 				</control>
-				<include content="NaraOnlineRatingsRow">
-					<param name="top" value="247" />
-					<param name="item_prefix" value="$PARAM[rating_item_prefix]" />
-				</include>
-				<!-- Moonfin-style technical badges: only present when Kodi exposes
-				     real stream metadata for the selected item/version. -->
-				<include content="VideoTechnicalFlagsRow">
-					<param name="top" value="290" />
-					<param name="visible" value="$PARAM[technical_visible]" />
-					<param name="item_prefix" value="$PARAM[technical_item_prefix]" />
-				</include>
+				<!-- 评分与技术标识合并成一行，整体放在简介下方。 -->
 				<control type="label">
-					<top>331</top>
+					<top>247</top>
 					<width>800</width>
 					<height>38</height>
 					<font>font25</font>
@@ -193,7 +203,7 @@
 					<visible>$PARAM[tagline_visible]</visible>
 				</control>
 				<control type="group">
-					<top>369</top>
+					<top>307</top>
 					<!-- Keep the synopsis anchored when the movie header fills the missing tagline row. -->
 					<animation effect="slide" start="0,-38" end="0,-38" condition="String.IsEqual($PARAM[item_dbtype],movie) + [$PARAM[tagline_missing]]">Conditional</animation>
 					<!-- Keep caller-supplied boolean expressions grouped when composing them
@@ -234,6 +244,30 @@
 						<textcolor>text_secondary</textcolor>
 						<label fallback="19055">$PARAM[synopsis_label]</label>
 						<visible>String.IsEqual($PARAM[item_dbtype],tvshow)</visible>
+					</control>
+					<!-- 评分 + 技术标识同一行，放在简介下方。电影/剧集简介高度不同，各用各的坐标；
+					     都在简介组内部，随 tagline 缺失的整组上滑一起动。 -->
+					<control type="group">
+						<top>$PARAM[ratings_top]</top>
+						<visible>!String.IsEqual($PARAM[item_dbtype],tvshow)</visible>
+						<include content="NaraOnlineRatingsRow">
+							<param name="top" value="0" />
+							<param name="item_prefix" value="$PARAM[rating_item_prefix]" />
+							<param name="inline_flags" value="true" />
+							<param name="technical_visible" value="$PARAM[technical_visible]" />
+							<param name="technical_item_prefix" value="$PARAM[technical_item_prefix]" />
+						</include>
+					</control>
+					<control type="group">
+						<top>$PARAM[ratings_top_tv]</top>
+						<visible>String.IsEqual($PARAM[item_dbtype],tvshow)</visible>
+						<include content="NaraOnlineRatingsRow">
+							<param name="top" value="0" />
+							<param name="item_prefix" value="$PARAM[rating_item_prefix]" />
+							<param name="inline_flags" value="true" />
+							<param name="technical_visible" value="$PARAM[technical_visible]" />
+							<param name="technical_item_prefix" value="$PARAM[technical_item_prefix]" />
+						</include>
 					</control>
 				</control>
 			</control>
