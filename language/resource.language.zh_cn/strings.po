@@ -481,12 +481,12 @@ msgid "Default action for movie sets"
 msgstr "电影系列的默认打开方式"
 
 msgctxt "#31177"
-msgid "Radio is not available in Estuary N."
-msgstr "Estuary N 不提供电台功能。"
+msgid "Radio is not available in this skin."
+msgstr "本皮肤不提供电台功能。"
 
 msgctxt "#31178"
-msgid "Games are not available in Estuary N."
-msgstr "Estuary N 不提供游戏功能。"
+msgid "Games are not available in this skin."
+msgstr "本皮肤不提供游戏功能。"
 
 # empty strings from id 31179 to 31596
 #. Button to select Player Process Info window

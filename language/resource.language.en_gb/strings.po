@@ -608,12 +608,12 @@ msgstr ""
 
 #: /xml/DialogPVRRadioRDSInfo.xml /xml/MyPVRChannels.xml /xml/MyPVRGuide.xml /xml/MyPVRProviders.xml /xml/MyPVRRecordings.xml /xml/MyPVRSearch.xml /xml/MyPVRTimers.xml
 msgctxt "#31177"
-msgid "Radio is not available in Estuary N."
+msgid "Radio is not available in this skin."
 msgstr ""
 
 #: /xml/DialogGameControllers.xml /xml/DialogSelect.xml /xml/GameOSD.xml /xml/MyGames.xml
 msgctxt "#31178"
-msgid "Games are not available in Estuary N."
+msgid "Games are not available in this skin."
 msgstr ""
 
 #empty strings from id 31179 to 31596
