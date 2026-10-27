@@ -46,3 +46,15 @@ CoreELEC 设备同样可用。原分支依赖魔改内核的玻璃、圆角、sl
 ```bash
 python tools/xbt_tool.py pack
 ```
+
+## 许可
+
+| 部分 | 许可 |
+| --- | --- |
+| 皮肤代码（`xml/`、`colors/`、`tools/`） | GNU GPL v2 —— 全文见 [`LICENSE`](LICENSE) |
+| 美术素材（配色、布局、图标重绘、背景图） | CC BY-SA 4.0 |
+| UI 字体 | SIL OFL 1.1 —— 见 [`fonts/OFL.txt`](fonts/OFL.txt) |
+
+本皮肤衍生自 [Estuary](https://github.com/xbmc/xbmc/tree/master/addons/skin.estuary)
+（phil65 / Team Kodi）与 Estuary N，按上游要求保留署名。
+第三方素材的来源与许可见 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。

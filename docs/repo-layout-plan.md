@@ -50,7 +50,7 @@
 
 ```
 skin.mistuary/
-├── addon.xml  changelog.txt  README.md  LICENSE.txt
+├── addon.xml  changelog.txt  README.md  LICENSE  THIRD_PARTY_NOTICES.md
 ├── xml/  colors/  fonts/  language/  media/  resources/     ← 皮肤本体
 ├── extras/                       ← 随包发布的素材（新，进包）
 │   ├── backgrounds/primary.jpg   ← 原 backgrounds/

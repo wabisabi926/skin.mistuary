@@ -1,19 +1,28 @@
-Estuary by phil65 (Team Kodi)
+# 许可与第三方声明
 
-Estuary Artwork is licensed under a
-Creative Commons Attribution-ShareAlike 4.0 Unported License.
-You can find the license details here: <http://creativecommons.org/licenses/by-sa/4.0/>.
+本皮肤同时包含**代码**与**美术素材**，两者许可不同；另外还有若干第三方素材，
+其原始许可要求"随副本一并分发声明"。发布包必须同时带上本文件、`LICENSE` 和 `fonts/OFL.txt`。
 
-Estuary code work is licensed under
-GNU General Public License (GPL), Version 2.0
-You can find the license details here: <https://www.gnu.org/licenses/gpl-2.0>.
+## 一、许可构成
 
-Mistuary 自身的改动（配色、布局、玻璃面板、不透明度设置、图标重绘等）
-沿用同一许可：代码部分 GPL v2，美术部分 CC BY-SA 4.0。
+| 部分 | 许可 | 全文 |
+|---|---|---|
+| 皮肤代码（`xml/`、`colors/`、`tools/`） | GNU GPL v2 | [`LICENSE`](LICENSE) |
+| 美术素材（配色、布局、图标重绘、背景图） | CC BY-SA 4.0 | <https://creativecommons.org/licenses/by-sa/4.0/> |
+| UI 字体 `fonts/Inter-Unicode-Regular.ttf` | SIL OFL 1.1 | [`fonts/OFL.txt`](fonts/OFL.txt) |
+| `script.tinyppi` 播放器图标 | MIT | 见下文 |
+| Arctic Fuse 2 类型图标 | 上游许可 | 见下文 |
 
-================================================================================
-第三方素材声明（Third-party notices）
-================================================================================
+## 二、来源与署名
+
+本皮肤衍生自 **Estuary**（phil65 / Team Kodi）与 **Estuary N**，按上游许可保留署名：
+
+- Estuary 代码：GNU GPL v2
+- Estuary 美术：CC BY-SA 4.0
+- Mistuary 自身的改动（配色、布局、玻璃面板、不透明度设置、图标重绘等）沿用同一许可：
+  代码部分 GPL v2，美术部分 CC BY-SA 4.0。
+
+## 三、第三方素材
 
 本皮肤包含下列第三方素材，各自按其原始许可分发。
 原始许可要求"随副本一并分发版权声明"，因此本节必须随皮肤一起发布。

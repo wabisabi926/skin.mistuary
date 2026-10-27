@@ -43,7 +43,8 @@
 
 ```
 addon.xml  changelog.txt  README.md
-LICENSE.txt    本体许可（GPL v2 / CC BY-SA 4.0）+ 三方素材声明（MIT / OFL）
+LICENSE        GNU GPL v2 全文（代码部分；GitHub 靠它识别许可）
+THIRD_PARTY_NOTICES.md  许可构成 + Estuary 署名 + 第三方素材（MIT / OFL）
 xml/            全部窗口与 include
 colors/         defaults.xml（透黑）/ light.xml（透白，只写差异色）
 fonts/          Inter-Unicode-Regular.ttf（自带 CJK，见 §5.1）
