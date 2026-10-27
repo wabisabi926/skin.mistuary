@@ -719,6 +719,10 @@
 		<value condition="Container.ListItem.Property(emby.library.art) + !String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
 		<value condition="Container.ListItem.Property(emby.library.art) + !String.IsEmpty(Container.ListItem.Art(thumb))">$INFO[Container.ListItem.Art(thumb)]</value>
 		<value condition="!String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
+		<!-- 音乐页兜底：专辑条目只有 thumb、没有 fanart，前面所有分支都不成立 →
+		     直接复用「音乐播放器背景图」，和播放页共用同一张
+		     （也跟随 设置 → 外观 → 音乐背景，用户换图两边一起变）。 -->
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),music)">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</value>
 	</variable>
 	<variable name="NaraWallFanartVar">
 		<value condition="!String.IsEmpty(Container(500).ListItem.Art(fanart))">$INFO[Container(500).ListItem.Art(fanart)]</value>
@@ -1547,7 +1551,7 @@
 	</variable>
 	<!-- 贴图占位兜底：Kodi 的 <texture> 不支持 fallback 属性，
 	     取不到图时什么都不会画。这里按 (主标签, 占位图) 组合各建一个变量，
-	     空值时返回占位图。改这里之前先看 docs/HANDOVER.md §6.4。 -->
+	     空值时返回占位图。改这里之前先看 docs/skin-contracts.md 附录。 -->
 	<!-- 下面三个给 <include> 的默认参数用（调用点可以直接覆盖） -->
 	<variable name="NaraImgIconOrFolder">
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
@@ -1568,7 +1572,7 @@
 	</variable>
 	<variable name="NaraImgListItemArtFanartDefMusic">
 		<value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-		<value>special://skin/extras/home-images/music.jpg</value>
+		<value>special://skin/home-images/music.jpg</value>
 	</variable>
 	<variable name="NaraImgListItemArtPosterDefDefaultVideo">
 		<value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
@@ -1640,7 +1644,7 @@
 	</variable>
 	<variable name="NaraImgSkinStringNaraMusicBackgroundDefMusicBackground">
 		<value condition="!String.IsEmpty(Skin.String(Nara.MusicBackground))">$INFO[Skin.String(Nara.MusicBackground)]</value>
-		<value>osd/nara/music-background.png</value>
+		<value>osd/nara/music-background.jpg</value>
 	</variable>
 	<!-- BEGIN generated: technical flag maps (Kodi 21 compatible) -->
 	<variable name="NaraTechResolutionPlayer">
@@ -1766,4 +1770,76 @@
 		<value>$INFO[VideoPlayer.AudioCodec]</value>
 	</variable>
 	<!-- END generated: technical flag maps (Kodi 21 compatible) -->
+
+	<!-- ===== 浮窗不透明度档位（皮肤设置 → 外观 → 浮窗不透明度）=====
+	     colordiffuse 支持 $VAR（CGUIInfoColor::Parse），所以可以把颜色名做成变量。
+	     档位由 Skin.SelectBool 写入 glass_op_1..6，面板色与遮蔽色**联动**：
+	     档位越高，面板越实、面板外的遮蔽也越重（否则面板实、外面亮，会很割裂）。
+	     默认 gd_3 / sc_3（面板 78% + 遮蔽 50% = 89%）。 -->
+	<!-- 首页方块 widget（专辑/歌手）的封面。
+	     不能直接用 InfoWallThumbVar：它的兜底是 DefaultVideo.png（平均亮度只有 37，几乎全黑），
+	     没有封面的专辑会变成一块黑砖。这里兜到 DefaultMusicAlbums.png。 -->
+	<variable name="NaraAlbumCardThumbVar">
+		<value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+		<value>DefaultMusicAlbums.png</value>
+	</variable>
+	<variable name="NaraGlassDialogTintVar">
+		<value condition="Skin.HasSetting(glass_op_1)">gd_1</value>
+		<value condition="Skin.HasSetting(glass_op_2)">gd_2</value>
+		<value condition="Skin.HasSetting(glass_op_3)">gd_3</value>
+		<value condition="Skin.HasSetting(glass_op_5)">gd_5</value>
+		<value condition="Skin.HasSetting(glass_op_6)">gd_6</value>
+		<value>gd_4</value>
+	</variable>
+	<variable name="NaraGlassScrimTintVar">
+		<value condition="Skin.HasSetting(glass_op_1)">sc_1</value>
+		<value condition="Skin.HasSetting(glass_op_2)">sc_2</value>
+		<value condition="Skin.HasSetting(glass_op_3)">sc_3</value>
+		<value condition="Skin.HasSetting(glass_op_5)">sc_5</value>
+		<value condition="Skin.HasSetting(glass_op_6)">sc_6</value>
+		<value>sc_4</value>
+	</variable>
+	<variable name="NaraGlassDialogLabelVar">
+		<value condition="Skin.HasSetting(glass_op_1)">$LOCALIZE[31723]</value>
+		<value condition="Skin.HasSetting(glass_op_2)">$LOCALIZE[31724]</value>
+		<value condition="Skin.HasSetting(glass_op_3)">$LOCALIZE[31732]</value>
+		<value condition="Skin.HasSetting(glass_op_5)">$LOCALIZE[31726]</value>
+		<value condition="Skin.HasSetting(glass_op_6)">$LOCALIZE[31728]</value>
+		<value>$LOCALIZE[31725]</value>
+	</variable>
+	<!-- 播放中浮窗（OSD 设置 / 播放列表 / 书签 / 处理信息）专用的面板色。
+	     它们压在画面上，用「浮窗档」原值（78%）合成到 84.6% 太实、画面透不出来，
+	     所以整体**下移两档**：默认 78% → 60%，合成 72%，画面能看出来、字也还清楚。
+	     仍然跟随「浮窗不透明度」设置，只是永远比普通浮窗轻两档。 -->
+	<variable name="NaraPlaybackDialogTintVar">
+		<value condition="Skin.HasSetting(glass_op_1)">gd_1</value>
+		<value condition="Skin.HasSetting(glass_op_2)">gd_1</value>
+		<value condition="Skin.HasSetting(glass_op_3)">gd_1</value>
+		<value condition="Skin.HasSetting(glass_op_5)">gd_3</value>
+		<value condition="Skin.HasSetting(glass_op_6)">gd_4</value>
+		<value>gd_2</value>
+	</variable>
+	<!-- 设置类对话框的遮蔽层：**播放中**用 scrim_osd（30%），其余用浮窗档（50%）。
+	     理由：播放中打开设置（视频/音频/字幕/色彩管理）是"临时看一眼"，
+	     89% 的合成会把画面盖死；换成 30% 后合成 84.6%，画面还看得见、字也够清楚。
+	     判 Player.HasVideo/HasAudio 而不是判窗口属性 —— 语义更准，也不依赖谁去写属性。 -->
+	<variable name="NaraSettingsDialogScrimVar">
+		<value condition="Player.HasVideo | Player.HasAudio">scrim_osd</value>
+		<value>$VAR[NaraGlassScrimTintVar]</value>
+	</variable>
+	<!-- 全屏页内容面板（插件浏览 / 事件日志 / 皮肤设置 / 设置分类 / 系统信息） -->
+	<variable name="NaraGlassPageTintVar">
+		<value condition="Skin.HasSetting(glass_page_op_1)">gp_1</value>
+		<value condition="Skin.HasSetting(glass_page_op_2)">gp_2</value>
+		<value condition="Skin.HasSetting(glass_page_op_4)">gp_4</value>
+		<value>gp_3</value>
+	</variable>
+	<variable name="NaraGlassPageLabelVar">
+		<value condition="Skin.HasSetting(glass_page_op_1)">$LOCALIZE[31723]</value>
+		<value condition="Skin.HasSetting(glass_page_op_2)">$LOCALIZE[31724]</value>
+		<value condition="Skin.HasSetting(glass_page_op_4)">$LOCALIZE[31727]</value>
+		<value>$LOCALIZE[31725]</value>
+	</variable>
 </includes>
