@@ -207,6 +207,19 @@ Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本�
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。
 
+### 5.8 音乐播放页：歌词 / 评分 / 背景
+
+- **歌词**：OSD 有「歌词」按钮，播放入口是歌词插件（默认 `script.cu.lrclyrics`）。
+  皮肤用 `xml/script-cu-lrclyrics-main.xml` 覆盖插件窗口，列表固定在屏幕右侧、
+  无全屏遮罩；播放页 `onload` 自动启动、`onunload` 关闭。
+  插件的取词顺序是「内嵌 → 同名 .lrc → 在线源」，本地有词就不会联网。
+- **评分**：OSD 有「我的评分」按钮（`SetRating`，写 Kodi 用户评分）。
+- **背景**：默认图是 `media/osd/nara/music-background.jpg`（进 XBT）；
+  用户可在「设置 → 外观 → 音乐背景」换图，变量
+  `NaraImgSkinStringNaraMusicBackgroundDefMusicBackground` 统一给播放页和音乐信息页兜底。
+- **豆瓣**：StrmAssistant 的豆瓣覆盖改写的是 Emby `CommunityRating`（Kodi 侧为默认类型，
+  无来源标志），皮肤用设置项 `douban_rating` 手动切换第一颗评分胶囊的图标（IMDb / Douban）。
+
 ## 6. 发版流程
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）

@@ -69,6 +69,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
+| `douban_rating` | `SkinSettings.xml`（默认评分来源） | `ToggleSetting` |
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
