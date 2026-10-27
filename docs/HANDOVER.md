@@ -171,6 +171,27 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 ---
 
+### 5.7 评分：按类型读，别自己造标签
+
+Kodi 20+ 的视频信息标签支持**多个带类型的评分**：
+
+| 写法 | 含义 |
+|---|---|
+| `ListItem.Rating` | 默认类型（`m_strDefaultRating`） |
+| `ListItem.Rating(imdb)` / `(tmdb)` / `(tomatometerallcritics)` | 指定类型的评分 |
+| `ListItem.Votes(<type>)` / `ListItem.RatingAndVotes(<type>)` | 同类型的票数 |
+
+`CVideoInfoTag::SetRating` 会**丢弃 0 和 >10 的值**，所以 0-100 的分数必须先换算。
+
+Emby for Kodi（`emby/listitem.py`）实际写入的是：
+
+- `CommunityRating` → 默认评分；`imdbrating` 设置开启（默认开）时类型写成 `imdb`
+- `CriticRating / 10` → 类型 `tomatometerallcritics`；同一个数也写进了 `UserRating`
+- 服务器如果直接返回 `Ratings` 数组，还会多出别的类型
+
+取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
+**不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。
+
 ## 6. 发版流程
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）
@@ -197,7 +218,14 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 | 项 | 说明 |
 |---|---|
+| 详情页**评分行** | 原来用 `ListItem.NaraRating(<source>)` / `NaraRatingIcon(<source>)`（Estuary N 依赖魔改内核的标签，官方 Kodi 没有）→ 8 个胶囊全部隐藏。**2026-10-27 已改**为标准写法：`ListItem.Rating`（Emby 社区评分）+ `ListItem.Rating(tomatometerallcritics)`（Emby 影评人评分/10）+ `tmdb` / `metacritic`，图标改成每个胶囊写死，取不到的类型自动隐藏 |
+| `ListItem.BMP` 拼写错误 | `Includes.xml` 音乐媒体标识里写的是 `BMP`（位图），本意是 `BPM`。Kodi 的标签是 `ListItem.BPM`，现在这个徽标永远不显示 |
+| `ListItem.MusicBitsPerSample` 不存在 | Kodi 只有 `MusicPlayer.BitsPerSample`（播放器上下文），列表项没有位深标签 → 该徽标永远不显示 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `extras/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
+
+> 上面四条"标签不存在"是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表
+> 逐条比对 `$INFO[...]` 得出的。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X
+> 取出来，去掉 `(...)` 参数和 `$PARAM[...]` 前缀，取最后一段，与标签表求差集。

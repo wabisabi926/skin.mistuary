@@ -12,7 +12,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from audit_skin import RESET_ONLY_SETTINGS, collect_skin_settings  # noqa: E402
+from audit_skin import (  # noqa: E402
+    DEFAULT_ONLY_SETTINGS,
+    RESET_ONLY_SETTINGS,
+    collect_skin_settings,
+)
 
 XML_DIR = Path(__file__).resolve().parents[1] / "xml"
 
@@ -87,8 +91,16 @@ class RepoSkinSettingsTest(unittest.TestCase):
         self.assertEqual(readonly, [], f"这些设置只读，没有写入入口: {readonly}")
 
     def test_no_orphan_write(self):
-        """写入了却没人读 = 功能没接上（恢复默认选项除外）。"""
-        orphan = sorted(set(self.writes) - set(self.reads) - RESET_ONLY_SETTINGS)
+        """写入了却没人读 = 功能没接上。
+
+        两类豁免：
+        - RESET_ONLY_SETTINGS：只用来"恢复默认"的选项，本来就不需要读；
+        - DEFAULT_ONLY_SETTINGS：档位类设置里代表**默认值**的那一档，
+          变量用最后一条无条件的 <value> 兜底，所以没有显式的 Skin.HasSetting 读取。
+        """
+        orphan = sorted(
+            set(self.writes) - set(self.reads) - RESET_ONLY_SETTINGS - DEFAULT_ONLY_SETTINGS
+        )
         self.assertEqual(orphan, [], f"这些设置写了没人读: {orphan}")
 
 

@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<!-- This row is deliberately opt-in. Evaluating these labels is the only skin action
-	     that starts online rating work; hidden entries collapse in the horizontal list. -->
+	<!-- 评分胶囊。Kodi 20+ 支持按类型读评分：`ListItem.Rating(<type>)`，
+	     默认类型用 `ListItem.Rating` 读。Emby for Kodi 会同步两类：
+	     社区评分（默认类型，imdbrating 开启时是 imdb）和影评人评分（tomatometerallcritics）。
+	     取不到的类型返回空字符串，对应胶囊自动隐藏，所以多列几种类型是安全的。 -->
 	<include name="NaraOnlineRatingItem">
 		<param name="width">78</param>
+		<param name="visible">false</param>
+		<param name="icon"></param>
+		<param name="label"></param>
 		<definition>
 			<control type="group">
 				<width>$PARAM[width]</width>
 				<height>34</height>
-				<visible>!String.IsEmpty($PARAM[item_prefix].NaraRating($PARAM[source]))</visible>
+				<visible>$PARAM[visible]</visible>
 				<control type="image">
 					<top>3</top>
 					<width>28</width>
 					<height>28</height>
 					<aspectratio align="left" aligny="center">keep</aspectratio>
-					<texture>$INFO[$PARAM[item_prefix].NaraRatingIcon($PARAM[source])]</texture>
+					<texture>$PARAM[icon]</texture>
 				</control>
 				<control type="label">
 					<left>34</left>
@@ -22,7 +27,7 @@
 					<height>34</height>
 					<font>font13</font>
 					<aligny>center</aligny>
-					<label>$INFO[$PARAM[item_prefix].NaraRating($PARAM[source])]</label>
+					<label>$PARAM[label]</label>
 				</control>
 			</control>
 		</definition>
@@ -39,37 +44,28 @@
 				<orientation>horizontal</orientation>
 				<itemgap>10</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
+				<!-- 社区评分：Emby 的 CommunityRating，默认类型 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="douban" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating)" />
+					<param name="icon" value="flags/ratings/imdb.png" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
+				</include>
+				<!-- 影评人评分：Emby 的 CriticRating/10，类型 tomatometerallcritics -->
+				<include content="NaraOnlineRatingItem">
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics))" />
+					<param name="icon" value="flags/ratings/rtfresh.png" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
+				</include>
+				<!-- 下面几种只有本地库的刮削器（TMDb/Trakt）才会写入，取不到就自动隐藏 -->
+				<include content="NaraOnlineRatingItem">
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tmdb))" />
+					<param name="icon" value="flags/ratings/tmdb.png" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]" />
 				</include>
 				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="imdb" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="tmdb" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="trakt" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="mdblist" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="metacritic" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="rottentomatoes" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="item_prefix" value="$PARAM[item_prefix]" />
-					<param name="source" value="rottentomatoesaudience" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(metacritic))" />
+					<param name="icon" value="flags/ratings/metacritic.png" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(metacritic)]" />
 				</include>
 			</control>
 		</definition>
