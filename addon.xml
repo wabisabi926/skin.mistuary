@@ -22,10 +22,10 @@
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<summary lang="zh">雾汐｜轻量透明皮肤，基于 Estuary，支持透黑、透白双模式</summary>
-		<summary lang="en">Mistuary - Lightweight transparent skin based on Estuary, with dark &amp; light transparent mode</summary>
-		<description lang="zh">简约透明UI，低资源占用，画面优先，内置透黑/透白主题切换</description>
-		<description lang="en">Simple transparent UI, lightweight, video-first, built-in transparent dark / light theme switch</description>
+		<summary lang="zh">雾汐｜轻量透明皮肤，基于 Estuary，透明度可调，透黑 / 透白双模式</summary>
+		<summary lang="en">Mistuary - Lightweight transparent skin based on Estuary, adjustable glass transparency, dark &amp; light modes</summary>
+		<description lang="zh">简约透明 UI，低资源占用，画面优先。透明度分「页面 / 浮窗 / 播放中」三档、每档 6 级可调，内置透黑 / 透白主题。</description>
+		<description lang="en">Simple transparent UI, lightweight, video-first. Glass transparency is adjustable per page / popup / playback, six steps each, with built-in dark and light themes.</description>
 		<disclaimer lang="en_GB">Weather, radio and game browsing surfaces are intentionally omitted. The original Estuary skin remains available as a fallback.</disclaimer>
 		<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面；原版 Estuary 仍可作为备用皮肤。</disclaimer>
 	</extension>
