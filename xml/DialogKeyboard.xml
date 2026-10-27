@@ -4,6 +4,10 @@
 	<include>Keyboard_Slide_Up</include>
 	<depth>DepthDialog+</depth>
 	<controls>
+		<!-- 键盘面板原本只有一层 50% 玻璃 → 补遮蔽层 -->
+		<include content="NaraDialogScrim">
+			<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />
+		</include>
 		<control type="group">
 			<bottom>0</bottom>
 			<centerleft>50%</centerleft>
@@ -23,7 +27,7 @@
 				<width>100%</width>
 				<height>470</height>
 				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassTexture">
-					<param name="style" value="dialog" />
+					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 				</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
 					<param name="color" value="surface_dialog" />

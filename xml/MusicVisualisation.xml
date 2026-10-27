@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<onload condition="!Player.PauseEnabled">SetFocus(70048)</onload>
+	<!-- 歌词面板固定在播放页右侧：首次进入若未指定歌词插件，自动选中 CU LRC；
+	     已指定则在页面打开时自动启动歌词脚本（窗口覆盖文件已把列表放在右侧、无全屏遮罩），
+	     离开播放页时关闭歌词窗口。 -->
+	<onload condition="String.IsEmpty(Skin.String(LyricScript_Path)) + System.HasAddon(script.cu.lrclyrics)">Skin.SetString(LyricScript_Path,script.cu.lrclyrics)</onload>
+	<!-- 不能写 System.HasAddon($INFO[...])：Kodi 的布尔表达式解析器不认嵌套的 $INFO，
+	     会直接报 "Misplaced [" 然后整条条件失效 —— 歌词脚本永远不启动。
+	     这里只判路径非空；插件真缺了 RunScript 自己会报错，不影响其它功能。 -->
+	<onload condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onload>
+	<onunload>Dialog.Close(script-cu-lrclyrics-main)</onunload>
 	<defaultcontrol always="true">602</defaultcontrol>
 	<backgroundcolor>FF000000</backgroundcolor>
 	<controls>
@@ -46,7 +55,6 @@
 				<width>498</width>
 				<height>498</height>
 				<texture border="40" colordiffuse="4D000000">overlays/shadow.png</texture>
-				<visible>[!String.IsEmpty(Window(visualisation).Property(NaraMusic.Cover)) + !String.IsEqual(Window(visualisation).Property(NaraMusic.Cover),DefaultAlbumCover.png)] | [PVR.IsPlayingRadio + !String.IsEmpty(MusicPlayer.Cover) + !String.IsEqual(MusicPlayer.Cover,DefaultAlbumCover.png)]</visible>
 			</control>
 			<control type="image" id="431">
 				<left>136</left>
@@ -64,7 +72,6 @@
 				<aspectratio>keep</aspectratio>
 				<fadetime>320</fadetime>
 				<texture background="true">$VAR[NaraMusicCoverVar]</texture>
-				<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.Cover)) | PVR.IsPlayingRadio</visible>
 			</control>
 			<control type="grouplist" id="432">
 				<left>220</left>
@@ -138,73 +145,14 @@
 					<param name="label" value="$INFO[MusicPlayer.Channels,, ch]" />
 				</include>
 			</control>
-			<control type="fixedlist" id="420">
-				<left>960</left>
-				<top>150</top>
-				<width>800</width>
-				<height>622</height>
-				<focusposition>3</focusposition>
-				<movement>0</movement>
-				<scrolltime tween="sine">300</scrolltime>
-				<onleft>602</onleft>
-				<onright>602</onright>
-				<onup>420</onup>
-				<ondown>420</ondown>
-				<onclick>SetFocus(602)</onclick>
-				<visible>String.IsEqual(Window(visualisation).Property(NaraMusic.LyricsTimed),true) + !Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
-				<include>NaraMusicLyricsFade</include>
-				<itemlayout width="800" height="72">
-					<control type="label">
-						<width>790</width>
-						<height>72</height>
-						<font>font_nara_music_lyric_context</font>
-						<aligny>center</aligny>
-						<label>$INFO[ListItem.Label]</label>
-						<textcolor>4DFFFFFF</textcolor>
-					</control>
-				</itemlayout>
-				<focusedlayout width="800" height="180">
-					<control type="textbox">
-						<top>12</top>
-						<width>790</width>
-						<height>156</height>
-						<font>font_nara_music_lyric</font>
-						<aligny>center</aligny>
-						<label>$INFO[ListItem.Label]</label>
-						<textcolor>$VAR[NaraMusicLyricColorVar]</textcolor>
-						<autoscroll delay="1800" time="1400" repeat="5000">true</autoscroll>
-					</control>
-				</focusedlayout>
-			</control>
-			<control type="textbox" id="421">
-				<left>960</left>
-				<top>150</top>
-				<width>770</width>
-				<height>622</height>
-				<font>font27</font>
-				<textcolor>CFFFFFFF</textcolor>
-				<label>$INFO[Window(visualisation).Property(NaraMusic.LyricsText)]</label>
-				<pagecontrol>422</pagecontrol>
-				<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.LyricsText)) + !Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
-				<include>NaraMusicLyricsFade</include>
-			</control>
-			<control type="scrollbar" id="422">
-				<left>1760</left>
-				<top>150</top>
-				<width>6</width>
-				<height>622</height>
-				<orientation>vertical</orientation>
-				<onleft>602</onleft>
-				<onright>602</onright>
-				<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.LyricsText)) + !Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
-				<include>NaraMusicLyricsFade</include>
-			</control>
 			<control type="group">
 				<left>960</left>
 				<top>350</top>
 				<width>800</width>
 				<height>300</height>
-				<visible>!String.IsEqual(Window(visualisation).Property(NaraMusic.LyricsTimed),true) + String.IsEmpty(Window(visualisation).Property(NaraMusic.LyricsText)) + !Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
+				<!-- 原来这里还判 NaraMusic.LyricsTimed / LyricsText，但这两个属性全皮肤没人写入
+				     （CU LRC 用的是自己的窗口），恒为假/空，等于只判歌词窗口是否打开。已简化。 -->
+				<visible>!Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
 				<include>NaraMusicLyricsFade</include>
 				<control type="grouplist">
 					<width>800</width>

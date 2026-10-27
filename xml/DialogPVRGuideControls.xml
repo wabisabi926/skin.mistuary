@@ -4,6 +4,9 @@
 	<include>Animation_BottomSlide</include>
 	<depth>DepthOSD</depth>
 	<controls>
+		<include content="NaraDialogScrim">
+			<param name="tint" value="scrim_osd" />
+		</include>
 		<control type="button">
 			<textcolor>text_primary</textcolor>
 			<description>background close area</description>

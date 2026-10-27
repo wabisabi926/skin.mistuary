@@ -5,6 +5,7 @@
 	<menucontrol>9000</menucontrol>
 	<controls>
 		<include>DefaultBackground</include>
+		<include>NaraPageScrim</include>
 		<control type="group">
 			<include>OpenClose_Left</include>
 			<left>302</left>

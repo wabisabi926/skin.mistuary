@@ -60,8 +60,8 @@
 			<control type="group">
 				<visible>String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)</visible>
 
-			<!-- Seasons are directory-backed; the final static item switches the
-			     same lower shelf to the dialog's existing cast list. -->
+			<!-- Seasons are directory-backed; the cast list is toggled by the
+			     action-bar cast icon, same as movies. -->
 			<control type="list" id="5100">
 				<left>80</left>
 				<top>788</top>
@@ -76,8 +76,6 @@
 				<onup>5000</onup>
 				<!-- 焦点回到季度标签行就收起演员栏，避免和剧集面板打架 -->
 				<onfocus>Skin.Reset(nara_cast_open)</onfocus>
-				<ondown condition="String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)">50</ondown>
-				<ondown condition="Skin.HasSetting(nara_cast_open)">50</ondown>
 				<ondown>5101</ondown>
 				<itemlayout width="250" height="58">
 					<control type="label">
@@ -102,13 +100,6 @@
 					</control>
 				</focusedlayout>
 				<content sortby="season" sortorder="ascending" target="videos" browse="never">videodb://tvshows/titles/$INFO[ListItem.DBID]/</content>
-				<content>
-					<item>
-						<label>$LOCALIZE[206]</label>
-						<property name="VideoInfoTab">cast</property>
-						<visible>Integer.IsGreater(Container(50).NumItems,0)</visible>
-					</item>
-				</content>
 			</control>
 			<!-- Auto-width visible tabs. Seven measured labels plus their six
 			     36 px gaps fit the row even when every label reaches its cap. -->
@@ -155,7 +146,7 @@
 				<orientation>horizontal</orientation>
 				<scrolltime>220</scrolltime>
 				<preloaditems>1</preloaditems>
-				<visible>!String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast) + !Skin.HasSetting(nara_cast_open)</visible>
+				<visible>!Skin.HasSetting(nara_cast_open)</visible>
 				<onleft>5101</onleft>
 				<onright>5101</onright>
 				<onup>5100</onup>
@@ -232,13 +223,6 @@
 							<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="image">
-							<left>-14</left>
-							<top>-14</top>
-							<width>364</width>
-							<height>217</height>
-							<texture colordiffuse="focus_media" border="6">shapes/ring6_3.png</texture>
-						</control>
-						<control type="image">
 							<top>123</top>
 							<width>336</width>
 							<height>66</height>
@@ -281,6 +265,18 @@
 							<height>28</height>
 							<texture colordiffuse="text_primary">icons/infodialogs/enabled.png</texture>
 							<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
+						</control>
+						<!-- 焦点描边环：**1:1 整张图，不要 border**。
+						     原来用 ring6_3.png + border="6" 做 9-slice，描边落在九宫格的"角"里，
+						     拉伸后上边整条消失；而且旧位置是 -14，环顶跑到列表外面被裁掉。
+						     现在外扩 3px（与首页 widget 一致），并放在最后绘制，
+						     不会被 overlayfade / 标题盖住。 -->
+						<control type="image">
+							<left>-3</left>
+							<top>-3</top>
+							<width>342</width>
+							<height>195</height>
+							<texture colordiffuse="focus_media">shapes/ring_card_342x195_r6.png</texture>
 						</control>
 					</control>
 				</focusedlayout>

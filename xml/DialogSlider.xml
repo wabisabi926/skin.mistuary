@@ -4,6 +4,10 @@
 	<include>Animation_DialogPopupOpenClose</include>
 	<depth>DepthOSD+</depth>
 	<controls>
+		<!-- 顶部滑条：可能压在播放中的画面上，遮蔽只用 OSD 档（30%），不压黑画面 -->
+		<include content="NaraDialogScrim">
+			<param name="tint" value="scrim_osd" />
+		</include>
 		<control type="group">
 			<top>20</top>
 			<centerleft>50%</centerleft>
@@ -14,7 +18,7 @@
 				<width>840</width>
 				<height>155</height>
 				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassTexture">
-					<param name="style" value="dialog" />
+					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 				</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
 					<param name="texture" value="dialogs/dialog-bg-nobo.png" />

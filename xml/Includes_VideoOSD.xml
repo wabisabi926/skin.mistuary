@@ -161,19 +161,20 @@
 					<texture background="true">$VAR[VideoOSDPlaylistThumbVar]</texture>
 				</control>
 				<control type="image">
-					<left>-14</left>
-					<top>-14</top>
-					<width>384</width>
-					<height>228</height>
-					<texture colordiffuse="focus_media" border="6">shapes/ring6_3.png</texture>
-					<visible>$PARAM[focused]</visible>
-				</control>
-				<control type="image">
 					<top>134</top>
 					<width>356</width>
 					<height>66</height>
 					<aspectratio>stretch</aspectratio>
 					<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+				</control>
+				<!-- 焦点描边环：1:1 整张图，不要 border（9-slice 拉伸会让某条边消失） -->
+				<control type="image">
+					<left>-3</left>
+					<top>-3</top>
+					<width>362</width>
+					<height>206</height>
+					<texture colordiffuse="focus_media">shapes/ring_card_362x206_r6.png</texture>
+					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="label">
 					<left>12</left>
@@ -197,10 +198,10 @@
 				</control>
 				<control type="label">
 					<right>12</right>
-					<top>161</top>
-					<width>108</width>
-					<height>30</height>
-					<font>font10</font>
+					<top>159</top>
+					<width>124</width>
+					<height>32</height>
+					<font>font12</font>
 					<align>right</align>
 					<label>$INFO[ListItem.Duration]</label>
 					<textcolor>text_secondary</textcolor>
@@ -209,10 +210,10 @@
 				</control>
 				<control type="label">
 					<right>12</right>
-					<top>161</top>
-					<width>108</width>
-					<height>30</height>
-					<font>font10</font>
+					<top>159</top>
+					<width>124</width>
+					<height>32</height>
+					<font>font12</font>
 					<align>right</align>
 					<label>$LOCALIZE[31000]</label>
 					<textcolor>FFFFFFFF</textcolor>

@@ -2,6 +2,10 @@
 <window>
 	<defaultcontrol always="true">11</defaultcontrol>
 	<controls>
+		<!-- 频道列表压在直播画面上，遮蔽用 OSD 档（30%） -->
+		<include content="NaraDialogScrim">
+			<param name="tint" value="scrim_osd" />
+		</include>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<control type="group">

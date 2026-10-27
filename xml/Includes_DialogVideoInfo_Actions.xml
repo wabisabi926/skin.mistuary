@@ -274,7 +274,8 @@
 						<onleft condition="String.IsEmpty(ListItem.SetID) + ListItem.HasVideoVersions">5004</onleft>
 						<onleft condition="String.IsEmpty(ListItem.SetID) + !ListItem.HasVideoVersions + [String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,movie)] + Integer.IsGreater(ListItem.DBID,0)">5006</onleft>
 						<onleft>5001</onleft>
-						<onright condition="!String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(Container(50).NumItems,0)">5107</onright>
+						<!-- 「演员」图标电影/电视剧共用，只要它可见，右移就必须能到达（之前排除 tvshow 导致电视剧永远聚焦不到） -->
+						<onright condition="Integer.IsGreater(Container(50).NumItems,0)">5107</onright>
 						<onright>5000</onright>
 						<onclick>SetProperty(VideoInfo.More,True,home)</onclick>
 						<onclick>AlarmClock(VideoInfoMoreFocus,SetFocus(5199,0,absolute),00:00,silent)</onclick>

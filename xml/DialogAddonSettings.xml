@@ -8,7 +8,7 @@
 			<width>1640</width>
 			<height>890</height>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="glass_frosted" />
+				<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 				<param name="width" value="1640" />
 				<param name="height" value="890" />
 				<param name="header_id" value="2" />
@@ -44,7 +44,7 @@
 				<onright>5</onright>
 				<onup>3</onup>
 				<ondown>3</ondown>
-				<texturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texturefocus>
+				<texturefocus colordiffuse="glass_focus_medium" border="14">shapes/round14.png</texturefocus>
 				<texturenofocus />
 				<focusedcolor>text_primary</focusedcolor>
 				<textcolor>text_primary</textcolor>

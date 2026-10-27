@@ -6,6 +6,7 @@
 	<menucontrol>9000</menucontrol>
 	<controls>
 		<include>DefaultBackground</include>
+		<include>NaraPageScrim</include>
 		<control type="group">
 			<visible>Integer.IsGreater(Container.NumItems,0)</visible>
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>

@@ -7,8 +7,7 @@
 	<menucontrol>9000</menucontrol>
 	<controls>
 		<control type="group" id="9490">
-			<width>1920</width>
-			<height>1080</height>
+			<include>FullScreenDimensions</include>
 			<include content="Animation_NaraFanartDetail">
 				<param name="enabled" value="!Player.HasVideo" />
 			</include>
@@ -21,6 +20,8 @@
 				     process the hidden shared fanart and its second crossfade below them. -->
 				<param name="media_background_visible" value="!Control.IsVisible(51) + !Control.IsVisible(501)" />
 			</include>
+			<!-- 只压共享 fanart 这一层：下面 View_51/501 的专用背景是另一套设计，不跟着变。 -->
+			<include>NaraPageScrim</include>
 			<include>View_51_Poster_Background</include>
 			<!-- Keep the selected 501 artwork alive while the information foreground
 			     fades out, so playback Busy never exposes the primary fallback. -->

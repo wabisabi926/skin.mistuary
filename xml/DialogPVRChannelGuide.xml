@@ -9,6 +9,10 @@
 			<visible>!Window.IsActive(fullscreenvideo)</visible>
 			<include>ColoredBackgroundImages</include>
 		</control>
+		<!-- 节目单可能压在直播画面上，遮蔽用 OSD 档（30%） -->
+		<include content="NaraDialogScrim">
+			<param name="tint" value="scrim_osd" />
+		</include>
 		<control type="group">
 			<depth>DepthOSD</depth>
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>

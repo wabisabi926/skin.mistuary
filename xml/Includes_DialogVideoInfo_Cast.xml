@@ -7,8 +7,8 @@
 			<top>846</top>
 			<width>1760</width>
 			<height>200</height>
-			<!-- 默认收起演员栏：点「演员」图标展开；电视剧保留底部演员标签这条老路径 -->
-			<visible>Integer.IsGreater(Container(50).NumItems,0) + [Skin.HasSetting(nara_cast_open) | [String.IsEqual(ListItem.DBType,tvshow) + String.IsEqual(Container(5100).ListItem.Property(VideoInfoTab),cast)]]</visible>
+			<!-- 电影和电视剧统一由动作栏「演员」图标控制：默认收起，点图标展开 -->
+			<visible>Integer.IsGreater(Container(50).NumItems,0) + Skin.HasSetting(nara_cast_open)</visible>
 			<animation effect="slide" start="0,70" end="0,0" time="400" delay="100" tween="cubic" easing="out">WindowOpen</animation>
 			<!-- 通用版：演员栏原本完全没有底板，与动作栏（GlassTint_regular）不一致 -->
 			<control type="image">
@@ -37,10 +37,8 @@
 				<preloaditems>2</preloaditems>
 				<onleft>50</onleft>
 				<onright>50</onright>
-				<!-- 展开时一律回到打开它的图标开关（电视剧的标签行这时已隐藏） -->
-				<onup condition="Skin.HasSetting(nara_cast_open)">5107</onup>
-				<onup condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</onup>
-				<onup>5000</onup>
+				<!-- 展开时标签行/剧集面板均隐藏，向上一律回到「演员」图标开关 -->
+				<onup>5107</onup>
 				<ondown>50</ondown>
 				<onclick condition="System.AddonIsEnabled(script.embuary.info) + !String.IsEqual(ListItem.DBType,set)">RunScript(script.embuary.info,call=person,query='$ESCINFO[Container(50).ListItem.Label]')</onclick>
 				<onclick condition="System.HasAddon(script.embuary.info) + !System.AddonIsEnabled(script.embuary.info) + !String.IsEqual(ListItem.DBType,set)">EnableAddon(script.embuary.info)</onclick>

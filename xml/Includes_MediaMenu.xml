@@ -649,7 +649,8 @@
 			<width>4000</width>
 			<height>100%</height>
 			<aspectratio>scale</aspectratio>
-			<texture colordiffuse="66000000">colors/black.png</texture>
+			<!-- 侧边栏的遮蔽层要跟浮窗同一档，否则面板一样实、外面一样亮，观感比浮窗还透 -->
+			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
 			<visible>$EXP[sidebar_visible] + !System.HasActiveModalDialog</visible>
 			<animation effect="fade" time="200">VisibleChange</animation>
 		</control>
@@ -658,7 +659,7 @@
 			<top>0</top>
 			<width>432</width>
 			<height>100%</height>
-			<texture colordiffuse="glass_frosted">colors/white.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassDialogTintVar]">colors/white.png</texture>
 		</control>
 		<control type="button" id="6131">
 			<textcolor>text_primary</textcolor>
