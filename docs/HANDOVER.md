@@ -51,7 +51,6 @@ language/       resource.language.*/strings.po
 media/          松散图片 + Textures.xbt（打包后只带 xbt）
 extras/         随包素材，运行时用 special://skin/extras/... 引用
   backgrounds/    运行时背景图（primary.jpg）
-  home-images/    首页 widget 兜底图（movie / music .jpg）
   playlists/      widget 用的播放列表（*.xsp）
 libraryart/     分类封面（按「分类名.jpg」匹配；用户自备，gitignore 除 default.jpg）
 ```

@@ -1579,7 +1579,7 @@
 	</variable>
 	<variable name="NaraImgListItemArtFanartDefMusic">
 		<value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-		<value>special://skin/extras/home-images/music.jpg</value>
+		<value>$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</value>
 	</variable>
 	<variable name="NaraImgListItemArtPosterDefDefaultVideo">
 		<value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>

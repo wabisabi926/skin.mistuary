@@ -41,7 +41,7 @@
 | `tmdbhelper/` | 1 | TMDbHelper `baseitem.json` | 由 TMDbHelper 读 | 不需要（不用 TMDbHelper） |
 | `screenshots/` | 11 | 皮肤截图（README 用） | 无 | 可选，**而且不该进包** |
 
-结论：**十个目录里我们实际只用得上两个（backgrounds / playlists），加上自己特有的 home-images。**
+结论：**十个目录里我们实际只用得上两个（backgrounds / playlists），不需要额外目录。**
 其余七个硬建空目录只会误导，写进 README 说明"将来做对应功能时再建"更合适。
 
 ---
@@ -54,7 +54,6 @@ skin.mistuary/
 ├── xml/  colors/  fonts/  language/  media/  resources/     ← 皮肤本体
 ├── extras/                       ← 随包发布的素材（新，进包）
 │   ├── backgrounds/primary.jpg   ← 原 backgrounds/
-│   ├── home-images/{movie,music}.jpg
 │   └── playlists/*.xsp           ← 原 playlists/（38 个）
 ├── libraryart/                   ← 用户自备分类封面（留在根目录：体积大、可替换、gitignore）
 ├── tools/                        ← 构建期工具（原 extras/，不进包）
