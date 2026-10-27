@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # xbt_tool.py 与本文件同目录
 
 import xbt_tool  # noqa: E402
 

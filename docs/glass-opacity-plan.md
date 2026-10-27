@@ -369,7 +369,7 @@ if (!conditions.size()) return false;   // 不注册任何可见条件 → 控�
    `GUIIncludes::ResolveIncludes()` 里 `condition` 是**加载时**求值的
    （`conditionID->Get()` 在展开 XML 时调一次），写成 `condition="$PARAM[shadow]"`
    要靠"参数替换早于条件求值"才成立，不可依赖。
-4. `xbt_tool.py pack` → 668 张贴图，7.6MB。
+4. `tools/xbt_tool.py pack` → 668 张贴图，7.6MB。
 
 ### Phase 4 —— 审计兜底（已加两条规则）
 `tools/audit_skin.py`：

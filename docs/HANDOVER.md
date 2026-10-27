@@ -64,11 +64,11 @@ libraryart/     分类封面（按「分类名.jpg」匹配；用户自备，git
 
 ```
 .github/  .workbuddy-ai/  docs/  build/  __pycache__/  *.pyc
-xbt_tool.py  tools/
+tools/         自检、测试、贴图生成器、xbt_tool.py
 ```
 
-**`tools/` 整个目录都不进包** —— 它是纯构建期工具（自检、测试、贴图生成器），
-Kodi 运行时不加载任何一行。2026-10-27 之前它叫 `extras/`，与素材目录撞名，已改名。
+**`tools/` 整个目录都不进包** —— 它是纯构建期工具，Kodi 运行时不加载任何一行。
+2026-10-27 之前它叫 `extras/`，与素材目录撞名；`xbt_tool.py` 原本在根目录，也一并收了进来。
 
 ---
 
@@ -109,7 +109,7 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `generate_nara_osd_icons.ps1` | OSD 图标（PowerShell） |
 | `generate_nara_settings_icons.ps1` | 设置图标（PowerShell） |
 
-**改过 `media/` 一定要重打包**：`python xbt_tool.py pack`（否则实机还是旧图）。
+**改过 `media/` 一定要重打包**：`python tools/xbt_tool.py pack`（否则实机还是旧图）。
 
 ### 手动 UI 测试（PowerShell，需要实机 Kodi）
 

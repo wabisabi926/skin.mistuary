@@ -473,7 +473,7 @@ def main():
     sub = ap.add_subparsers(dest='cmd', required=True)
 
     p_pack = sub.add_parser('pack', help='把图片目录打包成 XBT')
-    p_pack.add_argument('input', nargs='?', default=None, help='图片目录 (默认: <脚本目录>/media)')
+    p_pack.add_argument('input', nargs='?', default=None, help='图片目录 (默认: <皮肤根目录>/media)')
     p_pack.add_argument('-o', '--output', default=None, help='输出 XBT (默认: <输入目录>/Textures.xbt)')
     p_pack.add_argument('--no-verify', action='store_true', help='跳过逐帧 LZO 往返校验')
 
@@ -483,8 +483,9 @@ def main():
 
     args = ap.parse_args()
     if args.cmd == 'pack':
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        input_dir = args.input or os.path.join(script_dir, 'media')
+        # 脚本在 tools/ 下，皮肤根目录是它的上一级
+        skin_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        input_dir = args.input or os.path.join(skin_root, 'media')
         output = args.output or os.path.join(input_dir, 'Textures.xbt')
         pack(input_dir, output, verify=not args.no_verify)
     else:

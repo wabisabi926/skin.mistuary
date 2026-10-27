@@ -113,7 +113,7 @@ jobs:
       # Textures.xbt 已入库；这里再跑一次是防止有人改了图忘了打包
       - name: Pack textures
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
-        run: python xbt_tool.py pack
+        run: python tools/xbt_tool.py pack
 
       # 从 changelog.txt 里截出"当前版本"那一段，作为 Release 正文
       - name: Extract changelog for this version
@@ -163,7 +163,6 @@ jobs:
             --exclude='build/' \
             --exclude='__pycache__/' \
             --exclude='*.pyc' \
-            --exclude='xbt_tool.py' \
             --exclude='tools/' \
             ./ "build/${ADDON_ID}/"
           # 发布包的 media/ 里只留 Textures.xbt，松散图片和子目录都不带

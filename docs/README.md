@@ -1,12 +1,13 @@
 # docs/ 索引
 
-皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份，按需读。**
+皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 一份历史资料。**
 
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环、角部遮盖前。含数值推导、实测锚点、踩过的坑 |
+| [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
 
 ---
 
@@ -41,10 +42,16 @@
 python tools/audit_skin.py                        # 静态自检
 python tools/gen_techflag_vars.py --check         # 技术标识变量同步
 python -m unittest discover -s tools -p 'test_*.py'
-python xbt_tool.py pack                            # 改过 media/ 之后必须重打包
+python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 
 ## 历史文档
+
+- [`kernel-extensions.md`](kernel-extensions.md)：魔改内核的皮肤 XML 扩展规格（玻璃、圆角、
+  `texturebackground`、`selectionsettledelay`、`slotlist`、`ImageChange`/`Follow`、
+  `playbacktarget` 等）。2026-10-27 从根目录 README 拆出来，避免用户照着写不生效的标签。
+- [`repo-layout-plan.md`](repo-layout-plan.md)：2026-10-27 把 `extras/` 归位成素材目录、
+  构建工具移到 `tools/` 的整改记录。
 
 1.0.0（改名 + 通用版收尾）之前的规划稿、外部审查报告、逐项修复清单已清理：
 内容全部落地，剩下的有效部分（环境路径、验证命令、`<texture fallback>` 那条）

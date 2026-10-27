@@ -126,7 +126,7 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
 | 实机 Kodi | **22.0-RC1**（build version code `21.90.901`，build 20260927） |
 | 日志 | `C:\Users\liwl\AppData\Roaming\Kodi\kodi.log` |
 | Python（带 Pillow） | `C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe` |
-| 贴图打包 | `python xbt_tool.py pack`（662 张 → 7.6 MB） |
+| 贴图打包 | `python tools/xbt_tool.py pack`（662 张 → 7.6 MB） |
 
 > 实机 Kodi 会随用户升级而变（BETA2 → RC1 就是一次）。看版本别看本文档，
 > 看 `kodi.log` 首行：`Starting Kodi (22.0-RC1 (21.90.901) Git:...)`。
@@ -153,7 +153,7 @@ set PY="C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe"
 %PY% -m unittest discover -s tools -p "test_*.py"     # 期望 35 项全绿
 %PY% tools/audit_skin.py --strict                      # 期望 EXIT=0
 %PY% tools/gen_techflag_vars.py --check                # 期望"与 map 同步"
-%PY% xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 662/662
+%PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 662/662
 ```
 
 实机检查（重启 Kodi 后）：
