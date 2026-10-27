@@ -297,13 +297,14 @@ Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本�
 
 | 项 | 说明 |
 |---|---|
-| `ListItem.BMP` 拼写错误 | `Includes.xml` 音乐媒体标识里写的是 `BMP`（位图），本意是 `BPM`。Kodi 的标签是 `ListItem.BPM`，现在这个徽标永远不显示 |
-| `ListItem.MusicBitsPerSample` 不存在 | Kodi 只有 `MusicPlayer.BitsPerSample`（播放器上下文），列表项没有位深标签 → 该徽标永远不显示 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
 
-> 上面四条"标签不存在"是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表
-> 逐条比对 `$INFO[...]` 得出的。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X
-> 取出来，去掉 `(...)` 参数和 `$PARAM[...]` 前缀，取最后一段，与标签表求差集。
+> **已修（2026-10-27）**：`ListItem.BMP` → `ListItem.BPM`（BPM 徽标现在能显示了）；
+> `ListItem.MusicBitsPerSample` 那条删掉了 —— Kodi 没有列表项位深标签，
+> 位深只有播放器上下文的 `Player.Process(AudioBitsPerSample)`。
+> 当时的判据是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表逐条比对
+> `$INFO[...]`。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X 取出来，
+> 去掉 `(...)` 参数和 `$PARAM[...]` 前缀，取最后一段，与标签表求差集。

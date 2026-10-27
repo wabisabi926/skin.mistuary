@@ -518,12 +518,8 @@
 					<param name="flag_label" value="$INFO[ListItem.BitRate, ,kbps]" />
 				</include>
 				<include content="MediaFlag">
-					<param name="flag_visible" value="!String.IsEmpty(ListItem.MusicBitsPerSample)" />
-					<param name="flag_label" value="$INFO[ListItem.MusicBitsPerSample, ,bit]" />
-				</include>
-				<include content="MediaFlag">
-					<param name="flag_visible" value="!String.IsEmpty(ListItem.BMP)" />
-					<param name="flag_label" value="$INFO[ListItem.BMP, ,bpm]" />
+					<param name="flag_visible" value="!String.IsEmpty(ListItem.BPM)" />
+					<param name="flag_label" value="$INFO[ListItem.BPM, ,bpm]" />
 				</include>
 			</control>
 			<control type="grouplist">
