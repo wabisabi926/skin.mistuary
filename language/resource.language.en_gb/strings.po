@@ -1071,8 +1071,8 @@ msgid "Playback transparency — steps are tuned for the dark theme; the light t
 msgstr "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
 
 msgctxt "#31733"
-msgid "Douban rating override"
-msgstr "Douban rating override"
+msgid "Main rating source"
+msgstr "Main rating source"
 
 msgctxt "#31734"
 msgid "Show the login screen before entering the main menu, so you can pick a user."
@@ -1099,8 +1099,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
 
 msgctxt "#31740"
-msgid "Turn on if StrmAssistant's Douban override is on: the main rating shows as Douban. Off shows IMDb."
-msgstr "Turn on if StrmAssistant's Douban override is on: the main rating shows as Douban. Off shows IMDb."
+msgid "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
+msgstr "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
@@ -1173,8 +1173,6 @@ msgstr "Hide the OSD automatically while playing. Off by default."
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
 msgstr "Seconds before the OSD hides. 4 by default."
-
-
 
 msgctxt "#31759"
 msgid "Popup transparency"

@@ -939,8 +939,8 @@ msgid "Playback transparency — steps are tuned for the dark theme; the light t
 msgstr "播放中透明度 — 档位按透黑模式设计；透白主题下会更浅"
 
 msgctxt "#31733"
-msgid "Default rating source"
-msgstr "豆瓣评分覆盖"
+msgid "Main rating source"
+msgstr "主评分来源"
 
 msgctxt "#31734"
 msgid "Show the login screen before entering the main menu, so you can pick a user."
@@ -967,8 +967,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "默认“我的评分”。可选“评分”（来源分）或“无”（隐藏）。"
 
 msgctxt "#31740"
-msgid "Icon of the first rating badge: IMDb or Douban. Turn on with a Douban rating add-on. IMDb by default."
-msgstr "开了神医助手的豆瓣覆盖就打开：主评分按豆瓣显示。没开就关掉，按 IMDb 显示。"
+msgid "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
+msgstr "开了神医助手的豆瓣覆盖就打开（值显示 Douban），没开就关掉（显示 IMDb）。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
@@ -1041,7 +1041,6 @@ msgstr "播放时无操作自动收起 OSD。默认关闭。"
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
 msgstr "收起前的等待秒数。默认 4 秒。"
-
 
 msgctxt "#31759"
 msgid "Popup transparency"
