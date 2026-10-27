@@ -940,7 +940,7 @@ msgstr "播放中透明度 — 档位按透黑模式设计；透白主题下会�
 
 msgctxt "#31733"
 msgid "Default rating source"
-msgstr "默认评分来源"
+msgstr "豆瓣评分覆盖"
 
 msgctxt "#31734"
 msgid "Show the login screen before entering the main menu, so you can pick a user."
@@ -968,7 +968,7 @@ msgstr "默认“我的评分”。可选“评分”（来源分）或“无”
 
 msgctxt "#31740"
 msgid "Icon of the first rating badge: IMDb or Douban. Turn on with a Douban rating add-on. IMDb by default."
-msgstr "第一颗评分胶囊的图标：IMDb 或豆瓣。装了豆瓣评分覆盖插件时开启。默认 IMDb。"
+msgstr "开了神医助手的豆瓣覆盖就打开：主评分按豆瓣显示。没开就关掉，按 IMDb 显示。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."

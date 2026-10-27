@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<!-- 评分胶囊。Kodi 20+ 支持按类型读评分：`ListItem.Rating(<type>)`，
-	     默认类型用 `ListItem.Rating` 读。Emby for Kodi 会同步两类：
-	     社区评分（默认类型，imdbrating 开启时是 imdb）和影评人评分（tomatometerallcritics）。
-	     取不到的类型返回空字符串，对应胶囊自动隐藏，所以多列几种类型是安全的。 -->
+	     默认类型用 `ListItem.Rating` 读。**一行最多两个胶囊**，优先级：
+	     豆瓣 > IMDb > TMDB > 烂番茄（豆瓣和 IMDb 是同一个字段，由设置二选一，天然互斥）。
+	     数据来源只有两个，都验证过：
+	       Emby for Kodi 只写 `default`（CommunityRating）和 `tomatometerallcritics`（CriticRating，仅电影）
+	       Kodi 官方 TMDb 刮削器写 `themoviedb`（电影）/ `tmdb`（剧集）/ `imdb` / `trakt`
+	     取不到的类型返回空字符串，对应胶囊自动隐藏。详见 docs/HANDOVER.md §5.7。 -->
 	<include name="NaraOnlineRatingItem">
 		<!-- 宽度按最长值定：Kodi 的评分固定一位小数（8.5 / 10.0），
 		     font13 = 27px 时 "10.0" 实测 52.8px，所以文字框给 56。
@@ -56,9 +59,11 @@
 				<align>$PARAM[align]</align>
 				<itemgap>10</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
-				<!-- 社区评分：Emby 的 CommunityRating，默认类型。
-				     IMDb 词标是 2:1，用 46×23 的图标框；豆瓣是方形徽标，用默认 28×28。
-				     两者按皮肤设置「默认评分来源」二选一。 -->
+				<!-- 主评分：Emby 的 CommunityRating（默认类型）。
+				     开「豆瓣评分覆盖」= 神医助手已经把 CommunityRating 改写成豆瓣分；
+				     关 = 原样按 IMDb 显示。两者互斥（同一个字段），
+				     所以"最多两个"只需要让烂番茄给 TMDB 让位，不用算别的。
+				     IMDb 词标是 2:1，用 46×23 的图标框；豆瓣是方形徽标，用默认 28×28。 -->
 				<include content="NaraOnlineRatingItem">
 					<param name="visible" value="!Skin.HasSetting(douban_rating) + !String.IsEmpty($PARAM[item_prefix].Rating)" />
 					<param name="icon" value="flags/ratings/imdb.png" />
@@ -75,22 +80,20 @@
 					<param name="icon" value="flags/ratings/douban.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
 				</include>
-				<!-- 影评人评分：Emby 的 CriticRating/10，类型 tomatometerallcritics -->
+				<!-- 次评分 ①：TMDB。**类型名两个刮削器不一样**：
+				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
+				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics))" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))" />
+					<param name="icon" value="flags/ratings/tmdb.png" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]$INFO[$PARAM[item_prefix].Rating(themoviedb)]" />
+				</include>
+				<!-- 次评分 ②：影评人评分（Emby 的 CriticRating/10，只有电影写）。
+				     **TMDB 有值时让位**，这样一行永远不超过两个胶囊。 -->
+				<include content="NaraOnlineRatingItem">
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))" />
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
-				</include>
-				<!-- 下面几种只有本地库的刮削器（TMDb/Trakt）才会写入，取不到就自动隐藏 -->
-				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tmdb))" />
-					<param name="icon" value="flags/ratings/tmdb.png" />
-					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(metacritic))" />
-					<param name="icon" value="flags/ratings/metacritic.png" />
-					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(metacritic)]" />
 				</include>
 			</control>
 		</definition>

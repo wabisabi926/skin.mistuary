@@ -202,8 +202,8 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 **文案规矩**：
 1. 写「怎么选」，不写「这是什么」——一句用途 + 默认值 + 什么情况该改。
-   反例：「这是设置评分来源的地方」。正例：「第一颗评分胶囊的图标：IMDb 或豆瓣。
-   装了豆瓣评分覆盖插件时开启。默认 IMDb。」
+   反例：「这是设置评分来源的地方」。正例：「开了神医助手的豆瓣覆盖就打开：
+   主评分按豆瓣显示。没开就关掉，按 IMDb 显示。」
 2. **一句话说完，不超过 40 字**（三条透明度要列清覆盖范围，可以到 50 字）。
    删掉「想…就…」「比如」这类口头语。
 3. **引号用 `“”`（弯双引号），不用 `「」`**。Kodi 官方中文包里 `“”` 出现 92 次、`「」` 只有 1 次，
@@ -215,7 +215,7 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 | 页 | 行 id | 字符串 | 设置 |
 |---|---|---|---|
 | 常规 | 702 / 710 / 705 / 706 | 31736 / 31737 / 31738 / 31739 | 自动滚动 / 封面文件夹 / 媒体标识 / 显示哪个评分 |
-| 常规 | 707 / 708 / 711 / 712 / 713 | 31740 / 31741 / 31742 / 31761 / 31743 | 评分来源 / 标题格式 / 页面透明度 / 浮窗透明度 / 播放中透明度 |
+| 常规 | 707 / 708 / 711 / 712 / 713 | 31740 / 31741 / 31742 / 31761 / 31743 | 豆瓣评分覆盖 / 标题格式 / 页面透明度 / 浮窗透明度 / 播放中透明度 |
 | 艺术图片 | 605 / 6067 | 31744 / 31745 | 背景图当背景 / 音乐电视海报 |
 | 主菜单项 | 611 / 6111 / 627 | 31746 / 31747 / 31748 | 电影 / 编辑小组件 / 系列打开方式 |
 | 主菜单项 | 612 / 6121 / 626 | 31749 / 31750 / 31751 | 电视剧 / 编辑小组件 / 打开方式 |
@@ -261,23 +261,46 @@ Kodi 20+ 的视频信息标签支持**多个带类型的评分**：
 
 `CVideoInfoTag::SetRating` 会**丢弃 0 和 >10 的值**，所以 0-100 的分数必须先换算。
 
-Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本核对）实际写入的是：
+**能直接拿到的评分类型，只有下面这些**（2026-10-27 按已安装插件源码逐条核对）：
 
-- `CommunityRating` → 类型 **`default`**（不是 `imdb`）：电影 / 剧集 / 单集 / 音乐视频都写
-- `CriticRating / 10` → 类型 `tomatometerallcritics`：**只有电影**写（`movies.py` / `videos.py`）
-- **不写 `UserRating`**：个人评分圆标（`circle_userrating`）显示的是 Kodi 自己的用户评分
-  （`SetRating` 打的星），与影评人分无关。早前"CriticRating 同时写进 UserRating"的记录已过时
-- `tmdb` / `metacritic` 类型只有**本地刮削器**（TMDb/Trakt）才会写，Emby 库恒空
+| 数据源 | 类型名 | 来源字段 | 范围 |
+|---|---|---|---|
+| Emby | `default`（`ListItem.Rating`） | `CommunityRating` | 电影 / 剧集 / 单集 / 音乐视频 |
+| Emby | `tomatometerallcritics` | `CriticRating / 10` | **只有电影**（`movies.py` / `videos.py`） |
+| Kodi 官方 TMDb 刮削器 | **`themoviedb`** | `vote_average` | 电影（`tmdb.py:140`） |
+| Kodi 官方 TMDb 刮削器 | **`tmdb`** | `vote_average` | 剧集 / 季 / 单集（剧集刮削器） |
+| Kodi 官方 TMDb 刮削器 | `imdb` | IMDb 网站 | 需把刮削器「评分来源」设为 IMDb，或勾「总是获取 IMDb 评分」 |
+| Kodi 官方 TMDb 刮削器 | `trakt` | Trakt | 需登录 + 勾选 |
+
+**两个坑**：
+
+1. **电影和剧集的 TMDB 类型名不一样** —— 电影写 `themoviedb`、剧集写 `tmdb`（两个刮削器各写各的）。
+   只读其中一个会漏一半。皮肤两个都读，标签直接拼接（同一条目只会命中一个）。
+2. Emby **不写** `imdb` / `tmdb` / `metacritic` 类型，`UserRating` 也不写
+   （个人评分圆标显示的是 Kodi 自己的 `SetRating` 星标，与影评人分无关）。
+
+Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:91-92`，
+`videos.py` / `episode.py` / `series.py` / `musicvideo.py` 同构，都只有 `default` 一行
+（`videos.py` / `movies.py` 多一行 `tomatometerallcritics`）。
 
 因此 Emby 库下：电影最多 2 颗胶囊（默认 + 烂番茄），剧集/单集只有 1 颗。
 
 **豆瓣覆盖**：StrmAssistant（神医助手）的「豆瓣评分覆盖」会把 Emby 的 `CommunityRating`
 改写成豆瓣分，同步到 Kodi 后仍是 `default` 类型——Kodi 侧**没有任何来源标志**，
-无法自动判断是豆瓣还是 IMDb。皮肤用设置项 `douban_rating`（设置 → 外观 → 默认评分来源）
+无法自动判断是豆瓣还是 IMDb。皮肤用设置项 `douban_rating`（设置 → 外观 → **豆瓣评分覆盖**）
 只切换第一颗胶囊的图标（IMDb ↔ 豆瓣），数值都读 `ListItem.Rating`。
+
+**一行最多两个胶囊**：豆瓣和 IMDb 是同一个字段、由上面那个开关二选一，天然互斥，
+所以"最多两个"退化成一条规则——**烂番茄给 TMDB 让位**（TMDB 有值时烂番茄隐藏）。
+优先顺序：豆瓣 > IMDb > TMDB > 烂番茄。
 
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。
+
+**TMDbHelper 的豆瓣分进不来**：它写在 list item 的 infoproperties（`douban_rating`），
+而且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
+皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到。要接得另做 `script.mistuary.helper`
+（皮肤包不能带 python），或者把列表来源换成 TMDbHelper。
 
 ### 5.8 音乐播放页：歌词 / 评分 / 背景
 
