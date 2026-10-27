@@ -7,8 +7,8 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.0**。
-功能完整、静态自检全绿、可随时发版。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.0**（2026-10-27 已发版）。
+功能完整、静态自检全绿。
 
 ---
 
@@ -322,7 +322,17 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 3. push 到 `main`
 4. `release.yml` 自动：跑测试 → 静态自检 → 打包贴图 → 暂存 → zip → 建 Release
 
-`workflow_dispatch` 可以勾 `force` 强制发同名版本。
+`workflow_dispatch` 可以勾 `force` 强制发同名版本 —— **版本号不升、又要把改动打进包时走这条**。
+普通 push 会因为"版本没变"直接跳过，Release 删掉了也不会重建。
+
+没有 `gh` 也能触发：
+
+```bash
+POST /repos/<owner>/<repo>/actions/workflows/release.yml/dispatches
+body: {"ref":"main","inputs":{"force":"true"}}   # 204 = 受理
+```
+
+token 从本机 git 凭据取：`git credential fill`（只放进变量，别打印、别落盘）。
 
 ### 写 changelog 的规矩
 
@@ -341,6 +351,7 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 
 | 项 | 说明 |
 |---|---|
+| addon 简介措辞 | `addon.xml` 描述写「直接展示豆瓣、IMDb、TMDB、烂番茄多源评分」，实际是**同时最多两个**、且豆瓣与 IMDb 二选一（同一个字段）。用户决定**下个版本**再补「（同时最多两个）」，1.1.0 不改 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |

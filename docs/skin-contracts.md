@@ -69,7 +69,8 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
-| `douban_rating` | `SkinSettings.xml`（默认评分来源） | `ToggleSetting` |
+| `douban_rating` | `SkinSettings.xml`（主评分来源） | `ToggleSetting` |
+| `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
@@ -77,7 +78,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 选中它等于把同组其它开关全置假，**自己永远不会被读取**，所以它们在
 `audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
 
-现状（`python tools/audit_skin.py` 输出）：**74 读 / 78 写，有读无写 0、有写无读 0**。
+现状（`python tools/audit_skin.py` 输出）：**85 读 / 87 写，有读无写 0、有写无读 0**。
 
 ---
 
