@@ -7,7 +7,7 @@
 
 ## 1. 一句话现状
 
-`universal` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.0**。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.0**。
 功能完整、静态自检全绿、可随时发版。
 
 ---
@@ -110,11 +110,15 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 
 **改过 `media/` 一定要重打包**：`python tools/xbt_tool.py pack`（否则实机还是旧图）。
 
-### 手动 UI 测试（PowerShell，需要实机 Kodi）
+### 手动 UI 测试（需要实机 Kodi）
 
-`test_nara_video_osd.ps1`、`test_nara_music_player.ps1`、
-`test_nara_search_navigation.ps1`、`test_nara_settings_navigation.ps1`、
-`test_nara_window_ids.ps1`。
+PowerShell 三个（走 `SendMessage` 发按键）：
+
+`test_nara_video_osd.ps1`、`test_nara_music_player.ps1`、`test_nara_window_ids.ps1`
+
+Python 两个（`unittest`，纯逻辑校验，CI 也会跑）：
+
+`test_nara_search_navigation.py`、`test_nara_settings_navigation.py`
 
 ---
 
@@ -176,9 +180,14 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 变量是自上而下取第一条成立的 value，分类条件**一直成立**，放前面就永远轮不到行级。
 
-**文案规矩**：写「怎么选」，不写「这是什么」。给默认值和适用场景，例如
-「默认选 IMDb。如果装了提供豆瓣评分的插件，可以选豆瓣。」
-不要写成「这是设置评分来源的地方」这种空话。
+**文案规矩**：
+1. 写「怎么选」，不写「这是什么」——一句用途 + 默认值 + 什么情况该改。
+   反例：「这是设置评分来源的地方」。正例：「第一颗评分胶囊的图标：IMDb 或豆瓣。
+   装了豆瓣评分覆盖插件时开启。默认 IMDb。」
+2. **一句话说完，不超过 40 字**。删掉「想…就…」「比如」这类口头语。
+3. **引号用 `“”`（弯双引号），不用 `「」`**。Kodi 官方中文包里 `“”` 出现 92 次、`「」` 只有 1 次，
+   皮肤更早的字符串（「请进入“文件”区」）也是 `“`。`Inter-Unicode-Regular.ttf`
+   含 U+201C / U+201D 字形（实测有墨迹，不是豆腐块）。
 
 **行 id → 字符串 id 对照**（改文案只动 po，别动条件）：
 
@@ -266,7 +275,7 @@ Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本�
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）
 2. `changelog.txt` 顶部加一段
-3. push 到 `universal`
+3. push 到 `main`
 4. `release.yml` 自动：跑测试 → 静态自检 → 打包贴图 → 暂存 → zip → 建 Release
 
 `workflow_dispatch` 可以勾 `force` 强制发同名版本。
@@ -288,7 +297,6 @@ Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本�
 
 | 项 | 说明 |
 |---|---|
-| 详情页**评分行** | 原来用 `ListItem.NaraRating(<source>)` / `NaraRatingIcon(<source>)`（Estuary N 依赖魔改内核的标签，官方 Kodi 没有）→ 8 个胶囊全部隐藏。**2026-10-27 已改**为标准写法：`ListItem.Rating`（Emby 社区评分）+ `ListItem.Rating(tomatometerallcritics)`（Emby 影评人评分/10）+ `tmdb` / `metacritic`，图标改成每个胶囊写死，取不到的类型自动隐藏 |
 | `ListItem.BMP` 拼写错误 | `Includes.xml` 音乐媒体标识里写的是 `BMP`（位图），本意是 `BPM`。Kodi 的标签是 `ListItem.BPM`，现在这个徽标永远不显示 |
 | `ListItem.MusicBitsPerSample` 不存在 | Kodi 只有 `MusicPlayer.BitsPerSample`（播放器上下文），列表项没有位深标签 → 该徽标永远不显示 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
