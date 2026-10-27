@@ -1395,3 +1395,48 @@ msgstr "Using skin's built-in libraryart folder"
 msgctxt "#31721"
 msgid "Skin settings"
 msgstr "Skin settings"
+
+msgctxt "#31722"
+msgid "Popup opacity"
+msgstr "Popup opacity"
+
+msgctxt "#31723"
+msgid "Very light"
+msgstr "Clearest"
+
+msgctxt "#31724"
+msgid "Light"
+msgstr "Light"
+
+msgctxt "#31725"
+msgid "Balanced"
+msgstr "Balanced"
+
+msgctxt "#31726"
+msgid "Dense"
+msgstr "Dense"
+
+msgctxt "#31727"
+msgid "Heavy"
+msgstr "Heavy"
+
+msgctxt "#31728"
+msgid "Solid"
+msgstr "Solid"
+
+msgctxt "#31729"
+msgid "Page panel opacity"
+msgstr "Page panel opacity"
+
+msgctxt "#31730"
+msgid "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
+
+msgctxt "#31731"
+msgid "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
+
+msgctxt "#31732"
+msgid "Slightly light"
+msgstr "Slightly light"
+

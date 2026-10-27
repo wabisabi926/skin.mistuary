@@ -78,6 +78,42 @@ WRITE_BUILTINS_DOC = (
 # SelectBool 里的"恢复默认"选项：选中它等于把同组的其它开关全部置假，
 # 它自己永远不会被读取，所以"有写无读"对它们是正常状态。
 RESET_ONLY_SETTINGS = {"circle_none", "OriginalTitleFormat_Default"}
+# 默认档位：它是变量里那条**无 condition** 的兜底 value，所以不会出现在
+# Skin.HasSetting(...) 里。属于"写了但按设计没人直接读"。
+DEFAULT_ONLY_SETTINGS = {"glass_op_4", "glass_page_op_3"}
+
+# ---------------------------------------------------------------------------
+# 浮窗不透明度检查（docs/glass-opacity-plan.md）
+# ---------------------------------------------------------------------------
+# 有这些 token 之一 = 该窗口有玻璃面板
+# （面板色 2026-10-26 起改由 $VAR 提供，所以变量名也要算作"有面板"）
+PANEL_TOKENS = (
+    "glass_frosted", "glass_dialog", "glass_page",
+    "NaraGlassDialogTintVar", "NaraGlassPageTintVar",
+    "NaraDialogGlassTexture", "NaraDialogGlassSurface",
+    "ContentPanel", "NaraSettingsDialogFrame",
+)
+# 有这些 token 之一 = 该窗口有遮蔽层（或走的是自带遮蔽层的公共 include）
+SCRIM_TOKENS = (
+    "scrim_dialog", "scrim_sheet", "scrim_osd", "NaraGlassScrimTintVar",
+    "NaraDialogScrim", "DialogBackgroundCommons", "NaraSettingsDialogFrame",
+    "NaraPowerMenuLayout", "NaraStreamDialogBackground",
+    "NaraMusicPlaylistBackground",
+)
+# 有意不加全屏遮蔽的浮窗：
+#   DialogNotification       瞬时提示条，加全屏遮蔽会干扰观看
+#   Custom_1100_AddonLauncher 整页（不是浮窗），靠自己的背景层压暗
+SCRIM_EXEMPT = {"DialogNotification.xml", "Custom_1100_AddonLauncher.xml"}
+
+HARDCODED_BLACK_SCRIM = re.compile(
+    r'colordiffuse="([0-9A-Fa-f]{8})"[^>]*>colors/black\.png'
+)
+
+
+def is_floating_window(name: str) -> bool:
+    """Dialog*.xml 与 Custom_11xx 是浮窗/弹出层；其余是全屏页。"""
+    return name.startswith("Dialog") or name.startswith("Custom_11")
+
 
 
 def collect_skin_settings(raw_texts) -> tuple[dict, dict]:
@@ -239,11 +275,43 @@ def main() -> int:
         more = "" if len(set(where)) <= 4 else f" …(+{len(set(where)) - 4})"
         print(f"  - {attr}=  ← {len(where)} 处，{files_txt}{more}")
 
+    # ------------------------------------------------------------------
+    # 浮窗不透明度：玻璃面板必须配一层遮蔽层
+    # 见 docs/glass-opacity-plan.md。只有面板、没有遮蔽的浮窗，底下是清晰原图，
+    # 白字会跟海报标题打架——2026-10-26 全量梳理时 11 个浮窗栽在这上面。
+    # ------------------------------------------------------------------
+    no_scrim = [n for n, raw in raw_texts
+                if is_floating_window(n) and n not in SCRIM_EXEMPT
+                and any(t in raw for t in PANEL_TOKENS)
+                and not any(t in raw for t in SCRIM_TOKENS)]
+    hard_scrim: list[str] = []
+    for name, raw in raw_texts:
+        if not is_floating_window(name):
+            continue
+        for m in HARDCODED_BLACK_SCRIM.finditer(raw):
+            v = m.group(1).upper()
+            # 只看半透明黑（alpha != FF 且 RGB 全 0），那才是"遮蔽色"
+            if v[:2] != "FF" and v[2:] == "000000":
+                hard_scrim.append(f"{name}: {v}")
+
+    print(f"\n## 浮窗缺遮蔽层：{len(no_scrim)} 个")
+    if no_scrim:
+        print("  （有玻璃面板但既没有 scrim_* 也没有 DialogBackgroundCommons）")
+        for name in no_scrim:
+            print(f"  - {name}")
+    print(f"\n## 浮窗里的硬编码遮蔽色：{len(hard_scrim)} 处")
+    if hard_scrim:
+        print("  （应改用 scrim_dialog / scrim_sheet / scrim_osd token）")
+        for hit in hard_scrim:
+            print(f"  - {hit}")
+
     settings_read, settings_written = collect_skin_settings(raw_texts)
     readonly = {k: v for k, v in settings_read.items() if k not in settings_written}
     writeonly = {
         k: v for k, v in settings_written.items()
-        if k not in settings_read and k not in RESET_ONLY_SETTINGS
+        if k not in settings_read
+        and k not in RESET_ONLY_SETTINGS
+        and k not in DEFAULT_ONLY_SETTINGS
     }
 
     print(f"\n## 皮肤设置：{len(settings_read)} 个读取 / {len(settings_written)} 个写入")

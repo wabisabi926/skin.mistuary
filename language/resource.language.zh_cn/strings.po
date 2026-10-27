@@ -1222,6 +1222,50 @@ msgctxt "#31721"
 msgid "Skin settings"
 msgstr "皮肤设置"
 
+msgctxt "#31722"
+msgid "Popup opacity"
+msgstr "浮窗不透明度"
+
+msgctxt "#31723"
+msgid "Very light"
+msgstr "极透"
+
+msgctxt "#31724"
+msgid "Light"
+msgstr "通透"
+
+msgctxt "#31725"
+msgid "Balanced"
+msgstr "平衡"
+
+msgctxt "#31726"
+msgid "Dense"
+msgstr "偏实"
+
+msgctxt "#31727"
+msgid "Heavy"
+msgstr "厚实"
+
+msgctxt "#31728"
+msgid "Solid"
+msgstr "实心"
+
+msgctxt "#31729"
+msgid "Page panel opacity"
+msgstr "页面面板不透明度"
+
+msgctxt "#31730"
+msgid "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "浮窗不透明度 — 档位按透黑模式设计；透白主题下会更浅"
+
+msgctxt "#31731"
+msgid "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "页面面板不透明度 — 档位按透黑模式设计；透白主题下会更浅"
+
+msgctxt "#31732"
+msgid "Slightly light"
+msgstr "偏透"
+
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."
 #~ msgstr "未找到收藏。你可以从媒体浏览使用上下文菜单添加收藏项目。"

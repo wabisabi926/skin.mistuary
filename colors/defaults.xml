@@ -81,7 +81,59 @@
 	     （与文件管理器同款），只有玻璃本身是压黑还是提白。 -->
 	<color name="glass_regular">66000000</color>
 	<color name="glass_frosted">800F0F12</color>
-	<color name="glass_dialog">BF141418</color>
+	<!-- 浮窗面板：80%。这个数是"读不出但看得出"的平衡点 ——
+	     60% 遮蔽 + 80% 面板 = 92%，白字只剩 ~19 灰阶：能看出底下有东西，读起来费劲。
+	     参考：86% 能逐条读字（太低），96% 是死板（太高）。
+	     边缘再靠贴图的 alpha 渐变额外掉到 ~83%，让面板"化"进背景而不是一块黑板。
+	     注意：实际生效的是下面的 gd_* 档位（皮肤设置可调），这里只是兼容别名。 -->
+	<color name="glass_dialog">CC0F0F12</color>
+	<!-- 全屏页内容面板：75%。页面的底本来就是压暗过的 fanart，不用这么狠。 -->
+	<color name="glass_page">BF0F0F12</color>
+
+	<!-- ===== 浮窗不透明度档位（皮肤设置「浮窗不透明度」驱动）=====
+	     由 Variables.xml 的 NaraGlassDialogTintVar / NaraGlassScrimTintVar 选中。
+	     面板 alpha 与遮蔽 alpha **联动**：档位越高面板越实、面板外也压得越重。
+
+	     合成遮盖 = 1 − (1−scrim)·(1−panel)，括号里是设置里显示给用户的百分比：
+	       档1  gd_1 50% + sc_1 25% = 63%   极透（底下文字能读）
+	       档2  gd_2 60% + sc_2 35% = 74%   通透
+	       档3  gd_3 70% + sc_3 45% = 84%   偏透
+	       档4  gd_4 78% + sc_4 50% = 89%   平衡（默认）
+	       档5  gd_5 85% + sc_5 58% = 94%   偏实
+	       档6  gd_6 92% + sc_6 65% = 97%   实心
+	     相邻档差约 11 个点，是全皮肤唯一能"看出区别"的粒度：
+	     再密就会像上一版那样，6 档里只有 15 个点的总跨度，调了跟没调一样。
+	     详见 docs/glass-opacity-plan.md -->
+	<color name="gd_1">800F0F12</color>
+	<color name="gd_2">990F0F12</color>
+	<color name="gd_3">B30F0F12</color>
+	<color name="gd_4">C70F0F12</color>
+	<color name="gd_5">D90F0F12</color>
+	<color name="gd_6">EB0F0F12</color>
+	<color name="sc_1">40000000</color>
+	<color name="sc_2">59000000</color>
+	<color name="sc_3">73000000</color>
+	<color name="sc_4">80000000</color>
+	<color name="sc_5">94000000</color>
+	<color name="sc_6">A6000000</color>
+
+	<!-- 全屏页内容面板档位（皮肤设置「页面面板不透明度」驱动）
+	     页面的底本来就是压暗过的 fanart，所以档位比浮窗少、跨度也不用那么大。 -->
+	<color name="gp_1">730F0F12</color>
+	<color name="gp_2">990F0F12</color>
+	<color name="gp_3">BF0F0F12</color>
+	<color name="gp_4">E00F0F12</color>
+
+	<!-- ===== 浮窗遮蔽层（scrim）=====
+	     与玻璃面板分工：scrim 管「底噪」（把底下的画面压到认不出），
+	     玻璃面板管「质感」（中心实、边缘化开）。
+	     实际生效的是上面的 sc_1..6 档位；下面这三个是固定用途 / 兼容别名。 -->
+	<color name="scrim_dialog">99000000</color>
+	<color name="scrim_sheet">8C000000</color>
+	<color name="scrim_osd">4D000000</color>
+
+	<!-- 文字底板：只垫在列表 / 长文本区，抬局部对比度（深色版） -->
+	<color name="glass_plate">1F000000</color>
 
 	<!-- 实心浅底上的深色文字（目前只有详情页的播放键在用） -->
 	<color name="ink_primary">FF14141A</color>
