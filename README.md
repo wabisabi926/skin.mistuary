@@ -139,3 +139,20 @@ Source: <https://github.com/narapeka/skin.arctic.fuse.2>
 Upstream: <https://github.com/jurialmunkey/skin.arctic.fuse.2>
 
 Source revision: 91c6fd8f932879dbe57e789d4651052ae25fb567
+
+### 技术标识图标（`media/techflags/`）
+
+详情页技术标识行的彩色图标，来自 Arctic Fuse 3 系列皮肤，按原许可
+（CC BY-NC-SA 4.0）随副本分发；仅做了等比缩放与去留白，未改动图形本身：
+
+- `skin.arctic.fuse.3` → `media/flags/color/{resolution,source,audio,channels}`
+- `skin.arctic.fuse.3-avdvplus&p3i` → `media/flags/color/hdr`
+- `skin.arctic.zephyr.martian` → `media/flags/color/channels/12.png`（fuse3 只到 10）
+
+素材库没有对应 logo 的冷门格式（8K、HD DVD、ProRes、VHS、AVC、AV3A、WavPack 等 16 个），
+由 `tools/gen_techflag_icons.py` 用 Inter 字体渲染成同风格白字标，不涉及第三方美术。
+
+Upstream: `skin.arctic.fuse.3` / `skin.arctic.fuse.3-avdvplus&p3i` / `skin.arctic.zephyr.martian`
+（三者均为 CC BY-NC-SA 4.0 / 3.0，图形版权归原作者）
+
+重新生成：`python tools/gen_techflag_icons.py`

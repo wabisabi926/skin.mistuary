@@ -46,7 +46,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 |---|---|---|
 | 首页菜单 | `HomeMenuNoMovieButton`、`HomeMenuNoMusicButton`、`HomeMenuNoTVButton`、`HomeMenuNoTVShowButton` | 隐藏顶部导航项；`NaraHomeMenuDefaultsMusicTVOff` 是"首次运行给音乐/电视默认关掉"的一次性标记 |
 | 首页小组件 | `home_no_<section>_<widget>_widget`（约 22 个） | 逐个小组件的开关，命名规则固定为 `home_no_` + 段名 + 组件名 + `_widget` |
-| 视觉 | `no_fanart`（12 处读取）、`hide_background_fanart`、`animate_background_fanart`、`hide_mediaflags`、`show_musicvideoposter` | 背景与媒体标识开关 |
+| 视觉 | `no_fanart`（12 处读取）、`hide_background_fanart`、`animate_background_fanart`、`hide_mediaflags`、`hide_techflag_icons`、`show_musicvideoposter` | 背景与媒体标识开关 |
 | 播放 | `autoscroll`、`OSDAutoClose`、`OSDAutoCloseTime`、`nara_cast_open` | 自动滚动 / OSD 自动关闭 / 演员栏展开 |
 | 数据 | `Nara.MusicBackground`、`Nara.SharedRandomFanart.LockedPath`、`library_art_folder` | 字符串型；`LockedPath` 表示"用户手动锁定的背景" |
 | 一次性标记 | `NaraHomeMenuDefaultsMusicTVOff` | `onload` 里判断后立刻 SetBool，避免重复初始化 |
@@ -110,10 +110,35 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
    包装用的 `<control type="group">` 没有 id，Kodi 串不出导航链。
 3. **`<include>` 有 `<param>` 就必须有 `<definition>`**，否则整条 include 被丢弃（`ChannelManagerList` 就是这么坏的）。
    参数本身不声明也能用，调用点传的值会和默认值合并。
-4. **技术标识胶囊有两条渲染路径**：`$MAP`（Kodi 22）和原始值（Kodi 21），
-   由 `$EXP[nara_kodi21]` 切换。改胶囊时两个分支都要改，`flag_label_raw` 别漏。
+4. **技术标识胶囊现在有四条渲染路径**：图标 / 文字 × Kodi 22 / 21。
+   入口统一在 `NaraTechnicalFlag`，不要在内容段直接调 `NaraTechnicalTextPill`——
+   那样会绕过图标分支。细节见下一节。
 5. **皮肤字符串 31000–31999 是自有区间**，`$LOCALIZE[31xxx]` 必须在 `language/*/strings.po` 里；
    31xxx 以下都是 Kodi 内置串，`audit_skin.py` 不会再报缺失。
+
+### 4.1 技术标识图标（techflags）
+
+| 项 | 约定 |
+|---|---|
+| 入口 | `NaraTechnicalFlag`（图标 / 文字双分支）→ `NaraTechnicalIconPill` / `NaraTechnicalTextPill` |
+| 图标路径 | `techflags/color/<类别>/<原始值>.png`，由 `NaraTechnical*IconMap` 查表 |
+| 生成脚本 | `tools/gen_techflag_icons.py`（`--check` 供 CI） |
+| 素材规格 | 96×56 画布（约 2:1），显示框 48×28；胶囊 72（DV 带档位 100），itemgap 8 |
+| 评分胶囊 | `NaraOnlineRatingItem` 同款底板：114（IMDb 128），内边距 12 |
+| 开关 | `hide_techflag_icons`，关掉 = 回到纯文字胶囊 |
+| 位置 | 四处（详情页 / 首页 / 搜索 / 海报视图 51）**全部并入评分行**：`NaraOnlineRatingsRow` + `inline_flags=true`；已无独立行组件 |
+
+**三条硬约束**：
+
+1. **每个取值都必须有图标。** `IconMap` 覆盖 TextMap 的全部 key；素材库没有 logo 的
+   冷门格式由脚本用显示名渲染成白字标。所以运行时不判断"这个值有没有图"——
+   `$MAP` 只出现在 `<texture>` 里，和原有用法一致。**不要把 `$MAP` 写进 `<visible>`**：
+   现有代码里没有先例，行为未经验证。
+2. **加新取值要改两处**：`*TextMap`（显示名）+ 重跑生成脚本（补图标）。只改前者的话，
+   Kodi 22 上会因为 IconMap 缺 entry 而显示空图。
+3. **声道不用图标，只出文字。** 素材按声道数命名且图上印死了布局文字，而
+   `5.1.2`/`7.1` 同为 8 声道、`5.1.4`/`7.1.2` 同为 10 声道，图必然说谎。
+   `skin.estuary.nara` 的「Atmos 码 + 声道数」推断在本机片库不成立（DB 里没有 `*_atmos`）。
 
 ---
 
