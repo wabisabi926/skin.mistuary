@@ -8,10 +8,10 @@
 		<!-- 内容面板：这三页原本没有自己的底板，文字直接压在背景图上；
 		     补一块和文件管理器同款的磨砂玻璃，文字仍是白色 -->
 		<control type="image">
-			<left>470</left>
-			<top>70</top>
-			<width>1400</width>
-			<height>880</height>
+			<left>505</left>
+			<top>145</top>
+			<width>1355</width>
+			<height>740</height>
 			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group">
@@ -20,10 +20,10 @@
 				<visible>Control.IsVisible(50)</visible>
 				<include>OpenClose_Right</include>
 				<control type="fixedlist" id="50">
-					<left>490</left>
-					<top>topbar_content_top</top>
-					<right>0</right>
-					<bottom>list_bottom</bottom>
+					<left>525</left>
+					<top>161</top>
+					<width>1315</width>
+					<height>708</height>
 					<onleft>9000</onleft>
 					<onright>60</onright>
 					<onup>50</onup>
@@ -33,46 +33,47 @@
 					<viewtype label="535">list</viewtype>
 					<pagecontrol>60</pagecontrol>
 					<scrolltime tween="cubic" easing="out">500</scrolltime>
-					<itemlayout height="141">
+					<itemlayout height="76">
 						<control type="image">
-							<left>10</left>
+							<left>28</left>
 							<top>10</top>
-							<width>120</width>
-							<height>120</height>
+							<width>56</width>
+							<height>56</height>
 							<texture>$VAR[NaraImgListitemIconDefDefaultAddon]</texture>
 							<aspectratio>scale</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>
 						<control type="label">
-							<left>160</left>
+							<left>100</left>
 							<right>400</right>
-							<top>10</top>
-							<height>35</height>
+							<top>2</top>
+							<height>36</height>
 							<aligny>center</aligny>
-							<font>font37</font>
+							<font>font26</font>
 							<label>$INFO[ListItem.Label]</label>
 						</control>
 						<control type="textbox">
-							<left>160</left>
-							<top>45</top>
-							<right>20</right>
-							<height>80</height>
+							<left>100</left>
+							<top>38</top>
+							<right>28</right>
+							<height>34</height>
 							<aligny>top</aligny>
+							<font>font10</font>
 							<textcolor>grey</textcolor>
 							<label>$INFO[ListItem.Property(Event.Description)]</label>
 						</control>
 						<control type="label">
 							<left>0</left>
-							<right>30</right>
-							<top>10</top>
-							<height>35</height>
+							<right>28</right>
+							<top>2</top>
+							<height>36</height>
 							<align>right</align>
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Label2]</label>
 						</control>
 					</itemlayout>
-					<focusedlayout height="141">
+					<focusedlayout height="76">
 						<control type="image">
 							<left>0</left>
 							<top>0</top>
@@ -82,40 +83,41 @@
 							<visible>Control.HasFocus(50)</visible>
 						</control>
 						<control type="image">
-							<left>10</left>
+							<left>28</left>
 							<top>10</top>
-							<width>120</width>
-							<height>120</height>
+							<width>56</width>
+							<height>56</height>
 							<texture>$VAR[NaraImgListitemIconDefDefaultAddon]</texture>
 							<aspectratio>scale</aspectratio>
 							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
 							<bordersize>4</bordersize>
 						</control>
 						<control type="label">
-							<left>160</left>
+							<left>100</left>
 							<right>400</right>
-							<top>10</top>
-							<height>35</height>
+							<top>2</top>
+							<height>36</height>
 							<aligny>center</aligny>
-							<font>font37</font>
+							<font>font26</font>
 							<label>$INFO[ListItem.Label]</label>
 							<textcolor>text_primary</textcolor>
 							<selectedcolor>text_primary</selectedcolor>
 						</control>
 						<control type="textbox">
-							<left>160</left>
-							<top>45</top>
-							<right>20</right>
-							<height>80</height>
+							<left>100</left>
+							<top>38</top>
+							<right>28</right>
+							<height>34</height>
 							<aligny>top</aligny>
+							<font>font10</font>
 							<label>$INFO[ListItem.Property(Event.Description)]</label>
 							<textcolor>text_primary</textcolor>
 						</control>
 						<control type="label">
 							<left>0</left>
-							<right>30</right>
-							<top>10</top>
-							<height>35</height>
+							<right>28</right>
+							<top>2</top>
+							<height>36</height>
 							<align>right</align>
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Label2]</label>
@@ -128,41 +130,34 @@
 			<control type="group">
 				<depth>DepthContentPanel</depth>
 				<include>OpenClose_Left</include>
-				<include content="NaraSettingsSidebar">
-					<param name="left" value="40" />
-					<param name="top" value="125" />
-					<param name="width" value="450" />
-					<param name="height" value="850" />
-				</include>
+				<include>NaraSettingsSidebar</include>
 				<control type="grouplist" id="9000">
 					<orientation>vertical</orientation>
-					<itemgap>-8.5</itemgap>
+					<itemgap>4</itemgap>
 					<onup>9000</onup>
 					<ondown>9000</ondown>
 					<onleft>50</onleft>
 					<onright>50</onright>
 					<usecontrolcoords>true</usecontrolcoords>
 					<control type="togglebutton" id="4">
-						<height>110</height>
-						<aligny>top</aligny>
-						<textoffsetx>40</textoffsetx>
+						<height>78</height>
+						<aligny>center</aligny>
+						<textoffsetx>24</textoffsetx>
 						<texturenofocus />
 						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<alttexturenofocus />
 						<alttexturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</alttexturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<textoffsety>35</textoffsety>
 						<label>$LOCALIZE[31032]: $LOCALIZE[584]</label>
 						<altlabel>$LOCALIZE[31032]: $LOCALIZE[585]</altlabel>
 					</control>
 					<control type="button" id="21">
 						<width>100%</width>
-						<height>110</height>
+						<height>78</height>
 						<align>left</align>
-						<aligny>top</aligny>
-						<textoffsetx>40</textoffsetx>
-						<textoffsety>35</textoffsety>
+						<aligny>center</aligny>
+						<textoffsetx>24</textoffsetx>
 						<texturenofocus />
 						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
@@ -172,22 +167,20 @@
 						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<control type="radiobutton" id="22">
-						<height>110</height>
-						<aligny>top</aligny>
+						<height>78</height>
+						<aligny>center</aligny>
 						<texturenofocus />
 						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
-						<textoffsetx>40</textoffsetx>
-						<textoffsety>35</textoffsety>
+						<textoffsetx>24</textoffsetx>
 					</control>
 					<control type="button" id="20">
 						<width>100%</width>
-						<height>110</height>
+						<height>78</height>
 						<align>left</align>
-						<aligny>top</aligny>
-						<textoffsetx>40</textoffsetx>
-						<textoffsety>35</textoffsety>
+						<aligny>center</aligny>
+						<textoffsetx>24</textoffsetx>
 						<texturenofocus />
 						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
@@ -198,11 +191,10 @@
 					</control>
 					<control type="button" id="501">
 						<width>100%</width>
-						<height>110</height>
+						<height>78</height>
 						<align>left</align>
-						<aligny>top</aligny>
-						<textoffsetx>40</textoffsetx>
-						<textoffsety>35</textoffsety>
+						<aligny>center</aligny>
+						<textoffsetx>24</textoffsetx>
 						<texturenofocus />
 						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
@@ -211,16 +203,16 @@
 						<onclick>ActivateWindow(systemsettings,logging)</onclick>
 						<selectedcolor>text_primary</selectedcolor>
 					</control>
-					<left>56</left>
-					<top>145</top>
-					<width>418</width>
-					<height>790</height>
+					<left>76</left>
+					<top>165</top>
+					<width>368</width>
+					<height>685</height>
 				</control>
 				<control type="image">
-					<left>70</left>
-					<bottom>90</bottom>
-					<width>300</width>
-					<height>300</height>
+					<left>200</left>
+					<bottom>130</bottom>
+					<width>120</width>
+					<height>120</height>
 					<fadetime>300</fadetime>
 					<aspectratio aligny="bottom">keep</aspectratio>
 					<texture>$VAR[NaraImgListItemIconDefDefaultAddon]</texture>
@@ -229,10 +221,10 @@
 				</control>
 			</control>
 			<control type="scrollbar" id="60">
-				<right>0</right>
-				<top>topbar_content_top</top>
-				<width>12</width>
-				<bottom>list_bottom</bottom>
+				<left>1874</left>
+				<top>165</top>
+				<width>8</width>
+				<height>700</height>
 				<onleft>50</onleft>
 				<onright>9000</onright>
 				<orientation>vertical</orientation>
@@ -242,6 +234,7 @@
 		</control>
 		<include content="TopBar">
 			<param name="breadcrumbs_label" value="$LOCALIZE[31067]" />
+			<param name="sublabel" value="" />
 		</include>
 		<include>BottomBar</include>
 	</controls>

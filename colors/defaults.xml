@@ -8,7 +8,7 @@
 	<color name="surface_dialog">FF18171E</color>
 	<color name="surface_dialog_header">FF201E27</color>
 	<color name="surface_subtle">12FFFFFF</color>
-	<color name="surface_raised">1FFFFFFF</color>
+	<color name="surface_raised">33FFFFFF</color>
 	<!-- Foreground hierarchy -->
 	<color name="text_primary">FFEDEDED</color>
 	<color name="text_secondary">B3EDEDED</color>

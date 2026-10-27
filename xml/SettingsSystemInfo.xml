@@ -1,100 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol always="true">95</defaultcontrol>
+	<backgroundcolor>background</backgroundcolor>
 	<controls>
 		<include>NaraSettingsBackground</include>
 		<!-- 内容面板：这三页原本没有自己的底板，文字直接压在背景图上；
 		     补一块和文件管理器同款的磨砂玻璃，文字仍是白色 -->
 		<control type="image">
-			<left>470</left>
-			<top>130</top>
-			<width>1400</width>
-			<height>570</height>
+			<left>505</left>
+			<top>145</top>
+			<width>1355</width>
+			<height>740</height>
 			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group">
-			<left>40</left>
-			<top>103</top>
+			<left>0</left>
+			<top>0</top>
 			<include>OpenClose_Right</include>
 			<control type="grouplist">
-				<left>420</left>
-				<top>30</top>
-				<height>550</height>
+				<left>553</left>
+				<top>161</top>
+				<height>370</height>
 				<orientation>vertical</orientation>
 				<control type="label" id="2">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="3">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="4">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="5">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="6">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="7">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="8">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="9">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="10">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="11">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="12">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 				<control type="label" id="13">
 					<height>47</height>
-					<width>1400</width>
+					<width>1259</width>
 					<font>Mono26</font>
 				</control>
 			</control>
 			<control type="textbox" id="30">
-				<left>420</left>
-				<right>50</right>
-				<top>30</top>
-				<bottom>347</bottom>
+				<left>553</left>
+				<top>161</top>
+				<width>1259</width>
+				<bottom>545</bottom>
 				<pagecontrol>60</pagecontrol>
 				<autoscroll delay="5000" repeat="7500" time="5000">!Control.HasFocus(60)</autoscroll>
 			</control>
 			<control type="scrollbar" id="60">
-				<right>0</right>
-				<top>0</top>
-				<width>12</width>
-				<bottom>340</bottom>
+				<left>1874</left>
+				<top>165</top>
+				<width>8</width>
+				<height>700</height>
 				<orientation>vertical</orientation>
 				<texturesliderbackground />
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
@@ -106,26 +107,19 @@
 				<animation effect="fade" start="0" end="100" delay="300" time="320">WindowOpen</animation>
 				<animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
 			</control>
-			<control type="image">
-				<left>380</left>
-				<top>-3</top>
-				<right>0</right>
-				<height>3</height>
-				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
-			</control>
 			<control type="group" id="102">
 				<description>System Info page that shows a QR code linking to https://kodi.tv/donate/</description>
-				<left>420</left>
-				<right>50</right>
-				<top>30</top>
-				<bottom>30</bottom>
+				<left>553</left>
+				<width>1259</width>
+				<top>161</top>
+				<bottom>80</bottom>
 				<control type="textbox">
 					<height>110</height>
 					<label>$LOCALIZE[12397]</label>
 				</control>
 				<control type="multiimage" id="103">
 					<top>110</top>
-					<height>620</height>
+					<height>372</height>
 					<imagepath>special://xbmc/media/qr/kodilove/</imagepath>
 					<aspectratio>keep</aspectratio>
 					<timeperimage>5000</timeperimage>
@@ -133,7 +127,7 @@
 					<randomize>false</randomize>
 				</control>
 				<control type="label">
-					<top>748</top>
+					<top>505</top>
 					<align>center</align>
 					<label>$LOCALIZE[12398]</label>
 				</control>
@@ -144,112 +138,117 @@
 			<top>0</top>
 			<depth>DepthContentPanel</depth>
 			<include>OpenClose_Left</include>
-			<include content="NaraSettingsSidebar">
-				<param name="left" value="40" />
-				<param name="top" value="125" />
-				<param name="width" value="380" />
-				<param name="height" value="850" />
-			</include>
+			<include>NaraSettingsSidebar</include>
 			<control type="grouplist" id="9000">
 				<onup>9000</onup>
 				<ondown>9000</ondown>
 				<onright>60</onright>
+				<itemgap>4</itemgap>
 				<control type="button" id="95">
 					<description>Button Summary Values</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[20037]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="94">
 					<description>Button Storage</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13277]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="96">
 					<description>Button Network</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13279]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="97">
 					<description>Button Video</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13280]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="98">
 					<description>Button Hardware</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[13281]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="99">
 					<description>Button PVR</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[19191]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="100">
 					<description>Button Privacy policy</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[12389]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
 				<control type="button" id="101">
 					<description>Button "Thank you!"</description>
 					<include content="NaraSettingsRow">
-						<param name="height" value="85" />
+						<param name="height" value="78" />
+						<param name="textoffsetx" value="24" />
 						<param name="text" value="text_primary" />
 					</include>
 					<label>$LOCALIZE[12396]</label>
-					<width>348</width>
+					<width>368</width>
 				</control>
-				<left>56</left>
-				<top>145</top>
-				<width>348</width>
-				<height>790</height>
+				<left>76</left>
+				<top>165</top>
+				<width>368</width>
+				<height>685</height>
 			</control>
 		</control>
 		<include content="TopBar">
 			<param name="breadcrumbs_label" value="$LOCALIZE[130]" />
+			<param name="sublabel" value="" />
 		</include>
 		<include>BottomBar</include>
 		<control type="group" id="104">
-			<bottom>0</bottom>
-			<left>40</left>
-			<height>370</height>
+			<bottom>195</bottom>
+			<left>0</left>
+			<height>330</height>
 			<include>OpenClose_Right</include>
 			<control type="image">
-				<left>380</left>
+				<left>553</left>
 				<top>30</top>
-				<right>0</right>
+				<width>1259</width>
 				<height>3</height>
 				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
 			</control>
 			<control type="grouplist">
-				<left>420</left>
+				<left>553</left>
 				<orientation>vertical</orientation>
 				<control type="label">
 					<description>Memory Text</description>
@@ -262,7 +261,7 @@
 				</control>
 				<control type="progress">
 					<description>Memory BAR</description>
-					<width>730</width>
+					<width>1259</width>
 					<height>16</height>
 					<info>system.memory(used)</info>
 				</control>
@@ -277,7 +276,7 @@
 				</control>
 				<control type="progress">
 					<description>CPU BAR</description>
-					<width>730</width>
+					<width>1259</width>
 					<height>16</height>
 					<info>System.CPUUsage</info>
 					<visible>System.SupportsCPUUsage</visible>
@@ -287,7 +286,7 @@
 				<animation effect="slide" end="0,-55" time="0" condition="!System.SupportsCPUUsage">Conditional</animation>
 				<control type="label">
 					<top>155</top>
-					<left>420</left>
+					<left>553</left>
 					<width>auto</width>
 					<height>50</height>
 					<aligny>bottom</aligny>
@@ -299,8 +298,8 @@
 					<description>Kodi build version</description>
 					<itemgap>10</itemgap>
 					<top>200</top>
-					<left>420</left>
-					<width>820</width>
+					<left>553</left>
+					<width>1259</width>
 					<orientation>horizontal</orientation>
 					<control type="label">
 						<description>Build label</description>
@@ -322,8 +321,8 @@
 					<description>Git version</description>
 					<itemgap>10</itemgap>
 					<top>235</top>
-					<left>420</left>
-					<width>820</width>
+					<left>553</left>
+					<width>1259</width>
 					<orientation>horizontal</orientation>
 					<control type="label">
 						<description>Git label</description>
@@ -345,8 +344,8 @@
 					<description>Build date</description>
 					<itemgap>10</itemgap>
 					<top>270</top>
-					<left>420</left>
-					<width>820</width>
+					<left>553</left>
+					<width>1259</width>
 					<orientation>horizontal</orientation>
 					<control type="label">
 						<description>kodi Compiled Text</description>

@@ -49,11 +49,11 @@ FORK_ATTRS = [
 KODI22_ONLY = ["$MAP[", "$ESCMAP["]
 
 # Kodi 的 GUIControlFactory::GetTexture 只解析这些属性，其余一律静默忽略。
-# 尤其是 fallback=：整个 guilib 里没有贴图级的 fallback（只有 <label fallback>），
-# 写了等于没写，缺图时不会出现占位图。
+# fallback= 是 Kodi 22 新增的贴图级兜底（官方 Estuary 22 大量使用），
+# 缺图时显示占位贴图；Kodi 21 会忽略该属性，只影响兜底效果，不会报错。
 TEXTURE_ATTRS_OK = {
     "border", "infill", "flipx", "flipy", "diffuse",
-    "colordiffuse", "background", "mipmap", "subpixel",
+    "colordiffuse", "background", "mipmap", "subpixel", "fallback",
 }
 
 # 皮肤设置的读取 / 写入内置函数。

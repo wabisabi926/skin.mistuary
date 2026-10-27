@@ -453,15 +453,6 @@
 					<height>1</height>
 					<texture colordiffuse="30FFFFFF">colors/white.png</texture>
 				</control>
-				<control type="label">
-					<left>52</left>
-					<top>396</top>
-					<width>500</width>
-					<height>30</height>
-					<font>font24</font>
-					<textcolor>text_secondary</textcolor>
-					<label>$LOCALIZE[31704]</label>
-				</control>
 				<control type="button" id="23">
 					<left>1110</left>
 					<top>32</top>

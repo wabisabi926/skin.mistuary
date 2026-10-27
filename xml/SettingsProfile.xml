@@ -7,66 +7,55 @@
 		<!-- 内容面板：这三页原本没有自己的底板，文字直接压在背景图上；
 		     补一块和文件管理器同款的磨砂玻璃，文字仍是白色 -->
 		<control type="image">
-			<left>470</left>
-			<top>130</top>
-			<width>1400</width>
-			<height>780</height>
+			<left>505</left>
+			<top>145</top>
+			<width>1355</width>
+			<height>740</height>
 			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group" id="9100">
 			<include>OpenClose_Right</include>
-			<left>472</left>
-			<control type="image">
-				<top>100</top>
-				<right>0</right>
-				<height>3</height>
-				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
-			</control>
-			<control type="image">
-				<bottom>134</bottom>
-				<right>0</right>
-				<height>3</height>
-				<texture colordiffuse="border_subtle" border="2">dialogs/separator-grey.png</texture>
-			</control>
+			<left>0</left>
 			<control type="panel" id="2">
-				<top>118</top>
-				<left>30</left>
+				<top>189</top>
+				<left>553</left>
 				<visible>Container(9000).Hasfocus(2)</visible>
-				<right>0</right>
-				<bottom>137</bottom>
+				<width>1259</width>
+				<height>652</height>
+				<pagecontrol>60</pagecontrol>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>2</onup>
 				<ondown>2</ondown>
 				<scrolltime>200</scrolltime>
-				<itemlayout height="390" width="354">
+				<itemlayout height="330" width="300">
 					<control type="image">
 						<top>5</top>
-						<width>320</width>
-						<height>380</height>
+						<width>270</width>
+						<height>320</height>
 						<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 					</control>
 					<control type="image">
-						<left>51</left>
-						<top>38</top>
-						<width>215</width>
-						<height>215</height>
+						<left>45</left>
+						<top>32</top>
+						<width>180</width>
+						<height>180</height>
 						<aspectratio>scale</aspectratio>
-						<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
+						<texture fallback="DefaultUser.png">$INFO[ListItem.Icon]</texture>
 					</control>
 					<control type="label">
-						<left>10</left>
-						<top>255</top>
-						<width>305</width>
+						<left>20</left>
+						<top>215</top>
+						<width>260</width>
 						<height>100</height>
 						<align>center</align>
 						<aligny>top</aligny>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>10</left>
-						<top>290</top>
-						<width>305</width>
+						<left>20</left>
+						<top>248</top>
+						<width>260</width>
 						<height>100</height>
 						<font>font10</font>
 						<align>center</align>
@@ -75,9 +64,9 @@
 						<visible>!String.IsEqual(Listitem.Label,$LOCALIZE[20058])</visible>
 					</control>
 					<control type="label">
-						<left>10</left>
-						<top>321</top>
-						<width>305</width>
+						<left>20</left>
+						<top>277</top>
+						<width>260</width>
 						<height>100</height>
 						<font>font10</font>
 						<align>center</align>
@@ -86,35 +75,35 @@
 						<visible>!String.Contains(Listitem.Label,$LOCALIZE[20058])</visible>
 					</control>
 				</itemlayout>
-				<focusedlayout height="390" width="354">
+				<focusedlayout height="330" width="300">
 					<control type="group">
-						<animation effect="zoom" start="100" end="105" time="200" tween="sine" easing="inout" center="160,190">Focus</animation>
-						<animation effect="zoom" start="105" end="100" time="200" tween="sine" easing="inout" center="160,190">UnFocus</animation>
+						<animation effect="zoom" start="100" end="105" time="200" tween="sine" easing="inout" center="150,165">Focus</animation>
+						<animation effect="zoom" start="105" end="100" time="200" tween="sine" easing="inout" center="150,165">UnFocus</animation>
 						<control type="image">
 							<top>5</top>
-							<width>320</width>
-							<height>380</height>
+							<width>270</width>
+							<height>320</height>
 							<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 						</control>
 						<control type="image">
 							<top>5</top>
-							<width>320</width>
-							<height>380</height>
+							<width>270</width>
+							<height>320</height>
 							<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
-							<left>51</left>
-							<top>38</top>
-							<width>215</width>
-							<height>215</height>
+							<left>45</left>
+							<top>32</top>
+							<width>180</width>
+							<height>180</height>
 							<aspectratio>scale</aspectratio>
-							<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
+							<texture fallback="DefaultUser.png">$INFO[ListItem.Icon]</texture>
 						</control>
 						<control type="label">
-							<left>10</left>
-							<top>255</top>
-							<width>305</width>
+							<left>20</left>
+							<top>215</top>
+							<width>260</width>
 							<height>100</height>
 							<align>center</align>
 							<aligny>top</aligny>
@@ -123,9 +112,9 @@
 							<selectedcolor>text_primary</selectedcolor>
 						</control>
 						<control type="label">
-							<left>10</left>
-							<top>290</top>
-							<width>305</width>
+							<left>20</left>
+							<top>248</top>
+							<width>260</width>
 							<height>100</height>
 							<font>font10</font>
 							<align>center</align>
@@ -136,9 +125,9 @@
 							<visible>!String.Contains(Listitem.Label,$LOCALIZE[20058])</visible>
 						</control>
 						<control type="label">
-							<left>10</left>
-							<top>321</top>
-							<width>305</width>
+							<left>20</left>
+							<top>277</top>
+							<width>260</width>
 							<height>100</height>
 							<font>font10</font>
 							<align>center</align>
@@ -151,11 +140,24 @@
 					</control>
 				</focusedlayout>
 			</control>
+			<control type="scrollbar" id="60">
+				<left>1874</left>
+				<top>165</top>
+				<width>8</width>
+				<height>700</height>
+				<orientation>vertical</orientation>
+				<texturesliderbackground />
+				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
+				<onleft>2</onleft>
+				<onright>2</onright>
+				<visible>Container(9000).Hasfocus(2)</visible>
+			</control>
 			<control type="grouplist" id="9001">
 				<visible>Container(9000).Hasfocus(1)</visible>
-				<right>0</right>
-				<height>765</height>
-				<top>133</top>
+				<left>553</left>
+				<width>1259</width>
+				<height>652</height>
+				<top>189</top>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>9001</onup>
@@ -175,29 +177,24 @@
 		<control type="group">
 			<depth>DepthContentPanel</depth>
 			<include>OpenClose_Left</include>
-			<include content="NaraSettingsSidebar">
-				<param name="left" value="40" />
-				<param name="top" value="125" />
-				<param name="width" value="430" />
-				<param name="height" value="850" />
-			</include>
+			<include>NaraSettingsSidebar</include>
 			<control type="list" id="9000">
 				<onleft>9100</onleft>
 				<onright>9100</onright>
 				<onup>9000</onup>
 				<ondown>9000</ondown>
 				<scrolltime>300</scrolltime>
-				<itemlayout height="85" width="398">
+				<itemlayout height="78" width="368">
 					<control type="label">
-						<left>30</left>
-						<right>30</right>
+						<left>24</left>
+						<right>24</right>
 						<bottom>0</bottom>
 						<label>$INFO[ListItem.Label]</label>
 						<font>font26</font>
 						<aligny>center</aligny>
 					</control>
 				</itemlayout>
-				<focusedlayout height="85" width="398">
+				<focusedlayout height="78" width="368">
 					<control type="image">
 						<right>0</right>
 						<bottom>0</bottom>
@@ -205,8 +202,8 @@
 						<animation effect="fade" start="100" end="50" time="40" condition="!Control.HasFocus(9000)">Conditional</animation>
 					</control>
 					<control type="label">
-						<left>30</left>
-						<right>30</right>
+						<left>24</left>
+						<right>24</right>
 						<bottom>0</bottom>
 						<label>$INFO[ListItem.Label]</label>
 						<textcolor>text_primary</textcolor>
@@ -227,10 +224,10 @@
 						<icon />
 					</item>
 				</content>
-				<left>56</left>
-				<top>145</top>
-				<width>398</width>
-				<height>790</height>
+				<left>76</left>
+				<top>165</top>
+				<width>368</width>
+				<height>685</height>
 			</control>
 		</control>
 		<include content="TopBar">
