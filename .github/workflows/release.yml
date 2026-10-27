@@ -11,8 +11,7 @@ name: Build skin zip
 #   softprops/action-gh-release v3.0.3  node24（annotated tag，SHA 取 peeled commit）
 on:
   push:
-    # universal 是当前开发分支，main 是旧的内核玻璃版；两个都监听
-    branches: [main, universal]
+    branches: [main]
   workflow_dispatch:
     inputs:
       force:
