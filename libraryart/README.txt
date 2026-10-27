@@ -37,9 +37,12 @@ skin 15x bigger. Other ratios are centre-cropped to 16:9, then scaled to fill.
 通用兜底图 / Default cover
 -------------------------
 default.jpg 是"没有对应封面"的分类统一显示的那张图，它随皮肤发布，不需要你提供。
-想换掉它，直接用同名文件覆盖即可（建议同样 640 × 360）。
+没配封面的分类会在卡面上叠加显示库名，所以默认图为深色底、中央干净；
+想换掉它，直接用同名文件覆盖即可（建议同样 640 × 360，保持深色底库名才清晰）。
 default.jpg is the image shown for any library that has no matching cover. It ships
-with the skin. To change it, just overwrite this file (640 x 360 recommended).
+with the skin. The library name is drawn over it, so it uses a dark, center-clean
+background. To change it, just overwrite this file (640 x 360, dark background
+recommended so the overlaid name stays readable).
 
 说明
 ----

@@ -76,7 +76,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 选中它等于把同组其它开关全置假，**自己永远不会被读取**，所以它们在
 `audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
 
-现状（`python extras/audit_skin.py` 输出）：**66 读 / 68 写，有读无写 0、有写无读 0**。
+现状（`python extras/audit_skin.py` 输出）：**74 读 / 78 写，有读无写 0、有写无读 0**。
 
 ---
 
@@ -112,3 +112,135 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
    由 `$EXP[nara_kodi21]` 切换。改胶囊时两个分支都要改，`flag_label_raw` 别漏。
 5. **皮肤字符串 31000–31999 是自有区间**，`$LOCALIZE[31xxx]` 必须在 `language/*/strings.po` 里；
    31xxx 以下都是 Kodi 内置串，`audit_skin.py` 不会再报缺失。
+
+---
+
+# 附：环境、验证与素材规格（原 docs/HANDOVER.md 合并而来）
+
+## 2. 环境与路径
+
+| 项 | 值 |
+|---|---|
+| 源码 | `D:\下载\AI\skin.mistuary`（分支 `universal`，与 `origin/main` 同源） |
+| 实机皮肤目录 | `C:\Users\liwl\AppData\Roaming\Kodi\addons\skin.mistuary` |
+| 实机 Kodi | **22.0-RC1**（build version code `21.90.901`，build 20260927） |
+| 日志 | `C:\Users\liwl\AppData\Roaming\Kodi\kodi.log` |
+| Python（带 Pillow） | `C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe` |
+| 贴图打包 | `python xbt_tool.py pack`（662 张 → 7.6 MB） |
+
+> 实机 Kodi 会随用户升级而变（BETA2 → RC1 就是一次）。看版本别看本文档，
+> 看 `kodi.log` 首行：`Starting Kodi (22.0-RC1 (21.90.901) Git:...)`。
+
+**部署命令**（改完代码必须同步，用户靠这个实机验证）：
+
+```powershell
+$src = "D:\下载\AI\skin.mistuary"
+$dst = "C:\Users\liwl\AppData\Roaming\Kodi\addons\skin.mistuary"
+robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore /NJH /NJS /NDL /NP /NFL
+```
+
+- 退出码 0–7 都算成功；`/MIR` 会删掉目标端多余文件（包括本地的 `build/`）。
+- **不要写成 .ps1/.bat 脚本文件**（源码路径含中文，脚本编码会出问题），直接执行命令。
+- 贴图改过要重新 `pack` 并重启 Kodi；只改 XML 也要重启（皮肤在启动时加载）。
+
+---
+## 5. 验证（现在就能跑）
+
+```bash
+cd /d "D:\下载\AI\skin.mistuary"
+set PY="C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe"
+
+%PY% -m unittest discover -s extras -p "test_*.py"     # 期望 35 项全绿
+%PY% extras/audit_skin.py --strict                      # 期望 EXIT=0
+%PY% extras/gen_techflag_vars.py --check                # 期望"与 map 同步"
+%PY% xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 662/662
+```
+
+实机检查（重启 Kodi 后）：
+
+```bash
+grep -c "LoadTTF: Couldn't load" %APPDATA%\Kodi\kodi.log        # 期望 0（改之前 3525）
+grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
+```
+
+> **陷阱：同步完必须重启 Kodi，否则日志骗人。**
+> 2026-10-26 那次部署（10:51）时 Kodi 从 09:59 就在跑，`kodi.log` 里一直是旧的
+> 94 条字体错误 + 2 条 include 错误，看起来像"没修好"，其实只是运行时还在用旧皮肤。
+> 11:35 重启后两项立刻归零。
+> 判断方法：`kodi.log` 首行的 `Starting Kodi` 时间必须**晚于**部署时间。
+
+**实测结果（2026-10-26 11:35 重启，Kodi 22.0-RC1）**：
+
+| 检查项 | 结果 |
+|---|---|
+| `LoadTTF: Couldn't load` | **0**（修复前 3525） |
+| `invalid include definition` | **0**（修复前 2，均为 `ChannelManagerList`） |
+| 单元测试 | **42 项全绿** |
+| `audit_skin.py --strict` | 退出码 **0**；缺失 include/变量/字体/贴图/字符串全 0；皮肤设置 66 读 / 68 写，有读无写 0、有写无读 0 |
+| `gen_techflag_vars.py --check` | 与 map 同步 |
+
+日志里剩余的无害噪声（不用管）：
+
+- `libraryart/<分类名>.png` 加载失败 —— 皮肤按"先 png 后 jpg"试两种扩展名，
+  而 `libraryart/` 里只有 jpg，所以每个分类必然报一条 png 缺失，jpg 正常。
+  只有 `临时` 是连 jpg 都没有（用户自己的分类没配封面）。
+- `special://masterprofile/Thumbnails/...` 失败 —— Emby 插件缩略图，与皮肤无关。
+- `EMBY.emby.http: Websocket receive interrupted` —— 网络，与皮肤无关。
+
+1. 字体变成 Inter（中文正常、粗体正常）
+2. PVR → 分组管理，左右两个频道列表都能出频道
+3. 首页「文件」里点不同文件源卡片，进对应目录（配两个源测）
+4. 播放中按 `O`，「显示输出」那行有值（`System.ScreenMode`）
+5. 详情页技术标识：22 上 `4K UHD` / `DOLBY VISION`；21 上 `4K` / `DOLBYVISION`，
+   **不能出现 `$MAP[` 原文**
+
+想在 21 上验：装个 **Kodi 21.2 便携版**（解压即用，不动现有配置），
+把皮肤拷到它的 `portable_data/addons/` 下跑一遍。
+
+---
+### 6.4 已修：`<texture fallback="...">` 在官方 Kodi 上完全无效（原 69 处）
+
+**事实**：`CGUIControlFactory::GetTexture`（`GUIControlFactory.cpp:424-455`）只解析
+`border` / `infill` / `flipx` / `flipy` / `diffuse` / `colordiffuse` / `background` /
+`mipmap` / `subpixel`。**没有 `fallback`**。
+
+全仓库搜 `fallback` 只有两处是真的：
+- `<label fallback="...">`（`GUIControlFactory.cpp:690`，信息标签取不到值时的兜底文字）——有效；
+- `CTextureManager` 里 "check all fallbacks" 指的是**贴图搜索目录**，不是占位图。
+
+官方 wiki 的 [Texture Attributes](https://kodi.wiki/view/Texture_Attributes) 也只列了上面那几个。
+
+**后果**：`<texture fallback="DefaultVideo.png">$INFO[ListItem.Art(thumb)]</texture>`
+在取不到图时**什么也不画**，占位图不会出现。
+
+**现状：69 处已全部改写（2026-10-26），`audit_skin.py` 报 0 类。**
+（`fallback` 很可能是原魔改内核的扩展属性，官方版没有。）
+
+改法分三条路线，以后再加新图控件照这个来：
+
+| 路线 | 用在哪 | 做法 |
+|---|---|---|
+| **A. 修变量** | 标签本身是 `$VAR[X]` 的 22 处 | 把变量末尾那条**无条件** `<value>` 改成 `condition="!String.IsEmpty(...)"`，后面补一条占位图 |
+| **B. 建变量** | 标签是固定 `$INFO[...]` 的 37 处（20 种组合） | 按 (主标签, 占位图) 建 `NaraImg*` 变量，`<texture>` 改引用 `$VAR[...]` |
+| **C. 改参数默认值** | 标签是 `$PARAM[...]` 的 9 处 | 把 include 的默认参数指向带兜底的变量（`NaraImgIconOrFolder` / `NaraImgIconOrTvShows` / `NaraImgArtThumbOrIcon`） |
+
+**踩坑提醒**：
+- 变量是**自上而下取第一条成立的 `<value>`**。无条件值放在中间或末尾会挡住后面的兜底，
+  必须先把最后那条改成条件式再补兜底。
+- 带格式参数的标签（`$INFO[ListItem.ActualIcon,flags/...,.png]`）要用**第一个参数**
+  做空值判断，不能把整串塞进 `String.IsEmpty()`。
+- `$PARAM[...]` 没法判断空值，所以只能在参数默认值/调用点做兜底，不要试图加垫底控件——
+  这些控件的 `aspectratio` 多是 `keep`，垫底图会从四周露出来。
+
+---
+
+### 6.5 素材规格：`libraryart/` 分类封面
+
+- **推荐 640 × 360（16:9）**。卡片本身是 320 × 180，用 2 倍是为了焦点放大时不糊；
+  再大纯属浪费——2026-10-26 之前那批是 1920 × 1080，24 张共 19.16 MB，
+  压到 640 × 360 后只有 1.24 MB（JPEG q86 + progressive，等比居中裁剪不变形）。
+- 原图备份在 `.workbuddy-ai/backup/libraryart-originals/`（该目录被 git 忽略，
+  也不会同步到实机之外的地方）。
+- 这批图**不入库**（`.gitignore` 里排除 `libraryart/*.jpg|png`），发布包里也没有，
+  所以终端用户装上后看到的是文件夹图标——这是设计如此，`libraryart/README.txt` 已说明。
+- 内置目录**只认 .jpg**（自定义封面目录 png/jpg 都支持）。
