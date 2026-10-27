@@ -190,11 +190,20 @@ Kodi 20+ 的视频信息标签支持**多个带类型的评分**：
 
 `CVideoInfoTag::SetRating` 会**丢弃 0 和 >10 的值**，所以 0-100 的分数必须先换算。
 
-Emby for Kodi（`emby/listitem.py`）实际写入的是：
+Emby for Kodi（`plugin.service.emby-next-gen`，2026-10-27 按已安装版本核对）实际写入的是：
 
-- `CommunityRating` → 默认评分；`imdbrating` 设置开启（默认开）时类型写成 `imdb`
-- `CriticRating / 10` → 类型 `tomatometerallcritics`；同一个数也写进了 `UserRating`
-- 服务器如果直接返回 `Ratings` 数组，还会多出别的类型
+- `CommunityRating` → 类型 **`default`**（不是 `imdb`）：电影 / 剧集 / 单集 / 音乐视频都写
+- `CriticRating / 10` → 类型 `tomatometerallcritics`：**只有电影**写（`movies.py` / `videos.py`）
+- **不写 `UserRating`**：个人评分圆标（`circle_userrating`）显示的是 Kodi 自己的用户评分
+  （`SetRating` 打的星），与影评人分无关。早前"CriticRating 同时写进 UserRating"的记录已过时
+- `tmdb` / `metacritic` 类型只有**本地刮削器**（TMDb/Trakt）才会写，Emby 库恒空
+
+因此 Emby 库下：电影最多 2 颗胶囊（默认 + 烂番茄），剧集/单集只有 1 颗。
+
+**豆瓣覆盖**：StrmAssistant（神医助手）的「豆瓣评分覆盖」会把 Emby 的 `CommunityRating`
+改写成豆瓣分，同步到 Kodi 后仍是 `default` 类型——Kodi 侧**没有任何来源标志**，
+无法自动判断是豆瓣还是 IMDb。皮肤用设置项 `douban_rating`（设置 → 外观 → 默认评分来源）
+只切换第一颗胶囊的图标（IMDb ↔ 豆瓣），数值都读 `ListItem.Rating`。
 
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。

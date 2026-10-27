@@ -176,13 +176,26 @@
 					<control type="label">
 						<left>80</left>
 						<top>202</top>
-						<width>800</width>
+						<width>600</width>
 						<height>40</height>
 						<font>font13</font>
 						<textcolor>text_secondary</textcolor>
 						<scroll>true</scroll>
 						<label>$PARAM[metadata]</label>
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
+					</control>
+					<!-- 紧凑态评分胶囊：与元数据同一行、贴右侧对齐（右缘 x=900，与简介右缘对齐），
+					     不占用纵向空间；只有一颗评分时靠右，不会停在这一行中间 -->
+					<control type="group">
+						<left>580</left>
+						<top>205</top>
+						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
+						<include content="NaraOnlineRatingsRow">
+							<param name="top" value="0" />
+							<param name="width" value="320" />
+							<param name="align" value="right" />
+							<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+						</include>
 					</control>
 					<control type="textbox">
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>

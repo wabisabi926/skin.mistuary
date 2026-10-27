@@ -1440,3 +1440,6 @@ msgctxt "#31732"
 msgid "Slightly light"
 msgstr "Slightly light"
 
+msgctxt "#31733"
+msgid "Default rating source"
+msgstr "Default rating source"

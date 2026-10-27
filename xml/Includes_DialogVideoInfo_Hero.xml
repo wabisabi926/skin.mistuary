@@ -7,26 +7,33 @@
 	<include name="NaraOnlineRatingItem">
 		<!-- 宽度按最长值定：Kodi 的评分固定一位小数（8.5 / 10.0），
 		     font13 = 27px 时 "10.0" 实测 52.8px，所以文字框给 56。
-		     这里没有胶囊底板，多出来的宽度只是胶囊间距，看不出来。 -->
+		     这里没有胶囊底板，多出来的宽度只是胶囊间距，看不出来。
+		     图标框按素材比例传参：方形徽标（烂番茄/TMDb/Metacritic/豆瓣）28×28，
+		     IMDb 词标是 2:1，给 46×23 才不至于比分数小一大截。 -->
 		<param name="width">90</param>
 		<param name="visible">false</param>
 		<param name="icon"></param>
 		<param name="label"></param>
+		<param name="icon_width">28</param>
+		<param name="icon_height">28</param>
+		<param name="icon_top">3</param>
+		<param name="label_left">34</param>
+		<param name="label_width">56</param>
 		<definition>
 			<control type="group">
 				<width>$PARAM[width]</width>
 				<height>34</height>
 				<visible>$PARAM[visible]</visible>
 				<control type="image">
-					<top>3</top>
-					<width>28</width>
-					<height>28</height>
+					<top>$PARAM[icon_top]</top>
+					<width>$PARAM[icon_width]</width>
+					<height>$PARAM[icon_height]</height>
 					<aspectratio align="left" aligny="center">keep</aspectratio>
 					<texture>$PARAM[icon]</texture>
 				</control>
 				<control type="label">
-					<left>34</left>
-					<width>56</width>
+					<left>$PARAM[label_left]</left>
+					<width>$PARAM[label_width]</width>
 					<height>34</height>
 					<font>font13</font>
 					<aligny>center</aligny>
@@ -39,18 +46,33 @@
 		<param name="item_prefix">ListItem</param>
 		<param name="top">0</param>
 		<param name="width">810</param>
+		<param name="align">left</param>
 		<definition>
 			<control type="grouplist">
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
 				<height>34</height>
 				<orientation>horizontal</orientation>
+				<align>$PARAM[align]</align>
 				<itemgap>10</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
-				<!-- 社区评分：Emby 的 CommunityRating，默认类型 -->
+				<!-- 社区评分：Emby 的 CommunityRating，默认类型。
+				     IMDb 词标是 2:1，用 46×23 的图标框；豆瓣是方形徽标，用默认 28×28。
+				     两者按皮肤设置「默认评分来源」二选一。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating)" />
+					<param name="visible" value="!Skin.HasSetting(douban_rating) + !String.IsEmpty($PARAM[item_prefix].Rating)" />
 					<param name="icon" value="flags/ratings/imdb.png" />
+					<param name="icon_width" value="46" />
+					<param name="icon_height" value="23" />
+					<param name="icon_top" value="6" />
+					<param name="label_left" value="52" />
+					<param name="label_width" value="52" />
+					<param name="width" value="104" />
+					<param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
+				</include>
+				<include content="NaraOnlineRatingItem">
+					<param name="visible" value="Skin.HasSetting(douban_rating) + !String.IsEmpty($PARAM[item_prefix].Rating)" />
+					<param name="icon" value="flags/ratings/douban.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
 				</include>
 				<!-- 影评人评分：Emby 的 CriticRating/10，类型 tomatometerallcritics -->

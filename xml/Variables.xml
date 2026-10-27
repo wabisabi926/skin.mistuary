@@ -219,6 +219,13 @@
 		<value condition="Skin.HasSetting(circle_userrating)">$LOCALIZE[38018]</value>
 		<value>$LOCALIZE[16018]</value>
 	</variable>
+	<!-- 默认评分（ListItem.Rating）的来源：Emby 的 CommunityRating 不带来源信息，
+	     StrmAssistant 的「豆瓣评分覆盖」会把它改写成豆瓣分，皮肤无法自动分辨，故提供手动切换；
+	     第一颗胶囊的图标与数值分别由评分行里的两种胶囊 + 本变量决定 -->
+	<variable name="NaraDefaultRatingSourceVar">
+		<value condition="Skin.HasSetting(douban_rating)">Douban</value>
+		<value>IMDb</value>
+	</variable>
 	<variable name="AlbumOnClickActionLabel2Var">
 		<value condition="Skin.HasSetting(album_onclick_browse)">$LOCALIZE[37015]</value>
 		<value condition="Skin.HasSetting(album_onclick_play)">$LOCALIZE[208]</value>

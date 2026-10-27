@@ -1266,6 +1266,10 @@ msgctxt "#31732"
 msgid "Slightly light"
 msgstr "偏透"
 
+msgctxt "#31733"
+msgid "Default rating source"
+msgstr "默认评分来源"
+
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."
 #~ msgstr "未找到收藏。你可以从媒体浏览使用上下文菜单添加收藏项目。"
