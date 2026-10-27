@@ -10,3 +10,10 @@ libraryart/*.jpg
 libraryart/*.png
 # 例外：default.jpg 是"没配封面的分类"统一使用的通用图，必须随包发布
 !libraryart/default.jpg
+
+# 开发临时文件（渲染预览、调试输出）——一律放 docs/scratch/，不要丢在根目录
+docs/scratch/*
+!docs/scratch/README.md
+
+# 打包暂存目录（release.yml 生成）
+build/

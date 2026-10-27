@@ -1,17 +1,18 @@
 name: Build skin zip
 
-# 只有 addon.xml 里的版本号变了才打包发布；改代码不升版本不会产生新 Release。
+# 版本号变了才打包发布；改代码不升版本不会产生新 Release。
 # 需要强制重打包时，在 Actions 页面手动运行并勾选 force。
 #
 # action 一律钉 commit SHA，不用 @v4 这种浮动标签（标签可被上游改写，
 # 等于把供应链交给别人）。升级时先核对 action.yml 的 inputs 没改名，
 # 再换 SHA 并更新行尾注释里的版本号。
-#   actions/checkout           v7.0.1  node24
-#   actions/setup-python       v7.1.0  node24
+#   actions/checkout            v7.0.1  node24
+#   actions/setup-python        v7.1.0  node24
 #   softprops/action-gh-release v3.0.3  node24（annotated tag，SHA 取 peeled commit）
 on:
   push:
-    branches: [main]
+    # universal 是当前开发分支，main 是旧的内核玻璃版；两个都监听
+    branches: [main, universal]
   workflow_dispatch:
     inputs:
       force:
@@ -27,7 +28,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 先跑静态检查：XML 结构、缺失引用、生成变量是否与 map 同步、22 专属写法是否有 21 守卫
+  # 先跑静态检查：XML 结构、缺失引用、生成变量是否与 map 同步、单元测试
   test:
     runs-on: ubuntu-latest
     steps:
@@ -114,6 +115,37 @@ jobs:
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
         run: python xbt_tool.py pack
 
+      # 从 changelog.txt 里截出"当前版本"那一段，作为 Release 正文
+      - name: Extract changelog for this version
+        if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
+        env:
+          VERSION: ${{ steps.meta.outputs.version }}
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          python - <<'PY'
+          import os, re, sys
+          version = os.environ["VERSION"]
+          lines = open("changelog.txt", encoding="utf-8").read().splitlines()
+          # 版本段 = 以 "<x.y.z> " 开头的行，到下一个同格式行为止
+          head = re.compile(r"^\d+\.\d+\.\d+\s")
+          title, out, inside = version, [], False
+          for line in lines:
+              if head.match(line):
+                  if inside:
+                      break
+                  if line.split()[0] == version:
+                      inside, title = True, line.strip()
+                  continue
+              if inside:
+                  out.append(line)
+          body = "\n".join(out).strip() or "（changelog.txt 里没有对应段落）"
+          with open("build/RELEASE_NOTES.md", "w", encoding="utf-8") as f:
+              f.write(f"## {title}\n\n{body}\n")
+          print("--- RELEASE_NOTES.md ---")
+          print(open("build/RELEASE_NOTES.md", encoding="utf-8").read()[:600])
+          PY
+
       # 只保留"能装进 Kodi 的东西"：开发脚本、文档、CI 配置都不进包
       - name: Stage addon
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
@@ -132,9 +164,7 @@ jobs:
             --exclude='__pycache__/' \
             --exclude='*.pyc' \
             --exclude='xbt_tool.py' \
-            --exclude='extras/*.py' \
-            --exclude='extras/*.ps1' \
-            --exclude='extras/*.html' \
+            --exclude='extras/' \
             ./ "build/${ADDON_ID}/"
           # 发布包的 media/ 里只留 Textures.xbt，松散图片和子目录都不带
           find "build/${ADDON_ID}/media" -mindepth 1 -maxdepth 1 \
@@ -143,6 +173,7 @@ jobs:
           du -sh "build/${ADDON_ID}"
           find "build/${ADDON_ID}" -maxdepth 1 -mindepth 1 | sort
 
+      # 包名固定为「插件名-版本号.zip」
       - name: Create zip
         id: zip
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
@@ -156,6 +187,7 @@ jobs:
           zip -r -q "${ZIP}" "${ADDON_ID}"
           ls -lh "${ZIP}"
           echo "path=build/${ZIP}" >> "$GITHUB_OUTPUT"
+          echo "name=${ZIP}" >> "$GITHUB_OUTPUT"
 
       - name: Upload to release
         if: steps.check.outputs.changed == 'true' || github.event.inputs.force == 'true'
@@ -163,7 +195,11 @@ jobs:
         with:
           tag_name: v${{ steps.meta.outputs.version }}
           name: ${{ steps.meta.outputs.name }} ${{ steps.meta.outputs.version }}
-          files: ${{ steps.zip.outputs.path }}
-          generate_release_notes: true
+          # 正文取自 changelog.txt 的对应段落
+          body_path: build/RELEASE_NOTES.md
+          # 皮肤包 + 完整日记
+          files: |
+            ${{ steps.zip.outputs.path }}
+            changelog.txt
           make_latest: true
           fail_on_unmatched_files: true
