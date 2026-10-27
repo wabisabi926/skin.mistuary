@@ -10,7 +10,7 @@
 			<top>130</top>
 			<width>1400</width>
 			<height>570</height>
-			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group">
 			<left>40</left>

@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<expression name="nara_dialog_glass">!Window.IsActive(fullscreenvideo) + !Window.IsActive(fullscreengame) + !$EXP[nara_settings_osd]</expression>
-	<include name="NaraDialogGlassTexture">
-		<param name="radius">32</param>
-		<param name="style">frosted</param>
+	<!-- 原来：!Window.IsActive(fullscreenvideo) + !Window.IsActive(fullscreengame) + !$EXP[nara_settings_osd]
+	     —— 即"播放中 / OSD 设置"时切到不透明的 Legacy 面，保证压在画面上看得清。
+	     问题是：`<include condition="X">` 是**加载时**求值的（GUIIncludes::ResolveIncludes），
+	     窗口只要在播放中被加载过一次，这个分支就永久钉死，之后再也不会切回玻璃面；
+	     而且 Legacy 面是 100% 不透明的死板，完全不跟「浮窗不透明度」走 ——
+	     这就是"播放中打开的对话框永远不跟设置"的根因。
+
+	     现在恒为 true：所有对话框、任何时候都走玻璃面（跟随浮窗档），
+	     压画面的问题交给遮蔽层用 scrim_osd（30%）解决，而不是靠不透明面板。 -->
+	<expression name="nara_dialog_glass">true</expression>
+	<!-- ===== 浮窗遮蔽层 =====
+	     scrim 只负责「底噪」：把底下的画面压到认不出，不参与面板质感。
+	     摆放顺序必须是：scrim → 点空白关闭按钮（如有）→ 面板 → 内容，
+	     否则面板内部点击会被 scrim 上的按钮吃掉。 -->
+	<include name="NaraDialogScrim">
+		<param name="tint">$VAR[NaraGlassScrimTintVar]</param>
 		<definition>
-			<texture colordiffuse="glass_frosted" border="32">shapes/round32.png</texture>
+			<control type="image">
+				<left>-2000</left>
+				<top>-2000</top>
+				<width>6000</width>
+				<height>6000</height>
+				<texture colordiffuse="$PARAM[tint]">colors/black.png</texture>
+				<animation effect="fade" time="300">VisibleChange</animation>
+			</control>
+		</definition>
+	</include>
+	<!-- 面板投影：不提高任何不透明度，靠「浮在背景之上」的暗示提升可读性感知。
+	     独立 include，由 NaraDialogGlassSurface 无条件注入 ——
+	     条件 include 的 condition 是**加载时**求值（GUIIncludes::ResolveIncludes），
+	     写成 condition="$PARAM[shadow]" 依赖参数替换早于条件求值，不可靠。 -->
+	<include name="NaraDialogGlassShadow">
+		<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+		<bordersize>20</bordersize>
+	</include>
+	<!-- tint 的值可以是颜色名（glass_frosted 等），**也可以是变量**（NaraGlassDialogTintVar）。
+	     不能用 frosted / dialog 这类别名——那不是颜色名，会解析失败。
+	     贴图 shapes/glass<N>.png 自带 alpha 渐变：中心实、边缘化开，
+	     所以 colordiffuse 的 alpha 语义是「不透明度上限」而不是「均匀不透明度」。 -->
+	<include name="NaraDialogGlassTexture">
+		<param name="tint">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="radius">20</param>
+		<definition>
+			<texture colordiffuse="$PARAM[tint]" border="$PARAM[radius]">shapes/glass$PARAM[radius].png</texture>
 		</definition>
 	</include>
 	<include name="NaraDialogGlassSurface">
-		<param name="style">dialog</param>
+		<param name="style">$VAR[NaraGlassDialogTintVar]</param>
 		<definition>
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
 				<include content="NaraDialogGlassTexture">
-					<param name="style" value="$PARAM[style]" />
+					<param name="tint" value="$PARAM[style]" />
 				</include>
+				<include>NaraDialogGlassShadow</include>
 			</control>
 		</definition>
 	</include>
@@ -47,7 +86,7 @@
 		<bordersize>20</bordersize>
 	</include>
 	<include name="NaraDialogActionTextures">
-		<texturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texturefocus>
+		<texturefocus colordiffuse="glass_focus_medium" border="14">shapes/round14.png</texturefocus>
 		<texturenofocus />
 		<textcolor>text_primary</textcolor>
 		<focusedcolor>text_primary</focusedcolor>
@@ -128,7 +167,7 @@
 		<control type="image">
 			<width>100%</width>
 			<height>100%</height>
-			<texture colordiffuse="66000000">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<width>100%</width>
@@ -143,7 +182,7 @@
 			<top>180</top>
 			<width>600</width>
 			<height>176</height>
-			<texture colordiffuse="glass_frosted" border="32">shapes/round32.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>103</defaultcontrol>
@@ -203,7 +242,7 @@
 	</include>
 	<include name="NaraDialogControlTextures">
 		<include>NaraDialogActionTextures</include>
-		<alttexturefocus colordiffuse="glass_focus_medium" border="18">shapes/round18.png</alttexturefocus>
+		<alttexturefocus colordiffuse="glass_focus_medium" border="14">shapes/round14.png</alttexturefocus>
 		<alttexturenofocus />
 	</include>
 	<include name="NaraDialogButtonRowHeight">

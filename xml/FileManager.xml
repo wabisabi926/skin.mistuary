@@ -28,7 +28,8 @@
 			<texture colordiffuse="1A000000">colors/black.png</texture>
 		</control>
 		<control type="image">
-			<width>1920</width>
+			<left>-120</left>
+			<right>-120</right>
 			<height>220</height>
 			<aspectratio>stretch</aspectratio>
 			<texture flipy="true" colordiffuse="66FFFFFF">overlays/overlayfade.png</texture>
@@ -78,7 +79,7 @@
 			<top>160</top>
 			<width>1750</width>
 			<height>870</height>
-			<texture colordiffuse="glass_frosted" border="42">shapes/round42.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group">
 			<left>105</left>
@@ -217,7 +218,7 @@
 						<top>3</top>
 						<width>1710</width>
 						<height>72</height>
-						<texture colordiffuse="glass_focus_medium" border="18">shapes/round18.png</texture>
+						<texture colordiffuse="glass_focus_medium" border="14">shapes/round14.png</texture>
 					</control>
 					<control type="image">
 						<left>25</left>

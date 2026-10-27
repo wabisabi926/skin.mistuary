@@ -856,8 +856,37 @@
 			</control>
 		</definition>
 	</include>
+	<!-- 媒体库页面的背景压暗层。
+	     共享 fanart 是 artwork_background_opaque（FF808080 = 50% 亮度），
+	     但它仍然有颜色、有明暗，跟海报/封面抢视线。再压 40%，背景退成"底噪"。
+	     放在 DefaultBackground 之后、内容之前。
+	     Home 不用它 —— 首页的 fanart 是设计主体，不该压。 -->
+	<include name="NaraPageScrim">
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<texture colordiffuse="66000000">colors/black.png</texture>
+		</control>
+	</include>
 	<include name="DialogBackgroundCommons">
-		<param name="glass_style">dialog</param>
+		<!-- darken_bg 以前从未声明默认值、也没有调用点传它，遮蔽层能显示纯属运气：
+		     Kodi 的 CGUIControlFactory::GetConditionalVisibility 用 `if (!node->NoChildren())`
+		     过滤掉空的 <visible>，于是不注册条件、控件默认可见。
+		     现在显式声明成 true，不再依赖这个隐式行为。
+
+		     下面 width / height / header_* / header_icon_* 以前**一个都没声明**，全靠调用点传。
+		     header_icon_* 更是没有任何调用点传过 —— DialogHeaderIcon 拿到
+		     `<right></right>` / `<width></width>` 这样的空串，尺寸算成 0，
+		     齿轮图标的位置和大小完全不受控。现在全部补上默认值。 -->
+		<param name="width">700</param>
+		<param name="height">438</param>
+		<param name="header_label"></param>
+		<param name="header_id">1</param>
+		<param name="header_icon_right">10</param>
+		<param name="header_icon_top">11</param>
+		<param name="header_icon_size">48</param>
+		<param name="glass_style">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="darken_bg">true</param>
+		<param name="scrim">$VAR[NaraGlassScrimTintVar]</param>
 		<definition>
 			<control type="image">
 				<left>-2000</left>
@@ -867,7 +896,7 @@
 				<animation effect="fade" time="300">VisibleChange</animation>
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
-				<texture colordiffuse="overlay_medium">colors/black.png</texture>
+				<texture colordiffuse="$PARAM[scrim]">colors/black.png</texture>
 				<visible>$PARAM[darken_bg]</visible>
 			</control>
 			<control type="button">
@@ -882,15 +911,27 @@
 			<control type="group">
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassSurface">
+				<!-- 只用跟随「浮窗不透明度」的玻璃面。
+				     原来这里还有个 `condition="!$EXP[nara_dialog_glass]"` 的分支指向
+				     `NaraDialogSolidSurface`（两块 100% 不透明的 FF201E27 / FF18171E），
+				     而 `nara_dialog_glass` 在**播放视频时为假** ——
+				     于是播放中打开的对话框全部走死板，完全不跟设置。
+				     另外 `<include condition>` 是**加载时**求值的（GUIIncludes::ResolveIncludes），
+				     一旦窗口在播放中被加载过，这个分支就永久固定，运行时再也不会切回来。
+				     所以直接删掉分支，永远走玻璃面。 -->
+				<include content="NaraDialogGlassSurface">
 					<param name="style" value="$PARAM[glass_style]" />
 				</include>
-				<include condition="!$EXP[nara_dialog_glass]">NaraDialogSolidSurface</include>
+				<!-- 标题原来 top=0 / height=70，垂直居中后文字上沿离面板边缘只有 ~19px，
+				     正好压在 20px 圆角的弧线上，看着像"标题浮在面板外面"。
+				     下移 8px、高度收到 62，让标题完整落在圆角之内。 -->
+				<!-- 标题内边距：左 48 / 上 18（垂直居中后文字上沿离面板边缘约 32px）。
+				     原来 left 40 / top 0，文字几乎贴着圆角，看着像"超出面板"。 -->
 				<control type="label" id="$PARAM[header_id]">
-					<left>40</left>
-					<top>0</top>
+					<left>48</left>
+					<top>18</top>
 					<right>100</right>
-					<height>70</height>
+					<height>56</height>
 					<font>font32_title</font>
 					<textcolor>text_primary</textcolor>
 					<label>$PARAM[header_label]</label>
@@ -1001,7 +1042,7 @@
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
 			<aspectratio>scale</aspectratio>
-			<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+			<texture colordiffuse="primary_background">special://skin/backgrounds/primary.jpg</texture>
 		</control>
 	</include>
 	<include name="DefaultBackground">
@@ -1164,7 +1205,7 @@
 				<width>900</width>
 				<height>380</height>
 				<include content="DialogBackgroundCommons">
-					<param name="glass_style" value="frosted" />
+					<param name="glass_style" value="$VAR[NaraGlassDialogTintVar]" />
 					<param name="width" value="900" />
 					<param name="height" value="380" />
 					<param name="header_label" value="$PARAM[header_label]" />
@@ -1271,7 +1312,7 @@
 		<param name="flipx">false</param>
 		<definition>
 			<control type="image">
-				<texture colordiffuse="glass_frosted" flipx="$PARAM[flipx]">colors/white.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" flipx="$PARAM[flipx]">colors/white.png</texture>
 				<width>$PARAM[width]</width>
 				<left>$PARAM[left]</left>
 				<right>$PARAM[right]</right>

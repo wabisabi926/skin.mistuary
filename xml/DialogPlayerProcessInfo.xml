@@ -26,7 +26,17 @@
 				<top>0</top>
 				<width>1880</width>
 				<height>610</height>
-				<texture border="40" colordiffuse="4D000000">colors/black.png</texture>
+				<texture border="40" colordiffuse="scrim_osd">colors/black.png</texture>
+			</control>
+			<!-- 玻璃面板：原来这里只有 30% 的 scrim_osd、没有任何面板，
+			     技术参数直接压在画面上读不清。加一层浮窗档面板（跟「浮窗不透明度」走），
+			     合成 78% + 30% = 84.6%，画面还能透出来一点。 -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>1880</width>
+				<height>610</height>
+				<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
 			</control>
 			<control type="label">
 				<left>28</left>

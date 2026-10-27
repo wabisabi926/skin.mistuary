@@ -6,7 +6,7 @@
 		<control type="image">
 			<width>100%</width>
 			<height>100%</height>
-			<texture colordiffuse="66000000">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<width>100%</width>
@@ -23,14 +23,7 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
-				<visible>$EXP[nara_dialog_glass]</visible>
-			</control>
-			<control type="image">
-				<width>100%</width>
-				<height>100%</height>
-				<texture colordiffuse="F02A2D32" border="32">shapes/round32.png</texture>
-				<visible>!$EXP[nara_dialog_glass]</visible>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="button" id="22002">
 				<width>100%</width>

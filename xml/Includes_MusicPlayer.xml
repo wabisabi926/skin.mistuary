@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<variable name="NaraMusicCoverVar">
-		<value condition="PVR.IsPlayingRadio + [String.IsEmpty(MusicPlayer.Cover) | String.IsEqual(MusicPlayer.Cover,DefaultAlbumCover.png)]">osd/nara/music-cover.png</value>
-		<value condition="PVR.IsPlayingRadio">$INFO[MusicPlayer.Cover]</value>
-		<value condition="String.IsEqual(Window(visualisation).Property(NaraMusic.Cover),DefaultAlbumCover.png)">osd/nara/music-cover.png</value>
-		<value condition="!String.IsEmpty(Window(visualisation).Property(NaraMusic.Cover))">$INFO[Window(visualisation).Property(NaraMusic.Cover)]</value>
+		<!-- 原来读 Window(visualisation).Property(NaraMusic.Cover)，但全皮肤没有任何地方写这个属性，
+		     所以专辑图永远拿不到、永远显示占位图。改用 Kodi 原生的 Player.Art(thumb)。
+		     注意：没有专辑图时 Kodi 返回的是它自带的 DefaultAlbumCover.png（**完整路径**，
+		     不是空串），所以要先判结尾，否则显示的是那个白色唱片图标而不是皮肤兜底图。 -->
+		<value condition="String.EndsWith(Player.Art(thumb),DefaultAlbumCover.png)">osd/nara/music-cover.png</value>
+		<value condition="!String.IsEmpty(Player.Art(thumb))">$INFO[Player.Art(thumb)]</value>
 		<value>osd/nara/music-cover.png</value>
 	</variable>
 	<variable name="NaraMusicAlbumYearVar">
@@ -35,10 +37,6 @@
 		<value condition="Playlist.IsRandom">FFFFFFFF</value>
 		<value>80FFFFFF</value>
 	</variable>
-	<variable name="NaraMusicLyricColorVar">
-		<value condition="String.IsEqual(Window(visualisation).Property(NaraMusic.LyricsStarted),true)">$INFO[Window(visualisation).Property(NaraMusic.LyricColor)]</value>
-		<value>70FFFFFF</value>
-	</variable>
 	<variable name="NaraMusicLyricsStatusVar">
 		<value condition="String.IsEqual(Window(visualisation).Property(NaraMusic.LyricsLoading),true)">$LOCALIZE[31700]</value>
 		<value>$LOCALIZE[31701]</value>
@@ -53,9 +51,9 @@
 	</variable>
 	<include name="NaraMusicAudioDetail">
 		<control type="label">
-			<width min="1" max="200">auto</width>
-			<height>28</height>
-			<font>font10</font>
+			<width min="1" max="240">auto</width>
+			<height>30</height>
+			<font>font12</font>
 			<aligny>center</aligny>
 			<textcolor>80FFFFFF</textcolor>
 			<label>$PARAM[label]</label>
@@ -100,19 +98,19 @@
 			<height>160</height>
 			<control type="label">
 				<left>32</left>
-				<top>38</top>
-				<width>82</width>
-				<height>24</height>
-				<font>font10</font>
+				<top>34</top>
+				<width>130</width>
+				<height>32</height>
+				<font>font24</font>
 				<aligny>center</aligny>
 				<label>$VAR[NaraOSDTimeLabelVar]</label>
 			</control>
 			<control type="label">
 				<right>32</right>
-				<top>38</top>
-				<width>82</width>
-				<height>24</height>
-				<font>font10</font>
+				<top>34</top>
+				<width>130</width>
+				<height>32</height>
+				<font>font24</font>
 				<align>right</align>
 				<aligny>center</aligny>
 				<label>$INFO[Player.Duration]</label>
@@ -222,7 +220,7 @@
 					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70048">
 						<onleft>607</onleft>
-						<onright>70054</onright>
+						<onright>70052</onright>
 						<include content="NaraMusicOSDButton">
 							<param name="texture" value="osd/nara/settings.png" />
 						</include>
@@ -230,13 +228,42 @@
 						<onclick>ActivateWindow(1113)</onclick>
 					</control>
 				</control>
+				<control type="group">
+					<include>NaraMusicOSDButtonGlass</include>
+					<control type="radiobutton" id="70052">
+						<onleft>70048</onleft>
+						<onright>70049</onright>
+						<include content="NaraMusicOSDButton">
+							<param name="texture" value="icons/infodialogs/rating.png" />
+						</include>
+						<label>$LOCALIZE[38018]</label>
+						<onclick>SetRating</onclick>
+					</control>
+				</control>
+				<control type="group">
+					<include>NaraMusicOSDButtonGlass</include>
+					<!-- 歌词：未选插件时先弹出插件选择（xbmc.python.lyrics），选好后再次点击即运行；
+					     逻辑与 Estuary 一致 -->
+					<control type="radiobutton" id="70049">
+						<onleft>70052</onleft>
+						<onright>70054</onright>
+						<include content="NaraMusicOSDButton">
+							<param name="texture" value="osd/nara/lyrics.png" />
+						</include>
+						<label>$LOCALIZE[24013]</label>
+						<onclick condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
+						<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Skin.SetAddon(LyricScript_Path,xbmc.python.lyrics)</onclick>
+						<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Close</onclick>
+						<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
+					</control>
+				</control>
 			</control>
 			<control type="label">
 				<right>32</right>
-				<top>95</top>
+				<top>93</top>
 				<width>420</width>
-				<height>28</height>
-				<font>font10</font>
+				<height>30</height>
+				<font>font12</font>
 				<align>right</align>
 				<textcolor>99FFFFFF</textcolor>
 				<label>$VAR[NaraMusicControlLabelVar]</label>
@@ -324,6 +351,10 @@
 	</include>
 	<include name="NaraMusicPlaylistBackground">
 		<definition>
+			<!-- 播放列表弹窗压在画面上，遮蔽用 OSD 档（30%） -->
+			<include content="NaraDialogScrim">
+				<param name="tint" value="scrim_osd" />
+			</include>
 			<control type="button">
 				<left>-2000</left>
 				<top>-2000</top>
@@ -341,7 +372,7 @@
 					<right>0</right>
 					<top>252</top>
 					<height>166</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>!Integer.IsGreater(Container(6).NumItems,1)</visible>
 				</control>
 				<control type="image">
@@ -349,7 +380,7 @@
 					<right>0</right>
 					<top>224</top>
 					<height>222</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,2)</visible>
 				</control>
 				<control type="image">
@@ -357,7 +388,7 @@
 					<right>0</right>
 					<top>196</top>
 					<height>278</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,3)</visible>
 				</control>
 				<control type="image">
@@ -365,7 +396,7 @@
 					<right>0</right>
 					<top>168</top>
 					<height>334</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,4)</visible>
 				</control>
 				<control type="image">
@@ -373,7 +404,7 @@
 					<right>0</right>
 					<top>140</top>
 					<height>390</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,5)</visible>
 				</control>
 				<control type="image">
@@ -381,7 +412,7 @@
 					<right>0</right>
 					<top>112</top>
 					<height>446</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,6)</visible>
 				</control>
 				<control type="image">
@@ -389,7 +420,7 @@
 					<right>0</right>
 					<top>84</top>
 					<height>502</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,7)</visible>
 				</control>
 				<control type="image">
@@ -397,7 +428,7 @@
 					<right>0</right>
 					<top>56</top>
 					<height>558</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,8)</visible>
 				</control>
 				<control type="image">
@@ -405,7 +436,7 @@
 					<right>0</right>
 					<top>28</top>
 					<height>614</height>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="image">
@@ -413,7 +444,7 @@
 					<right>0</right>
 					<top>0</top>
 					<bottom>0</bottom>
-					<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/round20.png</texture>
 					<visible>Integer.IsGreater(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="label" id="$PARAM[header_id]">

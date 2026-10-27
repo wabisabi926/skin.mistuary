@@ -14,7 +14,7 @@
 			<height>3240</height>
 			<animation effect="fade" start="0" end="100" time="120">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="90">WindowClose</animation>
-			<texture colordiffuse="4D000000">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<textcolor>text_primary</textcolor>
@@ -34,7 +34,7 @@
 				<top>0</top>
 				<width>450</width>
 				<height>780</height>
-				<texture colordiffuse="glass_frosted" border="42">shapes/round42.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="grouplist" id="996">
 				<description>grouplist for context buttons</description>
@@ -59,7 +59,7 @@
 			<height>65</height>
 			<align>center</align>
 			<textcolor>text_primary</textcolor>
-			<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+			<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 			<texturenofocus />
 			<focusedcolor>text_primary</focusedcolor>
 		</control>

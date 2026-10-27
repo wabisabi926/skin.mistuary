@@ -12,7 +12,7 @@
 			<top>70</top>
 			<width>1400</width>
 			<height>880</height>
-			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
@@ -78,7 +78,7 @@
 							<top>0</top>
 							<right>0</right>
 							<bottom>0</bottom>
-							<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
+							<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 							<visible>Control.HasFocus(50)</visible>
 						</control>
 						<control type="image">
@@ -147,9 +147,9 @@
 						<aligny>top</aligny>
 						<textoffsetx>40</textoffsetx>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<alttexturenofocus />
-						<alttexturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</alttexturefocus>
+						<alttexturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</alttexturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<textoffsety>35</textoffsety>
@@ -164,7 +164,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label></label>
@@ -175,7 +175,7 @@
 						<height>110</height>
 						<aligny>top</aligny>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<textoffsetx>40</textoffsetx>
@@ -189,7 +189,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[192]</label>
@@ -204,7 +204,7 @@
 						<textoffsetx>40</textoffsetx>
 						<textoffsety>35</textoffsety>
 						<texturenofocus />
-						<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+						<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[5]</label>

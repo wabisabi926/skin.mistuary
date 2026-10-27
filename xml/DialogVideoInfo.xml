@@ -60,17 +60,22 @@
 			<animation effect="fade" start="100" end="0" time="180">WindowClose</animation>
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="Window.IsVisible(script-embuary-video.xml) | Window.IsVisible(script-embuary-person.xml) | Window.IsVisible(script-embuary-image.xml)">Conditional</animation>
 			<!-- Backdrop and layered scrims. -->
+			<!-- 外扩尺寸而不是写死 1920×1080：Kodi 在 17:9 等宽画布（2040+）下会右侧露底 -->
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background">special://skin/backgrounds/primary.jpg</texture>
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image" id="5900">
-				<width>1920</width>
-				<height>1080</height>
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
@@ -84,9 +89,12 @@
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))" />
 			</include>
 			<!-- Detail-only left reading scrim. A dedicated horizontal texture
-			     keeps its dark edge deterministic and lighter than Fuse. -->
+			     keeps its dark edge deterministic and lighter than Fuse.
+			     **left 必须给负值**：外层分组是 1920 宽居中，在 2040 画布上起点在 x=60，
+			     不给偏移的话最左边 60px 会完全没有压暗，露一条亮带。 -->
 			<control type="image">
-				<width>1200</width>
+				<left>-120</left>
+				<width>1320</width>
 				<height>1080</height>
 				<aspectratio>stretch</aspectratio>
 				<texture>overlays/detail-left-scrim.png</texture>
@@ -94,7 +102,8 @@
 			</control>
 			<control type="image">
 				<top>420</top>
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>660</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
@@ -148,20 +157,16 @@
 		<!-- Context-menu style More dialog. It exists only while explicitly opened;
 		     deferred focus makes the first click both open it and enter the list. -->
 		<control type="group">
-			<centerleft>50%</centerleft>
-			<centertop>50%</centertop>
-			<width>1920</width>
-			<height>1080</height>
+			<include>FullScreenDimensions</include>
 			<visible>String.IsEqual(Window(Home).Property(VideoInfo.More),True)</visible>
 			<animation effect="fade" start="0" end="100" time="160">Visible</animation>
 			<animation effect="zoom" center="960,540" start="96" end="100" time="170" tween="cubic" easing="out">Visible</animation>
 			<animation effect="fade" start="100" end="0" time="120">Hidden</animation>
 			<control type="button" id="5110">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<label></label>
-				<texturefocus colordiffuse="4D000000">colors/black.png</texturefocus>
-				<texturenofocus colordiffuse="4D000000">colors/black.png</texturenofocus>
+				<texturefocus colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texturefocus>
+				<texturenofocus colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texturenofocus>
 				<onclick>ClearProperty(VideoInfo.More,home)</onclick>
 				<onclick>SetFocus(5003)</onclick>
 			</control>
@@ -172,7 +177,7 @@
 				<centertop>50%</centertop>
 				<width>480</width>
 				<height>349</height>
-				<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="list" id="5199">
 				<centerleft>50%</centerleft>

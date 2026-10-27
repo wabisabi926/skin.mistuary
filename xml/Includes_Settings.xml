@@ -9,7 +9,7 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background">special://skin/backgrounds/primary.jpg</texture>
 			</control>
 			<!-- 通用版：与文件管理一致 —— 用随机影片 fanart 作背景，
 			     让上层的半透明面板（GlassTint_*）能看出层次。
@@ -28,7 +28,7 @@
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true" colordiffuse="B3FFFFFF">$VAR[NaraFileManagerRandomFanartVar]</texture>
+				<texture background="true" colordiffuse="8CFFFFFF">$VAR[NaraFileManagerRandomFanartVar]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</visible>
 			</control>
 			<control type="image">
@@ -48,7 +48,7 @@
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 		</definition>
 	</include>
@@ -69,7 +69,7 @@
 			<selectedcolor>$PARAM[text]</selectedcolor>
 			<disabledcolor>text_disabled</disabledcolor>
 			<invalidcolor>status_error</invalidcolor>
-			<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
+			<texturefocus colordiffuse="$PARAM[focuscolor]" border="14">shapes/round14.png</texturefocus>
 			<texturenofocus />
 			<radiowidth>72</radiowidth>
 			<radioheight>40</radioheight>
@@ -107,20 +107,23 @@
 		</definition>
 	</include>
 	<include name="NaraSettingsDialogFrame">
-		<param name="glass_style">dialog</param>
-		<param name="tint">glass_dialog</param>
+		<param name="tint">$VAR[NaraGlassDialogTintVar]</param>
 		<param name="width">1000</param>
 		<param name="height">700</param>
 		<param name="header_id">1</param>
 		<param name="header_label" />
 		<param name="close_action">Action(close)</param>
 		<definition>
+			<!-- 遮蔽层跟「播放中/非播放」走：播放中 30%（scrim_osd），否则浮窗档 50%。
+			     这一处原来写死 $VAR[NaraGlassScrimTintVar]，
+			     而 OSD 设置窗口走的正是这个框架（不是 DialogBackgroundCommons），
+			     所以上一轮改 DialogBackgroundCommons 没覆盖到它。 -->
 			<control type="image">
 				<left>-2000</left>
 				<top>-2000</top>
 				<width>6000</width>
 				<height>6000</height>
-				<texture colordiffuse="66000000">colors/black.png</texture>
+				<texture colordiffuse="$VAR[NaraSettingsDialogScrimVar]">colors/black.png</texture>
 			</control>
 			<control type="button">
 				<left>-2000</left>
@@ -131,17 +134,13 @@
 				<texturenofocus />
 				<onclick>$PARAM[close_action]</onclick>
 			</control>
+			<!-- 面板：原来播放中走的是**写死的 F02A2D32（94% 不透明灰蓝板）**，
+			     完全不跟「浮窗不透明度」走 —— 这就是 OSD 设置窗口看着和别处不统一的原因。
+			     现在两种状态都用 tint（浮窗档），半径也从 32 收到 20，跟全皮肤统一。 -->
 			<control type="image">
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<visible>!Window.IsActive(fullscreenvideo) + !Window.IsActive(visualisation)</visible>
-				<texture colordiffuse="$PARAM[tint]" border="32">shapes/round32.png</texture>
-			</control>
-			<control type="image">
-				<width>$PARAM[width]</width>
-				<height>$PARAM[height]</height>
-				<visible>Window.IsActive(fullscreenvideo) | Window.IsActive(visualisation)</visible>
-				<texture colordiffuse="F02A2D32" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="$PARAM[tint]" border="20">shapes/round20.png</texture>
 			</control>
 			<control type="button" id="22002">
 				<width>$PARAM[width]</width>
@@ -178,7 +177,7 @@
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
-				<texturefocus colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texturefocus>
+				<texturefocus colordiffuse="$PARAM[focuscolor]" border="14">shapes/round14.png</texturefocus>
 				<texturenofocus />
 				<focusedcolor>$PARAM[text]</focusedcolor>
 				<textcolor>$PARAM[text]</textcolor>
@@ -219,7 +218,7 @@
 					<focusedcolor>text_primary</focusedcolor>
 					<textcolor>text_primary</textcolor>
 					<selectedcolor>text_primary</selectedcolor>
-					<texturefocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</texturefocus>
+					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
 					<onclick condition="$PARAM[modal]">SetProperty(SettingsHub.Target,$PARAM[target],1115)</onclick>
 					<!-- Keep the drawer hidden through the dialog and Home close animations. -->
 					<onclick condition="$PARAM[modal] + Window.IsActive(home) + String.IsEqual(Window(home).Property(Home.Section),search)">SetProperty(Search.SettingsTransition,true,home)</onclick>
@@ -278,8 +277,7 @@
 				<width>1400</width>
 				<height>560</height>
 				<include content="NaraSettingsDialogFrame">
-					<param name="glass_style" value="frosted" />
-					<param name="tint" value="glass_frosted" />
+					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 					<param name="width" value="1400" />
 					<param name="height" value="560" />
 					<param name="header_label" value="$LOCALIZE[5]" />
@@ -477,7 +475,7 @@
 					<onright>104</onright>
 					<onup>104</onup>
 					<ondown>104</ondown>
-					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+					<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 					<texturenofocus />
 					<focusedcolor>text_primary</focusedcolor>
 					<textcolor>text_primary</textcolor>
@@ -497,7 +495,7 @@
 					<onright>104</onright>
 					<onup>104</onup>
 					<ondown>104</ondown>
-					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+					<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 					<texturenofocus />
 					<focusedcolor>text_primary</focusedcolor>
 					<textcolor>text_primary</textcolor>
@@ -582,7 +580,7 @@
 					<top>0</top>
 					<right>0</right>
 					<bottom>0</bottom>
-					<texture colordiffuse="$PARAM[focuscolor]" border="18">shapes/round18.png</texture>
+					<texture colordiffuse="$PARAM[focuscolor]" border="14">shapes/round14.png</texture>
 					<animation effect="fade" start="100" end="50" time="0">UnFocus</animation>
 				</control>
 				<control type="group">
@@ -653,7 +651,7 @@
 				<width>1280</width>
 				<height>890</height>
 				<include content="NaraSettingsDialogFrame">
-					<param name="tint" value="glass_frosted" />
+					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 					<param name="width" value="1280" />
 					<param name="height" value="890" />
 					<param name="header_id" value="2" />

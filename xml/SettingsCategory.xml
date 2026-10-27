@@ -9,7 +9,7 @@
 			<top>145</top>
 			<width>1355</width>
 			<height>740</height>
-			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="grouplist" id="3">
 			<left>76</left>
@@ -102,7 +102,7 @@
 			<onright>5</onright>
 			<onup>3</onup>
 			<ondown>3</ondown>
-			<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
+			<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 			<texturenofocus></texturenofocus>
 			<focusedcolor>text_primary</focusedcolor>
 			<textcolor>text_primary</textcolor>

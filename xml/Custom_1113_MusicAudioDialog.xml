@@ -5,6 +5,9 @@
 	<include>Animation_DialogPopupOpenClose</include>
 	<depth>DepthOSD+</depth>
 	<controls>
+		<include content="NaraDialogScrim">
+			<param name="tint" value="scrim_osd" />
+		</include>
 		<control type="button">
 			<include>FullScreenDimensions</include>
 			<texturefocus />
@@ -19,7 +22,7 @@
 			<control type="image">
 				<width>760</width>
 				<height>402</height>
-				<texture colordiffuse="glass_regular" border="42">shapes/round42.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="button">
 				<width>760</width>

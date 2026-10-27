@@ -8,19 +8,37 @@
 				<width>1520</width>
 				<include>Animation_DialogPopupVisible</include>
 				<visible>!Window.IsVisible(sliderdialog)</visible>
-				<include content="DialogBackgroundCommons">
-					<param name="width" value="1520" />
-					<param name="height" value="870" />
-					<param name="header_label" value="" />
-					<param name="header_id" value="2" />
-				</include>
+				<!-- 遮蔽层 -->
 				<control type="image">
-					<left>10</left>
-					<top>80</top>
-					<width>1200</width>
-					<height>790</height>
-					<texture border="40">buttons/dialogbutton-nofo.png</texture>
+					<left>-2000</left>
+					<top>-2000</top>
+					<width>6000</width>
+					<height>6000</height>
+					<texture colordiffuse="$VAR[NaraSettingsDialogScrimVar]">colors/black.png</texture>
 				</control>
+				<!-- 面板：一整块显式图片（照抄 FileManager 的做法）。
+				     原来这里用 DialogBackgroundCommons，它的内嵌 group 让面板位置不可控 ——
+				     标题和右上角图标会跑到面板外面，还多出一层方角的半透明块。 -->
+				<control type="image">
+					<left>0</left>
+					<top>0</top>
+					<width>1520</width>
+					<height>870</height>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/glass20.png</texture>
+				</control>
+				<!-- 标题：id=2 由 Kodi 的设置窗口填入分组名 -->
+				<control type="label" id="2">
+					<left>48</left>
+					<top>18</top>
+					<width>1200</width>
+					<height>56</height>
+					<font>font32_title</font>
+					<textcolor>text_primary</textcolor>
+					<label></label>
+					<aligny>center</aligny>
+				</control>
+				<!-- 右上角图标 -->
+				<include>DialogHeaderIcon</include>
 				<control type="grouplist" id="5">
 					<description>control area</description>
 					<left>29</left>

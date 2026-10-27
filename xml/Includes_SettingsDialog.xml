@@ -10,6 +10,8 @@
 			<visible>String.IsEqual(window(home).Property(settingsdialog_content),streamselection)</visible>
 			<include content="SettingsDialogLayout">
 				<param name="width" value="1000" />
+				<!-- 流选择只有 3 行：80 + 3×70 + 8 = 298 -->
+				<param name="panel_height" value="298" />
 			</include>
 		</control>
 	</include>
@@ -26,7 +28,7 @@
 			<width>1000</width>
 			<height>800</height>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="glass_frosted" />
+				<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
 				<param name="height" value="800" />
 				<param name="header_label" value="$INFO[Window(home).Property(settingsdialog_header)]" />
 			</include>
@@ -55,25 +57,67 @@
 	<include name="SettingsDialogLayout">
 		<param name="height">700</param>
 		<param name="width">700</param>
+		<!-- 面板高度 = 标题 80 + 行数 × 70 + 底部留白 8。
+		     默认 368 = 4 行（OSD 设置菜单实际显示 4 行）；行数不同的内容块在调用处覆盖。 -->
+		<param name="panel_height">368</param>
 		<definition>
 			<control type="group">
 				<centerleft>50%</centerleft>
-				<height>$PARAM[height]</height>
 				<centertop>50%</centertop>
 				<width>$PARAM[width]</width>
+				<height>$PARAM[height]</height>
 				<include condition="String.IsEqual(window(home).Property(settingsdialog_content),osd) | String.IsEqual(window(home).Property(settingsdialog_content),3d) | String.IsEqual(window(home).Property(settingsdialog_content),videosettings)">SettingsDialogOSDVisible</include>
 				<animation effect="fade" time="200">VisibleChange</animation>
-				<include content="DialogBackgroundCommons">
-					<param name="width" value="$PARAM[width]" />
-					<param name="height" value="80" />
-					<param name="header_label" value="$INFO[Window(home).Property(settingsdialog_header)]" />
-					<param name="header_id" value="1" />
-				</include>
-				<control type="group" id="11000">
+
+				<!-- 遮蔽层 -->
+				<control type="image">
+					<left>-2000</left>
+					<top>-2000</top>
+					<width>6000</width>
+					<height>6000</height>
+					<texture colordiffuse="$VAR[NaraSettingsDialogScrimVar]">colors/black.png</texture>
+				</control>
+				<!-- 点空白关闭 -->
+				<control type="button">
+					<left>-2000</left>
+					<top>-2000</top>
+					<width>6000</width>
+					<height>6000</height>
+					<texturefocus />
+					<texturenofocus />
+					<onclick>Action(close)</onclick>
+				</control>
+
+				<!-- 面板：一整块显式图片（照抄 FileManager 的做法），
+				     标题和列表都放在它里面，不再依赖 DialogBackgroundCommons 的内嵌 group。 -->
+				<control type="image">
 					<left>0</left>
+					<top>0</top>
+					<width>$PARAM[width]</width>
+					<height>$PARAM[panel_height]</height>
+					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/glass20.png</texture>
+				</control>
+				<!-- 标题 -->
+				<control type="label" id="1">
+					<left>48</left>
+					<top>18</top>
+					<width>560</width>
+					<height>56</height>
+					<font>font32_title</font>
+					<textcolor>text_primary</textcolor>
+					<label>$INFO[Window(home).Property(settingsdialog_header)]</label>
+					<aligny>center</aligny>
+				</control>
+				<!-- 右上角图标 -->
+				<include>DialogHeaderIcon</include>
+
+				<!-- 列表：左右各内缩 20，选中条不再顶到面板边缘 -->
+				<control type="group" id="11000">
+					<left>20</left>
+					<right>20</right>
 					<top>80</top>
 					<control type="grouplist" id="11100">
-						<width>$PARAM[width]</width>
+						<width>100%</width>
 						<height>$PARAM[height]</height>
 						<itemgap>0</itemgap>
 						<onup>11100</onup>

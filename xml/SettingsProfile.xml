@@ -11,7 +11,7 @@
 			<top>130</top>
 			<width>1400</width>
 			<height>780</height>
-			<texture colordiffuse="glass_frosted" border="28">shapes/round28.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="group" id="9100">
 			<include>OpenClose_Right</include>
@@ -100,7 +100,7 @@
 							<top>5</top>
 							<width>320</width>
 							<height>380</height>
-							<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
+							<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
@@ -201,7 +201,7 @@
 					<control type="image">
 						<right>0</right>
 						<bottom>0</bottom>
-						<texture colordiffuse="glass_focus_light" border="18">shapes/round18.png</texture>
+						<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 						<animation effect="fade" start="100" end="50" time="40" condition="!Control.HasFocus(9000)">Conditional</animation>
 					</control>
 					<control type="label">
