@@ -19,8 +19,8 @@
 			<include>OpenClose_Right</include>
 			<control type="grouplist">
 				<left>553</left>
-				<top>161</top>
-				<height>370</height>
+				<top>193</top>
+				<height>644</height>
 				<orientation>vertical</orientation>
 				<control type="label" id="2">
 					<height>47</height>
@@ -85,17 +85,17 @@
 			</control>
 			<control type="textbox" id="30">
 				<left>553</left>
-				<top>161</top>
+				<top>193</top>
 				<width>1259</width>
-				<bottom>545</bottom>
+				<bottom>530</bottom>
 				<pagecontrol>60</pagecontrol>
 				<autoscroll delay="5000" repeat="7500" time="5000">!Control.HasFocus(60)</autoscroll>
 			</control>
 			<control type="scrollbar" id="60">
 				<left>1874</left>
-				<top>165</top>
+				<top>193</top>
 				<width>8</width>
-				<height>700</height>
+				<height>644</height>
 				<orientation>vertical</orientation>
 				<texturesliderbackground />
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
@@ -111,8 +111,8 @@
 				<description>System Info page that shows a QR code linking to https://kodi.tv/donate/</description>
 				<left>553</left>
 				<width>1259</width>
-				<top>161</top>
-				<bottom>80</bottom>
+				<top>193</top>
+				<bottom>243</bottom>
 				<control type="textbox">
 					<height>110</height>
 					<label>$LOCALIZE[12397]</label>
@@ -236,9 +236,9 @@
 		</include>
 		<include>BottomBar</include>
 		<control type="group" id="104">
-			<bottom>195</bottom>
+			<bottom>180</bottom>
 			<left>0</left>
-			<height>330</height>
+			<height>350</height>
 			<include>OpenClose_Right</include>
 			<control type="image">
 				<left>553</left>

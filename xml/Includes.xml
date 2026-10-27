@@ -911,7 +911,7 @@
 			<control type="group">
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<!-- 只用跟随「浮窗不透明度」的玻璃面。
+				<!-- 只用跟随「界面透明度」的玻璃面。
 				     原来这里还有个 `condition="!$EXP[nara_dialog_glass]"` 的分支指向
 				     `NaraDialogSolidSurface`（两块 100% 不透明的 FF201E27 / FF18171E），
 				     而 `nara_dialog_glass` 在**播放视频时为假** ——

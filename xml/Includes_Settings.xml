@@ -114,7 +114,7 @@
 		<param name="header_label" />
 		<param name="close_action">Action(close)</param>
 		<definition>
-			<!-- 遮蔽层跟「播放中/非播放」走：播放中 30%（scrim_osd），否则浮窗档 50%。
+			<!-- 遮蔽层跟「播放中/非播放」走：播放中 30%（scrim_osd），否则跟界面档。
 			     这一处原来写死 $VAR[NaraGlassScrimTintVar]，
 			     而 OSD 设置窗口走的正是这个框架（不是 DialogBackgroundCommons），
 			     所以上一轮改 DialogBackgroundCommons 没覆盖到它。 -->
@@ -135,8 +135,8 @@
 				<onclick>$PARAM[close_action]</onclick>
 			</control>
 			<!-- 面板：原来播放中走的是**写死的 F02A2D32（94% 不透明灰蓝板）**，
-			     完全不跟「浮窗不透明度」走 —— 这就是 OSD 设置窗口看着和别处不统一的原因。
-			     现在两种状态都用 tint（浮窗档），半径也从 32 收到 20，跟全皮肤统一。 -->
+			     完全不跟「界面透明度」走 —— 这就是 OSD 设置窗口看着和别处不统一的原因。
+			     现在两种状态都用 tint（界面档），半径也从 32 收到 20，跟全皮肤统一。 -->
 			<control type="image">
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>

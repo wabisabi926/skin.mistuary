@@ -29,9 +29,9 @@
 		</control>
 		<control type="grouplist" id="5">
 			<left>525</left>
-			<top>161</top>
+			<top>193</top>
 			<width>1315</width>
-			<height>708</height>
+			<height>644</height>
 			<itemgap>2</itemgap>
 			<pagecontrol>60</pagecontrol>
 			<onleft>3</onleft>
@@ -126,9 +126,9 @@
 		</control>
 		<control type="scrollbar" id="60">
 			<left>1874</left>
-			<top>165</top>
+			<top>193</top>
 			<width>8</width>
-			<height>700</height>
+			<height>644</height>
 			<onleft>5</onleft>
 			<onright>3</onright>
 			<orientation>vertical</orientation>

@@ -1021,7 +1021,7 @@
 					<height>60</height>
 					<!-- 导航条是常驻元素，不是浮窗：用卡片档的轻玻璃（40%）。
 					     跟浮窗档（78%）走会变成一条死黑的条。 -->
-					<texture colordiffuse="glass_regular" border="26">shapes/round26.png</texture>
+					<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="26">shapes/round26.png</texture>
 				</control>
 				<control type="grouplist" id="9000">
 					<left>0</left>
@@ -1200,7 +1200,7 @@
 						<control type="image">
 							<width>54</width>
 							<height>54</height>
-							<texture colordiffuse="glass_regular" border="27">shapes/round27.png</texture>
+							<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="27">shapes/round27.png</texture>
 						</control>
 						<control type="image">
 							<width>54</width>
@@ -1251,7 +1251,7 @@
 							<visible allowhiddenfocus="true">ControlGroup(8100).HasFocus</visible>
 							<animation effect="fade" start="0" end="100" time="140">VisibleChange</animation>
 							<animation effect="slide" start="0,-8" end="0,0" time="160" tween="sine" easing="out">VisibleChange</animation>
-							<!-- 左上角菜单弹层：原来只有 40% 的 glass_regular、没有遮蔽层，
+							<!-- 左上角菜单弹层：原来只有一层很透的固定底色、没有遮蔽层，
 							     压在 fanart 上等于没底。改成跟浮窗同一档。 -->
 							<include content="NaraDialogScrim">
 								<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />

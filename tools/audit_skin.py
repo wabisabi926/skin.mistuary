@@ -53,7 +53,7 @@ KODI22_ONLY = ["$MAP[", "$ESCMAP["]
 # 缺图时显示占位贴图；Kodi 21 会忽略该属性，只影响兜底效果，不会报错。
 TEXTURE_ATTRS_OK = {
     "border", "infill", "flipx", "flipy", "diffuse",
-    "colordiffuse", "background", "mipmap", "subpixel", "fallback",
+    "colordiffuse", "background", "mipmap", "subpixel",
 }
 
 # 皮肤设置的读取 / 写入内置函数。
@@ -80,7 +80,8 @@ WRITE_BUILTINS_DOC = (
 RESET_ONLY_SETTINGS = {"circle_none", "OriginalTitleFormat_Default"}
 # 默认档位：它是变量里那条**无 condition** 的兜底 value，所以不会出现在
 # Skin.HasSetting(...) 里。属于"写了但按设计没人直接读"。
-DEFAULT_ONLY_SETTINGS = {"glass_op_4", "glass_page_op_3"}
+# 2026-10-27 起每个档位都写了显式条件（含默认档），这里已清空。
+DEFAULT_ONLY_SETTINGS: set[str] = set()
 
 # ---------------------------------------------------------------------------
 # 浮窗不透明度检查（docs/glass-opacity-plan.md）

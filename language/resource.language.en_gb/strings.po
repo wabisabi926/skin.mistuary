@@ -1397,8 +1397,8 @@ msgid "Skin settings"
 msgstr "Skin settings"
 
 msgctxt "#31722"
-msgid "Popup opacity"
-msgstr "Popup opacity"
+msgid "Interface transparency"
+msgstr "Interface transparency"
 
 msgctxt "#31723"
 msgid "Very light"
@@ -1416,30 +1416,123 @@ msgctxt "#31726"
 msgid "Dense"
 msgstr "Dense"
 
-msgctxt "#31727"
-msgid "Heavy"
-msgstr "Heavy"
-
 msgctxt "#31728"
 msgid "Solid"
 msgstr "Solid"
 
 msgctxt "#31729"
-msgid "Page panel opacity"
-msgstr "Page panel opacity"
+msgid "Playback transparency"
+msgstr "Playback transparency"
 
 msgctxt "#31730"
-msgid "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
+msgid "Interface transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "Interface transparency — steps are tuned for the dark theme; the light theme looks lighter"
 
 msgctxt "#31731"
-msgid "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
-
-msgctxt "#31732"
-msgid "Slightly light"
-msgstr "Slightly light"
+msgid "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
 
 msgctxt "#31733"
 msgid "Default rating source"
 msgstr "Default rating source"
+
+msgctxt "#31734"
+msgid "Show the login screen before entering the main menu, so you can pick a user."
+msgstr "Show the login screen before entering the main menu, so you can pick a user."
+
+msgctxt "#31735"
+msgid "Log in as the selected user at startup and skip the login screen."
+msgstr "Log in as the selected user at startup and skip the login screen."
+
+msgctxt "#31736"
+msgid "Turn on to auto-scroll long plot or review text, so you don't have to page through it."
+msgstr "Turn on to auto-scroll long plot or review text, so you don't have to page through it. Recommended if you use a remote."
+
+msgctxt "#31737"
+msgid "Uses the skin's own libraryart folder by default. Pick your own folder to use custom covers; file names must match the library names."
+msgstr "Uses the skin's own libraryart folder by default. Pick your own folder to use custom covers; file names must match the library names."
+
+msgctxt "#31738"
+msgid "Turn on to show resolution, audio and subtitle badges on media info. Turn off if it looks too busy."
+msgstr "Turn on to show resolution, audio and subtitle badges on media info. Turn off if it looks too busy."
+
+msgctxt "#31739"
+msgid "Shows your own rating by default. Pick Rating to use source ratings (IMDb, Douban...), or None to hide it."
+msgstr "Shows your own rating by default. Pick Rating to use source ratings (IMDb, Douban...), or None to hide it."
+
+msgctxt "#31740"
+msgid "IMDb by default. If you have an add-on that provides Douban ratings (such as 神医助手), pick Douban instead."
+msgstr "IMDb by default. If you have an add-on that provides Douban ratings (such as 神医助手), pick Douban instead."
+
+msgctxt "#31741"
+msgid "Shows the localised title by default. Pick Original title (localised) to see both, or Original title only."
+msgstr "Shows the localised title by default. Pick Original title (localised) to see both, or Original title only."
+
+msgctxt "#31742"
+msgid "Balanced by default. Go towards Light to see more background; go towards Solid if text is hard to read."
+msgstr "Balanced by default. Go towards Clearest to see more background; go towards Solid if text is hard to read."
+
+msgctxt "#31743"
+msgid "Only affects popups while playing. Transparent by default; go towards Light if the OSD covers too much."
+msgstr "Only affects popups while playing. Light by default; go towards Clearest if the OSD covers too much."
+
+msgctxt "#31744"
+msgid "Turn on to use the item's fanart as the page background. Items without fanart fall back to the default background."
+msgstr "Turn on to use the item's fanart as the page background. Items without fanart fall back to the default background."
+
+msgctxt "#31745"
+msgid "Turn on to show posters for music videos in lists. Turn off to see video thumbnails instead."
+msgstr "Turn on to show posters for music videos in lists. Turn off to see video thumbnails instead."
+
+msgctxt "#31746"
+msgid "Turn off to hide the Movies entry from the main menu."
+msgstr "Turn off to hide the Movies entry from the main menu."
+
+msgctxt "#31747"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+
+msgctxt "#31748"
+msgid "Browse into the set by default. Pick Continue watching to resume where you left off."
+msgstr "Browse into the set by default. Pick Continue watching to resume where you left off."
+
+msgctxt "#31749"
+msgid "Turn off to hide the TV shows entry from the main menu."
+msgstr "Turn off to hide the TV shows entry from the main menu."
+
+msgctxt "#31750"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+
+msgctxt "#31751"
+msgid "Browse into the episode list by default. Pick Continue watching to resume where you left off."
+msgstr "Browse into the episode list by default. Pick Continue watching to resume where you left off."
+
+msgctxt "#31752"
+msgid "Turn off to hide the Music entry from the main menu."
+msgstr "Turn off to hide the Music entry from the main menu."
+
+msgctxt "#31753"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+
+msgctxt "#31754"
+msgid "Browse into the album by default. Pick Play to start playing right away."
+msgstr "Browse into the album by default. Pick Play to start playing right away."
+
+msgctxt "#31755"
+msgid "Turn off to hide the TV (PVR) entry from the main menu."
+msgstr "Turn off to hide the TV (PVR) entry from the main menu."
+
+msgctxt "#31756"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+
+msgctxt "#31757"
+msgid "Turn on to hide the OSD automatically while playing. Recommended."
+msgstr "Turn on to hide the OSD automatically while playing. Recommended."
+
+msgctxt "#31758"
+msgid "How long to wait before hiding the OSD, 4 seconds by default. Raise it to 6-8 if it hides too fast."
+msgstr "How long to wait before hiding the OSD, 4 seconds by default. Raise it to 6-8 if it hides too fast."
+

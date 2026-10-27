@@ -259,7 +259,7 @@
 				<control type="image">
 					<width>510</width>
 					<height>884</height>
-					<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
+					<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="32">shapes/round32.png</texture>
 				</control>
 				<control type="image">
 					<left>36</left>

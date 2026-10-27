@@ -25,7 +25,7 @@
 				<texture colordiffuse="scrim_osd">colors/black.png</texture>
 			</control>
 			<!-- 玻璃面板：原来只有 30% 的 scrim_osd、没有面板，书签文字直接压在画面上。
-			     补一层浮窗档（跟「浮窗不透明度」走）→ 78% + 30% = 84.6%，
+			     补一层玻璃面板（跟「播放中透明度」走），
 			     和播放列表 / 视频设置 / 处理信息统一。 -->
 			<control type="image">
 				<left>0</left>

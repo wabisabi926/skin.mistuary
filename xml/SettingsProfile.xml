@@ -17,46 +17,46 @@
 			<include>OpenClose_Right</include>
 			<left>0</left>
 			<control type="panel" id="2">
-				<top>189</top>
+				<top>188</top>
 				<left>553</left>
 				<visible>Container(9000).Hasfocus(2)</visible>
 				<width>1259</width>
-				<height>652</height>
+				<height>649</height>
 				<pagecontrol>60</pagecontrol>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>2</onup>
 				<ondown>2</ondown>
 				<scrolltime>200</scrolltime>
-				<itemlayout height="330" width="300">
+				<itemlayout height="297" width="270">
 					<control type="image">
 						<top>5</top>
-						<width>270</width>
-						<height>320</height>
+						<width>243</width>
+						<height>288</height>
 						<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 					</control>
 					<control type="image">
-						<left>45</left>
-						<top>32</top>
-						<width>180</width>
-						<height>180</height>
+						<left>40</left>
+						<top>29</top>
+						<width>162</width>
+						<height>162</height>
 						<aspectratio>scale</aspectratio>
-						<texture fallback="DefaultUser.png">$INFO[ListItem.Icon]</texture>
+						<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>215</top>
-						<width>260</width>
-						<height>100</height>
+						<left>18</left>
+						<top>194</top>
+						<width>234</width>
+						<height>90</height>
 						<align>center</align>
 						<aligny>top</aligny>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>248</top>
-						<width>260</width>
-						<height>100</height>
+						<left>18</left>
+						<top>226</top>
+						<width>234</width>
+						<height>90</height>
 						<font>font10</font>
 						<align>center</align>
 						<aligny>top</aligny>
@@ -64,10 +64,10 @@
 						<visible>!String.IsEqual(Listitem.Label,$LOCALIZE[20058])</visible>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>277</top>
-						<width>260</width>
-						<height>100</height>
+						<left>18</left>
+						<top>253</top>
+						<width>234</width>
+						<height>90</height>
 						<font>font10</font>
 						<align>center</align>
 						<aligny>top</aligny>
@@ -75,36 +75,36 @@
 						<visible>!String.Contains(Listitem.Label,$LOCALIZE[20058])</visible>
 					</control>
 				</itemlayout>
-				<focusedlayout height="330" width="300">
+				<focusedlayout height="297" width="270">
 					<control type="group">
-						<animation effect="zoom" start="100" end="105" time="200" tween="sine" easing="inout" center="150,165">Focus</animation>
-						<animation effect="zoom" start="105" end="100" time="200" tween="sine" easing="inout" center="150,165">UnFocus</animation>
+						<animation effect="zoom" start="100" end="105" time="200" tween="sine" easing="inout" center="135,149">Focus</animation>
+						<animation effect="zoom" start="105" end="100" time="200" tween="sine" easing="inout" center="135,149">UnFocus</animation>
 						<control type="image">
 							<top>5</top>
-							<width>270</width>
-							<height>320</height>
+							<width>243</width>
+							<height>288</height>
 							<texture colordiffuse="surface_raised" border="24">shapes/round24.png</texture>
 						</control>
 						<control type="image">
 							<top>5</top>
-							<width>270</width>
-							<height>320</height>
+							<width>243</width>
+							<height>288</height>
 							<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
-							<left>45</left>
-							<top>32</top>
-							<width>180</width>
-							<height>180</height>
+							<left>40</left>
+							<top>29</top>
+							<width>162</width>
+							<height>162</height>
 							<aspectratio>scale</aspectratio>
-							<texture fallback="DefaultUser.png">$INFO[ListItem.Icon]</texture>
+							<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
 						</control>
 						<control type="label">
-							<left>20</left>
-							<top>215</top>
-							<width>260</width>
-							<height>100</height>
+							<left>18</left>
+							<top>194</top>
+							<width>234</width>
+							<height>90</height>
 							<align>center</align>
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Label]</label>
@@ -112,10 +112,10 @@
 							<selectedcolor>text_primary</selectedcolor>
 						</control>
 						<control type="label">
-							<left>20</left>
-							<top>248</top>
-							<width>260</width>
-							<height>100</height>
+							<left>18</left>
+							<top>226</top>
+							<width>234</width>
+							<height>90</height>
 							<font>font10</font>
 							<align>center</align>
 							<aligny>top</aligny>
@@ -125,10 +125,10 @@
 							<visible>!String.Contains(Listitem.Label,$LOCALIZE[20058])</visible>
 						</control>
 						<control type="label">
-							<left>20</left>
-							<top>277</top>
-							<width>260</width>
-							<height>100</height>
+							<left>18</left>
+							<top>253</top>
+							<width>234</width>
+							<height>90</height>
 							<font>font10</font>
 							<align>center</align>
 							<aligny>top</aligny>
@@ -142,9 +142,9 @@
 			</control>
 			<control type="scrollbar" id="60">
 				<left>1874</left>
-				<top>165</top>
+				<top>193</top>
 				<width>8</width>
-				<height>700</height>
+				<height>644</height>
 				<orientation>vertical</orientation>
 				<texturesliderbackground />
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
@@ -154,10 +154,13 @@
 			</control>
 			<control type="grouplist" id="9001">
 				<visible>Container(9000).Hasfocus(1)</visible>
-				<left>553</left>
-				<width>1259</width>
-				<height>652</height>
-				<top>189</top>
+				<!-- 这里的行用 NaraSettingsRow，它自带 textoffsetx=28，
+				     所以容器必须和 PVR 页一样放在 525（文字才会落在 553）。
+				     放到 553 会变成 581，比 PVR 右 28px。 -->
+				<left>525</left>
+				<width>1315</width>
+				<height>708</height>
+				<top>161</top>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>9001</onup>
@@ -229,6 +232,19 @@
 				<width>368</width>
 				<height>685</height>
 			</control>
+		</control>
+		<!-- 帮助条：位置和 PVR/直播电视那页一致。
+		     注意 id=6 在这一页不会被 Kodi 自动填字（实测空白，Estuary 上游也没这个控件），
+		     所以 label 自己绑变量，按焦点切两条说明。 -->
+		<control type="textbox" id="6">
+			<left>545</left>
+			<top>915</top>
+			<width>1255</width>
+			<height>100</height>
+			<font>font24</font>
+			<textcolor>text_secondary</textcolor>
+			<label>$VAR[NaraSettingsProfileHelpVar]</label>
+			<autoscroll time="3000" delay="5000" repeat="5000">true</autoscroll>
 		</control>
 		<include content="TopBar">
 			<param name="breadcrumbs_label" value="$LOCALIZE[10034]" />

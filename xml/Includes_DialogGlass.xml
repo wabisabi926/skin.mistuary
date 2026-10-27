@@ -4,10 +4,10 @@
 	     —— 即"播放中 / OSD 设置"时切到不透明的 Legacy 面，保证压在画面上看得清。
 	     问题是：`<include condition="X">` 是**加载时**求值的（GUIIncludes::ResolveIncludes），
 	     窗口只要在播放中被加载过一次，这个分支就永久钉死，之后再也不会切回玻璃面；
-	     而且 Legacy 面是 100% 不透明的死板，完全不跟「浮窗不透明度」走 ——
+	     而且 Legacy 面是 100% 不透明的死板，完全不跟「界面透明度」走 ——
 	     这就是"播放中打开的对话框永远不跟设置"的根因。
 
-	     现在恒为 true：所有对话框、任何时候都走玻璃面（跟随浮窗档），
+	     现在恒为 true：所有对话框、任何时候都走玻璃面（跟随界面透明度），
 	     压画面的问题交给遮蔽层用 scrim_osd（30%）解决，而不是靠不透明面板。 -->
 	<expression name="nara_dialog_glass">true</expression>
 	<!-- ===== 浮窗遮蔽层 =====
@@ -35,7 +35,7 @@
 		<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 		<bordersize>20</bordersize>
 	</include>
-	<!-- tint 的值可以是颜色名（glass_frosted 等），**也可以是变量**（NaraGlassDialogTintVar）。
+	<!-- tint 的值可以是颜色名（gl_1..5 等），**也可以是变量**（NaraGlassDialogTintVar）。
 	     不能用 frosted / dialog 这类别名——那不是颜色名，会解析失败。
 	     贴图 shapes/glass<N>.png 自带 alpha 渐变：中心实、边缘化开，
 	     所以 colordiffuse 的 alpha 语义是「不透明度上限」而不是「均匀不透明度」。 -->

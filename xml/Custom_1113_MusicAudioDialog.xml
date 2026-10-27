@@ -69,7 +69,7 @@
 				<right>72</right>
 				<top>167</top>
 				<height>10</height>
-				<texture colordiffuse="glass_regular" border="5">shapes/round5.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="5">shapes/round5.png</texture>
 			</control>
 			<control type="progress">
 				<left>72</left>

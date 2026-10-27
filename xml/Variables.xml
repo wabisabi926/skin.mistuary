@@ -397,11 +397,46 @@
 		<value condition="Control.HasFocus(70054) + Playlist.IsRandom">$LOCALIZE[590]: $LOCALIZE[16041]</value>
 		<value condition="Control.HasFocus(70054)">$LOCALIZE[590]: $LOCALIZE[16039]</value>
 	</variable>
+	<!-- 皮肤设置页的帮助条。**行级条件必须放在分类级前面** ——
+	     变量自上而下取第一条成立的 value，分类条件会一直成立，放前面就轮不到行级了。
+	     行级覆盖 23 个设置行；其余页仍回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
+		<value condition="Control.HasFocus(702)">$LOCALIZE[31736]</value>
+		<value condition="Control.HasFocus(710)">$LOCALIZE[31737]</value>
+		<value condition="Control.HasFocus(705)">$LOCALIZE[31738]</value>
+		<value condition="Control.HasFocus(706)">$LOCALIZE[31739]</value>
+		<value condition="Control.HasFocus(707)">$LOCALIZE[31740]</value>
+		<value condition="Control.HasFocus(708)">$LOCALIZE[31741]</value>
+		<value condition="Control.HasFocus(711)">$LOCALIZE[31742]</value>
+		<value condition="Control.HasFocus(712)">$LOCALIZE[31743]</value>
+		<!-- 艺术图片 -->
+		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
+		<value condition="Control.HasFocus(6067)">$LOCALIZE[31745]</value>
+		<!-- 主菜单项 -->
+		<value condition="Control.HasFocus(611)">$LOCALIZE[31746]</value>
+		<value condition="Control.HasFocus(6111)">$LOCALIZE[31747]</value>
+		<value condition="Control.HasFocus(627)">$LOCALIZE[31748]</value>
+		<value condition="Control.HasFocus(612)">$LOCALIZE[31749]</value>
+		<value condition="Control.HasFocus(6121)">$LOCALIZE[31750]</value>
+		<value condition="Control.HasFocus(626)">$LOCALIZE[31751]</value>
+		<value condition="Control.HasFocus(613)">$LOCALIZE[31752]</value>
+		<value condition="Control.HasFocus(6132)">$LOCALIZE[31753]</value>
+		<value condition="Control.HasFocus(625)">$LOCALIZE[31754]</value>
+		<value condition="Control.HasFocus(618)">$LOCALIZE[31755]</value>
+		<value condition="Control.HasFocus(6181)">$LOCALIZE[31756]</value>
+		<!-- 屏幕菜单式调节 -->
+		<value condition="Control.HasFocus(623)">$LOCALIZE[31757]</value>
+		<value condition="Control.HasFocus(624)">$LOCALIZE[31758]</value>
 		<value condition="Container(9000).HasFocus(1)">$LOCALIZE[31129]</value>
 		<value condition="Container(9000).HasFocus(2)">$LOCALIZE[31130]</value>
 		<value condition="Container(9000).HasFocus(3)">$LOCALIZE[31169]</value>
 		<value condition="Container(9000).HasFocus(4)">$LOCALIZE[31171]</value>
+	</variable>
+	<!-- 用户配置页的帮助条。这里必须自己绑：SettingsProfile 虽然也是 Kodi 的设置窗口，
+	     但 textbox id=6 并不会像 SettingsCategory 那样被自动填字（实测空白）。 -->
+	<variable name="NaraSettingsProfileHelpVar">
+		<value condition="Control.HasFocus(5)">$LOCALIZE[31735]</value>
+		<value>$LOCALIZE[31734]</value>
 	</variable>
 	<variable name="SkinSettingOSDAutoCloseTime">
 		<value condition="!String.IsEmpty(Skin.String(OSDAutoCloseTime))">$INFO[Skin.String(OSDAutoCloseTime)]</value>
@@ -1609,10 +1644,6 @@
 		<value condition="!String.IsEmpty(ListItem.FolderPath)">$INFO[ListItem.FolderPath]</value>
 		<value>colors/black.png</value>
 	</variable>
-	<variable name="NaraImgListItemIconDefDefaultAddon">
-		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
-		<value>DefaultAddon.png</value>
-	</variable>
 	<variable name="NaraImgListItemIconDefDefaultFavourites">
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultFavourites.png</value>
@@ -1778,11 +1809,6 @@
 	</variable>
 	<!-- END generated: technical flag maps (Kodi 21 compatible) -->
 
-	<!-- ===== 浮窗不透明度档位（皮肤设置 → 外观 → 浮窗不透明度）=====
-	     colordiffuse 支持 $VAR（CGUIInfoColor::Parse），所以可以把颜色名做成变量。
-	     档位由 Skin.SelectBool 写入 glass_op_1..6，面板色与遮蔽色**联动**：
-	     档位越高，面板越实、面板外的遮蔽也越重（否则面板实、外面亮，会很割裂）。
-	     默认 gd_3 / sc_3（面板 78% + 遮蔽 50% = 89%）。 -->
 	<!-- 首页方块 widget（专辑/歌手）的封面。
 	     不能直接用 InfoWallThumbVar：它的兜底是 DefaultVideo.png（平均亮度只有 37，几乎全黑），
 	     没有封面的专辑会变成一块黑砖。这里兜到 DefaultMusicAlbums.png。 -->
@@ -1792,61 +1818,65 @@
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultMusicAlbums.png</value>
 	</variable>
+	<!-- ===== 玻璃透明度：两个设置，按场景分 =====
+	     界面透明度   glass_ui_op_1..5   → 浏览时所有玻璃（设置页/插件浏览/侧栏/对话框/菜单/卡片）
+	     播放中透明度 glass_play_op_1..5 → 播放时的浮窗（OSD 设置/播放列表/书签/处理信息）
+	     档位色 gl_1..5 + 遮蔽 sc_1..5 在 colors/defaults.xml，遮蔽跟面板联动。
+	     合成 = 1−(1−scrim)(1−panel)：45/27=60%、58/35=73%、71/43=83%、84/50=92%、97/58=99% -->
 	<variable name="NaraGlassDialogTintVar">
-		<value condition="Skin.HasSetting(glass_op_1)">gd_1</value>
-		<value condition="Skin.HasSetting(glass_op_2)">gd_2</value>
-		<value condition="Skin.HasSetting(glass_op_3)">gd_3</value>
-		<value condition="Skin.HasSetting(glass_op_5)">gd_5</value>
-		<value condition="Skin.HasSetting(glass_op_6)">gd_6</value>
-		<value>gd_4</value>
+		<value condition="Skin.HasSetting(glass_ui_op_1)">gl_1</value>
+		<value condition="Skin.HasSetting(glass_ui_op_2)">gl_2</value>
+		<value condition="Skin.HasSetting(glass_ui_op_4)">gl_4</value>
+		<value condition="Skin.HasSetting(glass_ui_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_ui_op_3)">gl_3</value>
+		<value>gl_3</value>
 	</variable>
 	<variable name="NaraGlassScrimTintVar">
-		<value condition="Skin.HasSetting(glass_op_1)">sc_1</value>
-		<value condition="Skin.HasSetting(glass_op_2)">sc_2</value>
-		<value condition="Skin.HasSetting(glass_op_3)">sc_3</value>
-		<value condition="Skin.HasSetting(glass_op_5)">sc_5</value>
-		<value condition="Skin.HasSetting(glass_op_6)">sc_6</value>
-		<value>sc_4</value>
+		<value condition="Skin.HasSetting(glass_ui_op_1)">sc_1</value>
+		<value condition="Skin.HasSetting(glass_ui_op_2)">sc_2</value>
+		<value condition="Skin.HasSetting(glass_ui_op_4)">sc_4</value>
+		<value condition="Skin.HasSetting(glass_ui_op_5)">sc_5</value>
+		<value condition="Skin.HasSetting(glass_ui_op_3)">sc_3</value>
+		<value>sc_3</value>
 	</variable>
 	<variable name="NaraGlassDialogLabelVar">
-		<value condition="Skin.HasSetting(glass_op_1)">$LOCALIZE[31723]</value>
-		<value condition="Skin.HasSetting(glass_op_2)">$LOCALIZE[31724]</value>
-		<value condition="Skin.HasSetting(glass_op_3)">$LOCALIZE[31732]</value>
-		<value condition="Skin.HasSetting(glass_op_5)">$LOCALIZE[31726]</value>
-		<value condition="Skin.HasSetting(glass_op_6)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_1)">$LOCALIZE[31723]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_2)">$LOCALIZE[31724]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_4)">$LOCALIZE[31726]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_5)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_3)">$LOCALIZE[31725]</value>
 		<value>$LOCALIZE[31725]</value>
 	</variable>
-	<!-- 播放中浮窗（OSD 设置 / 播放列表 / 书签 / 处理信息）专用的面板色。
-	     它们压在画面上，用「浮窗档」原值（78%）合成到 84.6% 太实、画面透不出来，
-	     所以整体**下移两档**：默认 78% → 60%，合成 72%，画面能看出来、字也还清楚。
-	     仍然跟随「浮窗不透明度」设置，只是永远比普通浮窗轻两档。 -->
+	<!-- 播放中浮窗：独立设置，不再"自动下移两档"那种隐式逻辑，所见即所得。 -->
 	<variable name="NaraPlaybackDialogTintVar">
-		<value condition="Skin.HasSetting(glass_op_1)">gd_1</value>
-		<value condition="Skin.HasSetting(glass_op_2)">gd_1</value>
-		<value condition="Skin.HasSetting(glass_op_3)">gd_1</value>
-		<value condition="Skin.HasSetting(glass_op_5)">gd_3</value>
-		<value condition="Skin.HasSetting(glass_op_6)">gd_4</value>
-		<value>gd_2</value>
+		<value condition="Skin.HasSetting(glass_play_op_1)">gl_1</value>
+		<value condition="Skin.HasSetting(glass_play_op_3)">gl_3</value>
+		<value condition="Skin.HasSetting(glass_play_op_4)">gl_4</value>
+		<value condition="Skin.HasSetting(glass_play_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_play_op_2)">gl_2</value>
+		<value>gl_2</value>
 	</variable>
-	<!-- 设置类对话框的遮蔽层：**播放中**用 scrim_osd（30%），其余用浮窗档（50%）。
-	     理由：播放中打开设置（视频/音频/字幕/色彩管理）是"临时看一眼"，
-	     89% 的合成会把画面盖死；换成 30% 后合成 84.6%，画面还看得见、字也够清楚。
-	     判 Player.HasVideo/HasAudio 而不是判窗口属性 —— 语义更准，也不依赖谁去写属性。 -->
+	<variable name="NaraGlassPlaybackLabelVar">
+		<value condition="Skin.HasSetting(glass_play_op_1)">$LOCALIZE[31723]</value>
+		<value condition="Skin.HasSetting(glass_play_op_3)">$LOCALIZE[31725]</value>
+		<value condition="Skin.HasSetting(glass_play_op_4)">$LOCALIZE[31726]</value>
+		<value condition="Skin.HasSetting(glass_play_op_5)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_play_op_2)">$LOCALIZE[31724]</value>
+		<value>$LOCALIZE[31724]</value>
+	</variable>
+	<!-- 设置类对话框的遮蔽层：**播放中**用 scrim_osd（30%），其余跟界面档。
+	     播放中打开设置是"临时看一眼"，89% 的合成会把画面盖死。 -->
 	<variable name="NaraSettingsDialogScrimVar">
 		<value condition="Player.HasVideo | Player.HasAudio">scrim_osd</value>
 		<value>$VAR[NaraGlassScrimTintVar]</value>
 	</variable>
-	<!-- 全屏页内容面板（插件浏览 / 事件日志 / 皮肤设置 / 设置分类 / 系统信息） -->
+	<!-- 全屏页内容面板：跟「界面透明度」同一套档位（原来是独立的页面档）。 -->
 	<variable name="NaraGlassPageTintVar">
-		<value condition="Skin.HasSetting(glass_page_op_1)">gp_1</value>
-		<value condition="Skin.HasSetting(glass_page_op_2)">gp_2</value>
-		<value condition="Skin.HasSetting(glass_page_op_4)">gp_4</value>
-		<value>gp_3</value>
-	</variable>
-	<variable name="NaraGlassPageLabelVar">
-		<value condition="Skin.HasSetting(glass_page_op_1)">$LOCALIZE[31723]</value>
-		<value condition="Skin.HasSetting(glass_page_op_2)">$LOCALIZE[31724]</value>
-		<value condition="Skin.HasSetting(glass_page_op_4)">$LOCALIZE[31727]</value>
-		<value>$LOCALIZE[31725]</value>
+		<value condition="Skin.HasSetting(glass_ui_op_1)">gl_1</value>
+		<value condition="Skin.HasSetting(glass_ui_op_2)">gl_2</value>
+		<value condition="Skin.HasSetting(glass_ui_op_4)">gl_4</value>
+		<value condition="Skin.HasSetting(glass_ui_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_ui_op_3)">gl_3</value>
+		<value>gl_3</value>
 	</variable>
 </includes>

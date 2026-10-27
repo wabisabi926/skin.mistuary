@@ -89,7 +89,7 @@
 		<control type="image">
 			<width>61</width>
 			<height>61</height>
-			<texture colordiffuse="glass_regular" border="30">shapes/round30.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="30">shapes/round30.png</texture>
 		</control>
 	</include>
 	<include name="NaraMusicPlayerControls">

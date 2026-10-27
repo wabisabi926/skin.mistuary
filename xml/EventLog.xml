@@ -21,9 +21,9 @@
 				<include>OpenClose_Right</include>
 				<control type="fixedlist" id="50">
 					<left>525</left>
-					<top>161</top>
+					<top>193</top>
 					<width>1315</width>
-					<height>708</height>
+					<height>644</height>
 					<onleft>9000</onleft>
 					<onright>60</onright>
 					<onup>50</onup>
@@ -208,29 +208,40 @@
 					<width>368</width>
 					<height>685</height>
 				</control>
-				<control type="image">
-					<left>200</left>
-					<bottom>130</bottom>
-					<width>120</width>
-					<height>120</height>
-					<fadetime>300</fadetime>
-					<aspectratio aligny="bottom">keep</aspectratio>
-					<texture>$VAR[NaraImgListItemIconDefDefaultAddon]</texture>
-					<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-					<bordersize>20</bordersize>
-				</control>
 			</control>
 			<control type="scrollbar" id="60">
 				<left>1874</left>
-				<top>165</top>
+				<top>193</top>
 				<width>8</width>
-				<height>700</height>
+				<height>644</height>
 				<onleft>50</onleft>
 				<onright>9000</onright>
 				<orientation>vertical</orientation>
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
 				<visible>Control.IsVisible(50)</visible>
 			</control>
+		</control>
+		<!-- 帮助条：占 PVR/直播电视那页同一个位置（545,915，1255×100）。
+		     列表里的消息是单行 font26、宽度只有 815，长消息必被裁；
+		     这里把选中项的标题和正文完整显示出来，超长自动滚动。 -->
+		<control type="label" id="70">
+			<left>545</left>
+			<top>915</top>
+			<width>1255</width>
+			<height>40</height>
+			<font>font26</font>
+			<textcolor>text_primary</textcolor>
+			<label>$INFO[Container(50).ListItem.Label]</label>
+		</control>
+		<control type="textbox" id="71">
+			<left>545</left>
+			<top>955</top>
+			<width>1255</width>
+			<height>60</height>
+			<font>font24</font>
+			<textcolor>text_secondary</textcolor>
+			<label>$INFO[Container(50).ListItem.Property(Event.Description)]</label>
+			<autoscroll time="3000" delay="5000" repeat="5000">true</autoscroll>
 		</control>
 		<include content="TopBar">
 			<param name="breadcrumbs_label" value="$LOCALIZE[31067]" />

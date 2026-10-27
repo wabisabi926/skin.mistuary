@@ -5,7 +5,9 @@
 		<control type="group">
 			<depth>DepthMax</depth>
 			<top>85</top>
-			<right>0</right>
+			<!-- 原来是 right=0，贴着屏幕边缘。改成 60：1920 画布下正好和
+			     设置页玻璃面板的右边缘（1860）对齐；宽屏居中时也能留出边距。 -->
+			<right>60</right>
 			<width>400</width>
 			<include>OpenClose_Right</include>
 			<visible>String.IsEmpty(Window(Home).Property(script.cinemavision.running))</visible>

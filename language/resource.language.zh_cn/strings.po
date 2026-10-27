@@ -1223,8 +1223,8 @@ msgid "Skin settings"
 msgstr "皮肤设置"
 
 msgctxt "#31722"
-msgid "Popup opacity"
-msgstr "浮窗不透明度"
+msgid "Interface transparency"
+msgstr "界面透明度"
 
 msgctxt "#31723"
 msgid "Very light"
@@ -1242,33 +1242,126 @@ msgctxt "#31726"
 msgid "Dense"
 msgstr "偏实"
 
-msgctxt "#31727"
-msgid "Heavy"
-msgstr "厚实"
-
 msgctxt "#31728"
 msgid "Solid"
 msgstr "实心"
 
 msgctxt "#31729"
-msgid "Page panel opacity"
-msgstr "页面面板不透明度"
+msgid "Playback transparency"
+msgstr "播放中透明度"
 
 msgctxt "#31730"
-msgid "Popup opacity — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "浮窗不透明度 — 档位按透黑模式设计；透白主题下会更浅"
+msgid "Interface transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "界面透明度 — 档位按透黑模式设计；透白主题下会更浅"
 
 msgctxt "#31731"
-msgid "Page panel opacity — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "页面面板不透明度 — 档位按透黑模式设计；透白主题下会更浅"
-
-msgctxt "#31732"
-msgid "Slightly light"
-msgstr "偏透"
+msgid "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "播放中透明度 — 档位按透黑模式设计；透白主题下会更浅"
 
 msgctxt "#31733"
 msgid "Default rating source"
 msgstr "默认评分来源"
+
+msgctxt "#31734"
+msgid "Show the login screen before entering the main menu, so you can pick a user."
+msgstr "启动 Kodi 时先显示用户选择界面，选好用户后再进入主界面。"
+
+msgctxt "#31735"
+msgid "Log in as the selected user at startup and skip the login screen."
+msgstr "启动时自动登录到选定的用户，跳过用户选择界面。"
+
+msgctxt "#31736"
+msgid "Turn on to auto-scroll long plot or review text, so you don't have to page through it."
+msgstr "开启后剧情或评论太长会自动滚动，不用一页页翻。用遥控器时建议开启。"
+
+msgctxt "#31737"
+msgid "Uses the skin's own libraryart folder by default. Pick your own folder to use custom covers; file names must match the library names."
+msgstr "默认用皮肤自带的 libraryart 目录。想换成自己的封面就指定一个文件夹，图片文件名要和媒体库名字一致。"
+
+msgctxt "#31738"
+msgid "Turn on to show resolution, audio and subtitle badges on media info. Turn off if it looks too busy."
+msgstr "开启后影片信息里会显示分辨率、音轨、字幕这些标识。嫌信息太密就关掉。"
+
+msgctxt "#31739"
+msgid "Shows your own rating by default. Pick Rating to use source ratings (IMDb, Douban...), or None to hide it."
+msgstr "默认显示「我的评分」。想改看来源评分（IMDb、豆瓣等）选「评分」；不想显示选「不显示」。"
+
+msgctxt "#31740"
+msgid "IMDb by default. If you have an add-on that provides Douban ratings (such as 神医助手), pick Douban instead."
+msgstr "默认选 IMDb。如果装了能提供豆瓣评分的插件（比如神医助手），就选豆瓣。"
+
+msgctxt "#31741"
+msgid "Shows the localised title by default. Pick Original title (localised) to see both, or Original title only."
+msgstr "默认显示本地化标题。想同时看到原名选「原标题（本地化标题）」；只看原名选「原始标题」。"
+
+msgctxt "#31742"
+msgid "Balanced by default. Go towards Light to see more background; go towards Solid if text is hard to read."
+msgstr "默认「平衡」。想多看到背景就往「极透」调；字看不清就往「实心」调。"
+
+msgctxt "#31743"
+msgid "Only affects popups while playing. Transparent by default; go towards Light if the OSD covers too much."
+msgstr "只影响播放时的浮窗。默认「通透」；嫌 OSD 挡画面就往「极透」调。"
+
+msgctxt "#31744"
+msgid "Turn on to use the item's fanart as the page background. Items without fanart fall back to the default background."
+msgstr "开启后用作品的背景图当页面背景。没有背景图的作品会显示默认背景。"
+
+msgctxt "#31745"
+msgid "Turn on to show posters for music videos in lists. Turn off to see video thumbnails instead."
+msgstr "开启后音乐电视在列表里显示海报。想看到视频画面就关掉。"
+
+msgctxt "#31746"
+msgid "Turn off to hide the Movies entry from the main menu."
+msgstr "关掉就不在主菜单显示「电影」入口。"
+
+msgctxt "#31747"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "进去选这一行显示什么，比如最近添加、继续观看、随机推荐。"
+
+msgctxt "#31748"
+msgid "Browse into the set by default. Pick Continue watching to resume where you left off."
+msgstr "默认「浏览」进系列看全部影片。想点开就接着上次看，选「继续观看」。"
+
+msgctxt "#31749"
+msgid "Turn off to hide the TV shows entry from the main menu."
+msgstr "关掉就不在主菜单显示「电视剧」入口。"
+
+msgctxt "#31750"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "进去选这一行显示什么，比如最近添加、继续观看、随机推荐。"
+
+msgctxt "#31751"
+msgid "Browse into the episode list by default. Pick Continue watching to resume where you left off."
+msgstr "默认「浏览」进剧集列表。想点开就接着上次看，选「继续观看」。"
+
+msgctxt "#31752"
+msgid "Turn off to hide the Music entry from the main menu."
+msgstr "关掉就不在主菜单显示「音乐」入口。"
+
+msgctxt "#31753"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "进去选这一行显示什么，比如最近添加、继续观看、随机推荐。"
+
+msgctxt "#31754"
+msgid "Browse into the album by default. Pick Play to start playing right away."
+msgstr "默认「浏览」进详情页看曲目。想点开就播放，选「播放」。"
+
+msgctxt "#31755"
+msgid "Turn off to hide the TV (PVR) entry from the main menu."
+msgstr "关掉就不在主菜单显示「电视」（PVR）入口。"
+
+msgctxt "#31756"
+msgid "Pick what this row shows, e.g. recently added, continue watching, random recommendations."
+msgstr "进去选这一行显示什么，比如最近添加、继续观看、随机推荐。"
+
+msgctxt "#31757"
+msgid "Turn on to hide the OSD automatically while playing. Recommended."
+msgstr "开启后播放时不动遥控器，OSD 会自己收起。建议开启。"
+
+msgctxt "#31758"
+msgid "How long to wait before hiding the OSD, 4 seconds by default. Raise it to 6-8 if it hides too fast."
+msgstr "设多久没操作就收起，默认 4 秒。觉得收得太快就调到 6-8 秒。"
+
 
 #~ msgctxt "#31025"
 #~ msgid "No favourites found. You can add any item from media views to this list by using the context menu."

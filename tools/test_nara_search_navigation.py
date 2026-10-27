@@ -366,9 +366,10 @@ class SearchDrawerTests(unittest.TestCase):
         self.assertLess(int(letters.findtext('top')) + int(letters.findtext('height')), int(digits.findtext('top')))
         self.assertLessEqual(int(digits.findtext('top')) + int(digits.findtext('height')), height - 24)
         self.assertEqual(drawer.findtext('bottom'), '0')
-        # 通用版：玻璃属性已移除，改为半透明纯色 + 圆角贴图；颜色名走主题，不再用 $VAR
+        # 2026-10-27 起玻璃统一走「界面透明度」设置：所有面板都用 NaraGlassDialogTintVar，
+        # 不再有 glass_regular 这类固定色名（那条旁路就是侧栏"调了设置也不变"的根因）。
         self.assertEqual(drawer.find('control/texture').get('colordiffuse'),
-                         'glass_regular')
+                         '$VAR[NaraGlassDialogTintVar]')
         lift = int(INCLUDES['NaraSearchResultsLift'].find('animation').get('end').split(',')[1])
         for id in (16101, 16102):
             row = CONTROLS[id]

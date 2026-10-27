@@ -29,8 +29,8 @@
 				<texture border="40" colordiffuse="scrim_osd">colors/black.png</texture>
 			</control>
 			<!-- 玻璃面板：原来这里只有 30% 的 scrim_osd、没有任何面板，
-			     技术参数直接压在画面上读不清。加一层浮窗档面板（跟「浮窗不透明度」走），
-			     合成 78% + 30% = 84.6%，画面还能透出来一点。 -->
+			     技术参数直接压在画面上读不清。加一层玻璃面板（跟「播放中透明度」走），
+			     面板叠 scrim_osd 30%，合成后画面还能透出来一点。 -->
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
