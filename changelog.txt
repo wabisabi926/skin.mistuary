@@ -5,7 +5,6 @@
   16 个颜色 token 经变量接入 43 处 colordiffuse
 - 浅色主题配独立档位区间（白玻璃 15%~36%），设置项在两个主题下都生效
 - 媒体库 13 个页面加背景压暗层（插件浏览 / 音乐 / 收藏 / 图片 / 程序 / PVR 全系）
-- 新增贴图生成器：gen_glass_plates / gen_rings / gen_corner_masks / gen_music_cover
 
 [修复]
 - 播放中打开的浮窗完全不跟「浮窗不透明度」。三处死板一并删掉：条件 include 是
