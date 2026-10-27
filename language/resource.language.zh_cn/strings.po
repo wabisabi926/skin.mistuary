@@ -1053,3 +1053,7 @@ msgstr "浮窗透明度 — 档位按透黑模式设计；透白主题下会更�
 msgctxt "#31761"
 msgid "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
 msgstr "管叠在页面上的层：插件详情、插件设置、对话框、右键菜单、键盘、设置页左侧栏。默认“偏实”。"
+
+msgctxt "#31762"
+msgid "Technical flags as icons"
+msgstr "技术标识用图标"

@@ -50,6 +50,17 @@
 					<onclick>Skin.ToggleSetting(hide_mediaflags)</onclick>
 					<selected>!Skin.HasSetting(hide_mediaflags)</selected>
 				</control>
+				<!-- 详情页技术标识那一行：开 = 品牌图标，关 = 文字胶囊。
+				     素材里没有对应图标的取值（冷门编码等）无论开关如何都走文字。 -->
+				<control type="radiobutton" id="709">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31762]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(hide_techflag_icons)</onclick>
+					<selected>!Skin.HasSetting(hide_techflag_icons)</selected>
+				</control>
 				<control type="button" id="706">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31024]</label>

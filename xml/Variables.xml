@@ -1737,6 +1737,7 @@
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hevc)">H.265</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,hvc1)">H.265</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mp4v)">MPEG-4</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mjpeg)">MJPEG</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg1)">MPEG-1</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg1video)">MPEG-1</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoCodec,mpeg2)">MPEG-2</value>

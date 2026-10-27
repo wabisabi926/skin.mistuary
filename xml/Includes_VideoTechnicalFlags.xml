@@ -1,5 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
+	<!-- BEGIN generated: techflag icon maps -->
+	<map name="NaraTechnicalResolutionIconMap">
+		<entry key="480">resolution/480</entry>
+		<entry key="540">resolution/540</entry>
+		<entry key="576">resolution/576</entry>
+		<entry key="720">resolution/720</entry>
+		<entry key="1080">resolution/1080</entry>
+		<entry key="4K">resolution/4K</entry>
+		<entry key="8K">resolution/8K</entry>
+	</map>
+	<map name="NaraTechnicalHdrIconMap">
+		<entry key="dolbyvision">hdr/dolbyvision</entry>
+		<entry key="hdr10plus">hdr/hdr10plus</entry>
+		<entry key="hdr10">hdr/hdr10</entry>
+		<entry key="hdrvivid">hdr/hdrvivid</entry>
+		<entry key="hdr_vivid">hdr/hdr_vivid</entry>
+		<entry key="hlg">hdr/hlg</entry>
+	</map>
+	<map name="NaraTechnicalVideoCodecIconMap">
+		<entry key="av1">video/av1</entry>
+		<entry key="avc1">video/avc1</entry>
+		<entry key="bluray">video/bluray</entry>
+		<entry key="div3">video/div3</entry>
+		<entry key="divx">video/divx</entry>
+		<entry key="dvd">video/dvd</entry>
+		<entry key="dx50">video/dx50</entry>
+		<entry key="flv">video/flv</entry>
+		<entry key="h264">video/h264</entry>
+		<entry key="h265">video/h265</entry>
+		<entry key="hddvd">video/hddvd</entry>
+		<entry key="hdmv">video/hdmv</entry>
+		<entry key="hev1">video/hev1</entry>
+		<entry key="hevc">video/hevc</entry>
+		<entry key="hvc1">video/hvc1</entry>
+		<entry key="mp4v">video/mp4v</entry>
+		<entry key="mjpeg">video/mjpeg</entry>
+		<entry key="mpeg1">video/mpeg1</entry>
+		<entry key="mpeg1video">video/mpeg1video</entry>
+		<entry key="mpeg2">video/mpeg2</entry>
+		<entry key="mpeg2video">video/mpeg2video</entry>
+		<entry key="mpeg4">video/mpeg4</entry>
+		<entry key="prores">video/prores</entry>
+		<entry key="theora">video/theora</entry>
+		<entry key="tv">video/tv</entry>
+		<entry key="vc-1">video/vc-1</entry>
+		<entry key="vc1">video/vc1</entry>
+		<entry key="vhs">video/vhs</entry>
+		<entry key="vp8">video/vp8</entry>
+		<entry key="vp9">video/vp9</entry>
+		<entry key="wmv">video/wmv</entry>
+		<entry key="wmv3">video/wmv3</entry>
+		<entry key="wvc1">video/wvc1</entry>
+		<entry key="xvid">video/xvid</entry>
+	</map>
+	<map name="NaraTechnicalAudioCodecIconMap">
+		<entry key="aac">audio/aac</entry>
+		<entry key="aac_latm">audio/aac_latm</entry>
+		<entry key="aac_lc">audio/aac_lc</entry>
+		<entry key="aac_ltp">audio/aac_ltp</entry>
+		<entry key="aac_ssr">audio/aac_ssr</entry>
+		<entry key="ac3">audio/ac3</entry>
+		<entry key="aif">audio/aif</entry>
+		<entry key="aifc">audio/aifc</entry>
+		<entry key="aiff">audio/aiff</entry>
+		<entry key="alac">audio/alac</entry>
+		<entry key="ape">audio/ape</entry>
+		<entry key="av3a">audio/av3a</entry>
+		<entry key="avc">audio/avc</entry>
+		<entry key="cdda">audio/cdda</entry>
+		<entry key="dca">audio/dca</entry>
+		<entry key="dolbydigital">audio/dolbydigital</entry>
+		<entry key="dts">audio/dts</entry>
+		<entry key="dts_96_24">audio/dts_96_24</entry>
+		<entry key="dts_es">audio/dts_es</entry>
+		<entry key="dts_express">audio/dts_express</entry>
+		<entry key="dtshd_hra">audio/dtshd_hra</entry>
+		<entry key="dtshd_ma">audio/dtshd_ma</entry>
+		<entry key="dtshd_ma_x">audio/dtshd_ma_x</entry>
+		<entry key="dtshd_ma_x_imax">audio/dtshd_ma_x_imax</entry>
+		<entry key="dtsma">audio/dtsma</entry>
+		<entry key="eac3">audio/eac3</entry>
+		<entry key="eac3_ddp_atmos">audio/eac3_ddp_atmos</entry>
+		<entry key="flac">audio/flac</entry>
+		<entry key="he_aac">audio/he_aac</entry>
+		<entry key="he_aac_v2">audio/he_aac_v2</entry>
+		<entry key="mp1">audio/mp1</entry>
+		<entry key="mp2">audio/mp2</entry>
+		<entry key="mp3">audio/mp3</entry>
+		<entry key="mp3float">audio/mp3float</entry>
+		<entry key="ogg">audio/ogg</entry>
+		<entry key="opus">audio/opus</entry>
+		<entry key="pcm">audio/pcm</entry>
+		<entry key="pcm_bluray">audio/pcm_bluray</entry>
+		<entry key="pcm_s16le">audio/pcm_s16le</entry>
+		<entry key="pcm_s24le">audio/pcm_s24le</entry>
+		<entry key="pcm_s32le">audio/pcm_s32le</entry>
+		<entry key="truehd">audio/truehd</entry>
+		<entry key="truehd_atmos">audio/truehd_atmos</entry>
+		<entry key="vorbis">audio/vorbis</entry>
+		<entry key="wav">audio/wav</entry>
+		<entry key="wavpack">audio/wavpack</entry>
+		<entry key="wma">audio/wma</entry>
+		<entry key="wmapro">audio/wmapro</entry>
+		<entry key="wmav2">audio/wmav2</entry>
+	</map>
+	<!-- END generated: techflag icon maps -->
+
 	<!-- The shared row owns all display-name normalization. Unknown non-empty values fall back
 	     to Kodi's raw value and the pill applies uppercase styling to the complete label. -->
 	<map name="NaraTechnicalResolutionTextMap">
@@ -55,6 +162,7 @@
 		<entry key="hevc">H.265</entry>
 		<entry key="hvc1">H.265</entry>
 		<entry key="mp4v">MPEG-4</entry>
+		<entry key="mjpeg">MJPEG</entry>
 		<entry key="mpeg1">MPEG-1</entry>
 		<entry key="mpeg1video">MPEG-1</entry>
 		<entry key="mpeg2">MPEG-2</entry>
@@ -132,6 +240,7 @@
 	     one when laying out (GUIControlGroupList checks IsVisible), so only one capsule shows. -->
 	<include name="NaraTechnicalTextPill">
 		<param name="flag_visible">true</param>
+		<param name="font">font_flag</param>
 		<param name="flag_label_raw"></param>
 		<definition>
 			<control type="button">
@@ -139,14 +248,14 @@
 				<height>36</height>
 				<align>center</align>
 				<aligny>center</aligny>
-				<textoffsetx>18</textoffsetx>
-				<font>font_flag</font>
+				<textoffsetx>14</textoffsetx>
+				<font>$PARAM[font]</font>
 				<textcolor>white</textcolor>
 				<focusedcolor>white</focusedcolor>
 				<disabledcolor>white</disabledcolor>
+				<texturefocus colordiffuse="66000000" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="66000000" border="4">shapes/round4.png</texturenofocus>
 				<label>[B][UPPERCASE]$PARAM[flag_label][/UPPERCASE][/B]</label>
-				<texturefocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturefocus>
-				<texturenofocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturenofocus>
 				<visible>$PARAM[flag_visible] + !$EXP[nara_kodi21]</visible>
 			</control>
 			<control type="button">
@@ -154,16 +263,85 @@
 				<height>36</height>
 				<align>center</align>
 				<aligny>center</aligny>
-				<textoffsetx>18</textoffsetx>
-				<font>font_flag</font>
+				<textoffsetx>14</textoffsetx>
+				<font>$PARAM[font]</font>
 				<textcolor>white</textcolor>
 				<focusedcolor>white</focusedcolor>
 				<disabledcolor>white</disabledcolor>
+				<texturefocus colordiffuse="66000000" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="66000000" border="4">shapes/round4.png</texturenofocus>
 				<label>[B][UPPERCASE]$PARAM[flag_label_raw][/UPPERCASE][/B]</label>
-				<texturefocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturefocus>
-				<texturenofocus colordiffuse="33FFFFFF" border="4">shapes/round4.png</texturenofocus>
 				<visible>$PARAM[flag_visible] + $EXP[nara_kodi21]</visible>
 			</control>
+		</definition>
+	</include>
+
+	<!-- 图标胶囊：与评分项同款底板。图标框 48×28 垂直居中（top 4），
+	     可选小字跟在图标右侧，承载 Dolby Vision 的 P7/P8 档位。
+	     图标本体不做 colordiffuse 染色 —— 彩色版必须保住原色。 -->
+	<include name="NaraTechnicalIconPill">
+		<param name="flag_visible">true</param>
+		<param name="icon"></param>
+		<param name="detail"></param>
+		<param name="width">72</param>
+		<definition>
+			<control type="group">
+				<width>$PARAM[width]</width>
+				<height>36</height>
+				<visible>$PARAM[flag_visible]</visible>
+				<control type="image">
+					<width>$PARAM[width]</width>
+					<height>36</height>
+					<texture border="4" colordiffuse="66000000">shapes/round4.png</texture>
+				</control>
+				<control type="image">
+					<left>12</left>
+					<top>4</top>
+					<width>48</width>
+					<height>28</height>
+					<aspectratio>keep</aspectratio>
+					<align>center</align>
+					<aligny>center</aligny>
+					<texture>techflags/color/$PARAM[icon].png</texture>
+				</control>
+				<control type="label">
+					<left>64</left>
+					<top>0</top>
+					<width>24</width>
+					<height>36</height>
+					<font>font13</font>
+					<align>left</align>
+					<aligny>center</aligny>
+					<textcolor>white</textcolor>
+					<label>$PARAM[detail]</label>
+					<visible>!String.IsEmpty($PARAM[detail])</visible>
+				</control>
+			</control>
+		</definition>
+	</include>
+
+	<!-- 单个技术标识的唯一入口：有图标走图标，其余情况（Kodi 21 / 开关关闭 / 素材缺图）
+	     走原来的文字胶囊。两条互斥，grouplist 会跳过隐藏的那条，不会占位。
+	     素材缺图的判定就是 icon 参数为空 —— IconMap 里没有这个 key。 -->
+	<include name="NaraTechnicalFlag">
+		<param name="visible">true</param>
+		<param name="icon"></param>
+		<param name="label"></param>
+		<param name="label_raw"></param>
+		<param name="detail"></param>
+		<param name="width">72</param>
+		<definition>
+			<include content="NaraTechnicalIconPill">
+				<param name="flag_visible" value="$PARAM[visible] + !Skin.HasSetting(hide_techflag_icons) + !$EXP[nara_kodi21]" />
+				<param name="icon" value="$PARAM[icon]" />
+				<param name="detail" value="$PARAM[detail]" />
+				<param name="width" value="$PARAM[width]" />
+			</include>
+			<include content="NaraTechnicalTextPill">
+				<param name="flag_visible" value="$PARAM[visible] + [Skin.HasSetting(hide_techflag_icons) | $EXP[nara_kodi21]]" />
+				<param name="flag_label" value="$PARAM[label]" />
+				<param name="flag_label_raw" value="$PARAM[label_raw]" />
+			</include>
 		</definition>
 	</include>
 
@@ -171,15 +349,20 @@
 	<include name="NaraTechnicalHdrPill">
 		<param name="visible">true</param>
 		<definition>
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail])" />
-				<param name="flag_label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
-				<param name="flag_label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
+			<!-- 带档位：图标 + P7 小字，胶囊加宽到 96 -->
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail])" />
+				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
+				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
+				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
+				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
+				<param name="width" value="100" />
 			</include>
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + [!String.IsEqual($PARAM[hdr_type],dolbyvision) | String.IsEmpty($PARAM[hdr_detail])]" />
-				<param name="flag_label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]" />
-				<param name="flag_label_raw" value="$INFO[$PARAM[hdr_type]]" />
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + [!String.IsEqual($PARAM[hdr_type],dolbyvision) | String.IsEmpty($PARAM[hdr_detail])]" />
+				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
+				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]" />
+				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]" />
 			</include>
 		</definition>
 	</include>
@@ -189,10 +372,11 @@
 	<include name="VideoTechnicalFlagsContent">
 		<param name="visible">true</param>
 		<definition>
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[resolution])" />
-				<param name="flag_label" value="$MAP[NaraTechnicalResolutionTextMap,$PARAM[resolution]]" />
-				<param name="flag_label_raw" value="$INFO[$PARAM[resolution]]" />
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[resolution])" />
+				<param name="icon" value="$MAP[NaraTechnicalResolutionIconMap,$PARAM[resolution]]" />
+				<param name="label" value="$MAP[NaraTechnicalResolutionTextMap,$PARAM[resolution]]" />
+				<param name="label_raw" value="$INFO[$PARAM[resolution]]" />
 			</include>
 
 			<!-- Primary HDR: prefer stream 1, then the base value, then stream 2. -->
@@ -224,69 +408,76 @@
 				<param name="hdr_detail" value="$PARAM[hdr_detail_2]" />
 			</include>
 
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[video_codec])" />
-				<param name="flag_label" value="$MAP[NaraTechnicalVideoCodecTextMap,$PARAM[video_codec]]" />
-				<param name="flag_label_raw" value="$INFO[$PARAM[video_codec]]" />
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[video_codec])" />
+				<param name="icon" value="$MAP[NaraTechnicalVideoCodecIconMap,$PARAM[video_codec]]" />
+				<param name="label" value="$MAP[NaraTechnicalVideoCodecTextMap,$PARAM[video_codec]]" />
+				<param name="label_raw" value="$INFO[$PARAM[video_codec]]" />
 			</include>
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_codec])" />
-				<param name="flag_label" value="$MAP[NaraTechnicalAudioCodecTextMap,$PARAM[audio_codec]]" />
-				<param name="flag_label_raw" value="$INFO[$PARAM[audio_codec]]" />
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_codec])" />
+				<param name="icon" value="$MAP[NaraTechnicalAudioCodecIconMap,$PARAM[audio_codec]]" />
+				<param name="label" value="$MAP[NaraTechnicalAudioCodecTextMap,$PARAM[audio_codec]]" />
+				<param name="label_raw" value="$INFO[$PARAM[audio_codec]]" />
 			</include>
-			<!-- Language is intentionally omitted. -->
+			<!-- Atmos 叠加徽章：fuse3 同款做法 —— AudioCodec 里出现 atmos 就多一枚。
+			     truehd_atmos / eac3_ddp_atmos 的编码图标本身已印着 ATMOS，这两种不再重复叠加。 -->
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + String.Contains($PARAM[audio_codec],atmos) + !String.IsEqual($PARAM[audio_codec],truehd_atmos) + !String.IsEqual($PARAM[audio_codec],eac3_ddp_atmos)" />
+				<param name="icon" value="audio/atmos" />
+				<param name="label" value="ATMOS" />
+				<param name="label_raw" value="ATMOS" />
+			</include>
+			<!-- Language is intentionally omitted.
+			     声道只用文字，不做图标：素材按声道数命名，而 5.1.2 与 7.1 都是 8 声道、
+			     5.1.4 与 7.1.2 都是 10 声道，图标必然说谎。文字如实反映 Kodi 报的布局串。 -->
 			<include content="NaraTechnicalTextPill">
 				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_channels])" />
 				<param name="flag_label" value="$INFO[$PARAM[audio_channels]]" />
+				<param name="font" value="font13" />
 			</include>
 		</definition>
 	</include>
 
 	<!-- Public shared component. Callers only identify the item source and placement; source
 	     selection, aliases, dual HDR, Dolby Vision detail and missing-value compaction stay here. -->
-	<include name="VideoTechnicalFlagsRow">
-		<param name="top">0</param>
-		<param name="width">1060</param>
+	<!-- 按 item 前缀取流信息。电影/单集用条目本身的流标签；
+	     剧集（show 层级）本身没有流信息，只能读 TvShowRepresentative.* 属性 ——
+	     注意：**目前没有任何组件写这组属性**（皮肤里没有，Emby for Kodi 也不写），
+	     所以剧集层级实际不显示技术标识。留着这段是为了将来有脚本写入时能直接生效。 -->
+	<include name="VideoTechnicalFlagsByPrefix">
 		<param name="visible">true</param>
 		<param name="item_prefix">ListItem</param>
 		<definition>
-			<control type="grouplist">
-				<top>$PARAM[top]</top>
-				<width>$PARAM[width]</width>
-				<height>36</height>
-				<orientation>horizontal</orientation>
-				<itemgap>8</itemgap>
-				<usecontrolcoords>true</usecontrolcoords>
-				<visible>$PARAM[visible]</visible>
+			<include content="VideoTechnicalFlagsContent">
+				<param name="visible" value="$PARAM[visible] + !String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
+				<param name="resolution" value="$PARAM[item_prefix].VideoResolution" />
+				<param name="hdr_type" value="$PARAM[item_prefix].HdrType" />
+				<param name="hdr_detail" value="$PARAM[item_prefix].HdrDetail" />
+				<param name="hdr_type_1" value="$PARAM[item_prefix].Property(HdrType.1)" />
+				<param name="hdr_detail_1" value="$PARAM[item_prefix].Property(HdrDetail.1)" />
+				<param name="hdr_type_2" value="$PARAM[item_prefix].Property(HdrType.2)" />
+				<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(HdrDetail.2)" />
+				<param name="video_codec" value="$PARAM[item_prefix].VideoCodec" />
+				<param name="audio_codec" value="$PARAM[item_prefix].AudioCodec" />
+				<param name="audio_channels" value="$PARAM[item_prefix].AudioChannels(DefaultLayout)" />
+			</include>
 
-				<include content="VideoTechnicalFlagsContent">
-					<param name="visible" value="!String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
-					<param name="resolution" value="$PARAM[item_prefix].VideoResolution" />
-					<param name="hdr_type" value="$PARAM[item_prefix].HdrType" />
-					<param name="hdr_detail" value="$PARAM[item_prefix].HdrDetail" />
-					<param name="hdr_type_1" value="$PARAM[item_prefix].Property(HdrType.1)" />
-					<param name="hdr_detail_1" value="$PARAM[item_prefix].Property(HdrDetail.1)" />
-					<param name="hdr_type_2" value="$PARAM[item_prefix].Property(HdrType.2)" />
-					<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(HdrDetail.2)" />
-					<param name="video_codec" value="$PARAM[item_prefix].VideoCodec" />
-					<param name="audio_codec" value="$PARAM[item_prefix].AudioCodec" />
-					<param name="audio_channels" value="$PARAM[item_prefix].AudioChannels(DefaultLayout)" />
-				</include>
-
-				<include content="VideoTechnicalFlagsContent">
-					<param name="visible" value="String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
-					<param name="resolution" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoResolution)" />
-					<param name="hdr_type" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType)" />
-					<param name="hdr_detail" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail)" />
-					<param name="hdr_type_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.1)" />
-					<param name="hdr_detail_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.1)" />
-					<param name="hdr_type_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.2)" />
-					<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.2)" />
-					<param name="video_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoCodec)" />
-					<param name="audio_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioCodec)" />
-					<param name="audio_channels" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioChannels)" />
-				</include>
-			</control>
+			<include content="VideoTechnicalFlagsContent">
+				<param name="visible" value="$PARAM[visible] + String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
+				<param name="resolution" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoResolution)" />
+				<param name="hdr_type" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType)" />
+				<param name="hdr_detail" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail)" />
+				<param name="hdr_type_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.1)" />
+				<param name="hdr_detail_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.1)" />
+				<param name="hdr_type_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.2)" />
+				<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.2)" />
+				<param name="video_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoCodec)" />
+				<param name="audio_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioCodec)" />
+				<param name="audio_channels" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioChannels)" />
+			</include>
 		</definition>
 	</include>
+
+
 </includes>

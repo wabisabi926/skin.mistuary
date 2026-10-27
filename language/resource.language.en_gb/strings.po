@@ -1185,3 +1185,7 @@ msgstr "Popup transparency — steps are tuned for the dark theme; the light the
 msgctxt "#31761"
 msgid "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
 msgstr "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
+
+msgctxt "#31762"
+msgid "Technical flags as icons"
+msgstr "Technical flags as icons"
