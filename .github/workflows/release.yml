@@ -39,6 +39,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      # test_xbt_tool 会 import xbt_tool，而 xbt_tool 顶层就 import PIL。
+      # 不装的话整个 test 任务直接 ModuleNotFoundError，发布被卡住。
+      - name: Install Pillow
+        run: pip install --quiet "pillow==11.3.0"
+
       - name: Unit tests
         run: python -m unittest discover -s tools -p 'test_*.py' -v
 
