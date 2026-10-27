@@ -53,6 +53,10 @@ jobs:
       - name: Generated variables in sync
         run: python tools/gen_techflag_vars.py --check
 
+      # 只校验已入库的图标产物与 IconMap/TextMap 是否对齐，不依赖本机的源皮肤素材
+      - name: Technical flag icons in sync
+        run: python tools/gen_techflag_icons.py --check
+
   build:
     needs: test
     runs-on: ubuntu-latest
