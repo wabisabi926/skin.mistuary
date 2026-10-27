@@ -15,8 +15,7 @@
 			<!-- DefaultBackground supplies the selected fanart. These frameless scrims
 			     preserve the image while giving the precision list a stable contrast field. -->
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<texture colordiffuse="33000000">colors/black.png</texture>
 			</control>
 			<control type="image">
@@ -27,7 +26,8 @@
 			</control>
 			<control type="image">
 				<top>400</top>
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>680</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="66FFFFFF">overlays/overlayfade.png</texture>

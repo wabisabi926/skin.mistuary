@@ -511,6 +511,22 @@
 				<aspectratio>scale</aspectratio>
 				<texture background="true">special://skin/libraryart/default.jpg</texture>
 			</control>
+			<!-- 兜底库名：画在 default.jpg 之上、其它封面层之下。Kodi 无法运行时
+			     判断封面文件是否存在，靠图层遮挡实现——真实封面是不透明图，会盖住
+			     名字；都没有时名字留在兜底图上，没配封面的分类也能在卡面认出库名。 -->
+			<control type="label">
+				<left>0</left>
+				<top>0</top>
+				<width>320</width>
+				<height>180</height>
+				<font>font32_title</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<scroll>false</scroll>
+				<label>$INFO[ListItem.Label]</label>
+			</control>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
@@ -838,6 +854,93 @@
 			</control>
 		</definition>
 	</include>
+	<!-- 首页「专辑 / 歌手」方块卡片，70% 版。
+	     单独一份的原因：原尺寸走 InfoWallMusicLayout，那是音乐库视图也在用的共享布局，
+	     直接改会把库里的专辑网格一起缩小。
+	     焦点框**完全照抄海报墙**那套：图片 → 角部遮盖 → 描边环。
+	     几何：封面 221×221（遮盖 r9）+ 环 227×227 r12（外扩 3px、描边 3px →
+	     环内缘半径正好 9，与遮盖弧度对齐），描边正好填满那 3px，视觉上紧贴图片。 -->
+	<include name="HomeWidgetAlbumCard">
+		<param name="fallback_image">DefaultFolder.png</param>
+		<param name="main_label">$INFO[ListItem.Artist]</param>
+		<param name="sub_label">$INFO[ListItem.Title]</param>
+		<param name="single_label">$INFO[ListItem.Label]</param>
+		<param name="focused">false</param>
+		<param name="textcolor">text_primary</param>
+		<param name="subtextcolor">text_secondary</param>
+		<definition>
+			<!-- 卡片不要底板：封面 + 下面两行文字直接压在页面背景上（参考网易云那种排版） -->
+			<!-- 封面：scale（裁切填满），不能用 keep —— keep 会留边，
+			     描边环看起来就比图大一圈 -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>186</width>
+				<height>186</height>
+				<texture background="true">$VAR[NaraAlbumCardThumbVar]</texture>
+				<aspectratio>scale</aspectratio>
+			</control>
+			<!-- 圆角：实色角部遮盖（和海报墙同款，必须在描边环之前绘制） -->
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>186</width>
+				<height>186</height>
+				<texture>shapes/corner_186x186_r9.png</texture>
+			</control>
+			<control type="textbox">
+				<left>0</left>
+				<top>190</top>
+				<width>186</width>
+				<height>44</height>
+				<font>font12</font>
+				<textcolor>$PARAM[textcolor]</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$PARAM[single_label]</label>
+				<visible>!String.IsEqual(ListItem.DBType,album)</visible>
+			</control>
+			<!-- 层级：专辑名是主体（font12 亮），歌手是次要（font10 暗）。
+			     原来是反的 —— 专辑名小+暗、歌手大+亮，读起来主次不清。 -->
+			<control type="group">
+				<visible>String.IsEqual(ListItem.DBType,album)</visible>
+				<control type="label">
+					<left>0</left>
+					<top>190</top>
+					<width>186</width>
+					<label>$PARAM[sub_label]</label>
+					<font>font12</font>
+					<textcolor>$PARAM[textcolor]</textcolor>
+					<scroll>$PARAM[focused]</scroll>
+					<align>center</align>
+				</control>
+				<control type="label">
+					<left>0</left>
+					<top>218</top>
+					<width>186</width>
+					<label>$PARAM[main_label]</label>
+					<font>font10</font>
+					<textcolor>$PARAM[subtextcolor]</textcolor>
+					<scroll>$PARAM[focused]</scroll>
+					<align>center</align>
+				</control>
+			</control>
+			<control type="group">
+				<left>78</left>
+				<top>1</top>
+				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
+			</control>
+			<control type="image">
+				<left>-3</left>
+				<top>-3</top>
+				<width>192</width>
+				<height>192</height>
+				<texture colordiffuse="focus_media">shapes/ring_card_192x192_r12.png</texture>
+				<visible>$PARAM[focused]</visible>
+				<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+			</control>
+		</definition>
+	</include>
 	<include name="WidgetListSquare">
 		<param name="sub_label">$INFO[ListItem.Label]</param>
 		<param name="sortby"></param>
@@ -862,10 +965,10 @@
 				<param name="visible" value="$PARAM[visible]"/>
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
-				<left>0</left>
+				<left>70</left>
 				<top>120</top>
 				<right>0</right>
-				<height>500</height>
+				<height>358</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
 				<onclick condition="$PARAM[onclick_condition_2]">$PARAM[onclick_action_2]</onclick>
 				<include content="WidgetListCommon">
@@ -873,10 +976,11 @@
 				</include>
 				<visible>$PARAM[visible]</visible>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
-				<itemlayout width="310" height="500">
+				<itemlayout width="207" height="358">
 					<control type="group">
-						<left>60</left>
-						<include content="InfoWallMusicLayout">
+						<left>8</left>
+						<top>6</top>
+						<include content="HomeWidgetAlbumCard">
 							<param name="main_label" value="$PARAM[main_label]" />
 							<param name="single_label" value="$PARAM[single_label]" />
 							<param name="sub_label" value="$PARAM[sub_label]" />
@@ -884,26 +988,22 @@
 						</include>
 					</control>
 				</itemlayout>
-				<focusedlayout width="310" height="500">
+				<focusedlayout width="207" height="358">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
-						<left>60</left>
+						<left>8</left>
+						<top>6</top>
 						<animation type="Focus">
-							<effect type="zoom" start="100" end="112" time="200" tween="sine" easing="inout" center="240,120" />
+							<effect type="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="93,116" />
 						</animation>
 						<animation type="Unfocus">
-							<effect type="zoom" start="112" end="100" time="200" tween="sine" easing="inout" center="240,120" />
+							<effect type="zoom" start="106" end="100" time="200" tween="sine" easing="inout" center="93,116" />
 						</animation>
-						<include content="InfoWallMusicLayout">
+						<include content="HomeWidgetAlbumCard">
 							<param name="main_label" value="$PARAM[main_label]" />
 							<param name="single_label" value="$PARAM[single_label]" />
 							<param name="sub_label" value="$PARAM[sub_label]" />
 							<param name="focused" value="true" />
-							<param name="focus_border" value="3" />
-							<param name="focus_left" value="-2.678571" />
-							<param name="focus_top" value="-2.678571" />
-							<param name="focus_width" value="321.357142" />
-							<param name="focus_height" value="391.357142" />
 						</include>
 					</control>
 				</focusedlayout>
@@ -969,7 +1069,7 @@
 				</include>
 				<visible>$PARAM[visible]</visible>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
-				<itemlayout width="310" height="$PARAM[item_height]">
+				<itemlayout width="324" height="$PARAM[item_height]">
 					<control type="group">
 						<left>60</left>
 						<control type="image">
@@ -1022,7 +1122,7 @@
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout width="310" height="$PARAM[item_height]">
+				<focusedlayout width="324" height="$PARAM[item_height]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<left>60</left>

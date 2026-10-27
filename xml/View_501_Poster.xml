@@ -9,20 +9,17 @@
 			<!-- The selected item owns a detail-page backdrop while this view is
 			     active. TopBar and BottomBar remain above this group in MyVideoNav. -->
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<texture>colors/black.png</texture>
 			</control>
 			<control type="image">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background">special://skin/backgrounds/primary.jpg</texture>
 				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(Container(501).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image" id="5090">
-				<width>1920</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[Container(501).ListItem.Art(fanart)]</texture>
@@ -42,7 +39,8 @@
 			</control>
 			<control type="image">
 				<top>420</top>
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>660</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>

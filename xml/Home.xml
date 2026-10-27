@@ -82,7 +82,8 @@
 			<!-- Keep the navigation and clock legible over bright fanart. Reuse the
 			     lower scrim texture upside down so it fades from the top edge. -->
 			<control type="image">
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>220</height>
 				<aspectratio>stretch</aspectratio>
 				<texture flipy="true" colordiffuse="33FFFFFF">overlays/overlayfade.png</texture>
@@ -90,7 +91,8 @@
 			<!-- Give the focused file path a stable reading zone without drawing a separate bar. -->
 			<control type="image">
 				<top>860</top>
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>220</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="4DFFFFFF">overlays/overlayfade.png</texture>
@@ -108,7 +110,8 @@
 			</control>
 			<control type="image">
 				<top>420</top>
-				<width>1920</width>
+				<left>-120</left>
+				<right>-120</right>
 				<height>660</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
@@ -1006,16 +1009,18 @@
 				     sections collapse without any width or position bookkeeping. -->
 				<!-- 通用版：grouplist 无 texturebackground，改为独立背景层。
 				     注意坐标系：标签组固定 left=0 width=1920，内容居中于设计坐标 x=960，
-				     5 个标签总宽约 609（实测自渲染截图，换算回设计坐标）。
-				     条的范围严格等于标签内容 655~1264，不加内边距 ——
+				     6 个标签总宽约 721（5 个实测 609，音乐 2 字约 112）。
+				     条的范围严格等于标签内容 600~1321，不加内边距 ——
 				     这样首尾标签的焦点胶囊（round26）与条的圆角端完全重合。
 				     该位置与设计分辨率无关（16:9 与 17:9 下标签位置相同），
 				     但改标签文字或隐藏标签后需重新测量。 -->
 				<control type="image">
-					<left>655</left>
+					<left>600</left>
 					<top>20</top>
-					<width>609</width>
+					<width>721</width>
 					<height>60</height>
+					<!-- 导航条是常驻元素，不是浮窗：用卡片档的轻玻璃（40%）。
+					     跟浮窗档（78%）走会变成一条死黑的条。 -->
 					<texture colordiffuse="glass_regular" border="26">shapes/round26.png</texture>
 				</control>
 				<control type="grouplist" id="9000">
@@ -1183,7 +1188,8 @@
 						<onup>noop</onup>
 						<ondown condition="Integer.IsGreater(Container(15010).NumItems,0)">15010</ondown>
 						<ondown condition="!Integer.IsGreater(Container(15010).NumItems,0)">noop</ondown>
-						<onclick>ActivateWindow(filemanager,$ROOT,return)</onclick>
+						<!-- 不再写显式 onclick：内容源已声明 target=filemanager，
+						     交给 Kodi 默认导航按源路径打开（原来的 $ROOT 是无效标记，会打开错误目录） -->
 					</control>
 				</control>
 					<control type="group" id="700">
@@ -1245,10 +1251,15 @@
 							<visible allowhiddenfocus="true">ControlGroup(8100).HasFocus</visible>
 							<animation effect="fade" start="0" end="100" time="140">VisibleChange</animation>
 							<animation effect="slide" start="0,-8" end="0,0" time="160" tween="sine" easing="out">VisibleChange</animation>
+							<!-- 左上角菜单弹层：原来只有 40% 的 glass_regular、没有遮蔽层，
+							     压在 fanart 上等于没底。改成跟浮窗同一档。 -->
+							<include content="NaraDialogScrim">
+								<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />
+							</include>
 							<control type="image">
 								<width>220</width>
 								<height>220</height>
-								<texture colordiffuse="glass_regular" border="32">shapes/round32.png</texture>
+								<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/round20.png</texture>
 							</control>
 							<control type="image">
 								<left>6</left>
