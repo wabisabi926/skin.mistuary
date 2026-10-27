@@ -899,8 +899,8 @@ msgid "Skin settings"
 msgstr "皮肤设置"
 
 msgctxt "#31722"
-msgid "Interface transparency"
-msgstr "界面透明度"
+msgid "Page transparency"
+msgstr "页面透明度"
 
 msgctxt "#31723"
 msgid "Very light"
@@ -927,8 +927,8 @@ msgid "Playback transparency"
 msgstr "播放中透明度"
 
 msgctxt "#31730"
-msgid "Interface transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "界面透明度 — 档位按透黑模式设计；透白主题下会更浅"
+msgid "Page transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "页面透明度 — 档位按透黑模式设计；透白主题下会更浅"
 
 msgctxt "#31731"
 msgid "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
@@ -971,12 +971,12 @@ msgid "Follows the language setting by default. Or show the original title only,
 msgstr "默认跟随语言设置；可只显示原始标题，或原名与译名并列。"
 
 msgctxt "#31742"
-msgid "Glass panels while browsing. Balanced by default; Clearest shows more background, Solid if text is faint."
-msgstr "浏览时的玻璃面板。默认“平衡”；要多露背景选“极透”，嫌字淡选“实心”。"
+msgid "Covers full-screen pages and the cards inside them: settings, add-on browser, video and music info, home cards. Balanced by default."
+msgstr "管全屏页面和页面里的卡片：设置页、插件浏览、影片和音乐信息页、首页卡片。默认“平衡”。"
 
 msgctxt "#31743"
-msgid "Only affects popups while playing. Light by default; Clearest if the OSD covers too much."
-msgstr "仅影响播放中的浮窗。默认“通透”；嫌 OSD 挡画面选“极透”。"
+msgid "Covers popups while playing: OSD settings, playlist, bookmarks, process info, player controls. Light by default."
+msgstr "管播放时的浮窗：OSD 设置、播放列表、书签、处理信息、播放控制条。默认“通透”。"
 
 msgctxt "#31744"
 msgid "Use item fanart as the page background, falling back to the default image. On by default."
@@ -1037,3 +1037,16 @@ msgstr "播放时无操作自动收起 OSD。默认关闭。"
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
 msgstr "收起前的等待秒数。默认 4 秒。"
+
+
+msgctxt "#31759"
+msgid "Popup transparency"
+msgstr "浮窗透明度"
+
+msgctxt "#31760"
+msgid "Popup transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgstr "浮窗透明度 — 档位按透黑模式设计；透白主题下会更浅"
+
+msgctxt "#31761"
+msgid "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
+msgstr "管叠在页面上的层：插件详情、插件设置、对话框、右键菜单、键盘、设置页左侧栏。默认“偏实”。"

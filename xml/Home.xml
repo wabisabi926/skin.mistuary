@@ -1021,7 +1021,7 @@
 					<height>60</height>
 					<!-- 导航条是常驻元素，不是浮窗：用卡片档的轻玻璃（40%）。
 					     跟浮窗档（78%）走会变成一条死黑的条。 -->
-					<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="26">shapes/round26.png</texture>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 				</control>
 				<control type="grouplist" id="9000">
 					<left>0</left>
@@ -1200,7 +1200,7 @@
 						<control type="image">
 							<width>54</width>
 							<height>54</height>
-							<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="27">shapes/round27.png</texture>
+							<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="27">shapes/round27.png</texture>
 						</control>
 						<control type="image">
 							<width>54</width>
@@ -1259,7 +1259,7 @@
 							<control type="image">
 								<width>220</width>
 								<height>220</height>
-								<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/round20.png</texture>
+								<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/round20.png</texture>
 							</control>
 							<control type="image">
 								<left>6</left>

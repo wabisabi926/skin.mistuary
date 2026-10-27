@@ -20,7 +20,7 @@
 				<control type="image">
 					<width>265</width>
 					<height>265</height>
-					<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="48">shapes/round48.png</texture>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="48">shapes/round48.png</texture>
 				</control>
 				<control type="image">
 					<width>265</width>
@@ -1090,7 +1090,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="32">shapes/round32.png</texture>
+							<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
@@ -1150,7 +1150,7 @@
 							<top>20</top>
 							<width>276</width>
 							<height>160</height>
-							<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="32">shapes/round32.png</texture>
+							<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">

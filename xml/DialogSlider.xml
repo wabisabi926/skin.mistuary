@@ -18,7 +18,7 @@
 				<width>840</width>
 				<height>155</height>
 				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassTexture">
-					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
+					<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
 				</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
 					<param name="texture" value="dialogs/dialog-bg-nobo.png" />

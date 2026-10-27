@@ -6,7 +6,7 @@
 			<control type="image">
 				<width>100%</width>
 				<height>100%</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 			</control>
 			<control type="image">
 				<width>100%</width>

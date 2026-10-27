@@ -231,7 +231,7 @@
 			<control type="image">
 				<width>802</width>
 				<height>$PARAM[height]</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="32">shapes/round32.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 			</control>
 		</definition>
 	</include>

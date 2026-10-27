@@ -13,6 +13,7 @@
 				<include>OpenClose_Left</include>
 				<include content="ContentPanel">
 					<param name="width" value="1042" />
+					<param name="tint" value="$VAR[NaraPlaybackDialogTintVar]" />
 				</include>
 				<control type="fixedlist" id="11">
 					<left>0</left>

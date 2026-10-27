@@ -993,7 +993,7 @@
 			<centertop>50%</centertop>
 			<centerleft>50%</centerleft>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
+				<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
 				<param name="height" value="760" />
 			</include>
 			<control type="list" id="3">

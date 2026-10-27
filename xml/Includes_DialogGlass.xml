@@ -35,19 +35,20 @@
 		<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 		<bordersize>20</bordersize>
 	</include>
-	<!-- tint 的值可以是颜色名（gl_1..5 等），**也可以是变量**（NaraGlassDialogTintVar）。
+	<!-- tint 的值可以是颜色名（gl_1..5 等），**也可以是变量**（NaraGlassFloatTintVar /
+	     NaraGlassPageTintVar / NaraPlaybackDialogTintVar）。
 	     不能用 frosted / dialog 这类别名——那不是颜色名，会解析失败。
 	     贴图 shapes/glass<N>.png 自带 alpha 渐变：中心实、边缘化开，
 	     所以 colordiffuse 的 alpha 语义是「不透明度上限」而不是「均匀不透明度」。 -->
 	<include name="NaraDialogGlassTexture">
-		<param name="tint">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="tint">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="radius">20</param>
 		<definition>
 			<texture colordiffuse="$PARAM[tint]" border="$PARAM[radius]">shapes/glass$PARAM[radius].png</texture>
 		</definition>
 	</include>
 	<include name="NaraDialogGlassSurface">
-		<param name="style">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="style">$VAR[NaraGlassFloatTintVar]</param>
 		<definition>
 			<control type="image">
 				<width>100%</width>
@@ -182,7 +183,7 @@
 			<top>180</top>
 			<width>600</width>
 			<height>176</height>
-			<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>103</defaultcontrol>

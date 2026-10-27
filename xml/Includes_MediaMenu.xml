@@ -659,7 +659,7 @@
 			<top>0</top>
 			<width>432</width>
 			<height>100%</height>
-			<texture colordiffuse="$VAR[NaraGlassDialogTintVar]">colors/white.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]">colors/white.png</texture>
 		</control>
 		<control type="button" id="6131">
 			<textcolor>text_primary</textcolor>

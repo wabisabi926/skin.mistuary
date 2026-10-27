@@ -8,7 +8,7 @@
 			<width>1640</width>
 			<height>890</height>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
+				<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
 				<param name="width" value="1640" />
 				<param name="height" value="890" />
 				<param name="header_id" value="2" />

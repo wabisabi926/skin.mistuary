@@ -27,7 +27,7 @@
 				<width>100%</width>
 				<height>470</height>
 				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassTexture">
-					<param name="tint" value="$VAR[NaraGlassDialogTintVar]" />
+					<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
 				</include>
 				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
 					<param name="color" value="surface_dialog" />

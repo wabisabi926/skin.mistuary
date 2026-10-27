@@ -177,7 +177,7 @@
 				<centertop>50%</centertop>
 				<width>480</width>
 				<height>349</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="list" id="5199">
 				<centerleft>50%</centerleft>

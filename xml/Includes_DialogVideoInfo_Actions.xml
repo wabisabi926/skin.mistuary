@@ -3,7 +3,7 @@
 	<include name="VideoInfoActionGlass">
 		<param name="button_id">0</param>
 		<param name="ring">shapes/ring_btn_70x70_r35.png</param>
-		<param name="base">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="base">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="focus">glass_focus_medium</param>
 		<definition>
 			<control type="image">

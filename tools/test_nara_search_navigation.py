@@ -366,10 +366,11 @@ class SearchDrawerTests(unittest.TestCase):
         self.assertLess(int(letters.findtext('top')) + int(letters.findtext('height')), int(digits.findtext('top')))
         self.assertLessEqual(int(digits.findtext('top')) + int(digits.findtext('height')), height - 24)
         self.assertEqual(drawer.findtext('bottom'), '0')
-        # 2026-10-27 起玻璃统一走「界面透明度」设置：所有面板都用 NaraGlassDialogTintVar，
-        # 不再有 glass_regular 这类固定色名（那条旁路就是侧栏"调了设置也不变"的根因）。
+        # 2026-10-27 起玻璃统一走透明度设置，没有 glass_regular 这类固定色名
+        # （那条旁路就是侧栏"调了设置也不变"的根因）。
+        # 搜索键盘是叠在页面上的浮层，跟「浮窗透明度」走。
         self.assertEqual(drawer.find('control/texture').get('colordiffuse'),
-                         '$VAR[NaraGlassDialogTintVar]')
+                         '$VAR[NaraGlassFloatTintVar]')
         lift = int(INCLUDES['NaraSearchResultsLift'].find('animation').get('end').split(',')[1])
         for id in (16101, 16102):
             row = CONTROLS[id]

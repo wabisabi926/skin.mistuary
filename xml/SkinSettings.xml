@@ -79,21 +79,32 @@
 					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
 					<label2>$VAR[OriginalTitleSetting]</label2>
 				</control>
-				<!-- 界面 / 播放中透明度：值在 Variables.xml 的 NaraGlass*TintVar 里，
-				     档位色在 colors/defaults.xml 的 gl_* / sc_*（light.xml 里是白玻璃那套）。
-				     面板色和遮蔽色是联动的，选一个档位两样一起变。
-				     弹窗标题带一句主题差异说明（31730/31731），只在选档时出现；
-				     每行的用途写在底部帮助条（31742/31743）。 -->
+				<!-- 三档透明度，按「离用户多近」分：
+				     711 页面（全屏页面 + 页面里的卡片/导航条）
+				     712 浮窗（叠在页面上的层：对话框/插件详情/插件设置/菜单/键盘/设置侧栏）
+				     713 播放中（播放时的浮窗 + 播放控制条）
+				     档位色都在 colors/defaults.xml 的 gl_*，遮蔽 sc_* 只跟页面档。
+				     弹窗标题带一句主题差异说明（31730/31760/31731），只在选档时出现；
+				     每行管哪些地方写在底部帮助条（31742/31761/31743）。 -->
 				<control type="button" id="711">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31722]</label>
 					<include content="NaraSettingsRow">
 					<param name="text" value="text_primary" />
 				</include>
-					<onclick>Skin.SelectBool(31730, 31723|glass_ui_op_1, 31724|glass_ui_op_2, 31725|glass_ui_op_3, 31726|glass_ui_op_4, 31728|glass_ui_op_5)</onclick>
-					<label2>$VAR[NaraGlassDialogLabelVar]</label2>
+					<onclick>Skin.SelectBool(31730, 31723|glass_page_op_1, 31724|glass_page_op_2, 31725|glass_page_op_3, 31726|glass_page_op_4, 31728|glass_page_op_5)</onclick>
+					<label2>$VAR[NaraGlassPageLabelVar]</label2>
 				</control>
 				<control type="button" id="712">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31759]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31760, 31723|glass_float_op_1, 31724|glass_float_op_2, 31725|glass_float_op_3, 31726|glass_float_op_4, 31728|glass_float_op_5)</onclick>
+					<label2>$VAR[NaraGlassFloatLabelVar]</label2>
+				</control>
+				<control type="button" id="713">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31729]</label>
 					<include content="NaraSettingsRow">

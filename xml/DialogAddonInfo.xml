@@ -25,7 +25,7 @@
 				<top>140</top>
 				<width>1440</width>
 				<height>800</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="grouplist" id="9001">
 				<left>240</left>

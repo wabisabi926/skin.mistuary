@@ -90,7 +90,7 @@ DEFAULT_ONLY_SETTINGS: set[str] = set()
 # （面板色 2026-10-26 起改由 $VAR 提供，所以变量名也要算作"有面板"）
 PANEL_TOKENS = (
     "glass_frosted", "glass_dialog", "glass_page",
-    "NaraGlassDialogTintVar", "NaraGlassPageTintVar",
+    "NaraGlassPageTintVar", "NaraGlassFloatTintVar", "NaraPlaybackDialogTintVar",
     "NaraDialogGlassTexture", "NaraDialogGlassSurface",
     "ContentPanel", "NaraSettingsDialogFrame",
 )

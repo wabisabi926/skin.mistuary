@@ -22,7 +22,7 @@
 			<control type="image">
 				<width>760</width>
 				<height>402</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="20">shapes/glass20.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="button">
 				<width>760</width>
@@ -69,7 +69,7 @@
 				<right>72</right>
 				<top>167</top>
 				<height>10</height>
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" border="5">shapes/round5.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="5">shapes/round5.png</texture>
 			</control>
 			<control type="progress">
 				<left>72</left>

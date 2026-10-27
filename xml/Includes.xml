@@ -880,7 +880,7 @@
 		<param name="header_icon_right">10</param>
 		<param name="header_icon_top">11</param>
 		<param name="header_icon_size">48</param>
-		<param name="glass_style">$VAR[NaraGlassDialogTintVar]</param>
+		<param name="glass_style">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="darken_bg">true</param>
 		<param name="scrim">$VAR[NaraGlassScrimTintVar]</param>
 		<definition>
@@ -1201,7 +1201,7 @@
 				<width>900</width>
 				<height>380</height>
 				<include content="DialogBackgroundCommons">
-					<param name="glass_style" value="$VAR[NaraGlassDialogTintVar]" />
+					<param name="glass_style" value="$VAR[NaraGlassFloatTintVar]" />
 					<param name="width" value="900" />
 					<param name="height" value="380" />
 					<param name="header_label" value="$PARAM[header_label]" />
@@ -1306,9 +1306,11 @@
 		<param name="top">-10%</param>
 		<param name="height">120%</param>
 		<param name="flipx">false</param>
+		<!-- 默认走页面档；OSD 里用的时候调用方传播放中档进来。 -->
+		<param name="tint">$VAR[NaraGlassPageTintVar]</param>
 		<definition>
 			<control type="image">
-				<texture colordiffuse="$VAR[NaraGlassDialogTintVar]" flipx="$PARAM[flipx]">colors/white.png</texture>
+				<texture colordiffuse="$PARAM[tint]" flipx="$PARAM[flipx]">colors/white.png</texture>
 				<width>$PARAM[width]</width>
 				<left>$PARAM[left]</left>
 				<right>$PARAM[right]</right>
