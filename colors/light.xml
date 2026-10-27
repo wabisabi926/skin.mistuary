@@ -7,7 +7,7 @@
 	<!-- 透白主题的浮窗 / 页面面板**刻意保持半透明**：
 	     白玻璃一旦不透明，白色文字就彻底消失。要解决只能改成深色字（ink_primary），
 	     那是独立任务，见 docs/glass-opacity-plan.md §8。
-	     所以这里不跟 defaults.xml 的 45%~97%，只做到 15%~36%。 -->
+	     所以这里不跟 defaults.xml 的 32%~97%，只做到 10%~36%。 -->
 
 	<!-- 透白模式的浮窗遮蔽层仍用深色：
 	     白色遮蔽 + 白色文字 = 文字彻底消失，所以这里不能提白。
@@ -17,23 +17,25 @@
 	<color name="scrim_sheet">73000000</color>
 	<color name="glass_plate">1A000000</color>
 
-	<!-- ===== 浮窗 / 页面不透明度档位（透白主题专用值）=====
+	<!-- ===== 玻璃透明度档位（透白主题专用值）=====
 	     透白主题的可行区间比透黑窄得多：白玻璃越不透明，白色文字越看不见。
-	     所以同一档位在透黑是 45%~97%（黑玻璃），在透白只能是 15%~36%（白玻璃）。
+	     所以同一档位在透黑是 32%~97%（黑玻璃），在透白只能是 10%~36%（白玻璃）。
 	     设置项在两个主题下都生效，只是绝对值不同 —— 这是没办法的事：
 	     Kodi 没有暴露"当前颜色主题"的 info 标签（查过 GUIInfoManager 全部翻译表），
 	     皮肤无法判断自己在哪个主题下，也就没法给设置项加条件显示。
 	     真正的解法是把浮窗文字换成深色（ink_primary），白玻璃才能做到 90%，
 	     那是浅色主题改造的一部分，见 docs/glass-opacity-plan.md §8。 -->
-	<color name="gl_1">26FFFFFF</color>
-	<color name="gl_2">33FFFFFF</color>
-	<color name="gl_3">40FFFFFF</color>
-	<color name="gl_4">4DFFFFFF</color>
-	<color name="gl_5">5CFFFFFF</color>
+	<color name="gl_1">1AFFFFFF</color>
+	<color name="gl_2">26FFFFFF</color>
+	<color name="gl_3">33FFFFFF</color>
+	<color name="gl_4">40FFFFFF</color>
+	<color name="gl_5">4DFFFFFF</color>
+	<color name="gl_6">5CFFFFFF</color>
 	<!-- 遮蔽层仍用深色（白遮蔽 + 白字 = 字没了），各档统一，让"越实"只由面板决定 -->
 	<color name="sc_1">8C000000</color>
 	<color name="sc_2">8C000000</color>
 	<color name="sc_3">8C000000</color>
 	<color name="sc_4">8C000000</color>
 	<color name="sc_5">8C000000</color>
+	<color name="sc_6">8C000000</color>
 </colors>

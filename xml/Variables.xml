@@ -1820,21 +1820,23 @@
 		<value>DefaultMusicAlbums.png</value>
 	</variable>
 	<!-- ===== 玻璃透明度：三个设置，按「离用户多近」分 =====
-	     页面透明度   glass_page_op_1..5  → 全屏页面面板 + 页面里的卡片 / 胶囊 / 导航条
-	     浮窗透明度   glass_float_op_1..5 → 叠在页面上的层：对话框、插件详情、插件设置、
+	     页面透明度   glass_page_op_1..6  → 全屏页面面板 + 页面里的卡片 / 胶囊 / 导航条
+	     浮窗透明度   glass_float_op_1..6 → 叠在页面上的层：对话框、插件详情、插件设置、
 	                                       右键菜单、键盘、搜索键盘、设置页左侧栏
-	     播放中透明度 glass_play_op_1..5  → 播放时的浮窗：OSD 设置、播放列表、书签、
+	     播放中透明度 glass_play_op_1..6  → 播放时的浮窗：OSD 设置、播放列表、书签、
 	                                       处理信息、播放控制条
-	     档位色 gl_1..5 三个设置共用；遮蔽 sc_1..5 **只跟页面档** ——
+	     档位色 gl_1..6 三个设置共用；遮蔽 sc_1..6 **只跟页面档** ——
 	     遮蔽干的是"把页面压暗"，属于页面，不属于浮窗（浮窗只改自己的面板）。
-	     合成 = 1−(1−scrim)(1−panel)：45/27=60%、58/35=73%、71/43=83%、84/50=92%、97/58=99%
-	     默认：页面 3 平衡、浮窗 4 偏实、播放中 2 通透 —— 越靠前的层越黑。 -->
+	     合成 = 1−(1−scrim)(1−panel)：32/19=45%、45/27=60%、58/35=73%、
+	            71/43=83%、84/50=92%、97/58=99%
+	     默认：页面 3 平衡 73%、浮窗 4 偏实 83%、播放中 2 通透 60% —— 越靠前的层越黑。 -->
 	<variable name="NaraGlassPageTintVar">
 		<value condition="Skin.HasSetting(glass_page_op_1)">gl_1</value>
 		<value condition="Skin.HasSetting(glass_page_op_2)">gl_2</value>
 		<value condition="Skin.HasSetting(glass_page_op_3)">gl_3</value>
 		<value condition="Skin.HasSetting(glass_page_op_4)">gl_4</value>
 		<value condition="Skin.HasSetting(glass_page_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_page_op_6)">gl_6</value>
 		<value>gl_3</value>
 	</variable>
 	<variable name="NaraGlassPageLabelVar">
@@ -1842,7 +1844,8 @@
 		<value condition="Skin.HasSetting(glass_page_op_2)">$LOCALIZE[31724]</value>
 		<value condition="Skin.HasSetting(glass_page_op_3)">$LOCALIZE[31725]</value>
 		<value condition="Skin.HasSetting(glass_page_op_4)">$LOCALIZE[31726]</value>
-		<value condition="Skin.HasSetting(glass_page_op_5)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_page_op_5)">$LOCALIZE[31727]</value>
+		<value condition="Skin.HasSetting(glass_page_op_6)">$LOCALIZE[31728]</value>
 		<value>$LOCALIZE[31725]</value>
 	</variable>
 	<!-- 遮蔽层跟页面档联动：档位越高，页面外压得越重。 -->
@@ -1852,6 +1855,7 @@
 		<value condition="Skin.HasSetting(glass_page_op_3)">sc_3</value>
 		<value condition="Skin.HasSetting(glass_page_op_4)">sc_4</value>
 		<value condition="Skin.HasSetting(glass_page_op_5)">sc_5</value>
+		<value condition="Skin.HasSetting(glass_page_op_6)">sc_6</value>
 		<value>sc_3</value>
 	</variable>
 	<variable name="NaraGlassFloatTintVar">
@@ -1860,6 +1864,7 @@
 		<value condition="Skin.HasSetting(glass_float_op_3)">gl_3</value>
 		<value condition="Skin.HasSetting(glass_float_op_4)">gl_4</value>
 		<value condition="Skin.HasSetting(glass_float_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_float_op_6)">gl_6</value>
 		<value>gl_4</value>
 	</variable>
 	<variable name="NaraGlassFloatLabelVar">
@@ -1867,7 +1872,8 @@
 		<value condition="Skin.HasSetting(glass_float_op_2)">$LOCALIZE[31724]</value>
 		<value condition="Skin.HasSetting(glass_float_op_3)">$LOCALIZE[31725]</value>
 		<value condition="Skin.HasSetting(glass_float_op_4)">$LOCALIZE[31726]</value>
-		<value condition="Skin.HasSetting(glass_float_op_5)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_float_op_5)">$LOCALIZE[31727]</value>
+		<value condition="Skin.HasSetting(glass_float_op_6)">$LOCALIZE[31728]</value>
 		<value>$LOCALIZE[31726]</value>
 	</variable>
 	<!-- 播放中浮窗：独立设置，不再"自动下移两档"那种隐式逻辑，所见即所得。 -->
@@ -1877,6 +1883,7 @@
 		<value condition="Skin.HasSetting(glass_play_op_3)">gl_3</value>
 		<value condition="Skin.HasSetting(glass_play_op_4)">gl_4</value>
 		<value condition="Skin.HasSetting(glass_play_op_5)">gl_5</value>
+		<value condition="Skin.HasSetting(glass_play_op_6)">gl_6</value>
 		<value>gl_2</value>
 	</variable>
 	<variable name="NaraGlassPlaybackLabelVar">
@@ -1884,7 +1891,8 @@
 		<value condition="Skin.HasSetting(glass_play_op_2)">$LOCALIZE[31724]</value>
 		<value condition="Skin.HasSetting(glass_play_op_3)">$LOCALIZE[31725]</value>
 		<value condition="Skin.HasSetting(glass_play_op_4)">$LOCALIZE[31726]</value>
-		<value condition="Skin.HasSetting(glass_play_op_5)">$LOCALIZE[31728]</value>
+		<value condition="Skin.HasSetting(glass_play_op_5)">$LOCALIZE[31727]</value>
+		<value condition="Skin.HasSetting(glass_play_op_6)">$LOCALIZE[31728]</value>
 		<value>$LOCALIZE[31724]</value>
 	</variable>
 	<!-- 设置类对话框的遮蔽层：**播放中**用 scrim_osd（30%），其余跟页面档。

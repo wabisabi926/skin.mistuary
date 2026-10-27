@@ -918,6 +918,10 @@ msgctxt "#31726"
 msgid "Dense"
 msgstr "偏实"
 
+msgctxt "#31727"
+msgid "Heavy"
+msgstr "厚实"
+
 msgctxt "#31728"
 msgid "Solid"
 msgstr "实心"

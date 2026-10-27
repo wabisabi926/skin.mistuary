@@ -1050,6 +1050,10 @@ msgctxt "#31726"
 msgid "Dense"
 msgstr "Dense"
 
+msgctxt "#31727"
+msgid "Heavy"
+msgstr "Heavy"
+
 msgctxt "#31728"
 msgid "Solid"
 msgstr "Solid"
