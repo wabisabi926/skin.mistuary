@@ -41,13 +41,13 @@ jobs:
           python-version: '3.12'
 
       - name: Unit tests
-        run: python -m unittest discover -s extras -p 'test_*.py' -v
+        run: python -m unittest discover -s tools -p 'test_*.py' -v
 
       - name: Static audit
-        run: python extras/audit_skin.py --strict
+        run: python tools/audit_skin.py --strict
 
       - name: Generated variables in sync
-        run: python extras/gen_techflag_vars.py --check
+        run: python tools/gen_techflag_vars.py --check
 
   build:
     needs: test
@@ -164,7 +164,7 @@ jobs:
             --exclude='__pycache__/' \
             --exclude='*.pyc' \
             --exclude='xbt_tool.py' \
-            --exclude='extras/' \
+            --exclude='tools/' \
             ./ "build/${ADDON_ID}/"
           # 发布包的 media/ 里只留 Textures.xbt，松散图片和子目录都不带
           find "build/${ADDON_ID}/media" -mindepth 1 -maxdepth 1 \

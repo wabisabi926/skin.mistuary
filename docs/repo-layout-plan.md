@@ -1,6 +1,12 @@
 # 仓库目录整改方案：`extras/` 归位
 
-日期：2026-10-27　状态：**待确认后执行**
+日期：2026-10-27　状态：**已执行**
+
+> 执行结果：`extras/` → `tools/`（14 个 .py + 5 个 .ps1 原样迁走，代码未改）；
+> `backgrounds/` `home-images/` `playlists/` → `extras/`；XML 引用替换 30 处、
+> 文档与工具内的路径替换 28 处；`release.yml` 改为排除 `tools/`、包含 `extras/`。
+> 验证：`audit_skin.py --strict` 缺失贴图 0（它会真实校验 `special://skin/extras/...`）、
+> 单测 42 项全绿、`gen_techflag_vars.py --check` 同步。
 
 ---
 

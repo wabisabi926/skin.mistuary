@@ -25,8 +25,8 @@ ALPHA 是唯一能调的旋钮：100% 是硬黑缺口，88% 会透出一点背�
 
 用法
 ----
-  python extras/gen_corner_masks.py            # 重新生成
-  python extras/gen_corner_masks.py --check    # 只检查是否齐全
+  python tools/gen_corner_masks.py            # 重新生成
+  python tools/gen_corner_masks.py --check    # 只检查是否齐全
 """
 
 import argparse

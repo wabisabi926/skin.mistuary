@@ -2,7 +2,7 @@
 残留的魔改内核专属属性、只在 Kodi 22 才有的写法，以及皮肤设置的读写是否配对。
 
 用法：
-    python extras/audit_skin.py [--verbose] [--strict]
+    python tools/audit_skin.py [--verbose] [--strict]
 
 退出码：发现"硬错误"（XML 解析失败、缺失 include / 变量 / 字体 / 贴图、
 $MAP 缺 Kodi 21 守卫）返回 1；只有软提示（皮肤字符串缺失）返回 0。

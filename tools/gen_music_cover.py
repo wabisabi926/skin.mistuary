@@ -21,8 +21,8 @@ gen_music_cover.py — 生成音乐播放页的「无专辑图」兜底图（黑
 
 用法
 ----
-  python extras/gen_music_cover.py                 # 用默认冷白
-  python extras/gen_music_cover.py --accent 4FC3E8 # 换色（RRGGBB）
+  python tools/gen_music_cover.py                 # 用默认冷白
+  python tools/gen_music_cover.py --accent 4FC3E8 # 换色（RRGGBB）
 """
 
 import argparse

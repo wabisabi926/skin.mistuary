@@ -1222,7 +1222,7 @@
 		<content>
 			<item>
 				<label>$LOCALIZE[20382]</label>
-				<onclick>ActivateWindow(videos,special://skin/playlists/recent_movies_70.xsp,return)</onclick>
+				<onclick>ActivateWindow(videos,special://skin/extras/playlists/recent_movies_70.xsp,return)</onclick>
 				<thumb>DefaultRecentlyAddedMovies.png</thumb>
 			</item>
 			<item>
@@ -1262,7 +1262,7 @@
 		<content>
 			<item>
 				<label>$LOCALIZE[31617]</label>
-				<onclick>ActivateWindow(videos,special://skin/playlists/recent_tvshows_70.xsp,return)</onclick>
+				<onclick>ActivateWindow(videos,special://skin/extras/playlists/recent_tvshows_70.xsp,return)</onclick>
 				<thumb>DefaultRecentlyAddedEpisodes.png</thumb>
 			</item>
 			<item>

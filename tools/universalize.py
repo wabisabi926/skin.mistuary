@@ -13,8 +13,8 @@ universalize.py — 把依赖魔改 Kodi 内核的玻璃/圆角皮肤，转换�
 
 用法
 ----
-  python extras/universalize.py --dry-run    # 只统计，不写文件
-  python extras/universalize.py              # 实际改写
+  python tools/universalize.py --dry-run    # 只统计，不写文件
+  python tools/universalize.py              # 实际改写
 """
 
 import argparse

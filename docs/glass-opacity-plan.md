@@ -252,7 +252,7 @@ if (!conditions.size()) return false;   // 不注册任何可见条件 → 控�
 - 现状问题：遮蔽层有的 30%、有的 40%、有的 70%、有的没有。统一后观感立刻一致。
 
 ### B. 玻璃面板贴图做 alpha 渐变 —— **推荐（已实施）**
-- 新增 `media/shapes/glass16/18/20/28/32/42.png`（生成器 `extras/gen_glass_plates.py`）：
+- 新增 `media/shapes/glass16/18/20/28/32/42.png`（生成器 `tools/gen_glass_plates.py`）：
   - 中心 alpha **255**（配 `glass_dialog` 80% 得 80%）
   - 边缘 alpha **180**（得 56%），18px 平滑过渡
   - 圆角用 SDF + 1px 抗锯齿裁出来，角落自然"化开"
@@ -360,7 +360,7 @@ if (!conditions.size()) return false;   // 不注册任何可见条件 → 控�
   该压的是背景层而不是加遮蔽。
 
 ### Phase 3 —— 贴图
-1. `extras/gen_glass_plates.py` 生成 `media/shapes/glass16/18/20/28/32/42.png`：
+1. `tools/gen_glass_plates.py` 生成 `media/shapes/glass16/18/20/28/32/42.png`：
    中心 alpha 255、边缘 150、约 19px 过渡、SDF 圆角 + 1px 抗锯齿。
    **去掉了初稿里的噪点**——9-slice 中间只有 2×2 像素，噪点会被拉伸成明显涂抹。
 2. `NaraDialogGlassTexture` 指向 `glass$PARAM[radius].png`。
@@ -372,7 +372,7 @@ if (!conditions.size()) return false;   // 不注册任何可见条件 → 控�
 4. `xbt_tool.py pack` → 668 张贴图，7.6MB。
 
 ### Phase 4 —— 审计兜底（已加两条规则）
-`extras/audit_skin.py`：
+`tools/audit_skin.py`：
 - **浮窗缺遮蔽层**：`Dialog*.xml` / `Custom_11*.xml` 里有玻璃面板 token 但没有遮蔽 token → 报出。
 - **浮窗里的硬编码遮蔽色**：`colordiffuse="XXXX0000"` + `colors/black.png` → 提示改用 token。
 两条都是软提示（不影响退出码），现状均 **0**。
@@ -476,7 +476,7 @@ L1 作为独立的后续任务。
 - [ ] 直播信息栏、音乐信息栏、图片信息栏、频道节目单、键盘——打开时**认不出底下是什么**
 - [ ] 面板边缘仍能看出底下有画面（不能是死板）
 - [ ] `kodi.log` 无新增贴图加载失败（`Starting Kodi` 时间必须晚于部署时间）
-- [ ] `extras/audit_skin.py` 的"浮窗缺遮蔽层"归零
+- [ ] `tools/audit_skin.py` 的"浮窗缺遮蔽层"归零
 - [ ] 全屏播放时打开对话框，仍是**不透明**（`nara_dialog_glass` 分支，别破坏）
 - [ ] 透白主题不崩（浮窗文字仍可读）
 
@@ -502,7 +502,7 @@ L1 作为独立的后续任务。
 | 面板外压暗轻一点 | `scrim_dialog` | `99`(60%) → `80`(50%) |
 | 面板外压暗重一点 | `scrim_dialog` | `99` → `B3`(70%) |
 | 全屏页更实 | `glass_page` | `BF`(75%) → `D9`(85%) |
-| 边缘渐隐更明显 | `extras/gen_glass_plates.py` 的 `EDGE_ALPHA` / `RAMP_MAX` | `180`/`18` → `150`/`24`，重跑脚本 + 重打包 |
+| 边缘渐隐更明显 | `tools/gen_glass_plates.py` 的 `EDGE_ALPHA` / `RAMP_MAX` | `180`/`18` → `150`/`24`，重跑脚本 + 重打包 |
 
 `scrim_sheet`（侧边浮窗）和 `scrim_osd`（播放中 OSD）同理。
 Phase 0+1+2 就能拿到 80% 的收益，Phase 3 是"从能用变好看"。

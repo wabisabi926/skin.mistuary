@@ -13,7 +13,7 @@
 ## 运行时依赖
 
 **皮肤本体不需要任何 Python 脚本。** `addon.xml` 只依赖 `xbmc.gui 5.17.0`。
-`extras/` 全是构建期工具，不进发布包。
+`tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen` 和 `script.embuary.info`，
 两者都只是"装了才显示"的可选增强，没有硬依赖。
@@ -26,9 +26,9 @@
   `NaraGlass*TintVar` → 43 处 `colordiffuse`。设置项在「皮肤设置 → 外观」。
   播放中浮窗走 `NaraPlaybackDialogTintVar`（下移两档，合成 72%）。
 - **圆角**：玻璃面板只有 `glass20`，选中行只有 `round14`。`border` 只给实心填充。
-- **描边环**：一律 1:1 整张图（`extras/gen_rings.py` 生成），**不要 border**，
+- **描边环**：一律 1:1 整张图（`tools/gen_rings.py` 生成），**不要 border**，
   而且必须是该卡片**最后绘制**的控件。
-- **角部遮盖**：`extras/gen_corner_masks.py`，`ALPHA=200` / `#2A2A2E`。
+- **角部遮盖**：`tools/gen_corner_masks.py`，`ALPHA=200` / `#2A2A2E`。
 - **不要相信 `Window.Property(NaraMusic.*)`**：全皮肤无人写入，是死属性。
 - **`<include condition="X">` 是加载时求值的**，按运行时状态切外观只能用 `<visible>` / `$VAR`。
 - **panel 不裁剪子控件**：想让行尾不露半张卡，得让"下一张起点 ≥ 1920"。
@@ -38,9 +38,9 @@
 ## 自检
 
 ```bash
-python extras/audit_skin.py                        # 静态自检
-python extras/gen_techflag_vars.py --check         # 技术标识变量同步
-python -m unittest discover -s extras -p 'test_*.py'
+python tools/audit_skin.py                        # 静态自检
+python tools/gen_techflag_vars.py --check         # 技术标识变量同步
+python -m unittest discover -s tools -p 'test_*.py'
 python xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 

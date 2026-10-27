@@ -4,7 +4,7 @@
 由皮肤用 colordiffuse="text_primary" 上色）。
 
 用法：
-    python extras/generate_nara_cast_icon.py
+    python tools/generate_nara_cast_icon.py
 """
 
 from pathlib import Path

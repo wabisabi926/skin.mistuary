@@ -76,7 +76,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 选中它等于把同组其它开关全置假，**自己永远不会被读取**，所以它们在
 `audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
 
-现状（`python extras/audit_skin.py` 输出）：**74 读 / 78 写，有读无写 0、有写无读 0**。
+现状（`python tools/audit_skin.py` 输出）：**74 读 / 78 写，有读无写 0、有写无读 0**。
 
 ---
 
@@ -150,9 +150,9 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 cd /d "D:\下载\AI\skin.mistuary"
 set PY="C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe"
 
-%PY% -m unittest discover -s extras -p "test_*.py"     # 期望 35 项全绿
-%PY% extras/audit_skin.py --strict                      # 期望 EXIT=0
-%PY% extras/gen_techflag_vars.py --check                # 期望"与 map 同步"
+%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 35 项全绿
+%PY% tools/audit_skin.py --strict                      # 期望 EXIT=0
+%PY% tools/gen_techflag_vars.py --check                # 期望"与 map 同步"
 %PY% xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 662/662
 ```
 

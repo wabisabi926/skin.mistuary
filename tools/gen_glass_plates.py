@@ -27,8 +27,8 @@ gen_glass_plates.py — 生成浮窗面板用的「渐变玻璃」贴图。
 
 用法
 ----
-  python extras/gen_glass_plates.py            # 生成全部半径
-  python extras/gen_glass_plates.py --check    # 只检查是否已存在/是否过期
+  python tools/gen_glass_plates.py            # 生成全部半径
+  python tools/gen_glass_plates.py --check    # 只检查是否已存在/是否过期
 """
 
 import argparse

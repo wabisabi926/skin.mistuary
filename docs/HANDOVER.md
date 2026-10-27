@@ -22,7 +22,7 @@
 <import addon="xbmc.gui" version="5.17.0"/>
 ```
 
-`extras/` 里的所有 `.py` / `.ps1` 都是**构建期工具**，不参与运行，也不进发布包。
+`tools/` 里的所有 `.py` / `.ps1` 都是**构建期工具**，不参与运行，也不进发布包。
 
 ### 皮肤会"探测"两个第三方插件，但都不是必需
 
@@ -49,19 +49,26 @@ colors/         defaults.xml（透黑）/ light.xml（透白，只写差异色�
 fonts/          Inter-Unicode-Regular.ttf（自带 CJK，见 §5.1）
 language/       resource.language.*/strings.po
 media/          松散图片 + Textures.xbt（打包后只带 xbt）
-backgrounds/    运行时背景图（primary.jpg）
-home-images/    首页 widget 兜底图（movie / music .jpg）
-libraryart/     分类封面（按「分类名.jpg」匹配）
+extras/         随包素材，运行时用 special://skin/extras/... 引用
+  backgrounds/    运行时背景图（primary.jpg）
+  home-images/    首页 widget 兜底图（movie / music .jpg）
+  playlists/      widget 用的播放列表（*.xsp）
+libraryart/     分类封面（按「分类名.jpg」匹配；用户自备，gitignore 除 default.jpg）
 ```
+
+> `extras/` 这个名字是 Arctic 系皮肤的约定（jurialmunkey / narapeka 一脉）：
+> **随包发布的素材**放这里，图片不进 `Textures.xbt`，是松散文件，用户可以直接替换。
+> 不要把它和构建工具混在一起——构建工具在 `tools/`。
 
 ### 不进发布包的（`release.yml` 里显式排除）
 
 ```
 .github/  .workbuddy-ai/  docs/  build/  __pycache__/  *.pyc
-xbt_tool.py  extras/
+xbt_tool.py  tools/
 ```
 
-**`extras/` 整个目录都不进包** —— 它是纯开发工具目录。
+**`tools/` 整个目录都不进包** —— 它是纯构建期工具（自检、测试、贴图生成器），
+Kodi 运行时不加载任何一行。2026-10-27 之前它叫 `extras/`，与素材目录撞名，已改名。
 
 ---
 
@@ -77,14 +84,14 @@ xbt_tool.py  extras/
 
 ---
 
-## 4. 开发工具（`extras/`）
+## 4. 开发工具（`tools/`）
 
 ### 必跑的三条
 
 ```bash
-python extras/audit_skin.py          # 静态自检：缺失 include/变量/字体/贴图/字符串、浮窗遮蔽、设置读写配对
-python extras/gen_techflag_vars.py --check   # 技术标识变量是否与 map 同步
-python -m unittest discover -s extras -p 'test_*.py'   # 单元测试
+python tools/audit_skin.py          # 静态自检：缺失 include/变量/字体/贴图/字符串、浮窗遮蔽、设置读写配对
+python tools/gen_techflag_vars.py --check   # 技术标识变量是否与 map 同步
+python -m unittest discover -s tools -p 'test_*.py'   # 单元测试
 ```
 
 CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，任一失败就中止。
@@ -209,7 +216,7 @@ Emby for Kodi（`emby/listitem.py`）实际写入的是：
   "行距 420"后来改成 358，就只写 358。
 - 一条问题只占一个条目。同一件事在 `[修复]` 和 `[调整]` 里各写一遍属于重复，合并掉。
 - 写"为什么"比写"改了哪个参数"有用。参数细节留给 git log 和 docs。
-- **不要写开发工具。** `extras/` 整个目录都不进包，用户拿不到那些脚本，
+- **不要写开发工具。** `tools/` 整个目录都不进包，用户拿不到那些脚本，
   写进 changelog 只会让人以为包里有 .py。changelog 只写用户能看到的变化。
 
 ---
@@ -224,7 +231,7 @@ Emby for Kodi（`emby/listitem.py`）实际写入的是：
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
-| `extras/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
+| `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
 
 > 上面四条"标签不存在"是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表
 > 逐条比对 `$INFO[...]` 得出的。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X

@@ -43,7 +43,9 @@
 [清理]
 - 删除永远不可能显示的歌词面板（fixedlist 420 / textbox 421 / scrollbar 422）
   以及只被它们使用的 NaraMusicLyricColorVar
-- 三方素材声明并入 LICENSE.txt；运行时图片移出 extras/（改为 backgrounds/、home-images/）
+- 三方素材声明并入 LICENSE.txt
+- 目录整理：运行时素材统一收进 extras/（backgrounds / home-images / playlists），
+  构建脚本移到 tools/（不进包）。**手动替换过 background.jpg / 播放列表的，路径要跟着改**
 - 删除 1.0.0 之前的旧皮肤 changelog 历史
 
 1.0.0 Mistuary（改名 + 通用版收尾）

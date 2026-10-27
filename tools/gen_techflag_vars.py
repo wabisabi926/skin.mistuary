@@ -13,8 +13,8 @@
 可重复执行；`--check` 供 CI 校验是否与 map 同步。
 
 用法：
-    python extras/gen_techflag_vars.py
-    python extras/gen_techflag_vars.py --check
+    python tools/gen_techflag_vars.py
+    python tools/gen_techflag_vars.py --check
 """
 
 from __future__ import annotations
@@ -87,7 +87,7 @@ def main() -> int:
 
     if "--check" in sys.argv:
         if new != text:
-            print("Variables.xml 与 map 不同步，请运行 extras/gen_techflag_vars.py")
+            print("Variables.xml 与 map 不同步，请运行 tools/gen_techflag_vars.py")
             return 1
         print("Variables.xml 与 map 同步")
         return 0

@@ -1,6 +1,6 @@
 """xbt_tool 解包边界测试：路径穿越、绝对路径、畸形容器。
 
-运行：python -m unittest discover -s extras -p 'test_*.py'
+运行：python -m unittest discover -s tools -p 'test_*.py'
 """
 
 import struct

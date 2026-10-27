@@ -18,8 +18,8 @@ gen_rings.py — 生成 1:1 的卡片描边环贴图。
 
 用法
 ----
-  python extras/gen_rings.py           # 生成表里所有尺寸
-  python extras/gen_rings.py --check   # 只检查是否齐全
+  python tools/gen_rings.py           # 生成表里所有尺寸
+  python tools/gen_rings.py --check   # 只检查是否齐全
 """
 
 import argparse
