@@ -359,11 +359,11 @@ msgstr "显示图标"
 
 msgctxt "#31129"
 msgid "General settings applying to all areas of the skin."
-msgstr "常规设置用于皮肤的所有区域。"
+msgstr "皮肤全局的常规设置。"
 
 msgctxt "#31130"
 msgid "Main menu-related settings: Configure the home screen to your likings."
-msgstr "主菜单相关设置：按喜好设置主界面。"
+msgstr "主菜单与首页相关设置。"
 
 msgctxt "#31132"
 msgid "Select Program"
@@ -443,7 +443,7 @@ msgstr "对于音乐电视，显示海报而不是缩略图"
 #. Description label for skin settings area
 msgctxt "#31169"
 msgid "Artwork related settings."
-msgstr "艺术图片相关的设置。"
+msgstr "艺术图片相关设置。"
 
 #. Label for OSD settings category
 msgctxt "#31170"
@@ -453,7 +453,7 @@ msgstr "屏幕菜单式调节"
 #. Helper text for the label of OSD settings category
 msgctxt "#31171"
 msgid "On screen display (OSD) related settings"
-msgstr "屏幕菜单式调节（OSD）相关设置"
+msgstr "播放控制条（OSD）相关设置。"
 
 #. Setting Automatically close video OSD
 msgctxt "#31172"
@@ -944,55 +944,55 @@ msgstr "主评分来源"
 
 msgctxt "#31734"
 msgid "Show the login screen before entering the main menu, so you can pick a user."
-msgstr "启动 Kodi 时先显示用户选择界面，选好用户后再进入主界面。"
+msgstr "启动 Kodi 时先选择用户，再进入主界面。"
 
 msgctxt "#31735"
 msgid "Log in as the selected user at startup and skip the login screen."
-msgstr "启动时自动登录到选定的用户，跳过用户选择界面。"
+msgstr "启动时以选定用户自动登录，跳过用户选择界面。"
 
 msgctxt "#31736"
 msgid "Auto-scroll long plots instead of paging. Off by default."
-msgstr "剧情简介过长时自动滚动，免手动翻页。默认关闭。"
+msgstr "剧情较长时自动滚动，替代手动翻页。默认关闭。"
 
 msgctxt "#31737"
 msgid "Uses the skin's own libraryart folder by default. Custom covers must match library names."
-msgstr "默认用皮肤自带的 libraryart 目录。自定义封面需与媒体库同名。"
+msgstr "默认使用皮肤自带的 libraryart 目录；自定义封面须与媒体库同名。"
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
-msgstr "影片信息中显示分辨率、音轨、字幕等标识。默认开启。"
+msgstr "在影片信息中显示分辨率、音轨与字幕标识。默认开启。"
 
 msgctxt "#31739"
 msgid "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
-msgstr "默认“我的评分”。可选“评分”（来源分）或“无”（隐藏）。"
+msgstr "主评分位默认显示个人评分；可选来源评分或不显示。"
 
 msgctxt "#31740"
 msgid "Source label for the main rating. A fixed source is shown as picked; Auto follows the scraped rating type, falling back to TMDb."
-msgstr "主评分胶囊的来源标签。指定来源时按所选显示；「自动」按刮削的评分类型识别，匹配不上用 TMDb。"
+msgstr "主评分胶囊的来源标签。指定来源后按其显示；“自动”按刮削类型识别，无法识别时用 TMDb。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
-msgstr "默认跟随语言设置；可只显示原始标题，或原名与译名并列。"
+msgstr "标题默认跟随语言设置；可选仅显示原始标题，或原名与译名并列。"
 
 msgctxt "#31742"
 msgid "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
-msgstr "控制页面面板、设置中心、设置页侧栏及页面卡片。档位越高越不透明，默认“平衡”。"
+msgstr "控制页面面板、设置中心与侧栏、页面卡片。档位越高越不透明，默认“平衡”。"
 
 msgctxt "#31743"
 msgid "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
-msgstr "控制播放 OSD、视频/音乐 OSD 设置及播放控制条。档位越高越不透明，默认“通透”。"
+msgstr "控制播放 OSD、视频与音乐 OSD 设置、播放控制条。档位越高越不透明，默认“通透”。"
 
 msgctxt "#31744"
 msgid "Use item fanart as the page background, falling back to the default image. On by default."
-msgstr "用作品背景图作页面背景，无图时回退默认图。默认开启。"
+msgstr "以作品背景图作为页面背景，缺图时使用默认图。默认开启。"
 
 msgctxt "#31745"
 msgid "Show posters for music videos in lists; off shows video thumbnails. Off by default."
-msgstr "列表中音乐电视显示海报，关闭则显示视频画面。默认关闭。"
+msgstr "列表中音乐视频显示海报；关闭则显示视频缩略图。默认关闭。"
 
 msgctxt "#31746"
 msgid "Hides the Movies entry from the main menu when off. On by default."
-msgstr "关闭后主菜单隐藏“电影”入口。默认开启。"
+msgstr "关闭后主菜单不再显示“电影”。默认开启。"
 
 msgctxt "#31747"
 msgid "What this row shows, e.g. recently added, continue watching, random."
@@ -1000,11 +1000,11 @@ msgstr "选择该行显示的内容，如最近添加、继续观看、随机推
 
 msgctxt "#31748"
 msgid "Browse opens the set by default; or play directly or queue it."
-msgstr "默认“浏览”进入系列；也可直接播放或加入播放列表。"
+msgstr "默认“浏览”进入系列详情；亦可直接播放或加入播放列表。"
 
 msgctxt "#31749"
 msgid "Hides the TV shows entry from the main menu when off. On by default."
-msgstr "关闭后主菜单隐藏“电视剧”入口。默认开启。"
+msgstr "关闭后主菜单不再显示“电视剧”。默认开启。"
 
 msgctxt "#31750"
 msgid "What this row shows, e.g. recently added, continue watching, random."
@@ -1012,11 +1012,11 @@ msgstr "选择该行显示的内容，如最近添加、继续观看、随机推
 
 msgctxt "#31751"
 msgid "Browse opens the episode list by default; or play directly or queue it."
-msgstr "默认“浏览”进入剧集列表；也可直接播放或加入播放列表。"
+msgstr "默认“浏览”进入剧集列表；亦可直接播放或加入播放列表。"
 
 msgctxt "#31752"
 msgid "Hides the Music entry from the main menu when off. On by default."
-msgstr "关闭后主菜单隐藏“音乐”入口。默认开启。"
+msgstr "关闭后主菜单不再显示“音乐”。默认开启。"
 
 msgctxt "#31753"
 msgid "What this row shows, e.g. recently added, continue watching, random."
@@ -1024,11 +1024,11 @@ msgstr "选择该行显示的内容，如最近添加、继续观看、随机推
 
 msgctxt "#31754"
 msgid "Browse opens the album by default; or play directly or queue it."
-msgstr "默认“浏览”进入专辑；也可直接播放或加入播放列表。"
+msgstr "默认“浏览”进入专辑；亦可直接播放或加入播放列表。"
 
 msgctxt "#31755"
 msgid "Hides the TV entry from the main menu when off. On by default."
-msgstr "关闭后主菜单隐藏“电视”入口。默认开启。"
+msgstr "关闭后主菜单不再显示“电视”。默认开启。"
 
 msgctxt "#31756"
 msgid "What this row shows, e.g. recently added, continue watching, random."
@@ -1036,11 +1036,11 @@ msgstr "选择该行显示的内容，如最近添加、继续观看、随机推
 
 msgctxt "#31757"
 msgid "Hide the OSD automatically while playing. Off by default."
-msgstr "播放时无操作自动收起 OSD。默认关闭。"
+msgstr "播放时无操作自动隐藏 OSD。默认关闭。"
 
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
-msgstr "收起前的等待秒数。默认 4 秒。"
+msgstr "自动隐藏前的等待秒数。默认 4 秒。"
 
 msgctxt "#31759"
 msgid "Popup transparency"
@@ -1052,7 +1052,7 @@ msgstr "浮窗透明度 — 档位按透黑模式设计；透白主题下会更�
 
 msgctxt "#31761"
 msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
-msgstr "控制对话框、菜单、键盘及非播放时的设置弹窗。档位越高越不透明，默认“偏实”。"
+msgstr "控制对话框、菜单、键盘与非播放时的设置弹窗。档位越高越不透明，默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
