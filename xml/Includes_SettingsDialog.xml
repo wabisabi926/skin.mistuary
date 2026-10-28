@@ -28,7 +28,7 @@
 			<width>1000</width>
 			<height>800</height>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
+				<param name="tint" value="$VAR[NaraSettingsDialogTintVar]" />
 				<param name="height" value="800" />
 				<param name="header_label" value="$INFO[Window(home).Property(settingsdialog_header)]" />
 			</include>
@@ -95,7 +95,7 @@
 					<top>0</top>
 					<width>$PARAM[width]</width>
 					<height>$PARAM[panel_height]</height>
-					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/glass20.png</texture>
+					<texture colordiffuse="$VAR[NaraSettingsDialogTintVar]" border="20">shapes/glass20.png</texture>
 				</control>
 				<!-- 标题 -->
 				<control type="label" id="1">

@@ -48,7 +48,7 @@
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
 				<height>$PARAM[height]</height>
-				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 		</definition>
 	</include>
@@ -277,7 +277,7 @@
 				<width>1400</width>
 				<height>560</height>
 				<include content="NaraSettingsDialogFrame">
-					<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
+					<param name="tint" value="$VAR[NaraGlassPageTintVar]" />
 					<param name="width" value="1400" />
 					<param name="height" value="560" />
 					<param name="header_label" value="$LOCALIZE[5]" />

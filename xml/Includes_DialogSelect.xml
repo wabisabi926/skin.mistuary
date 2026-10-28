@@ -246,7 +246,7 @@
 					<right>0</right>
 					<top>252</top>
 					<height>166</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>!Integer.IsGreater(Container(6).NumItems,1)</visible>
 				</control>
 				<control type="image">
@@ -254,7 +254,7 @@
 					<right>0</right>
 					<top>224</top>
 					<height>222</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,2)</visible>
 				</control>
 				<control type="image">
@@ -262,7 +262,7 @@
 					<right>0</right>
 					<top>196</top>
 					<height>278</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,3)</visible>
 				</control>
 				<control type="image">
@@ -270,7 +270,7 @@
 					<right>0</right>
 					<top>168</top>
 					<height>334</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,4)</visible>
 				</control>
 				<control type="image">
@@ -278,7 +278,7 @@
 					<right>0</right>
 					<top>140</top>
 					<height>390</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,5)</visible>
 				</control>
 				<control type="image">
@@ -286,7 +286,7 @@
 					<right>0</right>
 					<top>112</top>
 					<height>446</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,6)</visible>
 				</control>
 				<control type="image">
@@ -294,7 +294,7 @@
 					<right>0</right>
 					<top>84</top>
 					<height>502</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,7)</visible>
 				</control>
 				<control type="image">
@@ -302,7 +302,7 @@
 					<right>0</right>
 					<top>56</top>
 					<height>558</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,8)</visible>
 				</control>
 				<control type="image">
@@ -310,7 +310,7 @@
 					<right>0</right>
 					<top>28</top>
 					<height>614</height>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsEqual(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="image">
@@ -318,7 +318,7 @@
 					<right>0</right>
 					<top>0</top>
 					<bottom>0</bottom>
-					<texture border="20" colordiffuse="$VAR[NaraPlaybackDialogTintVar]">shapes/glass20.png</texture>
+					<texture border="20" colordiffuse="$VAR[NaraSettingsDialogTintVar]">shapes/glass20.png</texture>
 					<visible>Integer.IsGreater(Container(6).NumItems,9)</visible>
 				</control>
 				<control type="label" id="$PARAM[header_id]">
@@ -993,7 +993,7 @@
 			<centertop>50%</centertop>
 			<centerleft>50%</centerleft>
 			<include content="NaraSettingsDialogFrame">
-				<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
+				<param name="tint" value="$VAR[NaraSettingsDialogTintVar]" />
 				<param name="height" value="760" />
 			</include>
 			<control type="list" id="3">

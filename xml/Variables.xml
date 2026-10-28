@@ -1902,6 +1902,13 @@
 		<value condition="Skin.HasSetting(glass_play_op_6)">$LOCALIZE[31728]</value>
 		<value>$LOCALIZE[31724]</value>
 	</variable>
+	<!-- 设置对话框：播放中跟播放中档，否则跟浮窗档。
+	     视频/音乐 OSD 设置、播放中的设置选择框都走这里；
+	     设置中心/设置页本身不走这个变量（它们是页面档）。 -->
+	<variable name="NaraSettingsDialogTintVar">
+		<value condition="Player.HasVideo | Player.HasAudio">$VAR[NaraPlaybackDialogTintVar]</value>
+		<value>$VAR[NaraGlassFloatTintVar]</value>
+	</variable>
 	<!-- 设置类对话框的遮蔽层：**播放中**用 scrim_osd（30%），其余跟页面档。
 	     播放中打开设置是"临时看一眼"，把画面盖死就没法边看边调了。 -->
 	<variable name="NaraSettingsDialogScrimVar">

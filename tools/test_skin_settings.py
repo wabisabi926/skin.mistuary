@@ -126,5 +126,31 @@ class VideoInfoTechFlagsCaptionTest(unittest.TestCase):
         self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,1)">01</value>', variables)
 
 
+class SettingsSurfaceTintTest(unittest.TestCase):
+    def test_settings_pages_and_osd_dialogs_use_expected_layers(self):
+        """设置页=页面档；播放中的设置对话框=播放中档，非播放时回落浮窗档。"""
+        variables = (XML_DIR / "Variables.xml").read_text(encoding="utf-8")
+        settings = (XML_DIR / "Includes_Settings.xml").read_text(encoding="utf-8")
+        settings_dialog = (XML_DIR / "Includes_SettingsDialog.xml").read_text(encoding="utf-8")
+        music_audio = (XML_DIR / "Custom_1113_MusicAudioDialog.xml").read_text(encoding="utf-8")
+        dialog_select = (XML_DIR / "Includes_DialogSelect.xml").read_text(encoding="utf-8")
+
+        self.assertIn('<variable name="NaraSettingsDialogTintVar">', variables)
+        self.assertIn('Player.HasVideo | Player.HasAudio', variables)
+
+        sidebar = settings.split('<include name="NaraSettingsSidebar">', 1)[1].split('</include>', 1)[0]
+        self.assertIn('$VAR[NaraGlassPageTintVar]', sidebar)
+        self.assertNotIn('$VAR[NaraGlassFloatTintVar]', sidebar)
+
+        hub = settings.split('<include name="NaraSettingsHub">', 1)[1].split(
+            '<include content="NaraSettingsHubEntry">', 1)[0]
+        self.assertIn('$VAR[NaraGlassPageTintVar]', hub)
+        self.assertNotIn('$VAR[NaraGlassFloatTintVar]', hub)
+
+        self.assertEqual(settings_dialog.count('$VAR[NaraSettingsDialogTintVar]'), 2)
+        self.assertEqual(music_audio.count('$VAR[NaraSettingsDialogTintVar]'), 2)
+        self.assertEqual(dialog_select.count('$VAR[NaraSettingsDialogTintVar]'), 11)
+
+
 if __name__ == "__main__":
     unittest.main()

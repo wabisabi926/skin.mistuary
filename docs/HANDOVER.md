@@ -252,9 +252,9 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 | 设置项 | 皮肤设置名 | 管什么 | 默认 |
 |---|---|---|---|
-| **页面透明度** | `glass_page_op_1..6` | 全屏页面面板 + 页面里的卡片 / 胶囊 / 顶部导航条 | 第 3 档 平衡 73% |
-| **浮窗透明度** | `glass_float_op_1..6` | 叠在页面上的层：对话框、插件详情、插件设置、右键菜单、键盘、搜索键盘、设置页左侧栏 | 第 4 档 偏实 83% |
-| **播放中透明度** | `glass_play_op_1..6` | 播放时的浮窗：OSD 设置、播放列表、书签、处理信息、播放控制条 | 第 2 档 通透 60% |
+| **页面透明度** | `glass_page_op_1..6` | 全屏页面面板 + 页面里的卡片 / 胶囊 / 顶部导航条 + **设置中心 / 设置页侧栏** | 第 3 档 平衡 73% |
+| **浮窗透明度** | `glass_float_op_1..6` | 叠在页面上的层：对话框、插件详情、插件设置、右键菜单、键盘、搜索键盘、非播放时的设置选择框 | 第 4 档 偏实 83% |
+| **播放中透明度** | `glass_play_op_1..6` | 播放时的浮窗：OSD 设置（含视频/音乐 OSD 设置）、播放列表、书签、处理信息、播放控制条 | 第 2 档 通透 60% |
 
 | 档 | 面板 `gl_*` | 遮蔽 `sc_*`（×0.6） | 合成 |
 |---|---|---|---|
@@ -270,9 +270,10 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 | 变量 | 来源 | 用在哪 |
 |---|---|---|
-| `NaraGlassPageTintVar` | 页面档 | 全屏页面面板、页面内卡片、顶部导航条（21 处） |
-| `NaraGlassFloatTintVar` | 浮窗档 | 对话框、插件详情/设置、菜单、键盘、设置侧栏（25 处） |
+| `NaraGlassPageTintVar` | 页面档 | 全屏页面面板、页面内卡片、顶部导航条、设置中心/设置侧栏 |
+| `NaraGlassFloatTintVar` | 浮窗档 | 对话框、插件详情/设置、菜单、键盘、非播放时的设置选择框 |
 | `NaraPlaybackDialogTintVar` | 播放中档 | 播放 OSD 全系 + 播放控制条 |
+| `NaraSettingsDialogTintVar` | 播放中档 / 浮窗档（按是否播放切换） | 视频/音乐 OSD 设置、播放中的设置选择框 |
 | `NaraGlassScrimTintVar` | 页面档 | 所有遮蔽层（播放中改走 `scrim_osd`） |
 
 **为什么换维度**：用户感知的是"我在看片 / 我在翻页面 / 我打开了一个浮窗"，不是"这是浮窗还是页面面板"。
@@ -289,8 +290,10 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 （固定 40% 黑）绕过去的。**以后不要再加固定色名的玻璃面板。**
 
 **加新窗口时怎么选**：问自己"这块玻璃是页面的一部分，还是浮在页面上面"——
-浮在上面就 `NaraGlassFloatTintVar`，页面内容就 `NaraGlassPageTintVar`，
-只在播放时出现就 `NaraPlaybackDialogTintVar`。`ContentPanel` 这个 include 默认走页面档，
+设置中心 / 设置页侧栏 / 设置页内容属于页面，走 `NaraGlassPageTintVar`；
+非播放时弹出的设置对话框 / 选择框走 `NaraGlassFloatTintVar`；
+播放中打开的 OSD 设置走 `NaraSettingsDialogTintVar`（播放中档，非播放时回落浮窗档）；
+纯播放 OSD 走 `NaraPlaybackDialogTintVar`。`ContentPanel` 这个 include 默认走页面档，
 调用方可以用 `<param name="tint">` 覆盖（PVR 频道 OSD 就是这么传播放中档的）。
 
 ### 5.3.1 皮肤设置的帮助条
