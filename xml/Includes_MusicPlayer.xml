@@ -47,7 +47,11 @@
 		<value condition="Control.HasFocus(602) + Player.Paused">$LOCALIZE[208]</value>
 		<value condition="Control.HasFocus(602)">$LOCALIZE[36045]</value>
 		<value condition="Control.HasFocus(70048)">$LOCALIZE[13396]</value>
-		<value>$VAR[OSDHelpTextVar]</value>
+		<value condition="Control.HasFocus(70054)">$LOCALIZE[590]</value>
+		<value condition="Control.HasFocus(70053)">$LOCALIZE[486]</value>
+		<value condition="Control.HasFocus(70051)">$LOCALIZE[559]</value>
+		<value condition="Control.HasFocus(70049)">$LOCALIZE[24013]</value>
+		<value></value>
 	</variable>
 	<include name="NaraMusicAudioDetail">
 		<control type="label">
