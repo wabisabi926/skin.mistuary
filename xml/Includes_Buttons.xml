@@ -209,7 +209,7 @@
 				<height>110</height>
 				<align>left</align>
 				<aligny>top</aligny>
-				<texturefocus colordiffuse="focus_surface">lists/focus.png</texturefocus>
+				<texturefocus colordiffuse="focus_surface" border="14">shapes/round14.png</texturefocus>
 				<texturenofocus />
 				<textoffsetx>40</textoffsetx>
 				<textoffsety>35</textoffsety>
@@ -377,14 +377,14 @@
 				<top>0</top>
 				<width>600</width>
 				<height>70</height>
-				<texture colordiffuse="surface_dialog">colors/white.png</texture>
+				<texture colordiffuse="surface_dialog" border="14">shapes/round14.png</texture>
 			</control>
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
 				<width>600</width>
 				<height>70</height>
-				<texture colordiffuse="focus_surface">lists/focus.png</texture>
+				<texture colordiffuse="focus_surface" border="14">shapes/round14.png</texture>
 			</control>
 			<control type="label">
 				<left>0</left>

@@ -234,7 +234,8 @@
 	<include name="NaraDialogFocusTexture">
 		<include condition="$EXP[nara_dialog_glass]">NaraDialogGlassFocusTexture</include>
 		<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-			<param name="texture" value="lists/focus.png" />
+			<param name="texture" value="shapes/round14.png" />
+			<param name="border" value="14" />
 			<param name="color" value="focus_surface" />
 		</include>
 	</include>

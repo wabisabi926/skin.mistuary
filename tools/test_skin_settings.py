@@ -249,6 +249,13 @@ class SelectionBarRoundingTest(unittest.TestCase):
         self.assertIn('border="14">shapes/round14.png', metadata)
         self.assertNotIn('lists/focus.png', metadata)
 
+        for name in ("Includes_PVR.xml", "MyPVRChannels.xml", "View_50_List.xml",
+                     "Includes.xml", "Includes_DialogSelect.xml", "Includes_Buttons.xml",
+                     "Includes_DialogGlass.xml"):
+            self.assertNotIn('lists/focus.png', (XML_DIR / name).read_text(encoding="utf-8"), name)
+        self.assertIn('border="12">shapes/round12.png',
+                      (XML_DIR / "Includes_PVR.xml").read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()
