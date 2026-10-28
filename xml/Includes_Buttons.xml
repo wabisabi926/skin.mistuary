@@ -72,8 +72,8 @@
 				<textoffsetx>16</textoffsetx>
 				<aligny>center</aligny>
 				<font>font12</font>
-				<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">lists/focus.png</texturefocus>
-				<alttexturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">lists/focus.png</alttexturefocus>
+				<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]" border="14">shapes/round14.png</texturefocus>
+				<alttexturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]" border="14">shapes/round14.png</alttexturefocus>
 				<texturenofocus />
 				<alttexturenofocus />
 				<onclick>noop</onclick>
