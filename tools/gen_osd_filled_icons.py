@@ -65,7 +65,13 @@ def build(name: str) -> Image.Image:
     bar = int(u * 0.10)        # 竖条宽
 
     if name == "play":
-        _tri(d, (int(u * 0.26), m, int(u * 0.78), u - m), True)
+        # 等边比例（宽 = 高 × 0.866），包围盒略偏右 2% 做视觉居中。
+        # 之前是 0.52u 宽 × 0.80u 高，偏窄偏高，看起来"被压过"。
+        h = int(u * 0.74)
+        w = int(h * 0.866)
+        x0 = int((u - w) / 2 + u * 0.02)
+        y0 = (u - h) // 2
+        _tri(d, (x0, y0, x0 + w, y0 + h), True)
 
     elif name == "pause":
         w, gap = int(u * 0.20), int(u * 0.14)
