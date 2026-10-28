@@ -77,22 +77,22 @@
 		<textureradiooffdisabled colordiffuse="text_disabled">$PARAM[texture]</textureradiooffdisabled>
 		<texturefocus border="30" colordiffuse="glass_focus_medium">shapes/round30.png</texturefocus>
 		<texturenofocus />
-		<width>61</width>
-		<height>61</height>
-		<radiowidth>43</radiowidth>
-		<radioheight>43</radioheight>
-		<radioposx>9</radioposx>
-		<radioposy>9</radioposy>
+		<width>66</width>
+		<height>66</height>
+		<radiowidth>46</radiowidth>
+		<radioheight>46</radioheight>
+		<radioposx>10</radioposx>
+		<radioposy>10</radioposy>
 		<onup>87</onup>
 		<ondown>noop</ondown>
 		<font />
 	</include>
 	<include name="NaraMusicOSDButtonGlass">
-		<width>61</width>
-		<height>61</height>
+		<width>66</width>
+		<height>66</height>
 		<control type="image">
-			<width>61</width>
-			<height>61</height>
+			<width>66</width>
+			<height>66</height>
 			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="30">shapes/round30.png</texture>
 		</control>
 	</include>
@@ -105,10 +105,10 @@
 		<textureradiooffdisabled colordiffuse="66FFFFFF">$PARAM[texture]</textureradiooffdisabled>
 		<texturefocus border="30" colordiffuse="glass_focus_medium">shapes/round30.png</texturefocus>
 		<texturenofocus />
-		<width>61</width>
-		<height>61</height>
-		<radiowidth>43</radiowidth>
-		<radioheight>43</radioheight>
+		<width>66</width>
+		<height>66</height>
+		<radiowidth>48</radiowidth>
+		<radioheight>48</radioheight>
 		<radioposx>9</radioposx>
 		<radioposy>9</radioposy>
 		<onup>87</onup>
@@ -154,46 +154,46 @@
 			<left>0</left>
 			<right>0</right>
 			<top>79</top>
-			<height>61</height>
+			<height>66</height>
 			<align>center</align>
-			<itemgap>48</itemgap>
+			<itemgap>52</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
 			<ondown>noop</ondown>
 			<onleft>70049</onleft>
 			<onright>70054</onright>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="600">
 						<onleft>70049</onleft>
 						<onright>602</onright>
 						<include content="NaraMusicOSDButton">
-							<param name="texture" value="osd/nara/previous.png" />
+							<param name="texture" value="osd/nara/previous_filled.png" />
 						</include>
 						<label>$LOCALIZE[210]</label>
 						<onclick>PlayerControl(Previous)</onclick>
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-			<height>61</height>
+					<width>66</width>
+			<height>66</height>
 			<!-- 主键：全场唯一的实心元素，给视线一个落点 -->
 			<control type="image">
 				<left>2.5</left>
 				<top>2.5</top>
-				<width>56</width>
-				<height>56</height>
+				<width>62</width>
+				<height>62</height>
 				<texture colordiffuse="F2FFFFFF">shapes/round30.png</texture>
 			</control>
 					<control type="radiobutton" id="602">
 						<onleft>600</onleft>
 						<onright>607</onright>
-						<textureradioonfocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonnofocus>
-						<textureradioondisabled colordiffuse="66FFFFFF">osd/nara/play.png</textureradioondisabled>
+						<textureradioonfocus colordiffuse="FF14141A">osd/nara/play_filled.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="FF14141A">osd/nara/play_filled.png</textureradioonnofocus>
+						<textureradioondisabled colordiffuse="66FFFFFF">osd/nara/play_filled.png</textureradioondisabled>
 						<include content="NaraMusicOSDButtonPrimary">
-							<param name="texture" value="osd/nara/pause.png" />
+							<param name="texture" value="osd/nara/pause_filled.png" />
 						</include>
 						<label>$LOCALIZE[208]</label>
 						<selected>Player.Paused</selected>
@@ -202,13 +202,13 @@
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="607">
 						<onleft>602</onleft>
 						<onright>70054</onright>
 						<include content="NaraMusicOSDButton">
-							<param name="texture" value="osd/nara/next.png" />
+							<param name="texture" value="osd/nara/next_filled.png" />
 						</include>
 						<label>$LOCALIZE[209]</label>
 						<enable>Integer.IsGreater(Playlist.Length(music),1)</enable>
@@ -221,17 +221,17 @@
 			<right>80</right>
 			<top>79</top>
 			<width>433</width>
-			<height>61</height>
+			<height>66</height>
 			<align>right</align>
-			<itemgap>32</itemgap>
+			<itemgap>36</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
 			<ondown>noop</ondown>
 			<onleft>607</onleft>
 			<onright>600</onright>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="70054">
 						<onleft>607</onleft>
 						<onright>70053</onright>
@@ -247,8 +247,8 @@
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="70053">
 						<onleft>70054</onleft>
 						<onright>70051</onright>
@@ -266,8 +266,8 @@
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="70051">
 						<onleft>70053</onleft>
 						<onright>70048</onright>
@@ -280,8 +280,8 @@
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<control type="radiobutton" id="70048">
 						<onleft>70051</onleft>
 						<onright>70049</onright>
@@ -293,8 +293,8 @@
 					</control>
 				</control>
 				<control type="group">
-					<width>61</width>
-					<height>61</height>
+					<width>66</width>
+					<height>66</height>
 					<!-- 歌词：未选插件时先弹出插件选择（xbmc.python.lyrics），选好后再次点击即运行；
 					     逻辑与 Estuary 一致 -->
 					<control type="radiobutton" id="70049">
@@ -324,8 +324,8 @@
 				<label>$VAR[NaraMusicControlLabelVar]</label>
 			</control>
 			<control type="group">
-				<left>80</left>
-				<right>80</right>
+				<left>200</left>
+				<right>200</right>
 				<top>42</top>
 				<visible>Player.SeekEnabled</visible>
 				<control type="image">
