@@ -114,7 +114,7 @@ def main() -> int:
                 print("  ! Textures.xbt 正被 Kodi 占用，没能挪走")
                 print("    先完全退出 Kodi，再跑一次 --loose，之后贴图改动重载皮肤即可生效")
 
-    print(f"\n✓ 已同步 {copied} 个文件")
+    print(f"\n已同步 {copied} 个文件")
     print("  去 Kodi 里重载皮肤即可生效")
     return 0
 
