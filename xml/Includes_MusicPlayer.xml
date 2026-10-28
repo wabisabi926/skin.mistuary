@@ -98,12 +98,13 @@
 			<height>160</height>
 			<!-- 去胶囊底后图标压在亮背景上看不清，补一层自下而上的柔和压暗。
 			     只压底部 220px，不影响封面和歌词。 -->
+			<!-- overlayfade.png 本身就是「上透明、下实」，不要再加 flipy（会翻成上实下透明，变成一条硬边黑带）。 -->
 			<control type="image">
 				<left>0</left>
 				<right>0</right>
 				<bottom>0</bottom>
 				<height>220</height>
-				<texture flipy="true" colordiffuse="99000000">overlays/overlayfade.png</texture>
+				<texture colordiffuse="99000000">overlays/overlayfade.png</texture>
 			</control>
 			<control type="label">
 				<left>32</left>
