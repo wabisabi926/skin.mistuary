@@ -92,6 +92,26 @@
 			<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="30">shapes/round30.png</texture>
 		</control>
 	</include>
+	<include name="NaraMusicOSDButtonPrimary">
+		<textureradioonfocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonfocus>
+		<textureradioonnofocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonnofocus>
+		<textureradioofffocus colordiffuse="FF14141A">$PARAM[texture]</textureradioofffocus>
+		<textureradiooffnofocus colordiffuse="FF14141A">$PARAM[texture]</textureradiooffnofocus>
+		<textureradioondisabled colordiffuse="66FFFFFF">$PARAM[texture]</textureradioondisabled>
+		<textureradiooffdisabled colordiffuse="66FFFFFF">$PARAM[texture]</textureradiooffdisabled>
+		<texturefocus border="30" colordiffuse="glass_focus_medium">shapes/round30.png</texturefocus>
+		<texturenofocus />
+		<width>61</width>
+		<height>61</height>
+		<radiowidth>43</radiowidth>
+		<radioheight>43</radioheight>
+		<radioposx>9</radioposx>
+		<radioposy>9</radioposy>
+		<onup>87</onup>
+		<ondown>noop</ondown>
+		<font />
+	</include>
+
 	<include name="NaraMusicPlayerControls">
 		<control type="group">
 			<bottom>0</bottom>
@@ -189,14 +209,22 @@
 				</control>
 				<control type="group">
 					<width>61</width>
-					<height>61</height>
+			<height>61</height>
+			<!-- 主键：全场唯一的实心元素，给视线一个落点 -->
+			<control type="image">
+				<left>2.5</left>
+				<top>2.5</top>
+				<width>56</width>
+				<height>56</height>
+				<texture colordiffuse="F2FFFFFF">shapes/round30.png</texture>
+			</control>
 					<control type="radiobutton" id="602">
 						<onleft>70051</onleft>
 						<onright>600</onright>
-						<textureradioonfocus colordiffuse="text_primary">osd/nara/play.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="text_primary">osd/nara/play.png</textureradioonnofocus>
-						<textureradioondisabled colordiffuse="text_disabled">osd/nara/play.png</textureradioondisabled>
-						<include content="NaraMusicOSDButton">
+						<textureradioonfocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonnofocus>
+						<textureradioondisabled colordiffuse="66FFFFFF">osd/nara/play.png</textureradioondisabled>
+						<include content="NaraMusicOSDButtonPrimary">
 							<param name="texture" value="osd/nara/pause.png" />
 						</include>
 						<label>$LOCALIZE[208]</label>
