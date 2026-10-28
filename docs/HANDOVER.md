@@ -481,6 +481,22 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 ③ **`Custom_1111_MovieSetDialog` 里那套「111.11% / 120.37% 缩放对应 240×360 真实海报」
 的补偿数必须重算**，否则合集弹窗的焦点框会错位。
 
+### 5.10 搜索（首页「搜索」页签）
+
+- **接口**：不是 Kodi 原生 `Search`，也不是 JSON-RPC。皮肤把输入拼进视频库路径
+  `videodb://movies/titles/?xsp={...}` / `videodb://tvshows/titles/?xsp={...}`，
+  由 Kodi 视频库按 XSP 规则执行。输入来自隐藏 edit `16999`。
+- **规则**（`Includes_Search.xml`）：六字段 `or` —— `title` / `originaltitle` /
+  `sorttitle` / `actor` / `director` / `genre`。`sorttitle` 是神医助手生成的拼音首字母，
+  由 Emby for Kodi 同步写入（本机 742 部电影、512 部剧集都有），所以 A-Z 键盘只打
+  首字母也能搜到中文片名。换元数据源后要确认这项还在；没有拼音排序时拼音搜索会失效，
+  中文标题和原名搜索不受影响。
+- **不要给结果列表加 `limit`**：`<content limit="30">` 会同时截断结果和标签计数。
+  2026-10-28 已移除。
+- **覆盖不到**：分集（Kodi 22 没有全局 `videodb://episodes/` 节点，皮肤层拿不到）、
+  合集（22 个，可用 `videodb://movies/sets/` 单独做页签）、Emby 索引里尚未同步到
+  Kodi 库的条目（当时差 6 部电影 / 131 集）。
+
 ## 6. 发版流程
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）
