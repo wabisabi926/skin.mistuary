@@ -18,7 +18,7 @@
 |---|---|
 | `xml/View_54_InfoWall.xml` | `InfoWallMovieLayout` 的海报改用 `diffuse` 遮罩；焦点环改 `ring_card_246x354_r13` @ `(7,−1)`（外扩 1px、内缘压进海报 2px）；清掉 7 处 `bordersize`；卡片格 260 → **264** |
 | `xml/View_500_Wall.xml` | 电影/剧集 + 收藏三个卡片格 260 → **264**（左右空档 16 → 20，见 §5.9） |
-| `xml/View_51_Poster.xml` | 420×630 / 378×567 两套卡片改用 diffuse 遮罩；细边 `edge_*_r12` 保留 |
+| `xml/View_51_Poster.xml` | 卡片改用 diffuse 遮罩；**电影与季列表合并成一套布局**（378×567 @ (21,205)），细边 `edge_378x567_r12` 保留 |
 | `xml/Includes_Search.xml` | 搜索结果卡 214×321 改遮罩 r11，环换 `ring_card_216x323_r12` |
 | `xml/Includes_Home.xml` | 横版 320×180（正在观看 ×2、媒体库 ×2，含 5 层封面）改遮罩 r9；专辑 186×186 改遮罩 r9；环换成 322×182 / 188×188 |
 | `tools/gen_corner_masks.py` | 新增 `DIFFUSE_MASKS` + `build_diffuse()`（羽化遮罩）；文件头结论改正；清掉 3 张无引用尺寸 |
@@ -31,7 +31,7 @@
 
 | # | 位置 | 卡片 | 遮罩 | 配套 |
 |---|---|---|---|---|
-| 1 | `View_51_Poster` 主海报墙 | 420×630 | `mask_420x630_r12` | 底板 `round12` + 细边 `edge_420x630_r12`（半径 = 遮罩） |
+| 1 | `View_51_Poster` 封面（电影/剧集/合集/季 共用） | 378×567 | `mask_378x567_r12` | 底板 `round12` + 细边 `edge_378x567_r12`（半径 = 遮罩） |
 | 2 | `View_51_Poster` `NaraPosterDeckCard` | 378×567 | `mask_378x567_r12` | 细边 `edge_378x567_r12` |
 | 3 | `Includes_Search` 结果卡（搜索 + 横排共用） | 214×321 | `mask_214x321_r12` | 环 `ring_card_216x323_r13`；底板也挂同一张遮罩 |
 | 4 | `Includes_Home` `HomeContinueWatchingRail` ×2 | 320×180 | `mask_320x180_r9` | 环 `ring_card_322x182_r10` |
