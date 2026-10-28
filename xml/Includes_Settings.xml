@@ -320,7 +320,8 @@
 					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<!-- 通用版：这个磁贴原本是坏的（标签 $LOCALIZE[70127] 解析为空、
-				     目标窗口 narapekasettings 在皮肤里不存在），改为皮肤设置入口 -->
+				     目标窗口 narapekasettings 是原魔改内核的设置窗口、本皮肤不存在），
+				     改为皮肤设置入口 -->
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="104" />
 					<param name="x" value="1028" />

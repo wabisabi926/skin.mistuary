@@ -301,7 +301,7 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 在取不到图时**什么也不画**，占位图不会出现。
 
 **现状：69 处已全部改写（2026-10-26），`audit_skin.py` 报 0 类。**
-（`fallback` 很可能是原魔改内核的扩展属性，官方版没有。）
+（`<texture fallback>` 是原魔改内核的扩展属性，官方版没有；`<label fallback>` 是官方属性。）
 
 改法分三条路线，以后再加新图控件照这个来：
 

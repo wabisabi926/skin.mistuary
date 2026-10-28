@@ -10,9 +10,9 @@
 	<onunload>ClearProperty(infobackground,home)</onunload>
 	<onunload>ClearProperty(VideoInfo.More,home)</onunload>
 	<controls>
-		<!-- Kodi's built-in video-information actions plus SkinExtended relays.
-		     Visible skin controls forward to these IDs instead of duplicating
-		     playback, library or favourite behaviour. -->
+		<!-- Kodi's built-in video-information actions. Visible skin controls
+		     forward to these IDs instead of duplicating playback, library or
+		     favourite behaviour. -->
 		<control type="button" id="6">
 			<include>HiddenObject</include>
 		</control>

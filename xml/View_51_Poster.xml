@@ -43,9 +43,9 @@
 		</control>
 	</include>
 
-	<!-- Slotlist applies position, scale, opacity and dimming to this single card
-	     layout. Every visible and transition-only slot therefore renders the same
-	     item controls without duplicating artwork snapshots in the skin. -->
+	<!-- Deck card for the focused slot. The original slotlist applied position,
+	     scale, opacity and dimming per slot; the fixedlist replacement has no
+	     per-slot transforms, so deck_on gates the whole card instead. -->
 	<include name="NaraPosterDeckCard">
 		<param name="deck_on">true</param>
 		<definition>
