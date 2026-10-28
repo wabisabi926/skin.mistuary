@@ -24,6 +24,43 @@
   （TMDbHelper，GPL-3.0），必须保留版权声明与来源说明。
 - **依赖**：只用 Python 标准库（`urllib` / `json` / `hmac` 等），不打包第三方库。
 
+### 2.1 目录与入口
+
+```
+script.mistuary.helper/
+├── addon.xml            # id=script.mistuary.helper；xbmc.python 3.0.1；provides=video
+├── default.py           # 插件入口：mode=search 返回目录；action=* 执行动作
+├── service.py           # v1 不启用，仅预留
+├── lib/                 # 见 §5.4
+├── resources/
+│   ├── settings.xml     # server_id / page_size / douban_enabled / cache_ttl / debug_log
+│   └── language/...
+└── tests/               # pytest，HTTP 全部 mock
+```
+
+设置项（皮肤不读、只由用户在插件设置里改）：
+
+| 设置 | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `server_id` | string | 空 | 空 = 取第一个 Emby 服务器 |
+| `page_size` | int | 100 | 单次查询条数 |
+| `douban_enabled` | bool | true | 关掉即不发豆瓣请求 |
+| `cache_ttl` | int | 300 | 搜索缓存秒数；豆瓣固定 7 天 |
+| `debug_log` | bool | false | 打开后写 `kodi.log`，前缀 `MISTUARY.HELPER` |
+
+### 2.2 本地开发循环
+
+1. 仓库 checkout，`python -m pytest` 跑单测（HTTP 全 mock，不依赖 Emby）。
+2. 把目录复制（或目录联接）到 `%APPDATA%\Kodi\addons\script.mistuary.helper`。
+3. 改 `*.py` 无需重启 Kodi（每次调用重新加载）；改 `addon.xml` 或 `resources/` 需重启。
+4. 打开 `debug_log` 后看 `kodi.log`；日志**不打印 token**。
+5. 皮肤侧用 `python tools/sync_to_kodi.py`，插件单独复制，互不覆盖。
+
+### 2.3 安装（用户）
+
+- Releases 下载 `script.mistuary.helper-<ver>.zip` → Kodi「从 zip 安装」。
+- 可选依赖：不装时皮肤搜索回退本地 XSP、不显示豆瓣胶囊，其余功能不受影响。
+
 ## 三、与皮肤的契约
 
 | 功能 | 皮肤触点 | 数据方向 | 失败时 |
@@ -49,7 +86,24 @@
 | P2 | 剧集代表集技术标识 | Kodi 库或 Emby API |
 | P3（可选） | 行级数据增强（首页/搜索行带豆瓣角标）、动态节点名整理 | 皮肤换数据源 |
 
+### 4.1 功能说明（用户视角）
+
+| 功能 | 用户看到什么 | 前提 |
+|---|---|---|
+| 服务端搜索 | 搜索页输入中文、全拼、别名或演员名，结果与 Emby 官方 App 一致 | Emby 在线；未装插件时仍可用本地 XSP（首字母 / 中文标题） |
+| 豆瓣评分 | 详情页评分行多一颗豆瓣胶囊（分数 + 票数） | 该条目有 IMDb id；7 天缓存 |
+| 剧集代表集标识 | 首页 / 搜索的剧集卡显示当前季首集的分辨率 / HDR / 音轨 | 与详情页现有「代表集」规则一致 |
+
 ## 五、详细设计
+
+### 5.0 路由与参数
+
+| 调用 | 参数 | 行为 |
+|---|---|---|
+| `plugin://…/?mode=search` | `type=movies\|shows`，`query`（**最后一个**） | 返回结果目录 |
+| `RunScript(…,action=rating)` | `type=movie\|episode`，`dbid` | 取分并写窗口属性，无 UI |
+| `RunScript(…,action=techflags)` | `dbid` / `season` | 预留（P2） |
+| 无参数 | — | 提示从皮肤进入或跳到插件设置 |
 
 ### 5.1 搜索桥
 
@@ -192,7 +246,9 @@ Window(home).Property(Mistuary.Rating.Status)     # ok / missing / error
 
 ## 九、发版与版本契约
 
-- 独立仓库 + GitHub Actions：pytest → zip → Release（`script.mistuary.helper-<ver>.zip`）。
+- 独立仓库 + GitHub Actions：pytest → 打包 `script.mistuary.helper-<ver>.zip`（排除 `tests/`、`.git*`）
+  → 建 Release 并附 zip 与 changelog。
+- 版本号只在 `addon.xml` 升；同一版本不重复发布（与皮肤发版规则一致）。
 - 皮肤文档列出每个功能要求的最低版本：
 
 | 皮肤功能 | 最低 helper 版本 |
