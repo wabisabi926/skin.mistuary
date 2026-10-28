@@ -34,6 +34,10 @@ TEXTURE_REF = re.compile(
     r"|alttexturenofocus|midtexture|lefttexture|righttexture|texturebg|thumb|icon|fallback)"
     r"[^>]*>([^<]+)</"
 )
+# `diffuse="..."` 是贴图级的遮罩（HANDOVER §5.4.1），**也要检查文件是否存在**。
+# 2026-10-28 漏生成 mask_214x321_r11 时这里没报，搜索页就一直是方角 —— 补上这条。
+# 前面用 (?<![A-Za-z]) 排除 colordiffuse / scalediffuse（它们的尾巴也是 "diffuse="）。
+DIFFUSE_REF = re.compile(r'(?<![A-Za-z])diffuse="([^"]+)"')
 
 FORK_ATTRS = [
     "material", "glassstyle", "glassedge", "blurradius", "glassprogressiveblur",
@@ -207,6 +211,9 @@ def main() -> int:
         for name in LOC_REF.findall(raw):
             loc_used[name].append(path.name)
         for tex in TEXTURE_REF.findall(raw):
+            if tex.strip():
+                textures_used[tex.strip()].append(path.name)
+        for tex in DIFFUSE_REF.findall(raw):
             if tex.strip():
                 textures_used[tex.strip()].append(path.name)
 
