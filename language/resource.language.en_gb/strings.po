@@ -1193,3 +1193,15 @@ msgstr "Technical flags as icons"
 msgctxt "#31763"
 msgid "Stop"
 msgstr "Stop"
+
+msgctxt "#31764"
+msgid "TMDb"
+msgstr "TMDb"
+
+msgctxt "#31765"
+msgid "Douban"
+msgstr "Douban"
+
+msgctxt "#31766"
+msgid "IMDb"
+msgstr "IMDb"

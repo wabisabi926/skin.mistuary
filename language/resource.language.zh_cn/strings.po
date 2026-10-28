@@ -1061,3 +1061,15 @@ msgstr "技术标识用图标"
 msgctxt "#31763"
 msgid "Stop"
 msgstr "停止"
+
+msgctxt "#31764"
+msgid "TMDb"
+msgstr "TMDb"
+
+msgctxt "#31765"
+msgid "豆瓣"
+msgstr "豆瓣"
+
+msgctxt "#31766"
+msgid "IMDb"
+msgstr "IMDb"
