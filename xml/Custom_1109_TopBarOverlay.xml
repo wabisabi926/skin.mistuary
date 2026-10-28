@@ -195,6 +195,7 @@
 					<itemgap>10</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="image">
+				<visible>!VideoPlayer.HasVideo</visible>
 						<width>220</width>
 						<texture>$VAR[PlayerClearLogoVar]</texture>
 						<aspectratio aligny="center" align="center">keep</aspectratio>
