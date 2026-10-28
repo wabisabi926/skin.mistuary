@@ -181,6 +181,24 @@ python tools/sync_to_kodi.py
 
 **递交/发版前必须打包**：`python tools/xbt_tool.py pack`，否则包里还是旧图。
 
+#### 提交纪律：只 stage 自己改的文件（2026-10-28 事故）
+
+这个仓库**可能有多个 agent 并行改**，工作区里随时会有别人的未提交改动。
+`git add -A` 会把它们一起扫进我的提交 —— 实际发生过一次：搜索 XML 被扫进
+「音乐播放条渐变」提交、测试/文档/同步脚本被扫进「音质信息文字」提交，
+最后只能重写 12 个提交的 hash 来拆开。
+
+固定动作：
+
+```bash
+git status                      # 先看工作区有没有别人的改动
+git add xml/Includes_MusicPlayer.xml   # 只加自己动过的文件
+git diff --cached --name-only   # 核对：出现不属于本次的文件就撤
+git commit -F -                 # 提交信息里写清改了哪几个文件
+```
+
+**永远不要 `git add -A` / `git commit -a`。**
+
 #### 为什么 XBT 仍然写 v2，不跟 Kodi 22 升 v3（2026-10-28 结论）
 
 | | Kodi 21 (Omega) | Kodi 22 (master) |
