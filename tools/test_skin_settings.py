@@ -74,7 +74,10 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
 
     def test_reset_only_options_are_declared(self):
         """恢复默认选项必须留在白名单里，否则会一直被报成有写无读。"""
-        self.assertEqual(RESET_ONLY_SETTINGS, {"circle_none", "OriginalTitleFormat_Default"})
+        self.assertEqual(
+            RESET_ONLY_SETTINGS,
+            {"circle_none", "OriginalTitleFormat_Default", "rating_src_auto"},
+        )
 
 
 class RepoSkinSettingsTest(unittest.TestCase):
@@ -103,6 +106,73 @@ class RepoSkinSettingsTest(unittest.TestCase):
             set(self.writes) - set(self.reads) - RESET_ONLY_SETTINGS - DEFAULT_ONLY_SETTINGS
         )
         self.assertEqual(orphan, [], f"这些设置写了没人读: {orphan}")
+
+
+class RatingSourcePrecedenceTest(unittest.TestCase):
+    """主评分来源：手选档位必须压过类型自动识别。
+
+    回归理由（2026-10-28 实测）：Emby 插件默认把 `CommunityRating` 补写成 imdb 类型
+    （`emby-next-gen` 的 `Set imdb as default rating provider` 默认开），于是
+    `Rating(imdb)` 恒等于 `Rating`。自动识别只要排在设置前面，有类型字段的条目就永远
+    命中 IMDb，设置 707「主评分来源」怎么切都没反应。
+    """
+
+    GUARDS = (
+        "!Skin.HasSetting(douban_rating)",
+        "!Skin.HasSetting(rating_src_imdb)",
+        "!Skin.HasSetting(rating_src_tmdb)",
+    )
+
+    @classmethod
+    def setUpClass(cls):
+        root = ET.parse(XML_DIR / "Includes_DialogVideoInfo_Hero.xml").getroot()
+        row = next(i for i in root.iter("include") if i.get("name") == "NaraOnlineRatingsRow")
+        items = []
+        for inc in row.iter("include"):
+            if inc.get("content") != "NaraOnlineRatingItem":
+                continue
+            params = {p.get("name"): (p.get("value") or "").strip() for p in inc.findall("param")}
+            # 主评分的 label 是 Rating，次评分的 label 带类型名
+            if params.get("label") == "$INFO[$PARAM[item_prefix].Rating]":
+                items.append(params)
+        cls.items = items
+
+    def _split(self):
+        manual, auto = [], []
+        for i, p in enumerate(self.items):
+            (auto if all(g in p["visible"] for g in self.GUARDS) else manual).append((i, p))
+        return manual, auto
+
+    def test_manual_branches_cover_the_three_sources(self):
+        manual, _ = self._split()
+        self.assertEqual(
+            sorted(p["icon"] for _, p in manual),
+            ["flags/ratings/douban.png", "flags/ratings/imdb.png", "flags/ratings/tmdb.png"],
+        )
+
+    def test_manual_branches_ignore_rating_types(self):
+        manual, _ = self._split()
+        for _, p in manual:
+            for typed in ("Rating(tmdb)", "Rating(trakt)", "Rating(imdb)"):
+                self.assertNotIn(typed, p["visible"], f"手选分支不能依赖 {typed}")
+
+    def test_auto_detect_requires_no_manual_choice(self):
+        _, auto = self._split()
+        # TMDb / Trakt / IMDb 三条 + 都没匹配上的 TMDb 兜底
+        self.assertEqual(len(auto), 4)
+        for _, p in auto:
+            for guard in self.GUARDS:
+                self.assertIn(guard, p["visible"])
+
+    def test_manual_branches_render_before_auto_detect(self):
+        manual, auto = self._split()
+        self.assertTrue(manual and auto)
+        self.assertLess(max(i for i, _ in manual), min(i for i, _ in auto))
+
+    def test_auto_option_can_clear_manual_choice(self):
+        """设置 707 必须留一档「自动」，否则选过档位就再也回不到自动识别。"""
+        settings = (XML_DIR / "SkinSettings.xml").read_text(encoding="utf-8")
+        self.assertIn("31767|rating_src_auto", settings)
 
 
 class VideoInfoAutoScrollTest(unittest.TestCase):

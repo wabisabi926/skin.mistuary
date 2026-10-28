@@ -967,8 +967,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "默认“我的评分”。可选“评分”（来源分）或“无”（隐藏）。"
 
 msgctxt "#31740"
-msgid "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
-msgstr "Emby 建库按这里选：默认 TMDb，开了神医助手豆瓣覆盖选豆瓣，装了 IMDb 元数据才选 IMDb。Kodi 刮削会自动识别，无需设置。"
+msgid "Source label for the main rating. A fixed source is shown as picked; Auto follows the scraped rating type, falling back to TMDb."
+msgstr "主评分胶囊的来源标签。指定来源时按所选显示；「自动」按刮削的评分类型识别，匹配不上用 TMDb。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
@@ -1073,3 +1073,7 @@ msgstr "豆瓣"
 msgctxt "#31766"
 msgid "IMDb"
 msgstr "IMDb"
+
+msgctxt "#31767"
+msgid "Auto"
+msgstr "自动"

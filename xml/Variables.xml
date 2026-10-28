@@ -226,7 +226,7 @@
 		<value condition="Skin.HasSetting(douban_rating)">豆瓣</value>
 		<value condition="Skin.HasSetting(rating_src_imdb)">IMDb</value>
 		<value condition="Skin.HasSetting(rating_src_tmdb)">TMDb</value>
-		<value>TMDb</value>
+		<value>自动</value>
 	</variable>
 	<variable name="AlbumOnClickActionLabel2Var">
 		<value condition="Skin.HasSetting(album_onclick_browse)">$LOCALIZE[37015]</value>

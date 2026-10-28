@@ -81,7 +81,8 @@ WRITE_BUILTINS_DOC = (
 
 # SelectBool 里的"恢复默认"选项：选中它等于把同组的其它开关全部置假，
 # 它自己永远不会被读取，所以"有写无读"对它们是正常状态。
-RESET_ONLY_SETTINGS = {"circle_none", "OriginalTitleFormat_Default"}
+# rating_src_auto = 主评分来源的「自动」档：读取端只判断三档手动设置是否全假。
+RESET_ONLY_SETTINGS = {"circle_none", "OriginalTitleFormat_Default", "rating_src_auto"}
 # 默认档位：它是变量里那条**无 condition** 的兜底 value，所以不会出现在
 # Skin.HasSetting(...) 里。属于"写了但按设计没人直接读"。
 # 2026-10-27 起每个档位都写了显式条件（含默认档），这里已清空。

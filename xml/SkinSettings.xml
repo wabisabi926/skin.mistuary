@@ -71,14 +71,14 @@
 					<label2>$VAR[RatingSettingLabel2Var]</label2>
 				</control>
 				<!-- 默认评分来源：Emby 的 CommunityRating 本身不含来源信息，用 StrmAssistant 的
-				     豆瓣覆盖时需要手动把第一颗评分胶囊的图标切到豆瓣 -->
+				     豆瓣覆盖时需要手动把第一颗评分胶囊的图标切到豆瓣；「自动」交回按刮削类型识别 -->
 				<control type="button" id="707">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31733]</label>
 					<include content="NaraSettingsRow">
 					<param name="text" value="text_primary" />
 				</include>
-					<onclick>Skin.SelectBool(31733, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31765|douban_rating)</onclick>
+					<onclick>Skin.SelectBool(31733, 31767|rating_src_auto, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31765|douban_rating)</onclick>
 					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
 				</control>
 				<control type="button" id="708">
