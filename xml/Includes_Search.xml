@@ -265,7 +265,9 @@
 					<top>11</top>
 					<width>214</width>
 					<height>321</height>
-					<texture colordiffuse="selection_surface">$PARAM[poster_background]</texture>
+					<!-- 底板也要挂遮罩：调用方（横排视图）会传 colors/black.png，
+					     不挂的话圆角处会露出黑色方角 -->
+					<texture colordiffuse="selection_surface" diffuse="shapes/mask_214x321_r12.png">$PARAM[poster_background]</texture>
 				</control>
 				<control type="image">
 					<left>10</left>
@@ -273,7 +275,7 @@
 					<width>214</width>
 					<height>321</height>
 					<!-- 真圆角：diffuse 遮罩，尺寸必须和控件一致（214×321） -->
-					<texture background="true" diffuse="shapes/mask_214x321_r11.png">$PARAM[poster_texture]</texture>
+					<texture background="true" diffuse="shapes/mask_214x321_r12.png">$PARAM[poster_texture]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 				</control>
 				<control type="image">
@@ -281,7 +283,7 @@
 					<top>10</top>
 					<width>216</width>
 					<height>323</height>
-					<texture colordiffuse="$PARAM[focus_color]">shapes/ring_card_216x323_r12.png</texture>
+					<texture colordiffuse="$PARAM[focus_color]">shapes/ring_card_216x323_r13.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="image">

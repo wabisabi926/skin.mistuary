@@ -266,9 +266,9 @@
 					<top>28</top>
 					<width>438</width>
 					<height>366</height>
-					<aspectratio>keep</aspectratio>
+					<aspectratio scalediffuse="false">keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_438x366_r12.png">$VAR[IconWallThumbVar]</texture>
 					<visible>!Container.Content(addons) + !String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,episode) + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
 				</control>
 				<control type="image">
@@ -276,9 +276,9 @@
 					<centertop>211</centertop>
 					<width>160</width>
 					<height>160</height>
-					<aspectratio>keep</aspectratio>
+					<aspectratio scalediffuse="false">keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_160x160_r9.png">$VAR[IconWallThumbVar]</texture>
 					<visible>!Container.Content(addons) + !String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,episode) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 				</control>
 				<control type="image">
@@ -286,9 +286,9 @@
 					<centertop>211</centertop>
 					<width>240</width>
 					<height>240</height>
-					<aspectratio>keep</aspectratio>
+					<aspectratio scalediffuse="false">keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_240x240_r9.png">$VAR[IconWallThumbVar]</texture>
 					<visible>Container.Content(addons)</visible>
 				</control>
 				<control type="image">

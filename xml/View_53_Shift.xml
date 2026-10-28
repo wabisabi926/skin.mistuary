@@ -147,7 +147,7 @@
 				<width>334</width>
 				<height>480</height>
 				<aspectratio aligny="center">keep</aspectratio>
-				<texture background="true">$VAR[ShiftThumbVar]</texture>
+				<texture background="true" diffuse="shapes/mask_334x480_r12.png">$VAR[ShiftThumbVar]</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>20</bordersize>
 				<visible>String.IsEmpty(ListItem.Art(poster)) + ![Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(musicvideos) | $EXP[videoasset_true]]</visible>
@@ -159,7 +159,7 @@
 				<width>334</width>
 				<height>480</height>
 				<aspectratio aligny="center">scale</aspectratio>
-				<texture background="true">$VAR[ShiftThumbVar]</texture>
+				<texture background="true" diffuse="shapes/mask_334x480_r12.png">$VAR[ShiftThumbVar]</texture>
 				<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
 				<bordersize>20</bordersize>
 				<visible>!String.IsEmpty(ListItem.Art(poster))</visible>

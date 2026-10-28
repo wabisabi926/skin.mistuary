@@ -60,8 +60,8 @@
 				<control type="image">
 					<width>452</width>
 					<height>672</height>
-					<aspectratio>scale</aspectratio>
-					<texture background="true">$VAR[NaraPosterHeroPosterVar]</texture>
+					<aspectratio scalediffuse="false">scale</aspectratio>
+					<texture background="true" diffuse="shapes/mask_452x672_r12.png">$VAR[NaraPosterHeroPosterVar]</texture>
 				</control>
 			</control>
 		</control>
