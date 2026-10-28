@@ -225,6 +225,7 @@
 	<variable name="NaraDefaultRatingSourceVar">
 		<value condition="Skin.HasSetting(douban_rating)">豆瓣</value>
 		<value condition="Skin.HasSetting(rating_src_imdb)">IMDb</value>
+		<value condition="Skin.HasSetting(rating_src_tmdb)">TMDb</value>
 		<value>TMDb</value>
 	</variable>
 	<variable name="AlbumOnClickActionLabel2Var">
