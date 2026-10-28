@@ -49,11 +49,13 @@
 	<include name="NaraPosterDeckCard">
 		<param name="deck_on">true</param>
 		<definition>
-			<!-- 季列表：卡片缩到 378×567（90%）并整体下移，不再顶到上边缘。
-			     deck_on=false（itemlayout）时整组不画，滑动过程中两侧不会露出邻居卡片。
+			<!-- 电影/剧集/合集/季 共用这一套：卡片缩到 378×567（90%）并整体下移到
+			     (21,205)，不顶到上边缘。这套卡片原为魔改内核的 slotlist 设计
+			     （逐槽位缩放/变暗），降级成 fixedlist 后没有逐槽位变换，所以用
+			     deck_on 闸门控制：itemlayout 传 false → 未聚焦槽位整组不画。
 			     「整季」这类虚拟条目没有季海报，不画封面层，只留深色底板。 -->
 			<control type="group">
-				<visible>Container.Content(seasons) + $PARAM[deck_on]</visible>
+				<visible>$PARAM[deck_on]</visible>
 				<left>21</left>
 				<top>205</top>
 				<width>378</width>
@@ -143,61 +145,6 @@
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$INFO[Container(51).CurrentItem] / $INFO[Container(51).NumItems]</label>
-				</control>
-			</control>
-			<!-- 其它内容（电影/剧集/合集）保持原尺寸。
-			     deck_on 闸门和季列表一致：这套卡片原本靠魔改内核的 slotlist 逐槽位
-			     缩放/变暗，降级成 fixedlist 后没有逐槽位变换，未聚焦槽位会画出一张
-			     全尺寸卡片 —— 三张挤在一起、标题叠成一团。deck_on=false 时整组不画。 -->
-			<control type="group">
-				<visible>!Container.Content(seasons) + $PARAM[deck_on]</visible>
-				<width>420</width>
-				<height>630</height>
-				<depth>DepthContentPopout</depth>
-				<control type="image">
-					<left>-20</left>
-					<top>-20</top>
-					<width>460</width>
-					<height>670</height>
-					<texture colordiffuse="shadow_hard" border="21">overlays/shadow.png</texture>
-				</control>
-				<control type="image">
-					<width>420</width>
-					<height>630</height>
-					<texture border="12" colordiffuse="selection_surface">shapes/round12.png</texture>
-				</control>
-				<control type="image">
-					<width>420</width>
-					<height>630</height>
-					<!-- 真圆角：diffuse 遮罩，尺寸必须和控件一致（420×630）。
-					     半径 12 与底板 round12、细边 edge_420x630_r12 对齐。 -->
-					<texture background="true" diffuse="shapes/mask_420x630_r12.png">$VAR[PosterVar]</texture>
-					<aspectratio scalediffuse="false">scale</aspectratio>
-				</control>
-				<control type="image">
-					<right>12</right>
-					<bottom>12</bottom>
-					<width>32</width>
-					<height>32</height>
-					<texture colordiffuse="progress_watched">OverlayWatched.png</texture>
-					<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
-				</control>
-				<control type="progress">
-					<!-- 左右各缩 12px（= 圆角半径），理由同上 -->
-					<left>12</left>
-					<bottom>0</bottom>
-					<width>396</width>
-					<height>4</height>
-					<reveal>true</reveal>
-					<texturebg border="8,0,8,0" colordiffuse="progress_track">progress/card_progress_r8.png</texturebg>
-					<midtexture border="8,0,8,0" colordiffuse="progress_playback">progress/card_progress_r8.png</midtexture>
-					<info>ListItem.PercentPlayed</info>
-					<visible>!Integer.IsEqual(ListItem.PercentPlayed,0)</visible>
-				</control>
-				<control type="image">
-					<width>420</width>
-					<height>630</height>
-					<texture colordiffuse="38FFFFFF">shapes/edge_420x630_r12.png</texture>
 				</control>
 			</control>
 		</definition>
@@ -329,25 +276,9 @@
 				</focusedlayout>
 			</control>
 
-			<!-- 季列表的标题画在卡片坐标系里（见 NaraPosterDeckCard），这里只服务其它内容 -->
-			<control type="label">
-				<left>230</left>
-				<top>170</top>
-				<width>700</width>
-				<height>44</height>
-				<font>font32</font>
-				<textcolor>text_primary</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>center</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<label>$VAR[NaraPosterDeckTitleVar]</label>
-				<visible>!Container.Content(seasons)</visible>
-			</control>
 
-			<!-- A small spatial index echoes the deck's fixed centre without replacing
-			     the standard bottom scrollbar or the top-right item count.
-			     季列表的刻度/页码已画进卡片坐标系，这里只服务其它内容。 -->
+			<!-- 刻度与页码已经画进卡片坐标系（见 NaraPosterDeckCard），
+			     这里只剩一个透明的 scrollbar，供 <pagecontrol>5198</pagecontrol> 用。 -->
 			<control type="group">
 				<left>400</left>
 				<top>910</top>
@@ -355,18 +286,6 @@
 				<height>70</height>
 				<visible>!Container.Content(seasons)</visible>
 				<animation effect="fade" start="0" end="100" delay="160" time="220">WindowOpen</animation>
-				<control type="image"><left>72</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>90</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>108</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>126</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>144</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>162</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>198</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>216</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>234</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>252</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>270</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>288</left><top>8</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
 				<!-- 滚动条只保留分页导航能力，滑块做成透明（白色竖条会被误读成居中标记） -->
 				<control type="scrollbar" id="5198">
 					<left>72</left>
@@ -382,16 +301,6 @@
 					<textureslidernibfocus colordiffuse="00FFFFFF">overlays/deck-scroll-nib.png</textureslidernibfocus>
 					<onup>51</onup>
 					<ondown>51</ondown>
-				</control>
-				<control type="label">
-					<top>32</top>
-					<width>360</width>
-					<height>30</height>
-					<font>font22</font>
-					<textcolor>text_secondary</textcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-					<label>$INFO[Container(51).CurrentItem] / $INFO[Container(51).NumItems]</label>
 				</control>
 			</control>
 
