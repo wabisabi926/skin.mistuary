@@ -199,13 +199,13 @@
 					</control>
 					<control type="textbox">
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
-					<!-- 框高 96 = 3 行 × 32px。Inter 的行高约是字号的 1.45 倍（22 → 32），不是 1.18。 -->
+					<!-- 只把简介整体上移 8px（266 → 258），字号和框高保持原样。 -->
 						<animation effect="fade" time="180">VisibleChange</animation>
 						<left>80</left>
 						<top>258</top>
 						<width>820</width>
-						<height>96</height>
-						<font>font12</font>
+						<height>91</height>
+						<font>font12_large</font>
 						<textcolor>text_secondary</textcolor>
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 					</control>
