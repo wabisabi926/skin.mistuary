@@ -931,12 +931,12 @@ msgid "Playback transparency"
 msgstr "播放中透明度"
 
 msgctxt "#31730"
-msgid "Page transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "页面透明度 — 档位按透黑模式设计；透白主题下会更浅"
+msgid "Page transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "页面透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
 
 msgctxt "#31731"
-msgid "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "播放中透明度 — 档位按透黑模式设计；透白主题下会更浅"
+msgid "Playback transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "播放中透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
 
 msgctxt "#31733"
 msgid "Main rating source"
@@ -1044,11 +1044,11 @@ msgstr "自动隐藏前的等待秒数。默认 4 秒。"
 
 msgctxt "#31759"
 msgid "Popup transparency"
-msgstr "浮窗透明度"
+msgstr "弹窗透明度"
 
 msgctxt "#31760"
-msgid "Popup transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "浮窗透明度 — 档位按透黑模式设计；透白主题下会更浅"
+msgid "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "弹窗透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
 
 msgctxt "#31761"
 msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."

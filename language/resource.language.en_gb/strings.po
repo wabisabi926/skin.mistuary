@@ -1063,12 +1063,12 @@ msgid "Playback transparency"
 msgstr "Playback transparency"
 
 msgctxt "#31730"
-msgid "Page transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "Page transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgid "Page transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "Page transparency — levels are tuned for the dark theme; the light theme looks lighter."
 
 msgctxt "#31731"
-msgid "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "Playback transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgid "Playback transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "Playback transparency — levels are tuned for the dark theme; the light theme looks lighter."
 
 msgctxt "#31733"
 msgid "Main rating source"
@@ -1179,8 +1179,8 @@ msgid "Popup transparency"
 msgstr "Popup transparency"
 
 msgctxt "#31760"
-msgid "Popup transparency — steps are tuned for the dark theme; the light theme looks lighter"
-msgstr "Popup transparency — steps are tuned for the dark theme; the light theme looks lighter"
+msgid "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
 
 msgctxt "#31761"
 msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
