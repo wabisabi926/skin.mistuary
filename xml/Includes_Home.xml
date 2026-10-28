@@ -885,6 +885,7 @@
 			<!-- 层级：专辑名 font20_title(20) 亮、歌手 font10(18) 暗。
 			     间距比例：封面→专辑名 6px、专辑名→歌手 3px。
 			     两行字要读成"一块"，所以行间距离必须小于封面到文字的距离。 -->
+			<control type="group">
 				<visible>String.IsEqual(ListItem.DBType,album)</visible>
 				<control type="label">
 					<left>0</left>
