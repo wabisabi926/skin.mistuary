@@ -10,7 +10,13 @@
 `main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.1**（2026-10-27 已发版）。
 功能完整、静态自检全绿。
 
-### 2026-10-28 圆角改造（未发版，等 1.1.2）
+> **下一个版本 1.2.0 已就绪、尚未发版**：`changelog.txt` 顶部 1.2.0 段已写完（新增 6 / 调整 8 / 修复 12），
+> 但 `addon.xml` 版本号**是 1.1.1**、**没有 v1.2.0 tag / Release**。
+> **1.1.1 是刻意回退的状态，不是漏改**（原因见 §8.2）：现在 push 不会发版，
+> 只有把版本号改回 `1.2.0` 才会触发 CI 打包。发版动作见 §8.3。
+> 工作区另有两批**未提交**改动（圆角扫尾 / 设置表面归属，见 §8.1），交接到下一任前要么提交、要么讲清。
+
+### 2026-10-28 圆角改造（未发版，等 1.2.0）
 
 一批改动，主题是"海报真圆角 + 焦点环贴边 + 卡片间距"：
 
@@ -47,6 +53,31 @@
 | `View_501_Poster` 横排大图 | 452×672 | 同上（复用） |
 | `View_53_Shift`（2 层） | 334×480 | `mask_334x480_r12` |
 | `View_55_WideList`（3 层） | 438×366 / 160×160 / 240×240 | `mask_438x366_r12` / `mask_160x160_r9` / `mask_240x240_r9` |
+
+2026-10-28（换人开发前）最后扫了一遍全皮肤的图片控件：共 **33 个** ≥100px、非全屏、没挂遮罩的图片控件。
+按"该不该圆角"分成三类，A 类全部补齐，B / C 类故意不做：
+
+- **A 类（卡片，全做）**：见下表。其中前 3 条已随 `f225819` 提交；后 9 条（含 8 张新遮罩）
+  **仍在暂存区外、未提交**（见 §8），交接到下一任前需要处理。
+- **B 类（贴边 hero 大图，故意不做）**：圆角会露出后面那层底色，反而难看。包括 `View_50_List`
+  的 540×850 / 540×470、730×318，`View_54_InfoWall` 的 336×300 / 316×316 / 316×218 等。
+- **C 类（透明 PNG，不用做）**：clearlogo（720×145 / 660×170）、默认图标（DefaultActor 128×128、
+  收藏默认 244×352）—— 本身没角。
+
+| 位置 | 卡片 | 遮罩 | 提交状态 |
+|---|---|---|---|
+| `Includes_DialogVideoInfo_TvEpisodes` 剧集缩略图（item + focus 两处） | 336×189 | `mask_336x189_r9`（新增） | 已提交 `f225819` |
+| `Includes_Home` 首页「类别」卡背景（两处） | 276×160 | `mask_276x160_r9`（新增） | 已提交 `f225819` |
+| `Includes_Search` 搜索 hero 海报（无 fanart 时） | 452×672 | `mask_452x672_r12`（复用） | 已提交 `f225819` |
+| `DialogMusicInfo` 专辑大图 | 570×570 | `mask_570x570_r12`（新增） | **未提交** |
+| `View_55_WideList` 专辑图 / 横版图 | 340×340 / 438×246 | `mask_340x340_r12` / `mask_438x246_r12`（新增） | **未提交** |
+| `View_50_List` 列表预览 | 224×300 / 160×160 / 184×184 | `mask_224x300_r12` / `mask_160x160_r9` / `mask_184x184_r9`（新增） | **未提交** |
+| `Includes_VideoOSD` 播放列表缩略图 | 356×200 | `mask_356x200_r12`（新增） | **未提交** |
+| `DialogAddonInfo` 插件信息截图 | 656×312 | `mask_656x312_r12`（新增） | **未提交** |
+| `Includes_DialogVideoInfo_Cast` 演员头像 | 110×150 | `mask_110x150_r9`（新增） | **未提交** |
+
+新遮罩都在 `tools/gen_corner_masks.py` 的 `DIFFUSE_MASKS` 表里登记过，且 `xbt_tool.py pack` 已重打包
+（791 张）。`audit_skin.py --strict` 通过。
 
 三条硬约束（§5.4.1 有完整说明）：
 **① 遮罩尺寸必须和控件完全一致；② 环 = 卡片 +2、环外半径 = 遮罩半径 +1（内缘压进 2px）；
@@ -152,7 +183,9 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 |---|---|
 | `gen_glass_plates.py` | `glass<N>.png` 玻璃面板（9-slice，中心实、1px 透明边） |
 | `gen_rings.py` | `ring_card_*.png` 描边环（**1:1 整图，不能 9-slice**） |
-| `gen_corner_masks.py` | `mask_*.png` **diffuse 圆角遮罩**（真圆角，见 §5.4.1）；<br>`corner_*.png` 老式实色角部遮盖（逐步淘汰） |
+| `gen_corner_masks.py` | `mask_*.png` **diffuse 圆角遮罩**（真圆角，见 §5.4.1）。`corner_*.png` 老式实色角部遮盖**已退役**，`MASKS` 表清空 |
+| `gen_techflag_icons.py` | `techflags/color/` 的技术标识图标（含冷门格式白字标兜底），并维护 IconMap；`--check` 供 CI |
+| `gen_osd_filled_icons.py` | OSD 实心功能图标 |
 | `gen_music_cover.py` | 音乐播放页兜底封面（黑胶 + 唱臂） |
 | `generate_nara_cast_icon.py` | 演员图标 |
 | `generate_nara_fanart_mask.py` | fanart 遮罩 |
@@ -358,6 +391,18 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
   `DIFFUSE_MASKS` 表生成。
 - 参考实现：Arctic Fuse 3 的 `media/diffuse/card_w731_h310.png`（731×310，r≈14）。
 
+**`scalediffuse` 必须和 `aspectratio` 配对（2026-10-28 补，踩过）**
+
+| aspectratio | 要不要写 `scalediffuse="false"` | 为什么 |
+|---|---|---|
+| `scale` / `stretch`（图填满控件） | **要写** | 遮罩映射到控件矩形；图和控件同尺寸，两者等价 |
+| `keep`（图可能比控件窄/矮） | **不要写**（用默认 `true`） | 默认时遮罩**跟着图片走**，圆角才真的落在图上 |
+
+写成 `keep` + `scalediffuse="false"` 会**完全没有圆角效果**：源码里
+`m_diffuseScaleU = m_diffuseU * m_vertex.Width() / m_width`，采样窗口只覆盖遮罩中间那块，
+四角的圆弧被窗口切掉了（`GUITexture.cpp:441`）。2026-10-28 一次性清掉了 10 处
+（`DialogAddonInfo` ×2、`View_50_List` ×3、`View_55_WideList` ×5）。
+
 **配套：焦点环怎么摆（2026-10-28 修正，之前的「+3」是错的）**
 
 | | 环尺寸 | 环外半径 | 结果 |
@@ -372,8 +417,9 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 | 短边 | 半径 | 用在哪 |
 |---|---|---|
-| **≥ 200** | **r12** | 海报墙 / 信息墙 244、搜索 & 横排卡 214、封面 420/378、Shift 334、详情页 & 横排大图 452、宽列表 438×366 |
-| **< 200** | **r9** | 首页横版 320×180、专辑 186×186、宽列表缩略图 160/240 |
+| **≥ 200** | **r12** | 海报墙/信息墙 244、搜索&横排卡 214、封面 420/378、Shift 334、详情页&横排大图 452、宽列表 438×366 / 340² / 438×246、列表预览 224×300、OSD 播放列表 356×200、插件信息截图 656×312、音乐专辑 570² / **音乐播放页封面 450²**、**视频管理器海报 400×630** |
+| **< 200** | **r9** | 首页横版 320×180、专辑 186²、宽列表缩略图 160²、列表预览 160²/184²、剧集缩略图 336×189、首页类别卡 276×160、演员头像 110×150、**列表行小缩略图 110²** |
+| 特例 | r9 | **宽列表 240²**：和同视图的 160² 保持同一个圆角，不按短边升到 r12（同一个列表里两种半径更难看） |
 
 绝对半径统一（都 r12）会让小卡明显变圆，纯比例（短边 5%）又让大卡显得过圆 ——
 两档制是折中：小卡观感不动，大卡统一到 r12。
@@ -555,7 +601,9 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 项 | 说明 |
 |---|---|
 | 圆角半径两档制 | 短边 ≥200 → r12、<200 → r9（见 §5.4.1）。改任何一档都要连带改遮罩、焦点环、底板 `round<N>`、细边 `edge_*` 四样 |
-| addon 简介措辞 | `addon.xml` 描述写「直接展示豆瓣、IMDb、TMDB、烂番茄多源评分」，实际是**同时最多两个**、且豆瓣与 IMDb 二选一（同一个字段）。用户决定**下个版本**再补「（同时最多两个）」，1.1.0 不改 |
+| addon 简介措辞 | ✅ 2026-10-28 已补：中英两条 description 都写了「（同时最多两个）」/「(up to two at a time)」，随 1.2.0 发 |
+| 系统信息 / 事件日志的底部文字区 | 这两页底部**故意**和 PVR 不一样：`SettingsSystemInfo` 没有"当前项"，底部 y 555–885 被内存/CPU 浮层占用，所以不挂帮助条；`EventLog` 用 `label id=70`（915, h40）+ `textbox id=71`（955, h60）拼成两行，合起来仍占 915–1015 那 100px。**如果希望三页底部完全一致，需要先决定这两页要不要让出那块区域** |
+| `SettingsSystemInfo` 滚动条轨道 | 滚动条 `id=60` 是 644 高（和内容矩形一致），但它服务的 `textbox id=30` 只有 357 高（`bottom 530`），按"轨道要和被控控件同高"的约定，滑块比例偏小。改法：轨道改 193 / 357。**未改，因为会和其他设置页的滚动条高度不一致，属于观感取舍** |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
@@ -567,3 +615,60 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 > 当时的判据是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表逐条比对
 > `$INFO[...]`。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X 取出来，
 > 去掉 `(...)` 参数和 `$PARAM[...]` 前缀，取最后一段，与标签表求差集。
+
+---
+
+## 8. 交接前状态（2026-10-28）
+
+### 8.1 当前 git 状态
+
+- **`origin/main` 最新**：`43e0506`（1.2.0 changelog 补齐）
+- **本地比远端多 3 个提交**（都**未推送**）：
+  `f225819` 圆角（剧集缩略图 / 首页类别卡 / 搜索 hero）、
+  `3d74fb4` 设置表面与 OSD 设置对话框的透明度归属、
+  `6115ecd` 透明度帮助文案跟着改
+- **工作区还有一批未提交改动**（同一条线上的收尾，可以合成 1~2 个提交）：
+
+| 分组 | 文件 |
+|---|---|
+| 圆角扫尾 | `xml/DialogMusicInfo.xml` `xml/View_55_WideList.xml` `xml/View_50_List.xml` `xml/Includes_VideoOSD.xml` `xml/DialogAddonInfo.xml` `xml/Includes_DialogVideoInfo_Cast.xml` `tools/gen_corner_masks.py` + 8 张新遮罩（`mask_110x150_r9` `mask_184x184_r9` `mask_224x300_r12` `mask_340x340_r12` `mask_356x200_r12` `mask_438x246_r12` `mask_570x570_r12` `mask_656x312_r12`） |
+| 焦点环归位 | `xml/Includes_DialogVideoInfo_TvEpisodes.xml` `xml/Includes_VideoOSD.xml` `tools/gen_rings.py` —— 剧集缩略图 338×191 r10、OSD 播放列表 358×202 r13（原来还是外扩 3px / r6），删掉 `ring_card_342x195_r6` / `ring_card_362x206_r6` |
+| 圆角补完（第三批） | `xml/MusicVisualisation.xml`（封面 450²）、`xml/DialogVideoManager.xml`（海报 400×630）、`xml/Includes.xml` ×2 与 `xml/Includes_DialogSelect.xml` ×4（列表小缩略图 110²）+ 3 张新遮罩；另把 10 处 `keep` + `scalediffuse="false"` 的写法清掉（那组合等于没有圆角） |
+| 设置页对齐 | `xml/SettingsProfile.xml`（设置行容器 `top 161/h 708` → **193/644**）、`xml/SettingsSystemInfo.xml`（grouplist 补 `<width>1259</width>`）、`tools/test_skin_settings.py`（新增 4 条几何回归测试） |
+| 文案与文档 | `addon.xml`（简介补「（同时最多两个）」）、`changelog.txt`、`docs/HANDOVER.md` `docs/README.md` `docs/skin-contracts.md` |
+| 贴图包 | `media/Textures.xbt`（799 张，含 8 张新遮罩 + 2 枚新环，已剔除 2 枚旧环） |
+
+> `audit_skin.py --strict` EXIT=0、**50 项单测全绿**、`gen_rings/gen_corner_masks/gen_techflag_vars --check` 全通过。
+> **下一任要看到这些效果，必须先提交推送。**
+
+### 8.2 ⚠️ `addon.xml` 现在是 1.1.1，这是故意的
+
+1.2.0 的发版链路卡过一次：`2ac9ebf` 把版本升到 1.2.0 推上去，CI 的 `test` job 失败（`xbt_tool`
+缺 Pillow），只修了 CI 没再升版本 → 工作流判定「版本号未变化」直接跳过，v1.2.0 的 Release 一直没生成。
+`5020f1f` 于是把版本号**退回 1.1.1**（该版本已有 Release，闸门会跳过重发），
+等下一次推送再升回 1.2.0 就能正常打包。
+
+**结论：现在 push 任何东西都不会发版；只有把版本号改回 `1.2.0` 才会。**
+`changelog.txt` 的 1.2.0 段已经写好，升完版本号就能发。
+
+### 8.3 还没做完的事（按顺序）
+
+| # | 事项 | 状态 | 怎么做 |
+|---|---|---|---|
+| 1 | 提交工作区那批（见 §8.1） | ⏳ 待做 | 按 §4 纪律逐个 `git add`，含 10 张新贴图、2 张删除与 `Textures.xbt` |
+| 2 | push 本地 3+1 个提交 | ⏳ 待做 | `git push`（快进，不涉及发版） |
+| 3 | **发 1.2.0** | ⏳ 待做 | `addon.xml` 版本改回 `1.2.0` → push → CI 打包建 Release |
+| 4 | `addon.xml` 简介补「（同时最多两个）」 | ✅ 2026-10-28 已改 | 中英两条 description 都补了，随 1.2.0 发 |
+| 5 | 三个设置页对齐 PVR 基准 | 🟡 部分 | `SettingsProfile` 的设置行容器 `top 161/h 708` → **193/644**（曾被连 top 一起减 28，两行比 PVR 高 32px）；`SettingsSystemInfo` 的 grouplist 补 `<width>1259</width>`。**系统信息 / 事件日志的"底部文字区"是否要统一，见 §7 待定项** |
+| 6 | §7 其余遗留 | — | 多为"用户决定不改"，逐条见 §7 |
+
+### 8.4 给下一任的提醒
+
+- **提交纪律**（§4）：永远 `git add <具体文件>`、`git diff --cached --name-only` 核对再 commit。
+  这个仓库可能多个 agent 并行改，工作区里随时有别人的未提交改动，别一把扫进自己的提交。
+- **开发期同步实机用散包**：`python tools/sync_to_kodi.py --loose`（改 png 只重载皮肤就生效）；
+  **递交 / 发版前**才 `python tools/xbt_tool.py pack` + 普通 `sync_to_kodi.py`。
+- **版本号没升 = 没发版**：push 会触发发版，"提交"和"发版"要分开确认（§6）。
+- 圆角机制只有一条正确路子：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件完全一致
+  （§5.4.1），别再发明实色角部遮盖那套。
+- **不要擅自 commit / push / 发版**：改完先说明改了什么 + 验证结果，等指令。同步到实机也一样，先问。

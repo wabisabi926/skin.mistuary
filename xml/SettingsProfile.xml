@@ -156,11 +156,13 @@
 				<visible>Container(9000).Hasfocus(1)</visible>
 				<!-- 这里的行用 NaraSettingsRow，它自带 textoffsetx=28，
 				     所以容器必须和 PVR 页一样放在 525（文字才会落在 553）。
-				     放到 553 会变成 581，比 PVR 右 28px。 -->
+				     放到 553 会变成 581，比 PVR 右 28px。
+				     **28 只在水平方向补，纵向仍是 193 / 644**（曾经连 top 也减 28、
+				     height 加 56，两行设置比 PVR 页高 32px，用户一眼看出来没对齐）。 -->
 				<left>525</left>
 				<width>1315</width>
-				<height>708</height>
-				<top>161</top>
+				<height>644</height>
+				<top>193</top>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>9001</onup>

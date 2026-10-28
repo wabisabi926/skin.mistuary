@@ -18,8 +18,10 @@
 			<top>0</top>
 			<include>OpenClose_Right</include>
 			<control type="grouplist">
+				<!-- 纯 label 页没有 NaraSettingsRow，容器直接放 553 / 1259（不用减 28） -->
 				<left>553</left>
 				<top>193</top>
+				<width>1259</width>
 				<height>644</height>
 				<orientation>vertical</orientation>
 				<control type="label" id="2">

@@ -24,8 +24,8 @@
 		</assets>
 		<summary lang="zh">雾汐｜轻量透明皮肤，专为 Emby for Kodi NextGen 优化，支持多评分展示</summary>
 		<summary lang="en">Mistuary - Lightweight transparent skin optimized for Emby for Kodi NextGen with multi-rating support</summary>
-		<description lang="zh">基于 Estuary N 改造，画面优先。原生适配 Emby for Kodi NextGen 动态节点，详情页直接展示豆瓣、IMDb、TMDB、烂番茄多源评分；保留透黑/透白双主题，页面、浮窗、播放透明度可调。</description>
-		<description lang="en">Estuary N based video-first skin. Natively compatible with Emby for Kodi NextGen dynamic nodes, displaying ratings from Douban, IMDb, TMDB and Rotten Tomatoes. Features dark &amp; light transparent themes with adjustable transparency for pages, popups and playback overlay.</description>
+		<description lang="zh">基于 Estuary N 改造，画面优先。原生适配 Emby for Kodi NextGen 动态节点，详情页直接展示豆瓣、IMDb、TMDB、烂番茄的评分（同时最多两个）；保留透黑/透白双主题，页面、浮窗、播放透明度可调。</description>
+		<description lang="en">Estuary N based video-first skin. Natively compatible with Emby for Kodi NextGen dynamic nodes, displaying ratings from Douban, IMDb, TMDB and Rotten Tomatoes (up to two at a time). Features dark &amp; light transparent themes with adjustable transparency for pages, popups and playback overlay.</description>
 		<disclaimer lang="en_GB">Weather, radio and game browsing surfaces are intentionally omitted.</disclaimer>
 		<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面；</disclaimer>
 	</extension>

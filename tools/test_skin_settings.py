@@ -8,6 +8,7 @@ SetPath / SetAddon，而当时的排查只 grep 了 SetString / ToggleSetting。
 
 import sys
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -152,6 +153,83 @@ class SettingsSurfaceTintTest(unittest.TestCase):
         self.assertEqual(dialog_select.count('$VAR[NaraSettingsDialogTintVar]'), 11)
 
 
+class SettingsPageGeometryTest(unittest.TestCase):
+    """设置中心下的页面共用一套几何（见 docs/skin-contracts.md 第五节）。
+
+    钉住的理由：2026-10-28 给 `NaraSettingsRow` 补 28 的水平偏移时，有人把 `top` 也减了 28、
+    `height` 又加了 56（`189/652` → `161/708`），用户配置页的两行设置比 PVR 页高 32px，
+    用户一眼看出「四周空隙没对齐」。**28 只在水平方向补。**
+    """
+
+    PANEL = {"left": "505", "top": "145", "width": "1355", "height": "740"}
+    CONTENT = {"left": "525", "top": "193", "width": "1315", "height": "644"}
+
+    def _root(self, name):
+        return ET.parse(XML_DIR / name).getroot()
+
+    @staticmethod
+    def _geom(ctrl):
+        return {k: (ctrl.findtext(k) or "").strip() for k in ("left", "top", "width", "height")}
+
+    def _find(self, root, ctype, cid=None, width=None):
+        for c in root.iter("control"):
+            if c.get("type") != ctype:
+                continue
+            if cid is not None and c.get("id") != cid:
+                continue
+            if width is not None and (c.findtext("width") or "").strip() != width:
+                continue
+            return c
+        return None
+
+    def test_glass_panel_is_identical_on_every_settings_page(self):
+        for name in ("SettingsCategory.xml", "SettingsProfile.xml",
+                     "SettingsSystemInfo.xml", "EventLog.xml"):
+            panel = self._find(self._root(name), "image", width="1355")
+            self.assertIsNotNone(panel, name)
+            self.assertEqual(self._geom(panel), self.PANEL, name)
+
+    def test_content_rect_follows_the_pvr_baseline(self):
+        # 基准：原生设置分类页（播放器 / 媒体 / 界面 / 网络 / 系统 / PVR 与直播电视）
+        cat = self._root("SettingsCategory.xml")
+        self.assertEqual(self._geom(self._find(cat, "grouplist", "5")), self.CONTENT)
+
+        # 用户配置：设置行容器带 NaraSettingsRow，横向 525/1315，纵向仍是 193/644
+        prof = self._root("SettingsProfile.xml")
+        self.assertEqual(self._geom(self._find(prof, "grouplist", "9001")), self.CONTENT)
+
+        # 用户配置：卡片容器没有行 include，直接 553/1259；卡片自带 top 5，188+5=193
+        cards = self._geom(self._find(prof, "panel", "2"))
+        self.assertEqual((cards["left"], cards["width"]), ("553", "1259"))
+        self.assertEqual(int(cards["top"]) + 5, 193)
+        self.assertEqual(int(cards["top"]) + int(cards["height"]), 837)
+
+        # 系统信息：纯 label 页，容器 553/1259
+        info = self._find(self._root("SettingsSystemInfo.xml"), "grouplist", width="1259")
+        self.assertIsNotNone(info)
+        self.assertEqual(self._geom(info), {**self.CONTENT, "left": "553", "width": "1259"})
+
+        # 事件日志：列表 525/1315，行内首个控件 left=28 → 视觉落在 553
+        log = self._root("EventLog.xml")
+        self.assertEqual(self._geom(self._find(log, "fixedlist", "50")), self.CONTENT)
+
+    def test_help_bar_sits_at_the_same_place(self):
+        for name in ("SettingsCategory.xml", "SettingsProfile.xml"):
+            bar = self._find(self._root(name), "textbox", "6")
+            self.assertIsNotNone(bar, name)
+            self.assertEqual(self._geom(bar),
+                             {"left": "545", "top": "915", "width": "1255", "height": "100"}, name)
+
+    def test_scrollbar_track_matches_the_content_rect(self):
+        for name in ("SettingsCategory.xml", "SettingsProfile.xml",
+                     "SettingsSystemInfo.xml", "EventLog.xml"):
+            bar = self._find(self._root(name), "scrollbar", "60")
+            self.assertIsNotNone(bar, name)
+            g = self._geom(bar)
+            self.assertEqual((g["left"], g["top"], g["width"], g["height"]),
+                             ("1874", "193", "8", "644"), name)
+
+
 class SelectionBarRoundingTest(unittest.TestCase):
     def test_settings_selection_bars_are_rounded(self):
         """默认/对话框设置行的焦点条必须用圆角，不能用 1x1 的 lists/focus.png。"""
@@ -163,6 +241,13 @@ class SelectionBarRoundingTest(unittest.TestCase):
         music = (XML_DIR / "Custom_1113_MusicAudioDialog.xml").read_text(encoding="utf-8")
         self.assertEqual(music.count('border="14">shapes/round14.png'), 3)
         self.assertNotIn('round4.png', music)
+
+        osd = (XML_DIR / "Custom_1112_OSDPlaylistDialog.xml").read_text(encoding="utf-8")
+        self.assertIn('border="14">shapes/round14.png', osd)
+        self.assertNotIn('lists/focus.png', osd)
+        metadata = buttons.split('<include name="InfoDialogMetadata">', 1)[1].split('</include>', 1)[0]
+        self.assertIn('border="14">shapes/round14.png', metadata)
+        self.assertNotIn('lists/focus.png', metadata)
 
 
 if __name__ == "__main__":

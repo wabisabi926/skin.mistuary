@@ -32,7 +32,7 @@
 - **圆角（面板）**：玻璃面板只有 `glass20`，选中行只有 `round14`。`border` 只给实心填充。
 - **圆角（图片）**：`<texture diffuse="shapes/mask_<w>x<h>_r<半径>.png">`，
   **唯一正确做法**，遮罩尺寸必须和控件完全一致。见 HANDOVER §5.4.1。
-  `corner_*.png` 实色遮盖是弯路，正在淘汰（亮背景会露深色角）。
+  `corner_*.png` 实色遮盖已彻底退役（`media/shapes/` 里一张不剩）。
 - **描边环**：一律 1:1 整张图（`tools/gen_rings.py` 生成），**不要 border**，
   而且必须是该卡片**最后绘制**的控件。配遮罩时：环 = 卡片 +2、环半径 = 遮罩半径 +1
   （内缘压进海报 2px，环才贴得住）。**不要给环加 `bordersize`**（会走九宫格）。
@@ -48,7 +48,7 @@
 python tools/audit_skin.py --strict                      # 静态自检，必须 EXIT=0
 python tools/gen_techflag_vars.py --check                # 技术标识变量同步
 python tools/gen_corner_masks.py --check                 # 圆角贴图是否齐全
-python -m unittest discover -s tools -p 'test_*.py'      # 42 项
+python -m unittest discover -s tools -p 'test_*.py'      # 46 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 
