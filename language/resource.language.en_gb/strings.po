@@ -1107,12 +1107,12 @@ msgid "Follows the language setting by default. Or show the original title only,
 msgstr "Follows the language setting by default. Or show the original title only, or both."
 
 msgctxt "#31742"
-msgid "Covers full-screen pages and the cards inside them: settings, add-on browser, video and music info, home cards. Balanced by default."
-msgstr "Covers full-screen pages and the cards inside them: settings, add-on browser, video and music info, home cards. Balanced by default."
+msgid "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
+msgstr "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
 
 msgctxt "#31743"
-msgid "Covers popups while playing: OSD settings, playlist, bookmarks, process info, player controls. Light by default."
-msgstr "Covers popups while playing: OSD settings, playlist, bookmarks, process info, player controls. Light by default."
+msgid "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
+msgstr "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
 
 msgctxt "#31744"
 msgid "Use item fanart as the page background, falling back to the default image. On by default."
@@ -1183,8 +1183,8 @@ msgid "Popup transparency — steps are tuned for the dark theme; the light them
 msgstr "Popup transparency — steps are tuned for the dark theme; the light theme looks lighter"
 
 msgctxt "#31761"
-msgid "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
-msgstr "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
+msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
+msgstr "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
 
 msgctxt "#31762"
 msgid "Technical flags as icons"

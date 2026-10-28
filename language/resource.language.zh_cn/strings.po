@@ -975,12 +975,12 @@ msgid "Follows the language setting by default. Or show the original title only,
 msgstr "默认跟随语言设置；可只显示原始标题，或原名与译名并列。"
 
 msgctxt "#31742"
-msgid "Covers full-screen pages and the cards inside them: settings, add-on browser, video and music info, home cards. Balanced by default."
-msgstr "管全屏页面和页面里的卡片：设置页、插件浏览、影片和音乐信息页、首页卡片。默认“平衡”。"
+msgid "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
+msgstr "控制页面面板、设置中心、设置页侧栏及页面卡片。档位越高越不透明，默认“平衡”。"
 
 msgctxt "#31743"
-msgid "Covers popups while playing: OSD settings, playlist, bookmarks, process info, player controls. Light by default."
-msgstr "管播放时的浮窗：OSD 设置、播放列表、书签、处理信息、播放控制条。默认“通透”。"
+msgid "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
+msgstr "控制播放 OSD、视频/音乐 OSD 设置及播放控制条。档位越高越不透明，默认“通透”。"
 
 msgctxt "#31744"
 msgid "Use item fanart as the page background, falling back to the default image. On by default."
@@ -1051,8 +1051,8 @@ msgid "Popup transparency — steps are tuned for the dark theme; the light them
 msgstr "浮窗透明度 — 档位按透黑模式设计；透白主题下会更浅"
 
 msgctxt "#31761"
-msgid "Covers layers above pages: add-on info, add-on settings, dialogs, context menu, keyboard, settings sidebar. Dense by default."
-msgstr "管叠在页面上的层：插件详情、插件设置、对话框、右键菜单、键盘、设置页左侧栏。默认“偏实”。"
+msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
+msgstr "控制对话框、菜单、键盘及非播放时的设置弹窗。档位越高越不透明，默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
