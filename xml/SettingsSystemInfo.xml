@@ -37,10 +37,15 @@
 					<width>1259</width>
 					<font>Mono26</font>
 				</control>
+				<!-- id 5 在「摘要」是操作系统，在「网络」是子网掩码、在「存储」是第 4 个磁盘 ——
+				     这 12 个 label 所有分区共用，Kodi 按 id 顺序填，所以只能按分区隐藏，不能删。
+				     摘要在 id 5 那格是「操作系统」，Linux 上会连带塞进内核版本 / Build / 编译时间，
+				     跟下面「版本信息」块重复；电池那格（id 8）在电视盒子上也没有意义。 -->
 				<control type="label" id="5">
 					<height>47</height>
 					<width>1259</width>
 					<font>Mono26</font>
+					<visible>!Control.HasFocus(95)</visible>
 				</control>
 				<control type="label" id="6">
 					<height>47</height>
@@ -56,6 +61,7 @@
 					<height>47</height>
 					<width>1259</width>
 					<font>Mono26</font>
+					<visible>!Control.HasFocus(95)</visible>
 				</control>
 				<control type="label" id="9">
 					<height>47</height>
