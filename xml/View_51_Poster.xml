@@ -57,36 +57,36 @@
 			<control type="group">
 				<visible>$PARAM[deck_on]</visible>
 				<left>-60</left>
-				<top>220</top>
-				<width>480</width>
-				<height>720</height>
+				<top>215</top>
+				<width>460</width>
+				<height>690</height>
 				<depth>DepthContentPopout</depth>
 				<control type="image">
 					<left>-20</left>
 					<top>-20</top>
-					<width>520</width>
-					<height>760</height>
+					<width>500</width>
+					<height>730</height>
 					<texture colordiffuse="shadow_hard" border="21">overlays/shadow.png</texture>
 				</control>
 				<control type="image">
-					<width>480</width>
-					<height>720</height>
+					<width>460</width>
+					<height>690</height>
 					<texture border="12" colordiffuse="selection_surface">shapes/round12.png</texture>
 				</control>
 				<control type="image">
-					<width>480</width>
-					<height>720</height>
+					<width>460</width>
+					<height>690</height>
 					<!-- 真圆角：diffuse 逐像素相乘（含 alpha），四角真透明。
 					     遮罩必须和控件同尺寸（378×567），半径与底板 round12 / 细边 r12 一致。 -->
-					<texture background="true" diffuse="shapes/mask_480x720_r12.png">$VAR[PosterVar]</texture>
+					<texture background="true" diffuse="shapes/mask_460x690_r12.png">$VAR[PosterVar]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
 				</control>
 				<control type="image">
-					<right>14</right>
-					<bottom>14</bottom>
-					<width>36</width>
-					<height>36</height>
+					<right>13</right>
+					<bottom>13</bottom>
+					<width>34</width>
+					<height>34</height>
 					<texture colordiffuse="progress_watched">OverlayWatched.png</texture>
 					<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
 				</control>
@@ -95,7 +95,7 @@
 					     进度条压到圆角上两端会露在外面 -->
 					<left>12</left>
 					<bottom>0</bottom>
-					<width>456</width>
+					<width>436</width>
 					<height>4</height>
 					<reveal>true</reveal>
 					<texturebg border="8,0,8,0" colordiffuse="progress_track">progress/card_progress_r8.png</texturebg>
@@ -104,16 +104,16 @@
 					<visible>!Integer.IsEqual(ListItem.PercentPlayed,0)</visible>
 				</control>
 				<control type="image">
-					<width>480</width>
-					<height>720</height>
-					<texture colordiffuse="38FFFFFF">shapes/edge_480x720_r12.png</texture>
+					<width>460</width>
+					<height>690</height>
+					<texture colordiffuse="38FFFFFF">shapes/edge_460x690_r12.png</texture>
 				</control>
 				<!-- 标题和底部页码画在卡片坐标系里，随卡片一起移动，永远对正居中；
 				     卡片与上方标题、下方刻度各留同样的 30px 间距 -->
 				<control type="label">
 					<left>0</left>
 					<top>-74</top>
-					<width>480</width>
+					<width>460</width>
 					<height>44</height>
 					<font>font32</font>
 					<textcolor>text_primary</textcolor>
@@ -123,22 +123,22 @@
 					<scroll>true</scroll>
 					<label>$VAR[NaraPosterDeckTitleVar]</label>
 				</control>
-				<control type="image"><left>132</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>150</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>168</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>186</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>204</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>222</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>258</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>276</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>294</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>312</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>330</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
-				<control type="image"><left>348</left><top>750</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>122</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>140</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>158</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>176</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>194</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>212</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>248</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>266</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>284</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>302</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>320</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
+				<control type="image"><left>338</left><top>720</top><width>2</width><height>12</height><texture colordiffuse="50FFFFFF">colors/white.png</texture></control>
 				<control type="label">
 					<left>0</left>
-					<top>774</top>
-					<width>480</width>
+					<top>744</top>
+					<width>460</width>
 					<height>30</height>
 					<font>font22</font>
 					<textcolor>text_secondary</textcolor>
