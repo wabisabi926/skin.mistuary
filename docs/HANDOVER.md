@@ -643,11 +643,43 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | # | 事项 | 状态 | 怎么做 |
 |---|---|---|---|
-| 1 | 提交并 push 本轮改动 | ✅ 2026-10-28 已推 `b0d7ccf` | 7 个提交，未触发发版 |
-| 2 | **发 1.2.0** | ⏳ 待做 | `addon.xml` 版本改回 `1.2.0` → push → CI 打包建 Release（唯一还没做的一步） |
+| 1 | 提交并 push 本轮改动 | ✅ 2026-10-28 已推 `d094c2f` | 8 个提交，未触发发版 |
+| 2 | **发 1.2.0** | ⏳ 待做 | `addon.xml` 版本改回 `1.2.0` → push → CI 打包建 Release。**唯一的"功能"待办** |
 | 4 | `addon.xml` 简介补「（同时最多两个）」 | ✅ 2026-10-28 已改 | 中英两条 description 都补了，随 1.2.0 发 |
 | 5 | 三个设置页对齐 PVR 基准 | 🟡 部分 | `SettingsProfile` 的设置行容器 `top 161/h 708` → **193/644**（曾被连 top 一起减 28，两行比 PVR 高 32px）；`SettingsSystemInfo` 的 grouplist 补 `<width>1259</width>`。**系统信息 / 事件日志的"底部文字区"是否要统一，见 §7 待定项** |
 | 6 | §7 其余遗留 | — | 多为"用户决定不改"，逐条见 §7 |
+
+#### 8.3.1 圆角还剩 2 处（都卡在"方形边框"上）
+
+| 位置 | 现状 | 要改就得一起动 |
+|---|---|---|
+| `VideoOSDBookmarks.xml` 330×250（item + focused 两处） | 4px `bordertexture` + **方形**焦点框（`colors/white.png` `border="3"` `infill="false"`，328×248 @ 1,6） | 挂遮罩 + 焦点框换成 `ring_card_332x252_r13` + 去掉 `bordersize` |
+| `PlayerControls.xml` 250×250 封面 | 4px `bordertexture` | 挂遮罩 + 去掉 `bordertexture`/`bordersize`（这块没有焦点框，简单些） |
+
+只挂遮罩不换框 = 圆角图外面套一个方框，比现在更难看，所以这两处一直没动。
+
+#### 8.3.2 死贴图（不影响观感，只是包变大）
+
+`media/shapes/` 75 张里有 **17 张没有任何 XML 引用**：`glass16/18/28/32/42`、`round42/65`、
+`ring12_3`、`ring_btn_120x70_r35`、`ring_card_250x358_r14`，以及 7 枚生成的环
+（`206x206_r12` / `227x227_r12` / `227x276_r6` / `235x235_r6` / `243x243_r6` /
+`259x315_r6` / `275x331_r11`）。另外 `icons/filemanager.png`、`icons/power.png`、
+`osd/nara/metadata.png`、`osd/nara/video.png` 也没引用。
+清理要同时改 `gen_rings.py` / `gen_glass_plates.py` 的表，否则 `--check` 会报缺。
+
+#### 8.3.3 待决策（要你点头才动）
+
+- **系统信息 / 事件日志的底部文字区**是否要和 PVR 页完全一致（见 §7）
+- **`SettingsSystemInfo` 滚动条轨道**：644 高，但它服务的 `textbox id=30` 只有 357 高（见 §7）
+- **首页卡片背后的方形投影**：`Includes_Home` 8 处 `bordertexture border="21" infill="false"`
+  （`overlays/shadow.png`）是九宫格投影，卡片圆角后四角会留方形阴影。深色背景看不出来，
+  亮背景下可能有一点点
+
+#### 8.3.4 从没验过的
+
+**Kodi 21 实机**：双轨渲染（`$MAP` 在 21 上退化成原始值）只在本机的 22.0-BETA2 上跑过，
+21 分支一次都没实机验证。想验的话装个 Kodi 21.2 便携版（解压即用、不动现有配置），
+把皮肤拷进 `portable_data/addons/` 就行。
 
 ### 8.4 给下一任的提醒
 
