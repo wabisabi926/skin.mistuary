@@ -117,12 +117,12 @@
 				<scroll>true</scroll>
 			</control>
 			<control type="grouplist">
-				<right>160</right>
-				<bottom>163</bottom>
+				<left>80</left>
+				<bottom>40</bottom>
 				<width>800</width>
 				<height>28</height>
 				<orientation>horizontal</orientation>
-				<align>right</align>
+				<align>left</align>
 				<itemgap>16</itemgap>
 				<include content="NaraMusicAudioDetail">
 					<param name="info" value="MusicPlayer.Codec" />
