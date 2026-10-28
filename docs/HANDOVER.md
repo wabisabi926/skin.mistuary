@@ -497,12 +497,19 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 
 **豆瓣覆盖**：StrmAssistant（神医助手）的「豆瓣评分覆盖」会把 Emby 的 `CommunityRating`
 改写成豆瓣分，同步到 Kodi 后仍是 `default` 类型——Kodi 侧**没有任何来源标志**，
-无法自动判断是豆瓣还是 IMDb。皮肤用设置项 `douban_rating`（设置 → 外观 → **豆瓣评分覆盖**）
-只切换第一颗胶囊的图标（IMDb ↔ 豆瓣），数值都读 `ListItem.Rating`。
+无法自动判断是豆瓣还是 IMDb。皮肤用设置 707「主评分来源」（自动 / TMDb / IMDb / 豆瓣）
+只切换第一颗胶囊的图标，数值都读 `ListItem.Rating`。
 
-**一行最多两个胶囊**：豆瓣和 IMDb 是同一个字段、由上面那个开关二选一，天然互斥，
-所以"最多两个"退化成一条规则——**烂番茄给 TMDB 让位**（TMDB 有值时烂番茄隐藏）。
-优先顺序：豆瓣 > IMDb > TMDB > 烂番茄。
+**手选优先，自动识别只在「自动」档生效**（2026-10-28 修正）。原因：Emby 插件
+（`plugin.service.emby-next-gen` 的 `Set imdb as default rating provider`，默认开）
+会把 `CommunityRating` 补写成 **imdb 类型**的评分，`Rating(imdb)` 恒等于 `Rating`。
+自动识别若排在前面，有类型字段的条目永远命中 IMDb，设置 707 就完全失效（实测现象：
+怎么切都显示 IMDb）。用户指定来源后只按档位画图标；「自动」= 三档手动设置全假，
+随时可以切回去。
+
+**一行最多两个胶囊**：主评分是同一个字段、由 707 四档互斥决定，所以"最多两个"
+退化成一条规则——**烂番茄给 TMDB 让位**（TMDB 有值时烂番茄隐藏）。
+优先顺序：豆瓣 > IMDb > TMDb；「自动」时按 TMDb → Trakt → IMDb 识别，最后默认 TMDb。
 
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。

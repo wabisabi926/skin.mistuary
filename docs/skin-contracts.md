@@ -69,16 +69,23 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
-| `douban_rating` | `SkinSettings.xml`（主评分来源） | `ToggleSetting` |
+| `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:81`（主评分来源四档） | `SelectBool` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
-`circle_none` 和 `OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项：
-选中它等于把同组其它开关全置假，**自己永远不会被读取**，所以它们在
-`audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
+**主评分来源四档互斥，读取端 `NaraOnlineRatingsRow` 里手选优先**：只要用户指定了来源
+（`douban_rating` / `rating_src_imdb` / `rating_src_tmdb` 任一为真），就只按档位画图标；
+选「自动」（`rating_src_auto`，三档手动全假，等同于从未设置）时才比对
+`Rating(tmdb/trakt/imdb)` 自动识别，最后默认 TMDb。
+**不要让自动识别排在设置前面**：Emby 插件（`Set imdb as default rating provider`，默认开）
+会把 `CommunityRating` 补写成 imdb 类型，届时有类型字段的条目永远命中 IMDb，设置就失效了。
 
-现状（`python tools/audit_skin.py` 输出）：**85 读 / 87 写，有读无写 0、有写无读 0**。
+`circle_none`、`OriginalTitleFormat_Default` 和 `rating_src_auto` 是 `SelectBool` 里的
+"恢复默认"选项：选中它等于把同组其它开关全置假，**自己永远不会被读取**（读取端只看
+其余三档是否为假），所以它们在 `audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
+
+现状（`python tools/audit_skin.py` 输出）：**88 读 / 91 写，有读无写 0、有写无读 0**。
 
 ---
 
