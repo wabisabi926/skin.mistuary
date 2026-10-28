@@ -206,7 +206,7 @@
 					<height>61</height>
 					<control type="radiobutton" id="607">
 						<onleft>602</onleft>
-						<onright>70054</onright>
+						<onright>603</onright>
 						<include content="NaraMusicOSDButton">
 							<param name="texture" value="osd/nara/next.png" />
 						</include>
@@ -215,6 +215,18 @@
 						<onclick>PlayerControl(Next)</onclick>
 					</control>
 				</control>
+			<control type="group">
+				<width>61</width>
+				<height>61</height>
+				<control type="radiobutton" id="603">
+					<onleft>607</onleft>
+					<onright>70054</onright>
+					<include content="NaraMusicOSDButton">
+						<param name="texture" value="osd/nara/stop.png" />
+					</include>
+					<onclick>PlayerControl(Stop)</onclick>
+				</control>
+			</control>
 		</control>
 		<!-- 功能组：随机 / 循环 / 列表 / 设置 / 歌词，靠右 -->
 		<control type="grouplist" id="203">
@@ -227,13 +239,13 @@
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
 			<ondown>noop</ondown>
-			<onleft>607</onleft>
+			<onleft>603</onleft>
 			<onright>600</onright>
 				<control type="group">
 					<width>61</width>
 					<height>61</height>
 					<control type="radiobutton" id="70054">
-						<onleft>607</onleft>
+						<onleft>603</onleft>
 						<onright>70053</onright>
 						<textureradioonnofocus colordiffuse="$VAR[NaraMusicShuffleColorVar]">osd/nara/shuffle.png</textureradioonnofocus>
 						<textureradiooffnofocus colordiffuse="$VAR[NaraMusicShuffleColorVar]">osd/nara/shuffle.png</textureradiooffnofocus>
