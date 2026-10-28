@@ -66,20 +66,62 @@
 			</control>
 			<control type="group" id="200">
 				<include>Animation_BottomSlide</include>
-				<control type="grouplist" id="201">
-					<left>160</left>
-					<right>160</right>
-					<top>68</top>
-					<height>56</height>
-					<align>center</align>
-					<itemgap>16</itemgap>
-					<scrolltime tween="sine">200</scrolltime>
-					<orientation>horizontal</orientation>
-					<onup>87</onup>
-					<ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">Nara.OSDPlaylistShelf</ondown>
-					<ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
-					<onleft>70048</onleft>
-					<onright>70046</onright>
+        <!-- 主控组：上一章 / 播放 / 下一章 / 停止，屏幕居中 -->
+        <control type="grouplist" id="201">
+          <left>0</left>
+          <right>0</right>
+          <align>center</align>
+          <itemgap>48</itemgap>
+          <top>68</top>
+          <height>56</height>
+          <orientation>horizontal</orientation>
+          <onup>87</onup>
+          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">Nara.OSDPlaylistShelf</ondown>
+          <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
+          <onleft>87</onleft>
+          <onright>70046</onright>
+					<control type="radiobutton" id="600">
+						<include content="NaraVideoOSDButton">
+							<param name="texture" value="osd/nara/previous.png"/>
+						</include>
+						<onclick>PlayerControl(Previous)</onclick>
+						<visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | [Player.SeekEnabled + VideoPlayer.Content(livetv)]</visible>
+					</control>
+					<control type="radiobutton" id="602">
+						<include>NaraVideoOSDPlayButton</include>
+						<selected>Player.Paused</selected>
+						<onclick>PlayerControl(Play)</onclick>
+						<visible>Player.PauseEnabled</visible>
+					</control>
+					<control type="radiobutton" id="607">
+						<include content="NaraVideoOSDButton">
+							<param name="texture" value="osd/nara/next.png"/>
+						</include>
+						<onclick>PlayerControl(Next)</onclick>
+						<visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | PVR.IsTimeShift</visible>
+					</control>
+					<control type="radiobutton" id="603">
+						<include content="NaraVideoOSDButton">
+							<param name="texture" value="osd/nara/stop.png"/>
+						</include>
+						<onclick>PlayerControl(Stop)</onclick>
+					</control>
+        </control>
+
+        <!-- 功能组：音频/字幕/列表/书签/信息/设置/菜单/频道/EPG/录制/图文/3D，靠右 -->
+        <control type="grouplist" id="202">
+          <right>80</right>
+          <width>800</width>
+          <align>right</align>
+          <itemgap>16</itemgap>
+          <top>68</top>
+          <height>56</height>
+          <orientation>horizontal</orientation>
+          <onup>87</onup>
+          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">Nara.OSDPlaylistShelf</ondown>
+          <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
+          <onleft>603</onleft>
+          <onright>70046</onright>
 					<control type="radiobutton" id="70046">
 						<include content="NaraVideoOSDButton">
 							<param name="texture" value="osd/nara/audio.png"/>
@@ -101,32 +143,6 @@
 						<label>$LOCALIZE[559]</label>
 						<onclick>ActivateWindow(1112)</onclick>
 						<visible>Integer.IsGreater(Playlist.Length(video),1)</visible>
-					</control>
-					<control type="radiobutton" id="600">
-						<include content="NaraVideoOSDButton">
-							<param name="texture" value="osd/nara/previous.png"/>
-						</include>
-						<onclick>PlayerControl(Previous)</onclick>
-						<visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | [Player.SeekEnabled + VideoPlayer.Content(livetv)]</visible>
-					</control>
-					<control type="radiobutton" id="607">
-						<include content="NaraVideoOSDButton">
-							<param name="texture" value="osd/nara/next.png"/>
-						</include>
-						<onclick>PlayerControl(Next)</onclick>
-						<visible>Player.HasSceneMarkers | Player.ChapterCount | Integer.IsGreater(Playlist.Length(video),1) | PVR.IsTimeShift</visible>
-					</control>
-					<control type="radiobutton" id="602">
-						<include>NaraVideoOSDPlayButton</include>
-						<selected>Player.Paused</selected>
-						<onclick>PlayerControl(Play)</onclick>
-						<visible>Player.PauseEnabled</visible>
-					</control>
-					<control type="radiobutton" id="603">
-						<include content="NaraVideoOSDButton">
-							<param name="texture" value="osd/nara/stop.png"/>
-						</include>
-						<onclick>PlayerControl(Stop)</onclick>
 					</control>
 					<control type="radiobutton" id="70044">
 						<include content="NaraVideoOSDButton">
@@ -198,7 +214,7 @@
 						<onclick>SetProperty(settingsdialog_header,$LOCALIZE[36501],home)</onclick>
 						<onclick>ActivateWindow(1101)</onclick>
 					</control>
-				</control>
+        </control>
 			</control>
 			<control type="group" id="6000">
 				<left>200</left>
