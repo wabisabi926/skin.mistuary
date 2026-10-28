@@ -135,7 +135,7 @@
 					<label>$INFO[VideoPlayer.Season,S]$INFO[VideoPlayer.Episode,E]$INFO[VideoPlayer.Title, · ]</label>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
-					<visible>VideoPlayer.Content(episodes)</visible>
+					<visible>VideoPlayer.Content(episodes) + !Window.IsVisible(1109)</visible>
 				</control>
 			</control>
 			<include content="VideoOSDInfoBadgeRow">
