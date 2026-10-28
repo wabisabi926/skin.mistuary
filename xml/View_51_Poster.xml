@@ -74,16 +74,11 @@
 				<control type="image">
 					<width>378</width>
 					<height>567</height>
-					<aspectratio>scale</aspectratio>
-					<texture background="true">$VAR[PosterVar]</texture>
+					<!-- 真圆角：diffuse 逐像素相乘（含 alpha），四角真透明。
+					     遮罩必须和控件同尺寸（378×567），半径与底板 round12 / 细边 r12 一致。 -->
+					<texture background="true" diffuse="shapes/mask_378x567_r12.png">$VAR[PosterVar]</texture>
+					<aspectratio scalediffuse="false">scale</aspectratio>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
-				</control>
-				<!-- 圆角：实色角部遮盖盖掉图片的方角。半径 12（L 档），
-				     和 edge_378x567_r12 的细边对齐；画布必须与海报控件同尺寸。 -->
-				<control type="image">
-					<width>378</width>
-					<height>567</height>
-					<texture>shapes/corner_378x567_r12.png</texture>
 				</control>
 				<control type="image">
 					<right>11</right>
@@ -168,15 +163,10 @@
 				<control type="image">
 					<width>420</width>
 					<height>630</height>
-					<aspectratio>scale</aspectratio>
-					<texture background="true">$VAR[PosterVar]</texture>
-				</control>
-				<!-- 圆角：实色角部遮盖盖掉图片的方角（半径 12 = L 档），
-				     必须放在海报之后、角标/进度条之前，否则进度条两端会被吃掉。 -->
-				<control type="image">
-					<width>420</width>
-					<height>630</height>
-					<texture>shapes/corner_420x630_r12.png</texture>
+					<!-- 真圆角：diffuse 遮罩，尺寸必须和控件一致（420×630）。
+					     半径 12 与底板 round12、细边 edge_420x630_r12 对齐。 -->
+					<texture background="true" diffuse="shapes/mask_420x630_r12.png">$VAR[PosterVar]</texture>
+					<aspectratio scalediffuse="false">scale</aspectratio>
 				</control>
 				<control type="image">
 					<right>12</right>

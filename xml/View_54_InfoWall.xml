@@ -430,29 +430,29 @@
 		<param name="focused">false</param>
 		<param name="caption_title_color">text_primary</param>
 		<param name="caption_year_color">text_secondary</param>
-		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
+		<!-- 和 InfoWallMovieLayout 对齐：环外扩 1px、半径 = 遮罩半径 + 1（内缘压进海报 2px）。 -->
 		<param name="focus_border">2</param>
-		<param name="focus_left">5</param>
-		<param name="focus_top">-3</param>
-		<param name="focus_width">250</param>
-		<param name="focus_height">358</param>
+		<param name="focus_left">7</param>
+		<param name="focus_top">-1</param>
+		<param name="focus_width">246</param>
+		<param name="focus_height">354</param>
 		<definition>
 			<control type="image">
 				<left>8</left>
 				<top>0</top>
 				<width>244</width>
 				<height>352</height>
-				<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
-				<bordersize>14</bordersize>
+				<!-- 底板半径必须 ≥ 遮罩半径，否则四角会从海报下面露出来 -->
+				<texture colordiffuse="selection_surface" border="20">shapes/round20.png</texture>
 			</control>
 			<control type="image">
 				<left>8</left>
 				<top>0</top>
 				<width>244</width>
 				<height>352</height>
-				<texture background="true">$VAR[IconWallThumbVar]</texture>
-				<aspectratio>scale</aspectratio>
-				<bordersize>14</bordersize>
+				<!-- 真圆角：和电影卡同一张遮罩（244×352 r20） -->
+				<texture background="true" diffuse="shapes/mask_244x352_r20.png">$VAR[IconWallThumbVar]</texture>
+				<aspectratio scalediffuse="false">scale</aspectratio>
 				<visible>!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
 			<control type="image">
@@ -462,24 +462,14 @@
 				<height>352</height>
 				<texture background="true">$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 				<aspectratio>keep</aspectratio>
-				<bordersize>14</bordersize>
 				<visible>String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
-				<!-- 圆角：实色角部遮盖，盖住图片的方角 -->
-				<control type="image">
-					<left>8</left>
-					<top>0</top>
-					<width>244</width>
-					<height>352</height>
-					<texture>shapes/corner_244x352_r11.png</texture>
-				</control>
 			<control type="image">
 				<left>$PARAM[focus_left]</left>
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media">shapes/ring_card_250x358_r14.png</texture>
-				<bordersize>14</bordersize>
+				<texture colordiffuse="focus_media">shapes/ring_card_246x354_r21.png</texture>
 				<visible>$PARAM[focused] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
 			</control>
 			<control type="image">
@@ -487,8 +477,7 @@
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_card_surface">shapes/ring_card_250x358_r14.png</texture>
-				<bordersize>14</bordersize>
+				<texture colordiffuse="focus_card_surface">shapes/ring_card_246x354_r21.png</texture>
 				<visible>$PARAM[focused] + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
 			<include content="PosterCardCaption">

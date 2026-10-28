@@ -18,28 +18,28 @@
 |---|---|
 | `xml/View_54_InfoWall.xml` | `InfoWallMovieLayout` 的海报改用 `diffuse` 遮罩；焦点环改 `ring_card_246x354_r21` @ `(7,−1)`（外扩 1px、内缘压进海报 2px）；清掉 7 处 `bordersize`；卡片格 260 → **264** |
 | `xml/View_500_Wall.xml` | 电影/剧集 + 收藏三个卡片格 260 → **264**（左右空档 16 → 20，见 §5.9） |
-| `xml/View_51_Poster.xml` | 两套卡片（378×567 / 420×630）加了**老式**角部遮盖 + 1px 圆角细边，**待改成 diffuse** |
+| `xml/View_51_Poster.xml` | 420×630 / 378×567 两套卡片改用 diffuse 遮罩；细边 `edge_*_r12` 保留 |
+| `xml/Includes_Search.xml` | 搜索结果卡 214×321 改遮罩 r11，环换 `ring_card_216x323_r12` |
+| `xml/Includes_Home.xml` | 横版 320×180（正在观看 ×2、媒体库 ×2，含 5 层封面）改遮罩 r9；专辑 186×186 改遮罩 r9；环换成 322×182 / 188×188 |
 | `tools/gen_corner_masks.py` | 新增 `DIFFUSE_MASKS` + `build_diffuse()`（羽化遮罩）；文件头结论改正；清掉 3 张无引用尺寸 |
 | `tools/gen_rings.py` | 新增 `ring_card_246x354_r21`、`EDGES`（1px 圆角细边）；文件头补「环怎么摆」的规则表 |
 | `media/shapes/` | 新增 `mask_244x352_r20`、`ring_card_246x354_r21`、`corner_*_r12`、`edge_*_r12`；删 3 张无引用 |
 | `docs/HANDOVER.md` / `docs/README.md` | 文档同步 |
 
-**已完成**：海报墙（InfoWall 电影/剧集网格）的真圆角 + 贴边焦点环 + 空档 20px。
-**待做**：把 `corner_*.png` 那套老方案在其余视图逐个换成 diffuse 遮罩 —— 清单见下表。
+**已完成**：**全部 7 处视图**都换成了 diffuse 真圆角（2026-10-28），实色角部遮盖 `corner_*.png`
+已彻底退役（`media/shapes/` 里一张不剩，`gen_corner_masks.py` 的 `MASKS` 表也清空了）。
 
-#### 圆角迁移清单（`corner_*` → `mask_*`）
+| # | 位置 | 卡片 | 遮罩 | 配套 |
+|---|---|---|---|---|
+| 1 | `View_51_Poster` 主海报墙 | 420×630 | `mask_420x630_r12` | 底板 `round12` + 细边 `edge_420x630_r12`（半径 = 遮罩） |
+| 2 | `View_51_Poster` `NaraPosterDeckCard` | 378×567 | `mask_378x567_r12` | 细边 `edge_378x567_r12` |
+| 3 | `Includes_Search` 结果卡 | 214×321 | `mask_214x321_r11` | 环 `ring_card_216x323_r12` |
+| 4 | `Includes_Home` `HomeContinueWatchingRail` ×2 | 320×180 | `mask_320x180_r9` | 环 `ring_card_322x182_r10` |
+| 5 | `Includes_Home` `HomeMediaLibraryRail` ×2（5 层封面全部挂遮罩） | 320×180 | 同上 | 同上 |
+| 6 | `Includes_Home` `HomeWidgetAlbumCard` | 186×186 | `mask_186x186_r9` | 环 `ring_card_188x188_r10` |
+| 7 | `View_54` `InfoWallFavouriteLayout` | 244×352 | `mask_244x352_r20`（与电影卡统一） | 环 `ring_card_246x354_r21` |
 
-| # | 文件 / include | 卡片尺寸 | 现在 | 目标遮罩 | 配套环（外扩 1 / 半径 = 遮罩+1） |
-|---|---|---|---|---|---|
-| 1 | `View_51_Poster.xml` 主海报墙（420×630） | 420×630 | `corner_420x630_r12` | `mask_420x630_r12` | 无环：底板 `round12` + 细边 `edge_420x630_r12`（半径 = 遮罩） |
-| 2 | `View_51_Poster.xml` `NaraPosterDeckCard`（季列表，378×567） | 378×567 | `corner_378x567_r12` | `mask_378x567_r12` | 同上，细边 `edge_378x567_r12` |
-| 3 | `Includes_Search.xml` 搜索结果卡 | 214×321 | `corner_214x321_r11` | `mask_214x321_r11` | 216×323 r12（现为 220×327 r14） |
-| 4 | `Includes_Home.xml` `HomeContinueWatchingRail` ×2 | 320×180 | `corner_320x180_r9` | `mask_320x180_r9` | 322×182 r10（现为 326×186 r12） |
-| 5 | `Includes_Home.xml` `HomeMediaLibraryRail` ×2 | 320×180 | 同上 | 同上 | 同上 |
-| 6 | `Includes_Home.xml` `HomeWidgetAlbumCard` | 186×186 | `corner_186x186_r9` | `mask_186x186_r9` | 188×188 r10（现为 192×192 r12） |
-| 7 | `View_54_InfoWall.xml` `InfoWallFavouriteLayout` | 244×352 | `corner_244x352_r11` | `mask_244x352_r20`（与电影卡统一） | 246×354 r21（复用现成的） |
-
-换的时候记住三条硬约束（§5.4.1 有完整说明）：
+三条硬约束（§5.4.1 有完整说明）：
 **① 遮罩尺寸必须和控件完全一致；② 环 = 卡片 +2、环外半径 = 遮罩半径 +1（内缘压进 2px）；
 ③ 海报下面的圆角底板（`round<N>.png`）半径不能小于遮罩半径，否则四角会从下面露出来。**
 
@@ -326,13 +326,16 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 `<bordertexture>` 时控件实例化成 `CGUIBorderedImage`（九宫格），而描边环必须 1:1 整图。
 `View_54_InfoWall.xml` 里原本 7 个环控件都带着 `bordersize=20/14`，已清掉。
 
-#### 5.4.2 已经被淘汰的弯路：实色角部遮盖
+#### 5.4.2 已经被淘汰的弯路：实色角部遮盖（**已全部清除**）
 
 `media/shapes/corner_<w>x<h>_r<半径>.png`（圆角内透明、四角填 `#2A2A2E` @ 78%）
 是 2026-10-27 的做法，**只在纯色/深色背景下勉强成立**：
 遮盖色必须和背后的像素一致，而背后是变化的 fanart，于是亮背景上会露出四块深色斑点，
-远看轮廓还是方的。**逐步用 5.4.1 的 diffuse 遮罩替换掉。**
-（还留着是因为首页卡片、搜索页、封面流等视图尚未迁移。）
+远看轮廓还是方的。
+
+2026-10-28 全部 7 处视图迁移到 5.4.1 的 diffuse 遮罩后，`corner_*.png` 一张不剩，
+`gen_corner_masks.py` 的 `MASKS` 表已清空（函数保留，只是不再有实色遮盖产物）。
+**新视图一律只写 `DIFFUSE_MASKS`。**
 
 ### 5.5 三个反复踩过的坑
 
@@ -475,8 +478,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | 项 | 说明 |
 |---|---|
-| 圆角迁移未完成 | 只有 `InfoWallMovieLayout` 换成了 `diffuse` 真圆角（§5.4.1），其余 7 处还在用老式 `corner_*.png` 实色遮盖，亮背景上会露深色角。逐项清单见 §1「圆角迁移清单」 |
-| 圆角半径不统一 | 同一个 `View_54` 里电影卡 r20、收藏卡 r11；`View_51` 大卡还是 r12。等实机看过再决定是否统一（统一要连带改底板 `round<N>` 与细边 `edge_*` 的半径，且 `View_51` 底部 4px 进度条会在角上外露，r12 约 3px / r20 约 8px） |
+| 圆角半径不统一 | 244×352 是 r20、封面流 420×630 是 r12、搜索 214×321 是 r11、首页 320×180 / 186×186 是 r9 —— 按卡片大小手工定的，不成比例。等实机看过再决定是否按「长边 5%」统一（统一要连带改底板 `round<N>` 与细边 `edge_*` 的半径，且 `View_51` 底部 4px 进度条会在角上外露，r12 约 3px / r20 约 8px） |
 | addon 简介措辞 | `addon.xml` 描述写「直接展示豆瓣、IMDb、TMDB、烂番茄多源评分」，实际是**同时最多两个**、且豆瓣与 IMDb 二选一（同一个字段）。用户决定**下个版本**再补「（同时最多两个）」，1.1.0 不改 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
