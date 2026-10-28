@@ -40,8 +40,8 @@
 						<top>29</top>
 						<width>162</width>
 						<height>162</height>
-						<aspectratio>scale</aspectratio>
-						<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
+						<aspectratio scalediffuse="false">scale</aspectratio>
+						<texture background="true" diffuse="shapes/mask_162x162_r9.png">$VAR[NaraImgListitemIconDefDefaultUser]</texture>
 					</control>
 					<control type="label">
 						<left>18</left>
@@ -97,8 +97,8 @@
 							<top>29</top>
 							<width>162</width>
 							<height>162</height>
-							<aspectratio>scale</aspectratio>
-							<texture>$VAR[NaraImgListitemIconDefDefaultUser]</texture>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_162x162_r9.png">$VAR[NaraImgListitemIconDefDefaultUser]</texture>
 						</control>
 						<control type="label">
 							<left>18</left>

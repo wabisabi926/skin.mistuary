@@ -49,7 +49,7 @@
 							<top>14</top>
 							<width>160</width>
 							<height>116</height>
-							<texture>$VAR[IconWallThumbVar]</texture>
+							<texture background="true" diffuse="shapes/mask_160x116_r9.png">$VAR[IconWallThumbVar]</texture>
 							<aspectratio>keep</aspectratio>
 							<align>center</align>
 						</control>
@@ -87,7 +87,7 @@
 							<top>14</top>
 							<width>160</width>
 							<height>116</height>
-							<texture>$VAR[IconWallThumbVar]</texture>
+							<texture background="true" diffuse="shapes/mask_160x116_r9.png">$VAR[IconWallThumbVar]</texture>
 							<aspectratio>keep</aspectratio>
 							<align>center</align>
 						</control>

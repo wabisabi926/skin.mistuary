@@ -190,9 +190,7 @@
 				<height>250</height>
 				<fadetime>400</fadetime>
 				<aspectratio>keep</aspectratio>
-				<texture border="2">$VAR[NowPlayingPosterVar]</texture>
-				<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
-				<bordersize>4</bordersize>
+				<texture background="true" diffuse="shapes/mask_250x250_r12.png">$VAR[NowPlayingPosterVar]</texture>
 			</control>
 			<centertop>50%</centertop>
 			<height>440</height>

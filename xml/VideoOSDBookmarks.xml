@@ -108,10 +108,8 @@
 							<top>5</top>
 							<width>330</width>
 							<height>250</height>
-							<aspectratio>scale</aspectratio>
-							<texture border="4">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
-							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
-							<bordersize>4</bordersize>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_330x250_r12.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="label">
 							<left>20</left>
@@ -132,10 +130,8 @@
 							<top>5</top>
 							<width>330</width>
 							<height>250</height>
-							<aspectratio>scale</aspectratio>
-							<texture border="4">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
-							<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>
-							<bordersize>4</bordersize>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_330x250_r12.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="label">
 							<left>20</left>
@@ -147,11 +143,11 @@
 							<align>center</align>
 						</control>
 						<control type="image">
-							<left>1</left>
-							<top>6</top>
-							<width>328</width>
-							<height>248</height>
-							<texture border="3" infill="false" colordiffuse="focus_media">colors/white.png</texture>
+							<left>-1</left>
+							<top>4</top>
+							<width>332</width>
+							<height>252</height>
+							<texture colordiffuse="focus_media">shapes/ring_card_332x252_r13.png</texture>
 							<visible>Control.HasFocus(11)</visible>
 						</control>
 					</control>
