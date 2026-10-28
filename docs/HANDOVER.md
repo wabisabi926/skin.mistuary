@@ -159,7 +159,27 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `generate_nara_osd_icons.ps1` | OSD 图标（PowerShell） |
 | `generate_nara_settings_icons.ps1` | 设置图标（PowerShell） |
 
-**改过 `media/` 一定要重打包**：`python tools/xbt_tool.py pack`（否则实机还是旧图）。
+#### 开发期用散包，递交/发版才打包（2026-10-28 定）
+
+打包成 `Textures.xbt` 之后，**改一张图要重打包 + 重启 Kodi**，迭代太慢。
+所以分两种同步方式：
+
+```bash
+# 开发期（默认）：散包。跳过 Textures.xbt，并把目标端那份挪成 .off
+python tools/sync_to_kodi.py --loose
+
+# 递交 / 发版前：打包 + 正常同步
+python tools/xbt_tool.py pack
+python tools/sync_to_kodi.py
+```
+
+- `--loose` 会**跳过** `media/Textures.xbt`，并尝试把实机那份改名成 `.xbt.off`，
+  强制 Kodi 读散图 → 之后改 png 只要**重载皮肤**就生效，不用打包、不用重启
+- **Kodi 运行时 xbt 是被锁住的**，改名会失败，脚本会提示"先完全退出 Kodi 再跑一次"。
+  只需要退出这一次，之后一直是散图状态
+- 只改 XML 的话两种模式都一样（XML 不进 xbt）
+
+**递交/发版前必须打包**：`python tools/xbt_tool.py pack`，否则包里还是旧图。
 
 #### 为什么 XBT 仍然写 v2，不跟 Kodi 22 升 v3（2026-10-28 结论）
 
