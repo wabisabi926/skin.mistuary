@@ -72,7 +72,7 @@
 					<top>68</top>
 					<height>56</height>
 					<align>center</align>
-					<itemgap>10</itemgap>
+					<itemgap>16</itemgap>
 					<scrolltime tween="sine">200</scrolltime>
 					<orientation>horizontal</orientation>
 					<onup>87</onup>
