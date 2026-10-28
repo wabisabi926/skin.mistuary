@@ -883,12 +883,12 @@
 				<visible>!String.IsEqual(ListItem.DBType,album)</visible>
 			</control>
 			<!-- 层级：专辑名 font20_title(20) 亮、歌手 font10(18) 暗。
-			     22 号字行高约 32px，两行只隔 28px 会重叠，所以第一行降到 20、两行拉开到 32px。 -->
-			<control type="group">
+			     间距比例：封面→专辑名 6px、专辑名→歌手 3px。
+			     两行字要读成"一块"，所以行间距离必须小于封面到文字的距离。 -->
 				<visible>String.IsEqual(ListItem.DBType,album)</visible>
 				<control type="label">
 					<left>0</left>
-					<top>188</top>
+					<top>192</top>
 					<width>186</width>
 					<label>$PARAM[sub_label]</label>
 					<font>font20_title</font>
@@ -898,7 +898,7 @@
 				</control>
 				<control type="label">
 					<left>0</left>
-					<top>220</top>
+					<top>224</top>
 					<width>186</width>
 					<label>$PARAM[main_label]</label>
 					<font>font10</font>
