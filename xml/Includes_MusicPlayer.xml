@@ -23,11 +23,11 @@
 	</variable>
 	<variable name="NaraMusicProgressColorVar">
 		<value condition="Control.HasFocus(87) | Player.Seeking">FFFFFFFF</value>
-		<value>90FFFFFF</value>
+		<value>CCFFFFFF</value>
 	</variable>
 	<variable name="NaraMusicNibColorVar">
 		<value condition="Control.HasFocus(87) | Player.Seeking">FFFFFFFF</value>
-		<value>FF8C8C8C</value>
+		<value>FFE6E6E6</value>
 	</variable>
 	<variable name="NaraMusicRepeatColorVar">
 		<value condition="Playlist.IsRepeat">FFFFFFFF</value>
@@ -300,7 +300,7 @@
 				<height>30</height>
 				<font>font12</font>
 				<align>right</align>
-				<textcolor>99FFFFFF</textcolor>
+				<textcolor>CCFFFFFF</textcolor>
 				<label>$VAR[NaraMusicControlLabelVar]</label>
 			</control>
 			<control type="group">
@@ -312,7 +312,7 @@
 					<width>100%</width>
 					<top>7</top>
 					<height>2</height>
-					<texture colordiffuse="40FFFFFF">colors/white.png</texture>
+					<texture colordiffuse="59FFFFFF">colors/white.png</texture>
 				</control>
 				<control type="progress">
 					<width>100%</width>
