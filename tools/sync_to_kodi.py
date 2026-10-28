@@ -25,7 +25,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ADDON_ID = "skin.mistuary"
-EXCLUDE_DIRS = {".git", ".workbuddy-ai", "build"}
+EXCLUDE_DIRS = {".git", ".github", ".workbuddy-ai", "build"}
+EXCLUDE_FILES = {".gitignore"}
 EXCLUDE_PATHS = {Path("docs") / "scratch"}
 
 
@@ -46,6 +47,8 @@ def iter_files():
         dirnames[:] = [d for d in dirnames if d not in EXCLUDE_DIRS]
         for name in filenames:
             rel = rel_dir / name
+            if name in EXCLUDE_FILES:
+                continue
             if any(rel == p or p in rel.parents for p in EXCLUDE_PATHS):
                 continue
             yield rel
