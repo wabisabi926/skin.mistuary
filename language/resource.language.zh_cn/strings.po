@@ -1067,8 +1067,8 @@ msgid "TMDb"
 msgstr "TMDb"
 
 msgctxt "#31765"
-msgid "豆瓣"
-msgstr "豆瓣"
+msgid "Douban"
+msgstr "Douban"
 
 msgctxt "#31766"
 msgid "IMDb"
