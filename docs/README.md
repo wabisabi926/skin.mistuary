@@ -20,8 +20,9 @@
 **皮肤本体不需要任何 Python 脚本。** `addon.xml` 只依赖 `xbmc.gui 5.17.0`。
 `tools/` 全是构建期工具，不进发布包。
 
-皮肤会探测 `plugin.service.emby-next-gen` 和 `script.embuary.info`，
-两者都只是"装了才显示"的可选增强，没有硬依赖。
+皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
+`script.mistuary.helper`（规划中），都是"装了才启用"的可选增强，没有硬依赖。
+helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
 
 ---
 
