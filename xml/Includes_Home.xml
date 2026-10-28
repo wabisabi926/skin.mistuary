@@ -199,12 +199,13 @@
 					</control>
 					<control type="textbox">
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
+					<!-- 上移 8px 给下方栏目留白；font12_large(24) 下 4 行要 96px，框只有 91，第四行被切一半；font12(22) 下 4 行 88px 刚好。 -->
 						<animation effect="fade" time="180">VisibleChange</animation>
 						<left>80</left>
-						<top>266</top>
+						<top>258</top>
 						<width>820</width>
 						<height>91</height>
-						<font>font12_large</font>
+						<font>font12</font>
 						<textcolor>text_secondary</textcolor>
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 					</control>
