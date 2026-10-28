@@ -16,14 +16,14 @@
 
 | 文件 | 改了什么 |
 |---|---|
-| `xml/View_54_InfoWall.xml` | `InfoWallMovieLayout` 的海报改用 `diffuse` 遮罩；焦点环改 `ring_card_246x354_r21` @ `(7,−1)`（外扩 1px、内缘压进海报 2px）；清掉 7 处 `bordersize`；卡片格 260 → **264** |
+| `xml/View_54_InfoWall.xml` | `InfoWallMovieLayout` 的海报改用 `diffuse` 遮罩；焦点环改 `ring_card_246x354_r13` @ `(7,−1)`（外扩 1px、内缘压进海报 2px）；清掉 7 处 `bordersize`；卡片格 260 → **264** |
 | `xml/View_500_Wall.xml` | 电影/剧集 + 收藏三个卡片格 260 → **264**（左右空档 16 → 20，见 §5.9） |
 | `xml/View_51_Poster.xml` | 420×630 / 378×567 两套卡片改用 diffuse 遮罩；细边 `edge_*_r12` 保留 |
 | `xml/Includes_Search.xml` | 搜索结果卡 214×321 改遮罩 r11，环换 `ring_card_216x323_r12` |
 | `xml/Includes_Home.xml` | 横版 320×180（正在观看 ×2、媒体库 ×2，含 5 层封面）改遮罩 r9；专辑 186×186 改遮罩 r9；环换成 322×182 / 188×188 |
 | `tools/gen_corner_masks.py` | 新增 `DIFFUSE_MASKS` + `build_diffuse()`（羽化遮罩）；文件头结论改正；清掉 3 张无引用尺寸 |
-| `tools/gen_rings.py` | 新增 `ring_card_246x354_r21`、`EDGES`（1px 圆角细边）；文件头补「环怎么摆」的规则表 |
-| `media/shapes/` | 新增 `mask_244x352_r20`、`ring_card_246x354_r21`、`corner_*_r12`、`edge_*_r12`；删 3 张无引用 |
+| `tools/gen_rings.py` | 新增 `ring_card_246x354_r13`、`EDGES`（1px 圆角细边）；文件头补「环怎么摆」的规则表 |
+| `media/shapes/` | 新增 `mask_244x352_r12`、`ring_card_246x354_r13`、`corner_*_r12`、`edge_*_r12`；删 3 张无引用 |
 | `docs/HANDOVER.md` / `docs/README.md` | 文档同步 |
 
 **已完成**：**全部 7 处视图**都换成了 diffuse 真圆角（2026-10-28），实色角部遮盖 `corner_*.png`
@@ -37,7 +37,7 @@
 | 4 | `Includes_Home` `HomeContinueWatchingRail` ×2 | 320×180 | `mask_320x180_r9` | 环 `ring_card_322x182_r10` |
 | 5 | `Includes_Home` `HomeMediaLibraryRail` ×2（5 层封面全部挂遮罩） | 320×180 | 同上 | 同上 |
 | 6 | `Includes_Home` `HomeWidgetAlbumCard` | 186×186 | `mask_186x186_r9` | 环 `ring_card_188x188_r10` |
-| 7 | `View_54` `InfoWallFavouriteLayout` | 244×352 | `mask_244x352_r20`（与电影卡统一） | 环 `ring_card_246x354_r21` |
+| 7 | `View_54` `InfoWallFavouriteLayout` | 244×352 | `mask_244x352_r12`（与电影卡统一） | 环 `ring_card_246x354_r13` |
 
 三条硬约束（§5.4.1 有完整说明）：
 **① 遮罩尺寸必须和控件完全一致；② 环 = 卡片 +2、环外半径 = 遮罩半径 +1（内缘压进 2px）；
@@ -295,7 +295,7 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 **这是唯一正确的路子，别再自己发明。** Kodi 的 `<texture>` 有个 `diffuse` 属性：
 
 ```xml
-<texture background="true" diffuse="shapes/mask_244x352_r20.png">$INFO[ListItem.Art(poster)]</texture>
+<texture background="true" diffuse="shapes/mask_244x352_r12.png">$INFO[ListItem.Art(poster)]</texture>
 <aspectratio scalediffuse="false">scale</aspectratio>
 ```
 
@@ -315,8 +315,8 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 | 配遮罩的圆角卡片 | 卡片 **+2**（外扩 1px） | 遮罩半径 **+1** | 内缘压进海报 2px，盖住羽化边，环贴在海报上 |
 | 方角卡片（无遮罩） | 卡片 +6（外扩 3px） | 卡片圆角 +3 | 环在卡片外面一圈 |
 
-海报墙实测：`mask_244x352_r20` 配 `ring_card_246x354_r21` @ `(7,−1)`。
-圆心 (8−1+21, 0−1+21) = (28,20)，与海报圆角圆心重合 → 两个圆弧同心。
+海报墙实测：`mask_244x352_r12` 配 `ring_card_246x354_r13` @ `(7,−1)`。
+圆心 (8−1+13, 0−1+13) = (20,12)，与海报圆角圆心 (8+12, 0+12) 重合 → 两个圆弧同心。
 
 **为什么不是 +3**：环外扩 3px 时，环内缘正好落在海报边界上，读起来是"浮在卡片外的一圈框"
 （用户原话：比海报大了一点点）；而且遮罩的 3px 羽化让海报最外 1.5px 半透明，
@@ -478,7 +478,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | 项 | 说明 |
 |---|---|
-| 圆角半径不统一 | 244×352 是 r20、封面流 420×630 是 r12、搜索 214×321 是 r11、首页 320×180 / 186×186 是 r9 —— 按卡片大小手工定的，不成比例。等实机看过再决定是否按「长边 5%」统一（统一要连带改底板 `round<N>` 与细边 `edge_*` 的半径，且 `View_51` 底部 4px 进度条会在角上外露，r12 约 3px / r20 约 8px） |
+| 圆角半径按卡片大小分档 | 244×352 / 420×630 / 378×567 是 r12、214×321 是 r11、320×180 / 186×186 是 r9 —— 基本按「短边 5%」走（244→12、214→11、186→9.3），**不再追求绝对统一**。改任何一档都要连带改遮罩、焦点环、底板 `round<N>`、细边 `edge_*` 四样 |
 | addon 简介措辞 | `addon.xml` 描述写「直接展示豆瓣、IMDb、TMDB、烂番茄多源评分」，实际是**同时最多两个**、且豆瓣与 IMDb 二选一（同一个字段）。用户决定**下个版本**再补「（同时最多两个）」，1.1.0 不改 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |

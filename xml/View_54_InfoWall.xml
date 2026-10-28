@@ -314,7 +314,7 @@
 		<param name="progress_height">3</param>
 		<param name="progress_visible_condition">true</param>
 		<!-- 焦点环：外扩 1px、描边 3px → 内缘压进海报 2px（盖住遮罩羽化，环贴在海报边上）。
-		     环外半径 21 = 遮罩半径 20 + 1，圆心与海报圆角同心（8−1+21 = 8+20 = 28）。
+		     环外半径 13 = 遮罩半径 12 + 1，圆心与海报圆角同心（8−1+13 = 8+12 = 20）。
 		     **不要加 bordersize**：有它控件会变成 CGUIBorderedImage 走九宫格，
 		     而描边环必须是 1:1 整图（见 tools/gen_rings.py 的文件头）。 -->
 		<param name="focus_border">2</param>
@@ -337,7 +337,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-					<texture colordiffuse="focus_card_surface">shapes/ring_card_246x354_r21.png</texture>
+					<texture colordiffuse="focus_card_surface">shapes/ring_card_246x354_r13.png</texture>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
@@ -352,7 +352,7 @@
 					<top>0</top>
 					<width>244</width>
 					<height>352</height>
-					<texture background="true" diffuse="shapes/mask_244x352_r20.png">$INFO[ListItem.Art(poster)]</texture>
+					<texture background="true" diffuse="shapes/mask_244x352_r12.png">$INFO[ListItem.Art(poster)]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 				</control>
 				<control type="image">
@@ -360,7 +360,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-					<texture colordiffuse="focus_media">shapes/ring_card_246x354_r21.png</texture>
+					<texture colordiffuse="focus_media">shapes/ring_card_246x354_r13.png</texture>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
@@ -443,15 +443,15 @@
 				<width>244</width>
 				<height>352</height>
 				<!-- 底板半径必须 ≥ 遮罩半径，否则四角会从海报下面露出来 -->
-				<texture colordiffuse="selection_surface" border="20">shapes/round20.png</texture>
+				<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 			</control>
 			<control type="image">
 				<left>8</left>
 				<top>0</top>
 				<width>244</width>
 				<height>352</height>
-				<!-- 真圆角：和电影卡同一张遮罩（244×352 r20） -->
-				<texture background="true" diffuse="shapes/mask_244x352_r20.png">$VAR[IconWallThumbVar]</texture>
+				<!-- 真圆角：和电影卡同一张遮罩（244×352 r12） -->
+				<texture background="true" diffuse="shapes/mask_244x352_r12.png">$VAR[IconWallThumbVar]</texture>
 				<aspectratio scalediffuse="false">scale</aspectratio>
 				<visible>!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
@@ -469,7 +469,7 @@
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_media">shapes/ring_card_246x354_r21.png</texture>
+				<texture colordiffuse="focus_media">shapes/ring_card_246x354_r13.png</texture>
 				<visible>$PARAM[focused] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
 			</control>
 			<control type="image">
@@ -477,7 +477,7 @@
 				<top>$PARAM[focus_top]</top>
 				<width>$PARAM[focus_width]</width>
 				<height>$PARAM[focus_height]</height>
-				<texture colordiffuse="focus_card_surface">shapes/ring_card_246x354_r21.png</texture>
+				<texture colordiffuse="focus_card_surface">shapes/ring_card_246x354_r13.png</texture>
 				<visible>$PARAM[focused] + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
 			</control>
 			<include content="PosterCardCaption">
