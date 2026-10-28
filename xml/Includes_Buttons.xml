@@ -98,7 +98,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>status_error</invalidcolor>
 			<selectedcolor>selection_foreground</selectedcolor>
-			<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]" border="14">shapes/round14.png</texturefocus>
 			<texturenofocus />
 			<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 			<textureupfocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">buttons/spinctrl/arrow-light-up.png</textureupfocus>
@@ -121,7 +121,7 @@
 			<aligny>center</aligny>
 			<invalidcolor>status_error</invalidcolor>
 			<selectedcolor>selection_foreground</selectedcolor>
-			<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">lists/focus.png</texturefocus>
+			<texturefocus colordiffuse="$VAR[NaraDialogFocusSurfaceVar]" border="14">shapes/round14.png</texturefocus>
 			<!-- 原来这里是 texturenofocus colordiffuse="surface_dialog"（FF18171E，100% 不透明），
 			     每行一块死板，叠起来把玻璃面板整块盖住 —— 所以"列表区域没有透黑"。
 			     行背景交给外层面板，这里留空。 -->

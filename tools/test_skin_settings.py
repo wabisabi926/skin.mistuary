@@ -152,5 +152,18 @@ class SettingsSurfaceTintTest(unittest.TestCase):
         self.assertEqual(dialog_select.count('$VAR[NaraSettingsDialogTintVar]'), 11)
 
 
+class SelectionBarRoundingTest(unittest.TestCase):
+    def test_settings_selection_bars_are_rounded(self):
+        """默认/对话框设置行的焦点条必须用圆角，不能用 1x1 的 lists/focus.png。"""
+        buttons = (XML_DIR / "Includes_Buttons.xml").read_text(encoding="utf-8")
+        for name in ("DefaultSettingButton", "DialogSettingButton"):
+            block = buttons.split(f'<include name="{name}">', 1)[1].split('</include>', 1)[0]
+            self.assertIn('border="14">shapes/round14.png', block)
+            self.assertNotIn('lists/focus.png', block)
+        music = (XML_DIR / "Custom_1113_MusicAudioDialog.xml").read_text(encoding="utf-8")
+        self.assertEqual(music.count('border="14">shapes/round14.png'), 3)
+        self.assertNotIn('round4.png', music)
+
+
 if __name__ == "__main__":
     unittest.main()
