@@ -121,14 +121,13 @@
 				<top>79</top>
 				<height>61</height>
 				<align>center</align>
-				<itemgap>16</itemgap>
+				<itemgap>24</itemgap>
 				<orientation>horizontal</orientation>
 				<onup>87</onup>
 				<ondown>noop</ondown>
 				<onleft>70048</onleft>
 				<onright>70054</onright>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70054">
 						<onleft>70048</onleft>
 						<onright>70053</onright>
@@ -144,7 +143,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70053">
 						<onleft>70054</onleft>
 						<onright>70051</onright>
@@ -162,7 +160,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70051">
 						<onleft>70053</onleft>
 						<onright>602</onright>
@@ -175,7 +172,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="602">
 						<onleft>70051</onleft>
 						<onright>600</onright>
@@ -192,7 +188,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="600">
 						<onleft>602</onleft>
 						<onright>607</onright>
@@ -204,7 +199,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="607">
 						<onleft>600</onleft>
 						<onright>70048</onright>
@@ -217,7 +211,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70048">
 						<onleft>607</onleft>
 						<onright>70052</onright>
@@ -229,7 +222,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<control type="radiobutton" id="70052">
 						<onleft>70048</onleft>
 						<onright>70049</onright>
@@ -241,7 +233,6 @@
 					</control>
 				</control>
 				<control type="group">
-					<include>NaraMusicOSDButtonGlass</include>
 					<!-- 歌词：未选插件时先弹出插件选择（xbmc.python.lyrics），选好后再次点击即运行；
 					     逻辑与 Estuary 一致 -->
 					<control type="radiobutton" id="70049">
