@@ -112,5 +112,19 @@ class VideoInfoAutoScrollTest(unittest.TestCase):
         self.assertEqual(hero.count(binding), 2)
 
 
+class VideoInfoTechFlagsCaptionTest(unittest.TestCase):
+    def test_tvshow_techflags_use_current_season_first_episode(self):
+        """剧集页用当前季第一集当代表集，并在行尾标 SxxExx。"""
+        hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
+        variables = (XML_DIR / "Variables.xml").read_text(encoding="utf-8")
+        self.assertIn('<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />', hero)
+        self.assertIn('<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />', hero)
+        self.assertIn('<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />', hero)
+        self.assertIn('<variable name="NaraRepCaptionVar">', variables)
+        self.assertIn('代表集 S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]', variables)
+        self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,1)">01</value>', variables)
+        self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,1)">01</value>', variables)
+
+
 if __name__ == "__main__":
     unittest.main()

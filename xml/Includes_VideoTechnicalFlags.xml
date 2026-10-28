@@ -442,9 +442,10 @@
 	<!-- Public shared component. Callers only identify the item source and placement; source
 	     selection, aliases, dual HDR, Dolby Vision detail and missing-value compaction stay here. -->
 	<!-- 按 item 前缀取流信息。电影/单集用条目本身的流标签；
-	     剧集（show 层级）本身没有流信息，只能读 TvShowRepresentative.* 属性 ——
-	     注意：**目前没有任何组件写这组属性**（皮肤里没有，Emby for Kodi 也不写），
-	     所以剧集层级实际不显示技术标识。留着这段是为了将来有脚本写入时能直接生效。 -->
+	     剧集（show 层级）本身没有流信息。详情页例外：它把分集货架 5101 的第一集
+	     作为 item_prefix 传进来，走条目自己的流标签。搜索/首页的 show 行仍只能读
+	     TvShowRepresentative.* 属性 —— 目前没有组件写这组属性（皮肤里没有，
+	     Emby for Kodi 也不写），所以这些行实际不显示技术标识；分支保留给脚本方案。 -->
 	<include name="VideoTechnicalFlagsByPrefix">
 		<param name="visible">true</param>
 		<param name="item_prefix">ListItem</param>

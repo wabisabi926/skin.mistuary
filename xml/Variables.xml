@@ -1906,4 +1906,36 @@
 		<value condition="Player.HasVideo | Player.HasAudio">scrim_osd</value>
 		<value>$VAR[NaraGlassScrimTintVar]</value>
 	</variable>
+	<!-- 剧集页「代表集」补零：Kodi 的 Season/Episode 本身不带前导零。
+	     0-9 补成 00-09，10 及以上原样；Season/Episode 缺失时回退到「代表集」。 -->
+	<variable name="NaraRepSeasonVar">
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,0)">00</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,1)">01</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,2)">02</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,3)">03</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,4)">04</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,5)">05</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,6)">06</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,7)">07</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,8)">08</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,9)">09</value>
+		<value>$INFO[Container(5101).ListItemAbsolute(0).Season]</value>
+	</variable>
+	<variable name="NaraRepEpisodeVar">
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,0)">00</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,1)">01</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,2)">02</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,3)">03</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,4)">04</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,5)">05</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,6)">06</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,7)">07</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,8)">08</value>
+		<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,9)">09</value>
+		<value>$INFO[Container(5101).ListItemAbsolute(0).Episode]</value>
+	</variable>
+	<variable name="NaraRepCaptionVar">
+		<value condition="!String.IsEmpty(Container(5101).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5101).ListItemAbsolute(0).Episode)">代表集 S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]</value>
+		<value>代表集</value>
+	</variable>
 </includes>

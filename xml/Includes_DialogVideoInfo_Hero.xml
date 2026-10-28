@@ -60,6 +60,8 @@
 		<param name="inline_flags">false</param>
 		<param name="technical_visible">true</param>
 		<param name="technical_item_prefix">ListItem</param>
+		<param name="technical_caption"></param>
+		<param name="technical_caption_visible">false</param>
 		<definition>
 			<control type="grouplist">
 				<top>$PARAM[top]</top>
@@ -110,6 +112,27 @@
 					<param name="visible" value="$PARAM[inline_flags] + $PARAM[technical_visible]" />
 					<param name="item_prefix" value="$PARAM[technical_item_prefix]" />
 				</include>
+				<!-- 代表集说明放在参数后面：先读评分/规格，再把「这是哪一集」当注释。 -->
+				<control type="label">
+					<width>10</width>
+					<height>36</height>
+					<font>font13</font>
+					<textcolor>text_muted</textcolor>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>|</label>
+					<visible>$PARAM[technical_visible] + $PARAM[technical_caption_visible]</visible>
+				</control>
+				<control type="label">
+					<width>260</width>
+					<height>36</height>
+					<font>font13</font>
+					<textcolor>text_secondary</textcolor>
+					<align>left</align>
+					<aligny>center</aligny>
+					<label>$PARAM[technical_caption]</label>
+					<visible>$PARAM[technical_visible] + $PARAM[technical_caption_visible]</visible>
+				</control>
 
 			</control>
 		</definition>
@@ -267,8 +290,10 @@
 							<param name="top" value="0" />
 							<param name="item_prefix" value="$PARAM[rating_item_prefix]" />
 							<param name="inline_flags" value="true" />
-							<param name="technical_visible" value="$PARAM[technical_visible]" />
-							<param name="technical_item_prefix" value="$PARAM[technical_item_prefix]" />
+							<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />
+							<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />
+							<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />
+							<param name="technical_caption_visible" value="!String.IsEmpty(Container(5101).ListItemAbsolute(0).VideoResolution)" />
 						</include>
 					</control>
 				</control>

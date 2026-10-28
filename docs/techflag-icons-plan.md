@@ -270,15 +270,15 @@ fuse3 不是"推断"全景声，而是**在音频编码图标右边再叠一枚 
 `VideoTechnicalFlagsRow`（独立行组件）已无调用者，**删除**。
 四处的调用统一为 `NaraOnlineRatingsRow` + `inline_flags=true` + `technical_item_prefix`。
 
-### 剧集（show 层级）为什么不显示
+### 剧集（show 层级）怎么显示（2026-10-28 更新）
 
-`VideoTechnicalFlagsByPrefix` 的 tvshow 分支读 `TvShowRepresentative.*` 属性，
-但**这组属性没有任何组件写入**：皮肤里没有，`plugin.service.emby-next-gen` 源码里也没有
-（它只写 `id` / `Name` / `server_type` / `path` 之类）。
+show 本身没有 streamdetails。详情页现在的做法是：取**当前选中季的第一集**
+（`Container(5101).ListItemAbsolute(0)`）作为代表集，展开它的分辨率/编码/音轨，
+并在行尾标注「代表集 S01E01」（Season/Episode 补零到两位）。切季时跟着变；如果没有季/集货架（纯 Emby 动态节点、
+DBID=0），仍然只显示评分。
 
-所以剧集层级永远拿不到流信息 —— 这是数据本质（show 本身没有视频流），不是 bug。
-**单集（episode）正常显示**，因为走的是 `ListItem.VideoResolution` 那条分支。
-分支保留是为了将来有脚本写入时能直接生效。
+`TvShowRepresentative.*` 分支保留给脚本方案：目前没有组件写这组属性，
+搜索页/首页的 TV show 行仍不显示技术标识。**单集页**仍然显示该集自己的流信息。
 
 ---
 
