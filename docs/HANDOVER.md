@@ -622,24 +622,12 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 ### 8.1 当前 git 状态
 
-- **`origin/main` 最新**：`43e0506`（1.2.0 changelog 补齐）
-- **本地比远端多 3 个提交**（都**未推送**）：
-  `f225819` 圆角（剧集缩略图 / 首页类别卡 / 搜索 hero）、
-  `3d74fb4` 设置表面与 OSD 设置对话框的透明度归属、
-  `6115ecd` 透明度帮助文案跟着改
-- **工作区还有一批未提交改动**（同一条线上的收尾，可以合成 1~2 个提交）：
-
-| 分组 | 文件 |
-|---|---|
-| 圆角扫尾 | `xml/DialogMusicInfo.xml` `xml/View_55_WideList.xml` `xml/View_50_List.xml` `xml/Includes_VideoOSD.xml` `xml/DialogAddonInfo.xml` `xml/Includes_DialogVideoInfo_Cast.xml` `tools/gen_corner_masks.py` + 8 张新遮罩（`mask_110x150_r9` `mask_184x184_r9` `mask_224x300_r12` `mask_340x340_r12` `mask_356x200_r12` `mask_438x246_r12` `mask_570x570_r12` `mask_656x312_r12`） |
-| 焦点环归位 | `xml/Includes_DialogVideoInfo_TvEpisodes.xml` `xml/Includes_VideoOSD.xml` `tools/gen_rings.py` —— 剧集缩略图 338×191 r10、OSD 播放列表 358×202 r13（原来还是外扩 3px / r6），删掉 `ring_card_342x195_r6` / `ring_card_362x206_r6` |
-| 圆角补完（第三批） | `xml/MusicVisualisation.xml`（封面 450²）、`xml/DialogVideoManager.xml`（海报 400×630）、`xml/Includes.xml` ×2 与 `xml/Includes_DialogSelect.xml` ×4（列表小缩略图 110²）+ 3 张新遮罩；另把 10 处 `keep` + `scalediffuse="false"` 的写法清掉（那组合等于没有圆角） |
-| 设置页对齐 | `xml/SettingsProfile.xml`（设置行容器 `top 161/h 708` → **193/644**）、`xml/SettingsSystemInfo.xml`（grouplist 补 `<width>1259</width>`）、`tools/test_skin_settings.py`（新增 4 条几何回归测试） |
-| 文案与文档 | `addon.xml`（简介补「（同时最多两个）」）、`changelog.txt`、`docs/HANDOVER.md` `docs/README.md` `docs/skin-contracts.md` |
-| 贴图包 | `media/Textures.xbt`（799 张，含 8 张新遮罩 + 2 枚新环，已剔除 2 枚旧环） |
-
-> `audit_skin.py --strict` EXIT=0、**50 项单测全绿**、`gen_rings/gen_corner_masks/gen_techflag_vars --check` 全通过。
-> **下一任要看到这些效果，必须先提交推送。**
+- **已全部推送**：`origin/main` = `b0d7ccf`，本地与远端同步（ahead 0）。
+  这一轮推上去 7 个提交：`f225819` 圆角、`3d74fb4` + `6115ecd` 设置表面归属与帮助文案、
+  `ad714c6` 选择条圆角、`0f95903` 圆角补完、`6c3bf67` 用户配置页几何、`b0d7ccf` OSD 列表圆角。
+- **工作区干净**。
+- **这次 push 没有发版**：`addon.xml` 仍是 `1.1.1`，和基线一致 → CI 判定「版本号未变化」直接跳过。
+  `Textures.xbt` 现在是 802 张（含 3 张新遮罩 + 2 枚新环）。
 
 ### 8.2 ⚠️ `addon.xml` 现在是 1.1.1，这是故意的
 
@@ -655,9 +643,8 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | # | 事项 | 状态 | 怎么做 |
 |---|---|---|---|
-| 1 | 提交工作区那批（见 §8.1） | ⏳ 待做 | 按 §4 纪律逐个 `git add`，含 10 张新贴图、2 张删除与 `Textures.xbt` |
-| 2 | push 本地 3+1 个提交 | ⏳ 待做 | `git push`（快进，不涉及发版） |
-| 3 | **发 1.2.0** | ⏳ 待做 | `addon.xml` 版本改回 `1.2.0` → push → CI 打包建 Release |
+| 1 | 提交并 push 本轮改动 | ✅ 2026-10-28 已推 `b0d7ccf` | 7 个提交，未触发发版 |
+| 2 | **发 1.2.0** | ⏳ 待做 | `addon.xml` 版本改回 `1.2.0` → push → CI 打包建 Release（唯一还没做的一步） |
 | 4 | `addon.xml` 简介补「（同时最多两个）」 | ✅ 2026-10-28 已改 | 中英两条 description 都补了，随 1.2.0 发 |
 | 5 | 三个设置页对齐 PVR 基准 | 🟡 部分 | `SettingsProfile` 的设置行容器 `top 161/h 708` → **193/644**（曾被连 top 一起减 28，两行比 PVR 高 32px）；`SettingsSystemInfo` 的 grouplist 补 `<width>1259</width>`。**系统信息 / 事件日志的"底部文字区"是否要统一，见 §7 待定项** |
 | 6 | §7 其余遗留 | — | 多为"用户决定不改"，逐条见 §7 |
