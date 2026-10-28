@@ -377,15 +377,20 @@ class SearchDrawerTests(unittest.TestCase):
             self.assertLessEqual(int(row.findtext('top')) + lift + int(row.findtext('height')), 1080 - height)
 
 
-    def test_search_matches_alternate_and_pinyin_fields_without_result_cap(self):
+    def test_search_uses_prefix_initials_and_text_fields_only(self):
+        """首字母必须前缀匹配；人员/类型字段会淹没单字母查询，交给服务端桥。"""
         variables = {node.get('name'): node.findtext('value') for node in SEARCH.findall('variable')}
         for name, media_type in (('NaraSearchMoviesPathVar', 'movies'),
                                  ('NaraSearchTVShowsPathVar', 'tvshows')):
             path = variables[name]
             self.assertIn('"rules":{"or":[', path)
             self.assertIn('"type":"%s"' % media_type, path)
-            for field in ('title', 'originaltitle', 'sorttitle', 'actor', 'director', 'genre'):
+            for field in ('title', 'originaltitle'):
                 self.assertIn('{"field":"%s","operator":"contains"' % field, path)
+            self.assertIn('{"field":"sorttitle","operator":"startswith"', path)
+            self.assertNotIn('"field":"sorttitle","operator":"contains"', path)
+            for field in ('actor', 'director', 'genre'):
+                self.assertNotIn('"field":"%s"' % field, path)
         # limit 会同时截断结果和标签计数（旧值 30），搜索列表必须不设上限。
         for control_id in (16101, 16102):
             self.assertIsNone(CONTROLS[control_id].find('content').get('limit'))
