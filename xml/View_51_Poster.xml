@@ -145,9 +145,12 @@
 					<label>$INFO[Container(51).CurrentItem] / $INFO[Container(51).NumItems]</label>
 				</control>
 			</control>
-			<!-- 其它内容（电影/剧集/合集）保持原尺寸 -->
+			<!-- 其它内容（电影/剧集/合集）保持原尺寸。
+			     deck_on 闸门和季列表一致：这套卡片原本靠魔改内核的 slotlist 逐槽位
+			     缩放/变暗，降级成 fixedlist 后没有逐槽位变换，未聚焦槽位会画出一张
+			     全尺寸卡片 —— 三张挤在一起、标题叠成一团。deck_on=false 时整组不画。 -->
 			<control type="group">
-				<visible>!Container.Content(seasons)</visible>
+				<visible>!Container.Content(seasons) + $PARAM[deck_on]</visible>
 				<width>420</width>
 				<height>630</height>
 				<depth>DepthContentPopout</depth>
