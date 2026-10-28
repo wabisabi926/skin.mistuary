@@ -61,7 +61,7 @@
 				<font>font30_title</font>
 				<scroll>true</scroll>
 				<label>$VAR[NaraOSDPlayingTitleVar]</label>
-				<visible>VideoPlayer.Content(episodes)</visible>
+				<visible>!VideoPlayer.Content(livetv)</visible>
 			</control>
 			<control type="label">
 				<left>80</left>
