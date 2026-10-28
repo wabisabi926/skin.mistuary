@@ -283,6 +283,10 @@
 		<param name="flag_visible">true</param>
 		<param name="icon"></param>
 		<param name="detail"></param>
+		<!-- 小字是否显示：必须用布尔参数，不能写 String.IsEmpty($PARAM[detail])。
+		     detail 可能是 $MAP[...]，展开后条件里出现 [ ，Kodi 21 的表达式解析器
+		     会在加载时报 "Misplaced ["（每部带杜比视界的片子刷两遍日志）。 -->
+		<param name="detail_visible">false</param>
 		<param name="width">72</param>
 		<definition>
 			<control type="group">
@@ -314,7 +318,7 @@
 					<aligny>center</aligny>
 					<textcolor>white</textcolor>
 					<label>$PARAM[detail]</label>
-					<visible>!String.IsEmpty($PARAM[detail])</visible>
+					<visible>$PARAM[detail_visible]</visible>
 				</control>
 			</control>
 		</definition>
@@ -329,12 +333,14 @@
 		<param name="label"></param>
 		<param name="label_raw"></param>
 		<param name="detail"></param>
+		<param name="detail_visible">false</param>
 		<param name="width">72</param>
 		<definition>
 			<include content="NaraTechnicalIconPill">
 				<param name="flag_visible" value="$PARAM[visible] + !Skin.HasSetting(hide_techflag_icons) + !$EXP[nara_kodi21]" />
 				<param name="icon" value="$PARAM[icon]" />
 				<param name="detail" value="$PARAM[detail]" />
+			<param name="detail_visible" value="$PARAM[detail_visible]" />
 				<param name="width" value="$PARAM[width]" />
 			</include>
 			<include content="NaraTechnicalTextPill">
@@ -356,6 +362,7 @@
 				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
 				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
+			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
 				<param name="width" value="100" />
 			</include>
 			<include content="NaraTechnicalFlag">

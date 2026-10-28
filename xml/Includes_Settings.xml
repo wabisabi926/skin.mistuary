@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<expression name="nara_settings_osd">Window.IsActive(osdvideosettings) | Window.IsActive(osdaudiosettings) | Window.IsActive(osdsubtitlesettings) | Window.IsActive(osdcmssettings)</expression>
-	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(narapekasettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(1115) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
+	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(1115) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
 	<include name="NaraSettingsBackground">
 		<definition>
 			<include>DefaultBackground</include>
