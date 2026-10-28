@@ -49,8 +49,10 @@
 	<include name="NaraPosterDeckCard">
 		<param name="deck_on">true</param>
 		<definition>
-			<!-- 电影/剧集/合集/季 共用这一套：420×630 填满槽位、垂直下移到 (0,174)
-			     （= 垂直居中 174+315=489）。这套卡片原为魔改内核的 slotlist 设计
+			<!-- 电影/剧集/合集/季 共用这一套：440×660 @ (-60,210)。
+			     卡片可以超出 420 宽的槽位 —— deck_on 闸门让未聚焦槽位整组不画，
+			     所以只受屏幕边界约束：top + 高 + 84 ≤ 1080（84 = 刻度 30 + 页码 54）。
+			     这套卡片原为魔改内核的 slotlist 设计
 			     （逐槽位缩放/变暗），降级成 fixedlist 后没有逐槽位变换，所以用
 			     deck_on 闸门控制：itemlayout 传 false → 未聚焦槽位整组不画。
 			     「整季」这类虚拟条目没有季海报，不画封面层，只留深色底板。 -->
@@ -77,7 +79,7 @@
 					<width>440</width>
 					<height>660</height>
 					<!-- 真圆角：diffuse 逐像素相乘（含 alpha），四角真透明。
-					     遮罩必须和控件同尺寸（378×567），半径与底板 round12 / 细边 r12 一致。 -->
+					     遮罩必须和控件同尺寸（440×660），半径与底板 round12 / 细边 r12 一致。 -->
 					<texture background="true" diffuse="shapes/mask_440x660_r12.png">$VAR[PosterVar]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
