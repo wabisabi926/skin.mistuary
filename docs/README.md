@@ -1,12 +1,13 @@
 # docs/ 索引
 
-皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 两份专题 + 两份历史资料。**
+皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 两份历史资料。**
 
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
+| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 要新增运行时脚本能力（服务端搜索、豆瓣评分、代表集标识）前。`script.mistuary.helper` 的皮肤契约、接口与阶段规划 |
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。96 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |

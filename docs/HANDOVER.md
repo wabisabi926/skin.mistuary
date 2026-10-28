@@ -112,10 +112,12 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
+| `script.mistuary.helper`（规划中） | 服务端搜索、豆瓣评分、剧集代表集标识 | 回退本地 XSP / 不显示豆瓣胶囊 |
 
-两处都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
-如果以后确实需要随皮肤分发脚本，再单独建 `script.mistuary.*` 依赖插件，
-**不要塞进皮肤包**（Kodi 不允许 skin addon 携带可执行脚本）。
+都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
+`script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
+[`helper-plugin-plan.md`](helper-plugin-plan.md)；**不要塞进皮肤包**
+（Kodi 不允许 skin addon 携带可执行脚本）。
 
 ---
 
@@ -516,8 +518,9 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 
 **TMDbHelper 的豆瓣分进不来**：它写在 list item 的 infoproperties（`douban_rating`），
 而且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
-皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到。要接得另做 `script.mistuary.helper`
-（皮肤包不能带 python），或者把列表来源换成 TMDbHelper。
+皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到。接入方式（`script.mistuary.helper`
+调豆瓣双通道、写 `Window.Property(Mistuary.Rating.*)`）见
+[`helper-plugin-plan.md`](helper-plugin-plan.md) §5.2。
 
 ### 5.8 音乐播放页：歌词 / 评分 / 背景
 
@@ -560,11 +563,16 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 - **接口**：不是 Kodi 原生 `Search`，也不是 JSON-RPC。皮肤把输入拼进视频库路径
   `videodb://movies/titles/?xsp={...}` / `videodb://tvshows/titles/?xsp={...}`，
   由 Kodi 视频库按 XSP 规则执行。输入来自隐藏 edit `16999`。
-- **规则**（`Includes_Search.xml`）：六字段 `or` —— `title` / `originaltitle` /
-  `sorttitle` / `actor` / `director` / `genre`。`sorttitle` 是神医助手生成的拼音首字母，
+- **规则**（`Includes_Search.xml`）：三字段 `or` —— `title` / `originaltitle`
+  （`contains`）、`sorttitle`（**`startswith`**）。`sorttitle` 是神医助手生成的拼音首字母，
   由 Emby for Kodi 同步写入（本机 742 部电影、512 部剧集都有），所以 A-Z 键盘只打
   首字母也能搜到中文片名。换元数据源后要确认这项还在；没有拼音排序时拼音搜索会失效，
   中文标题和原名搜索不受影响。
+- **不要再加回 `actor` / `director` / `genre`**：一个 flat `or` 只能共用一个 operator，
+  子串匹配会把演员名当命中（实测单字母 `Z` 命中 238/742 部、`S` 命中 371/742）。
+  人员与类型搜索归服务端桥（[`helper-plugin-plan.md`](helper-plugin-plan.md) §6）。
+- **首字母必须前缀匹配**：`contains` 会把首字母出现在词中的条目捞进来
+  （`HZ` 命中 14 部 → 前缀只剩 4 部）。2026-10-28 已改 `startswith`。
 - **不要给结果列表加 `limit`**：`<content limit="30">` 会同时截断结果和标签计数。
   2026-10-28 已移除。
 - **覆盖不到**：分集（Kodi 22 没有全局 `videodb://episodes/` 节点，皮肤层拿不到）、
