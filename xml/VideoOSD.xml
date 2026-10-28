@@ -52,6 +52,17 @@
 				<label>$INFO[Player.Duration]</label>
 				<visible>!VideoPlayer.Content(LiveTV)</visible>
 			</control>
+			<!-- 播放中的标题：进度条上方左侧，与顶部 logo 分开 -->
+			<control type="label">
+				<left>80</left>
+				<bottom>208</bottom>
+				<width>1400</width>
+				<height>40</height>
+				<font>font30_title</font>
+				<scroll>true</scroll>
+				<label>$VAR[NaraOSDPlayingTitleVar]</label>
+				<visible>VideoPlayer.Content(episodes)</visible>
+			</control>
 			<control type="label">
 				<left>80</left>
 				<top>68</top>

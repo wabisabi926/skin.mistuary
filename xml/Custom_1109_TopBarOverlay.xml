@@ -200,6 +200,7 @@
 						<aspectratio aligny="center" align="center">keep</aspectratio>
 					</control>
 					<control type="label">
+					<visible>!VideoPlayer.Content(episodes)</visible>
 						<align>left</align>
 						<aligny>center</aligny>
 						<font>font13</font>
@@ -210,7 +211,7 @@
 				<control type="group">
 					<visible>!Window.IsActive(pvrosdchannels) + !Window.IsActive(pvrchannelguide)</visible>
 					<visible>String.IsEmpty(Player.Art(clearlogo))</visible>
-					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo))</visible>
+					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + !VideoPlayer.Content(episodes)</visible>
 					<animation effect="fade" time="150">VisibleChange</animation>
 					<left>20</left>
 					<right>400</right>
