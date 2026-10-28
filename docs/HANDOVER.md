@@ -10,7 +10,44 @@
 `main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.1.1**（2026-10-27 已发版）。
 功能完整、静态自检全绿。
 
-1.1.1 的重点是**影片技术标识图标化**：`media/techflags/` 存 96 张归一化图标，
+### 2026-10-28 圆角改造（未发版，等 1.1.2）
+
+一批改动，主题是"海报真圆角 + 焦点环贴边 + 卡片间距"：
+
+| 文件 | 改了什么 |
+|---|---|
+| `xml/View_54_InfoWall.xml` | `InfoWallMovieLayout` 的海报改用 `diffuse` 遮罩；焦点环改 `ring_card_246x354_r21` @ `(7,−1)`（外扩 1px、内缘压进海报 2px）；清掉 7 处 `bordersize`；卡片格 260 → **264** |
+| `xml/View_500_Wall.xml` | 电影/剧集 + 收藏三个卡片格 260 → **264**（左右空档 16 → 20，见 §5.9） |
+| `xml/View_51_Poster.xml` | 两套卡片（378×567 / 420×630）加了**老式**角部遮盖 + 1px 圆角细边，**待改成 diffuse** |
+| `tools/gen_corner_masks.py` | 新增 `DIFFUSE_MASKS` + `build_diffuse()`（羽化遮罩）；文件头结论改正；清掉 3 张无引用尺寸 |
+| `tools/gen_rings.py` | 新增 `ring_card_246x354_r21`、`EDGES`（1px 圆角细边）；文件头补「环怎么摆」的规则表 |
+| `media/shapes/` | 新增 `mask_244x352_r20`、`ring_card_246x354_r21`、`corner_*_r12`、`edge_*_r12`；删 3 张无引用 |
+| `docs/HANDOVER.md` / `docs/README.md` | 文档同步 |
+
+**已完成**：海报墙（InfoWall 电影/剧集网格）的真圆角 + 贴边焦点环 + 空档 20px。
+**待做**：把 `corner_*.png` 那套老方案在其余视图逐个换成 diffuse 遮罩 —— 清单见下表。
+
+#### 圆角迁移清单（`corner_*` → `mask_*`）
+
+| # | 文件 / include | 卡片尺寸 | 现在 | 目标遮罩 | 配套环（外扩 1 / 半径 = 遮罩+1） |
+|---|---|---|---|---|---|
+| 1 | `View_51_Poster.xml` 主海报墙（420×630） | 420×630 | `corner_420x630_r12` | `mask_420x630_r12` | 无环：底板 `round12` + 细边 `edge_420x630_r12`（半径 = 遮罩） |
+| 2 | `View_51_Poster.xml` `NaraPosterDeckCard`（季列表，378×567） | 378×567 | `corner_378x567_r12` | `mask_378x567_r12` | 同上，细边 `edge_378x567_r12` |
+| 3 | `Includes_Search.xml` 搜索结果卡 | 214×321 | `corner_214x321_r11` | `mask_214x321_r11` | 216×323 r12（现为 220×327 r14） |
+| 4 | `Includes_Home.xml` `HomeContinueWatchingRail` ×2 | 320×180 | `corner_320x180_r9` | `mask_320x180_r9` | 322×182 r10（现为 326×186 r12） |
+| 5 | `Includes_Home.xml` `HomeMediaLibraryRail` ×2 | 320×180 | 同上 | 同上 | 同上 |
+| 6 | `Includes_Home.xml` `HomeWidgetAlbumCard` | 186×186 | `corner_186x186_r9` | `mask_186x186_r9` | 188×188 r10（现为 192×192 r12） |
+| 7 | `View_54_InfoWall.xml` `InfoWallFavouriteLayout` | 244×352 | `corner_244x352_r11` | `mask_244x352_r20`（与电影卡统一） | 246×354 r21（复用现成的） |
+
+换的时候记住三条硬约束（§5.4.1 有完整说明）：
+**① 遮罩尺寸必须和控件完全一致；② 环 = 卡片 +2、环外半径 = 遮罩半径 +1（内缘压进 2px）；
+③ 海报下面的圆角底板（`round<N>.png`）半径不能小于遮罩半径，否则四角会从下面露出来。**
+
+> 表里"目标遮罩"都沿用**当前半径**，即只换机制、不改观感 —— 迁移的目的是消掉
+> "亮背景上四角露深色斑点"，半径统一是另一件事（见 §7 遗留）。
+
+1.1.1 的重点是**影片技术标识图标化**：`media/techflags/color/` 存 97 张归一化图标
+（`Includes_VideoTechnicalFlags.xml` 里 206 条 key → 图标的映射），
 `tools/gen_techflag_icons.py` 负责生成（含冷门格式的白字标兜底）并维护 IconMap；
 评分与技术标识合并成一行、整体移到简介下方。设计取舍与坐标见
 `docs/techflag-icons-plan.md`，素材来源与许可见 README 的第三方声明段。
@@ -57,7 +94,7 @@ media/          松散图片 + Textures.xbt（打包后只带 xbt）
 extras/         随包素材，运行时用 special://skin/extras/... 引用
   backgrounds/    运行时背景图（primary.jpg）
   playlists/      widget 用的播放列表（*.xsp）
-libraryart/     分类封面（按「分类名.jpg」匹配；2026-10-28 起随包发布，24 张约 1.4MB）
+libraryart/     分类封面（按「分类名.jpg」匹配；2026-10-28 起随包发布，24 张封面 + default.jpg，约 1.4MB）
 ```
 
 > `extras/` 这个名字是 Arctic 系皮肤的约定（jurialmunkey / narapeka 一脉）：
@@ -106,7 +143,7 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 |---|---|
 | `gen_glass_plates.py` | `glass<N>.png` 玻璃面板（9-slice，中心实、1px 透明边） |
 | `gen_rings.py` | `ring_card_*.png` 描边环（**1:1 整图，不能 9-slice**） |
-| `gen_corner_masks.py` | `corner_*.png` 圆角角部遮盖（实色填角外） |
+| `gen_corner_masks.py` | `mask_*.png` **diffuse 圆角遮罩**（真圆角，见 §5.4.1）；<br>`corner_*.png` 老式实色角部遮盖（逐步淘汰） |
 | `gen_music_cover.py` | 音乐播放页兜底封面（黑胶 + 唱臂） |
 | `generate_nara_cast_icon.py` | 演员图标 |
 | `generate_nara_fanart_mask.py` | fanart 遮罩 |
@@ -114,6 +151,21 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `generate_nara_settings_icons.ps1` | 设置图标（PowerShell） |
 
 **改过 `media/` 一定要重打包**：`python tools/xbt_tool.py pack`（否则实机还是旧图）。
+
+#### 为什么 XBT 仍然写 v2，不跟 Kodi 22 升 v3（2026-10-28 结论）
+
+| | Kodi 21 (Omega) | Kodi 22 (master) |
+|---|---|---|
+| 打包器写的版本 | `"2"` | `"3"` |
+| 读取端最低版本 | 硬编码 ≥ 2 | `XBTF_VERSION_MIN = '2'` |
+| 读取端最高版本 | **没有检查** | **没有检查** |
+
+读取端只有 `if (version < MIN) return false;`，**不判上限**，而且解析逻辑与版本号无关
+（宽/高/格式 u32、packed/unpacked u64、duration u32、offset u64 —— 两种版本布局完全一致）。
+v3 是 Kodi 22 打包器的标记，配套新的 KD_TEX 格式字段；我们写的是普通 `XB_FMT`，用不上。
+
+**结论：保持 v2。** 一个包同时给 Kodi 19/20/21/22 用；写 v3 没有任何收益，
+只会把"能不能读"变成依赖未文档化行为。真正决定兼容性的是格式字段，不是这个版本字节。
 
 ### 手动 UI 测试（需要实机 Kodi）
 
@@ -238,6 +290,50 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 
 **`border` 只给实心填充用。描边环一律 1:1 整图，且必须最后绘制。**
 
+#### 5.4.1 给**图片**裁圆角：用 `<texture diffuse="遮罩.png">`（2026-10-28 定论）
+
+**这是唯一正确的路子，别再自己发明。** Kodi 的 `<texture>` 有个 `diffuse` 属性：
+
+```xml
+<texture background="true" diffuse="shapes/mask_244x352_r20.png">$INFO[ListItem.Art(poster)]</texture>
+<aspectratio scalediffuse="false">scale</aspectratio>
+```
+
+- `diffuse` 指定的图会**逐像素乘到原图上**，所以遮罩里"黑的/透明的地方"就把图压暗/抠掉，
+  海报四角就是**真的圆角**，背景直接透出来。
+- 遮罩长这样：圆角内 `(255,255,255,255)`，圆角外 `(0,0,0,0)`，边缘羽化 3px 左右。
+  **RGB 和 alpha 要一起给** —— 实测只给"白 + alpha 0"完全没效果。
+- **遮罩尺寸必须和控件完全一致**，否则会被拉伸、圆角变形。所以是"一尺寸一张"，
+  放在 `media/shapes/mask_<w>x<h>_r<半径>.png`，由 `tools/gen_corner_masks.py` 的
+  `DIFFUSE_MASKS` 表生成。
+- 参考实现：Arctic Fuse 3 的 `media/diffuse/card_w731_h310.png`（731×310，r≈14）。
+
+**配套：焦点环怎么摆（2026-10-28 修正，之前的「+3」是错的）**
+
+| | 环尺寸 | 环外半径 | 结果 |
+|---|---|---|---|
+| 配遮罩的圆角卡片 | 卡片 **+2**（外扩 1px） | 遮罩半径 **+1** | 内缘压进海报 2px，盖住羽化边，环贴在海报上 |
+| 方角卡片（无遮罩） | 卡片 +6（外扩 3px） | 卡片圆角 +3 | 环在卡片外面一圈 |
+
+海报墙实测：`mask_244x352_r20` 配 `ring_card_246x354_r21` @ `(7,−1)`。
+圆心 (8−1+21, 0−1+21) = (28,20)，与海报圆角圆心重合 → 两个圆弧同心。
+
+**为什么不是 +3**：环外扩 3px 时，环内缘正好落在海报边界上，读起来是"浮在卡片外的一圈框"
+（用户原话：比海报大了一点点）；而且遮罩的 3px 羽化让海报最外 1.5px 半透明，
+两者之间必然露出一条暗缝。改成外扩 1px、内缘压进 2px，缝和"框感"一起消失。
+
+**别再给环加 `<bordersize>`**：`GUIControlFactory.cpp:1493` —— 有 `<bordersize>` 或
+`<bordertexture>` 时控件实例化成 `CGUIBorderedImage`（九宫格），而描边环必须 1:1 整图。
+`View_54_InfoWall.xml` 里原本 7 个环控件都带着 `bordersize=20/14`，已清掉。
+
+#### 5.4.2 已经被淘汰的弯路：实色角部遮盖
+
+`media/shapes/corner_<w>x<h>_r<半径>.png`（圆角内透明、四角填 `#2A2A2E` @ 78%）
+是 2026-10-27 的做法，**只在纯色/深色背景下勉强成立**：
+遮盖色必须和背后的像素一致，而背后是变化的 fanart，于是亮背景上会露出四块深色斑点，
+远看轮廓还是方的。**逐步用 5.4.1 的 diffuse 遮罩替换掉。**
+（还留着是因为首页卡片、搜索页、封面流等视图尚未迁移。）
+
 ### 5.5 三个反复踩过的坑
 
 1. **`<include condition="X">` 是加载时求值的** —— 按运行时状态切外观只能用
@@ -320,6 +416,29 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 - **豆瓣**：StrmAssistant 的豆瓣覆盖改写的是 Emby `CommunityRating`（Kodi 侧为默认类型，
   无来源标志），皮肤用设置项 `douban_rating` 手动切换第一颗评分胶囊的图标（IMDb / Douban）。
 
+### 5.9 海报墙的列宽预算（2026-10-28 实测）
+
+海报墙（`View_500_Wall` / `View_54_InfoWall`）的卡片格 = 海报 + 左右空档：
+
+| | 值 | 说明 |
+|---|---|---|
+| 海报 | 244×352 | 从 1.1.0 起没变过 |
+| 卡片格 | **264**（原 260） | 空档 = 264 − 244 = **20px**（原 16） |
+| 行高 | 430 | 海报 `top` 18（Wall 是 10） |
+
+**为什么不能随便加**：面板是 `width=98%`，1920 逻辑宽下只有 **1881px**。
+7 列 × 264 = 1848，余 33px。**卡片格超过 268 就会掉成 6 列**
+（7×268 = 1876，只剩 5px，取整就会翻车）。要更大的缝只能缩海报，见下。
+
+**4K 不用单独考虑**：`addon.xml` 声明了 8 组 `<res>`，但全部 `folder="xml"`（同一套 XML）。
+Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×1080 那组、放大 2 倍输出。
+1920 下不溢出，4K / 16:10 / 4:3 都不会溢出。
+
+**想把海报本身改小**（比如 236×340 + 缝 24）的连带成本，别低估：
+① 要新生成 `mask_236x340_r19`、`ring_card_238x342_r20`；② 改 focus 参数与 caption 位置；
+③ **`Custom_1111_MovieSetDialog` 里那套「111.11% / 120.37% 缩放对应 240×360 真实海报」
+的补偿数必须重算**，否则合集弹窗的焦点框会错位。
+
 ## 6. 发版流程
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）
@@ -356,6 +475,8 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | 项 | 说明 |
 |---|---|
+| 圆角迁移未完成 | 只有 `InfoWallMovieLayout` 换成了 `diffuse` 真圆角（§5.4.1），其余 7 处还在用老式 `corner_*.png` 实色遮盖，亮背景上会露深色角。逐项清单见 §1「圆角迁移清单」 |
+| 圆角半径不统一 | 同一个 `View_54` 里电影卡 r20、收藏卡 r11；`View_51` 大卡还是 r12。等实机看过再决定是否统一（统一要连带改底板 `round<N>` 与细边 `edge_*` 的半径，且 `View_51` 底部 4px 进度条会在角上外露，r12 约 3px / r20 约 8px） |
 | addon 简介措辞 | `addon.xml` 描述写「直接展示豆瓣、IMDb、TMDB、烂番茄多源评分」，实际是**同时最多两个**、且豆瓣与 IMDb 二选一（同一个字段）。用户决定**下个版本**再补「（同时最多两个）」，1.1.0 不改 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |

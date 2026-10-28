@@ -16,6 +16,17 @@ gen_rings.py — 生成 1:1 的卡片描边环贴图。
 - alpha 剖面 ≈ [254, 255, 238, 17]（0.5px 外扩 + 1px 抗锯齿）
 - 用 4× 超采样画直角/圆角矩形描边再降采样
 
+**环和卡片的位置关系（2026-10-28 定论）**
+
+| | 尺寸 | 半径 | 效果 |
+|---|---|---|---|
+| 配 **diffuse 遮罩**的海报 | 卡片 **+2**（外扩 1px） | 遮罩半径 **+1** | 内缘压进海报 2px，盖住遮罩羽化边，环贴在海报上 |
+| 方角卡片（无遮罩） | 卡片 +6（外扩 3px） | 卡片圆角 +3 | 环在卡片外面一圈 |
+
+外扩 3px 配圆角海报会读成"浮在卡片外的一圈框"（用户原话：比海报大了一点点）；
+而且环内缘正好落在海报边界上时，遮罩的 3px 羽化会露出一条暗缝。
+**圆角海报一律用 +2 / +1。**
+
 用法
 ----
   python tools/gen_rings.py           # 生成表里所有尺寸
@@ -56,14 +67,27 @@ RINGS = (
     ("ring_card_206x206_r12.png", 206, 206, 12),
     # 首页专辑卡 186 版：封面 186 + 外扩 3px
     ("ring_card_192x192_r12.png", 192, 192, 12),
+    # 海报墙焦点环：海报 244×352（diffuse 遮罩 r20）。
+    # **外扩只有 1px、描边 3px → 内缘压进海报 2px**，这样环才"贴"在海报边上：
+    #   · 外扩 3px（旧值）环会像浮在卡片外面的一圈框，实测用户觉得"比海报大了一点"；
+    #   · 内缘必须压进海报，才能盖住遮罩 3px 羽化边留下的那条暗缝。
+    # 环外半径 = 遮罩半径 + 1 = 21，圆心与海报圆角同心（8−1+21 = 8+20 = 28）。
+    ("ring_card_246x354_r21.png", 246, 354, 21),
+)
+
+# 发丝细边（1px）：不是焦点环，是"贴边那圈很淡的线"（海报墙用）。
+# 圆角必须和角部遮盖一致，否则方角会从圆角外面戳出来。
+EDGES = (
+    ("edge_420x630_r12.png", 420, 630, 12),
+    ("edge_378x567_r12.png", 378, 567, 12),
 )
 
 
-def build_ring(w: int, h: int, radius: int) -> Image.Image:
+def build_ring(w: int, h: int, radius: int, stroke: float = STROKE) -> Image.Image:
     W, H = w * SS, h * SS
     mask = Image.new("L", (W, H), 0)
     d = ImageDraw.Draw(mask)
-    sw = max(1, int(round(STROKE * SS)))
+    sw = max(1, int(round(stroke * SS)))
     box = [0, 0, W - 1, H - 1]
     if radius <= 0:
         d.rectangle(box, outline=255, width=sw)
@@ -85,25 +109,26 @@ def main() -> int:
     out_dir = os.path.abspath(args.out or os.path.join(here, os.pardir, "media", "shapes"))
 
     missing = []
-    for name, w, h, r in RINGS:
-        path = os.path.join(out_dir, name)
-        if args.check:
-            if not os.path.exists(path):
-                missing.append(name)
-            continue
-        img = build_ring(w, h, r)
-        img.save(path)
-        a = img.split()[3]
-        print("写入 %s  %dx%d r%d  左边缘=%s  中心=%d"
-              % (name, w, h, r,
-                 [a.getpixel((x, h // 2)) for x in range(0, 5)],
-                 a.getpixel((w // 2, h // 2))))
+    for table, stroke in ((RINGS, STROKE), (EDGES, 1.0)):
+        for name, w, h, r in table:
+            path = os.path.join(out_dir, name)
+            if args.check:
+                if not os.path.exists(path):
+                    missing.append(name)
+                continue
+            img = build_ring(w, h, r, stroke)
+            img.save(path)
+            a = img.split()[3]
+            print("写入 %s  %dx%d r%d  左边缘=%s  中心=%d"
+                  % (name, w, h, r,
+                     [a.getpixel((x, h // 2)) for x in range(0, 5)],
+                     a.getpixel((w // 2, h // 2))))
 
     if args.check:
         if missing:
             print("缺少 %d 张：%s" % (len(missing), ", ".join(missing)))
             return 1
-        print("描边环齐全（%d 张）" % len(RINGS))
+        print("描边环齐全（%d 张环 + %d 张细边）" % (len(RINGS), len(EDGES)))
     return 0
 
 

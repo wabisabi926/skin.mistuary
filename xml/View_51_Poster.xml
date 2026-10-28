@@ -69,7 +69,7 @@
 				<control type="image">
 					<width>378</width>
 					<height>567</height>
-					<texture colordiffuse="selection_surface">colors/black.png</texture>
+					<texture border="12" colordiffuse="selection_surface">shapes/round12.png</texture>
 				</control>
 				<control type="image">
 					<width>378</width>
@@ -77,6 +77,13 @@
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$VAR[PosterVar]</texture>
 					<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
+				</control>
+				<!-- 圆角：实色角部遮盖盖掉图片的方角。半径 12（L 档），
+				     和 edge_378x567_r12 的细边对齐；画布必须与海报控件同尺寸。 -->
+				<control type="image">
+					<width>378</width>
+					<height>567</height>
+					<texture>shapes/corner_378x567_r12.png</texture>
 				</control>
 				<control type="image">
 					<right>11</right>
@@ -99,7 +106,7 @@
 				<control type="image">
 					<width>378</width>
 					<height>567</height>
-					<texture border="1" infill="false" colordiffuse="38FFFFFF">colors/white.png</texture>
+					<texture colordiffuse="38FFFFFF">shapes/edge_378x567_r12.png</texture>
 				</control>
 				<!-- 标题和底部页码画在卡片坐标系里，随卡片一起移动，永远对正居中；
 				     卡片与上方标题、下方刻度各留同样的 30px 间距 -->
@@ -156,13 +163,20 @@
 				<control type="image">
 					<width>420</width>
 					<height>630</height>
-					<texture colordiffuse="selection_surface">colors/black.png</texture>
+					<texture border="12" colordiffuse="selection_surface">shapes/round12.png</texture>
 				</control>
 				<control type="image">
 					<width>420</width>
 					<height>630</height>
 					<aspectratio>scale</aspectratio>
 					<texture background="true">$VAR[PosterVar]</texture>
+				</control>
+				<!-- 圆角：实色角部遮盖盖掉图片的方角（半径 12 = L 档），
+				     必须放在海报之后、角标/进度条之前，否则进度条两端会被吃掉。 -->
+				<control type="image">
+					<width>420</width>
+					<height>630</height>
+					<texture>shapes/corner_420x630_r12.png</texture>
 				</control>
 				<control type="image">
 					<right>12</right>
@@ -185,7 +199,7 @@
 				<control type="image">
 					<width>420</width>
 					<height>630</height>
-					<texture border="1" infill="false" colordiffuse="38FFFFFF">colors/white.png</texture>
+					<texture colordiffuse="38FFFFFF">shapes/edge_420x630_r12.png</texture>
 				</control>
 			</control>
 		</definition>
