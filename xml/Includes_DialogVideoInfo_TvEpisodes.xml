@@ -161,8 +161,8 @@
 						<control type="image">
 							<width>336</width>
 							<height>189</height>
-							<aspectratio>scale</aspectratio>
-							<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_336x189_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="image">
 							<top>123</top>
@@ -219,8 +219,8 @@
 						<control type="image">
 							<width>336</width>
 							<height>189</height>
-							<aspectratio>scale</aspectratio>
-							<texture background="true">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_336x189_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
 						</control>
 						<control type="image">
 							<top>123</top>
