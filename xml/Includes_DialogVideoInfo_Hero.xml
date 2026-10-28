@@ -125,7 +125,7 @@
 				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
 				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(themoviedb))" />
+					<param name="visible" value="[!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))] + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(themoviedb))" />
 					<param name="icon" value="flags/ratings/tmdb.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]$INFO[$PARAM[item_prefix].Rating(themoviedb)]" />
 				</include>
