@@ -882,23 +882,23 @@
 				<label>$PARAM[single_label]</label>
 				<visible>!String.IsEqual(ListItem.DBType,album)</visible>
 			</control>
-			<!-- 层级：专辑名是主体（font12 亮），歌手是次要（font10 暗）。
-			     原来是反的 —— 专辑名小+暗、歌手大+亮，读起来主次不清。 -->
+			<!-- 层级：专辑名 font20_title(20) 亮、歌手 font10(18) 暗。
+			     22 号字行高约 32px，两行只隔 28px 会重叠，所以第一行降到 20、两行拉开到 32px。 -->
 			<control type="group">
 				<visible>String.IsEqual(ListItem.DBType,album)</visible>
 				<control type="label">
 					<left>0</left>
-					<top>190</top>
+					<top>188</top>
 					<width>186</width>
 					<label>$PARAM[sub_label]</label>
-					<font>font12</font>
+					<font>font20_title</font>
 					<textcolor>$PARAM[textcolor]</textcolor>
 					<scroll>$PARAM[focused]</scroll>
 					<align>center</align>
 				</control>
 				<control type="label">
 					<left>0</left>
-					<top>218</top>
+					<top>220</top>
 					<width>186</width>
 					<label>$PARAM[main_label]</label>
 					<font>font10</font>
