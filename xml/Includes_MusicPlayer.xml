@@ -107,10 +107,10 @@
 		<texturenofocus />
 		<width>66</width>
 		<height>66</height>
-		<radiowidth>48</radiowidth>
-		<radioheight>48</radioheight>
-		<radioposx>9</radioposx>
-		<radioposy>9</radioposy>
+		<radiowidth>40</radiowidth>
+		<radioheight>40</radioheight>
+		<radioposx>13</radioposx>
+		<radioposy>13</radioposy>
 		<onup>87</onup>
 		<ondown>noop</ondown>
 		<font />
