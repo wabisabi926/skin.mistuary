@@ -53,12 +53,12 @@
 				<visible>!VideoPlayer.Content(LiveTV)</visible>
 			</control>
 			<control type="label">
-				<right>30</right>
+				<left>80</left>
 				<top>68</top>
 				<width>300</width>
 				<height>56</height>
 				<font>font24</font>
-				<align>right</align>
+				<align>left</align>
 				<aligny>center</aligny>
 				<label>$LOCALIZE[31080] $INFO[Player.FinishTime]</label>
 				<textcolor>text_secondary</textcolor>
