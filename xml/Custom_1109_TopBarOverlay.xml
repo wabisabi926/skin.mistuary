@@ -195,7 +195,7 @@
 					<itemgap>10</itemgap>
 					<orientation>horizontal</orientation>
 					<control type="image">
-				<visible>!VideoPlayer.HasVideo</visible>
+				<visible>!Player.HasVideo</visible>
 						<width>220</width>
 						<texture>$VAR[PlayerClearLogoVar]</texture>
 						<aspectratio aligny="center" align="center">keep</aspectratio>
@@ -212,7 +212,7 @@
 				<control type="group">
 					<visible>!Window.IsActive(pvrosdchannels) + !Window.IsActive(pvrchannelguide)</visible>
 					<visible>String.IsEmpty(Player.Art(clearlogo))</visible>
-					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + [VideoPlayer.Content(livetv) | !VideoPlayer.HasVideo]</visible>
+					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + [VideoPlayer.Content(livetv) | !Player.HasVideo]</visible>
 					<animation effect="fade" time="150">VisibleChange</animation>
 					<left>20</left>
 					<right>400</right>

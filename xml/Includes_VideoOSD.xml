@@ -126,7 +126,7 @@
 					<font>font36_title</font>
 					<label>$VAR[NowPlayingBreadcrumbsVar]</label>
 					<scroll>true</scroll>
-					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + String.IsEmpty(Player.Art(clearlogo)) + [VideoPlayer.Content(livetv) | !VideoPlayer.HasVideo]</visible>
+					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + String.IsEmpty(Player.Art(clearlogo)) + [VideoPlayer.Content(livetv) | !Player.HasVideo]</visible>
 				</control>
 				<control type="label">
 					<width>820</width>

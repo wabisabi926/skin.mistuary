@@ -55,7 +55,7 @@
 			<!-- 播放中的标题：进度条上方左侧，与顶部 logo 分开 -->
 			<control type="label">
 				<left>80</left>
-				<bottom>208</bottom>
+				<bottom>140</bottom>
 				<width>1400</width>
 				<height>40</height>
 				<font>font30_title</font>
