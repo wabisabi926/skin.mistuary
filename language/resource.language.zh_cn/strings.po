@@ -1057,3 +1057,7 @@ msgstr "管叠在页面上的层：插件详情、插件设置、对话框、右
 msgctxt "#31762"
 msgid "Technical flags as icons"
 msgstr "技术标识用图标"
+
+msgctxt "#31763"
+msgid "Stop"
+msgstr "停止"

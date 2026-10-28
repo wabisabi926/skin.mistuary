@@ -1189,3 +1189,7 @@ msgstr "Covers layers above pages: add-on info, add-on settings, dialogs, contex
 msgctxt "#31762"
 msgid "Technical flags as icons"
 msgstr "Technical flags as icons"
+
+msgctxt "#31763"
+msgid "Stop"
+msgstr "Stop"

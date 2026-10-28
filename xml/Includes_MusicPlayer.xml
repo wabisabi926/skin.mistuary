@@ -51,6 +51,7 @@
 		<value condition="Control.HasFocus(70053)">$LOCALIZE[486]</value>
 		<value condition="Control.HasFocus(70051)">$LOCALIZE[559]</value>
 		<value condition="Control.HasFocus(70049)">$LOCALIZE[24013]</value>
+		<value condition="Control.HasFocus(603)">$LOCALIZE[31763]</value>
 		<value></value>
 	</variable>
 	<include name="NaraMusicAudioDetail">
