@@ -151,7 +151,7 @@
 				<top>79</top>
 				<height>61</height>
 				<align>center</align>
-				<itemgap>24</itemgap>
+				<itemgap>28</itemgap>
 				<orientation>horizontal</orientation>
 				<onup>87</onup>
 				<ondown>noop</ondown>
@@ -265,7 +265,7 @@
 					<height>61</height>
 					<control type="radiobutton" id="70048">
 						<onleft>607</onleft>
-						<onright>70052</onright>
+						<onright>70049</onright>
 						<include content="NaraMusicOSDButton">
 							<param name="texture" value="osd/nara/settings.png" />
 						</include>
@@ -276,28 +276,16 @@
 				<control type="group">
 					<width>61</width>
 					<height>61</height>
-					<control type="radiobutton" id="70052">
-						<onleft>70048</onleft>
-						<onright>70049</onright>
-						<include content="NaraMusicOSDButton">
-							<param name="texture" value="icons/infodialogs/rating.png" />
-						</include>
-						<label>$LOCALIZE[38018]</label>
-						<onclick>SetRating</onclick>
-					</control>
-				</control>
-				<control type="group">
-					<width>61</width>
-					<height>61</height>
 					<!-- 歌词：未选插件时先弹出插件选择（xbmc.python.lyrics），选好后再次点击即运行；
 					     逻辑与 Estuary 一致 -->
 					<control type="radiobutton" id="70049">
-						<onleft>70052</onleft>
+						<onleft>70048</onleft>
 						<onright>70054</onright>
 						<include content="NaraMusicOSDButton">
 							<param name="texture" value="osd/nara/lyrics.png" />
 						</include>
 						<label>$LOCALIZE[24013]</label>
+						<onclick condition="Window.IsVisible(script-cu-lrclyrics-main.xml)">Dialog.Close(script-cu-lrclyrics-main)</onclick>
 						<onclick condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onclick>
 						<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Skin.SetAddon(LyricScript_Path,xbmc.python.lyrics)</onclick>
 						<onclick condition="String.IsEmpty(Skin.String(LyricScript_Path))">Close</onclick>
