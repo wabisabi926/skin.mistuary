@@ -138,11 +138,6 @@
 					<visible>VideoPlayer.Content(episodes) + !Window.IsVisible(1109)</visible>
 				</control>
 			</control>
-			<include content="VideoOSDInfoBadgeRow">
-				<param name="top" value="32" />
-				<param name="surface" value="50000000" />
-				<param name="foreground" value="00000000" />
-			</include>
 			<include content="VideoOSDInfoBadgeRow" />
 		</control>
 	</include>
