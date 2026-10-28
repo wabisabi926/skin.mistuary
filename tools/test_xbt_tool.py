@@ -12,6 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # xbt_tool.py 与本文件同目录
 
 import xbt_tool  # noqa: E402
+from PIL import Image  # noqa: E402  xbt_tool 顶层已依赖 PIL
 
 
 def build_xbt(entries, fmt=None):
@@ -85,6 +86,35 @@ class UnpackBoundaryTests(unittest.TestCase):
             out = Path(tmp) / "extracted"
             xbt_tool.unpack(src, str(out))
             self.assertTrue((out / "shapes" / "ok.png").exists())
+
+    def test_unpacks_opaque_jpeg_entry(self):
+        """media/ 下确实有 .jpg（osd/nara/music-background.jpg）。
+
+        XBT 里的帧统一是 RGBA，直接 save 会让 Pillow 走 JPEG 编码器并抛
+        "cannot write mode RGBA as JPEG"。全不透明时应转 RGB 存回 .jpg。
+        """
+        data = build_xbt([("osd/bg.jpg", 1, 1, b"\x00\x00\x00\xff")])
+        with tempfile.TemporaryDirectory() as tmp:
+            src = self._write(tmp, data)
+            out = Path(tmp) / "extracted"
+            xbt_tool.unpack(src, str(out))
+            got = out / "osd" / "bg.jpg"
+            self.assertTrue(got.exists())
+            with Image.open(got) as im:
+                self.assertEqual(im.mode, "RGB")
+
+    def test_jpeg_entry_with_alpha_falls_back_to_png(self):
+        """带真实透明的条目存不进 JPEG，应改存同名 .png 而不是崩掉。"""
+        data = build_xbt([("osd/bg.jpg", 1, 1, b"\x00\x00\x00\x80")])
+        with tempfile.TemporaryDirectory() as tmp:
+            src = self._write(tmp, data)
+            out = Path(tmp) / "extracted"
+            xbt_tool.unpack(src, str(out))
+            self.assertFalse((out / "osd" / "bg.jpg").exists())
+            got = out / "osd" / "bg.png"
+            self.assertTrue(got.exists())
+            with Image.open(got) as im:
+                self.assertEqual(im.mode, "RGBA")
 
     def test_rejects_truncated_header(self):
         with tempfile.TemporaryDirectory() as tmp:

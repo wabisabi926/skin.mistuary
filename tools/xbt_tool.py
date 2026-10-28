@@ -415,6 +415,32 @@ def _safe_target(root, rel):
     return target
 
 
+def _save_image(im, out_path, rel):
+    """按目标后缀保存，返回实际写出的路径。
+
+    XBT 里所有帧统一是 A8R8G8B8（RGBA），但 media/ 下确实存在 .jpg
+    （如 `osd/nara/music-background.jpg`）。直接 `im.save(out_path)` 会让
+    Pillow 按后缀选 JPEG 编码器，而 JPEG 存不下 RGBA → `OSError: cannot
+    write mode RGBA as JPEG`。
+
+    处理：JPEG 分支里先看 alpha —— 全不透明（pack 时会打 XB_FMT_OPAQUE）
+    就转 RGB 存；真含透明像素则改存同名 .png（JPEG 本身没有 alpha 通道，
+    这种条目只可能来自被人手工塞进 xbt 的 PNG），并打印提示。
+    """
+    ext = os.path.splitext(out_path)[1].lower()
+    if ext in ('.jpg', '.jpeg'):
+        if im.getchannel('A').getextrema() == (255, 255):
+            im.convert('RGB').save(out_path)
+            return out_path
+        png_path = os.path.splitext(out_path)[0] + '.png'
+        im.save(png_path)
+        print('  提示: %s 含透明像素，JPEG 存不下，已改存 %s'
+              % (rel, os.path.basename(png_path)))
+        return png_path
+    im.save(out_path)
+    return out_path
+
+
 def unpack(xbt_file, output_dir):
     with open(xbt_file, 'rb') as f:
         data = f.read()
@@ -463,7 +489,7 @@ def unpack(xbt_file, output_dir):
                 continue
             im = Image.frombytes('RGBA', (w, h), raw, 'raw', 'BGRA')
             os.makedirs(os.path.dirname(out_path) or output_dir, exist_ok=True)
-            im.save(out_path)
+            _save_image(im, out_path, path)
             ok += 1
     print('解包完成: %d/%d 张贴图 -> %s' % (ok, count, output_dir))
 
