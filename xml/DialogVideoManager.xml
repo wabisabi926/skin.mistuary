@@ -13,12 +13,14 @@
 				<param name="height" value="780" />
 				<param name="header_id" value="2" />
 			</include>
+			<!-- 海报真圆角：海报 2:3 = 400×600 落在 400×630 的盒子里，
+			     遮罩跟着图片走（不加 scalediffuse="false"） -->
 			<control type="image">
 				<left>20</left>
 				<width>400</width>
 				<height>630</height>
 				<top>100</top>
-				<texture>$VAR[VideoListPosterVar]</texture>
+				<texture diffuse="shapes/mask_400x630_r12.png">$VAR[VideoListPosterVar]</texture>
 				<aspectratio aligny="top">keep</aspectratio>
 			</control>
 			<control type="label">

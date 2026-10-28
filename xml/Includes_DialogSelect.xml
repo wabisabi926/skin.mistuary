@@ -69,7 +69,7 @@
 						<top>7</top>
 						<width>110</width>
 						<height>110</height>
-						<texture>$VAR[InfoWallThumbVar]</texture>
+						<texture diffuse="shapes/mask_110x110_r9.png">$VAR[InfoWallThumbVar]</texture>
 						<aspectratio>keep</aspectratio>
 						<visible>!ListItem.Property(PVR.IsRecordingTimer) + !ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
@@ -127,7 +127,7 @@
 						<top>7</top>
 						<width>110</width>
 						<height>110</height>
-						<texture>$VAR[InfoWallThumbVar]</texture>
+						<texture diffuse="shapes/mask_110x110_r9.png">$VAR[InfoWallThumbVar]</texture>
 						<aspectratio>keep</aspectratio>
 						<visible>!ListItem.Property(PVR.IsRecordingTimer) + !ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
@@ -1032,7 +1032,7 @@
 						<top>7</top>
 						<width>110</width>
 						<height>110</height>
-						<texture>$VAR[InfoWallThumbVar]</texture>
+						<texture diffuse="shapes/mask_110x110_r9.png">$VAR[InfoWallThumbVar]</texture>
 						<aspectratio>keep</aspectratio>
 						<visible>!ListItem.Property(PVR.IsRecordingTimer) + !ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>
@@ -1090,7 +1090,7 @@
 						<top>7</top>
 						<width>110</width>
 						<height>110</height>
-						<texture>$VAR[InfoWallThumbVar]</texture>
+						<texture diffuse="shapes/mask_110x110_r9.png">$VAR[InfoWallThumbVar]</texture>
 						<aspectratio>keep</aspectratio>
 						<visible>!ListItem.Property(PVR.IsRecordingTimer) + !ListItem.Property(PVR.IsRemindingTimer)</visible>
 					</control>

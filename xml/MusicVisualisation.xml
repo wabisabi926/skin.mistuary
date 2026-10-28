@@ -64,6 +64,9 @@
 				<colordiffuse>00FFFFFF</colordiffuse>
 				<texture>osd/nara/music-cover-glow.png</texture>
 			</control>
+			<!-- 封面真圆角：正方形盒子 + 正方形专辑图，遮罩 1:1。
+			     这里**不加 scalediffuse="false"**：keep 时图片可能比控件窄，
+			     遮罩要跟着图片走才能保证圆角真的落在图上（默认 true 就是这个行为）。 -->
 			<control type="image" id="430">
 				<left>220</left>
 				<top>190</top>
@@ -71,7 +74,7 @@
 				<height>450</height>
 				<aspectratio>keep</aspectratio>
 				<fadetime>320</fadetime>
-				<texture background="true">$VAR[NaraMusicCoverVar]</texture>
+				<texture background="true" diffuse="shapes/mask_450x450_r12.png">$VAR[NaraMusicCoverVar]</texture>
 			</control>
 			<control type="grouplist" id="432">
 				<left>220</left>

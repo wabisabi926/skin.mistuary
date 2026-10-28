@@ -266,7 +266,7 @@
 					<top>28</top>
 					<width>438</width>
 					<height>366</height>
-					<aspectratio scalediffuse="false">keep</aspectratio>
+					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<texture background="true" diffuse="shapes/mask_438x366_r12.png">$VAR[IconWallThumbVar]</texture>
 					<visible>!Container.Content(addons) + !String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,episode) + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Thumb)]</visible>
@@ -276,7 +276,7 @@
 					<centertop>211</centertop>
 					<width>160</width>
 					<height>160</height>
-					<aspectratio scalediffuse="false">keep</aspectratio>
+					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<texture background="true" diffuse="shapes/mask_160x160_r9.png">$VAR[IconWallThumbVar]</texture>
 					<visible>!Container.Content(addons) + !String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,episode) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Thumb)</visible>
@@ -286,7 +286,7 @@
 					<centertop>211</centertop>
 					<width>240</width>
 					<height>240</height>
-					<aspectratio scalediffuse="false">keep</aspectratio>
+					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<texture background="true" diffuse="shapes/mask_240x240_r9.png">$VAR[IconWallThumbVar]</texture>
 					<visible>Container.Content(addons)</visible>
@@ -298,7 +298,7 @@
 					<height>340</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[MusicInfoThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_340x340_r12.png">$VAR[MusicInfoThumbVar]</texture>
 					<visible>!Container.Content(addons) + String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="image">
@@ -308,7 +308,7 @@
 					<height>246</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[ShiftThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_438x246_r12.png">$VAR[ShiftThumbVar]</texture>
 					<visible>!Container.Content(addons) + String.IsEqual(ListItem.DBType,episode)</visible>
 				</control>
 				<control type="textbox">

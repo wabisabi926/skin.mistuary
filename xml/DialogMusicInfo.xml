@@ -33,9 +33,9 @@
 					<top>25</top>
 					<width>570</width>
 					<height>570</height>
-					<aspectratio aligny="top">scale</aspectratio>
+					<aspectratio scalediffuse="false" aligny="top">scale</aspectratio>
 					<fadetime>300</fadetime>
-					<texture background="true">$VAR[MusicInfoThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_570x570_r12.png">$VAR[MusicInfoThumbVar]</texture>
 				</control>
 			</control>
 			<control type="group">

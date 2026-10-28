@@ -1330,7 +1330,7 @@
 					<top>7</top>
 					<width>110</width>
 					<height>110</height>
-					<texture>$VAR[VideoListThumbVar]</texture>
+					<texture diffuse="shapes/mask_110x110_r9.png">$VAR[VideoListThumbVar]</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="label">
@@ -1367,7 +1367,7 @@
 					<top>7</top>
 					<width>110</width>
 					<height>110</height>
-					<texture>$VAR[VideoListThumbVar]</texture>
+					<texture diffuse="shapes/mask_110x110_r9.png">$VAR[VideoListThumbVar]</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="label">

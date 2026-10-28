@@ -259,7 +259,7 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<visible>$EXP[nara_list50_has_art]</visible>
-					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_224x300_r12.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="image">
 					<left>84</left>
@@ -324,7 +324,7 @@
 					<height>160</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_160x160_r9.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="grouplist">
 					<left>232</left>
@@ -467,7 +467,7 @@
 					<height>184</height>
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_184x184_r9.png">$VAR[NaraList50PreviewThumbVar]</texture>
 				</control>
 				<control type="textbox">
 					<left>256</left>

@@ -269,14 +269,15 @@
 						<!-- 焦点描边环：**1:1 整张图，不要 border**。
 						     原来用 ring6_3.png + border="6" 做 9-slice，描边落在九宫格的"角"里，
 						     拉伸后上边整条消失；而且旧位置是 -14，环顶跑到列表外面被裁掉。
-						     现在外扩 3px（与首页 widget 一致），并放在最后绘制，
-						     不会被 overlayfade / 标题盖住。 -->
+						     现在按「环 = 卡片 +2、半径 = 遮罩半径 +1」外扩 1px：
+						     缩略图 336×189 遮罩 r9 → 环 338×191 r10，环内缘压进海报 2px。
+						     （原来外扩 3px / r6，环的圆角比海报紧，角上是浮着的，会露缝。） -->
 						<control type="image">
-							<left>-3</left>
-							<top>-3</top>
-							<width>342</width>
-							<height>195</height>
-							<texture colordiffuse="focus_media">shapes/ring_card_342x195_r6.png</texture>
+							<left>-1</left>
+							<top>-1</top>
+							<width>338</width>
+							<height>191</height>
+							<texture colordiffuse="focus_media">shapes/ring_card_338x191_r10.png</texture>
 						</control>
 					</control>
 				</focusedlayout>

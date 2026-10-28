@@ -166,7 +166,7 @@
 								<top>8</top>
 								<width>656</width>
 								<height>312</height>
-								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true" diffuse="shapes/mask_656x312_r12.png">$INFO[ListItem.Art(thumb)]</texture>
 								<aspectratio>keep</aspectratio>
 								<fadetime>200</fadetime>
 							</control>
@@ -184,7 +184,7 @@
 								<top>8</top>
 								<width>656</width>
 								<height>312</height>
-								<texture background="true">$INFO[ListItem.Art(thumb)]</texture>
+								<texture background="true" diffuse="shapes/mask_656x312_r12.png">$INFO[ListItem.Art(thumb)]</texture>
 								<aspectratio>keep</aspectratio>
 								<fadetime>200</fadetime>
 							</control>

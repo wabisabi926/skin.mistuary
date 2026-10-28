@@ -152,8 +152,8 @@
 				<control type="image">
 					<width>356</width>
 					<height>200</height>
-					<aspectratio>scale</aspectratio>
-					<texture background="true">$VAR[VideoOSDPlaylistThumbVar]</texture>
+					<aspectratio scalediffuse="false">scale</aspectratio>
+					<texture background="true" diffuse="shapes/mask_356x200_r12.png">$VAR[VideoOSDPlaylistThumbVar]</texture>
 				</control>
 				<control type="image">
 					<top>134</top>
@@ -162,13 +162,14 @@
 					<aspectratio>stretch</aspectratio>
 					<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
 				</control>
-				<!-- 焦点描边环：1:1 整张图，不要 border（9-slice 拉伸会让某条边消失） -->
+				<!-- 焦点描边环：1:1 整张图，不要 border（9-slice 拉伸会让某条边消失）。
+				     缩略图 356×200 遮罩 r12 → 环 358×202 r13（外扩 1px、内缘压进 2px）。 -->
 				<control type="image">
-					<left>-3</left>
-					<top>-3</top>
-					<width>362</width>
-					<height>206</height>
-					<texture colordiffuse="focus_media">shapes/ring_card_362x206_r6.png</texture>
+					<left>-1</left>
+					<top>-1</top>
+					<width>358</width>
+					<height>202</height>
+					<texture colordiffuse="focus_media">shapes/ring_card_358x202_r13.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
 				<control type="label">
