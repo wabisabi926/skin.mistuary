@@ -104,5 +104,13 @@ class RepoSkinSettingsTest(unittest.TestCase):
         self.assertEqual(orphan, [], f"这些设置写了没人读: {orphan}")
 
 
+class VideoInfoAutoScrollTest(unittest.TestCase):
+    def test_synopsis_textboxes_follow_autoscroll_setting(self):
+        """详情页剧情必须受 autoscroll 控制；列表和 PVR 之外最容易漏的就是这里。"""
+        hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
+        binding = '<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll)'
+        self.assertEqual(hero.count(binding), 2)
+
+
 if __name__ == "__main__":
     unittest.main()

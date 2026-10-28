@@ -1083,8 +1083,8 @@ msgid "Log in as the selected user at startup and skip the login screen."
 msgstr "Log in as the selected user at startup and skip the login screen."
 
 msgctxt "#31736"
-msgid "Auto-scroll long plots and reviews instead of paging. Off by default."
-msgstr "Auto-scroll long plots and reviews instead of paging. Off by default."
+msgid "Auto-scroll long plots instead of paging. Off by default."
+msgstr "Auto-scroll long plots instead of paging. Off by default."
 
 msgctxt "#31737"
 msgid "Uses the skin's own libraryart folder by default. Custom covers must match library names."

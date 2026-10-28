@@ -951,8 +951,8 @@ msgid "Log in as the selected user at startup and skip the login screen."
 msgstr "启动时自动登录到选定的用户，跳过用户选择界面。"
 
 msgctxt "#31736"
-msgid "Auto-scroll long plots and reviews instead of paging. Off by default."
-msgstr "剧情或评论过长时自动滚动，免手动翻页。默认关闭。"
+msgid "Auto-scroll long plots instead of paging. Off by default."
+msgstr "剧情简介过长时自动滚动，免手动翻页。默认关闭。"
 
 msgctxt "#31737"
 msgid "Uses the skin's own libraryart folder by default. Custom covers must match library names."

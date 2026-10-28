@@ -233,6 +233,7 @@
 						<font>font13</font>
 						<textcolor>text_secondary</textcolor>
 						<label fallback="19055">$PARAM[synopsis_label]</label>
+						<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll) + !Window.IsActive(1102)</autoscroll>
 						<visible>!String.IsEqual($PARAM[item_dbtype],tvshow)</visible>
 					</control>
 					<control type="textbox">
@@ -243,6 +244,7 @@
 						<font>font13</font>
 						<textcolor>text_secondary</textcolor>
 						<label fallback="19055">$PARAM[synopsis_label]</label>
+						<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll) + !Window.IsActive(1102)</autoscroll>
 						<visible>String.IsEqual($PARAM[item_dbtype],tvshow)</visible>
 					</control>
 					<!-- 评分 + 技术标识同一行，放在简介下方。电影/剧集简介高度不同，各用各的坐标；
