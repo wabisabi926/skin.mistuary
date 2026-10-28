@@ -220,7 +220,7 @@
 										<param name="update_hero" value="true"/>
 									</include>
 									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
-										<param name="content_path" value="videodb://movies/tags/?excludetags=Movies%20%28Favorites%29%7CTVShows%20%28Favorites%29&amp;SkinExtended=true"/>
+										<param name="content_path" value="videodb://movies/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="5700"/>
@@ -526,7 +526,7 @@
 										<param name="update_hero" value="true"/>
 									</include>
 									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
-										<param name="content_path" value="videodb://tvshows/tags/?excludetags=Movies%20%28Favorites%29%7CTVShows%20%28Favorites%29&amp;SkinExtended=true"/>
+										<param name="content_path" value="videodb://tvshows/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="6600"/>
