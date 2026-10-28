@@ -89,8 +89,11 @@
 					<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
 				</control>
 				<control type="progress">
+					<!-- 左右各缩 12px（= 圆角半径）：角现在是真透明的，
+					     进度条压到圆角上两端会露在外面 -->
+					<left>12</left>
 					<bottom>0</bottom>
-					<width>378</width>
+					<width>354</width>
 					<height>4</height>
 					<reveal>true</reveal>
 					<texturebg border="8,0,8,0" colordiffuse="progress_track">progress/card_progress_r8.png</texturebg>
@@ -177,8 +180,10 @@
 					<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
 				</control>
 				<control type="progress">
+					<!-- 左右各缩 12px（= 圆角半径），理由同上 -->
+					<left>12</left>
 					<bottom>0</bottom>
-					<width>420</width>
+					<width>396</width>
 					<height>4</height>
 					<reveal>true</reveal>
 					<texturebg border="8,0,8,0" colordiffuse="progress_track">progress/card_progress_r8.png</texturebg>
