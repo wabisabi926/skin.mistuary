@@ -1100,7 +1100,7 @@ msgstr "Shows your own rating by default. Pick Rating for source ratings, or Non
 
 msgctxt "#31740"
 msgid "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
-msgstr "Turn on when StrmAssistant's Douban override is active (the value shows Douban). Off shows IMDb."
+msgstr "For Emby libraries: TMDb by default, Douban when StrmAssistant's Douban override is on, IMDb only with an IMDb metadata add-on. Kodi-scraped items are detected automatically."
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
