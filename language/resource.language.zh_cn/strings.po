@@ -967,8 +967,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "主评分位默认显示个人评分；可选来源评分或不显示。"
 
 msgctxt "#31740"
-msgid "Source label for the main rating. A fixed source is shown as picked; Auto follows the scraped rating type, falling back to TMDb."
-msgstr "主评分胶囊的来源标签。指定来源后按其显示；“自动”按刮削类型识别，无法识别时用 TMDb。"
+msgid "A picked source is shown as-is; with Auto, the item's rating type decides: Kodi-scraped items carry TMDb/IMDb types, while Emby items are typed by the add-on (usually IMDb). Pick Douban when its override is on."
+msgstr "指定来源后按其显示；选“自动”时按评分类型识别：Kodi 本地刮削带 TMDb/IMDb 类型；Emby 同步的条目由插件标注（通常为 IMDb）；开了豆瓣覆盖请选 Douban。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
