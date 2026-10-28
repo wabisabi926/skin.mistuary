@@ -1266,7 +1266,7 @@
 								<top>6</top>
 								<width>208</width>
 								<height>52</height>
-								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
+								<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 								<visible>Control.HasFocus(8101)</visible>
 							</control>
 							<control type="image">
@@ -1274,7 +1274,7 @@
 								<top>58</top>
 								<width>208</width>
 								<height>52</height>
-								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
+								<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 								<visible>Control.HasFocus(8102)</visible>
 							</control>
 							<control type="image">
@@ -1282,7 +1282,7 @@
 								<top>110</top>
 								<width>208</width>
 								<height>52</height>
-								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
+								<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 								<visible>Control.HasFocus(8106)</visible>
 							</control>
 							<control type="image">
@@ -1290,7 +1290,7 @@
 								<top>162</top>
 								<width>208</width>
 								<height>52</height>
-								<texture colordiffuse="glass_focus_light" border="26">shapes/round26.png</texture>
+								<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
 								<visible>Control.HasFocus(8105)</visible>
 							</control>
 							<!-- Match the original independent tick implementation, using a
