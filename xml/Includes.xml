@@ -1047,6 +1047,14 @@
 		<param name="window_close_time">300</param>
 		<param name="media_background_visible">true</param>
 		<param name="fanart_align">center</param>
+		<!-- 没有 fanart 时的兜底背景。目前只有音乐库窗口传值（音乐页的专属背景图），
+		     不传就是空 → 行为和以前完全一致。
+		     ⚠️ 可见性必须用独立的布尔参数 fallback_visible 控制，**不能拿 fallback 本身
+		     去做 String.IsEmpty 判断** —— 参数展开后条件里会套一层变量语法，
+		     Kodi 的条件解析器不认这种嵌套，整条条件失效、控件直接不显示
+		     （和本文件里 System.HasAddon 套 $INFO 那个坑同源）。 -->
+		<param name="fallback"></param>
+		<param name="fallback_visible">false</param>
 		<definition>
 			<control type="videowindow">
 				<depth>DepthBackground</depth>
@@ -1074,6 +1082,17 @@
 					<animation effect="fade" start="0" end="100" time="$PARAM[transition_time]" reversible="false" condition="!Window.Previous(home)">WindowOpen</animation>
 					<animation effect="fade" start="100" end="0" time="$PARAM[window_close_time]" condition="!Window.Next(home)">WindowClose</animation>
 					<animation effect="fade" time="$PARAM[transition_time]">VisibleChange</animation>
+					<!-- 兜底：fanart 为空时画这张（音乐库用专辑背景图），有 fanart 时被下面那层盖住。
+					     **不加 colordiffuse**：这张图本身就很暗（平均亮度 64），再乘 #808080 会变成纯黑；
+					     音乐播放页画同一张图时也是裸的，两边保持一致。 -->
+					<control type="image">
+						<include>FullScreenDimensions</include>
+						<aspectratio>scale</aspectratio>
+						<fadetime>$PARAM[transition_time]</fadetime>
+						<animation effect="fade" time="$PARAM[transition_time]">VisibleChange</animation>
+						<texture background="true">$PARAM[fallback]</texture>
+						<visible>$PARAM[fallback_visible]</visible>
+					</control>
 					<control type="image" id="32111">
 						<include>FullScreenDimensions</include>
 						<aspectratio align="$PARAM[fanart_align]">scale</aspectratio>

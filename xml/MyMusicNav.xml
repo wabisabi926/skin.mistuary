@@ -5,7 +5,11 @@
 	<menucontrol>9000</menucontrol>
 	<views>50,52,53,54,55,500</views>
 	<controls>
-		<include>DefaultBackground</include>
+		<include content="DefaultBackground">
+			<!-- 音乐没有 fanart 时用音乐页的专属背景图兜底，否则整页只剩接近纯黑的底图 -->
+			<param name="fallback" value="$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]" />
+			<param name="fallback_visible" value="true" />
+		</include>
 		<include>NaraPageScrim</include>
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>

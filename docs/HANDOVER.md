@@ -7,6 +7,20 @@
 
 ---
 
+## 0. 三条铁律（每轮开工先看）
+
+1. **不要擅自 `git commit` / `push` / 发版**。改完先说明改了什么 + 验证结果，等指令。
+2. **改皮肤外观先给方案**（XML 结构、贴图、半径、布局），说清影响面 + 备选，
+   等点头再动文件。只读排查（grep / 看图 / 读文档）不受限制。
+3. **同步实机一律用散包**：`python tools/sync_to_kodi.py --loose`
+   —— 跳过 `Textures.xbt` 并把它挪成 `.off`，改 png 只需重载皮肤（F5）即可生效。
+   **只有用户明确说"打 tag / 发版"时才 `python tools/xbt_tool.py pack`。**
+   打包会让用户必须完全重启 Kodi 才能看到新图，开发期极影响效率。
+   ⚠️ 第一次切散包时 Kodi 正占用 `Textures.xbt`，挪不动 —— 让用户先完全退出 Kodi，
+   再跑一次 `--loose` 即可。
+
+---
+
 ## 1. 一句话现状
 
 `main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.1**
@@ -69,7 +83,11 @@
 - **A 类（卡片，全做）**：见下表。其中前 3 条已随 `f225819` 提交；后 9 条（含 8 张新遮罩）
   **仍在暂存区外、未提交**（见 §8），交接到下一任前需要处理。
 - **B 类（贴边 hero 大图，故意不做）**：圆角会露出后面那层底色，反而难看。包括 `View_50_List`
-  的 540×850 / 540×470、730×318，`View_54_InfoWall` 的 336×300 / 316×316 / 316×218 等。
+  的 540×850 / 540×470（视频分支）、730×318，`View_54_InfoWall` 的 336×300 / 316×316 / 316×218。
+  > **2026-10-29 试过又撤回**：给 `View_50_List` 540×470 的歌曲分支、`View_54_InfoWall` 的
+  > 316×316 / 316×218 加过 `diffuse`，实测**不生效** —— `aspectratio keep` 时控件尺寸和
+  > 实际画出来的图片尺寸不一致，遮罩对不齐，结果还是方角。三处已全部回退。
+  > **结论：`keep` + 绘制尺寸随图片变化的控件，不要挂 diffuse。**
 - **C 类（透明 PNG，不用做）**：clearlogo（720×145 / 660×170）、默认图标（DefaultActor 128×128、
   收藏默认 244×352）—— 本身没角。
 
@@ -485,13 +503,20 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 `gen_corner_masks.py` 的 `MASKS` 表已清空（函数保留，只是不再有实色遮盖产物）。
 **新视图一律只写 `DIFFUSE_MASKS`。**
 
-### 5.5 三个反复踩过的坑
+### 5.5 四个反复踩过的坑
 
 1. **`<include condition="X">` 是加载时求值的** —— 按运行时状态切外观只能用
    `<visible>` 或 `$VAR`。曾导致"播放中打开的对话框永远不跟设置"。
 2. **panel 不裁剪子控件** —— 想让行尾不露半张卡，必须让"下一张起点 ≥ 1920"。
 3. **批量替换先数命中次数** —— 短串（`<left>0</left>`、`start="100" end="112"`）
    往往命中多处，误伤过 PVR 面板和电影 widget 的缩放。
+4. **条件里不能嵌套 `$VAR` / `$INFO`** —— `String.IsEmpty($VAR[x])`、
+   `System.HasAddon($INFO[y])` 这类写法会让 Kodi 的布尔表达式解析器直接报
+   `Misplaced [` + `Error parsing boolean expression ...`，**整条条件失效**，
+   控件该显示时不显示（2026-10-29 在音乐页背景兜底上踩过：控件永远不出现，页面纯黑）。
+   正确做法：用独立的布尔参数（`<param name="xxx_visible">true</param>` +
+   `<visible>$PARAM[xxx_visible]</visible>`），或用 `<visible>` 分开写多条。
+   **排查时先 `grep "Misplaced\|Error parsing boolean" kodi.log`** —— 一眼就能看到。
 
 ### 5.6 排查顺序
 
