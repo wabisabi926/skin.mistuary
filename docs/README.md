@@ -1,6 +1,6 @@
 # docs/ 索引
 
-皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 一份待办 + 两份历史资料。**
+皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 两份待办 + 两份历史资料。**
 
 | 文件 | 什么时候读 |
 |---|---|
@@ -51,9 +51,11 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
 
 ```bash
 python tools/audit_skin.py --strict                      # 静态自检，必须 EXIT=0
+python tools/audit_skin.py --orphans                     # 反向：没人引用的贴图（应 0 张）
+python tools/audit_skin.py --dead                        # 反向：没人用的变量 / include
 python tools/gen_techflag_vars.py --check                # 技术标识变量同步
 python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
-python tools/gen_rings.py --check                        # 焦点环是否齐全（15 环 + 1 细边）
+python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
 python -m unittest discover -s tools -p 'test_*.py'      # 58 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包

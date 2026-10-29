@@ -127,7 +127,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | `docs/README.md` 自检块 | 单测「**46 项**」，缺 `gen_rings` / `scan_rounded` | **58 项** |
 | `docs/skin-contracts.md:277` | 单测「**42 项**全绿」 | **58 项** |
 | `docs/HANDOVER.md:644` | HEAD `efea1ff` | `f71a891`（v1.2.0 之后又推了 1 个文档提交） |
-| `docs/HANDOVER.md` §4 工具表 | 没有 `scan_rounded.py` | 它在 §8.3 被提到，但工具表漏了 |
+| `docs/HANDOVER.md` §4 工具表 | 没有 `scan_rounded.py` | 已补进工具表 |
 | `addon.xml:31` | `<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面；` | 结尾是**分号**，应是句号 |
 | `addon.xml:19` | `<forum>http://forum.kodi.tv/</forum>` | 指向论坛首页，不是皮肤帖 |
 
@@ -181,107 +181,63 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 ---
 
-# 八、接下来做什么（2026-10-29 更新）
+# 八、接下来做什么（2026-10-29 收尾）
 
-## 已完成
+## 已完成（1.2.1 之后）
 
-| 批次 | 内容 | 结果 |
-|---|---|---|
-| 第 1 批 ① | 删 `settings/background.png` + 21 张死贴图 | `Textures.xbt` **10.2 → 7.2 MB（−29%）**，提交 `d29a225` |
-| 第 1 批 ② | 三张生成器表同步收窄 | `gen_glass_plates` 1 张 / `gen_rings` 8 环 + 1 细边 |
-| 第 1 批 ④ | 文档失真 8 处 | README / skin-contracts / HANDOVER 已对齐实测值 |
-
-## 剩下 6 件事（按建议顺序）
-
-### ① 发 1.2.1（把这次清理交出去）　5 分钟
-
-```bash
-# addon.xml: 1.2.0 → 1.2.1；changelog.txt 顶部加一段
-python tools/audit_skin.py --strict && python -m unittest discover -s tools -p 'test_*.py'
-git add addon.xml changelog.txt && git commit -m "release: 1.2.1" && git push
-```
-
-**changelog 怎么写**（只写用户能感知的）：包体从 10.2 MB 降到 7.2 MB、皮肤设置说明文案修正。
-不写"删了 22 张图"——用户不关心实现。
-**风险**：CI 的 test job 挂了就不打包（1.2.0 卡过一次）。本地四件套先跑绿。
-**验收**：Actions 绿 + Releases 出现 v1.2.1。
-
-### ② 给 `audit_skin.py` 加两条反向检查　✅ 2026-10-29 已完成
-
-现在它只查"引用了但文件不存在"，不查"定义了没人用"——1.87 MB 的死图就是这么藏住的。
-
-- `--orphans`：先收集 XML 里的贴图路径，**再识别动态前缀**（`techflags/color/$PARAM[icon].png`、
-  `settings/$PARAM[icon].png`、`shapes/glass$PARAM[radius].png`、
-  `$INFO[…,windows/subtitles/flags/,.png]`、`dialogs/volume/progress/p<N>.png`、
-  `genres/<名>.png`、`Default*.png`），差集才准。默认只提示、不返回非 0。
-- `--dead`：变量用 `\$(?:ESC)?VAR\[([^,\]]+)`（`$ESC` 前缀 + 格式参数两个坑），
-  include 要算 `content="X"`、`<include …>X</include>`、**`$PARAM[...]` 间接引用**三种。
-- CI 的 test job 补 `gen_corner_masks --check`、`gen_rings --check`、`gen_glass_plates --check`。
-
-**实测结果（2026-10-29）**
-- `--orphans`：783 张里报出 **33 张 / 50.6 KB** 疑似未引用（`flags/ratings` 的
-  metacritic / popcorn / rtrotten / mdblist、`flags/starrating/1..10.png`、
-  `icons/sidemenu` 7 张、`osd/fullscreen/buttons` 4 张、`icons/search.png`、`lists/duration.png`）。
-  已经排除了 Kodi 按名字自己解析的贴图（`Overlay*.png` / `pointer_*.png` / `spinner.png` /
-  `defaultgenre.png` / `Default*.png`）和 12 个动态前缀。
-  **这批还没删**——等下一轮确认（都很小，共 50 KB）。
-- `--dead`：变量 312 个里 24 个没人引用、include 301 个里 6 个——**和 2.1 / 2.2 完全一致**。
-- CI 补了 `gen_corner_masks / gen_rings / gen_glass_plates --check` 一步。
-
-### ③ 决定 4 张 `*_filled` 图标　2 分钟
-
-- 要实心/空心两态按钮 → 现在补引用（改 OSD 主控）；
-- 不要 → 删 4 张图 + 删 `tools/gen_osd_filled_icons.py` + `tools/osd_icons/` 的 SVG。
-
-### ④ 两个待决策（都在 §七）　各 10 分钟
-
-- 系统信息 / 事件日志的底部文字区：建议保持现状
-- `SettingsSystemInfo` 滚动条轨道 644 → 357：建议改（滑块长度是功能信息）
-
-### ⑤ Kodi 21 实机验证　30 分钟
-
-双轨渲染只在 22.0-BETA2 上跑过。装 Kodi 21.2 便携版（解压即用、不动现有配置）→
-皮肤拷进 `portable_data/addons/` → 看四处：技术标识不出现 `$MAP[...]` 原文、详情页评分、
-字幕/音轨标签、PVR 台标回退。**风险 0**。
-
-### ⑥ `script.mistuary.helper` 阶段 0 + 1　1~2 天
-
-规划在 [`helper-plugin-plan.md`](helper-plugin-plan.md)。**这是唯一能补回
-"1.2.0 拿掉的演员/类型搜索"的路径**，因为中文分词/全拼只在 Emby 服务端生效。
-
-阶段 0：仓库骨架 + CI（pytest + zip）+ settings + 缓存/HTTP/配置 → 可安装、空跑通过。
-阶段 1：搜索桥 + 皮肤侧 `System.AddonIsEnabled(script.mistuary.helper)` 分支 + 回退本地 XSP。
-
-**需要你定**：仓库建在哪个账号、名字是否就叫 `script.mistuary.helper`。
-
-## 暂缓（保守档的取舍）
-
-| 项 | 为什么暂缓 |
+| 项 | 结果 |
 |---|---|
-| 24 个死变量 + 6 个死 include | 不影响渲染，删了以后想复用要重写。等 `--dead` 工具做出来再一次性清 |
-| `docs/scratch/` 17 MB | 里面 7 处引用已失效（§3.1），清之前要先修文档 |
-| PVR 台标 9 处圆角 | 透明台标抠四角看不出来，只有 `DialogPVRInfo` 显示剧照时明显 |
+| 发 1.2.1 | ✅ tag `v1.2.1` → `fc61e7e`，GitHub 已打包 |
+| 删 22 张死图 | ✅ `d29a225`，包体 10.2 → 7.2 MB |
+| 删 33 张死图 | ✅ `0ebccc5`（`--orphans` 首次实战），包体 → **7.1 MB / 751 张** |
+| `--orphans` / `--dead` | ✅ 已加，`--orphans` 复检 **0 张** |
+| 系统信息页滚动条 644 → 357 | ✅ 含几何回归测试 |
+| 4 张 `*_filled` + 生成器 | ✅ 已删（源 SVG 留在 `tools/osd_icons/`） |
+| 文档失真 8 处 | ✅ 已对齐实测值 |
+| helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §3.1 |
+
+## 还剩 3 件事
+
+### ① 黑胶唱片效果（用户点名要先做）　约 2 小时
+
+方案在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §2，技术已核实：
+`<animation effect="rotate" loop="true">` 能连续转（`GUIControlFactory.cpp:1148`），
+圆形遮罩直接用 256² 的 `masks/circle.png` 等比放大。
+
+**先要用户认可一个硬伤**：Kodi 条件动画在条件消失时 reset，**暂停时唱片会"啪"回 0°**，
+没有 API 能停在当前角度。缓解是周期拉到 24s/圈 + `reversible`。
+
+素材要拆：`gen_music_cover.py` 现在把盘面 + 唱臂压成一张 768² 兜底图，
+要拆成 `vinyl-disc.png`（转）+ `vinyl-tonearm.png`（不转）。
+
+### ② `script.mistuary.helper` 阶段 0 + 1　半天 + 1 天
+
+骨架清单在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §3，规划在
+[`helper-plugin-plan.md`](helper-plugin-plan.md)。**三个待定**：
+仓库位置（建议 `D:/下载/AI/script.mistuary.helper/` 独立仓库）、
+Emby token 来源、阶段 1 返回 Emby 直链还是 `plugin://plugin.video.emby`。
+
+### ③ 24 个死变量 + 6 个死 include　1 小时
+
+`python tools/audit_skin.py --dead` 直接列。删前逐个确认——
+**`HomeVideoRowNavigation` 是活的**（经 `<param name="navigation">` → `$PARAM` 动态引用）。
+
+## 不建议做的
+
+| 项 | 为什么 |
+|---|---|
+| 背景兜底换图 | 有兜底（`extras/backgrounds/primary.jpg`，1920×1080 / 228 KB，`DefaultBackground` 里无条件绘制）。只是深色图和纯黑对比低，换图收益小 |
+| PVR 台标 9 处圆角 | 透明台标抠四角看不出来 |
+| `docs/scratch/` 清理 | 里面 7 处文档引用已失效，清之前要先修文档；17 MB 且 gitignore，不急 |
 
 **统一验收**
 
 ```bash
-python tools/audit_skin.py --strict
-python -m unittest discover -s tools -p 'test_*.py'
-python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check
-python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
-python tools/scan_rounded.py
-python tools/xbt_tool.py pack        # 只有动过 media/
+python tools/audit_skin.py --strict                      # EXIT=0
+python tools/audit_skin.py --orphans                     # 0 张
+python tools/audit_skin.py --dead                        # 24 变量 + 6 include
+python -m unittest discover -s tools -p 'test_*.py'       # 58 项
+python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check \
+  && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
+python tools/xbt_tool.py pack                            # 只有动过 media/
 ```
-
----
-
-# 附：本轮已改
-
-| 文件 | 改动 |
-|---|---|
-| `media/` 22 张 | 删除零引用贴图，xbt 10.2 → 7.2 MB |
-| 三张生成器表 | `RADII` / `RINGS` / PS1 的 `video`+`metadata` 块收窄 |
-| `docs/README.md` | techflags 96→97；透明度 25/29→18/17（补 15/16）；单测 46→58；自检块补 `gen_rings` / `scan_rounded` |
-| `docs/skin-contracts.md` | 单测 42→58 |
-| `docs/HANDOVER.md` | §8.3.2 改写为「已清理」；§4 补 `scan_rounded.py`；§8.1 HEAD 更正 |
-| `addon.xml` | zh_CN disclaimer 结尾分号 → 句号 |

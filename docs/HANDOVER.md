@@ -1,14 +1,20 @@
-# 交接说明（Mistuary 1.2.0）
+# 交接说明（Mistuary 1.2.1）
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
+> **新接手的三步**：① 本文 §8 看现状与待办 ② `docs/pending-work-plan.md` 看还剩什么
+> ③ 要动音乐页或插件，读 `docs/vinyl-helper-plan.md`。
 
 ---
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.0**
-（2026-10-29 已发版，tag `v1.2.0`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.1**
+（2026-10-29 已发版，tag `v1.2.1`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
+`Textures.xbt` **751 张 / 7.1 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **58 项**。
+
+> **本地还有 1 个未推送的提交**（`0ebccc5`：删 33 张死图 + 新增 `vinyl-helper-plan.md`），
+> 见 §8.1。
 
 ### 2026-10-29 本轮改动（已随 1.2.0 发布）
 
@@ -630,9 +636,9 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 圆角半径两档制 | 短边 ≥200 → r12、<200 → r9（见 §5.4.1）。改任何一档都要连带改遮罩、焦点环、底板 `round<N>`、细边 `edge_*` 四样 |
 | addon 简介措辞 | ✅ 2026-10-28 已补：中英两条 description 都写了「（同时最多两个）」/「(up to two at a time)」，随 1.2.0 发 |
 | 系统信息 / 事件日志的底部文字区 | 这两页底部**故意**和 PVR 不一样：`SettingsSystemInfo` 没有"当前项"，底部 y 555–885 被内存/CPU 浮层占用，所以不挂帮助条；`EventLog` 用 `label id=70`（915, h40）+ `textbox id=71`（955, h60）拼成两行，合起来仍占 915–1015 那 100px。**如果希望三页底部完全一致，需要先决定这两页要不要让出那块区域** |
-| `SettingsSystemInfo` 滚动条轨道 | 滚动条 `id=60` 是 644 高（和内容矩形一致），但它服务的 `textbox id=30` 只有 357 高（`bottom 530`），按"轨道要和被控控件同高"的约定，滑块比例偏小。改法：轨道改 193 / 357。**未改，因为会和其他设置页的滚动条高度不一致，属于观感取舍** |
+| `SettingsSystemInfo` 滚动条轨道 | ✅ 2026-10-29 已改：`id=60` 轨道 644 → **357**（它服务的是 `textbox id=30`，193→550 高 357；写 644 会让滑块按两屏算比例）。几何回归测试已按页取期望值 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
-| 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型等服务端桥（§8.5）。**已拍板，不要加回来** |
+| 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型等服务端桥（§8.9）。**已拍板，不要加回来** |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
@@ -650,122 +656,90 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 ### 8.1 当前 git 状态
 
-- HEAD `f71a891`（v1.2.0 之后又推了 1 个文档提交），工作区干净，与 `origin/main` 同步。
-- **v1.2.0 已发布**：Release「Mistuary 1.2.0」，tag 指向 `efea1ff`。
-- 发版后无未提交改动；`media/shapes/` 现有 30 张 diffuse 遮罩、15 张环 + 1 张细边。
+| 项 | 值 |
+|---|---|
+| HEAD | `0ebccc5`（删 33 张死图 + 新增 `vinyl-helper-plan.md`） |
+| 与远端 | **领先 1 个提交，未 push**（`origin/main` = `fc61e7e`） |
+| 工作区 | 干净 |
+| 版本 | `addon.xml` = 1.2.1，`v1.2.1` 已发版 |
+| 贴图 | `Textures.xbt` 751 张 / 7.1 MB；`media/` 松散 PNG 750 张 |
 
-### 8.2 发版记录（1.2.0）
+> 接手第一件事：`git push`（不涉及发版，版本号没变）。之后要发新版才升 `addon.xml`。
 
-- `2ac9ebf` 首次升 1.2.0 时 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，随后 `5020f1f`
-  把版本退回 1.1.1；2026-10-29 `efea1ff` 重新升到 1.2.0 并 push，CI 通过并创建 v1.2.0 Release。
-- 后续发版只改 `addon.xml` 版本号并 push；CI 失败后要重发**同版本**，走
-  `workflow_dispatch` + `force=true`（普通 push 会被版本闸门跳过）。
+### 8.2 发版记录
 
-### 8.3 还没做完的事（按顺序）
+| 版本 | 要点 |
+|---|---|
+| v1.0.0 / v1.1.0 / v1.1.1 | 通用版落地、透明度三档、技术标识图标化 |
+| **v1.2.0** | 真圆角（diffuse 遮罩）+ 播放条重排 + 搜索增强 + 主评分四档 |
+| **v1.2.1** | 包体 10.2 → 7.2 MB（清死图）+ 系统信息页滚动条 |
 
-| # | 事项 | 状态 | 怎么做 |
+> **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
+> 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
+> 后来 `5020f1f` 把版本号退回 1.1.1、再重新升到 1.2.0 才发出去。
+> **教训**：CI 失败后要重发**同版本**，走 `workflow_dispatch` + `force=true`。
+
+### 8.3 最近两天做过什么（免得重做）
+
+| 主题 | 落点 |
+|---|---|
+| 主评分来源四档 + 手选优先 | 设置 707、`NaraOnlineRatingsRow`、`NaraDefaultRatingSourceVar`（§5.7） |
+| 搜索首字母改前缀匹配 | `sorttitle` 用 `startswith`，并**移除** `actor` / `director` / `genre`（§5.10） |
+| 帮助文案统一 | 「弹窗透明度」、26 条帮助条改陈述式、双引号 |
+| 圆角二期 | 全库收口，30 张 diffuse 遮罩、8 环 + 1 细边（§5.4.1） |
+| 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
+| 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
+| 插件规划 | `docs/helper-plugin-plan.md`，含「可选安装」契约 §3.1 |
+
+### 8.4 现在可以直接接着做的四件事
+
+| # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | 提交并 push 圆角二期 | ✅ 2026-10-28 | C-1 + A 档 |
-| 2 | **发 1.2.0** | ✅ 2026-10-29 | `efea1ff` → CI 建 Release + tag |
-| 3 | **script.mistuary.helper** | ⏳ 下一任 | 独立仓库，规划见 [`helper-plugin-plan.md`](helper-plugin-plan.md)，入口在 §8.5 |
-| 4 | `addon.xml` 简介补「（同时最多两个）」 | ✅ 2026-10-28 已改 | 中英两条 description 都补了，已随 1.2.0 发 |
-| 5 | 三个设置页对齐 PVR 基准 | ✅ 2026-10-28 | `SettingsProfile` 已回 193/644；`SettingsSystemInfo` grouplist 已补 `<width>1259</width>`。底部文字区差异见 §7 |
-| 6 | §7 其余遗留 | — | 多为"用户决定不改"，逐条见 §7 |
+| 1 | **音乐播放页黑胶唱片效果** | `docs/vinyl-helper-plan.md` §2（含动画写法、素材清单、**暂停回弹这个硬伤**） | 用户先认可硬伤 |
+| 2 | **`script.mistuary.helper` 阶段 0 + 1** | `docs/helper-plugin-plan.md` + `vinyl-helper-plan.md` §3（骨架清单） | 定仓库位置 / token 来源 / 播放地址形态 |
+| 3 | **删 24 个死变量 + 6 个死 include** | `audit_skin.py --dead` 直接列出来 | 逐个确认（`HomeVideoRowNavigation` 是活的，别删） |
+| 4 | 背景兜底图 | `vinyl-helper-plan.md` §1 | 用户选 A/B/C（建议 A 不动） |
 
-#### 8.3.1 圆角已全库收口（2026-10-28 二期完成）
-
-这里原来挂的是「还剩 2 处」。2026-10-28 用 `tools/scan_rounded.py` 扫了全库 125 个 xml，
-又找出 9 处，连同那 2 处一起做完。**现在 `media/shapes/mask_*` 共 30 张，
-所有该圆角的内容图都挂上了。**
-
-二期补的 11 处（环一律按 §5.4.1：卡片 +2、环半径 = 遮罩半径 +1）：
-
-| 位置 | 尺寸 | 遮罩 | 配套动作 |
-|---|---|---|---|
-| `PlayerControls` 播放条封面 | 250² | `mask_250x250_r12` | 去掉 4px 方框 |
-| `VideoOSDBookmarks` 书签缩略图 ×2 | 330×250 | `mask_330x250_r12` | 焦点框从 `colors/white.png` 方框换成 `ring_card_332x252_r13` @ `(-1,4)` |
-| `DialogMusicInfo` 专辑缩略图 ×2 | 190² | `mask_190x190_r9` | 去掉 4px 方框 |
-| `FileBrowser` 右侧预览 | 260×380 | `mask_260x380_r12` | 去掉 4px 方框 |
-| `View_52_IconWall` 缩略图 ×2 | 160×116 | `mask_160x116_r9` | — |
-| `DialogSeekBar` 播放中封面 | 200² | `mask_200x200_r12` | — |
-| `SettingsProfile` 用户头像 ×2 | 162² | `mask_162x162_r9` | — |
-
-顺带修掉 **3 处违规**：`View_54_InfoWall` 三个布局的焦点环还带 `<bordersize>20</bordersize>`。
-§5.4.1 说这批 7 处已清，实际漏了 3 处。环尺寸 403.45×407.45 vs 贴图 403×407 只差 0.45px，
-所以肉眼没暴露 —— 但尺寸一改环就会变形。**底板控件的 `bordersize` 要保留**（那是 1×1 纯色块）。
-
-**有意不做的**（不是漏）：
-
-- `View_50_List` 540×850 / 540×470 / 540×330 / 730×318、`View_54_InfoWall`
-  336×300 / 316×316 / 316×218 —— 贴边 hero 大图，圆角后四角露出底板色
-- `DialogPictureInfo` 1180×720 —— 全屏看照片，切角不合适
-- clearlogo（720×145 / 660×170 / 624×134 / 356×100）、`DefaultActor.png`、各类默认图标 —— 透明 PNG
-- 所有 ≤60px 的列表行小图标
-
-**收益低、本轮没做**：PVR 台标类 9 处 —— `MyPVRGuide` 290×250 ×2、`Includes_PVR` 200×200、
-`DialogPVRInfo` 505×655 ×3 + 505×315 ×3、`DialogPVRChannelGuide` 320×280、
-`DialogPVRGroupManager` 314×200、`AddonBrowser` 180×180。多数是 `keep` 居中的透明台标，
-抠四角看不出来；`DialogPVRInfo` 走 `Art(thumb)` 剧照时才明显。
-
-**下次怎么查漏**：
+### 8.5 新接手先跑这五条
 
 ```bash
-python tools/scan_rounded.py          # 列 A 类（应圆角但没挂 diffuse）
-python tools/scan_rounded.py --all    # 连透明 PNG 一起列
+python tools/audit_skin.py --strict                      # 必须 EXIT=0
+python tools/audit_skin.py --orphans                     # 应报 0 张
+python tools/audit_skin.py --dead                        # 24 变量 + 6 include（已知，未清）
+python -m unittest discover -s tools -p 'test_*.py'       # 58 项
+python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
+### 8.6 待决策（4 项，都要用户点头）
 
-#### 8.3.2 死贴图 —— 2026-10-29 已清理
+1. **黑胶的暂停回弹**：Kodi 条件动画条件消失会 reset，唱片"啪"回 0°。接受还是不做？
+2. **helper 仓库位置**：`D:/下载/AI/script.mistuary.helper/`（独立仓库）可以吗？
+3. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
+4. **背景兜底**：A 不动 / B 换图 / C 按主题两张。
 
-删掉 **22 个**零引用贴图，`Textures.xbt` 从 **10.2 MB 降到 7.2 MB（−29%）**：
+### 8.7 从没验证过的
 
-- `media/settings/background.png`（**1.87 MB**，4.x 时代设置页背景图，改版后没人用）
-- `shapes/` 17 张：`glass16/18/28/32/42`（`NaraDialogGlassTexture` 的 radius 恒 20）、
-  `round42` `round65` `ring12_3` `ring_btn_120x70_r35` `ring_card_250x358_r14`
-  + 7 枚没接上的环（`206x206_r12` `227x227_r12` `227x276_r6` `235x235_r6` `243x243_r6`
-  `259x315_r6` `275x331_r11`）
-- `icons/filemanager.png` `icons/power.png`
-- `osd/nara/metadata.png` `osd/nara/video.png`
+**Kodi 21 实机**：双轨渲染（`$MAP` 在 21 上退化成原始值、13 个 v22 标签靠
+`!String.IsEmpty` 保护）**只在 22.0-BETA2 上跑过**。装 Kodi 21.2 便携版
+（解压即用、不动现有配置）→ 皮肤拷进 `portable_data/addons/` → 看四处：
+技术标识不出现 `$MAP[...]` 原文、详情页评分、字幕/音轨标签、PVR 台标回退。**风险 0。**
 
-生成器表同步收窄：`gen_glass_plates.py` 的 `RADII` 只留 `20`、`gen_rings.py` 的 `RINGS`
-删 7 条（现 8 环 + 1 细边）、`generate_nara_osd_icons.ps1` 删 `video` / `metadata` 两块。
-
-**故意留着没删的 4 张**：`osd/nara/{play,pause,next,previous}_filled.png`（共 13 KB）。
-`gen_osd_filled_icons.py` 的 `--check` 会要它们；删图就得连脚本一起删，
-等于决定"不做实心/空心两态按钮"。**这是个设计取舍，等用户定。**
-
-#### 8.3.3 待决策（要你点头才动）
-
-- **系统信息 / 事件日志的底部文字区**是否要和 PVR 页完全一致（见 §7）
-- **`SettingsSystemInfo` 滚动条轨道**：644 高，但它服务的 `textbox id=30` 只有 357 高（见 §7）
-- **首页卡片背后的方形投影**：`Includes_Home` 6 处 + `View_53_Shift` 3 处
-  `bordertexture border="21" infill="false"`（`overlays/shadow.png`）是**直角**九宫格描边，
-  挂在圆角卡片上时四角会留一条方形阴影缝。**2026-10-28 评估后不做**：
-  阴影线在距卡片边缘 17–19px、alpha 最高只有 63（25% 黑），深色背景完全看不见，
-  亮背景也只是"可能有一点点"。要做就得新增 `shadow_r9` / `shadow_r12` / `round9` 三张图，
-  收益不值。真要做时的算法：三层同心 1px 圆角矩形（半径 r+3 / r+2 / r+1，alpha 12/33/63），
-  圆心统一在 (32,32)，用 `ImageChops.lighter` 合并，9-slice border 仍为 21。
-
-#### 8.3.4 从没验过的
-
-**Kodi 21 实机**：双轨渲染（`$MAP` 在 21 上退化成原始值）只在本机的 22.0-BETA2 上跑过，
-21 分支一次都没实机验证。想验的话装个 Kodi 21.2 便携版（解压即用、不动现有配置），
-把皮肤拷进 `portable_data/addons/` 就行。
-
-### 8.4 给下一任的提醒
+### 8.8 给下一任的提醒
 
 - **提交纪律**（§4）：永远 `git add <具体文件>`、`git diff --cached --name-only` 核对再 commit。
   这个仓库可能多个 agent 并行改，工作区里随时有别人的未提交改动，别一把扫进自己的提交。
 - **开发期同步实机用散包**：`python tools/sync_to_kodi.py --loose`（改 png 只重载皮肤就生效）；
   **递交 / 发版前**才 `python tools/xbt_tool.py pack` + 普通 `sync_to_kodi.py`。
+  ⚠️ `--loose` 要把目标端 `Textures.xbt` 挪成 `.off`，**Kodi 开着时挪不动**，会只同步散文件。
 - **版本号没升 = 没发版**：push 会触发发版，"提交"和"发版"要分开确认（§6）。
-- 圆角机制只有一条正确路子：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件完全一致
-  （§5.4.1），别再发明实色角部遮盖那套。
+- 圆角机制只有一条正确路子：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件一致
+  （§5.4.1）；`scale` 才写 `scalediffuse="false"`，`keep` **不要写**（写了等于没圆角）。
 - **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。同步到实机也一样，先问。
 
-### 8.5 下一步：`script.mistuary.helper`（独立仓库）
+### 8.9 下一步：`script.mistuary.helper`（独立仓库）
 
-规划、契约、阶段验收全在 [`helper-plugin-plan.md`](helper-plugin-plan.md)，这里只列接手要点：
+规划、契约、阶段验收全在 [`helper-plugin-plan.md`](helper-plugin-plan.md)，
+骨架清单与三个待定项在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §3。要点：
 
 - **定位**：皮肤的运行时脚本能力都进这一个插件（不要再建第二个 `script.mistuary.*`）。
   独立仓库、GPL-3.0、只用标准库。
@@ -773,14 +747,8 @@ python tools/scan_rounded.py --all    # 连透明 PNG 一起列
   只用 `System.AddonIsEnabled` 软探测；缺插件时搜索回退本地 XSP、豆瓣胶囊隐藏、
   代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §3.1。
   ⚠️ 装/卸插件后要**重载皮肤**才生效（`<include condition>` 与 `<content>` 是加载时求值）。
-- **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（神医助手的中文分词/全拼只在服务端生效），
-  皮肤容器在 `System.AddonIsEnabled(script.mistuary.helper)` 时切到插件路径，否则回退本地 XSP。
-- **P1 豆瓣评分**：复用 `plugin.video.themoviedb.helper-douban` 的 Legacy + Frodo 双通道，
-  IMDb id 输入、7 天缓存、写 `Window.Property(Mistuary.Rating.*)`。
-- **P2 剧集代表集标识**：写 `ListItem.Property(TvShowRepresentative.*)`，皮肤分支已留好。
-- **已拍板的取舍**：v1 不做常驻 service（按需 + 磁盘缓存）；单集搜索放 v1.1；
-  仓库放独立仓库而不是皮肤仓库子目录。
-- **皮肤侧待做**（等插件 P0 可用后）：搜索容器加 helper 分支、详情页豆瓣属性、搜索方式开关。
+- **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（中文分词/全拼只在服务端生效）。
+- **P1 豆瓣评分**、**P2 代表集标识** 见规划文档。
 
 > ⚠️ 行为变化：1.2.0 起本地快速搜索不再匹配演员 / 导演 / 类型（见 §5.10），
-> 人员搜索要等服务端桥补回来。交接时别当成 bug 又加回去。
+> 人员搜索要等服务端桥补回来。**交接时别当成 bug 又加回去。**

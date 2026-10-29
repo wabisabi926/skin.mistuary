@@ -285,6 +285,11 @@ python tools/sync_to_kodi.py --loose       # 散包同步，改图只需重载�
 
 - `gen_corner_masks.py --check` → 齐全（diffuse 30 / 实色 0 / 纯白 0）
 - `gen_rings.py --check` → 齐全（15 环 + 1 细边）
+
+> **2026-10-29 更新**：清理死资源时删掉 7 枚没接上的环（`206x206_r12` / `227x227_r12` /
+> `227x276_r6` / `235x235_r6` / `243x243_r6` / `259x315_r6` / `275x331_r11`）与
+> `ring12_3` / `ring_btn_120x70_r35` / `ring_card_250x358_r14`，`RINGS` 表同步收窄，
+> 现在 `--check` 报 **8 环 + 1 细边**。
 - `audit_skin.py --strict` → 缺失 include / 变量 / 字体 / 贴图 / 字符串 全 0，
   残留魔改属性 0，`<texture>` 非法属性 0
 - 单元测试 56 个全过
