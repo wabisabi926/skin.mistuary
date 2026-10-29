@@ -113,15 +113,19 @@
 | `Includes_DialogVideoInfo_TvEpisodes` 剧集缩略图（item + focus 两处） | 336×189 | `mask_336x189_r9`（新增） | 已提交 `f225819` |
 | `Includes_Home` 首页「类别」卡背景（两处） | 276×160 | `mask_276x160_r9`（新增） | 已提交 `f225819` |
 | `Includes_Search` 搜索 hero 海报（无 fanart 时） | 452×672 | `mask_452x672_r12`（复用） | 已提交 `f225819` |
-| `DialogMusicInfo` 封面（2026-10-29 重做） | 452×452 | `mask_452x452_r12`（新增） | 本次改动 |
+| `DialogMusicInfo` 封面（2026-10-29 重做） | 452×452 | `mask_452x452_r12`（新增） | 已落地 |
 | `View_55_WideList` 专辑图 / 横版图 | 340×340 / 438×246 | `mask_340x340_r12` / `mask_438x246_r12`（新增） | **未提交** |
 | `View_50_List` 列表预览 | 224×300 / 160×160 / 184×184 | `mask_224x300_r12` / `mask_160x160_r9` / `mask_184x184_r9`（新增） | **未提交** |
 | `Includes_VideoOSD` 播放列表缩略图 | 356×200 | `mask_356x200_r12`（新增） | **未提交** |
 | `DialogAddonInfo` 插件信息截图 | 656×312 | `mask_656x312_r12`（新增） | **未提交** |
 | `Includes_DialogVideoInfo_Cast` 演员头像 | 110×150 | `mask_110x150_r9`（新增） | **未提交** |
 
-新遮罩都在 `tools/gen_corner_masks.py` 的 `DIFFUSE_MASKS` 表里登记过，且 `xbt_tool.py pack` 已重打包
-（791 张）。`audit_skin.py --strict` 通过。
+> **2026-10-29 音乐信息页重做**：`DialogMusicInfo` 改用 `mask_452x452_r12`；
+> 旧的 `mask_570x570_r12` / `mask_190x190_r9` 已删除，生成器表同步移除。
+> `--orphans` 当前 0 张。
+
+新遮罩都在 `tools/gen_corner_masks.py` 的 `DIFFUSE_MASKS` 表里登记过；发版时 `xbt_tool.py pack`
+会重打包。`audit_skin.py --strict` / `gen_corner_masks.py --check` 通过。
 
 三条硬约束（§5.4.1 有完整说明）：
 **① 遮罩尺寸必须和控件完全一致；② 环 = 卡片 +2、环外半径 = 遮罩半径 +1（内缘压进 2px）；
@@ -635,9 +639,40 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 - **背景**：默认图是 `media/osd/nara/music-background.jpg`（进 XBT）；
   用户可在「设置 → 外观 → 音乐背景」换图，变量
   `NaraImgSkinStringNaraMusicBackgroundDefMusicBackground` 给播放页和音乐库背景兜底。
-  音乐信息页（2026-10-29 重做）改用全幅 fanart / `primary.jpg`，不再用这张背景图。
+  音乐信息页（2026-10-29 重做）在**没有 fanart** 时也用它兜底；有 fanart 时优先 fanart，
+  `primary.jpg` 原色常驻最底层。
 - **豆瓣**：StrmAssistant 的豆瓣覆盖改写的是 Emby `CommunityRating`（Kodi 侧为默认类型，
   无来源标志），皮肤用设置项 `douban_rating` 手动切换第一颗评分胶囊的图标（IMDb / Douban）。
+
+#### 5.8.1 音乐信息页（2026-10-29 重做）
+
+`DialogMusicInfo` 不再走旧的「左封面 + 中间面板 + 右侧元数据列表」，按电影详情页骨架：
+
+- **全幅背景**：`primary.jpg`（原色，`primary_background_info`）+ 无 fanart 时音乐背景图
+  + fanart；左侧 `detail-left-scrim.png`，没有玻璃大卡
+- **左列** `x=209 / y=303`：标题、艺人/专辑、年份/类型/时长、评分 + 音频规格；
+  只显示有值的字段，不铺空行
+- **右列** `452×452 @ (1259,303)`：圆角 `mask_452x452_r12`，下方说明居中
+- **底部动作条** `x=209 / y=681`：播放白色主按钮 + 我的评分 / 选择艺术图片 / 专辑信息
+- **内置动作**：Kodi 的 `7/8/10/12` 用 `HiddenObject` 隐藏，可见按钮用
+  `70080–70083` + `SendClick()` 转发；直接给可见按钮用内置 ID 会把 Kodi 的
+  文字标签压进 70×70 圆里
+- **简介**：只在 `Comment` / `Album_Description` / `Artist_Description` 有内容时出现；
+  `EmbyLibraryId-...` 技术注释自动隐藏
+- **已删**：`Includes_MusicInfo.xml`、`VideoInfoButtonsCommon`、`MusicInfoTextboxVar`、
+  `mask_570x570_r12`、`mask_190x190_r9`；新增 `mask_452x452_r12`
+
+#### 5.8.2 详情页背景兜底
+
+| 页面 | 兜底 |
+|---|---|
+| `DialogVideoInfo` | `primary.jpg` 原色（`primary_background_info`）+ fanart + 左侧压暗 |
+| `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图，再退到 primary |
+| `DialogAddonInfo` | `primary.jpg` 原色 + fanart；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
+| `DialogPVRInfo` / `DialogPictureInfo` | **故意透出直播画面 / 当前图片**，不铺不透明底图 |
+
+> `primary_background`（`FF404040`）会把 `primary.jpg` 乘到 25% 亮度，详情页不要再用它；
+> 详情页统一用 `primary_background_info`（`FFFFFFFF`）。PVR / 图片详情不在此列。
 
 ### 5.9 海报墙的列宽预算（2026-10-28 实测）
 
@@ -800,6 +835,8 @@ git status -sb              # 与远端的关系 + 工作区
 | 死分支清理 | 40 处 `!$EXP[nara_dialog_glass]` + 65 恒真条件 + 6 个 `NaraDialogLegacy*` + 1 张贴图 |
 | 卡片格回到 260 | 264 在真机掉成 6 列，回 260 恢复 7 列 |
 | 设置页重排 | 4 类：首页 11 / 媒体 7 / 界面 5 / 播放 2（§5.3.2） |
+| 音乐信息页 v4 | 全幅两栏、452 封面、内置 7/8/10/12 隐藏 + SendClick（§5.8.1） |
+| 详情页背景兜底 | Video/Music/Addon 用 `primary_background_info`；Addon 无 fanart `sc_2`（§5.8.2） |
 
 ### 8.4 现在可以直接接着做的三件事
 

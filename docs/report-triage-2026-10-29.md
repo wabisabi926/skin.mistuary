@@ -99,7 +99,7 @@ PVR 扩展和 `<map>` 渲染。
 | P0 | [`xml/DialogPlayerProcessInfo.xml:460`](../xml/DialogPlayerProcessInfo.xml#L460)、[`:463`](../xml/DialogPlayerProcessInfo.xml#L463) | `Player.DecodedFilenameAndPath` 在 21/22 都不存在，播放信息页路径永远空 | 改 `Player.FilenameAndPath` | 待办 |
 | P0 | [`xml/AddonBrowser.xml:30`](../xml/AddonBrowser.xml#L30)、[`116`](../xml/AddonBrowser.xml#L116)、[`155`](../xml/AddonBrowser.xml#L155) | `<fallback>` 不是 image 的子标签；Kodi 只支持 `<label fallback="...">` 属性。插件图标缺失时空白 | 用现有 `NaraImg*` 变量兜底，或加一层条件默认图 | 待办 |
 | P0 | [`xml/Includes_Search.xml:314`](../xml/Includes_Search.xml#L314)、[`329`](../xml/Includes_Search.xml#L329) 及调用点 | `<scroll>` 只接受 `true/false` 等字面量，传 `Control.HasFocus(...)` 会被判非法，搜索/首页长标题不滚动（12 处） | 给 include 增加独立 `scroll` 参数（默认 `false`），聚焦布局传 `true`；不要把条件表达式塞进 `<scroll>` | 待办 |
-| P1 | [`xml/DialogMusicInfo.xml:418-421`](../xml/DialogMusicInfo.xml#L418)、[`DialogPVRInfo.xml:137`](../xml/DialogPVRInfo.xml#L137)、[`DialogVideoManager.xml:71`](../xml/DialogVideoManager.xml#L71)、[`PlayerControls.xml:140-141`](../xml/PlayerControls.xml#L140) | 9 个 `onup/onleft` 指向不存在的控件 ID，方向键跳转失效 | 删掉无效 `onX`，让 Kodi 按几何自动导航；或按实际布局重指 | 待办 |
+| P1 | [`xml/DialogMusicInfo.xml:418-421`](../xml/DialogMusicInfo.xml#L418)、[`DialogPVRInfo.xml:137`](../xml/DialogPVRInfo.xml#L137)、[`DialogVideoManager.xml:71`](../xml/DialogVideoManager.xml#L71)、[`PlayerControls.xml:140-141`](../xml/PlayerControls.xml#L140) | 9 个 `onup/onleft` 指向不存在的控件 ID，方向键跳转失效 | 删掉无效 `onX`，让 Kodi 按几何自动导航；或按实际布局重指 | DialogMusicInfo 已随 2026-10-29 重做移除；其余待办 |
 | P1 | [`xml/EventLog.xml:166`](../xml/EventLog.xml#L166)、[`189`](../xml/EventLog.xml#L189)、[`xml/Includes_Buttons.xml:167`](../xml/Includes_Buttons.xml#L167) | 空 `<onclick>` 在 13 个窗口里产生错误 | 默认 `onclick` 改 `noop`；EventLog 两处也改 `noop` | 待办 |
 | P2 | [`xml/Font.xml:77`](../xml/Font.xml#L77)、[`142`](../xml/Font.xml#L142)、[`239`](../xml/Font.xml#L239) | 3 个字体定义无人引用 | 删除 | 待办 |
 | P2 | [`xml/View_52_IconWall.xml:26`](../xml/View_52_IconWall.xml#L26)、[`Custom_1116_OSDPlaylistShelf.xml:36`](../xml/Custom_1116_OSDPlaylistShelf.xml#L36) | `sharedglassbackdrop` / `defaultfocusposition` 不是 Kodi 标签，死代码 | 删除 | 待办 |
@@ -167,7 +167,7 @@ xml/AddonBrowser.xml               3 处 <fallback> 改变量兜底
 xml/Includes_Search.xml            scroll 参数 + 调用点
 xml/Includes_Home.xml              scroll 调用点
 xml/View_501_Poster.xml            scroll 调用点
-xml/DialogMusicInfo.xml            删除死导航
+xml/DialogMusicInfo.xml            （已随重做移除，旧死导航不再存在）
 xml/DialogPVRInfo.xml              删除死导航
 xml/DialogVideoManager.xml         删除死导航
 xml/PlayerControls.xml             删除死导航

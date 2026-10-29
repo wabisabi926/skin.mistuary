@@ -6,6 +6,9 @@
 > **状态：已实施（第三轮定稿，2026-10-26 14:15）。**
 > 86% 太透（能逐条读字）→ 96% 太实（像黑板）→ **最终 92%**。
 > 浅色主题押后。三轮踩坑记录见 §5.2 / §7之二 / §7之三。
+>
+> **2026-10-29 更新**：音乐信息页已按电影详情页重做——全幅背景、无玻璃面板。
+> §3.2 里的 `DialogMusicInfo` 行只作为历史盘点，当前实现见 HANDOVER §5.8.1。
 
 ---
 
@@ -13,8 +16,8 @@
 
 1. 皮肤里共有 **34 个 `Dialog*.xml` + 12 个 `Custom_11xx` 自定义窗口**，其中 **24 个是"带面板的浮窗"**。
 2. 它们的不透明度**完全没有统一标准**，现状横跨 **30% ~ 85%** 四档，同一种视觉语言被拆成了四种。
-3. **最严重的一档是 50%**：11 个浮窗只有一层 50% 玻璃面板、**连全屏遮蔽层都没有**（`DialogPVRInfo`、
-   `DialogMusicInfo`、`DialogPictureInfo`、`DialogKeyboard`、`DialogSlider`、`DialogPVRChannelGuide`、
+3. **最严重的一档是 50%**：10 个浮窗只有一层 50% 玻璃面板、**连全屏遮蔽层都没有**（`DialogPVRInfo`、
+   `DialogPictureInfo`、`DialogKeyboard`、`DialogSlider`、`DialogPVRChannelGuide`、
    `DialogPVRChannelsOSD`、`DialogPVRGuideControls`、`DialogNotification`、`Custom_1100_AddonLauncher`、
    `Custom_1116_OSDPlaylistShelf`）。底下 50% 的画面是**清晰原图**，文字直接跟海报标题打架。
 4. 插件设置页 70%、插件详情页 85% —— 两个"本该一致"的页面差了 15 个百分点，
@@ -69,7 +72,7 @@
 | 窗口 | 遮蔽 | 面板 | 合成 | 判定 |
 |---|---|---|---|---|
 | `DialogPVRInfo`（直播信息侧栏） | **无** | `glass_frosted` 50% | **50%** | ❌❌ 严重 |
-| `DialogMusicInfo`（音乐信息侧栏） | **无** | 50% | **50%** | ❌❌ 严重 |
+| `DialogMusicInfo`（音乐信息页，2026-10-29 重做） | 无玻璃面板 | — | — | 历史问题已消除（§5.8.1） |
 | `DialogPictureInfo`（图片信息侧栏） | **无** | 50% | **50%** | ❌❌ 严重 |
 | `DialogKeyboard`（键盘面板） | **无** | 50% | **50%** | ❌❌ 严重 |
 | `DialogSlider` | **无** | 50% | **50%** | ❌❌ 严重 |
