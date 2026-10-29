@@ -678,11 +678,18 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 ### 8.1 当前 git 状态
 
+**这里不钉 commit hash 和"领先几个提交"** —— 那种快照提交完就过时（踩过：刚写完就又不准）。
+要现状直接跑：
+
+```bash
+git log -1 --oneline        # HEAD
+git status -sb              # 与远端的关系 + 工作区
+```
+
+稳定的只有这几项：
+
 | 项 | 值 |
 |---|---|
-| HEAD | `3f9b825`（皮肤设置重排成 4 类 + po 空行修复） |
-| 与远端 | **领先 1 个提交**（`origin/main` = 上一个提交） |
-| 工作区 | 干净 |
 | 版本 | `addon.xml` = 1.2.1，`v1.2.1` 已发版 |
 | 贴图 | `Textures.xbt` 754 张 / 7.3 MB；`media/` 松散 PNG 753 张（+1 张 jpg） |
 
