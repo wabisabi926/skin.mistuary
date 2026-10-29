@@ -11,6 +11,7 @@
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
+| [`vinyl-helper-plan.md`](vinyl-helper-plan.md) | 做音乐播放页的黑胶唱片效果、或开始搭 `script.mistuary.helper` 前。含动画可行性核实、素材清单、骨架文件职责、暂停回弹等硬伤 |
 | [`pending-work-plan.md`](pending-work-plan.md) | **还剩什么没做**。发版进度、体积清理、待决策项、`script.mistuary.helper` 规划入口、Kodi 21 实机验证，每条带证据和方案 |
 | [`repo-layout-plan.md`](repo-layout-plan.md) | **历史资料**。2026-10-27 把 `extras/` 归位成素材目录、构建工具移到 `tools/` 的整改记录 |
 
