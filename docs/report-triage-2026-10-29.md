@@ -42,6 +42,9 @@
 - 报告里的 3 条空 `onclick` 已降到 **1 条**（`DefaultDialogButton` 的默认参数仍为空）。
 - `--dead` 仍有 **9 个** `FocusLayoutTextColor*` 死变量，尚未清。
 
+**P1 / P2 执行后（2026-10-29 晚）：** 上面两项都已清零——空 `onclick` 改为 `noop`，
+9 个死变量删除，`--dead` 归零。详见 §2 / §5。
+
 ---
 
 ## 1. 报告分诊
@@ -120,28 +123,28 @@ XML 已经改走 `NaraDialogFocusLayoutTextColor*`（Includes_DialogGlass.xml）
 | 1 | [`xml/MusicVisualisation.xml:14`](../xml/MusicVisualisation.xml#L14) | `Dialog.Close(script-cu-lrclyrics-main)` 无法解析，离开播放页报错 | 删掉；插件自己会关 | ✅ 已删 |
 | 1 | [`xml/MusicVisualisation.xml:195`](../xml/MusicVisualisation.xml#L195) | `Window.IsVisible(script-cu-lrclyrics-main.xml)` 不可靠 | 改用 `Window(home).Property(culrc.guirunning)` | ✅ 已改 |
 
-### P1：导航 / 可感知（约 1.5 小时）
+### P1：导航 / 可感知（已完成）
 
-| 数 | 位置 | 影响 | 修法 |
-|---:|---|---|---|
-| 4 | [`DialogPVRInfo.xml:128`](../xml/DialogPVRInfo.xml#L128)、[`DialogVideoManager.xml:67`](../xml/DialogVideoManager.xml#L67)、[`PlayerControls.xml:140`](../xml/PlayerControls.xml#L140) | `onup/onleft` 指向不存在的控件 ID | 删无效 `onX`，让 Kodi 自动导航 |
-| 1 | [`DialogVideoManager.xml:37`](../xml/DialogVideoManager.xml#L37) | `ListItem.DecodedFileNameAndPath` 22 才有，21 路径空白 | 变量按 `$EXP[nara_kodi21]` 分支：22 用 Decoded，21 用 `ListItem.FileNameAndPath` |
-| 1 | [`Variables.xml:865`](../xml/Variables.xml#L865) | `VideoPlayer.SubtitleIsExternal` 不存在，外部字幕前缀永不成立 | 删掉该分支，或改用可用标签 |
+| 数 | 位置 | 影响 | 修法 | 状态 |
+|---:|---|---|---|---|
+| 4 | [`DialogPVRInfo.xml:128`](../xml/DialogPVRInfo.xml#L128)、[`DialogVideoManager.xml:67`](../xml/DialogVideoManager.xml#L67)、[`PlayerControls.xml:140`](../xml/PlayerControls.xml#L140) | `onup/onleft` 指向不存在的控件 ID | 删无效 `onX`，让 Kodi 自动导航 | ✅ 已删（PVRInfo `50`、VideoManager `9001`、PlayerControls `1000`×2） |
+| 1 | [`DialogVideoManager.xml:37`](../xml/DialogVideoManager.xml#L37) | `ListItem.DecodedFileNameAndPath` 22 才有，21 路径空白 | 直接改 `ListItem.FileNameAndPath`：21/22 都有，显示内容对版本列表足够，免去 `$EXP` 双分支 | ✅ 已改 |
+| 1 | [`Variables.xml:865`](../xml/Variables.xml#L865) | `VideoPlayer.SubtitleIsExternal` 不存在，外部字幕前缀永不成立 | 删掉该分支；`31716 "External"` 因此暂时没有引用，保留在 `.po` 里备用 | ✅ 已删 |
 
 > `<scroll>` 12 条暂缓，理由见上面的“复核修正”。
 
-### P2：清理 / 文案（约 1 小时）
+### P2：清理 / 文案（已完成）
 
-| 数 | 位置 | 问题 |
-|---:|---|---|
-| 9 | `Variables.xml:1360-1453` | 旧 `FocusLayoutTextColor*` 死变量，见 §1.3 |
-| 4 | `Font.xml` | `font23_narrow` / `font27_narrow` / `font_clock` / `font_MainMenu` 无人引用 |
-| 7 | `DialogPVRGroupManager.xml:185-227` | 6 个 `<font>` + 1 个 `<radiowidth>` 和 `SettingsItemCommon` 重复；Kodi 忽略后写的，删掉即与实际一致 |
-| 1 | `DialogMusicInfo.xml:83` | `MUSIC INFO · 音乐信息` 硬编码；加 `31779` 后走 `$LOCALIZE` |
-| 1 | `Includes_Buttons.xml:178` | `DefaultDialogButton` 的 `onclick` 默认参数为空；EventLog 两处已由并行改动改 `noop` |
-| 2 | `View_52_IconWall.xml:26`、`Custom_1116_OSDPlaylistShelf.xml:36` | `sharedglassbackdrop` / `defaultfocusposition` 不是 Kodi 标签 |
-| 3 | `AddonBrowser.xml:30/116/155` | `<fallback>` 不是 image 子标签；并行已改用 `NaraImgAddonBrowserIcon` / `NaraImgAddonListItemIcon` |
-| 12 | `NaraSearchPosterLayout` | `<scroll>` 运行时条件；完整修需拆两套 label，**暂缓** |
+| 数 | 位置 | 问题 | 状态 |
+|---:|---|---|---|
+| 9 | `Variables.xml:1360-1453` | 旧 `FocusLayoutTextColor*` 死变量，见 §1.3 | ✅ 已删（保留 6/11/50/51/52/53/55）；`--dead` 归零 |
+| 4 | `Font.xml` | `font23_narrow` / `font27_narrow` / `font_clock` / `font_MainMenu` 无人引用 | ✅ 已删 |
+| 7 | `DialogPVRGroupManager.xml:185-227` | 6 个 `<font>` + 1 个 `<radiowidth>` 和 `SettingsItemCommon` 重复；Kodi 忽略后写的，删掉即与实际一致 | ✅ 已删，实际生效值（font26 / radiowidth72）不变 |
+| 1 | `DialogMusicInfo.xml:83` | `MUSIC INFO · 音乐信息` 硬编码；加 `31779` 后走 `$LOCALIZE` | ✅ 中英 `.po` 均已加 31779 |
+| 1 | `Includes_Buttons.xml:178` | `DefaultDialogButton` 的 `onclick` 默认参数为空；EventLog 两处已由并行改动改 `noop` | ✅ 默认值改 `noop` |
+| 2 | `View_52_IconWall.xml:26`、`Custom_1116_OSDPlaylistShelf.xml:36` | `sharedglassbackdrop` / `defaultfocusposition` 不是 Kodi 标签 | ✅ 已删 |
+| 3 | `AddonBrowser.xml:30/116/155` | `<fallback>` 不是 image 子标签；并行已改用 `NaraImgAddonBrowserIcon` / `NaraImgAddonListItemIcon` | ✅ 并行已修 |
+| 12 | `NaraSearchPosterLayout` | `<scroll>` 运行时条件；完整修需拆两套 label，**暂缓** | ⏸ 本轮不做 |
 
 ### P3：降噪（可选）
 
@@ -157,7 +160,7 @@ XML 已经改走 `NaraDialogFocusLayoutTextColor*`（Includes_DialogGlass.xml）
 | 位置 | 21 上的表现 | 建议 |
 |---|---|---|
 | `Includes_SettingsDialog.xml:168` `VideoStreamCount` | 读 0，视频版本按钮永远禁用 | ✅ 并行已改 `HasVideoVersions` |
-| `DialogVideoManager.xml:37` `DecodedFileNameAndPath` | 路径空白 | 见 P1 |
+| `DialogVideoManager.xml:37` `DecodedFileNameAndPath` | 路径空白 | ✅ 已改 `FileNameAndPath` |
 | `Variables.xml:1524` `ChannelLogo` | 台标退化成 `DefaultTVShows.png` | 补 `ListItem.Art(thumb)` / `Icon` fallback |
 | `VideoPlayer.SubtitleCodec` | 字幕徽标没有编码，语言仍显示 | 接受为 v22 增强 |
 | `PVRClientName` / `PVRInstanceName` / `PVR.ClientCount` / `PVRGroupOrigin` | PVR 信息行部分为空 | 接受，或只在 22 显示 |
@@ -211,15 +214,15 @@ python tools/sync_to_kodi.py --loose
 播放信息页路径是否有值；离开音乐页 `kodi.log` 不再出现
 `Window Translator: Can't find window`。
 
-### 第 2 批：P1（约 1 小时）
+### 第 2 批：P1（已完成）
 
 - `DialogPVRInfo.xml` / `DialogVideoManager.xml` / `PlayerControls.xml`：
   删 4 个死导航。
-- `DialogVideoManager.xml`：21/22 路径变量。
-- `Variables.xml`：`VideoPlayer.SubtitleIsExternal` 分支处理。
+- `DialogVideoManager.xml`：路径统一用 `ListItem.FileNameAndPath`（21/22 通用）。
+- `Variables.xml`：删 `VideoPlayer.SubtitleIsExternal` 死分支。
 - **不做 `<scroll>`**：完整修法要拆两套 label，本轮暂缓。
 
-### 第 3 批：P2（约 1 小时）
+### 第 3 批：P2（已完成）
 
 - 删 9 个旧 `FocusLayoutTextColor*` 变量。
 - 删 4 个未用字体。
@@ -237,13 +240,13 @@ python tools/sync_to_kodi.py --loose
 
 ---
 
-## 6. 验收基线（2026-10-29 16:44 报告，修前快照）
+## 6. 验收基线（P1 / P2 后实测）
 
 ```text
 外部报告         456 E / 448 W（修前快照，需重跑）
 audit --strict   EXIT=0
 audit --orphans  0 张
-audit --dead     9 个 FocusLayoutTextColor* 旧变量
+audit --dead     0 变量 / 0 include
 unittest         59 项 OK
 Textures.xbt     754 张 / 7.3 MB
 ```
