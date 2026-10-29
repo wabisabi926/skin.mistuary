@@ -145,6 +145,8 @@ jobs:
           lines = open("changelog.txt", encoding="utf-8").read().splitlines()
           # 版本段 = 以 "<x.y.z> " 开头的行，到下一个同格式行为止
           head = re.compile(r"^\d+\.\d+\.\d+\s")
+          # 分类行 "[新增]" 这类在正文里渲染成三级标题，否则和条目同字号、分不出层次
+          section = re.compile(r"^\[(.+?)\]$")
           title, out, inside = version, [], False
           for line in lines:
               if head.match(line):
@@ -154,10 +156,12 @@ jobs:
                       inside, title = True, line.strip()
                   continue
               if inside:
-                  out.append(line)
+                  out.append(section.sub(r"### \1", line.strip()) if section.match(line.strip()) else line)
+          # 页面标题已经是 "Mistuary <版本>"，正文 H2 再去掉一遍版本号
+          heading = re.sub(r"^\d+\.\d+\.\d+\s*", "", title) or version
           body = "\n".join(out).strip() or "（changelog.txt 里没有对应段落）"
           with open("build/RELEASE_NOTES.md", "w", encoding="utf-8") as f:
-              f.write(f"## {title}\n\n{body}\n")
+              f.write(f"## {heading}\n\n{body}\n")
           print("--- RELEASE_NOTES.md ---")
           print(open("build/RELEASE_NOTES.md", encoding="utf-8").read()[:600])
           PY
@@ -175,6 +179,7 @@ jobs:
             --exclude='.github/' \
             --exclude='.workbuddy-ai/' \
             --exclude='.gitignore' \
+            --exclude='.gitattributes' \
             --exclude='docs/' \
             --exclude='build/' \
             --exclude='__pycache__/' \
