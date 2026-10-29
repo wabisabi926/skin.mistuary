@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<!-- 歌词面板固定在播放页右侧：首次进入若未指定歌词插件，自动选中 CU LRC；
-	     已指定则在页面打开时自动启动歌词脚本（窗口覆盖文件已把列表放在右侧、无全屏遮罩），
-	     离开播放页时关闭歌词窗口。 -->
+	     已指定则在页面打开时自动启动歌词脚本（窗口覆盖文件已把列表放在右侧、无全屏遮罩）。
+	     关闭由插件自己处理：皮肤不再发 Dialog.Close，那个窗口名 Kodi 翻译不出来。 -->
 	<onload condition="String.IsEmpty(Skin.String(LyricScript_Path)) + System.HasAddon(script.cu.lrclyrics)">Skin.SetString(LyricScript_Path,script.cu.lrclyrics)</onload>
 	<!-- 不能写 System.HasAddon($INFO[...])：Kodi 的布尔表达式解析器不认嵌套的 $INFO，
 	     会直接报 "Misplaced [" 然后整条条件失效 —— 歌词脚本永远不启动。

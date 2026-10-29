@@ -856,6 +856,10 @@
 		<value condition="String.IsEqual(VideoPlayer.AudioChannels,10)">FL, FR, FC, LFE, BL, BR, SL, SR, FWL, FWR</value>
 		<value>$INFO[VideoPlayer.AudioChannels]</value>
 	</variable>
+	<variable name="NaraAudioLanguageVar">
+		<value condition="!String.IsEmpty(VideoPlayer.AudioLanguageEx)">$INFO[VideoPlayer.AudioLanguageEx]</value>
+		<value>$INFO[VideoPlayer.AudioLanguage]</value>
+	</variable>
 	<variable name="NaraSubtitleTrackNameVar">
 		<value condition="!String.IsEmpty(VideoPlayer.SubtitleName)">$INFO[VideoPlayer.SubtitleName]</value>
 		<value condition="String.IsEmpty(VideoPlayer.SubtitlesLanguage) | String.IsEqual(VideoPlayer.SubtitlesLanguage,und)">$LOCALIZE[31715]</value>

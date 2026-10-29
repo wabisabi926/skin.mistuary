@@ -204,7 +204,7 @@
 				<include content="NaraProcessInfoRow">
 					<param name="width" value="600" />
 					<param name="label" value="$LOCALIZE[31643]" />
-					<param name="value" value="$INFO[VideoPlayer.AudioLanguageEx]" />
+					<param name="value" value="$VAR[NaraAudioLanguageVar]" />
 				</include>
 				<include content="NaraProcessInfoRow">
 					<param name="width" value="600" />
