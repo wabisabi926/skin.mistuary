@@ -185,16 +185,39 @@ class VideoInfoAutoScrollTest(unittest.TestCase):
 
 class VideoInfoTechFlagsCaptionTest(unittest.TestCase):
     def test_tvshow_techflags_use_current_season_first_episode(self):
-        """剧集页用当前季第一集当代表集，并在行尾标 SxxExx。"""
+        """剧集页用当前季第一集当代表集，并在行尾标 SxxExx。
+
+        2026-10-29：行尾只留集号，不再写「代表集」三个字 —— 这一行的宽度上限
+        是剧情简介的 790，三个字要 81px，加上集号后两个评分时直接超 133px。
+        """
         hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
         variables = (XML_DIR / "Variables.xml").read_text(encoding="utf-8")
         self.assertIn('<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />', hero)
         self.assertIn('<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />', hero)
         self.assertIn('<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />', hero)
         self.assertIn('<variable name="NaraRepCaptionVar">', variables)
-        self.assertIn('代表集 S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]', variables)
+        self.assertIn('>S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]<', variables)
         self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,1)">01</value>', variables)
         self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Episode,1)">01</value>', variables)
+
+    def test_ratings_row_never_wider_than_the_synopsis(self):
+        """评分 + 技术标识那一行的宽度必须和剧情简介一致（790）。
+
+        这一行和简介左右对齐，宽了就会顶到简介右边界外。790 下
+        「两个评分 + 5 个标识 + 集号」= 757，还剩 33px。
+        """
+        hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
+        root = ET.fromstring(hero)
+        for inc in root.iter("include"):
+            if inc.get("name") != "NaraOnlineRatingsRow":
+                continue
+            widths = {p.get("name"): (p.text or "").strip() for p in inc.findall("param")}
+            self.assertEqual(widths.get("width"), "790")
+            break
+        else:
+            self.fail("没找到 NaraOnlineRatingsRow")
+        # 简介正文的宽度也是 790，两处必须一致
+        self.assertGreaterEqual(hero.count("<width>790</width>"), 2)
 
 
 class SettingsSurfaceTintTest(unittest.TestCase):

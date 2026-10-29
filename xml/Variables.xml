@@ -1750,7 +1750,11 @@
 		<value>$INFO[Container(5101).ListItemAbsolute(0).Episode]</value>
 	</variable>
 	<variable name="NaraRepCaptionVar">
-		<value condition="!String.IsEmpty(Container(5101).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5101).ListItemAbsolute(0).Episode)">代表集 S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]</value>
+		<!-- 只留集号，不再写「代表集」三个字：这一行的宽度上限是剧情简介的 790，
+		     三个字要 81px，加上集号就顶到 190，两个评分时直接超 133px。
+		     剧集详情页显示 S01E01 本身就能看懂（Emby / Plex 都这么显示）。
+		     没有季集号时退回「代表集」——这种情况很少（5101 有分辨率却没季集）。 -->
+		<value condition="!String.IsEmpty(Container(5101).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5101).ListItemAbsolute(0).Episode)">S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]</value>
 		<value>代表集</value>
 	</variable>
 </includes>
