@@ -1429,3 +1429,7 @@ msgstr "Not rated"
 msgctxt "#31778"
 msgid "Back"
 msgstr "Back"
+
+msgctxt "#31779"
+msgid "Music info"
+msgstr "Music info"

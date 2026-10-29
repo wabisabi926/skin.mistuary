@@ -1206,3 +1206,7 @@ msgstr "未评分"
 msgctxt "#31778"
 msgid "Back"
 msgstr "返回"
+
+msgctxt "#31779"
+msgid "Music info"
+msgstr "音乐信息"

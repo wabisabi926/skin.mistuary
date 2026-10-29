@@ -80,7 +80,7 @@
 					<height>30</height>
 					<font>font12</font>
 					<textcolor>text_secondary</textcolor>
-					<label>MUSIC INFO  ·  音乐信息</label>
+					<label>$LOCALIZE[31779]</label>
 				</control>
 				<control type="grouplist">
 					<top>24</top>
