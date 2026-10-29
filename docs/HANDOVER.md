@@ -634,7 +634,7 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 而且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
 皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到。接入方式（`script.mistuary.helper`
 调豆瓣双通道、写 `Window.Property(Mistuary.Rating.*)`）见
-[`helper-plugin-plan.md`](helper-plugin-plan.md) §5.2。
+[`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；实现细节见插件仓库 `D://下载//AI//script.mistuary.helper//docs//contract.md`。
 
 ### 5.8 音乐播放页：歌词 / 评分 / 背景
 
@@ -729,7 +729,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   中文标题和原名搜索不受影响。
 - **不要再加回 `actor` / `director` / `genre`**：一个 flat `or` 只能共用一个 operator，
   子串匹配会把演员名当命中（实测单字母 `Z` 命中 238/742 部、`S` 命中 371/742）。
-  人员与类型搜索归服务端桥（[`helper-plugin-plan.md`](helper-plugin-plan.md) §6）。
+  人员与类型搜索归服务端桥（[`helper-plugin-plan.md`](helper-plugin-plan.md)）。
 - **首字母必须前缀匹配**：`contains` 会把首字母出现在词中的条目捞进来
   （`HZ` 命中 14 部 → 前缀只剩 4 部）。2026-10-28 已改 `startswith`。
 - **不要给结果列表加 `limit`**：`<content limit="30">` 会同时截断结果和标签计数。
@@ -849,7 +849,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 圆角二期 | 全库收口，30 张 diffuse 遮罩、8 环 + 1 细边（§5.4.1） |
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
-| 插件规划 | `docs/helper-plugin-plan.md`，含「可选安装」契约 §3.1 |
+| 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
 | **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`（`main`，首个提交 `352e12e`）：阶段 0 骨架 + 阶段 1 服务端搜索已完成，58 项单测全绿，已同步到 `%APPDATA%\Kodi\addons\script.mistuary.helper`。豆瓣（P1）/ 代表集（P2）是空壳。**皮肤侧还没接分支**——`NaraSearchMoviesPathVar` 仍是纯 XSP，要等实机验证播放地址后再加 `$EXP[helper_ready]` 分支 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
@@ -917,7 +917,7 @@ python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   
   独立仓库、GPL-3.0、只用标准库。
 - **可选安装（2026-10-29 定）**：**不装就少功能，装了就多**。`addon.xml` **不写** `<import>`，
   只用 `System.AddonIsEnabled` 软探测；缺插件时搜索回退本地 XSP、豆瓣胶囊隐藏、
-  代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §3.1。
+  代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §2。
   ⚠️ 装/卸插件后要**重载皮肤**才生效（`<include condition>` 与 `<content>` 是加载时求值）。
 - **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（中文分词/全拼只在服务端生效）。
 - **P1 豆瓣评分**、**P2 代表集标识** 见规划文档。

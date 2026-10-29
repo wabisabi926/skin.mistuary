@@ -185,7 +185,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | 系统信息页滚动条 644 → 357 | ✅ 含几何回归测试 |
 | 4 张 `*_filled` + 生成器 | ✅ 已删（源 SVG 留在 `tools/osd_icons/`） |
 | 文档失真 8 处 | ✅ 已对齐实测值 |
-| helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §3.1 |
+| helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §2 |
 
 ## 还剩 1 件事（2026-10-29 更新）
 

@@ -191,13 +191,17 @@ script.mistuary.helper/
 - 皮肤侧：`NaraSearchMoviesPathVar` / `NaraSearchTVShowsPathVar` 加 `$EXP[helper_ready]` 分支，
   服务端模式下**不要** `sortby="sorttitle"`（否则相关度排序被覆盖成字母序）
 
-### 3.5 需要你定三件事
+### 3.5 三件事已定（2026-10-29）
 
-1. **仓库位置**：`D:/下载/AI/script.mistuary.helper/` 可以吗？（方案 A）
-2. **Emby token 怎么取**：读 Emby 插件的 `settings.xml`（用户不用二次输入，但依赖插件装了），
-   还是让用户在 helper 设置里自己填？（我倾向读插件配置 + 允许手填覆盖）
-3. **阶段 1 的播放地址**：先做"返回 Emby 直链"，还是"返回 `plugin://plugin.video.emby`"？
-   这个要在实机上点一下才知道哪个能播。
+1. **仓库位置** ✅ `D:/下载/AI/script.mistuary.helper/`（独立仓库，`main` 分支，
+   首个提交 `352e12e`）
+2. **Emby token** ✅ 直接读 Emby 插件的 `servers_*.json`（用户不用二次输入）；
+   设置里留了 `server_id` 用来选服务器，没做手填地址——实测插件配置里
+   `ServerUrl` / `ManualAddress` / `LocalAddress` / `RemoteAddress` 四档齐全，
+   手填只会增加一个出错点
+3. **播放地址** ⏳ 暂用 `plugin://plugin.service.emby-next-gen/?mode=play&item=…&server=…`，
+   **仍需实机验证**；打不开的退路是 Emby 直链 `{base}/Videos/{Id}/stream?static=true&api_key=…`
+   （代码里 `emby.play_url()` 有注释标明）
 
 ---
 

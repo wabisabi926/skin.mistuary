@@ -7,7 +7,7 @@
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
-| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 要新增运行时脚本能力（服务端搜索、豆瓣评分、代表集标识）前。`script.mistuary.helper` 的皮肤契约、接口与阶段规划 |
+| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 要新增运行时脚本能力（服务端搜索、豆瓣评分、代表集标识）前。**皮肤侧摘要**：调用方式、降级表、版本要求。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
@@ -25,7 +25,7 @@
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
 `script.mistuary.helper`（规划中），都是"装了才启用"的可选增强，没有硬依赖。
-helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
+helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；权威文档在插件仓库 `docs/`。
 
 ---
 

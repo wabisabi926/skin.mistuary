@@ -1,327 +1,120 @@
-# script.mistuary.helper 规划（独立插件）
+# script.mistuary.helper（皮肤侧摘要）
 
-> 状态：**计划中，未实施**。本文是皮肤与插件之间的契约，改代码前先改本文。
-> 皮肤包不能携带 Python（Kodi 限制），所有运行时逻辑走这个独立 addon。
+> **本文是摘要，不是权威。** 实现细节、进度表、测试策略都在插件仓库：
+> `D:\下载\AI\script.mistuary.helper\docs\`
+> （`roadmap.md` / `architecture.md` / `contract.md` / `testing.md`）
+>
+> 本文只写**皮肤需要知道的那部分**：怎么调、怎么退、最低版本。
 
-## 一、为什么需要
+## 定位
 
-皮肤是声明式 XML：不能发 HTTP、不能解析 JSON/HTML、不能把中文转拼音、
-也不能给别的窗口的 ListItem 写属性。文档里已经出现过三处「必须脚本」的需求：
+皮肤包不能携带 Python（Kodi 限制），凡是「发 HTTP / 解析 JSON / 写别人的 ListItem 属性」
+这类 XML 做不到的事，都进这个独立插件。**不再新增第二个 `script.mistuary.*`。**
 
-| 需求 | 出处 | 皮肤侧现状 |
-|---|---|---|
-| 服务端搜索（中文/全拼/模糊） | 本文 §5.1 | 本地 XSP 只能匹配 `contains`，全拼/分词/别名吃不到 |
-| 豆瓣评分 | HANDOVER §5.7 | TMDbHelper 的豆瓣分在 infoproperties，皮肤读不到 |
-| 剧集代表集技术标识 | `techflag-icons-plan.md` §280 | `TvShowRepresentative.*` 分支已留好，无人写入 |
+## 四项功能
 
-后续凡是「皮肤拿不到、算不了」的功能都进这个插件，不再新增第二个 `script.mistuary.*`。
+| # | 功能 | 不装插件时 | 状态 |
+|---|---|---|---|
+| 1 | 服务端搜索（中文 / 全拼 / 别名 / 演员 / 类型） | 本地 XSP（标题 `contains` + 首字母 `startswith`） | 插件侧已完成，**皮肤侧未接** |
+| 2 | 豆瓣评分（详情页胶囊） | 胶囊不显示，其余评分照常 | 未实现 |
+| 3 | 代表集技术标识 | 皮肤自己的 `ListItemAbsolute(0)` 推断，行为不变 | 未实现 |
+| 4 | 行级增强（首页豆瓣角标、节点名整理） | 无影响 | 可选，不排期 |
 
-## 二、命名、仓库、许可
+**明确不做**：常驻 `service.py`、播放代理 / 转码、写 Kodi 库或皮肤设置、自建歌词
+（歌词继续用 `script.cu.lrclyrics`，见 §6）。
 
-- **addon id**：`script.mistuary.helper`（HANDOVER §5.7 已按此名预留）。
-- **仓库**：独立仓库，与皮肤分开发版；皮肤仓库只保留探测与回退逻辑。
-- **许可**：GPL-3.0。豆瓣取分复用 `plugin.video.themoviedb.helper-douban` 的实现
-  （TMDbHelper，GPL-3.0），必须保留版权声明与来源说明。
-- **依赖**：只用 Python 标准库（`urllib` / `json` / `hmac` 等），不打包第三方库。
-
-### 2.1 目录与入口
+## 1. 调用方式
 
 ```
-script.mistuary.helper/
-├── addon.xml            # id=script.mistuary.helper；xbmc.python 3.0.1；provides=video
-├── default.py           # 插件入口：mode=search 返回目录；action=* 执行动作
-├── service.py           # v1 不启用，仅预留
-├── lib/                 # 见 §5.4
-├── resources/
-│   ├── settings.xml     # server_id / page_size / douban_enabled / cache_ttl / debug_log
-│   └── language/...
-└── tests/               # pytest，HTTP 全部 mock
+plugin://script.mistuary.helper/?mode=search&type=movies&query=<搜索词>
+plugin://script.mistuary.helper/?mode=search&type=shows&query=<搜索词>
+RunScript(script.mistuary.helper,action=rating,type=movie,dbid=<id>)     # P1
+RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 ```
 
-设置项（皮肤不读、只由用户在插件设置里改）：
+**`query` 必须是最后一个参数**——插件用 `raw.split("query=", 1)` 取值，
+这样中文、`&`、`?`、`=` 都不会被截断。`#` 会被 Kodi 当锚点截掉，无法绕开。
 
-| 设置 | 类型 | 默认 | 说明 |
-|---|---|---|---|
-| `server_id` | string | 空 | 空 = 取第一个 Emby 服务器 |
-| `page_size` | int | 100 | 单次查询条数 |
-| `douban_enabled` | bool | true | 关掉即不发豆瓣请求 |
-| `cache_ttl` | int | 300 | 搜索缓存秒数；豆瓣固定 7 天 |
-| `debug_log` | bool | false | 打开后写 `kodi.log`，前缀 `MISTUARY.HELPER` |
+## 2. 可选安装：装了就多，不装就少
 
-### 2.2 本地开发循环
-
-1. 仓库 checkout，`python -m pytest` 跑单测（HTTP 全 mock，不依赖 Emby）。
-2. 把目录复制（或目录联接）到 `%APPDATA%\Kodi\addons\script.mistuary.helper`。
-3. 改 `*.py` 无需重启 Kodi（每次调用重新加载）；改 `addon.xml` 或 `resources/` 需重启。
-4. 打开 `debug_log` 后看 `kodi.log`；日志**不打印 token**。
-5. 皮肤侧用 `python tools/sync_to_kodi.py`，插件单独复制，互不覆盖。
-
-### 2.3 安装（用户）
-
-- Releases 下载 `script.mistuary.helper-<ver>.zip` → Kodi「从 zip 安装」。
-- 可选依赖：不装时皮肤搜索回退本地 XSP、不显示豆瓣胶囊，其余功能不受影响。
-
-## 三、与皮肤的契约
-
-| 功能 | 皮肤触点 | 数据方向 | 失败时 |
-|---|---|---|---|
-| 搜索 | 容器内容 `plugin://script.mistuary.helper/?mode=search&type=movies&query=<原始词>` | 插件 → 列表 | 回退现有 XSP |
-| 豆瓣评分 | `RunScript(script.mistuary.helper,action=rating&type=movie&dbid=<id>)`；读 `Window(home).Property(Mistuary.Rating.Douban)` / `.Votes` / `.FetchedAt` | 插件 → 窗口属性 | 属性为空，皮肤不显示 |
-| 代表集标识 | 读 `ListItem.Property(TvShowRepresentative.*)`，已有 include 分支 | 插件 → 列表项 | 属性为空，不显示 |
-| 版本探测 | `System.AddonIsEnabled(script.mistuary.helper)` + `System.AddonVersion(script.mistuary.helper)` | 皮肤 ← 插件 | 视为未安装 |
-
-硬约束：
-
-1. `query` 必须是插件的**最后一个参数**，插件用 `raw.split("query=", 1)[1]` 取值，
-   这样中文、`&`、`?` 不会截断（`#` 除外，属已知限制）。
-2. 插件只读 Emby 配置与 Kodi 库，**不改库、不写皮肤设置**。
-3. 任何失败静默降级，不弹错误框；错误写 `kodi.log` 且**不含 token**。
-
-### 3.1 可选安装：**装了就多，不装就少**（2026-10-29 定）
-
-**可以，而且这是唯一正确的做法。** 皮肤不声明对它的硬依赖，插件缺失时每一项功能都有明确降级，
-不会出现"装了皮肤打不开"或"少个插件就报错"。
-
-| 功能 | 装了插件 | **没装插件**（默认状态） |
+| 功能 | 装了插件 | **没装 / 禁用 / 版本低** |
 |---|---|---|
-| 搜索：中文标题 / 原名 | Emby 服务端，结果与官方 App 一致 | 本地 XSP（`contains` 匹配，够用） |
-| 搜索：首字母（`HZ` / `S`） | 服务端 | 本地 XSP（`startswith`，2026-10-28 已修） |
-| 搜索：**演员 / 导演 / 类型** | ✅ 有 | ❌ **没有**（1.2.0 起本地已移除，只保留标题类） |
-| 搜索：全拼 / 别名 / 分词 | ✅ 有 | ❌ 没有（本地没有分词器） |
-| 详情页豆瓣胶囊 | ✅ 显示 | 整行不显示（评分行其余胶囊照常） |
-| 剧集「代表集」技术标识 | 由插件写属性 | 走皮肤自己的 `ListItemAbsolute(0)` 推断，**行为不变** |
-| 启动 / 播放 / 设置 | 完全不受影响 | 完全不受影响 |
+| 搜索：中文标题 / 原名 | Emby 服务端，与官方 App 一致 | 本地 XSP（`contains`） |
+| 搜索：首字母 | 服务端 | 本地 XSP（`startswith`） |
+| 搜索：演员 / 导演 / 类型 | ✅ | ❌ 没有（1.2.0 起本地已移除） |
+| 搜索：全拼 / 别名 / 分词 | ✅ | ❌ 没有 |
+| 详情页豆瓣胶囊 | ✅ | 整行不显示，其余胶囊照常 |
+| 剧集代表集技术标识 | 插件写属性 | 皮肤自己推断，**行为不变** |
+| 启动 / 播放 / 设置 | 不受影响 | 不受影响 |
 
-**技术实现（皮肤侧）**
+### 四条硬约束
+
+1. **皮肤侧只加分支，不替换**：新条件写进已有 `<variable>`，原来那行无条件 `<value>` 永远留在最后。
+2. 任何分支都必须有"未装"兜底，**兜底是当前已有行为**，不是空白。
+3. 插件返回空 / 报错 / 超时 → 按"没装"处理，**不弹错误框**。
+4. 设置开关 `helper_search` 默认开，但**未装插件时整行隐藏**——别给用户一个拨不动的开关。
+
+### 皮肤侧写法
 
 ```xml
-<!-- 1. 探测：装且启用才算 true。注意是 Enabled 不是 Installed -->
 <expression name="helper_ready">System.AddonIsEnabled(script.mistuary.helper)</expression>
 
-<!-- 2. 搜索路径二选一：服务端优先，本地兜底 -->
 <variable name="NaraSearchMoviesPathVar">
     <value condition="$EXP[helper_ready] + Skin.HasSetting(helper_search)">plugin://script.mistuary.helper/?mode=search&amp;type=movies&amp;query=</value>
-    <value>library://video/movies/...</value>   <!-- 现有 XSP -->
+    <value>library://video/movies/...</value>
 </variable>
 ```
 
-**四条硬约束**
+服务端模式下**不要**给容器加 `sortby="sorttitle"`，否则相关度排序会被覆盖成字母序。
 
-1. **`addon.xml` 不写 `<import addon="script.mistuary.helper"/>`**——写了就变成硬依赖，
-   用户没装插件时整个皮肤加载失败。软探测只用 `System.AddonIsEnabled`。
-2. **任何分支都必须有"未装"的兜底**，且兜底是**当前已有行为**，不是空白。
-3. **插件返回空 / 报错 / 超时**时，皮肤按"没装"处理（属性为空就隐藏，容器空就回退），
-   **不弹错误框**。
-4. **设置开关 `helper_search` 默认开**，但**未装插件时整行隐藏**（`visible=$EXP[helper_ready]`），
-   免得用户看到一个拨不动的开关。
+## 3. 版本契约
 
-**一个必须写进用户文档的坑**：Kodi 的 `<include condition="...">` 和容器的 `<content>`
-都是**加载时求值**的，所以**装完 / 卸载插件后要重载皮肤**（设置 → 界面 → 皮肤 → 重新加载）
-新分支才生效。README 的安装说明里要写明这一句，否则用户会以为插件没起作用。
-
-**版本契约**：皮肤侧读 `System.AddonVersion(script.mistuary.helper)`，低于
-`0.1.0`（阶段 1 的产物）时按"未装"处理——避免用户装了早期测试版却拿到半截数据。
-
-**卸载即回退**：插件可以随时从「我的插件」里删掉，皮肤下一帧就回到"少功能"状态
-（因为探测是每次渲染求值，不是缓存）。这条要写进插件的 README，让用户敢装。
-
-## 四、功能与优先级
-
-| 阶段 | 功能 | 依赖 |
-|---|---|---|
-| P0 | 服务端搜索（电影 / 剧集） | Emby 在线 |
-| P1 | 豆瓣评分（详情页优先） | 网络 + IMDb id |
-| P2 | 剧集代表集技术标识 | Kodi 库或 Emby API |
-| P3（可选） | 行级数据增强（首页/搜索行带豆瓣角标）、动态节点名整理 | 皮肤换数据源 |
-
-### 4.1 功能说明（用户视角）
-
-| 功能 | 用户看到什么 | 前提 |
-|---|---|---|
-| 服务端搜索 | 搜索页输入中文、全拼、别名或演员名，结果与 Emby 官方 App 一致 | Emby 在线；未装插件时仍可用本地 XSP（首字母 / 中文标题） |
-| 豆瓣评分 | 详情页评分行多一颗豆瓣胶囊（分数 + 票数） | 该条目有 IMDb id；7 天缓存 |
-| 剧集代表集标识 | 首页 / 搜索的剧集卡显示当前季首集的分辨率 / HDR / 音轨 | 与详情页现有「代表集」规则一致 |
-
-## 五、详细设计
-
-### 5.0 路由与参数
-
-| 调用 | 参数 | 行为 |
-|---|---|---|
-| `plugin://…/?mode=search` | `type=movies\|shows`，`query`（**最后一个**） | 返回结果目录 |
-| `RunScript(…,action=rating)` | `type=movie\|episode`，`dbid` | 取分并写窗口属性，无 UI |
-| `RunScript(…,action=techflags)` | `dbid` / `season` | 预留（P2） |
-| 无参数 | — | 提示从皮肤进入或跳到插件设置 |
-
-### 5.1 搜索桥
-
-**入口**：`default.py` 解析 `mode=search&type=movies|shows&query=…`。
-
-**服务器发现**：扫描
-`special://profile/addon_data/plugin.service.emby-next-gen/servers_*.json`，
-读取 `ServerId / ServerUrl / LocalAddress / RemoteAddress / AccessToken / UserId`；
-`ServerUrl` 为空时按 `LocalAddress → RemoteAddress` 回退。多服务器时按设置里选中的
-`ServerId`，默认取第一个。
-
-**请求**：
-
-```
-GET {base}/emby/Items
-  ?searchTerm={query}
-  &Recursive=true
-  &IncludeItemTypes=Movie,Series
-  &Fields=ProductionYear,PremiereDate,CommunityRating,Overview,RunTimeTicks,
-          PrimaryImageTag,BackdropImageTags,ProviderIds,UserData
-  &ImageTypeLimit=1&EnableImageTypes=Primary,Backdrop
-  &Limit=100&UserId={UserId}
-Header: X-Emby-Token: {AccessToken}
-超时: 5s
-```
-
-神医助手的中文分词/全拼在服务端生效，这条路径与 Emby 官方 App 等价。
-
-**结果映射**：
-
-| 类型 | ListItem | 路径 |
-|---|---|---|
-| Movie | `setInfo('video', {...})`、`IsPlayable=true` | `plugin://plugin.service.emby-next-gen/?mode=play&item={Id}&server={ServerId}`（插件已支持，`webservice.py:451`） |
-| Series | 文件夹 + 海报/简介 | `plugin://plugin.service.emby-next-gen/?mode=browse&id={Id}&parentid=0&content=tvshows&libraryid=0&query=Series&server={ServerId}`（实现时按插件实测校准） |
-
-- 图片：`{base}/Items/{Id}/Images/Primary?tag={PrimaryImageTag}&maxWidth=400&quality=90&api_key={token}`；
-  无图回退 `DefaultVideo.png`。
-- 已看/进度：`UserData.Played`、`PlaybackPositionTicks`。
-- 排序：按服务端相关度返回，皮肤容器**不要**再按 `sorttitle` 重排（见 §6）。
-
-**分页**：默认 100 条；超出时追加「加载更多」（`offset` 递增）。
-
-**缓存**：key = sha1(`ServerId|type|query`)，TTL 5 分钟，存
-`addon_data/script.mistuary.helper/cache/`，避免容器重绘反复打服务端。
-
-**错误映射**：
-
-| 情况 | 行为 |
-|---|---|
-| `401/403` | 结果里放一条「Emby 登录已失效，请在 Emby 插件重新连接」 |
-| 连接失败/超时 | 一条「Emby 服务端不可达」 |
-| 空结果 | 空列表，皮肤显示现有空态 |
-
-### 5.2 豆瓣评分
-
-**取分方式（采用 `plugin.video.themoviedb.helper-douban` 的方案）**：
-
-- 双通道、按概率分流，失败互备：
-  - Legacy：`POST https://api.douban.com/v2/movie/imdb/{imdbid}` + `apikey`
-  - Frodo：`GET https://frodo.douban.com/api/v2/search/movie?q={imdbid}`，
-    `_sig` = base64(HMAC-SHA1(secret, `GET&{path}&{yyyymmdd}`))，随机 `User-Agent`、
-    固定 `bid` Cookie
-- 归一：`average × 10` 取整（0–100），另存 `numRaters`。
-- 输入：优先 Kodi `uniqueid` 的 imdb，其次 Emby `ProviderIds`；没有 IMDb id 直接返回空。
-
-**缓存**：磁盘 JSON，key = imdb id，TTL **7 天**；失败结果缓存 30 分钟避免反复重试；
-并发上限 1，失败指数退避（1s/2s/4s）。
-
-**皮肤交互**：详情页 `onload` 调 `RunScript(script.mistuary.helper,action=rating&type=movie&dbid=…)`，
-插件写：
-
-```
-Window(home).Property(Mistuary.Rating.Douban)     # 8.6
-Window(home).Property(Mistuary.Rating.Votes)      # 123456
-Window(home).Property(Mistuary.Rating.FetchedAt)  # epoch
-Window(home).Property(Mistuary.Rating.Status)     # ok / missing / error
-```
-
-皮肤只负责显示，不判断来源；`Status != ok` 时隐藏胶囊。
-
-### 5.3 剧集代表集技术标识
-
-- 取「当前季首集」作为代表集（与详情页现有规则一致）。
-- 数据源：库内条目走 Kodi JSON-RPC（`VideoLibrary.GetEpisodes` + `GetItemDetails`）；
-  Emby 动态节点走 `/emby/Items?ParentId=…&IncludeItemTypes=Episode&Limit=1`。
-- 写 `ListItem.Property(TvShowRepresentative.VideoResolution / HdrType / HdrDetail /
-  VideoCodec / AudioCodec / AudioChannels …)`，皮肤已有 include 分支直接生效。
-- 仅对插件自己生成的列表生效；库里的行保持现状（见 §4 P3）。
-
-### 5.4 基础设施（lib/）
-
-| 模块 | 职责 |
-|---|---|
-| `emby.py` | 服务器发现、HTTP 客户端、token 注入、错误映射 |
-| `douban.py` | 双通道取分、签名、限速、缓存 |
-| `kodi.py` | ListItem 构造、属性桥、翻译、日志 |
-| `cache.py` | 磁盘缓存（JSON + TTL + 原子写） |
-| `techflags.py` | 代表集解析与属性拼装 |
-| `default.py` | 路由：`mode=search` / `action=rating` / `action=techflags` |
-
-## 六、皮肤侧改动（含本地搜索修复）
-
-1. **首字母搜索修复（2026-10-28 已实施）**
-   - `sorttitle` 的 operator：`contains` → **`startswith`**。实测：`HZ` 从 14 部降到 4 部，
-     `Z` 从 221 部降到 37 部。
-   - 从快速搜索的 `or` 里**去掉 `actor` / `director` / `genre`**：同一 `or` 只能共用一个
-     operator，拉丁字母查询会把演员名当命中（`Z` 命中 238/742 部、`S` 命中 371/742），
-     而且首字母与人员搜索语义不同。人员/类型搜索交给服务端桥。
-   - 保留 `title` / `originaltitle` 的 `contains`（中文标题、原名靠它）。
-2. **搜索容器**：`NaraSearchMoviesPathVar` / `NaraSearchTVShowsPathVar` 增加
-   `System.AddonIsEnabled(script.mistuary.helper)` 分支（§3 的路径），原 XSP 条件整体退为 fallback。
-   服务端模式下容器不要 `sortby="sorttitle"`，避免把相关度排序覆盖成字母序。
-3. **豆瓣胶囊**：详情页新增一行属性绑定；`Status != ok` 时整行隐藏。
-4. **设置开关**：常规新增「使用 Emby 服务端搜索」（默认开，未装插件时隐藏）。
-
-## 七、实施阶段与验收
-
-| 阶段 | 内容 | 验收 |
-|---|---|---|
-| 0 | 仓库骨架、CI（pytest + zip）、settings、缓存/HTTP/配置 | 可安装，空跑通过 |
-| 1 | 搜索桥 + 皮肤分支 + 回退 | 中文/全拼/别名结果与 Emby 官方 App 抽查一致；未装插件行为不变 |
-| 2 | 豆瓣评分（详情页） | 首屏 ≤ 500ms（命中缓存）；失败静默；7 天缓存生效 |
-| 3 | 代表集标识 | 首页/搜索剧集行显示与详情页一致 |
-| 4（可选） | 行级增强 / 节点名 | 按需另立方案 |
-
-**单集搜索**：v1 只做电影 + 剧集；v1.1 再把单集并入「剧集」页签（带 SxxExx，点击直接播放），
-避免 v1 同时改两套映射与页签逻辑。
-
-**常驻服务**：v1 **不做** `service.py`，纯按需调用 + 磁盘缓存。理由：少一个常驻线程、
-少一类崩溃面、无后台网络；若实测详情页豆瓣首屏 > 1s，再增加「只预取、不轮询」的轻服务。
-
-## 八、测试
-
-- 单测（pytest，HTTP 全 mock）：参数解析（中文/空格/`&`）、服务器选择、错误映射、
-  ListItem 字段、缓存 TTL、豆瓣签名与归一、代表集解析。
-- 静态（皮肤仓库）：`tools/` 新增断言——搜索变量必须同时包含 helper 分支与 XSP 回退；
-  `audit_skin.py` 不受影响。
-- 手工矩阵：Emby 在线/离线、helper 未装/禁用、Kodi 刮削库、中文/全拼/首字母/演员、
-  特殊字符、已看进度、剧集二级页。
-
-## 九、发版与版本契约
-
-- 独立仓库 + GitHub Actions：pytest → 打包 `script.mistuary.helper-<ver>.zip`（排除 `tests/`、`.git*`）
-  → 建 Release 并附 zip 与 changelog。
-- 版本号只在 `addon.xml` 升；同一版本不重复发布（与皮肤发版规则一致）。
-- 皮肤文档列出每个功能要求的最低版本：
-
-| 皮肤功能 | 最低 helper 版本 |
+| 皮肤功能 | 最低插件版本 |
 |---|---|
 | 服务端搜索 | 0.1.0 |
 | 详情页豆瓣 | 0.2.0 |
 | 代表集标识 | 0.3.0 |
 
-- 皮肤不声明硬依赖，只做软探测；插件升级不影响皮肤回退路径。
+低于要求按"未装"处理，避免用户装了早期测试版却拿到半截数据。
 
-## 十、风险与回滚
+## 4. 一个必须写进用户文档的坑
 
-| 风险 | 处置 |
+`<include condition="...">` 和容器的 `<content>` 都是**加载时求值**的。
+所以**装完 / 卸载插件后要重载皮肤**（设置 → 界面 → 皮肤 → 重新加载）才生效。
+不写这句，用户会以为插件没起作用。
+
+卸载后回退是**立即**的（探测每次渲染求值，不是缓存）。
+
+## 5. 当前状态
+
+| 项 | 状态 |
 |---|---|
-| Emby for Kodi 改 `servers_*.json` 结构 | 读取失败即回退，不动用户数据；版本适配写进插件 changelog |
-| 豆瓣接口变更/风控 | 双通道互备 + 失败缓存；持续失败时属性置 `error`，皮肤隐藏 |
-| GPL-3.0 传染 | 插件整体 GPL-3.0，保留 TMDbHelper 版权声明 |
-| Token 泄露 | 只读、不打印、不落缓存文件；日志只记 ServerId 与状态码 |
-| 搜索延迟 | 100 条上限 + 5 分钟缓存 + 超时 5s；必要时降级本地 XSP |
+| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，首个提交 `352e12e` |
+| 已完成 | 骨架 + 搜索桥代码（58 项单测全绿） |
+| 未完成 | **皮肤侧分支未接**、播放地址未实机验证、豆瓣 P1、代表集 P2 |
+| 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper` |
 
-## 附录 A：参考实现
+**皮肤侧一行都还没改**——所以现在装不装插件，搜索行为都一样。
+接分支是 M1b，单独一步，做完立刻验证降级。
 
-- 豆瓣：`plugin.video.themoviedb.helper-douban/resources/tmdbhelper/lib/api/douban/api.py`
-  （legacy + frodo 双通道、HMAC 签名、随机 UA）
-- Emby 路由：`plugin.service.emby-next-gen/hooks/webservice.py`
-  （`mode=search` 见 375 行，`mode=play` 见 451 行）、`emby/views.py`（动态节点路径）
-- 中文搜索增强：`StrmAssistant-mod/decompiled/StrmAssistant/Patch/ChineseSearch.cs`（服务端 FTS 分词）
-- 拼音首字母：`StrmAssistant-mod/decompiled/StrmAssistant/Patch/PinyinSortName.cs`（写 Emby `SortName`）
+## 6. 歌词为什么不进插件
+
+皮肤现在用第三方插件 `script.cu.lrclyrics`（v6.7.6）做歌词，皮肤提供窗口覆盖文件
+`xml/script-cu-lrclyrics-main.xml` 把它的列表放到播放页右侧。
+
+**不重做自建歌词的理由**：
+
+| 用户场景 | 自建桥能做到吗 | CU LRC |
+|---|---|---|
+| 自动下载歌词 | ❌ 要多源搜索 + 鉴权 + 模糊匹配，最难的部分 | ✅ 已做 |
+| 本地同名 `.lrc` | ✅ | ✅ |
+| 内嵌歌词 | ⚠️ 格式多，只覆盖一部分 | ✅ |
+
+最常用的"自动下载"恰恰是自建做不了的那个。而且 Kodi 22-BETA2 上 CU LRC 工作正常
+（`kodi.log` 里 `Window Translator` 错误为 0）。
+
+**唯一风险**：CU LRC 升级改了控件 id（覆盖文件里硬编码了 `list id="110"`），
+或用户换成别的歌词插件——两种情况都是「右侧排版失效、歌词以插件自己的全屏界面出现」，
+**不报错、不影响播放**。
+
+要重做的话，`.lrc` 解析本身只有 100 行，真正贵的是在线搜索，所以**延后没有额外成本**。
