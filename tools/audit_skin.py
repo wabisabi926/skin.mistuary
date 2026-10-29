@@ -3,6 +3,10 @@
 
 用法：
     python tools/audit_skin.py [--verbose] [--strict]
+    python tools/audit_skin.py --orphans    # 反向：盘上有、XML 里没人引用的贴图
+    python tools/audit_skin.py --dead       # 反向：定义了、没人用的变量 / include
+
+`--orphans` / `--dead` 是**报告模式**，永远返回 0（只提示，不进 CI 闸门）。
 
 退出码：发现"硬错误"（XML 解析失败、缺失 include / 变量 / 字体 / 贴图、
 $MAP 缺 Kodi 21 守卫）返回 1；只有软提示（皮肤字符串缺失）返回 0。
@@ -148,6 +152,10 @@ def collect_skin_settings(raw_texts) -> tuple[dict, dict]:
 
 
 def main() -> int:
+    if "--orphans" in sys.argv:
+        return report_orphans()
+    if "--dead" in sys.argv:
+        return report_dead()
     verbose = "--verbose" in sys.argv
     strict = "--strict" in sys.argv
     files = sorted(XML.glob("*.xml"))
@@ -340,6 +348,142 @@ def main() -> int:
         return 1
     if strict and missing_loc:
         return 1
+    return 0
+
+
+# ---------------------------------------------------------------- 反向检查
+# 2026-10-29 补：以前只查"引用了但文件不存在"，不查"文件在但没人用"。
+# media/settings/background.png（1.87 MB）就是这么在包里躺了半个月。
+
+# 贴图路径里的动态段：$PARAM[...] / $INFO[...] / $VAR[...] —— 整族都算被引用
+_DYN = re.compile(r"\$(?:ESC)?(?:PARAM|INFO|VAR|ESCINFO|ESCVAR)\[([^\]]*)\]")
+# Kodi 自带的默认图标（DefaultAddon.png 之类），由 <fallback>/<icon> 隐式引用
+# Kodi 按**文件名**自己去 media/ 找的贴图，XML 里不会出现：
+#   OverlayWatched.png / OverlayHD.png …  → CFileItem::GetOverlayImage()
+#   pointer_arrow.png / pointer_click.png → 鼠标指针
+#   spinner.png（DialogBusy）、defaultgenre.png（Estuary 默认类型图）
+_IMPLICIT = re.compile(
+    r"^(?:Default[A-Za-z0-9]*|Overlay[A-Za-z]*|pointer_[a-z]+|spinner|defaultgenre)\.png$")
+# 任何位置出现的 png 路径（含空格和 & —— genres 里有 "sci-fi & fantasy.png"）
+PATH_RE = re.compile(r"[A-Za-z0-9_\-./ &]+\.png")
+
+
+def _strip_comments(text: str) -> str:
+    return re.sub(r"<!--.*?-->", "", text, flags=re.S)
+
+
+def _texture_refs() -> tuple[set[str], set[str]]:
+    """返回 (字面路径集合, 动态前缀集合)。
+
+    贴图路径不只出现在 `<texture>` 里——`<variable><value>`、`<param value="...">`、
+    itemlayout 的 `<icon>` 都可能写路径，所以这里**整段文本扫**。
+
+    动态写法有三类，都要认：
+      `techflags/color/$PARAM[icon].png`      → 前缀 `techflags/color/`
+      `shapes/glass$PARAM[radius].png`        → 前缀 `shapes/glass`
+      `$INFO[ListItem.Thumb,windows/subtitles/flags/,.png]` → 参数里的 `windows/subtitles/flags/`
+    """
+    literal: set[str] = set()
+    dynamic: set[str] = set()
+    for path in sorted(XML.glob("*.xml")):
+        raw = _strip_comments(path.read_text(encoding="utf-8", errors="replace"))
+        raw = raw.replace("&amp;", "&").replace("\\", "/")
+
+        # ① $INFO/$VAR 参数里的路径片段
+        for args in _DYN.findall(raw):
+            for frag in args.split(","):
+                frag = frag.strip()
+                if "/" in frag and "$" not in frag:
+                    dynamic.add(frag)
+
+        # ② 把 $XXX[...] 整体替换成一个占位符，占位符紧邻的前缀就是动态前缀
+        marked = _DYN.sub("\x00", raw)
+        for m in re.finditer(r"[A-Za-z0-9_\-./ &]+\x00", marked):
+            head = m.group(0)[:-1]
+            if "/" in head and head[0].isalnum() and " " not in head:
+                dynamic.add(head)
+
+        # ③ 剩下的字面路径（占位符已经把动态段切掉了）
+        for s in PATH_RE.findall(marked):
+            s = s.strip()
+            if not s or "\x00" in s:
+                continue
+            if s.startswith("special://skin/"):
+                s = s[len("special://skin/"):]
+            literal.add(s)
+    return literal, dynamic
+
+
+def report_orphans() -> int:
+    literal, dynamic = _texture_refs()
+    lit_lower = {p.lower() for p in literal}
+    names = {p.rsplit("/", 1)[-1].lower() for p in literal}
+    dyn_lower = [d.lower() for d in dynamic if d]
+    orphans: list[tuple[str, int]] = []
+    total = 0
+    for f in sorted(MEDIA.rglob("*.png")):
+        total += 1
+        rel = str(f.relative_to(MEDIA)).replace("\\", "/")
+        low = rel.lower()
+        if low in lit_lower or f.name.lower() in names:
+            continue
+        if _IMPLICIT.match(f.name):
+            continue
+        if any(low.startswith(prefix) for prefix in dyn_lower):
+            continue
+        orphans.append((rel, f.stat().st_size))
+
+    print(f"media 下 PNG {total} 张；XML 里没有任何引用 {len(orphans)} 张"
+          f"（已排除动态前缀 {len(dynamic)} 个、Default*.png；大小写不敏感）")
+    if orphans:
+        size = sum(s for _, s in orphans)
+        print(f"合计 {size / 1024:.1f} KB，按体积排序：")
+        for rel, s in sorted(orphans, key=lambda x: -x[1]):
+            print(f"  {s / 1024:9.1f} KB  {rel}")
+        print("\n确认后可删：`git rm <文件>` + 同步改生成器表 + `python tools/xbt_tool.py pack`")
+    return 0
+
+
+def report_dead() -> int:
+    texts = {p.name: _strip_comments(p.read_text(encoding="utf-8", errors="replace"))
+             for p in sorted(XML.glob("*.xml"))}
+    joined = "\n".join(texts.values())
+    # 定义标签里的名字要去掉，否则每个定义都会把自己算成"被引用"
+    no_def = re.sub(r'<variable\s+name="[^"]+"', "<variable", joined)
+    no_def = re.sub(r'<include\s+name="[^"]+"', "<include", no_def)
+
+    dead_vars = []
+    for p in sorted(XML.glob("*.xml")):
+        for el in ET.parse(p).getroot().iter("variable"):
+            name = el.get("name")
+            if not name:
+                continue
+            # $VAR[X] / $ESCVAR[X] / $VAR[X, fmt] —— 两个坑：ESC 前缀、格式参数
+            if not re.search(r"\$(?:ESC)?VAR\[\s*" + re.escape(name) + r"\s*[,]?[^\]]*\]", joined):
+                dead_vars.append(name)
+
+    dead_incs = []
+    for p in sorted(XML.glob("*.xml")):
+        for el in ET.parse(p).getroot().iter("include"):
+            name = el.get("name")
+            if not name:
+                continue
+            # 三种引用：content="X"、<include>X</include>、$PARAM[...] 间接引用（值里出现名字）
+            if not re.search(r"(?<![\w])" + re.escape(name) + r"(?![\w])", no_def):
+                dead_incs.append(name)
+
+    total_vars = sum(1 for p in sorted(XML.glob("*.xml"))
+                     for el in ET.parse(p).getroot().iter("variable") if el.get("name"))
+    total_incs = sum(1 for p in sorted(XML.glob("*.xml"))
+                     for el in ET.parse(p).getroot().iter("include") if el.get("name"))
+    print(f"变量：定义 {total_vars} 个，没人引用 {len(set(dead_vars))} 个")
+    for n in sorted(set(dead_vars)):
+        print(f"    {n}")
+    print(f"\ninclude：定义 {total_incs} 个，没人引用 {len(set(dead_incs))} 个")
+    for n in sorted(set(dead_incs)):
+        print(f"    {n}")
+    print("\n注意：动态引用（$PARAM[name] 传值、变量套变量）只能按字面匹配，"
+          "删之前逐个确认；`HomeVideoRowNavigation` 那种是活的。")
     return 0
 
 

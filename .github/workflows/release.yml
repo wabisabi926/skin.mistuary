@@ -50,6 +50,14 @@ jobs:
       - name: Static audit
         run: python tools/audit_skin.py --strict
 
+      # 生成器表与盘上产物漂移：--strict 只查"XML 引用的贴图在不在"，
+      # 查不出"表里登记了但没生成"，所以三条 --check 单独跑一遍。
+      - name: Generated textures in sync
+        run: |
+          python tools/gen_corner_masks.py --check
+          python tools/gen_rings.py --check
+          python tools/gen_glass_plates.py --check
+
       - name: Generated variables in sync
         run: python tools/gen_techflag_vars.py --check
 

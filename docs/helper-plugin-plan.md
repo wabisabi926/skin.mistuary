@@ -77,6 +77,54 @@ script.mistuary.helper/
 2. 插件只读 Emby 配置与 Kodi 库，**不改库、不写皮肤设置**。
 3. 任何失败静默降级，不弹错误框；错误写 `kodi.log` 且**不含 token**。
 
+### 3.1 可选安装：**装了就多，不装就少**（2026-10-29 定）
+
+**可以，而且这是唯一正确的做法。** 皮肤不声明对它的硬依赖，插件缺失时每一项功能都有明确降级，
+不会出现"装了皮肤打不开"或"少个插件就报错"。
+
+| 功能 | 装了插件 | **没装插件**（默认状态） |
+|---|---|---|
+| 搜索：中文标题 / 原名 | Emby 服务端，结果与官方 App 一致 | 本地 XSP（`contains` 匹配，够用） |
+| 搜索：首字母（`HZ` / `S`） | 服务端 | 本地 XSP（`startswith`，2026-10-28 已修） |
+| 搜索：**演员 / 导演 / 类型** | ✅ 有 | ❌ **没有**（1.2.0 起本地已移除，只保留标题类） |
+| 搜索：全拼 / 别名 / 分词 | ✅ 有 | ❌ 没有（本地没有分词器） |
+| 详情页豆瓣胶囊 | ✅ 显示 | 整行不显示（评分行其余胶囊照常） |
+| 剧集「代表集」技术标识 | 由插件写属性 | 走皮肤自己的 `ListItemAbsolute(0)` 推断，**行为不变** |
+| 启动 / 播放 / 设置 | 完全不受影响 | 完全不受影响 |
+
+**技术实现（皮肤侧）**
+
+```xml
+<!-- 1. 探测：装且启用才算 true。注意是 Enabled 不是 Installed -->
+<expression name="helper_ready">System.AddonIsEnabled(script.mistuary.helper)</expression>
+
+<!-- 2. 搜索路径二选一：服务端优先，本地兜底 -->
+<variable name="NaraSearchMoviesPathVar">
+    <value condition="$EXP[helper_ready] + Skin.HasSetting(helper_search)">plugin://script.mistuary.helper/?mode=search&amp;type=movies&amp;query=</value>
+    <value>library://video/movies/...</value>   <!-- 现有 XSP -->
+</variable>
+```
+
+**四条硬约束**
+
+1. **`addon.xml` 不写 `<import addon="script.mistuary.helper"/>`**——写了就变成硬依赖，
+   用户没装插件时整个皮肤加载失败。软探测只用 `System.AddonIsEnabled`。
+2. **任何分支都必须有"未装"的兜底**，且兜底是**当前已有行为**，不是空白。
+3. **插件返回空 / 报错 / 超时**时，皮肤按"没装"处理（属性为空就隐藏，容器空就回退），
+   **不弹错误框**。
+4. **设置开关 `helper_search` 默认开**，但**未装插件时整行隐藏**（`visible=$EXP[helper_ready]`），
+   免得用户看到一个拨不动的开关。
+
+**一个必须写进用户文档的坑**：Kodi 的 `<include condition="...">` 和容器的 `<content>`
+都是**加载时求值**的，所以**装完 / 卸载插件后要重载皮肤**（设置 → 界面 → 皮肤 → 重新加载）
+新分支才生效。README 的安装说明里要写明这一句，否则用户会以为插件没起作用。
+
+**版本契约**：皮肤侧读 `System.AddonVersion(script.mistuary.helper)`，低于
+`0.1.0`（阶段 1 的产物）时按"未装"处理——避免用户装了早期测试版却拿到半截数据。
+
+**卸载即回退**：插件可以随时从「我的插件」里删掉，皮肤下一帧就回到"少功能"状态
+（因为探测是每次渲染求值，不是缓存）。这条要写进插件的 README，让用户敢装。
+
 ## 四、功能与优先级
 
 | 阶段 | 功能 | 依赖 |
