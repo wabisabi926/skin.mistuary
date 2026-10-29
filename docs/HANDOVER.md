@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.2.1）
+# 交接说明（Mistuary 1.3.0）
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
@@ -25,13 +25,13 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.1**
-（2026-10-29 已发版，tag `v1.2.1`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.3.0**
+（2026-10-29 发版，tag `v1.3.0`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
 `Textures.xbt` **751 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **59 项**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
-### 2026-10-29 下午（已推送，未发版，版本号仍是 1.2.1）
+### 2026-10-29 下午（随 1.3.0 发布）
 
 | 主题 | 落点 | 提交 |
 |---|---|---|
@@ -779,6 +779,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 系统信息 / 事件日志的底部文字区 | 这两页底部**故意**和 PVR 不一样：`SettingsSystemInfo` 没有"当前项"，底部 y 555–885 被内存/CPU 浮层占用，所以不挂帮助条；`EventLog` 用 `label id=70`（915, h40）+ `textbox id=71`（955, h60）拼成两行，合起来仍占 915–1015 那 100px。**如果希望三页底部完全一致，需要先决定这两页要不要让出那块区域** |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 2026-10-29 已改：`id=60` 轨道 644 → **357**（它服务的是 `textbox id=30`，193→550 高 357；写 644 会让滑块按两屏算比例）。几何回归测试已按页取期望值 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
+| 歌词只对 CU LRC 有内嵌排版 | `xml/script-cu-lrclyrics-main.xml` 里硬编码了 `script.cu.lrclyrics` 的窗口和 `list id="110"`。**两种情况会失效**：① CU LRC 升级改了控件 id；② 用户在设置里换成别的歌词插件。表现是「右侧内嵌排版没了、歌词以插件自己的全屏界面出现」——**不报错、不影响播放**。歌词继续用 CU LRC 而不自建，理由见 `helper-plugin-plan.md` §6（用户最常用的"自动下载歌词"是自建做不了的那部分） |
 | 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型等服务端桥（§8.9）。**已拍板，不要加回来** |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
@@ -809,7 +810,7 @@ git status -sb              # 与远端的关系 + 工作区
 
 | 项 | 值 |
 |---|---|
-| 版本 | `addon.xml` = 1.2.1，`v1.2.1` 已发版 |
+| 版本 | `addon.xml` = 1.3.0，`v1.3.0` 已发版 |
 | 贴图 | `Textures.xbt` 751 张 / 7.2 MB；`media/` 松散 PNG **750 张**（+1 张 jpg） |
 | 打包状态 | `xbt` 与 `media/` 一致（`unpack` 751/751），改过 png 才需要重打包 |
 
@@ -831,6 +832,7 @@ git status -sb              # 与远端的关系 + 工作区
 | v1.0.0 / v1.1.0 / v1.1.1 | 通用版落地、透明度三档、技术标识图标化 |
 | **v1.2.0** | 真圆角（diffuse 遮罩）+ 播放条重排 + 搜索增强 + 主评分四档 |
 | **v1.2.1** | 包体 10.2 → 7.2 MB（清死图）+ 系统信息页滚动条 |
+| **v1.3.0** | 黑胶模式 + 音乐信息页重做 + 电源菜单 + 详情页背景兜底；Kodi 21 标签/导航修复 |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -859,13 +861,15 @@ git status -sb              # 与远端的关系 + 工作区
 | 音乐信息页 v4 | 全幅两栏、452 封面、内置 7/8/10/12 隐藏 + SendClick（§5.8.1） |
 | 详情页背景兜底 | Video/Music/Addon 用 `primary_background_info`；Addon 无 fanart `sc_2`（§5.8.2） |
 
-### 8.4 现在可以直接接着做的三件事
+### 8.4 现在可以直接接着做的两件事
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **外部校验报告 P0/P1** | [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md) | 先定兼容目标（保持 21+ / 只支持 22） |
-| 2 | **`script.mistuary.helper` 阶段 0 + 1** | `docs/helper-plugin-plan.md` + `vinyl-helper-plan.md` §3（骨架清单） | 定仓库位置 / token 来源 / 播放地址形态 |
-| 3 | **Kodi 21 实机验证** | 见 §8.7 | 装 21.2 便携版，验双轨渲染 |
+| 1 | **`script.mistuary.helper` 阶段 0 + 1** | `docs/helper-plugin-plan.md` + `vinyl-helper-plan.md` §3（骨架清单） | 定 token 来源 / 播放地址形态；皮肤侧再接 `$EXP[helper_ready]` |
+| 2 | **Kodi 21 实机验证** | 见 §8.7 | 装 21.2 便携版，验双轨渲染 |
+
+> 外部校验报告的 P0 / P1 / P2 已在 1.3.0 清完，`report-triage-2026-10-29.md`
+> 里剩下的 `<scroll>` 与校验器噪音都是刻意不做的项。
 
 ### 8.5 新接手先跑这五条
 
@@ -877,11 +881,13 @@ python -m unittest discover -s tools -p 'test_*.py'       # 59 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（3 项，都要用户点头）
+### 8.6 待决策（2 项，都要用户点头）
 
-1. **兼容目标**：保持 Kodi 21+（推荐，补 3 个回退点）/ 只支持 Kodi 22 / 冲官方仓库。
-2. **helper 仓库位置**：`D:/下载/AI/script.mistuary.helper/`（独立仓库）可以吗？
-3. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
+1. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
+2. **helper 阶段 1 的播放地址**：返回 Emby 直链还是 `plugin://plugin.video.emby`？
+
+> 兼容目标已定：**保持 Kodi 21+**（方案 A）。1.3.0 已补完 21 回退点，
+> 22 才有的标签继续双轨。
 
 ### 8.7 从没验证过的
 
