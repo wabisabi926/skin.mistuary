@@ -1478,6 +1478,16 @@
 	     取不到图时什么都不会画。这里按 (主标签, 占位图) 组合各建一个变量，
 	     空值时返回占位图。改这里之前先看 docs/skin-contracts.md 附录。 -->
 	<!-- 下面三个给 <include> 的默认参数用（调用点可以直接覆盖） -->
+	<!-- 插件图标兜底：Kodi 不解析 image 上的 <fallback> 子标签（只有
+	     <label fallback="..."> 属性有效），所以缺图标时原来会空白。 -->
+	<variable name="NaraImgAddonBrowserIcon">
+		<value condition="!String.IsEmpty(Container(50).ListItem.Icon)">$INFO[Container(50).ListItem.Icon]</value>
+		<value>DefaultAddon.png</value>
+	</variable>
+	<variable name="NaraImgAddonListItemIcon">
+		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+		<value>DefaultAddon.png</value>
+	</variable>
 	<variable name="NaraImgIconOrFolder">
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultFolder.png</value>

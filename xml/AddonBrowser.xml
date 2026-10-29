@@ -26,8 +26,7 @@
 					<top>0</top>
 					<width>180</width>
 					<height>180</height>
-					<texture>$INFO[Container(50).ListItem.Icon]</texture>
-					<fallback>DefaultAddon.png</fallback>
+					<texture>$VAR[NaraImgAddonBrowserIcon]</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="label">
@@ -112,8 +111,7 @@
 					<top>11</top>
 					<width>52</width>
 					<height>52</height>
-					<texture>$INFO[ListItem.Icon]</texture>
-					<fallback>DefaultAddon.png</fallback>
+					<texture>$VAR[NaraImgAddonListItemIcon]</texture>
 					<aspectratio>keep</aspectratio>
 				</control>
 				<control type="label">
@@ -151,8 +149,7 @@
 					<top>11</top>
 					<width>52</width>
 					<height>52</height>
-					<texture>$INFO[ListItem.Icon]</texture>
-					<fallback>DefaultAddon.png</fallback>
+					<texture>$VAR[NaraImgAddonListItemIcon]</texture>
 					<colordiffuse>$VAR[NaraDialogFocusLayoutTextColor50Var]</colordiffuse>
 					<aspectratio>keep</aspectratio>
 				</control>
