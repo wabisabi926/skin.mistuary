@@ -11,7 +11,6 @@
 	<!-- 兜底 OSD：有歌词时歌词窗口会在它上面再带一份 OSD，两边是同一套 include。
 	     这里先打开 MusicOSD，也能让 CU LRC 的 ACTION_OSD 不再重复开一个 MusicOSD。 -->
 	<onload condition="!Window.IsVisible(musicosd)">ActivateWindow(musicosd)</onload>
-	<onunload>Dialog.Close(script-cu-lrclyrics-main)</onunload>
 	<backgroundcolor>FF000000</backgroundcolor>
 	<controls>
 		<include>NaraMusicPlayerBackground</include>
@@ -190,9 +189,9 @@
 				<top>350</top>
 				<width>800</width>
 				<height>300</height>
-				<!-- 原来这里还判 NaraMusic.LyricsTimed / LyricsText，但这两个属性全皮肤没人写入
-				     （CU LRC 用的是自己的窗口），恒为假/空，等于只判歌词窗口是否打开。已简化。 -->
-				<visible>!Window.IsVisible(script-cu-lrclyrics-main.xml)</visible>
+				<!-- CU LRC 把运行状态写在 home 窗口的 culrc.guirunning；插件窗口名
+				     不在 Kodi 的 WindowTranslator 里，不能用 Window.IsVisible 查。 -->
+				<visible>String.IsEmpty(Window(home).Property(culrc.guirunning))</visible>
 				<include>NaraMusicLyricsFade</include>
 				<control type="grouplist">
 					<width>800</width>

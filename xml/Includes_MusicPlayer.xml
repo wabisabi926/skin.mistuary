@@ -79,7 +79,7 @@
 		<animation effect="fade" start="100" end="0" time="180" tween="sine" easing="out">Hidden</animation>
 	</include>
 	<include name="NaraMusicOSDButton">
-		<param name="lyrics_id">0</param>
+		<param name="ondown">87</param>
 		<definition>
 		<textureradioonfocus colordiffuse="text_primary">$PARAM[texture]</textureradioonfocus>
 		<textureradioonnofocus colordiffuse="text_primary">$PARAM[texture]</textureradioonnofocus>
@@ -96,13 +96,12 @@
 		<radioposx>9</radioposx>
 		<radioposy>9</radioposy>
 		<onup>87</onup>
-		<ondown condition="String.IsEqual($PARAM[lyrics_id],0)">87</ondown>
-		<ondown condition="!String.IsEqual($PARAM[lyrics_id],0)">$PARAM[lyrics_id]</ondown>
+		<ondown>$PARAM[ondown]</ondown>
 		<font />
 		</definition>
 	</include>
 	<include name="NaraMusicOSDButtonPrimary">
-		<param name="lyrics_id">0</param>
+		<param name="ondown">87</param>
 		<definition>
 		<textureradioonfocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonfocus>
 		<textureradioonnofocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonnofocus>
@@ -119,14 +118,13 @@
 		<radioposx>9</radioposx>
 		<radioposy>9</radioposy>
 		<onup>87</onup>
-		<ondown condition="String.IsEqual($PARAM[lyrics_id],0)">87</ondown>
-		<ondown condition="!String.IsEqual($PARAM[lyrics_id],0)">$PARAM[lyrics_id]</ondown>
+		<ondown>$PARAM[ondown]</ondown>
 		<font />
 		</definition>
 	</include>
 
 	<include name="NaraMusicPlayerControls">
-		<param name="lyrics_id">0</param>
+		<param name="ondown">87</param>
 		<definition>
 		<control type="group">
 			<bottom>0</bottom>
@@ -170,8 +168,7 @@
 			<itemgap>48</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
-			<ondown condition="String.IsEqual($PARAM[lyrics_id],0)">87</ondown>
-		<ondown condition="!String.IsEqual($PARAM[lyrics_id],0)">$PARAM[lyrics_id]</ondown>
+			<ondown>$PARAM[ondown]</ondown>
 			<onleft>70049</onleft>
 			<onright>70054</onright>
 				<control type="group">
@@ -181,7 +178,7 @@
 						<onleft>70049</onleft>
 						<onright>602</onright>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/previous.png" />
 						</include>
 						<label>$LOCALIZE[210]</label>
@@ -206,7 +203,7 @@
 						<textureradioonnofocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonnofocus>
 						<textureradioondisabled colordiffuse="66FFFFFF">osd/nara/play.png</textureradioondisabled>
 						<include content="NaraMusicOSDButtonPrimary">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/pause.png" />
 						</include>
 						<label>$LOCALIZE[208]</label>
@@ -222,7 +219,7 @@
 						<onleft>602</onleft>
 						<onright>603</onright>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/next.png" />
 						</include>
 						<label>$LOCALIZE[209]</label>
@@ -237,7 +234,7 @@
 					<onleft>607</onleft>
 					<onright>70054</onright>
 					<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 						<param name="texture" value="osd/nara/stop.png" />
 					</include>
 					<onclick>PlayerControl(Stop)</onclick>
@@ -254,8 +251,7 @@
 			<itemgap>32</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
-			<ondown condition="String.IsEqual($PARAM[lyrics_id],0)">87</ondown>
-		<ondown condition="!String.IsEqual($PARAM[lyrics_id],0)">$PARAM[lyrics_id]</ondown>
+			<ondown>$PARAM[ondown]</ondown>
 			<onleft>603</onleft>
 			<onright>600</onright>
 				<control type="group">
@@ -267,7 +263,7 @@
 						<textureradioonnofocus colordiffuse="$VAR[NaraMusicShuffleColorVar]">osd/nara/shuffle.png</textureradioonnofocus>
 						<textureradiooffnofocus colordiffuse="$VAR[NaraMusicShuffleColorVar]">osd/nara/shuffle.png</textureradiooffnofocus>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/shuffle.png" />
 						</include>
 						<label>$LOCALIZE[590]</label>
@@ -287,7 +283,7 @@
 						<textureradioondisabled colordiffuse="text_disabled">osd/nara/repeat-one.png</textureradioondisabled>
 						<textureradiooffnofocus colordiffuse="$VAR[NaraMusicRepeatColorVar]">osd/nara/repeat.png</textureradiooffnofocus>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/repeat.png" />
 						</include>
 						<label>$LOCALIZE[486]</label>
@@ -303,7 +299,7 @@
 						<onleft>70053</onleft>
 						<onright>70048</onright>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/playlist.png" />
 						</include>
 						<label>$LOCALIZE[559]</label>
@@ -318,7 +314,7 @@
 						<onleft>70051</onleft>
 						<onright>70049</onright>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/settings.png" />
 						</include>
 						<label>$LOCALIZE[13396]</label>
@@ -336,7 +332,7 @@
 						<onleft>70048</onleft>
 						<onright>600</onright>
 						<include content="NaraMusicOSDButton">
-						<param name="lyrics_id" value="$PARAM[lyrics_id]" />
+						<param name="ondown" value="$PARAM[ondown]" />
 							<param name="texture" value="osd/nara/vinyl.png" />
 						</include>
 						<label>$LOCALIZE[31768]</label>

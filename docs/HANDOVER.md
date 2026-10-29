@@ -630,8 +630,9 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
   歌词列表：↑/↓ 仍归 CU LRC 选行/同步，←/→ 聚焦同一窗口的 OSD 播放键。
   OSD 按钮行：←/→ 切按钮，↑ 进度条，↓ 回歌词列表。
   进度条：↑/↓ 回按钮行，←/→ seek；焦点控件是 `slider id=87`。
-  `NaraMusicPlayerControls` 通过 `lyrics_id` 参数决定按钮 ↓ 去 87 还是去歌词列表
-  （MusicOSD 默认 0，歌词窗口传 110）。
+  `NaraMusicPlayerControls` 通过 `ondown` 参数决定按钮 ↓ 去 87 还是去歌词列表
+  （MusicOSD 默认 87，歌词窗口传 110）。**不要改回 `lyrics_id` + 数字条件**：
+  Kodi 会把 `0/110` 当 info 标签，条件不可靠。
   **不要把 `NaraMusicPlayerControls` 塞回播放页**：Kodi 的 `<Visualisation>` 键位把
   ←→ 映射成快退/快进、↑↓ 映射成上一曲/下一曲，放在 visualisation 里的按钮永远
   收不到方向键导航。也不要用 timer 把 OSD 顶在歌词窗口上面——会把歌词上下键锁死。

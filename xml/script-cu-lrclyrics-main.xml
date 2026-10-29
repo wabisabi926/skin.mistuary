@@ -60,7 +60,7 @@
 		<!-- OSD 和歌词放在同一个窗口，焦点可以在两者之间移动；
 		     MusicOSD 只作为没有歌词时的兜底。 -->
 		<include content="NaraMusicPlayerControls">
-			<param name="lyrics_id" value="110" />
+			<param name="ondown" value="110" />
 		</include>
 	</controls>
 </window>
