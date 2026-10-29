@@ -8,7 +8,11 @@
 	     这就是"播放中打开的对话框永远不跟设置"的根因。
 
 	     现在恒为 true：所有对话框、任何时候都走玻璃面（跟随界面透明度），
-	     压画面的问题交给遮蔽层用 scrim_osd（30%）解决，而不是靠不透明面板。 -->
+	     压画面的问题交给遮蔽层用 scrim_osd（30%）解决，而不是靠不透明面板。
+
+	     ⚠️ **所以全皮肤里所有 `!$EXP[nara_dialog_glass]` 分支都是死代码，永远不会执行。**
+	     改对话框时**只改玻璃分支**，别照着旧分支抄一份（22 个文件、约 40 处）。
+	     2026-10-29 已按这个原则删掉电源菜单那一套；其余等有空整体清理。 -->
 	<expression name="nara_dialog_glass">true</expression>
 	<!-- ===== 浮窗遮蔽层 =====
 	     scrim 只负责「底噪」：把底下的画面压到认不出，不参与面板质感。
@@ -120,57 +124,6 @@
 	<include name="NaraDialogLegacyActionTextures">
 		<texturefocus border="40" colordiffuse="focus_surface">buttons/dialogbutton-fo.png</texturefocus>
 		<texturenofocus border="40">buttons/dialogbutton-nofo.png</texturenofocus>
-	</include>
-	<include name="NaraPowerMenuLegacyLayout">
-		<control type="group">
-			<centerleft>50%</centerleft>
-			<width>400</width>
-			<centertop>50%</centertop>
-			<height>700</height>
-			<include content="DialogBackgroundCommons">
-				<param name="width" value="400" />
-				<param name="height" value="80" />
-				<param name="header_label" value="$LOCALIZE[33060]" />
-				<param name="header_id" value="2" />
-				<param name="header_icon_right" value="17" />
-				<param name="header_icon_top" value="17" />
-				<param name="header_icon_size" value="36" />
-			</include>
-			<control type="panel" id="9000">
-				<include>ButtonMenuList</include>
-				<content>
-					<item>
-						<label>$LOCALIZE[13012]</label>
-						<onclick>Quit()</onclick>
-						<visible>System.ShowExitButton</visible>
-					</item>
-					<item>
-						<label>$LOCALIZE[31774]</label>
-						<onclick>Powerdown()</onclick>
-						<visible>System.CanPowerDown</visible>
-					</item>
-					<item>
-						<label>$LOCALIZE[13013]</label>
-						<onclick>Reset()</onclick>
-						<visible>System.CanReboot</visible>
-					</item>
-					<item>
-						<label>$LOCALIZE[13011]</label>
-						<onclick>Suspend()</onclick>
-						<visible>System.CanSuspend</visible>
-					</item>
-					<item>
-						<label>$LOCALIZE[13010]</label>
-						<onclick>Hibernate()</onclick>
-						<visible>System.CanHibernate</visible>
-					</item>
-					<item>
-						<label>$LOCALIZE[20183]</label>
-						<onclick>ReloadSkin()</onclick>
-					</item>
-				</content>
-			</control>
-		</control>
 	</include>
 	<include name="NaraPowerMenuLayout">
 		<control type="image">

@@ -3,7 +3,8 @@
 	<defaultcontrol>9000</defaultcontrol>
 	<include>Animation_DialogPopupOpenClose</include>
 	<controls>
-		<include condition="$EXP[nara_dialog_glass]">NaraPowerMenuLayout</include>
-		<include condition="!$EXP[nara_dialog_glass]">NaraPowerMenuLegacyLayout</include>
+		<!-- 只有玻璃一套：`nara_dialog_glass` 恒为 true，旧版分支是迁移遗留的死代码，
+		     2026-10-29 已删（连同只为它服务的 ButtonMenuList 模板）。 -->
+		<include>NaraPowerMenuLayout</include>
 	</controls>
 </window>

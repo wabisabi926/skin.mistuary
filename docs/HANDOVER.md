@@ -504,7 +504,7 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
 `gen_corner_masks.py` 的 `MASKS` 表已清空（函数保留，只是不再有实色遮盖产物）。
 **新视图一律只写 `DIFFUSE_MASKS`。**
 
-### 5.5 四个反复踩过的坑
+### 5.5 五个反复踩过的坑
 
 1. **`<include condition="X">` 是加载时求值的** —— 按运行时状态切外观只能用
    `<visible>` 或 `$VAR`。曾导致"播放中打开的对话框永远不跟设置"。
@@ -518,6 +518,13 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
    正确做法：用独立的布尔参数（`<param name="xxx_visible">true</param>` +
    `<visible>$PARAM[xxx_visible]</visible>`），或用 `<visible>` 分开写多条。
    **排查时先 `grep "Misplaced\|Error parsing boolean" kodi.log`** —— 一眼就能看到。
+5. **`nara_dialog_glass` 恒为 `true`，所有 `!$EXP[nara_dialog_glass]` 分支都是死代码**
+   —— 这是 2026-10 从"依赖魔改内核"迁到"官方 Kodi 21 通用方案"时留的总开关，
+   现在硬编码成 true，旧分支**永远不会执行**。全皮肤 22 个文件、约 40 处。
+   **改对话框只改玻璃分支，别照着旧分支抄一份**（我自己在电源菜单上就白改了一半）。
+   2026-10-29 已删掉电源菜单那套（`NaraPowerMenuLegacyLayout` + `ButtonMenuList`），
+   其余等有空整体清理。
+
 
 ### 5.6 排查顺序
 
