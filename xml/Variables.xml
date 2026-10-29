@@ -862,7 +862,6 @@
 		<value>$INFO[VideoPlayer.SubtitleLanguageEx]</value>
 	</variable>
 	<variable name="NaraSubtitleFormatVar">
-		<value condition="VideoPlayer.SubtitleIsExternal">$LOCALIZE[31716]$VAR[SubtitleCodecVar, ]</value>
 		<value>$VAR[SubtitleCodecVar]</value>
 	</variable>
 	<variable name="NaraSubtitleDescriptionVar">
