@@ -116,9 +116,6 @@
 	<color name="scrim_sheet">8C000000</color>
 	<color name="scrim_osd">4D000000</color>
 
-	<!-- 文字底板：只垫在列表 / 长文本区，抬局部对比度（深色版） -->
-	<color name="glass_plate">1F000000</color>
-
 	<!-- 实心浅底上的深色文字（目前只有详情页的播放键在用） -->
 	<color name="ink_primary">FF14141A</color>
 

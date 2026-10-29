@@ -15,7 +15,6 @@
 	     后续若改成深色字（ink_primary）再回来把这几行换成白色。 -->
 	<color name="scrim_dialog">8C000000</color>
 	<color name="scrim_sheet">73000000</color>
-	<color name="glass_plate">1A000000</color>
 
 	<!-- ===== 玻璃透明度档位（透白主题专用值）=====
 	     透白主题的可行区间比透黑窄得多：白玻璃越不透明，白色文字越看不见。
