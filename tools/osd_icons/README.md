@@ -1,7 +1,12 @@
 # OSD 图标源文件
 
-这里放 OSD 主控按钮（上一首 / 播放 / 下一首 / 暂停）的 **SVG 源**，
-由 `tools/gen_osd_filled_icons.py` 渲染成 `media/osd/nara/*_filled.png`。
+这里放 OSD 主控按钮（上一首 / 播放 / 下一首 / 暂停）的 **SVG 源**。
+
+> **2026-10-29：生成脚本和产物已删除。** 这四个实心图标做出来之后 OSD 改成了描边方案，
+> 一直没人引用（`grep -rn '_filled' xml/` 零命中），属于死资源。
+> 源 SVG 保留在这里（不随包发布），将来真要做「实心 / 空心两态」按钮时，
+> 从 git 历史恢复 `tools/gen_osd_filled_icons.py` 再跑一次即可：
+> `git log --all --oneline -- tools/gen_osd_filled_icons.py`
 
 | 文件 | 用于 | 说明 |
 |---|---|---|

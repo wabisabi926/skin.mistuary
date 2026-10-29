@@ -291,13 +291,24 @@ class SettingsPageGeometryTest(unittest.TestCase):
                              {"left": "545", "top": "915", "width": "1255", "height": "100"}, name)
 
     def test_scrollbar_track_matches_the_content_rect(self):
-        for name in ("SettingsCategory.xml", "SettingsProfile.xml",
-                     "SettingsSystemInfo.xml", "EventLog.xml"):
+        """轨道高度必须等于**它服务的那个控件**的高度，否则滑块比例是错的。
+
+        三页的列表/分组都是 644 高；`SettingsSystemInfo` 例外——它的滚动条服务的是
+        「捐赠页」那个 `textbox id=30`（193→550，高 357），2026-10-29 之前写 644，
+        滑块按 644 算比例，看起来永远"还有很多内容"。
+        """
+        expect = {
+            "SettingsCategory.xml": "644",
+            "SettingsProfile.xml": "644",
+            "SettingsSystemInfo.xml": "357",
+            "EventLog.xml": "644",
+        }
+        for name, height in expect.items():
             bar = self._find(self._root(name), "scrollbar", "60")
             self.assertIsNotNone(bar, name)
             g = self._geom(bar)
             self.assertEqual((g["left"], g["top"], g["width"], g["height"]),
-                             ("1874", "193", "8", "644"), name)
+                             ("1874", "193", "8", height), name)
 
 
 class SelectionBarRoundingTest(unittest.TestCase):

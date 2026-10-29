@@ -99,11 +99,13 @@
 				<pagecontrol>60</pagecontrol>
 				<autoscroll delay="5000" repeat="7500" time="5000">!Control.HasFocus(60)</autoscroll>
 			</control>
+			<!-- 轨道只跟「捐赠页」那个 textbox（id=30，193→550，高 357）同高。
+			     写 644 会让滑块比例偏小：内容只有 357 高，滑块却按 644 算。 -->
 			<control type="scrollbar" id="60">
 				<left>1874</left>
 				<top>193</top>
 				<width>8</width>
-				<height>644</height>
+				<height>357</height>
 				<orientation>vertical</orientation>
 				<texturesliderbackground />
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
