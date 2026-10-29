@@ -274,7 +274,7 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 |---|---|
 | `LoadTTF: Couldn't load` | **0**（修复前 3525） |
 | `invalid include definition` | **0**（修复前 2，均为 `ChannelManagerList`） |
-| 单元测试 | **42 项全绿** |
+| 单元测试 | **58 项全绿** |
 | `audit_skin.py --strict` | 退出码 **0**；缺失 include/变量/字体/贴图/字符串全 0；皮肤设置 66 读 / 68 写，有读无写 0、有写无读 0 |
 | `gen_techflag_vars.py --check` | 与 map 同步 |
 

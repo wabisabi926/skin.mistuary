@@ -103,12 +103,6 @@ Save-Icon 'process-info' {
   $g.DrawLine($p, 46, 44, 46, 14)
 }
 
-Save-Icon 'video' {
-  param($g, $p)
-  Draw-RoundedRectangle $g $p 13 13 38 38 5
-  Draw-Polyline $g $p ([float[]]@(27, 23, 41, 32, 27, 41, 27, 23))
-}
-
 Save-Icon 'processing' {
   param($g, $p)
   foreach ($entry in @(@(14, 20, 50, 20, 26), @(14, 32, 50, 32, 40), @(14, 44, 50, 44, 31))) {
@@ -127,13 +121,6 @@ Save-Icon 'system' {
     $g.DrawLine($p, 11, $offset, 17, $offset)
     $g.DrawLine($p, 47, $offset, 53, $offset)
   }
-}
-
-Save-Icon 'metadata' {
-  param($g, $p)
-  Draw-Polyline $g $p ([float[]]@(13, 22, 32, 13, 51, 22, 32, 31, 13, 22))
-  Draw-Polyline $g $p ([float[]]@(13, 32, 32, 41, 51, 32))
-  Draw-Polyline $g $p ([float[]]@(13, 42, 32, 51, 51, 42))
 }
 
 Save-Icon 'dolby-vision' {

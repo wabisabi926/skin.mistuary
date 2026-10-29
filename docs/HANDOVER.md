@@ -190,6 +190,7 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `gen_rings.py` | `ring_card_*.png` 描边环（**1:1 整图，不能 9-slice**） |
 | `gen_corner_masks.py` | `mask_*.png` **diffuse 圆角遮罩**（真圆角，见 §5.4.1）。`corner_*.png` 老式实色角部遮盖**已退役**，`MASKS` 表清空 |
 | `gen_techflag_icons.py` | `techflags/color/` 的技术标识图标（含冷门格式白字标兜底），并维护 IconMap；`--check` 供 CI |
+| `scan_rounded.py` | 列「应圆角但没挂 `diffuse`」的控件（A 类内容图）；`--all` 连透明 PNG 一起列 |
 | `gen_osd_filled_icons.py` | OSD 实心功能图标 |
 | `gen_music_cover.py` | 音乐播放页兜底封面（黑胶 + 唱臂） |
 | `generate_nara_cast_icon.py` | 演员图标 |
@@ -641,7 +642,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 ### 8.1 当前 git 状态
 
-- HEAD `efea1ff`（`chore(release): 1.2.0`），工作区干净，与 `origin/main` 同步。
+- HEAD `f71a891`（v1.2.0 之后又推了 1 个文档提交），工作区干净，与 `origin/main` 同步。
 - **v1.2.0 已发布**：Release「Mistuary 1.2.0」，tag 指向 `efea1ff`。
 - 发版后无未提交改动；`media/shapes/` 现有 30 张 diffuse 遮罩、15 张环 + 1 张细边。
 
@@ -706,14 +707,24 @@ python tools/scan_rounded.py --all    # 连透明 PNG 一起列
 ```
 
 
-#### 8.3.2 死贴图（不影响观感，只是包变大）
+#### 8.3.2 死贴图 —— 2026-10-29 已清理
 
-`media/shapes/` 75 张里有 **17 张没有任何 XML 引用**：`glass16/18/28/32/42`、`round42/65`、
-`ring12_3`、`ring_btn_120x70_r35`、`ring_card_250x358_r14`，以及 7 枚生成的环
-（`206x206_r12` / `227x227_r12` / `227x276_r6` / `235x235_r6` / `243x243_r6` /
-`259x315_r6` / `275x331_r11`）。另外 `icons/filemanager.png`、`icons/power.png`、
-`osd/nara/metadata.png`、`osd/nara/video.png` 也没引用。
-清理要同时改 `gen_rings.py` / `gen_glass_plates.py` 的表，否则 `--check` 会报缺。
+删掉 **22 个**零引用贴图，`Textures.xbt` 从 **10.2 MB 降到 7.2 MB（−29%）**：
+
+- `media/settings/background.png`（**1.87 MB**，4.x 时代设置页背景图，改版后没人用）
+- `shapes/` 17 张：`glass16/18/28/32/42`（`NaraDialogGlassTexture` 的 radius 恒 20）、
+  `round42` `round65` `ring12_3` `ring_btn_120x70_r35` `ring_card_250x358_r14`
+  + 7 枚没接上的环（`206x206_r12` `227x227_r12` `227x276_r6` `235x235_r6` `243x243_r6`
+  `259x315_r6` `275x331_r11`）
+- `icons/filemanager.png` `icons/power.png`
+- `osd/nara/metadata.png` `osd/nara/video.png`
+
+生成器表同步收窄：`gen_glass_plates.py` 的 `RADII` 只留 `20`、`gen_rings.py` 的 `RINGS`
+删 7 条（现 8 环 + 1 细边）、`generate_nara_osd_icons.ps1` 删 `video` / `metadata` 两块。
+
+**故意留着没删的 4 张**：`osd/nara/{play,pause,next,previous}_filled.png`（共 13 KB）。
+`gen_osd_filled_icons.py` 的 `--check` 会要它们；删图就得连脚本一起删，
+等于决定"不做实心/空心两态按钮"。**这是个设计取舍，等用户定。**
 
 #### 8.3.3 待决策（要你点头才动）
 

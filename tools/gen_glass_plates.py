@@ -39,7 +39,9 @@ from PIL import Image
 
 # 与 media/shapes/round<N>.png 保持同一套半径，避免 NaraDialogGlassTexture
 # 换了 radius 参数却找不到贴图。
-RADII = (16, 18, 20, 28, 32, 42)
+# 只有 20 在用：NaraDialogGlassTexture 的 radius 参数默认 20、没有调用方覆盖。
+# 其余半径（16/18/28/32/42）2026-10-29 清理时删掉，要加回来在这里补。
+RADII = (20,)
 
 EDGE_ALPHA = 180   # 边缘不透明度（0-255），配 glass_dialog 80% → 约 56%
 CORE_ALPHA = 255   # 中心不透明度，配 glass_dialog 80% → 80%

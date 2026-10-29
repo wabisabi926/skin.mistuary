@@ -1,6 +1,6 @@
 # docs/ 索引
 
-皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 两份历史资料。**
+皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 一份待办 + 两份历史资料。**
 
 | 文件 | 什么时候读 |
 |---|---|
@@ -9,8 +9,9 @@
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
 | [`helper-plugin-plan.md`](helper-plugin-plan.md) | 要新增运行时脚本能力（服务端搜索、豆瓣评分、代表集标识）前。`script.mistuary.helper` 的皮肤契约、接口与阶段规划 |
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
-| [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。96 张图标的覆盖盘点 |
+| [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
+| [`pending-work-plan.md`](pending-work-plan.md) | **还剩什么没做**。发版进度、体积清理、待决策项、`script.mistuary.helper` 规划入口、Kodi 21 实机验证，每条带证据和方案 |
 | [`repo-layout-plan.md`](repo-layout-plan.md) | **历史资料**。2026-10-27 把 `extras/` 归位成素材目录、构建工具移到 `tools/` 的整改记录 |
 
 ---
@@ -29,7 +30,8 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
 ## 一句话速查
 
 - **不透明度**：`colors/defaults.xml` 的 `gl_*` / `sc_*` → `Variables.xml` 的
-  `NaraGlass*TintVar` → 21 处页面 / 25 处浮窗 / 29 处播放中 `colordiffuse`。
+  `NaraGlass*TintVar` → 21 处页面 / 18 处浮窗 / 17 处播放中 `colordiffuse`
+  （另有 15 处设置对话框、16 处遮蔽）。
   三档设置 × 6 档，默认 播放中 60% < 页面 73% < 浮窗 83%。见 HANDOVER §5.3。
 - **圆角（面板）**：玻璃面板只有 `glass20`，选中行只有 `round14`。`border` 只给实心填充。
 - **圆角（图片）**：`<texture diffuse="shapes/mask_<w>x<h>_r<半径>.png">`，
@@ -49,8 +51,10 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
 ```bash
 python tools/audit_skin.py --strict                      # 静态自检，必须 EXIT=0
 python tools/gen_techflag_vars.py --check                # 技术标识变量同步
-python tools/gen_corner_masks.py --check                 # 圆角贴图是否齐全
-python -m unittest discover -s tools -p 'test_*.py'      # 46 项
+python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
+python tools/gen_rings.py --check                        # 焦点环是否齐全（15 环 + 1 细边）
+python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
+python -m unittest discover -s tools -p 'test_*.py'      # 58 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 
