@@ -25,7 +25,7 @@
 				<onright>9000</onright>
 				<onup>24</onup>
 				<ondown>10</ondown>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonInsetTexture</include>
+				<include>NaraDialogButtonInsetTexture</include>
 			</control>
 			<control type="textbox">
 				<description>Search help</description>
@@ -42,11 +42,7 @@
 				<top>210</top>
 				<width>1460</width>
 				<height>740</height>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="grouplist" id="5000">
 				<left>30</left>
@@ -226,7 +222,7 @@
 				<onright>5000</onright>
 				<width>260</width>
 				<orientation>vertical</orientation>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonItemGap</include>
+				<include>NaraDialogButtonItemGap</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="26" />
 					<param name="label" value="$LOCALIZE[137]" />

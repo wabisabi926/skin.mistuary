@@ -21,11 +21,7 @@
 					<width>620</width>
 					<height>620</height>
 					<aspectratio>scale</aspectratio>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogGlassTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="dialogs/dialog-bg-nobo.png" />
-						<param name="shadow" value="true" />
-					</include>
+					<include>NaraDialogGlassTexture</include>
 				</control>
 				<control type="image">
 					<depth>DepthContentPopout</depth>
@@ -56,7 +52,7 @@
 						<onleft>41</onleft>
 						<onright>41</onright>
 						<label></label>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
+						<include>NaraDialogControlTextures</include>
 					</control>
 					<control type="image">
 						<left>-4</left>
@@ -103,8 +99,7 @@
 						<width>720</width>
 						<height>430</height>
 						<label></label>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonInsetTexture</include>
-						<include condition="!$EXP[nara_dialog_glass]">NaraDialogLegacyButtonTexture</include>
+						<include>NaraDialogButtonInsetTexture</include>
 						<onclick>SetProperty(TextViewer_Header,$LOCALIZE[21821],home)</onclick>
 						<onclick>SetProperty(TextViewer_Text,$ESCVAR[MusicInfoTextboxVar],home)</onclick>
 						<onclick condition="[String.IsEqual(ListItem.DbType,song) + !String.IsEmpty(ListItem.Comment)] | [String.IsEqual(ListItem.DbType,album) + !String.IsEmpty(ListItem.Property(Album_Description))] | [String.IsEqual(ListItem.DbType,artist) + !String.IsEmpty(ListItem.Property(Artist_Description))]">ActivateWindow(1102)</onclick>

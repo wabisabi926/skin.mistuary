@@ -518,12 +518,14 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
    正确做法：用独立的布尔参数（`<param name="xxx_visible">true</param>` +
    `<visible>$PARAM[xxx_visible]</visible>`），或用 `<visible>` 分开写多条。
    **排查时先 `grep "Misplaced\|Error parsing boolean" kodi.log`** —— 一眼就能看到。
-5. **`nara_dialog_glass` 恒为 `true`，所有 `!$EXP[nara_dialog_glass]` 分支都是死代码**
-   —— 这是 2026-10 从"依赖魔改内核"迁到"官方 Kodi 21 通用方案"时留的总开关，
-   现在硬编码成 true，旧分支**永远不会执行**。全皮肤 22 个文件、约 40 处。
-   **改对话框只改玻璃分支，别照着旧分支抄一份**（我自己在电源菜单上就白改了一半）。
-   2026-10-29 已删掉电源菜单那套（`NaraPowerMenuLegacyLayout` + `ButtonMenuList`），
-   其余等有空整体清理。
+5. **对话框只有玻璃一套，别再找"旧面"** —— 历史上曾有第二条不透明旧面
+   （`NaraDialogLegacy*`），由 `nara_dialog_glass` 表达式切换。它被废弃有两个原因：
+   ① `<include condition="X">` 是**加载时**求值的，窗口在播放中被加载过一次就永久钉死；
+   ② 旧面 100% 不透明，完全不跟「界面透明度」走。
+   **2026-10-29 已整体清理完毕**：40 处死分支、65 处恒真条件、6 个 `NaraDialogLegacy*`
+   定义、1 张孤儿贴图（`dialogs/dialog-bg.png`）全部删除，表达式本身也删了。
+   现在改对话框**只有一个分支可改**；若在别处看到 `!$EXP[nara_dialog_glass]` 之类的写法，
+   那是历史遗留的注释，不是活代码。
 
 
 ### 5.6 排查顺序

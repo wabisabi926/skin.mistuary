@@ -72,7 +72,7 @@
 				<align>center</align>
 				<onup>9002</onup>
 				<ondown>15</ondown>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonItemGap</include>
+				<include>NaraDialogButtonItemGap</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="18" />
 					<param name="label" value="$LOCALIZE[186]" />

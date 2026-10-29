@@ -32,11 +32,7 @@
 					<top>10</top>
 					<width>672</width>
 					<height>910</height>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="buttons/dialogbutton-nofo.png" />
-						<param name="border" value="40" />
-					</include>
+					<include>NaraDialogInsetTexture</include>
 				</control>
 				<control type="list" id="20">
 					<left>20</left>
@@ -247,7 +243,7 @@
 						<textoffsetx>40</textoffsetx>
 						<align>center</align>
 						<label>$LOCALIZE[19041]</label>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
+						<include>NaraDialogControlTextures</include>
 					</control>
 					<control type="button" id="31">
 						<textcolor>text_primary</textcolor>
@@ -257,7 +253,7 @@
 						<textoffsetx>40</textoffsetx>
 						<align>center</align>
 						<label>$LOCALIZE[19204]</label>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
+						<include>NaraDialogControlTextures</include>
 					</control>
 					<control type="button" id="30">
 						<textcolor>text_primary</textcolor>
@@ -267,7 +263,7 @@
 						<textoffsetx>40</textoffsetx>
 						<align>center</align>
 						<label>$LOCALIZE[19205]</label>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogControlTextures</include>
+						<include>NaraDialogControlTextures</include>
 					</control>
 				</control>
 			</control>

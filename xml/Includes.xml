@@ -1244,7 +1244,7 @@
 					<height>100</height>
 					<orientation>horizontal</orientation>
 					<align>center</align>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonItemGap</include>
+					<include>NaraDialogButtonItemGap</include>
 					<include content="DefaultDialogButton">
 						<param name="id" value="$PARAM[button_id]" />
 						<param name="label" value="$LOCALIZE[15067]" />

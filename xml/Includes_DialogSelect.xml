@@ -17,11 +17,7 @@
 				<top>80</top>
 				<width>920</width>
 				<bottom>2</bottom>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="list" id="3">
 				<left>20</left>
@@ -34,7 +30,7 @@
 				<onright>61</onright>
 				<pagecontrol>61</pagecontrol>
 				<scrolltime>200</scrolltime>
-				<include content="NaraSettingsSimpleListLayout" condition="$EXP[nara_dialog_glass]">
+				<include content="NaraSettingsSimpleListLayout">
 					<param name="width" value="880" />
 					<param name="list_id" value="3" />
 					<param name="selectedcolor" value="focus_indicator" />
@@ -42,14 +38,6 @@
 					<param name="labelright" value="70" />
 					<param name="showselectedmark" value="true" />
 					<param name="focuscolor" value="glass_focus_medium" />
-				</include>
-				<include content="DefaultSimpleListLayout" condition="!$EXP[nara_dialog_glass]">
-					<param name="width" value="880" />
-					<param name="list_id" value="3" />
-					<param name="selectedcolor" value="focus_indicator" />
-					<param name="focusedselectedcolor" value="$VAR[NaraDialogFocusForegroundVar]" />
-					<param name="labelright" value="70" />
-					<param name="showselectedmark" value="true" />
 				</include>
 			</control>
 			<control type="list" id="6">
@@ -380,11 +368,7 @@
 				<top>80</top>
 				<width>970</width>
 				<bottom>2</bottom>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="list" id="3">
 				<left>20</left>

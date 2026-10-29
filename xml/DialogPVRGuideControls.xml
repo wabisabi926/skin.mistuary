@@ -28,10 +28,7 @@
 					<top>0</top>
 					<width>100%</width>
 					<height>100%</height>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogGlassTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="dialogs/dialog-bg-nobo.png" />
-					</include>
+					<include>NaraDialogGlassTexture</include>
 				</control>
 				<control type="group">
 					<left>20</left>

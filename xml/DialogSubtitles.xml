@@ -22,7 +22,7 @@
 						<onright>150</onright>
 						<onleft>73</onleft>
 						<orientation>vertical</orientation>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogButtonItemGap</include>
+						<include>NaraDialogButtonItemGap</include>
 						<include content="DefaultDialogButton">
 							<param name="id" value="160" />
 							<param name="label" value="$LOCALIZE[24120]" />
@@ -74,11 +74,7 @@
 					<top>-20</top>
 					<width>960</width>
 					<height>640</height>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="buttons/dialogbutton-nofo.png" />
-						<param name="border" value="40" />
-					</include>
+					<include>NaraDialogInsetTexture</include>
 				</control>
 				<control type="label">
 					<description>Video label</description>
@@ -239,11 +235,7 @@
 					<top>-20</top>
 					<width>360</width>
 					<height>520</height>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="buttons/dialogbutton-nofo.png" />
-						<param name="border" value="40" />
-					</include>
+					<include>NaraDialogInsetTexture</include>
 				</control>
 				<control type="label">
 					<left>0</left>
@@ -273,19 +265,13 @@
 					<onup>150</onup>
 					<ondown>150</ondown>
 					<scrolltime>200</scrolltime>
-					<include content="NaraSettingsSimpleListLayout" condition="$EXP[nara_dialog_glass]">
+					<include content="NaraSettingsSimpleListLayout">
 						<param name="width" value="320" />
 						<param name="height" value="80" />
 						<param name="list_id" value="150" />
 						<param name="align" value="center" />
 						<param name="focuscolor" value="glass_focus_medium" />
 						<param name="focusedselectedcolor" value="text_primary" />
-					</include>
-					<include content="DefaultSimpleListLayout" condition="!$EXP[nara_dialog_glass]">
-						<param name="width" value="320" />
-						<param name="height" value="80" />
-						<param name="list_id" value="150" />
-						<param name="align" value="center" />
 					</include>
 				</control>
 			</control>

@@ -55,11 +55,7 @@
 					<top>0</top>
 					<width>1040</width>
 					<height>665</height>
-					<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-					<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-						<param name="texture" value="buttons/dialogbutton-nofo.png" />
-						<param name="border" value="40" />
-					</include>
+					<include>NaraDialogInsetTexture</include>
 				</control>
 				<control type="list" id="50">
 					<description>version list</description>

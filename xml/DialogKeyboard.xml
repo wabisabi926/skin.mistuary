@@ -26,11 +26,8 @@
 				<bottom>0</bottom>
 				<width>100%</width>
 				<height>470</height>
-				<include condition="$EXP[nara_dialog_glass]" content="NaraDialogGlassTexture">
+				<include content="NaraDialogGlassTexture">
 					<param name="tint" value="$VAR[NaraGlassFloatTintVar]" />
-				</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="color" value="surface_dialog" />
 				</include>
 			</control>
 			<control type="label" id="311">
@@ -49,10 +46,7 @@
 				<top>184</top>
 				<width>1542</width>
 				<height>100</height>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="color" value="surface_dialog" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="image">
 				<centerleft>50%</centerleft>
@@ -681,10 +675,7 @@
 						<top>0</top>
 						<width>480</width>
 						<height>50</height>
-						<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-						<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-							<param name="color" value="surface_dialog" />
-						</include>
+						<include>NaraDialogInsetTexture</include>
 					</control>
 					<control type="label">
 						<textcolor>text_primary</textcolor>
@@ -704,10 +695,7 @@
 							<top>0</top>
 							<width>480</width>
 							<height>50</height>
-							<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-							<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-								<param name="color" value="surface_dialog" />
-							</include>
+							<include>NaraDialogInsetTexture</include>
 						</control>
 						<control type="image">
 							<left>10</left>

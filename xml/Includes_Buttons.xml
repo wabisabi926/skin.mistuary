@@ -144,11 +144,10 @@
 		<textcolor>text_secondary</textcolor>
 	</include>
 	<include name="SettingsItemCommon">
-		<include condition="$EXP[nara_dialog_glass]" content="NaraSettingsRow">
+		<include content="NaraSettingsRow">
 			<param name="height" value="70" />
 			<param name="focuscolor" value="glass_focus_medium" />
 		</include>
-		<include condition="!$EXP[nara_dialog_glass]">NaraDialogLegacySettingsItem</include>
 	</include>
 	<include name="SettingsLabelCommon">
 		<height>50</height>
@@ -169,13 +168,9 @@
 		<param name="enable">true</param>
 		<definition>
 			<control type="button" id="$PARAM[id]">
-				<include content="NaraDialogButtonDimensions" condition="$EXP[nara_dialog_glass]">
+				<include content="NaraDialogButtonDimensions">
 					<param name="width" value="$PARAM[width]" />
 					<param name="height" value="$PARAM[height]" />
-				</include>
-				<include content="NaraDialogButtonDimensions" condition="!$EXP[nara_dialog_glass]">
-					<param name="width" value="$PARAM[legacy_width]" />
-					<param name="height" value="$PARAM[legacy_height]" />
 				</include>
 				<label>$PARAM[label]</label>
 				<font>$PARAM[font]</font>
@@ -183,8 +178,7 @@
 				<onclick>$PARAM[onclick]</onclick>
 				<wrapmultiline>$PARAM[wrapmultiline]</wrapmultiline>
 				<align>center</align>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogActionTextures</include>
-				<include condition="!$EXP[nara_dialog_glass]">NaraDialogLegacyActionTextures</include>
+				<include>NaraDialogActionTextures</include>
 				<visible>$PARAM[visible]</visible>
 				<enable>$PARAM[enable]</enable>
 			</control>

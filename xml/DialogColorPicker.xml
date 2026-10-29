@@ -20,11 +20,7 @@
 				<top>80</top>
 				<width>920</width>
 				<bottom>2</bottom>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<!-- Color picker panel -->
 			<control type="panel" id="6">

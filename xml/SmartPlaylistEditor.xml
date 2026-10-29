@@ -87,11 +87,7 @@
 				<top>95</top>
 				<width>640</width>
 				<height>530</height>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="list" id="10">
 				<description>Rules List Control</description>
@@ -102,15 +98,11 @@
 				<onleft>500</onleft>
 				<onright>9001</onright>
 				<orientation>vertical</orientation>
-				<include content="NaraSettingsSimpleListLayout" condition="$EXP[nara_dialog_glass]">
+				<include content="NaraSettingsSimpleListLayout">
 					<param name="width" value="600" />
 					<param name="list_id" value="10" />
 					<param name="focuscolor" value="glass_focus_medium" />
 					<param name="focusedselectedcolor" value="text_primary" />
-				</include>
-				<include content="DefaultSimpleListLayout" condition="!$EXP[nara_dialog_glass]">
-					<param name="width" value="600" />
-					<param name="list_id" value="10" />
 				</include>
 			</control>
 			<control type="textbox">

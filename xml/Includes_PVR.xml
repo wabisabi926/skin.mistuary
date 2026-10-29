@@ -202,11 +202,7 @@
 				<top>55</top>
 				<width>486</width>
 				<height>855</height>
-				<include condition="$EXP[nara_dialog_glass]">NaraDialogInsetTexture</include>
-				<include condition="!$EXP[nara_dialog_glass]" content="NaraDialogLegacyTexture">
-					<param name="texture" value="buttons/dialogbutton-nofo.png" />
-					<param name="border" value="40" />
-				</include>
+				<include>NaraDialogInsetTexture</include>
 			</control>
 			<control type="list" id="$PARAM[list_id]">
 				<left>20</left>
