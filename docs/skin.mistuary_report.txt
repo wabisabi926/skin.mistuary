@@ -4,29 +4,27 @@ KODI SKIN VALIDATION REPORT
 
 Skin:      skin.mistuary
 Path:      D:\下载\AI\skin.mistuary
-Generated: 2026-10-29 12:49:49
-Total:     445 errors, 458 warnings
+Generated: 2026-10-29 16:44:06
+Total:     456 errors, 448 warnings
 
 --------------------------------------------------------------------------------
 Category                    Errors   Warnings
 --------------------------------------------------------------------------------
-File Integrity                  91         43
-Fonts                            0          3
-IDs                            106          3
+File Integrity                  88         43
+Fonts                            0          4
+IDs                            101          3
 Images                           0          1
 Kodi Repo                        0          9
-Labels                           0          2
+Labels                           0          3
 Maps                             1          0
-XML Validation                 247        397
+Variables                        9          0
+XML Validation                 257        385
 --------------------------------------------------------------------------------
 
 
 ============================================================
- FILE INTEGRITY (134 issues)
+ FILE INTEGRITY (131 issues)
 ============================================================
-
-  .workbuddy-ai\memory\MEMORY.md
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   README.md
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
@@ -35,6 +33,9 @@ XML Validation                 247        397
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   changelog.txt
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  docs\HANDOVER.md
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   docs\README.md
@@ -58,7 +59,25 @@ XML Validation                 247        397
   docs\scratch\README.md
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
+  docs\scratch\make_music_mockup.py
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  docs\scratch\make_music_mockup_v3.py
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  docs\scratch\make_music_mockup_v4.py
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
   docs\skin-contracts.md
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  docs\skin.mistuary_report.txt
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  language\resource.language.en_gb\strings.po
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  language\resource.language.zh_cn\strings.po
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   libraryart\内地剧.jpg
@@ -271,12 +290,6 @@ XML Validation                 247        397
   xml\DialogButtonMenu.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\DialogColorPicker.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\DialogConfirm.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
   xml\DialogExtendedProgressBar.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
@@ -284,9 +297,6 @@ XML Validation                 247        397
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\DialogGameControllers.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\DialogMediaSource.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\DialogMusicInfo.xml
@@ -298,19 +308,7 @@ XML Validation                 247        397
   xml\DialogPVRChannelGuide.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\DialogPVRChannelManager.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
   xml\DialogPVRChannelsOSD.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\DialogPVRGroupManager.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\DialogPVRGuideControls.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\DialogPVRGuideSearch.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\DialogPVRRadioRDSInfo.xml
@@ -325,19 +323,10 @@ XML Validation                 247        397
   xml\DialogSettings.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\DialogSubtitles.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
   xml\DialogTextViewer.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\DialogVideoManager.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
   xml\DialogVolumeBar.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\FileBrowser.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\GameOSD.xml
@@ -358,7 +347,7 @@ XML Validation                 247        397
   xml\Includes_MusicBackground.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\Includes_MusicInfo.xml
+  xml\Includes_MusicPlayer.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\Includes_Search.xml
@@ -368,6 +357,12 @@ XML Validation                 247        397
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\LoginScreen.xml
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  xml\MusicOSD.xml
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
+  xml\MusicVisualisation.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
   xml\MyGames.xml
@@ -397,12 +392,6 @@ XML Validation                 247        397
   xml\SlideShow.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
-  xml\SmartPlaylistEditor.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
-  xml\SmartPlaylistRule.xml
-    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
-
   xml\Startup.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
@@ -427,30 +416,27 @@ XML Validation                 247        397
   xml\View_55_WideList.xml
     ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
 
+  xml\script-cu-lrclyrics-main.xml
+    ERROR    line 0     Windows line endings (CRLF), which Kodi repo review rejects; save the file with LF
+
 
 ============================================================
- FONTS (3 issues)
+ FONTS (4 issues)
 ============================================================
 
   xml\Font.xml
     WARNING  line 76    Unused font definition: 'font23_narrow'
+    WARNING  line 93    Unused font definition: 'font27_narrow'
     WARNING  line 141   Unused font definition: 'font_clock'
     WARNING  line 238   Unused font definition: 'font_MainMenu'
 
 
 ============================================================
- IDS (109 issues)
+ IDS (104 issues)
 ============================================================
 
-  xml\DialogMusicInfo.xml
-    ERROR    line 418   Control ID 155 not defined in DialogMusicInfo.xml's scope
-    ERROR    line 420   Control ID 5000 not defined in DialogMusicInfo.xml's scope
-    ERROR    line 420   Control ID 210 not defined
-    ERROR    line 421   Control ID 5000 not defined in DialogMusicInfo.xml's scope
-    ERROR    line 421   Control ID 138 not defined in DialogMusicInfo.xml's scope
-
   xml\DialogPVRInfo.xml
-    ERROR    line 137   Control ID 50 not defined in DialogPVRInfo.xml's scope
+    ERROR    line 128   Control ID 50 not defined in DialogPVRInfo.xml's scope
 
   xml\DialogSelect.xml
     ERROR    line 8     Window name not recognized by Kodi: dialogselectvideo
@@ -464,16 +450,16 @@ XML Validation                 247        397
     ERROR    line 16    Window name not recognized by Kodi: dialogselectsubtitle
 
   xml\DialogVideoManager.xml
-    ERROR    line 71    Control ID 9001 not defined in DialogVideoManager.xml's scope
+    ERROR    line 67    Control ID 9001 not defined in DialogVideoManager.xml's scope
 
   xml\Includes.xml
-    WARNING  line 382   Window id 10025 works, but its name videos is preferred
+    WARNING  line 381   Window id 10025 works, but its name videos is preferred
 
   xml\Includes_Animations.xml
     WARNING  line 43    Window id 12016 works, but its name selectvideoextra is preferred
 
   xml\MusicVisualisation.xml
-    ERROR    line 12    Window name not recognized by Kodi: script-cu-lrclyrics-main
+    ERROR    line 14    Window name not recognized by Kodi: script-cu-lrclyrics-main
 
   xml\MyPVRProviders.xml
     ERROR    line 4     Window name not recognized by Kodi: RadioProviders
@@ -485,7 +471,12 @@ XML Validation                 247        397
     ERROR    line 141   Control ID 1000 not defined in PlayerControls.xml's scope
 
   xml\Variables.xml
-    WARNING  line 1200  Window id 10502 works, but its name music is preferred
+    WARNING  line 1195  Window id 10502 works, but its name music is preferred
+    ERROR    line 1220  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1221  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1222  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1223  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1224  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1225  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1226  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1227  Window name not recognized by Kodi: dialogselectvideo
@@ -505,11 +496,11 @@ XML Validation                 247        397
     ERROR    line 1241  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1242  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1243  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1244  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1245  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1246  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1247  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1248  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1244  Window name not recognized by Kodi: dialogselectaudio
+    ERROR    line 1245  Window name not recognized by Kodi: dialogselectaudio
+    ERROR    line 1246  Window name not recognized by Kodi: dialogselectaudio
+    ERROR    line 1247  Window name not recognized by Kodi: dialogselectaudio
+    ERROR    line 1248  Window name not recognized by Kodi: dialogselectaudio
     ERROR    line 1249  Window name not recognized by Kodi: dialogselectaudio
     ERROR    line 1250  Window name not recognized by Kodi: dialogselectaudio
     ERROR    line 1251  Window name not recognized by Kodi: dialogselectaudio
@@ -547,11 +538,11 @@ XML Validation                 247        397
     ERROR    line 1283  Window name not recognized by Kodi: dialogselectaudio
     ERROR    line 1284  Window name not recognized by Kodi: dialogselectaudio
     ERROR    line 1285  Window name not recognized by Kodi: dialogselectaudio
-    ERROR    line 1286  Window name not recognized by Kodi: dialogselectaudio
-    ERROR    line 1287  Window name not recognized by Kodi: dialogselectaudio
-    ERROR    line 1288  Window name not recognized by Kodi: dialogselectaudio
-    ERROR    line 1289  Window name not recognized by Kodi: dialogselectaudio
-    ERROR    line 1290  Window name not recognized by Kodi: dialogselectaudio
+    ERROR    line 1286  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1287  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1288  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1289  Window name not recognized by Kodi: dialogselectvideo
+    ERROR    line 1290  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1291  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1292  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1293  Window name not recognized by Kodi: dialogselectvideo
@@ -565,11 +556,6 @@ XML Validation                 247        397
     ERROR    line 1301  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1302  Window name not recognized by Kodi: dialogselectvideo
     ERROR    line 1303  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1304  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1305  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1306  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1307  Window name not recognized by Kodi: dialogselectvideo
-    ERROR    line 1308  Window name not recognized by Kodi: dialogselectvideo
 
 
 ============================================================
@@ -613,8 +599,11 @@ XML Validation                 247        397
 
 
 ============================================================
- LABELS (2 issues)
+ LABELS (3 issues)
 ============================================================
+
+  xml\DialogMusicInfo.xml
+    WARNING  line 83    Label in <label> not translated: MUSIC INFO  ·  音乐信息
 
   xml\DialogPlayerProcessInfo.xml
     WARNING  line 300   Label in <label> not translated: RPU / BL / EL:
@@ -632,7 +621,23 @@ XML Validation                 247        397
 
 
 ============================================================
- XML VALIDATION (644 issues)
+ VARIABLES (9 issues)
+============================================================
+
+  xml\Variables.xml
+    ERROR    line 1360  Unused variable: FocusLayoutTextColor10Var
+    ERROR    line 1368  Unused variable: FocusLayoutTextColor12Var
+    ERROR    line 1372  Unused variable: FocusLayoutTextColor13Var
+    ERROR    line 1376  Unused variable: FocusLayoutTextColor20Var
+    ERROR    line 1437  Unused variable: FocusLayoutTextColor120Var
+    ERROR    line 1441  Unused variable: FocusLayoutTextColor450Var
+    ERROR    line 1445  Unused variable: FocusLayoutTextColor451Var
+    ERROR    line 1449  Unused variable: FocusLayoutTextColor9010Var
+    ERROR    line 1453  Unused variable: FocusLayoutTextColor9000Var
+
+
+============================================================
+ XML VALIDATION (642 issues)
 ============================================================
 
   xml\AddonBrowser.xml
@@ -693,10 +698,10 @@ XML Validation                 247        397
     WARNING  line 80    invalid tag for <default type=spincontrol>: <pulseonselect>
 
   xml\DialogAddonInfo.xml
-    WARNING  line 37    Redundant <itemgap>: same value as <default type="grouplist">
-    WARNING  line 68    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 294   Redundant <textureradioondisabled>: same value as <default type="radiobutton">
-    WARNING  line 295   Redundant <textureradiooffdisabled>: same value as <default type="radiobutton">
+    WARNING  line 57    Redundant <itemgap>: same value as <default type="grouplist">
+    WARNING  line 88    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 314   Redundant <textureradioondisabled>: same value as <default type="radiobutton">
+    WARNING  line 315   Redundant <textureradiooffdisabled>: same value as <default type="radiobutton">
 
   xml\DialogAddonSettings.xml
     WARNING  line 50    Redundant <textcolor>: same value as <default type="button">
@@ -705,11 +710,11 @@ XML Validation                 247        397
     WARNING  line 133   Redundant <orientation>: same value as <default type="scrollbar">
 
   xml\DialogColorPicker.xml
-    WARNING  line 58    Redundant <aspectratio>: same value as <default type="image">
-    WARNING  line 79    Redundant <aspectratio>: same value as <default type="image">
-    WARNING  line 91    Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 94    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 99    Redundant <align>: same value as <default type="label">
+    WARNING  line 54    Redundant <aspectratio>: same value as <default type="image">
+    WARNING  line 75    Redundant <aspectratio>: same value as <default type="image">
+    WARNING  line 87    Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 90    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 95    Redundant <align>: same value as <default type="label">
 
   xml\DialogConfirm.xml
     WARNING  line 18    Redundant <textcolor>: same value as <default type="textbox">
@@ -719,101 +724,86 @@ XML Validation                 247        397
     WARNING  line 61    Redundant <textcolor>: same value as <default type="button">
 
   xml\DialogKeyboard.xml
-    WARNING  line 37    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 71    Redundant <aligny>: same value as <default type="edit">
-    WARNING  line 89    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 97    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 105   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 113   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 121   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 129   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 137   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 145   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 153   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 161   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 169   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 177   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 185   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 201   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 208   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 215   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 222   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 229   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 236   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 243   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 250   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 257   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 264   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 271   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 278   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 285   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 300   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 307   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 314   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 321   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 328   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 335   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 342   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 349   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 356   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 363   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 370   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 377   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 384   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 399   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 406   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 413   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 420   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 427   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 434   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 441   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 448   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 455   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 462   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 469   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 476   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 483   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 498   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 516   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 535   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 553   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 570   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 588   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 606   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 690   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 735   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 760   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 34    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 65    Redundant <aligny>: same value as <default type="edit">
+    WARNING  line 83    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 91    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 99    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 107   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 115   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 123   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 131   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 139   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 147   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 155   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 163   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 171   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 179   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 195   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 202   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 209   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 216   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 223   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 230   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 237   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 244   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 251   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 258   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 265   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 272   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 279   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 294   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 301   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 308   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 315   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 322   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 329   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 336   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 343   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 350   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 357   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 364   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 371   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 378   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 393   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 400   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 407   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 414   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 421   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 428   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 435   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 442   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 449   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 456   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 463   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 470   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 477   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 492   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 510   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 529   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 547   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 564   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 582   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 600   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 681   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 723   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 748   Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogMediaSource.xml
     WARNING  line 18    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 90    Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 124   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 142   Redundant <aligny>: same value as <default type="edit">
+    WARNING  line 86    Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 120   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 138   Redundant <aligny>: same value as <default type="edit">
 
   xml\DialogMusicInfo.xml
-    WARNING  line 81    Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 97    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 134   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 168   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 188   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 212   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 250   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 261   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 334   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 369   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 412   Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 424   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 438   invalid tag for <control type=image>: <align>
-    WARNING  line 443   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 506   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 537   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 544   Redundant <scroll>: same value as <default type="label">
-    ERROR    line 587   Kodi has no info 'MusicPlayer.BMP', so $INFO[MusicPlayer.BMP] shows only its prefix (from include 'MediaFlag')  (from include: MediaFlag)
-    ERROR    line 587   Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
-    ERROR    line 587   Kodi has no info 'MusicPlayer.BMP', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
+    WARNING  line 59    Redundant <aspectratio>: same value as <default type="image">
+    WARNING  line 67    Redundant <aspectratio>: same value as <default type="image">
+    WARNING  line 91    invalid tag for <control type=grouplist>: <aligny>
+    WARNING  line 387   Redundant <font>: same value as <default type="button">
+    WARNING  line 389   Redundant <aligny>: same value as <default type="button">
 
   xml\DialogNotification.xml
-    WARNING  line 31    Redundant <aspectratio>: same value as <default type="image">
+    WARNING  line 27    Redundant <aspectratio>: same value as <default type="image">
 
   xml\DialogNumeric.xml
     WARNING  line 26    Redundant <textcolor>: same value as <default type="label">
@@ -841,76 +831,83 @@ XML Validation                 247        397
 
   xml\DialogPVRChannelManager.xml
     WARNING  line 28    Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 81    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 77    Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogPVRGroupManager.xml
-    ERROR    line 71    Kodi has no info 'ListItem.PVRGroupOrigin', so $INFO[ListItem.PVRGroupOrigin] shows nothing
-    ERROR    line 114   Kodi has no info 'ListItem.PVRGroupOrigin', so $INFO[ListItem.PVRGroupOrigin] shows nothing
-    WARNING  line 140   Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 247   Redundant <textcolor>: same value as <default type="label">
+    ERROR    line 67    Kodi has no info 'ListItem.PVRGroupOrigin', so $INFO[ListItem.PVRGroupOrigin] shows nothing
+    ERROR    line 110   Kodi has no info 'ListItem.PVRGroupOrigin', so $INFO[ListItem.PVRGroupOrigin] shows nothing
+    WARNING  line 136   Redundant <orientation>: same value as <default type="scrollbar">
+    ERROR    line 185   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 193   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 201   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 209   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 211   Invalid multiple tags for control: <radiowidth>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 219   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    ERROR    line 227   Invalid multiple tags for control: <font>, ignored because include 'NaraSettingsRow' sets it first
+    WARNING  line 243   Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogPVRGuideControls.xml
     WARNING  line 11    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 40    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 57    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 66    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 75    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 85    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 94    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 103   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 114   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 127   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 144   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 153   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 164   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 178   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 195   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 205   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 214   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 37    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 54    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 63    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 72    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 82    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 91    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 100   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 111   Redundant <textcolor>: same value as <default type="textbox">
+    WARNING  line 124   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 141   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 150   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 161   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 175   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 192   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 202   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 211   Redundant <textcolor>: same value as <default type="radiobutton">
 
   xml\DialogPVRGuideSearch.xml
-    WARNING  line 60    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 68    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 83    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 98    Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 113   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 121   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 129   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 167   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 182   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 190   Redundant <textcolor>: same value as <default type="radiobutton">
-    WARNING  line 212   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 56    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 64    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 79    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 94    Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 109   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 117   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 125   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 163   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 178   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 186   Redundant <textcolor>: same value as <default type="radiobutton">
+    WARNING  line 208   Redundant <textcolor>: same value as <default type="radiobutton">
 
   xml\DialogPVRInfo.xml
     WARNING  line 26    Redundant <aspectratio>: same value as <default type="image">
-    WARNING  line 37    invalid tag for <control type=image>: <aligny>
-    ERROR    line 40    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    WARNING  line 46    invalid tag for <control type=image>: <aligny>
-    ERROR    line 49    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    WARNING  line 56    invalid tag for <control type=image>: <aligny>
-    ERROR    line 58    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    ERROR    line 67    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    ERROR    line 76    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    ERROR    line 85    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
-    WARNING  line 96    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 118   invalid tag for <control type=image>: <aligny>
-    WARNING  line 127   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 33    invalid tag for <control type=image>: <aligny>
+    ERROR    line 36    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    WARNING  line 42    invalid tag for <control type=image>: <aligny>
+    ERROR    line 45    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    WARNING  line 52    invalid tag for <control type=image>: <aligny>
+    ERROR    line 54    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    ERROR    line 63    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    ERROR    line 72    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    ERROR    line 81    Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    WARNING  line 92    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 113   invalid tag for <control type=image>: <aligny>
+    WARNING  line 118   Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 136   Redundant <textcolor>: same value as <default type="textbox">
     WARNING  line 146   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 156   Redundant <textcolor>: same value as <default type="textbox">
-    ERROR    line 182   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
-    ERROR    line 182   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
-    ERROR    line 182   Kodi has no info 'ListItem.PVRClientName', so String.IsEmpty always reads true (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
-    ERROR    line 188   Kodi has no info 'ListItem.MediaProviders', so $INFO[ListItem.MediaProviders] shows nothing (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
-    ERROR    line 188   Kodi has no info 'ListItem.MediaProviders', so String.IsEmpty always reads true (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
-    ERROR    line 366   Kodi has no info 'MusicPlayer.BMP', so $INFO[MusicPlayer.BMP] shows only its prefix (from include 'MediaFlag')  (from include: MediaFlag)
-    ERROR    line 366   Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
-    ERROR    line 366   Kodi has no info 'MusicPlayer.BMP', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
-    WARNING  line 380   Redundant <textcolor>: same value as <default type="label">
+    ERROR    line 172   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
+    ERROR    line 172   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
+    ERROR    line 172   Kodi has no info 'ListItem.PVRClientName', so String.IsEmpty always reads true (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
+    ERROR    line 178   Kodi has no info 'ListItem.MediaProviders', so $INFO[ListItem.MediaProviders] shows nothing (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
+    ERROR    line 178   Kodi has no info 'ListItem.MediaProviders', so String.IsEmpty always reads true (from include 'InfoDialogMetadata')  (from include: InfoDialogMetadata)
+    ERROR    line 356   Kodi has no info 'MusicPlayer.BMP', so $INFO[MusicPlayer.BMP] shows only its prefix (from include 'MediaFlag')  (from include: MediaFlag)
+    ERROR    line 356   Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
+    ERROR    line 356   Kodi has no info 'MusicPlayer.BMP', so String.IsEmpty always reads true (from include 'MediaFlag')  (from include: MediaFlag)
+    WARNING  line 370   Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogPictureInfo.xml
-    WARNING  line 68    Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 96    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 117   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 60    Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 88    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 109   Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogPlayerProcessInfo.xml
     WARNING  line 72    Redundant <itemgap>: same value as <default type="grouplist">
@@ -939,17 +936,17 @@ XML Validation                 247        397
     ERROR    line 195   Kodi has no info 'Player.Bookmarks', so <info> reads nothing; a label shows its <label> instead
 
   xml\DialogSlider.xml
-    WARNING  line 36    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 39    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 84    Redundant <textcolor>: same value as <default type="button">
-    WARNING  line 98    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 32    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 35    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 80    Redundant <textcolor>: same value as <default type="button">
+    WARNING  line 94    Redundant <textcolor>: same value as <default type="button">
 
   xml\DialogSubtitles.xml
     WARNING  line 36    Redundant <textcolor>: same value as <default type="label">
     WARNING  line 58    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 141   Redundant <textcolor>: same value as <default type="textbox">
-    WARNING  line 231   Redundant <orientation>: same value as <default type="scrollbar">
-    WARNING  line 257   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 137   Redundant <textcolor>: same value as <default type="textbox">
+    WARNING  line 227   Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 249   Redundant <textcolor>: same value as <default type="label">
 
   xml\DialogTextViewer.xml
     WARNING  line 17    Redundant <textcolor>: same value as <default type="textbox">
@@ -976,7 +973,7 @@ XML Validation                 247        397
 
   xml\DialogVideoManager.xml
     ERROR    line 37    Kodi has no info 'Container(50).ListItem.DecodedFileNameAndPath', so $INFO[Container(50).ListItem.DecodedFileNameAndPath] shows nothing
-    WARNING  line 84    Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 80    Redundant <orientation>: same value as <default type="scrollbar">
 
   xml\EventLog.xml
     WARNING  line 103   Redundant <textcolor>: same value as <default type="label">
@@ -997,9 +994,9 @@ XML Validation                 247        397
     WARNING  line 233   Redundant <textcolor>: same value as <default type="label">
 
   xml\FileBrowser.xml
-    WARNING  line 95    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 155   Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 201   Redundant <orientation>: same value as <default type="scrollbar">
+    WARNING  line 91    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 151   Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 197   Redundant <orientation>: same value as <default type="scrollbar">
 
   xml\FileManager.xml
     WARNING  line 34    Redundant <aspectratio>: same value as <default type="image">
@@ -1108,37 +1105,37 @@ XML Validation                 247        397
     WARNING  line 1390  Redundant <aligny>: same value as <default type="button">
 
   xml\Includes.xml
-    WARNING  line 242   invalid tag for <control type=image>: <aligny>
-    WARNING  line 250   invalid tag for <control type=image>: <aligny>
-    WARNING  line 307   invalid tag for <control type=image>: <aligny>
-    WARNING  line 315   invalid tag for <control type=image>: <aligny>
+    WARNING  line 241   invalid tag for <control type=image>: <aligny>
+    WARNING  line 249   invalid tag for <control type=image>: <aligny>
+    WARNING  line 306   invalid tag for <control type=image>: <aligny>
+    WARNING  line 314   invalid tag for <control type=image>: <aligny>
 
   xml\Includes_Buttons.xml
-    ERROR    line 183   <onclick> is empty where a call passes no onclick; give the onclick param a default of noop (include 'DefaultDialogButton', in 13 windows)  (from include: DefaultDialogButton)
+    ERROR    line 178   <onclick> is empty where a call passes no onclick; give the onclick param a default of noop (include 'DefaultDialogButton', in 13 windows)  (from include: DefaultDialogButton)
 
   xml\Includes_DialogSelect.xml
-    WARNING  line 82    invalid tag for <control type=image>: <aligny>
-    WARNING  line 92    invalid tag for <control type=image>: <aligny>
-    WARNING  line 140   invalid tag for <control type=image>: <aligny>
-    WARNING  line 150   invalid tag for <control type=image>: <aligny>
-    WARNING  line 416   invalid tag for <control type=fixedlist>: <startmovement>
-    WARNING  line 417   invalid tag for <control type=fixedlist>: <endmovement>
-    WARNING  line 418   invalid tag for <control type=fixedlist>: <aligny>
-    WARNING  line 427   invalid tag for <control type=image>: <aligny>
-    WARNING  line 456   invalid tag for <control type=image>: <align>
-    WARNING  line 476   invalid tag for <control type=image>: <aligny>
-    WARNING  line 510   invalid tag for <control type=image>: <align>
-    WARNING  line 511   invalid tag for <control type=image>: <aligny>
-    WARNING  line 615   invalid tag for <control type=fixedlist>: <startmovement>
-    WARNING  line 616   invalid tag for <control type=fixedlist>: <endmovement>
-    WARNING  line 617   invalid tag for <control type=fixedlist>: <aligny>
-    WARNING  line 831   invalid tag for <control type=fixedlist>: <startmovement>
-    WARNING  line 832   invalid tag for <control type=fixedlist>: <endmovement>
-    WARNING  line 833   invalid tag for <control type=fixedlist>: <aligny>
-    WARNING  line 1045  invalid tag for <control type=image>: <aligny>
-    WARNING  line 1055  invalid tag for <control type=image>: <aligny>
-    WARNING  line 1103  invalid tag for <control type=image>: <aligny>
-    WARNING  line 1113  invalid tag for <control type=image>: <aligny>
+    WARNING  line 70    invalid tag for <control type=image>: <aligny>
+    WARNING  line 80    invalid tag for <control type=image>: <aligny>
+    WARNING  line 128   invalid tag for <control type=image>: <aligny>
+    WARNING  line 138   invalid tag for <control type=image>: <aligny>
+    WARNING  line 400   invalid tag for <control type=fixedlist>: <startmovement>
+    WARNING  line 401   invalid tag for <control type=fixedlist>: <endmovement>
+    WARNING  line 402   invalid tag for <control type=fixedlist>: <aligny>
+    WARNING  line 411   invalid tag for <control type=image>: <aligny>
+    WARNING  line 440   invalid tag for <control type=image>: <align>
+    WARNING  line 460   invalid tag for <control type=image>: <aligny>
+    WARNING  line 494   invalid tag for <control type=image>: <align>
+    WARNING  line 495   invalid tag for <control type=image>: <aligny>
+    WARNING  line 599   invalid tag for <control type=fixedlist>: <startmovement>
+    WARNING  line 600   invalid tag for <control type=fixedlist>: <endmovement>
+    WARNING  line 601   invalid tag for <control type=fixedlist>: <aligny>
+    WARNING  line 815   invalid tag for <control type=fixedlist>: <startmovement>
+    WARNING  line 816   invalid tag for <control type=fixedlist>: <endmovement>
+    WARNING  line 817   invalid tag for <control type=fixedlist>: <aligny>
+    WARNING  line 1029  invalid tag for <control type=image>: <aligny>
+    WARNING  line 1039  invalid tag for <control type=image>: <aligny>
+    WARNING  line 1087  invalid tag for <control type=image>: <aligny>
+    WARNING  line 1097  invalid tag for <control type=image>: <aligny>
 
   xml\Includes_Home.xml
     ERROR    line 68    invalid integer value for min: 100% (include 'HomeVideoGroupListCommon', in 1 window)  (from include: HomeVideoGroupListCommon)
@@ -1148,14 +1145,14 @@ XML Validation                 247        397
     ERROR    line 4     Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
     WARNING  line 90    invalid tag for <control type=image>: <aligny>
     WARNING  line 99    invalid tag for <control type=image>: <aligny>
-    ERROR    line 251   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
-    ERROR    line 251   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
-    ERROR    line 289   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
-    ERROR    line 289   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
-    ERROR    line 488   Kodi has no info 'ListItem.MediaProviders', so $INFO[ListItem.MediaProviders] shows only its prefix (include 'PVRInfoPanel', in 5 windows)  (from include: PVRInfoPanel)
-    WARNING  line 626   invalid tag for <control type=epggrid>: <minspertimeblock>
-    ERROR    line 804   Kodi has no info 'PVR.ClientName', so $INFO[PVR.ClientName] shows nothing (include 'PVRBackendDiskspace', in 1 window)  (from include: PVRBackendDiskspace)
-    ERROR    line 804   Kodi has no info 'PVR.InstanceName', so $INFO[PVR.InstanceName] shows only its prefix (include 'PVRBackendDiskspace', in 1 window)  (from include: PVRBackendDiskspace)
+    ERROR    line 247   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
+    ERROR    line 247   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
+    ERROR    line 285   Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows nothing (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
+    ERROR    line 285   Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix (include 'ChannelManagerList', in 1 window)  (from include: ChannelManagerList)
+    ERROR    line 484   Kodi has no info 'ListItem.MediaProviders', so $INFO[ListItem.MediaProviders] shows only its prefix (include 'PVRInfoPanel', in 5 windows)  (from include: PVRInfoPanel)
+    WARNING  line 622   invalid tag for <control type=epggrid>: <minspertimeblock>
+    ERROR    line 800   Kodi has no info 'PVR.ClientName', so $INFO[PVR.ClientName] shows nothing (include 'PVRBackendDiskspace', in 1 window)  (from include: PVRBackendDiskspace)
+    ERROR    line 800   Kodi has no info 'PVR.InstanceName', so $INFO[PVR.InstanceName] shows only its prefix (include 'PVRBackendDiskspace', in 1 window)  (from include: PVRBackendDiskspace)
 
   xml\Includes_PlayerProcessInfo.xml
     WARNING  line 194   invalid tag for <control type=image>: <align>
@@ -1181,10 +1178,15 @@ XML Validation                 247        397
     WARNING  line 307   invalid tag for <control type=image>: <align>
     WARNING  line 308   invalid tag for <control type=image>: <aligny>
 
+  xml\MusicOSD.xml
+    ERROR    line 8     Kodi has no info '0', so String.IsEqual reads it as empty text (from include 'NaraMusicPlayerControls')  (from include: NaraMusicPlayerControls)
+    ERROR    line 8     Kodi has no info '0', so String.IsEqual reads it as empty text (from include 'NaraMusicOSDButton')  (from include: NaraMusicOSDButton)
+    ERROR    line 8     Kodi has no info '0', so String.IsEqual reads it as empty text (from include 'NaraMusicOSDButtonPrimary')  (from include: NaraMusicOSDButtonPrimary)
+
   xml\MusicVisualisation.xml
-    WARNING  line 26    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 47    Redundant <textcolor>: same value as <default type="label">
-    WARNING  line 164   Redundant <align>: same value as <default type="grouplist">
+    WARNING  line 27    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 48    Redundant <textcolor>: same value as <default type="label">
+    WARNING  line 165   Redundant <align>: same value as <default type="grouplist">
 
   xml\MyFavourites.xml
     ERROR    line 13    Kodi has no info 'Container(50).ListItem.HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(50).ListItem.HdrDetail] maps an empty value (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
@@ -1199,16 +1201,16 @@ XML Validation                 247        397
     ERROR    line 13    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
 
   xml\MyMusicNav.xml
-    ERROR    line 12    Kodi has no info 'Container(50).ListItem.HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(50).ListItem.HdrDetail] maps an empty value (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
-    ERROR    line 12    Kodi has no info 'Container(50).ListItem.HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(50).ListItem.HdrDetail, ] maps an empty value (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
-    ERROR    line 12    Kodi has no info 'Container(50).ListItem.HdrDetail', so $INFO[Container(50).ListItem.HdrDetail] shows only its prefix (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
-    ERROR    line 12    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(5101).ListItemAbsolute(0).HdrDetail] maps an empty value (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
-    ERROR    line 12    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(5101).ListItemAbsolute(0).HdrDetail, ] maps an empty value (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
-    ERROR    line 12    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $INFO[Container(5101).ListItemAbsolute(0).HdrDetail] shows only its prefix (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
-    ERROR    line 12    Kodi has no info 'Container(50).ListItem.HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
-    ERROR    line 12    Kodi has no info 'Container(50).ListItem.HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
-    ERROR    line 12    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
-    ERROR    line 12    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(50).ListItem.HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(50).ListItem.HdrDetail] maps an empty value (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
+    ERROR    line 16    Kodi has no info 'Container(50).ListItem.HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(50).ListItem.HdrDetail, ] maps an empty value (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(50).ListItem.HdrDetail', so $INFO[Container(50).ListItem.HdrDetail] shows only its prefix (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(5101).ListItemAbsolute(0).HdrDetail] maps an empty value (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
+    ERROR    line 16    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $MAP[NaraTechnicalDolbyVisionProfileTextMap,Container(5101).ListItemAbsolute(0).HdrDetail, ] maps an empty value (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so $INFO[Container(5101).ListItemAbsolute(0).HdrDetail] shows only its prefix (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(50).ListItem.HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
+    ERROR    line 16    Kodi has no info 'Container(50).ListItem.HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
+    ERROR    line 16    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalIconPill')  (from include: NaraTechnicalIconPill)
+    ERROR    line 16    Kodi has no info 'Container(5101).ListItemAbsolute(0).HdrDetail', so String.IsEmpty always reads true (from include 'NaraTechnicalTextPill')  (from include: NaraTechnicalTextPill)
 
   xml\MyMusicPlaylistEditor.xml
     WARNING  line 86    Redundant <orientation>: same value as <default type="scrollbar">
@@ -1331,33 +1333,38 @@ XML Validation                 247        397
 
   xml\Variables.xml
     WARNING  line 14    Value $INFO[Control.GetLabel(312).index(1)] in this plugin URL is the text typed into an edit control, which no skin label can URL-encode, so typing 'Law & Order' reaches the add-on cut short and + turns into a space; only a helper add-on that encodes it as it is typed avoids that
-    ERROR    line 81    Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
-    ERROR    line 865   Kodi has no info 'VideoPlayer.SubtitleName', so $INFO[VideoPlayer.SubtitleName] shows nothing
-    ERROR    line 865   Kodi has no info 'VideoPlayer.SubtitleName', so String.IsEmpty always reads true
-    ERROR    line 867   Kodi has no info 'VideoPlayer.SubtitleLanguageEx', so $INFO[VideoPlayer.SubtitleLanguageEx] shows nothing
-    ERROR    line 870   Kodi has no info 'VideoPlayer.SubtitleIsExternal', it always reads false
-    ERROR    line 907   Kodi has no info 'VideoPlayer.EpisodePart', so String.IsEmpty always reads true
-    ERROR    line 908   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
-    ERROR    line 908   Kodi has no info 'VideoPlayer.EpisodePart', so String.IsEmpty always reads true
-    ERROR    line 928   Kodi has no info 'ListItem.EpisodePart', so $INFO[ListItem.EpisodePart] shows only its prefix
-    ERROR    line 929   Kodi has no info 'ListItem.EpisodePart', so $INFO[ListItem.EpisodePart] shows only its prefix
+    ERROR    line 76    Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
+    ERROR    line 860   Kodi has no info 'VideoPlayer.SubtitleName', so $INFO[VideoPlayer.SubtitleName] shows nothing
+    ERROR    line 860   Kodi has no info 'VideoPlayer.SubtitleName', so String.IsEmpty always reads true
+    ERROR    line 862   Kodi has no info 'VideoPlayer.SubtitleLanguageEx', so $INFO[VideoPlayer.SubtitleLanguageEx] shows nothing
+    ERROR    line 865   Kodi has no info 'VideoPlayer.SubtitleIsExternal', it always reads false
+    ERROR    line 902   Kodi has no info 'VideoPlayer.EpisodePart', so String.IsEmpty always reads true
+    ERROR    line 903   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
+    ERROR    line 903   Kodi has no info 'VideoPlayer.EpisodePart', so String.IsEmpty always reads true
+    ERROR    line 923   Kodi has no info 'ListItem.EpisodePart', so $INFO[ListItem.EpisodePart] shows only its prefix
+    ERROR    line 924   Kodi has no info 'ListItem.EpisodePart', so $INFO[ListItem.EpisodePart] shows only its prefix
+    ERROR    line 924   Kodi has no info 'ListItem.EpisodePart', so String.IsEmpty always reads true
+    ERROR    line 929   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
     ERROR    line 929   Kodi has no info 'ListItem.EpisodePart', so String.IsEmpty always reads true
-    ERROR    line 934   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
-    ERROR    line 934   Kodi has no info 'ListItem.EpisodePart', so String.IsEmpty always reads true
-    ERROR    line 940   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
-    ERROR    line 941   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
-    ERROR    line 943   Kodi has no info 'VideoPlayer.TitleExtraInfo', so $INFO[VideoPlayer.TitleExtraInfo] shows nothing
-    ERROR    line 983   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows only its prefix
-    ERROR    line 983   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
-    ERROR    line 983   Kodi has no info 'ListItem.TitleExtraInfo', so String.StartsWith reads it as empty text
-    ERROR    line 984   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
-    ERROR    line 984   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
-    ERROR    line 991   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows only its prefix
-    ERROR    line 991   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
-    ERROR    line 991   Kodi has no info 'ListItem.TitleExtraInfo', so String.StartsWith reads it as empty text
-    ERROR    line 992   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
-    ERROR    line 992   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
-    ERROR    line 1009  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEmpty always reads true
+    ERROR    line 935   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
+    ERROR    line 936   Kodi has no info 'VideoPlayer.EpisodePart', so $INFO[VideoPlayer.EpisodePart] shows only its prefix
+    ERROR    line 938   Kodi has no info 'VideoPlayer.TitleExtraInfo', so $INFO[VideoPlayer.TitleExtraInfo] shows nothing
+    ERROR    line 978   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows only its prefix
+    ERROR    line 978   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
+    ERROR    line 978   Kodi has no info 'ListItem.TitleExtraInfo', so String.StartsWith reads it as empty text
+    ERROR    line 979   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
+    ERROR    line 979   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
+    ERROR    line 986   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows only its prefix
+    ERROR    line 986   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
+    ERROR    line 986   Kodi has no info 'ListItem.TitleExtraInfo', so String.StartsWith reads it as empty text
+    ERROR    line 987   Kodi has no info 'ListItem.TitleExtraInfo', so $INFO[ListItem.TitleExtraInfo] shows nothing
+    ERROR    line 987   Kodi has no info 'ListItem.TitleExtraInfo', so String.IsEmpty always reads true
+    ERROR    line 1004  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEmpty always reads true
+    ERROR    line 1199  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
+    ERROR    line 1200  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
+    ERROR    line 1201  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
+    ERROR    line 1202  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
+    ERROR    line 1203  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
     ERROR    line 1204  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
     ERROR    line 1205  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
     ERROR    line 1206  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
@@ -1371,17 +1378,12 @@ XML Validation                 247        397
     ERROR    line 1214  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
     ERROR    line 1215  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
     ERROR    line 1216  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1217  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1218  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1219  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1220  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1221  Kodi has no info 'VideoPlayer.SubtitleCodec', so String.IsEqual reads it as empty text
-    ERROR    line 1222  Kodi has no info 'VideoPlayer.SubtitleCodec', so $INFO[VideoPlayer.SubtitleCodec] shows nothing
-    ERROR    line 1345  Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows only its prefix
-    ERROR    line 1345  Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix
-    ERROR    line 1345  Kodi has no info 'PVR.ClientCount', so Integer.IsGreater reads it as 0
-    ERROR    line 1524  Kodi has no info 'ListItem.ChannelLogo', so $INFO[ListItem.ChannelLogo] shows nothing
-    ERROR    line 1524  Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
+    ERROR    line 1217  Kodi has no info 'VideoPlayer.SubtitleCodec', so $INFO[VideoPlayer.SubtitleCodec] shows nothing
+    ERROR    line 1340  Kodi has no info 'ListItem.PVRClientName', so $INFO[ListItem.PVRClientName] shows only its prefix
+    ERROR    line 1340  Kodi has no info 'ListItem.PVRInstanceName', so $INFO[ListItem.PVRInstanceName] shows only its prefix
+    ERROR    line 1340  Kodi has no info 'PVR.ClientCount', so Integer.IsGreater reads it as 0
+    ERROR    line 1515  Kodi has no info 'ListItem.ChannelLogo', so $INFO[ListItem.ChannelLogo] shows nothing
+    ERROR    line 1515  Kodi has no info 'ListItem.ChannelLogo', so String.IsEmpty always reads true
 
   xml\VideoFullScreen.xml
     WARNING  line 11    Redundant <label>: same value as <default type="label">
@@ -1426,6 +1428,11 @@ XML Validation                 247        397
     WARNING  line 373   invalid tag for <control type=image>: <aligny>
     WARNING  line 381   invalid tag for <control type=image>: <align>
     WARNING  line 382   invalid tag for <control type=image>: <aligny>
+
+  xml\script-cu-lrclyrics-main.xml
+    ERROR    line 62    Kodi has no info '110', so String.IsEqual reads it as empty text (from include 'NaraMusicPlayerControls')  (from include: NaraMusicPlayerControls)
+    ERROR    line 62    Kodi has no info '110', so String.IsEqual reads it as empty text (from include 'NaraMusicOSDButton')  (from include: NaraMusicOSDButton)
+    ERROR    line 62    Kodi has no info '110', so String.IsEqual reads it as empty text (from include 'NaraMusicOSDButtonPrimary')  (from include: NaraMusicOSDButtonPrimary)
 
 ================================================================================
 END OF REPORT
