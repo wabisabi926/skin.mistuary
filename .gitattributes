@@ -1,0 +1,11 @@
+# 统一 LF：Kodi 官方仓库的提交规范要求 LF 行尾，外部校验器按这个规范检查，
+# 本机 core.autocrlf=true 会把工作区检出成 CRLF，于是每次扫都报 91 条假阳性。
+# 索引里本来就是 LF（git ls-files --eol 全是 i/lf），这里把检出也固定成 LF。
+* text=auto eol=lf
+
+# 二进制：不要做行尾转换
+*.png   binary
+*.jpg   binary
+*.xbt   binary
+*.ttf   binary
+*.pyc   binary
