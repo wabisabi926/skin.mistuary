@@ -914,7 +914,8 @@
 				     于是播放中打开的对话框全部走死板，完全不跟设置。
 				     另外 `<include condition>` 是**加载时**求值的（GUIIncludes::ResolveIncludes），
 				     一旦窗口在播放中被加载过，这个分支就永久固定，运行时再也不会切回来。
-				     所以直接删掉分支，永远走玻璃面。 -->
+				     所以直接删掉分支，永远走玻璃面。
+				     （`NaraDialogSolidSurface` 这个 include 定义本身也已在 2026-10-29 的死代码清理中删除。） -->
 				<include content="NaraDialogGlassSurface">
 					<param name="style" value="$PARAM[glass_style]" />
 				</include>

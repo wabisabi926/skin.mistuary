@@ -41,6 +41,13 @@ MAPS = {
 }
 
 
+# 只给这两个 map 生成 $VAR 变量 —— 皮肤里只有 OSD 用它们。
+# 其余 3 个 map（分辨率 / 杜比视界 / 视频编码）仍然定义在
+# Includes_VideoTechnicalFlags.xml 里、被 $MAP[...] 直接引用，
+# **不要从 MAPS 里删**，删了 OSD 会空。
+EMIT_VAR_FOR = {"NaraTechnicalHdrTextMap", "NaraTechnicalAudioCodecTextMap"}
+
+
 def load_maps() -> dict[str, list[tuple[str, str]]]:
     root = ET.parse(SRC).getroot()
     return {
@@ -55,7 +62,7 @@ def render(maps: dict[str, list[tuple[str, str]]]) -> str:
     out = [BEGIN]
     for map_name, (infix, label) in MAPS.items():
         entries = maps.get(map_name)
-        if not entries:
+        if not entries or map_name not in EMIT_VAR_FOR:
             continue
         out.append(f'\t<variable name="NaraTech{infix}Player">')
         seen: set[str] = set()

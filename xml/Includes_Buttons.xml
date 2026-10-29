@@ -201,24 +201,6 @@
 		<font>font45</font>
 		<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
 	</include>
-	<include name="PlaylistWindowButton">
-		<param name="width">100%</param>
-		<definition>
-			<control type="button" id="$PARAM[control_id]">
-				<width>$PARAM[width]</width>
-				<height>110</height>
-				<align>left</align>
-				<aligny>top</aligny>
-				<texturefocus colordiffuse="focus_surface" border="14">shapes/round14.png</texturefocus>
-				<texturenofocus />
-				<textoffsetx>40</textoffsetx>
-				<textoffsety>35</textoffsety>
-				<label>$PARAM[label]</label>
-				<onclick>$PARAM[onclick]</onclick>
-				<selectedcolor>selection_foreground</selectedcolor>
-			</control>
-		</definition>
-	</include>
 	<include name="IconButton">
 		<param name="width">56</param>
 		<param name="height">56</param>

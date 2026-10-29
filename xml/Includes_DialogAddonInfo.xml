@@ -101,8 +101,4 @@
 			</control>
 		</definition>
 	</include>
-	<include name="NaraAddonInfoGlassBackground">
-		<!-- 通用版：官方 Kodi 的 grouplist 不支持 texturebackground，
-		     背景已改由 DialogAddonInfo.xml 中的独立 image 控件绘制。 -->
-	</include>
 </includes>

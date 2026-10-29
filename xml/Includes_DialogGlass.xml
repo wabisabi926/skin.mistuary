@@ -121,22 +121,6 @@
 		<texturefocus border="40" colordiffuse="focus_surface">buttons/dialogbutton-fo.png</texturefocus>
 		<texturenofocus border="40">buttons/dialogbutton-nofo.png</texturenofocus>
 	</include>
-	<include name="NaraDialogSolidSurface">
-		<control type="image">
-			<left>0</left>
-			<top>0</top>
-			<right>0</right>
-			<height>70</height>
-			<texture colordiffuse="surface_dialog_header">colors/white.png</texture>
-		</control>
-		<control type="image">
-			<left>0</left>
-			<top>70</top>
-			<right>0</right>
-			<bottom>0</bottom>
-			<texture colordiffuse="surface_dialog">colors/white.png</texture>
-		</control>
-	</include>
 	<include name="NaraPowerMenuLegacyLayout">
 		<control type="group">
 			<centerleft>50%</centerleft>
