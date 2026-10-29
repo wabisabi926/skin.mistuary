@@ -336,6 +336,25 @@ Python 两个（`unittest`，纯逻辑校验，CI 也会跑）：
 判据：`System.BuildVersion` 以 `21` 开头 → `$EXP[nara_kodi21]`。
 OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer`。
 
+**Kodi 22-only 清单（跑外部校验器时先看这里，别当成 bug 修）：**
+
+| 类型 | 名称 | 21 上的表现 |
+|---|---|---|
+| 窗口名 | `dialogselectvideo` / `dialogselectaudio` / `dialogselectsubtitle`（12300–12302） | 条件恒假，走兜底分支 |
+| 窗口名 | `RadioProviders`（10713） | 同上 |
+| 标签 | `HdrDetail` / `TitleExtraInfo` / `EpisodePart` / `MediaProviders` / `Bookmarks` | 空，多数有 `!String.IsEmpty` 保护 |
+| 标签 | `SubtitleCodec` / `SubtitleName` / `AudioLanguageEx` | 字幕编码、音轨语言缺失；音轨语言已用 `$VAR[NaraAudioLanguageVar]` 回退到 `VideoPlayer.AudioLanguage` |
+| 标签 | `VideoStreamCount` / `PVRClientName` / `PVRInstanceName` / `PVRGroupOrigin` / `PVR.ClientCount` | 已分别改用 `HasVideoVersions` 或接受为空 |
+| 标签 | `ListItem.ChannelLogo` / `ListItem.DecodedFileNameAndPath` | 版本列表路径统一用 `FileNameAndPath`；`DialogPVRInfo` 的台标在 21 上会落到 `Art(thumb)` / `EpgEventIcon` 分支，`MyPVRGuide` 的台标 21 上为空（未改，见分诊 §3） |
+
+**不要写的写法：**
+- `<scroll>` 只认布尔字面量，写 `Control.HasFocus(...)` 会被判非法且不生效；
+  需要“聚焦才滚动”只能拆成两套 label。
+- 数字字面量不能进 `String.IsEqual(...)`，会被当作 info 标签（音乐 OSD 踩过）。
+- `<texture>` 下写 `<fallback>` 无效，只有 `<label fallback="...">` 属性有效。
+
+完整分诊见 `docs/report-triage-2026-10-29.md`。
+
 ### 5.3 透明度（用户可调）
 
 两套主题：`colors/defaults.xml`（透黑）+ `colors/light.xml`（透白，只写差异）。

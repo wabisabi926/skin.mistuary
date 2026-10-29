@@ -161,7 +161,8 @@ XML 已经改走 `NaraDialogFocusLayoutTextColor*`（Includes_DialogGlass.xml）
 |---|---|---|
 | `Includes_SettingsDialog.xml:168` `VideoStreamCount` | 读 0，视频版本按钮永远禁用 | ✅ 并行已改 `HasVideoVersions` |
 | `DialogVideoManager.xml:37` `DecodedFileNameAndPath` | 路径空白 | ✅ 已改 `FileNameAndPath` |
-| `Variables.xml:1524` `ChannelLogo` | 台标退化成 `DefaultTVShows.png` | 补 `ListItem.Art(thumb)` / `Icon` fallback |
+| `Variables.xml:1487` `ChannelLogo` | 台标取不到；但 `DialogPVRInfo` 的可见条件也依赖该标签，21 上会自动落到 `Art(thumb)` / `EpgEventIcon` 分支。`MyPVRGuide` 的台标在 21 上为空 | 低价值：只补 texture 变量不会显示，改可见条件风险大于收益；**不改**，文档记录 |
+| `VideoPlayer.AudioLanguageEx` | 播放信息页音轨语言行空 | ✅ 已加 `$VAR[NaraAudioLanguageVar]`：22 用 Ex，21 回退 `VideoPlayer.AudioLanguage` |
 | `VideoPlayer.SubtitleCodec` | 字幕徽标没有编码，语言仍显示 | 接受为 v22 增强 |
 | `PVRClientName` / `PVRInstanceName` / `PVR.ClientCount` / `PVRGroupOrigin` | PVR 信息行部分为空 | 接受，或只在 22 显示 |
 | `HdrDetail` / `TitleExtraInfo` / `EpisodePart` / `MediaProviders` / `Bookmarks` / `SubtitleName` | 为空/隐藏，多数有兜底 | 抽查标题、PVR 行 |
