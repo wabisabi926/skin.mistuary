@@ -256,31 +256,6 @@
 			</control>
 		</definition>
 	</include>
-	<include name="VideoInfoButtonsCommon">
-		<param name="width">264</param>
-		<definition>
-			<width>$PARAM[width]</width>
-			<height>142</height>
-			<align>center</align>
-			<aligny>top</aligny>
-			<texturefocus border="21" colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">buttons/button-fo.png</texturefocus>
-			<texturenofocus border="21">buttons/button-nofo.png</texturenofocus>
-			<textoffsetx>22</textoffsetx>
-			<textoffsety>78</textoffsety>
-			<radioposx>108</radioposx>
-			<radioposy>13</radioposy>
-			<radiowidth>48</radiowidth>
-			<font>font12</font>
-			<hitrect x="21" y="21" w="245" h="100" />
-			<textureradioonfocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">$PARAM[icon]</textureradioonfocus>
-			<textureradioonnofocus colordiffuse="text_secondary">$PARAM[icon]</textureradioonnofocus>
-			<textureradioofffocus colordiffuse="$VAR[NaraDialogFocusForegroundVar]">$PARAM[icon]</textureradioofffocus>
-			<textureradiooffnofocus colordiffuse="text_secondary">$PARAM[icon]</textureradiooffnofocus>
-			<textureradiooffdisabled colordiffuse="text_disabled">$PARAM[icon]</textureradiooffdisabled>
-			<textureradioondisabled colordiffuse="text_disabled">$PARAM[icon]</textureradioondisabled>
-			<focusedcolor>$VAR[NaraDialogFocusForegroundVar]</focusedcolor>
-		</definition>
-	</include>
 	<include name="InfoDialogButton">
 		<param name="width">264</param>
 		<param name="onclick_1_condition">true</param>

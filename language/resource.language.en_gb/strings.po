@@ -1421,3 +1421,11 @@ msgstr "Seek bar"
 msgctxt "#31776"
 msgid "Left-Right: controls"
 msgstr "Left-Right: controls"
+
+msgctxt "#31777"
+msgid "Not rated"
+msgstr "Not rated"
+
+msgctxt "#31778"
+msgid "Back"
+msgstr "Back"

@@ -1198,3 +1198,11 @@ msgstr "进度条"
 msgctxt "#31776"
 msgid "Left-Right: controls"
 msgstr "←→：控制条"
+
+msgctxt "#31777"
+msgid "Not rated"
+msgstr "未评分"
+
+msgctxt "#31778"
+msgid "Back"
+msgstr "返回"

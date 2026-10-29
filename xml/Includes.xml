@@ -16,7 +16,6 @@
 	<include file="Includes_DialogVideoInfo_Actions.xml" />
 	<include file="Includes_DialogVideoInfo_Cast.xml" />
 	<include file="Includes_DialogVideoInfo_TvEpisodes.xml" />
-	<include file="Includes_MusicInfo.xml" />
 	<include file="Includes_MusicPlayer.xml" />
 	<include file="Includes_MusicBackground.xml" />
 	<include file="Includes_PlayerProcessInfo.xml" />

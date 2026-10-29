@@ -1,585 +1,496 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
-	<defaultcontrol always="true">9000</defaultcontrol>
+	<defaultcontrol always="true">70080</defaultcontrol>
+	<onload>SetFocus(70080)</onload>
 	<onload>SetProperty(infobackground,$ESCINFO[ListItem.Art(fanart)],home)</onload>
 	<onunload>ClearProperty(infobackground,home)</onunload>
 	<controls>
-		<!-- 信息侧栏原本只有一层 50% 玻璃，底下 50% 是清晰原图 → 补遮蔽层 -->
-		<include content="NaraDialogScrim">
-			<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />
-		</include>
-		<control type="group">
-			<centertop>50%</centertop>
-			<height>1080</height>
-			<centerleft>50%</centerleft>
-			<width>1920</width>
-			<control type="group">
-				<include>OpenClose_Left</include>
-				<top>159</top>
-				<left>40</left>
-				<control type="image">
-					<width>620</width>
-					<height>620</height>
-					<aspectratio>scale</aspectratio>
-					<include>NaraDialogGlassTexture</include>
-				</control>
-				<control type="image">
-					<depth>DepthContentPopout</depth>
-					<left>25</left>
-					<top>25</top>
-					<width>570</width>
-					<height>570</height>
-					<aspectratio scalediffuse="false" aligny="top">scale</aspectratio>
-					<fadetime>300</fadetime>
-					<texture background="true" diffuse="shapes/mask_570x570_r12.png">$VAR[MusicInfoThumbVar]</texture>
-				</control>
-			</control>
-			<control type="group">
-				<include>OpenClose_Left</include>
-				<include>Visible_Right</include>
-				<left>705</left>
-				<visible>![Window.Is(songinformation) + Window.IsActive(musicinformation)]</visible>
-				<control type="group">
-					<visible>Integer.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Control.GetLabel(400))</visible>
-					<top>455</top>
-					<control type="button" id="130">
-						<textcolor>text_primary</textcolor>
-						<left>-36</left>
-						<width>720</width>
-						<height>430</height>
-						<onup>50</onup>
-						<ondown>9000</ondown>
-						<onleft>41</onleft>
-						<onright>41</onright>
-						<label></label>
-						<include>NaraDialogControlTextures</include>
-					</control>
-					<control type="image">
-						<left>-4</left>
-						<top>30</top>
-						<width>660</width>
-						<height>370</height>
-						<aspectratio aligny="top">scale</aspectratio>
-						<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
-						<visible>String.IsEmpty(Control.GetLabel(400))</visible>
-					</control>
-					<control type="group">
-						<visible>String.IsEmpty(Control.GetLabel(400)) + String.IsEmpty(ListItem.Art(fanart))</visible>
-						<control type="image">
-							<left>-16</left>
-							<top>20</top>
-							<width>680</width>
-							<height>390</height>
-							<aspectratio>scale</aspectratio>
-							<texture colordiffuse="overlay_medium">colors/black.png</texture>
-						</control>
-						<control type="textbox">
-							<textcolor>text_primary</textcolor>
-							<left>16</left>
-							<top>20</top>
-							<width>680</width>
-							<height>390</height>
-							<align>center</align>
-							<aligny>center</aligny>
-							<font>font45_title</font>
-							<label>$LOCALIZE[19055]</label>
-						</control>
-					</control>
-				</control>
-				<control type="group">
-					<visible>!Integer.IsEqual(Container(50).NumItems,0) | !String.IsEmpty(Control.GetLabel(400))</visible>
-					<top>454</top>
-					<control type="button" id="130">
-						<textcolor>text_primary</textcolor>
-						<onleft>41</onleft>
-						<onright>41</onright>
-						<onup>50</onup>
-						<ondown>9000</ondown>
-						<left>-35</left>
-						<width>720</width>
-						<height>430</height>
-						<label></label>
-						<include>NaraDialogButtonInsetTexture</include>
-						<onclick>SetProperty(TextViewer_Header,$LOCALIZE[21821],home)</onclick>
-						<onclick>SetProperty(TextViewer_Text,$ESCVAR[MusicInfoTextboxVar],home)</onclick>
-						<onclick condition="[String.IsEqual(ListItem.DbType,song) + !String.IsEmpty(ListItem.Comment)] | [String.IsEqual(ListItem.DbType,album) + !String.IsEmpty(ListItem.Property(Album_Description))] | [String.IsEqual(ListItem.DbType,artist) + !String.IsEmpty(ListItem.Property(Artist_Description))]">ActivateWindow(1102)</onclick>
-					</control>
-					<control type="group">
-						<animation effect="slide" start="0,0" end="0,-295" time="0" condition="Integer.IsEqual(Container(50).NumItems,0)">Conditional</animation>
-						<visible>[!Integer.IsEqual(Container(50).NumItems,0) + String.IsEmpty(Control.GetLabel(400))]</visible>
-						<control type="image">
-							<left>-4</left>
-							<top>30</top>
-							<width>660</width>
-							<height>370</height>
-							<aspectratio aligny="top">scale</aspectratio>
-							<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
-						</control>
-						<control type="group">
-							<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
-							<control type="image">
-								<left>-4</left>
-								<top>30</top>
-								<width>660</width>
-								<height>370</height>
-								<aspectratio>scale</aspectratio>
-								<texture colordiffuse="overlay_medium">colors/black.png</texture>
-							</control>
-							<control type="textbox">
-								<textcolor>text_primary</textcolor>
-								<left>-14</left>
-								<top>20</top>
-								<width>670</width>
-								<height>380</height>
-								<align>center</align>
-								<aligny>center</aligny>
-								<font>font45_title</font>
-								<label>$LOCALIZE[19055]</label>
-							</control>
-						</control>
-					</control>
-					<control type="group">
-						<animation effect="slide" start="0,0" end="0,-295" time="0" condition="Integer.IsEqual(Container(50).NumItems,0)">Conditional</animation>
-						<visible>[Integer.IsEqual(Container(50).NumItems,0) + !String.IsEmpty(Control.GetLabel(400))]</visible>
-						<control type="image">
-							<left>-18</left>
-							<top>20</top>
-							<width>1154</width>
-							<height>277</height>
-							<aspectratio aligny="top">scale</aspectratio>
-							<texture>$VAR[NaraImgListItemArtFanartDefMusic]</texture>
-						</control>
-						<control type="group">
-							<visible>String.IsEmpty(ListItem.Art(fanart))</visible>
-							<control type="image">
-								<left>-15</left>
-								<top>20</top>
-								<width>670</width>
-								<height>380</height>
-								<aspectratio>scale</aspectratio>
-								<texture colordiffuse="overlay_medium">colors/black.png</texture>
-							</control>
-							<control type="textbox">
-								<textcolor>text_primary</textcolor>
-								<left>-14</left>
-								<top>20</top>
-								<width>670</width>
-								<height>380</height>
-								<align>center</align>
-								<aligny>center</aligny>
-								<font>font45_title</font>
-								<label>$LOCALIZE[19055]</label>
-							</control>
-						</control>
-					</control>
-				</control>
-				<control type="label" id="400">
-					<left>10</left>
-					<top>485</top>
-					<width>645</width>
-					<height>340</height>
-					<wrapmultiline>true</wrapmultiline>
-					<label>$VAR[MusicInfoTextboxVar]</label>
-					<textcolor>text_primary</textcolor>
-				</control>
-			</control>
-			<control type="group">
-				<include>OpenClose_Right</include>
-				<include>Visible_Right</include>
-				<left>80</left>
-				<visible>![Window.Is(songinformation) + Window.IsActive(musicinformation)]</visible>
-				<control type="panel" id="50">
-					<left>590</left>
-					<top>170</top>
-					<width>1180</width>
-					<height>360</height>
-					<ondown>130</ondown>
-					<onup>9000</onup>
-					<orientation>horizontal</orientation>
-					<itemlayout height="72.5" width="595" condition="Container.Content(songs)">
-						<control type="image">
-							<top>-10</top>
-							<width>595</width>
-							<height>100</height>
-							<texture border="21">buttons/button-nofo.png</texture>
-						</control>
-						<control type="label">
-							<textcolor>text_primary</textcolor>
-							<left>40</left>
-							<top>10</top>
-							<width>522</width>
-							<height>60</height>
-							<font>font12</font>
-							<aligny>center</aligny>
-							<label>$INFO[ListItem.Label,[COLOR grey], - [/COLOR]]$INFO[ListItem.Label2]</label>
-						</control>
-					</itemlayout>
-					<focusedlayout height="72.5" width="595" condition="Container.Content(songs)">
-						<control type="image">
-							<top>-10</top>
-							<width>595</width>
-							<height>100</height>
-							<texture border="21" colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">buttons/button-fo.png</texture>
-						</control>
-						<control type="label">
-							<left>40</left>
-							<top>10</top>
-							<width>522</width>
-							<height>60</height>
-							<font>font12</font>
-							<aligny>center</aligny>
-							<scroll>true</scroll>
-							<label>$INFO[ListItem.Label,[COLOR $VAR[NaraDialogFocusMutedVar]], - [/COLOR]]$INFO[ListItem.Label2]</label>
-							<textcolor>$VAR[NaraDialogFocusForegroundVar]</textcolor>
-							<selectedcolor>$VAR[NaraDialogFocusForegroundVar]</selectedcolor>
-						</control>
-					</focusedlayout>
-					<itemlayout height="72.5" width="595" condition="Container.Content(albums)">
-						<control type="image">
-							<top>-10</top>
-							<width>595</width>
-							<height>100</height>
-							<texture border="21">buttons/button-nofo.png</texture>
-						</control>
-							<control type="label">
-								<textcolor>text_primary</textcolor>
-								<left>40</left>
-								<top>10</top>
-								<width>522</width>
-								<height>60</height>
-								<font>font12</font>
-								<aligny>center</aligny>
-								<label>$INFO[ListItem.TrackNumber,[COLOR grey], - [/COLOR]]$INFO[ListItem.Label]</label>
-								<visible>![Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)] | [Skin.HasSetting(circle_userrating) + String.IsEmpty(ListItem.UserRating)] | [Skin.HasSetting(circle_rating) + String.IsEmpty(ListItem.Rating)]</visible>
-							</control>
-							<control type="label">
-								<textcolor>text_primary</textcolor>
-								<left>40</left>
-								<top>10</top>
-								<width>470</width>
-								<height>60</height>
-								<font>font12</font>
-								<aligny>center</aligny>
-								<label>$INFO[ListItem.TrackNumber,[COLOR grey], - [/COLOR]]$INFO[ListItem.Label]</label>
-								<visible>[Skin.HasSetting(circle_rating) + !String.IsEmpty(ListItem.Rating)] | [Skin.HasSetting(circle_userrating) + !String.IsEmpty(ListItem.UserRating)]</visible>
-							</control>
-						<control type="group">
-							<left>518</left>
-							<top>23</top>
-							<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-						</control>
-					</itemlayout>
-					<focusedlayout height="72.5" width="595" condition="Container.Content(albums)">
-						<control type="group">
-							<control type="image">
-								<top>-10</top>
-								<width>595</width>
-								<height>100</height>
-								<texture border="21" colordiffuse="$VAR[NaraDialogFocusSurfaceVar]">buttons/button-fo.png</texture>
-							</control>
-							<control type="label">
-								<left>40</left>
-								<top>10</top>
-								<width>522</width>
-								<height>60</height>
-								<font>font12</font>
-								<aligny>center</aligny>
-								<scroll>true</scroll>
-								<label>$INFO[ListItem.TrackNumber,[COLOR $VAR[NaraDialogFocusMutedVar]], - [/COLOR]]$INFO[ListItem.Label]</label>
-								<textcolor>$VAR[NaraDialogFocusForegroundVar]</textcolor>
-								<selectedcolor>$VAR[NaraDialogFocusForegroundVar]</selectedcolor>
-								<visible>![Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)] | [Skin.HasSetting(circle_userrating) + String.IsEmpty(ListItem.UserRating)] | [Skin.HasSetting(circle_rating) + String.IsEmpty(ListItem.Rating)]</visible>
-							</control>
-							<control type="label">
-								<left>40</left>
-								<top>10</top>
-								<width>470</width>
-								<height>60</height>
-								<font>font12</font>
-								<aligny>center</aligny>
-								<scroll>true</scroll>
-								<label>$INFO[ListItem.TrackNumber,[COLOR $VAR[NaraDialogFocusMutedVar]], - [/COLOR]]$INFO[ListItem.Label]</label>
-								<textcolor>$VAR[NaraDialogFocusForegroundVar]</textcolor>
-								<selectedcolor>$VAR[NaraDialogFocusForegroundVar]</selectedcolor>
-								<visible>[Skin.HasSetting(circle_rating) + !String.IsEmpty(ListItem.Rating)] | [Skin.HasSetting(circle_userrating) + !String.IsEmpty(ListItem.UserRating)]</visible>
-							</control>
-							<control type="group">
-								<left>518</left>
-								<top>23</top>
-								<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-							</control>
-						</control>
-					</focusedlayout>
-					<itemlayout height="360" width="236" condition="Container.Content(artists)">
-						<control type="image">
-							<top>-10</top>
-							<width>250</width>
-							<height>312</height>
-							<texture border="21">buttons/button-nofo.png</texture>
-						</control>
-						<control type="image">
-							<left>30</left>
-							<top>21</top>
-							<width>190</width>
-							<height>190</height>
-							<texture background="true" diffuse="shapes/mask_190x190_r9.png">$VAR[NaraImgListItemThumbDefDefaultAudio]</texture>
-							<aspectratio>keep</aspectratio>
-						</control>
-						<control type="textbox">
-							<textcolor>text_primary</textcolor>
-							<left>28</left>
-							<top>212</top>
-							<width>196</width>
-							<height>62</height>
-							<font>font27_narrow</font>
-							<align>center</align>
-							<aligny>center</aligny>
-							<label>$INFO[ListItem.Label2,[COLOR text_secondary], - [/COLOR]]$INFO[ListItem.Label]</label>
-						</control>
-						<control type="group">
-							<left>230</left>
-							<top>28</top>
-							<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-						</control>
-					</itemlayout>
-					<focusedlayout height="360" width="236" condition="Container.Content(artists)">
-						<control type="group">
-							<animation effect="zoom" start="100" end="105" time="200" tween="sine" easing="inout" center="160,180">Focus</animation>
-							<animation effect="zoom" start="105" end="100" time="200" tween="sine" easing="inout" center="160,180">UnFocus</animation>
-							<control type="image">
-								<top>-10</top>
-								<width>250</width>
-								<height>312</height>
-								<texture border="21">buttons/button-nofo.png</texture>
-							</control>
-							<control type="image">
-								<left>30</left>
-								<top>21</top>
-								<width>190</width>
-								<height>190</height>
-								<texture background="true" diffuse="shapes/mask_190x190_r9.png">$VAR[NaraImgListItemThumbDefDefaultAudio]</texture>
-								<aspectratio>keep</aspectratio>
-							</control>
-							<control type="textbox">
-								<textcolor>text_primary</textcolor>
-								<left>28</left>
-								<top>212</top>
-								<width>196</width>
-								<height>62</height>
-								<font>font27_narrow</font>
-								<align>center</align>
-								<aligny>center</aligny>
-								<autoscroll delay="1000" time="1000" repeat="1000">true</autoscroll>
-								<label>$INFO[ListItem.Label2,[COLOR text_secondary], - [/COLOR]]$INFO[ListItem.Label]</label>
-							</control>
-							<control type="group">
-								<left>230</left>
-								<top>28</top>
-								<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-							</control>
-							<control type="image">
-								<left>17.142857</left>
-								<top>7.142857</top>
-								<width>215.714286</width>
-								<height>277.714286</height>
-								<texture border="3" infill="false" colordiffuse="focus_media">colors/white.png</texture>
-								<animation effect="fade" start="100" end="0" time="200">Unfocus</animation>
-							</control>
-						</control>
-					</focusedlayout>
-				</control>
-				<control type="grouplist" id="9000">
-					<left>10</left>
-					<top>864</top>
-					<width>1740</width>
-					<height>300</height>
-					<onleft>9000</onleft>
-					<onright>9000</onright>
-					<onup>130</onup>
-					<ondown>50</ondown>
-					<align>center</align>
-					<itemgap>-18</itemgap>
-					<orientation>horizontal</orientation>
-					<control type="group" id="420">
-						<width>264</width>
-						<visible>String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)</visible>
-						<control type="button" id="7">
-							<textcolor>text_primary</textcolor>
-							<include content="VideoInfoButtonsCommon">
-								<param name="icon" value="" />
-							</include>
-							<label>$LOCALIZE[31033]</label>
-							<onup>130</onup>
-							<onleft>155</onleft>
-							<onright>120</onright>
-							<onup condition="Integer.IsGreater(Container(5000).CurrentItem,3)">210</onup>
-							<onup condition="!Integer.IsGreater(Container(5000).CurrentItem,3)">138</onup>
-						</control>
-						<control type="label">
-							<textcolor>text_primary</textcolor>
-							<label>$INFO[ListItem.UserRating]</label>
-							<font>font45_title</font>
-							<left>0</left>
-							<top>24</top>
-							<width>264</width>
-							<align>center</align>
-						</control>
-						<control type="image">
-							<texture>icons/infodialogs/rating.png</texture>
-							<left>108</left>
-							<top>30</top>
-							<width>48</width>
-							<height>48</height>
-							<align>center</align>
-							<visible>String.IsEmpty(ListItem.UserRating)</visible>
-						</control>
-					</control>
-					<control type="radiobutton" id="120">
-						<textcolor>text_primary</textcolor>
-						<include content="VideoInfoButtonsCommon">
-							<param name="icon" value="icons/infodialogs/image.png" />
-						</include>
-						<label>$LOCALIZE[31028]</label>
-						<enable>!String.IsEmpty(ListItem.Art(fanart))</enable>
-						<onclick>SetProperty(fanart,$ESCINFO[ListItem.Art(fanart)],home)</onclick>
-						<onclick>ActivateWindow(1104)</onclick>
-						<visible>String.IsEqual(ListItem.DBType,artist) | String.IsEqual(ListItem.DBType,album)</visible>
-					</control>
-					<include content="InfoDialogButton">
-						<param name="id" value="8" />
-						<param name="icon" value="icons/infodialogs/play.png" />
-						<param name="label" value="$LOCALIZE[208]" />
-					</include>
-					<include content="InfoDialogButton">
-						<param name="id" value="6" />
-						<param name="icon" value="icons/infodialogs/update.png" />
-						<param name="label" value="$LOCALIZE[184]" />
-					</include>
-					<include content="InfoDialogButton">
-						<param name="id" value="10" />
-						<param name="icon" value="icons/infodialogs/choose_image.png" />
-						<param name="label" value="$LOCALIZE[13405]" />
-					</include>
-					<include content="InfoDialogButton">
-						<param name="id" value="12" />
-						<param name="icon" value="icons/infodialogs/info.png" />
-						<param name="label" value="" />
-					</include>
-				</control>
-				<include content="LeftRightArrows">
-					<param name="list_id" value="50" />
-					<param name="left_posx" value="565" />
-					<param name="right_posx" value="1790" />
-					<param name="posy" value="300" />
-					<param name="visible" value="true" />
-				</include>
-				<control type="group">
-					<control type="image">
-						<left>1315</left>
-						<top>474</top>
-						<width>450</width>
-						<height>390</height>
-						<aspectratio>scale</aspectratio>
-						<texture colordiffuse="overlay_medium">colors/black.png</texture>
-					</control>
-					<control type="group">
-						<left>1275</left>
-						<top>480</top>
-						<control type="list" id="41">
-							<left>42</left>
-							<top>0</top>
-							<width>446</width>
-							<height>385</height>
-							<onleft>130</onleft>
-							<onright>130</onright>
-							<onup>50</onup>
-							<ondown>9000</ondown>
-							<pagecontrol/>
-							<scrolltime>200</scrolltime>
-							<itemlayout height="35">
-								<control type="label">
-									<textcolor>text_primary</textcolor>
-									<left>10</left>
-									<top>0</top>
-									<width>410</width>
-									<height>30</height>
-									<font>font27_narrow</font>
-									<label>$INFO[ListItem.Label,[COLOR text_secondary],[/COLOR]] $INFO[ListItem.Label2]</label>
-								</control>
-							</itemlayout>
-							<focusedlayout height="35">
-								<control type="image">
-									<left>0</left>
-								<top>1</top>
-								<width>446</width>
-								<height>33</height>
-								<include content="NaraDialogFocusTexture" />
-								<visible>Control.HasFocus(41)</visible>
-								</control>
-								<control type="label">
-									<left>10</left>
-									<top>0</top>
-								<width>410</width>
-								<height>30</height>
-								<font>font27_narrow</font>
-								<label>$INFO[ListItem.Label] $INFO[ListItem.Label2]</label>
-								<textcolor>$VAR[NaraDialogFocusForegroundVar]</textcolor>
-								<selectedcolor>$VAR[NaraDialogFocusForegroundVar]</selectedcolor>
-								<scroll>true</scroll>
-									<visible>Control.HasFocus(41)</visible>
-								</control>
-								<control type="label">
-									<textcolor>text_primary</textcolor>
-									<left>10</left>
-									<top>0</top>
-								<width>410</width>
-								<height>30</height>
-								<font>font27_narrow</font>
-								<label>$INFO[ListItem.Label,[COLOR text_secondary],[/COLOR]] $INFO[ListItem.Label2]</label>
-								<scroll>false</scroll>
-									<visible>!Control.HasFocus(41)</visible>
-								</control>
-							</focusedlayout>
-							<content>
-								<include condition="String.IsEqual(ListItem.DBTYPE,artist)">MusicInfoArtistInfo</include>
-								<include condition="String.IsEqual(ListItem.DBTYPE,album)">MusicInfoAlbumInfo</include>
-								<include condition="String.IsEqual(ListItem.DBTYPE,song)">MusicInfoSongInfo</include>
-							</content>
-						</control>
-					</control>
-				</control>
-			</control>
-			<control type="group">
-				<visible>String.IsEqual(ListItem.DBType,artist)</visible>
-				<include content="InfoDialogTopBarInfo">
-					<param name="main_label" value="$INFO[ListItem.Artist]" />
-					<param name="sub_label" value="$INFO[ListItem.Genre]" />
-					<param name="id" value="33333" />
-				</include>
-			</control>
-			<control type="group">
-				<visible>String.IsEqual(ListItem.DBType,album)</visible>
-				<include content="InfoDialogTopBarInfo">
-					<param name="main_label" value="$INFO[ListItem.Album]$INFO[ListItem.Year, ([COLOR grey],[/COLOR])]" />
-					<param name="sub_label" value="$INFO[ListItem.Artist]" />
-					<param name="id" value="33334" />
-				</include>
-			</control>
-			<control type="group">
-				<visible>String.IsEqual(ListItem.DBType,song) + !Window.IsActive(musicinformation)</visible>
-				<include content="InfoDialogTopBarInfo">
-					<param name="main_label" value="[COLOR text_secondary]$INFO[ListItem.TrackNumber]. [/COLOR]$INFO[ListItem.Title]" />
-					<param name="sub_label" value="$INFO[ListItem.Artist,, - ]$INFO[ListItem.Album]$INFO[ListItem.Year, ([COLOR grey],[/COLOR])]" />
-					<param name="id" value="33335" />
-				</include>
-			</control>
+		<!-- Kodi 内置音乐信息动作。可见按钮用自定义 ID + SendClick 转发，
+		     避免 Kodi 把内置文字标签压到 70×70 图标按钮里。 -->
+		<control type="button" id="7">
+			<include>HiddenObject</include>
 		</control>
+		<control type="button" id="8">
+			<include>HiddenObject</include>
+		</control>
+		<control type="button" id="10">
+			<include>HiddenObject</include>
+		</control>
+		<control type="button" id="12">
+			<include>HiddenObject</include>
+		</control>
+		<!-- 全幅背景：有 fanart 用 fanart，没有就用皮肤兜底背景。 -->
 		<control type="group">
 			<centerleft>50%</centerleft>
+			<centertop>50%</centertop>
 			<width>1920</width>
-			<bottom>10</bottom>
-			<height>40</height>
-			<include>MediaFlags</include>
+			<height>1080</height>
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+			</control>
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio>scale</aspectratio>
+				<texture background="true">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio align="right">scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<left>-120</left>
+				<width>1320</width>
+				<height>1080</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/detail-left-scrim.png</texture>
+			</control>
+			<control type="image">
+				<top>420</top>
+				<left>-120</left>
+				<right>-120</right>
+				<height>660</height>
+				<aspectratio>stretch</aspectratio>
+				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
+			</control>
+
+			<!-- 左侧信息：只放有内容的字段，空字段不占位。 -->
+			<control type="group">
+				<left>209</left>
+				<top>303</top>
+				<width>1000</width>
+				<height>450</height>
+				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
+				<control type="label">
+					<width>1000</width>
+					<height>30</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<label>MUSIC INFO  ·  音乐信息</label>
+				</control>
+				<control type="grouplist">
+					<top>24</top>
+					<width>1000</width>
+					<height>90</height>
+					<orientation>horizontal</orientation>
+					<itemgap>10</itemgap>
+					<aligny>center</aligny>
+					<control type="label">
+						<width>auto</width>
+						<height>80</height>
+						<font>font45_title</font>
+						<textcolor>text_secondary</textcolor>
+						<label>$INFO[ListItem.TrackNumber,,. ]</label>
+						<visible>String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.TrackNumber)</visible>
+					</control>
+					<control type="label">
+						<width>920</width>
+						<height>84</height>
+						<font>font60</font>
+						<scroll>true</scroll>
+						<label>$INFO[ListItem.Title]</label>
+						<visible>String.IsEqual(ListItem.DBType,song)</visible>
+					</control>
+					<control type="label">
+						<width>920</width>
+						<height>84</height>
+						<font>font60</font>
+						<scroll>true</scroll>
+						<label>$INFO[ListItem.Album]$INFO[ListItem.Year, ([COLOR grey],[/COLOR])]</label>
+						<visible>String.IsEqual(ListItem.DBType,album)</visible>
+					</control>
+					<control type="label">
+						<width>920</width>
+						<height>84</height>
+						<font>font60</font>
+						<scroll>true</scroll>
+						<label>$INFO[ListItem.Artist]</label>
+						<visible>String.IsEqual(ListItem.DBType,artist)</visible>
+					</control>
+				</control>
+				<control type="label">
+					<top>120</top>
+					<width>1000</width>
+					<height>44</height>
+					<font>font30_title</font>
+					<textcolor>text_secondary</textcolor>
+					<scroll>true</scroll>
+					<label>$INFO[ListItem.Artist,,  ·  ]$INFO[ListItem.Album]$INFO[ListItem.Year, ([COLOR grey],[/COLOR])]</label>
+					<visible>String.IsEqual(ListItem.DBType,song)</visible>
+				</control>
+				<control type="label">
+					<top>120</top>
+					<width>1000</width>
+					<height>44</height>
+					<font>font30_title</font>
+					<textcolor>text_secondary</textcolor>
+					<scroll>true</scroll>
+					<label>$INFO[ListItem.Artist]</label>
+					<visible>String.IsEqual(ListItem.DBType,album)</visible>
+				</control>
+				<control type="label">
+					<top>120</top>
+					<width>1000</width>
+					<height>44</height>
+					<font>font30_title</font>
+					<textcolor>text_secondary</textcolor>
+					<scroll>true</scroll>
+					<label>$INFO[ListItem.Genre]</label>
+					<visible>String.IsEqual(ListItem.DBType,artist)</visible>
+				</control>
+				<control type="grouplist">
+					<top>178</top>
+					<width>1000</width>
+					<height>30</height>
+					<orientation>horizontal</orientation>
+					<itemgap>18</itemgap>
+					<control type="label">
+						<width>auto</width>
+						<height>30</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Year]</label>
+						<visible>!String.IsEmpty(ListItem.Year)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>30</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Genre]</label>
+						<visible>!String.IsEmpty(ListItem.Genre)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>30</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Duration]</label>
+						<visible>!String.IsEmpty(ListItem.Duration)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>30</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.DiscNumber,光盘 ,]</label>
+						<visible>Integer.IsGreater(ListItem.TotalDiscs,1)</visible>
+					</control>
+				</control>
+				<control type="image">
+					<top>234</top>
+					<width>28</width>
+					<height>28</height>
+					<texture colordiffuse="text_secondary">icons/infodialogs/rating.png</texture>
+				</control>
+				<control type="label">
+					<left>38</left>
+					<top>234</top>
+					<width>100</width>
+					<height>28</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.UserRating]</label>
+					<visible>!String.IsEmpty(ListItem.UserRating)</visible>
+				</control>
+				<control type="label">
+					<left>38</left>
+					<top>234</top>
+					<width>100</width>
+					<height>28</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<aligny>center</aligny>
+					<label>$LOCALIZE[31777]</label>
+					<visible>String.IsEmpty(ListItem.UserRating)</visible>
+				</control>
+				<control type="grouplist">
+					<left>160</left>
+					<top>234</top>
+					<width>840</width>
+					<height>28</height>
+					<orientation>horizontal</orientation>
+					<itemgap>16</itemgap>
+					<control type="label">
+						<width>auto</width>
+						<height>28</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.FileExtension]</label>
+						<visible>!String.IsEmpty(ListItem.FileExtension)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>28</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$VAR[AudioChannelsVar]</label>
+						<visible>!String.IsEmpty(ListItem.MusicChannels)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>28</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Samplerate, ,kHz]</label>
+						<visible>!String.IsEmpty(ListItem.Samplerate)</visible>
+					</control>
+					<control type="label">
+						<width>auto</width>
+						<height>28</height>
+						<font>font12</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.BitRate, ,kbps]</label>
+						<visible>!String.IsEmpty(ListItem.BitRate)</visible>
+					</control>
+				</control>
+				<control type="label">
+					<top>268</top>
+					<width>1000</width>
+					<height>26</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<label>简介</label>
+					<visible>[String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.Comment) + !String.StartsWith(ListItem.Comment,EmbyLibraryId-)] | [String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.Property(Album_Description))] | [String.IsEqual(ListItem.DBType,artist) + !String.IsEmpty(ListItem.Property(Artist_Description))]</visible>
+				</control>
+				<control type="textbox">
+					<top>294</top>
+					<width>1000</width>
+					<height>66</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<label>$INFO[ListItem.Comment]</label>
+					<visible>String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.Comment) + !String.StartsWith(ListItem.Comment,EmbyLibraryId-)</visible>
+				</control>
+				<control type="textbox">
+					<top>294</top>
+					<width>1000</width>
+					<height>66</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<label>$INFO[ListItem.Property(Album_Description)]</label>
+					<visible>String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.Property(Album_Description))</visible>
+				</control>
+				<control type="textbox">
+					<top>294</top>
+					<width>1000</width>
+					<height>66</height>
+					<font>font12</font>
+					<textcolor>text_secondary</textcolor>
+					<label>$INFO[ListItem.Property(Artist_Description)]</label>
+					<visible>String.IsEqual(ListItem.DBType,artist) + !String.IsEmpty(ListItem.Property(Artist_Description))</visible>
+				</control>
+			</control>
+
+			<!-- 右侧专辑封面：和电影详情页的海报位同顶。 -->
+			<control type="group">
+				<left>1259</left>
+				<top>303</top>
+				<width>452</width>
+				<height>452</height>
+				<animation effect="slide" start="70,0" end="0,0" time="360" tween="cubic" easing="out">WindowOpen</animation>
+				<control type="image">
+					<left>-12</left>
+					<top>-12</top>
+					<width>476</width>
+					<height>476</height>
+					<texture colordiffuse="shadow_hard" border="21">overlays/shadow.png</texture>
+				</control>
+				<control type="image">
+					<width>452</width>
+					<height>452</height>
+					<aspectratio scalediffuse="false">scale</aspectratio>
+					<texture background="true" diffuse="shapes/mask_452x452_r12.png">$VAR[MusicInfoThumbVar]</texture>
+				</control>
+			</control>
+			<control type="label">
+				<left>1259</left>
+				<top>777</top>
+				<width>452</width>
+				<height>30</height>
+				<font>font12</font>
+				<textcolor>text_secondary</textcolor>
+				<align>center</align>
+				<scroll>true</scroll>
+				<label>$LOCALIZE[558]  ·  $INFO[ListItem.Album]</label>
+				<visible>String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.Album)</visible>
+			</control>
+			<control type="label">
+				<left>1259</left>
+				<top>777</top>
+				<width>452</width>
+				<height>30</height>
+				<font>font12</font>
+				<textcolor>text_secondary</textcolor>
+				<align>center</align>
+				<label>$INFO[ListItem.Duration]</label>
+				<visible>String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.Duration)</visible>
+			</control>
+			<control type="label">
+				<left>1259</left>
+				<top>777</top>
+				<width>452</width>
+				<height>30</height>
+				<font>font12</font>
+				<textcolor>text_secondary</textcolor>
+				<align>center</align>
+				<scroll>true</scroll>
+				<label>$INFO[ListItem.Genre]</label>
+				<visible>String.IsEqual(ListItem.DBType,artist) + !String.IsEmpty(ListItem.Genre)</visible>
+			</control>
+
+			<!-- 底部动作条：电影详情页同款播放主按钮 + 图标按钮。 -->
+			<control type="grouplist" id="9000">
+				<left>209</left>
+				<top>681</top>
+				<width>900</width>
+				<height>70</height>
+				<orientation>horizontal</orientation>
+				<itemgap>21</itemgap>
+				<onup>noop</onup>
+				<ondown>noop</ondown>
+				<control type="group">
+					<width>220</width>
+					<height>70</height>
+					<include content="VideoInfoActionGlass">
+						<param name="button_id" value="70080" />
+						<param name="ring" value="shapes/ring_btn_220x70_r35.png" />
+						<param name="base" value="E6FFFFFF" />
+						<param name="focus" value="33000000" />
+					</include>
+					<control type="button" id="70080">
+						<width>220</width>
+						<height>70</height>
+						<font>font13</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$LOCALIZE[208]</label>
+						<textcolor>ink_primary</textcolor>
+						<focusedcolor>ink_primary</focusedcolor>
+						<texturefocus />
+						<texturenofocus />
+						<onclick>SendClick(8)</onclick>
+						<onup>noop</onup>
+						<ondown>noop</ondown>
+						<onleft>70083</onleft>
+						<onright condition="[String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]">70081</onright>
+						<onright condition="![String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]">70082</onright>
+					</control>
+				</control>
+				<control type="group">
+					<width>70</width>
+					<height>70</height>
+					<visible>String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)</visible>
+					<include content="VideoInfoActionGlass">
+						<param name="button_id" value="70081" />
+					</include>
+					<control type="button" id="70081">
+						<width>70</width>
+						<height>70</height>
+						<label />
+						<texturefocus />
+						<texturenofocus />
+						<onclick>SendClick(7)</onclick>
+						<onup>noop</onup>
+						<ondown>noop</ondown>
+						<onleft>70080</onleft>
+						<onright>70082</onright>
+					</control>
+					<control type="image">
+						<left>12</left>
+						<top>12</top>
+						<width>46</width>
+						<height>46</height>
+						<texture colordiffuse="text_primary">icons/infodialogs/rating.png</texture>
+					</control>
+				</control>
+				<control type="group">
+					<width>70</width>
+					<height>70</height>
+					<include content="VideoInfoActionGlass">
+						<param name="button_id" value="70082" />
+					</include>
+					<control type="button" id="70082">
+						<width>70</width>
+						<height>70</height>
+						<label />
+						<texturefocus />
+						<texturenofocus />
+						<onclick>SendClick(10)</onclick>
+						<onup>noop</onup>
+						<ondown>noop</ondown>
+						<onleft condition="[String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]">70081</onleft>
+						<onleft condition="![String.IsEqual(ListItem.DBType,album) | String.IsEqual(ListItem.DBType,song)]">70080</onleft>
+						<onright>70083</onright>
+					</control>
+					<control type="image">
+						<left>12</left>
+						<top>12</top>
+						<width>46</width>
+						<height>46</height>
+						<texture colordiffuse="text_primary">icons/infodialogs/choose_image.png</texture>
+					</control>
+				</control>
+				<control type="group">
+					<width>70</width>
+					<height>70</height>
+					<include content="VideoInfoActionGlass">
+						<param name="button_id" value="70083" />
+					</include>
+					<control type="button" id="70083">
+						<width>70</width>
+						<height>70</height>
+						<label />
+						<texturefocus />
+						<texturenofocus />
+						<onclick>SendClick(12)</onclick>
+						<onup>noop</onup>
+						<ondown>noop</ondown>
+						<onleft>70082</onleft>
+						<onright>70080</onright>
+					</control>
+					<control type="image">
+						<left>12</left>
+						<top>12</top>
+						<width>46</width>
+						<height>46</height>
+						<texture colordiffuse="text_primary">icons/infodialogs/info.png</texture>
+					</control>
+				</control>
+			</control>
+			<control type="label">
+				<right>120</right>
+				<top>976</top>
+				<width>200</width>
+				<height>28</height>
+				<font>font12</font>
+				<textcolor>text_secondary</textcolor>
+				<align>right</align>
+				<label>$LOCALIZE[31778]</label>
+			</control>
 		</control>
 	</controls>
 </window>
