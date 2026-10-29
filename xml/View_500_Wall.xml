@@ -23,16 +23,18 @@
 				<pagecontrol>531</pagecontrol>
 				<scrolltime tween="cubic" easing="out">350</scrolltime>
 				<visible>Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | Container.Content(artists) | Container.Content(albums) | Container.Content(musicvideos) | Container.Content(addons) | Container.Content(images) | Container.Content(videos) | Container.Content(favourites) | $EXP[videoasset_true]</visible>
-				<!-- 卡片格 264 = 海报 244 + 左右缝 20（原 260 / 缝 16）。
-				     1920 逻辑宽下面板 98% = 1881，7 列 × 264 = 1848，余 33px —— 7 列保得住。
-				     **不要超过 268**（7×268 = 1876，只剩 5px，任何取整都可能掉成 6 列）。 -->
-				<itemlayout height="430" width="264" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
+				<!-- 卡片格 260 = 海报 244 + 左右缝 16。
+				     **实测上限就是 260**：曾经调到 264（缝 20）想加宽间距，结果在真机电视上
+				     7×264 = 1848 吃掉了全部余量，直接掉成 6 列（面板 98% 之后可用宽度不足 1848，
+				     而且面板整体右移 50）。回到 260（7×260 = 1820）就恢复 7 列。
+				     要再调宽请先确认目标设备实际可用宽度，别按 1920 满屏算。 -->
+				<itemlayout height="430" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">
 						<top>10</top>
 						<include>InfoWallMovieLayout</include>
 					</control>
 				</itemlayout>
-				<focusedlayout height="430" width="264" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
+				<focusedlayout height="430" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<animation effect="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="130,224">Focus</animation>
@@ -124,7 +126,7 @@
 						</include>
 					</control>
 				</focusedlayout>
-				<itemlayout height="430" width="264" condition="Container.Content(favourites)">
+				<itemlayout height="430" width="260" condition="Container.Content(favourites)">
 					<control type="group">
 						<top>18</top>
 						<include content="InfoWallFavouriteLayout">
@@ -132,7 +134,7 @@
 						</include>
 					</control>
 				</itemlayout>
-				<focusedlayout height="430" width="264" condition="Container.Content(favourites)">
+				<focusedlayout height="430" width="260" condition="Container.Content(favourites)">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<top>18</top>
