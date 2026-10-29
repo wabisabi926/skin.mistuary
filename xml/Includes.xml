@@ -552,8 +552,8 @@
 					<param name="flag_label" value="$INFO[MusicPlayer.BitsPerSample, ,bit]" />
 				</include>
 				<include content="MediaFlag">
-					<param name="flag_visible" value="!String.IsEmpty(MusicPlayer.BMP)" />
-					<param name="flag_label" value="$INFO[MusicPlayer.BMP, ,bpm]" />
+					<param name="flag_visible" value="!String.IsEmpty(MusicPlayer.BPM)" />
+					<param name="flag_label" value="$INFO[MusicPlayer.BPM, ,bpm]" />
 				</include>
 			</control>
 		</definition>

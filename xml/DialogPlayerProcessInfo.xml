@@ -457,10 +457,10 @@
 				<aligny>center</aligny>
 				<font>font_nara_process_info</font>
 				<textcolor>text_secondary</textcolor>
-				<label>$INFO[Player.DecodedFilenameAndPath]</label>
+				<label>$INFO[Player.FilenameAndPath]</label>
 				<scroll>true</scroll>
 				<scrollspeed>30</scrollspeed>
-				<visible>!String.IsEmpty(Player.DecodedFilenameAndPath)</visible>
+				<visible>!String.IsEmpty(Player.FilenameAndPath)</visible>
 			</control>
 		</control>
 	</controls>

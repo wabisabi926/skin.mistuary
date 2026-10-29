@@ -165,7 +165,7 @@
 			<label>$LOCALIZE[31109]</label>
 			<label2>$VAR[VideoCodecVar]$VAR[VideoHDRTypeVar, | ]$INFO[VideoPlayer.HdrDetail, P]$INFO[VideoPlayer.VideoResolution, | ]$VAR[VideoResolutionTypeVar, ]</label2>
 			<onclick>DialogSelectVideo</onclick>
-			<enable>Integer.IsGreater(VideoPlayer.VideoStreamCount,1)</enable>
+			<enable>VideoPlayer.HasVideoVersions</enable>
 		</control>
 	</include>
 	<include name="SettingsDialogVideoSettingsContent">
