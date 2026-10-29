@@ -61,11 +61,13 @@ msgid "Unplayed albums"
 msgstr "未播专辑"
 
 #. home screen recordings widget: recent tv recordings
+
 msgctxt "#31015"
 msgid "Recent recordings"
 msgstr "最近录制"
 
 #. home screen channel widget: recently played tv channels
+
 msgctxt "#31016"
 msgid "Recently played channels"
 msgstr "最近播放的频道"
@@ -111,6 +113,7 @@ msgid "Last logged in"
 msgstr "最近登录"
 
 #. Label to show the system memory usage
+
 msgctxt "#31030"
 msgid "System memory usage"
 msgstr "系统内存使用"
@@ -215,10 +218,6 @@ msgctxt "#31058"
 msgid "Automatic Login on startup"
 msgstr "启动时自动登录"
 
-msgctxt "#31061"
-msgid "Main menu items"
-msgstr "主菜单项"
-
 msgctxt "#31065"
 msgid "Video playlist"
 msgstr "视频播放列表"
@@ -284,21 +283,25 @@ msgid "Select your Kodi user profile[CR]to login and continue"
 msgstr "选择 Kodi 用户配置文件[CR]登录并继续"
 
 #. viewtype name
+
 msgctxt "#31099"
 msgid "IconWall"
 msgstr "图标墙"
 
 #. viewtype name
+
 msgctxt "#31100"
 msgid "Shift"
 msgstr "平移"
 
 #. viewtype name
+
 msgctxt "#31101"
 msgid "InfoWall"
 msgstr "信息墙"
 
 #. viewtype name
+
 msgctxt "#31102"
 msgid "Wall"
 msgstr "墙"
@@ -316,11 +319,13 @@ msgid "Teletext"
 msgstr "图文字幕"
 
 #. viewtype name
+
 msgctxt "#31107"
 msgid "WideList"
 msgstr "宽列表"
 
 # empty strings from id 31108 to 31108
+
 msgctxt "#31109"
 msgid "Video streams"
 msgstr "视频流"
@@ -358,12 +363,12 @@ msgid "Show icons"
 msgstr "显示图标"
 
 msgctxt "#31129"
-msgid "General settings applying to all areas of the skin."
-msgstr "皮肤全局的常规设置。"
+msgid "Choose which entries the main menu shows and what each row displays."
+msgstr "设置主菜单显示哪些入口，以及每一行显示什么内容。"
 
 msgctxt "#31130"
-msgid "Main menu-related settings: Configure the home screen to your likings."
-msgstr "主菜单与首页相关设置。"
+msgid "How media info is shown: badges, ratings, titles and artwork."
+msgstr "设置媒体信息的显示方式：标识、评分、标题和封面。"
 
 msgctxt "#31132"
 msgid "Select Program"
@@ -378,6 +383,7 @@ msgid "Binary"
 msgstr "二进制"
 
 #. Label to show PVR info page
+
 msgctxt "#31137"
 msgid "PVR"
 msgstr "PVR"
@@ -414,10 +420,6 @@ msgctxt "#31157"
 msgid "Edit categories"
 msgstr "编辑类别"
 
-msgctxt "#31159"
-msgid "Artwork"
-msgstr "艺术图片"
-
 msgctxt "#31160"
 msgid "Show media flags"
 msgstr "显示媒体标识"
@@ -431,51 +433,56 @@ msgid "Show Fanart background"
 msgstr "显示背景图背景"
 
 #. Label of a setting
+
 msgctxt "#31167"
 msgid "Animate background"
 msgstr "动态背景"
 
 #. Label of a setting
+
 msgctxt "#31168"
 msgid "Show posters instead of thumbs for musicvideos"
 msgstr "对于音乐电视，显示海报而不是缩略图"
 
 #. Description label for skin settings area
+
 msgctxt "#31169"
-msgid "Artwork related settings."
-msgstr "艺术图片相关设置。"
+msgid "Glass transparency, page background and text scrolling."
+msgstr "设置玻璃透明度、页面背景和文字滚动。"
 
 #. Label for OSD settings category
-msgctxt "#31170"
-msgid "On screen display"
-msgstr "屏幕菜单式调节"
-
 #. Helper text for the label of OSD settings category
+
 msgctxt "#31171"
-msgid "On screen display (OSD) related settings"
-msgstr "播放控制条（OSD）相关设置。"
+msgid "How the on-screen controls behave during playback."
+msgstr "设置播放时屏幕控制条的行为。"
 
 #. Setting Automatically close video OSD
+
 msgctxt "#31172"
 msgid "Automatically close video OSD"
 msgstr "自动关闭视频 OSD"
 
 #. Setting auto close time for video osd
+
 msgctxt "#31173"
 msgid "Video OSD autoclose time (seconds)"
 msgstr "视频 OSD 自动关闭时间（秒）"
 
 #. Setting to control the default action for a music album
+
 msgctxt "#31174"
 msgid "Default action for music albums"
 msgstr "音乐专辑的默认打开方式"
 
 #. Setting to control the default action for a TV show
+
 msgctxt "#31175"
 msgid "Default action for TV shows"
 msgstr "电视剧的默认打开方式"
 
 #. Setting to control the default action for a movie set
+
 msgctxt "#31176"
 msgid "Default action for movie sets"
 msgstr "电影系列的默认打开方式"
@@ -490,398 +497,476 @@ msgstr "本皮肤不提供游戏功能。"
 
 # empty strings from id 31179 to 31596
 #. Button to select Player Process Info window
+
 msgctxt "#31597"
 msgid "Player info"
 msgstr "播放器信息"
 
 #. Label to show the audio codec name
+
 msgctxt "#31604"
 msgid "Audio codec"
 msgstr "音频编码"
 
 #. Label to show the system info page
+
 msgctxt "#31611"
 msgid "System"
 msgstr "系统"
 
 #: /xml/Home.xml
 #. Header for media libraries synchronized by Emby
+
 msgctxt "#31616"
 msgid "Media libraries"
 msgstr "媒体库"
 
 #: /xml/Home.xml /xml/Includes_Home.xml
 #. Label for TV shows ordered by the date their latest episode was added
+
 msgctxt "#31617"
 msgid "Recently updated"
 msgstr "最近更新"
 
 #: /xml/Home.xml
 #. Header for unwatched TV shows ordered by the date their latest episode was added
+
 msgctxt "#31618"
 msgid "Recently updated TV shows"
 msgstr "最近更新的电视剧"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31621"
 msgid "Player Process Info"
 msgstr "播放器处理信息"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31622"
 msgid "VIDEO"
 msgstr "视频"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31623"
 msgid "PROCESSING"
 msgstr "处理"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31624"
 msgid "AUDIO"
 msgstr "音频"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31625"
 msgid "METADATA"
 msgstr "元数据"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31626"
 msgid "Display output"
 msgstr "显示输出"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31627"
 msgid "Video stream"
 msgstr "视频流"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31628"
 msgid "Pixel format"
 msgstr "像素格式"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31629"
 msgid "Bit depth"
 msgstr "位深"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31630"
 msgid "Aspect ratio"
 msgstr "宽高比"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31631"
 msgid "Decoder"
 msgstr "解码器"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31632"
 msgid "Decode method"
 msgstr "解码方式"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31633"
 msgid "Hardware"
 msgstr "硬件"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31634"
 msgid "Software"
 msgstr "软件"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31636"
 msgid "Live / average"
 msgstr "实时 / 平均"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31637"
 msgid "Color gamut"
 msgstr "色域"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31638"
 msgid "Media source"
 msgstr "媒体源"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31639"
 msgid "Playback time"
 msgstr "播放时间"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31640"
 msgid "Audio resolution"
 msgstr "音频精度"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31641"
 msgid "Input"
 msgstr "输入"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31642"
 msgid "Output"
 msgstr "输出"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31643"
 msgid "Audio language"
 msgstr "音频语言"
 
 #: /xml/Variables.xml
+
 msgctxt "#31645"
 msgid "Off"
 msgstr "已关闭"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31647"
 msgid "Processor"
 msgstr "处理器"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31649"
 msgid "Memory usage"
 msgstr "内存占用"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31650"
 msgid "Video queue / data"
 msgstr "视频队列 / 数据"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31651"
 msgid "Audio queue / data"
 msgstr "音频队列 / 数据"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31652"
 msgid "Dolby Vision"
 msgstr "杜比视界"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31654"
 msgid "Profile"
 msgstr "配置"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31664"
 msgid "Player cache"
 msgstr "播放器缓存"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31665"
 msgid "Passthrough"
 msgstr "直通"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31666"
 msgid "Converting"
 msgstr "转换"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31667"
 msgid "Output mode"
 msgstr "输出模式"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31668"
 msgid "Metadata"
 msgstr "元数据"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31670"
 msgid "HDR10 MDL"
 msgstr "HDR10 母版亮度"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31671"
 msgid "HDR10 MaxCLL / FALL"
 msgstr "HDR10 MaxCLL / FALL"
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31675"
 msgid "PCM"
 msgstr "PCM"
 
 #: /xml/FileManager.xml
+
 msgctxt "#31676"
 msgid "Modified"
 msgstr "修改时间"
 
 #: /xml/Variables.xml
+
 msgctxt "#31677"
 msgid "Disc image"
 msgstr "镜像"
 
 #: /xml/Variables.xml
+
 msgctxt "#31678"
 msgid "Video"
 msgstr "视频"
 
 #: /xml/Variables.xml
+
 msgctxt "#31679"
 msgid "Archive"
 msgstr "压缩包"
 
 #: /xml/Variables.xml
+
 msgctxt "#31680"
 msgid "Text file"
 msgstr "文本文件"
 
 #: /xml/Variables.xml
+
 msgctxt "#31681"
 msgid "Audio"
 msgstr "音频"
 
 #: /xml/Variables.xml
+
 msgctxt "#31682"
 msgid "Image"
 msgstr "图像"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31683"
 msgid "List"
 msgstr "列表"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31684"
 msgid "Scope"
 msgstr "范围"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31685"
 msgid "Cover"
 msgstr "封面"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31686"
 msgid "Row"
 msgstr "横排"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31687"
 msgid "Filter"
 msgstr "筛选"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31688"
 msgid "Sort method"
 msgstr "排序方式"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31689"
 msgid "Date added"
 msgstr "加入时间"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31690"
 msgid "Decades"
 msgstr "年代"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31691"
 msgid "Clear filters"
 msgstr "清除筛选"
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31692"
 msgid "Wall"
 msgstr "海报墙"
 
 #: /xml/Home.xml
+
 msgctxt "#31693"
 msgid "Refresh skin"
 msgstr "刷新皮肤"
 
 #: /xml/Home.xml
+
 msgctxt "#31695"
 msgid "Lock background"
 msgstr "锁定背景"
 
 #: /xml/MusicVisualisation.xml
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr "正在读取歌词…"
 
 #: /xml/MusicVisualisation.xml
+
 msgctxt "#31701"
 msgid "No lyrics for this track"
 msgstr "这首歌暂无歌词"
 
 #: /xml/Custom_1113_MusicAudioDialog.xml
+
 msgctxt "#31703"
 msgid "Mute"
 msgstr "静音"
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31705"
 msgid "Movies in library"
 msgstr "馆藏影片"
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31706"
 msgid "Average movie rating"
 msgstr "影片均分"
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31707"
 msgid "Latest movie year"
 msgstr "最新年份"
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31708"
 msgid "Included movies"
 msgstr "收录影片"
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31709"
 msgid "In progress"
 msgstr "观看中"
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31710"
 msgid "High-rated unwatched"
 msgstr "高分未看"
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31711"
 msgid "Recent releases"
 msgstr "近期上映"
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31712"
 msgid "Recent premieres"
 msgstr "近期首播"
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31713"
 msgid "Random TV shows"
 msgstr "随机电视剧"
 
 #: /xml/Custom_1113_MusicAudioDialog.xml
+
 msgctxt "#31714"
 msgid "Restore default background"
 msgstr "恢复默认背景"
 
 #: /xml/Variables.xml
+
 msgctxt "#31715"
 msgid "Unknown language"
 msgstr "未知语言"
 
 #: /xml/Variables.xml
+
 msgctxt "#31716"
 msgid "External"
 msgstr "外挂"
 
 #: /xml/Variables.xml
+
 msgctxt "#31717"
 msgid "No subtitles available"
 msgstr "无可用字幕"
@@ -1041,9 +1126,30 @@ msgstr "播放时无操作自动隐藏 OSD。默认关闭。"
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
 msgstr "自动隐藏前的等待秒数。默认 4 秒。"
+
 msgctxt "#31768"
 msgid "Vinyl record effect"
 msgstr "黑胶唱片效果"
+
+msgctxt "#31772"
+msgid "Playback"
+msgstr "播放"
+
+msgctxt "#31771"
+msgid "Interface"
+msgstr "界面"
+
+msgctxt "#31770"
+msgid "Media"
+msgstr "媒体"
+
+msgctxt "#31769"
+msgid "Home"
+msgstr "首页"
+
+msgctxt "#31773"
+msgid "Brand icons by default. Turn off to show plain text instead."
+msgstr "默认用品牌图标显示。图标看不清就关掉，改用文字。"
 
 msgctxt "#31759"
 msgid "Popup transparency"

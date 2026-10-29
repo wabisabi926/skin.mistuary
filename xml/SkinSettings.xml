@@ -18,153 +18,10 @@
 				<left>0</left>
 				<onleft>9000</onleft>
 				<onright>60</onright>
+				<pagecontrol>60</pagecontrol>
 				<onup>700</onup>
 				<ondown>700</ondown>
 				<visible>Container(9000).HasFocus(1)</visible>
-				<control type="radiobutton" id="702">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[20189]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.ToggleSetting(autoscroll)</onclick>
-					<selected>Skin.HasSetting(autoscroll)</selected>
-				</control>
-				<!-- 透白/透黑改由颜色主题控制（设置 → 界面 → 皮肤 → 颜色），
-				     皮肤设置里不再保留开关，避免两套机制打架 -->
-				<control type="button" id="710">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31719]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SetPath(library_art_folder)</onclick>
-					<label2>$VAR[LibraryArtFolderLabel]</label2>
-				</control>
-				<control type="radiobutton" id="705">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31160]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.ToggleSetting(hide_mediaflags)</onclick>
-					<selected>!Skin.HasSetting(hide_mediaflags)</selected>
-				</control>
-				<!-- 详情页技术标识那一行：开 = 品牌图标，关 = 文字胶囊。
-				     素材里没有对应图标的取值（冷门编码等）无论开关如何都走文字。 -->
-				<control type="radiobutton" id="709">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31762]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.ToggleSetting(hide_techflag_icons)</onclick>
-					<selected>!Skin.HasSetting(hide_techflag_icons)</selected>
-				</control>
-				<control type="button" id="706">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31024]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31024, 38018|circle_userrating, 563|circle_rating, 16018|circle_none)</onclick>
-					<label2>$VAR[RatingSettingLabel2Var]</label2>
-				</control>
-				<!-- 默认评分来源：Emby 的 CommunityRating 本身不含来源信息，用 StrmAssistant 的
-				     豆瓣覆盖时需要手动把第一颗评分胶囊的图标切到豆瓣；「自动」交回按刮削类型识别 -->
-				<control type="button" id="707">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31733]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31733, 31767|rating_src_auto, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31765|douban_rating)</onclick>
-					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
-				</control>
-				<control type="button" id="708">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31047]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
-					<label2>$VAR[OriginalTitleSetting]</label2>
-				</control>
-				<!-- 三档透明度，按「离用户多近」分：
-				     711 页面（全屏页面 + 页面里的卡片/导航条）
-				     712 浮窗（叠在页面上的层：对话框/插件详情/插件设置/菜单/键盘/设置侧栏）
-				     713 播放中（播放时的浮窗 + 播放控制条）
-				     档位色都在 colors/defaults.xml 的 gl_*，遮蔽 sc_* 只跟页面档。
-				     弹窗标题带一句主题差异说明（31730/31760/31731），只在选档时出现；
-				     每行管哪些地方写在底部帮助条（31742/31761/31743）。 -->
-				<control type="button" id="711">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31722]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31730, 31723|glass_page_op_1, 31724|glass_page_op_2, 31725|glass_page_op_3, 31726|glass_page_op_4, 31727|glass_page_op_5, 31728|glass_page_op_6)</onclick>
-					<label2>$VAR[NaraGlassPageLabelVar]</label2>
-				</control>
-				<control type="button" id="712">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31759]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31760, 31723|glass_float_op_1, 31724|glass_float_op_2, 31725|glass_float_op_3, 31726|glass_float_op_4, 31727|glass_float_op_5, 31728|glass_float_op_6)</onclick>
-					<label2>$VAR[NaraGlassFloatLabelVar]</label2>
-				</control>
-				<control type="button" id="713">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31729]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31731, 31723|glass_play_op_1, 31724|glass_play_op_2, 31725|glass_play_op_3, 31726|glass_play_op_4, 31727|glass_play_op_5, 31728|glass_play_op_6)</onclick>
-					<label2>$VAR[NaraGlassPlaybackLabelVar]</label2>
-				</control>
-				<top>161</top>
-				<width>1315</width>
-				<height>708</height>
-			</control>
-			<control type="grouplist" id="600">
-				<left>0</left>
-				<onleft>9000</onleft>
-				<onright>60</onright>
-				<onup>600</onup>
-				<ondown>600</ondown>
-				<visible>Container(9000).HasFocus(3)</visible>
-				<control type="radiobutton" id="605">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31002]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.ToggleSetting(no_fanart)</onclick>
-					<selected>!Skin.HasSetting(no_fanart)</selected>
-				</control>
-				<control type="radiobutton" id="6067">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31168]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.ToggleSetting(show_musicvideoposter)</onclick>
-					<selected>Skin.HasSetting(show_musicvideoposter)</selected>
-				</control>
-				<top>161</top>
-				<width>1315</width>
-				<height>708</height>
-			</control>
-			<control type="grouplist" id="610">
-				<left>0</left>
-				<onleft>9000</onleft>
-				<onright>60</onright>
-				<onup>610</onup>
-				<pagecontrol>60</pagecontrol>
-				<ondown>610</ondown>
-				<visible>Container(9000).HasFocus(2)</visible>
 				<control type="radiobutton" id="611">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[342]</label>
@@ -174,7 +31,7 @@
 					<selected>!Skin.HasSetting(HomeMenuNoMovieButton)</selected>
 					<onclick>Skin.ToggleSetting(HomeMenuNoMovieButton)</onclick>
 				</control>
-				<control type="button" id="6111">
+<control type="button" id="6111">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31040]</label>
 					<include content="NaraSettingsRow">
@@ -185,7 +42,7 @@
 					<onclick>ActivateWindow(1101)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)</enable>
 				</control>
-				<control type="button" id="627">
+<control type="button" id="627">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31176]</label>
 					<include content="NaraSettingsRow">
@@ -195,7 +52,7 @@
 					<label2>$VAR[MovieSetOnClickActionLabel2Var]</label2>
 					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)</enable>
 				</control>
-				<control type="radiobutton" id="612">
+<control type="radiobutton" id="612">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[20343]</label>
 					<include content="NaraSettingsRow">
@@ -204,7 +61,7 @@
 					<selected>!Skin.HasSetting(HomeMenuNoTVShowButton)</selected>
 					<onclick>Skin.ToggleSetting(HomeMenuNoTVShowButton)</onclick>
 				</control>
-				<control type="button" id="6121">
+<control type="button" id="6121">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31040]</label>
 					<include content="NaraSettingsRow">
@@ -215,7 +72,7 @@
 					<onclick>ActivateWindow(1101)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)</enable>
 				</control>
-				<control type="button" id="626">
+<control type="button" id="626">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31175]</label>
 					<include content="NaraSettingsRow">
@@ -225,7 +82,7 @@
 					<label2>$VAR[TVShowOnClickActionLabel2Var]</label2>
 					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)</enable>
 				</control>
-				<control type="radiobutton" id="613">
+<control type="radiobutton" id="613">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[2]</label>
 					<include content="NaraSettingsRow">
@@ -234,7 +91,7 @@
 					<selected>!Skin.HasSetting(HomeMenuNoMusicButton)</selected>
 					<onclick>Skin.ToggleSetting(HomeMenuNoMusicButton)</onclick>
 				</control>
-				<control type="button" id="6132">
+<control type="button" id="6132">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31040]</label>
 					<include content="NaraSettingsRow">
@@ -245,7 +102,7 @@
 					<onclick>ActivateWindow(1101)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)</enable>
 				</control>
-				<control type="button" id="625">
+<control type="button" id="625">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31174]</label>
 					<include content="NaraSettingsRow">
@@ -255,8 +112,7 @@
 					<label2>$VAR[AlbumOnClickActionLabel2Var]</label2>
 					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)</enable>
 				</control>
-				<!-- 电视（PVR）相关设置暂时隐藏：皮肤省略了电视浏览界面，这套开关没有实际作用 -->
-				<control type="radiobutton" id="618">
+<control type="radiobutton" id="618">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[19020]</label>
 					<include content="NaraSettingsRow">
@@ -266,7 +122,7 @@
 					<onclick>Skin.ToggleSetting(HomeMenuNoTVButton)</onclick>
 					<visible>false</visible>
 				</control>
-				<control type="button" id="6181">
+<control type="button" id="6181">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31040]</label>
 					<include content="NaraSettingsRow">
@@ -282,13 +138,144 @@
 				<width>1315</width>
 				<height>708</height>
 			</control>
-			<control type="grouplist" id="622">
+			<control type="grouplist" id="600">
+				<left>0</left>
+				<onleft>9000</onleft>
+				<onright>60</onright>
+				<onup>600</onup>
+				<ondown>600</ondown>
+				<visible>Container(9000).HasFocus(3)</visible>
+				<control type="button" id="711">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31722]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31730, 31723|glass_page_op_1, 31724|glass_page_op_2, 31725|glass_page_op_3, 31726|glass_page_op_4, 31727|glass_page_op_5, 31728|glass_page_op_6)</onclick>
+					<label2>$VAR[NaraGlassPageLabelVar]</label2>
+				</control>
+<control type="button" id="712">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31759]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31760, 31723|glass_float_op_1, 31724|glass_float_op_2, 31725|glass_float_op_3, 31726|glass_float_op_4, 31727|glass_float_op_5, 31728|glass_float_op_6)</onclick>
+					<label2>$VAR[NaraGlassFloatLabelVar]</label2>
+				</control>
+<control type="button" id="713">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31729]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31731, 31723|glass_play_op_1, 31724|glass_play_op_2, 31725|glass_play_op_3, 31726|glass_play_op_4, 31727|glass_play_op_5, 31728|glass_play_op_6)</onclick>
+					<label2>$VAR[NaraGlassPlaybackLabelVar]</label2>
+				</control>
+<control type="radiobutton" id="605">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31002]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(no_fanart)</onclick>
+					<selected>!Skin.HasSetting(no_fanart)</selected>
+				</control>
+<control type="radiobutton" id="702">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[20189]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(autoscroll)</onclick>
+					<selected>Skin.HasSetting(autoscroll)</selected>
+				</control>
+				<top>161</top>
+				<width>1315</width>
+				<height>708</height>
+			</control>
+			<control type="grouplist" id="610">
 				<left>0</left>
 				<onleft>9000</onleft>
 				<onright>60</onright>
 				<onup>610</onup>
 				<pagecontrol>60</pagecontrol>
 				<ondown>610</ondown>
+				<visible>Container(9000).HasFocus(2)</visible>
+				<control type="button" id="710">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31719]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetPath(library_art_folder)</onclick>
+					<label2>$VAR[LibraryArtFolderLabel]</label2>
+				</control>
+<control type="radiobutton" id="705">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31160]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(hide_mediaflags)</onclick>
+					<selected>!Skin.HasSetting(hide_mediaflags)</selected>
+				</control>
+<control type="radiobutton" id="709">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31762]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(hide_techflag_icons)</onclick>
+					<selected>!Skin.HasSetting(hide_techflag_icons)</selected>
+				</control>
+<control type="button" id="706">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31024]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31024, 38018|circle_userrating, 563|circle_rating, 16018|circle_none)</onclick>
+					<label2>$VAR[RatingSettingLabel2Var]</label2>
+				</control>
+<control type="button" id="707">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31733]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31733, 31767|rating_src_auto, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31765|douban_rating)</onclick>
+					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
+				</control>
+<control type="button" id="708">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31047]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
+					<label2>$VAR[OriginalTitleSetting]</label2>
+				</control>
+<control type="radiobutton" id="6067">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31168]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(show_musicvideoposter)</onclick>
+					<selected>Skin.HasSetting(show_musicvideoposter)</selected>
+				</control>
+				<top>161</top>
+				<width>1315</width>
+				<height>708</height>
+			</control>
+			<control type="grouplist" id="622">
+				<left>0</left>
+				<onleft>9000</onleft>
+				<onright>60</onright>
+				<onup>622</onup>
+				<pagecontrol>60</pagecontrol>
+				<ondown>622</ondown>
 				<visible>Container(9000).HasFocus(4)</visible>
 				<control type="radiobutton" id="623">
 					<textcolor>text_primary</textcolor>
@@ -299,7 +286,7 @@
 					<selected>Skin.HasSetting(OSDAutoClose)</selected>
 					<onclick>Skin.ToggleSetting(OSDAutoClose)</onclick>
 				</control>
-				<control type="button" id="624">
+<control type="button" id="624">
 					<textcolor>text_primary</textcolor>
 					<label>- $LOCALIZE[31173]</label>
 					<label2>$VAR[SkinSettingOSDAutoCloseTime]</label2>
@@ -355,19 +342,19 @@
 				</focusedlayout>
 				<content>
 					<item id="1">
-						<label>$LOCALIZE[128]</label>
+						<label>$LOCALIZE[31769]</label>
 						<onclick>noop</onclick>
 					</item>
 					<item id="2">
-						<label>$LOCALIZE[31061]</label>
+						<label>$LOCALIZE[31770]</label>
 						<onclick>noop</onclick>
 					</item>
 					<item id="3">
-						<label>$LOCALIZE[31159]</label>
+						<label>$LOCALIZE[31771]</label>
 						<onclick>noop</onclick>
 					</item>
 					<item id="4">
-						<label>$LOCALIZE[31170]</label>
+						<label>$LOCALIZE[31772]</label>
 						<onclick>noop</onclick>
 					</item>
 				</content>

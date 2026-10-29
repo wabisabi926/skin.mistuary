@@ -17,119 +17,142 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: /xml/Home.xml /xml/DialogSeekBar.xml
+
 msgctxt "#31000"
 msgid "Now playing"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31002"
 msgid "Show media fanart as background"
 msgstr ""
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31004"
 msgid "Change mode"
 msgstr ""
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31005"
 msgid "Watch as 2D"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31006"
 msgid "Random movies"
 msgstr ""
 
 #: /xml/MyVideoNav.xml
+
 msgctxt "#31009"
 msgid "Download icons"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31010"
 msgid "In progress movies"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31011"
 msgid "Most played albums"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31012"
 msgid "Random albums"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31013"
 msgid "Random artists"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31014"
 msgid "Unplayed albums"
 msgstr ""
 
 #. home screen recordings widget: recent tv recordings
 #: /xml/Home.xml
+
 msgctxt "#31015"
 msgid "Recent recordings"
 msgstr ""
 
 #. home screen channel widget: recently played tv channels
 #: /xml/Home.xml
+
 msgctxt "#31016"
 msgid "Recently played channels"
 msgstr ""
 
 #: /xml/DialogVideoInfo.xml
+
 msgctxt "#31017"
 msgid "Rated"
 msgstr ""
 
 #: /xml/MyMusicNav.xml /xml/MyPics.xml /xml/MyVideoNav.xml
+
 msgctxt "#31020"
 msgid "Actions"
 msgstr ""
 
 #: /xml/AddonBrowser.xml /xml/DialogPVRChannelManager.xml /xml/Includes_MediaMenu.xml /xml/EventLog.xml
+
 msgctxt "#31021"
 msgid "Misc options"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml /xml/Includes.xml
+
 msgctxt "#31022"
 msgid "Sort by"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31023"
 msgid "Viewtype"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31024"
 msgid "Choose rating to display for media items"
 msgstr ""
 
 #: /xml/Home.xml
 #: /xml/MyFavourites.xml
+
 msgctxt "#31025"
 msgid "No favourites found. You can add items from media and other views by using the context menu."
 msgstr ""
 
 #: /xml/DialogSeekBar.xml
+
 msgctxt "#31026"
 msgid "Timeshift"
 msgstr ""
 
 #: /xml/DialogAlbumInfo.xml /xml/DialogVideoInfo.xml
+
 msgctxt "#31028"
 msgid "Show fanart"
 msgstr ""
 
 #: /xml/SettingsProfile.xml
+
 msgctxt "#31029"
 msgid "Last logged in"
 msgstr ""
@@ -137,131 +160,157 @@ msgstr ""
 #: /xml/SettingsSystemInfo.xml
 #: /xml/DialogPlayerProcessInfo.xml
 #. Label to show the system memory usage
+
 msgctxt "#31030"
 msgid "System memory usage"
 msgstr ""
 
 #: /xml/SettingsSystemInfo.xml
+
 msgctxt "#31031"
 msgid "Version info"
 msgstr ""
 
 #: /xml/EventLog.xml /xml/Includes_MediaMenu.xml /xml/SmartPlaylistEditor.xml
+
 msgctxt "#31032"
 msgid "Order"
 msgstr ""
 
 #: /xml/DialogVideoInfo.xml /xml/DialogSongInfo.xml
+
 msgctxt "#31033"
 msgid "Your rating"
 msgstr ""
 
 #: /xml/DialogPVRChannelManager.xml /xml/DialogPVRChannelsOSD.xml /xml/DialogPVRGuideOSD.xml /xml/Variables.xml /xml/FileBrowser.xml
+
 msgctxt "#31035"
 msgid "Pages"
 msgstr ""
 
 #: /xml/FileBrowser.xml /xml/Variables.xml /xml/MyPVRRecordings.xml
+
 msgctxt "#31036"
 msgid "items"
 msgstr ""
 
 #: /xml/Includes.xml
+
 msgctxt "#31037"
 msgid "Selected track"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31038"
 msgid "Rewind"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31039"
 msgid "Fast forward"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31040"
 msgid "Edit widgets"
 msgstr ""
 
 #: /xml/Variables.xml /xml/MyPics.xml
+
 msgctxt "#31041"
 msgid "Camera manufacturer"
 msgstr ""
 
 #: /xml/SmartPlaylistEditor.xml
+
 msgctxt "#31042"
 msgid "Playlist options"
 msgstr ""
 
 #: /xml/SmartPlaylistEditor.xml
+
 msgctxt "#31043"
 msgid "Set the type and add rules to create a smart playlist. These playlists are dynamic and include all media items from your database which apply to your chosen rules."
 msgstr ""
 
 #: /xml/DialogPVRGroupManager.xml
+
 msgctxt "#31044"
 msgid "Add group"
 msgstr ""
 
 #: /xml/DialogPVRGroupManager.xml
+
 msgctxt "#31045"
 msgid "Rename group"
 msgstr ""
 
 #: /xml/DialogPVRGroupManager.xml
+
 msgctxt "#31046"
 msgid "Delete group"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31047"
 msgid "Movie title format"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31049"
 msgid "Original title"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31050"
 msgid "Original title (Localised title)"
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31051"
 msgid "Localised title (Original title)"
 msgstr ""
 
 #: /xml/Includes.xml
+
 msgctxt "#31052"
 msgid "filtered"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31054"
 msgid "Press Left to step back, or Right to step forward"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31055"
 msgid "Press Right to frame advance"
 msgstr ""
 
 #: /xml/MyMusicNav.xml /xml/MyVideoNav.xml
+
 msgctxt "#31056"
 msgid "Go to playlist"
 msgstr ""
 
 #: /xml/SettingsProfile.xml
+
 msgctxt "#31057"
 msgid "Show login screen on startup"
 msgstr ""
 
 #: /xml/SettingsProfile.xml
+
 msgctxt "#31058"
 msgid "Automatic Login on startup"
 msgstr ""
@@ -269,28 +318,28 @@ msgstr ""
 #empty strings from id 31059 to 31060
 
 #: /xml/SkinSettings.xml
-msgctxt "#31061"
-msgid "Main menu items"
-msgstr ""
-
 #empty string with id 31064
 
 #: /xml/MyVideoPlaylist.xml
+
 msgctxt "#31065"
 msgid "Video playlist"
 msgstr ""
 
 #: /xml/MyMusicPlaylist.xml
+
 msgctxt "#31066"
 msgid "Music playlist"
 msgstr ""
 
 #: /xml/EventLog.xml
+
 msgctxt "#31067"
 msgid "Event log"
 msgstr ""
 
 #: /xml/Custom_1105_MusicOSDSettings.xml
+
 msgctxt "#31068"
 msgid "Choose presets"
 msgstr ""
@@ -298,21 +347,25 @@ msgstr ""
 #empty string with id 31070
 
 #: /xml/DialogButtonMenu.xml /xml/LoginScreen.xml
+
 msgctxt "#31072"
 msgid "Power Options"
 msgstr ""
 
 #: /xml/MyPlaylist.xml
+
 msgctxt "#31073"
 msgid "Total length"
 msgstr ""
 
 #: /xml/MyPlaylist.xml
+
 msgctxt "#31074"
 msgid "Total duration"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31075"
 msgid "Movie sets"
 msgstr ""
@@ -320,21 +373,25 @@ msgstr ""
 #empty strings from id 31076 to 31078
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31080"
 msgid "Ends at"
 msgstr ""
 
 #: /xml/Custom_1105_MusicOSDSettings.xml
+
 msgctxt "#31082"
 msgid "Lyrics add-on"
 msgstr ""
 
 #: /xml/Custom_1105_MusicOSDSettings.xml
+
 msgctxt "#31083"
 msgid "Lyrics add-on settings"
 msgstr ""
 
 #: /xml/Custom_1105_MusicOSDSettings.xml
+
 msgctxt "#31084"
 msgid "Visualisation settings"
 msgstr ""
@@ -342,6 +399,7 @@ msgstr ""
 #empty strings from id 31085 to 31088
 
 #: /xml/DialogPVRGroupManager.xml
+
 msgctxt "#31089"
 msgid "Available groups"
 msgstr ""
@@ -351,267 +409,307 @@ msgstr ""
 #empty string with id 31094
 
 #: /xml/DialogSubtitles.xml
+
 msgctxt "#31096"
 msgid "Local subtitle available"
 msgstr ""
 
 #: /xml/DialogPVRChannelManager.xml
+
 msgctxt "#31097"
 msgid "Channel options"
 msgstr ""
 
 #: /xml/LoginScreen.xml
+
 msgctxt "#31098"
 msgid "Select your Kodi user profile[CR]to login and continue"
 msgstr ""
 
 #. viewtype name
 #: /xml/View_52_IconWall.xml
+
 msgctxt "#31099"
 msgid "IconWall"
 msgstr ""
 
 #. viewtype name
 #: /xml/View_53_Shift.xml
+
 msgctxt "#31100"
 msgid "Shift"
 msgstr ""
 
 #. viewtype name
 #: /xml/View_54_InfoWall.xml
+
 msgctxt "#31101"
 msgid "InfoWall"
 msgstr ""
 
 #. viewtype name
 #: /xml/View_500_Wall.xml
+
 msgctxt "#31102"
 msgid "Wall"
 msgstr ""
 
 #: /xml/SmartPlaylistRule.xml
+
 msgctxt "#31103"
 msgid "Enter text here..."
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31104"
 msgid "Your library is currently empty. In order to populate it with your personal media, enter \"Files\" section, add a media source and configure it. After the source has been added and indexed you will be able to browse your library."
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31106"
 msgid "Teletext"
 msgstr ""
 
 #. viewtype name
 #: /xml/View_55_WideList.xml
+
 msgctxt "#31107"
 msgid "WideList"
 msgstr ""
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31109"
 msgid "Video streams"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31110"
 msgid "Enter files section"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31111"
 msgid "View your personal pictures or download one of the many image add-ons from the official repository."
 msgstr ""
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31112"
 msgid "Audio streams"
 msgstr ""
 
 #: /xml/VideoOSD.xml
+
 msgctxt "#31115"
 msgid "Subtitles streams"
 msgstr ""
 
 #: /xml/MyVideoNav.xml
+
 msgctxt "#31117"
 msgid "Edit nodes"
 msgstr ""
 
 #: /xml/DialogVideoInfo.xml
+
 msgctxt "#31123"
 msgid "Same director"
 msgstr ""
 
 #: /xml/DialogVideoInfo.xml
+
 msgctxt "#31126"
 msgid "Press OK to read plot"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31127"
 msgid "Show icons"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31129"
-msgid "General settings applying to all areas of the skin."
-msgstr ""
+msgid "Choose which entries the main menu shows and what each row displays."
+msgstr "Choose which entries the main menu shows and what each row displays."
 
 #: /xml/Variables.xml
+
 msgctxt "#31130"
-msgid "Main menu-related settings: Configure the home screen to your likings."
-msgstr ""
+msgid "How media info is shown: badges, ratings, titles and artwork."
+msgstr "How media info is shown: badges, ratings, titles and artwork."
 
 #: /xml/Custom_1101_SettingsList.xml
+
 msgctxt "#31132"
 msgid "Select Program"
 msgstr ""
 
 #: /xml/Custom_1101_SettingsList.xml
+
 msgctxt "#31133"
 msgid "Select Resolution"
 msgstr ""
 
 #: /xml/DialogAddonInfo.xml
+
 msgctxt "#31135"
 msgid "Binary"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
 #. Label to show PVR info page
+
 msgctxt "#31137"
 msgid "PVR"
 msgstr ""
 
 #: /xml/DialogAddonInfo.xml
+
 msgctxt "#31141"
 msgid "Changes for version"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31142"
 msgid "Play speed"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31143"
 msgid "You did not set up PVR yet. In order to use PVR, choose a PVR client addon and configure it. Please visit http://kodi.wiki/view/PVR to learn more."
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31144"
 msgid "Enter add-on browser"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31148"
 msgid "Categories"
 msgstr ""
 
 #: /xml/Includes.xml
+
 msgctxt "#31153"
 msgid "You do not have any add-ons of this type installed. Enter the add-on browser to download add-ons created by our community."
 msgstr ""
 
 #: /xml/VideoOSDBookmarks.xml
+
 msgctxt "#31155"
 msgid "No bookmarks created yet."
 msgstr ""
 
 #: /xml/SkinSettings.xml
+
 msgctxt "#31157"
 msgid "Edit categories"
 msgstr ""
 
 #: /xml/SkinSettings.xml
-msgctxt "#31159"
-msgid "Artwork"
-msgstr ""
-
 #: /xml/SkinSettings.xml
+
 msgctxt "#31160"
 msgid "Show media flags"
 msgstr ""
 
 #: /xml/DialogNumeric.xml
+
 msgctxt "#31161"
 msgid "Numeric pad"
 msgstr ""
 
 #: /xml/Custom_1105_MusicOSDSettings.xml
+
 msgctxt "#31163"
 msgid "Show Fanart background"
 msgstr ""
 
 #. Label of a setting
 #: /xml/SkinSettings.xml
+
 msgctxt "#31167"
 msgid "Animate background"
 msgstr ""
 
 #. Label of a setting
 #: /xml/SkinSettings.xml
+
 msgctxt "#31168"
 msgid "Show posters instead of thumbs for musicvideos"
 msgstr ""
 
 #. Description label for skin settings area
 #: /xml/Variables.xml
+
 msgctxt "#31169"
-msgid "Artwork related settings."
-msgstr ""
+msgid "Glass transparency, page background and text scrolling."
+msgstr "Glass transparency, page background and text scrolling."
 
 #: /xml/SkinSettings.xml
 #. Label for OSD settings category
-msgctxt "#31170"
-msgid "On screen display"
-msgstr ""
-
 #: /xml/SkinSettings.xml
 #. Helper text for the label of OSD settings category
+
 msgctxt "#31171"
-msgid "On screen display (OSD) related settings"
-msgstr ""
+msgid "How the on-screen controls behave during playback."
+msgstr "How the on-screen controls behave during playback."
 
 #: /xml/SkinSettings.xml
 #. Setting Automatically close video OSD
+
 msgctxt "#31172"
 msgid "Automatically close video OSD"
 msgstr ""
 
 #: /xml/SkinSettings.xml
 #. Setting auto close time for video osd
+
 msgctxt "#31173"
 msgid "Video OSD autoclose time (seconds)"
 msgstr ""
 
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a music album
+
 msgctxt "#31174"
 msgid "Default action for music albums"
 msgstr ""
 
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a TV show
+
 msgctxt "#31175"
 msgid "Default action for TV shows"
 msgstr ""
 
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a movie set
+
 msgctxt "#31176"
 msgid "Default action for movie sets"
 msgstr ""
 
 #: /xml/DialogPVRRadioRDSInfo.xml /xml/MyPVRChannels.xml /xml/MyPVRGuide.xml /xml/MyPVRProviders.xml /xml/MyPVRRecordings.xml /xml/MyPVRSearch.xml /xml/MyPVRTimers.xml
+
 msgctxt "#31177"
 msgid "Radio is not available in this skin."
 msgstr ""
 
 #: /xml/DialogGameControllers.xml /xml/DialogSelect.xml /xml/GameOSD.xml /xml/MyGames.xml
+
 msgctxt "#31178"
 msgid "Games are not available in this skin."
 msgstr ""
@@ -620,400 +718,478 @@ msgstr ""
 
 #: /xml/Includes_SettingsDialog.xml
 #. Button to select Player Process Info window
+
 msgctxt "#31597"
 msgid "Player info"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
 #. Label to show the audio codec name
+
 msgctxt "#31604"
 msgid "Audio codec"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
 #. Label to show the system info page
+
 msgctxt "#31611"
 msgid "System"
 msgstr ""
 
 #: /xml/Home.xml
 #. Header for media libraries synchronized by Emby
+
 msgctxt "#31616"
 msgid "Media libraries"
 msgstr ""
 
 #: /xml/Home.xml /xml/Includes_Home.xml
 #. Label for TV shows ordered by the date their latest episode was added
+
 msgctxt "#31617"
 msgid "Recently updated"
 msgstr ""
 
 #: /xml/Home.xml
 #. Header for unwatched TV shows ordered by the date their latest episode was added
+
 msgctxt "#31618"
 msgid "Recently updated TV shows"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31621"
 msgid "Player Process Info"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31622"
 msgid "VIDEO"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31623"
 msgid "PROCESSING"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31624"
 msgid "AUDIO"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31625"
 msgid "METADATA"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31626"
 msgid "Display output"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31627"
 msgid "Video stream"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31628"
 msgid "Pixel format"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31629"
 msgid "Bit depth"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31630"
 msgid "Aspect ratio"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31631"
 msgid "Decoder"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31632"
 msgid "Decode method"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31633"
 msgid "Hardware"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31634"
 msgid "Software"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31636"
 msgid "Live / average"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31637"
 msgid "Color gamut"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31638"
 msgid "Media source"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31639"
 msgid "Playback time"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31640"
 msgid "Audio resolution"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31641"
 msgid "Input"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31642"
 msgid "Output"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31643"
 msgid "Audio language"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31645"
 msgid "Off"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31647"
 msgid "Processor"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31649"
 msgid "Memory usage"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31650"
 msgid "Video queue / data"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31651"
 msgid "Audio queue / data"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31652"
 msgid "Dolby Vision"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31654"
 msgid "Profile"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31664"
 msgid "Player cache"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31665"
 msgid "Passthrough"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31666"
 msgid "Converting"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31667"
 msgid "Output mode"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31668"
 msgid "Metadata"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31670"
 msgid "HDR10 MDL"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31671"
 msgid "HDR10 MaxCLL / FALL"
 msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
+
 msgctxt "#31675"
 msgid "PCM"
 msgstr ""
 
 #: /xml/FileManager.xml
+
 msgctxt "#31676"
 msgid "Modified"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31677"
 msgid "Disc image"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31678"
 msgid "Video"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31679"
 msgid "Archive"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31680"
 msgid "Text file"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31681"
 msgid "Audio"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31682"
 msgid "Image"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31683"
 msgid "List"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31684"
 msgid "Scope"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31685"
 msgid "Cover"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31686"
 msgid "Row"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31687"
 msgid "Filter"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31688"
 msgid "Sort method"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31689"
 msgid "Date added"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31690"
 msgid "Decades"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31691"
 msgid "Clear filters"
 msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
+
 msgctxt "#31692"
 msgid "Wall"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31693"
 msgid "Refresh skin"
 msgstr ""
 
 #: /xml/Home.xml
+
 msgctxt "#31695"
 msgid "Lock background"
 msgstr ""
 
 #: /xml/MusicVisualisation.xml
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr ""
 
 #: /xml/MusicVisualisation.xml
+
 msgctxt "#31701"
 msgid "No lyrics for this track"
 msgstr ""
 
 #: /xml/Custom_1113_MusicAudioDialog.xml
+
 msgctxt "#31703"
 msgid "Mute"
 msgstr ""
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31705"
 msgid "Movies in library"
 msgstr ""
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31706"
 msgid "Average movie rating"
 msgstr ""
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31707"
 msgid "Latest movie year"
 msgstr ""
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31708"
 msgid "Included movies"
 msgstr ""
 
 #: /xml/Includes_HomeVideo.xml
+
 msgctxt "#31709"
 msgid "In progress"
 msgstr ""
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31710"
 msgid "High-rated unwatched"
 msgstr ""
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31711"
 msgid "Recent releases"
 msgstr ""
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31712"
 msgid "Recent premieres"
 msgstr ""
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
+
 msgctxt "#31713"
 msgid "Random TV shows"
 msgstr ""
 
 #: /xml/Custom_1113_MusicAudioDialog.xml
+
 msgctxt "#31714"
 msgid "Restore default background"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31715"
 msgid "Unknown language"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31716"
 msgid "External"
 msgstr ""
 
 #: /xml/Variables.xml
+
 msgctxt "#31717"
 msgid "No subtitles available"
 msgstr ""
@@ -1173,9 +1349,30 @@ msgstr "Hide the OSD automatically while playing. Off by default."
 msgctxt "#31758"
 msgid "Seconds before the OSD hides. 4 by default."
 msgstr "Seconds before the OSD hides. 4 by default."
+
 msgctxt "#31768"
 msgid "Vinyl record effect"
 msgstr "Vinyl record effect"
+
+msgctxt "#31772"
+msgid "Playback"
+msgstr "Playback"
+
+msgctxt "#31771"
+msgid "Interface"
+msgstr "Interface"
+
+msgctxt "#31770"
+msgid "Media"
+msgstr "Media"
+
+msgctxt "#31769"
+msgid "Home"
+msgstr "Home"
+
+msgctxt "#31773"
+msgid "Brand icons by default. Turn off to show plain text instead."
+msgstr "Brand icons by default. Turn off to show plain text instead."
 
 msgctxt "#31759"
 msgid "Popup transparency"
