@@ -10,16 +10,18 @@
 			<!-- 电影和电视剧统一由动作栏「演员」图标控制：默认收起，点图标展开 -->
 			<visible>Integer.IsGreater(Container(50).NumItems,0) + Skin.HasSetting(nara_cast_open)</visible>
 			<animation effect="slide" start="0,70" end="0,0" time="400" delay="100" tween="cubic" easing="out">WindowOpen</animation>
-			<!-- 通用版：演员栏原本完全没有底板，与动作栏（GlassTint_regular）不一致 -->
+			<!-- 底板跟「页面透明度」而不是「浮窗透明度」：这块是详情页里的卡片，
+			     不是浮在页面上的层。详情页唯一的真浮窗是「更多」菜单底板
+			     （DialogVideoInfo.xml 那块 480×349 居中面板），那个才该用浮窗档。
+			     底板不能去掉：Kodi 的 label 没有文字描边和阴影，白字压在亮 fanart 上会糊。
+
+			     贴图和「更多」弹窗同一张 glass20（中心 255 / 边缘 192 / 16px 渐变带），
+			     边缘自己会化进背景，所以**不要再叠一圈描边环**——原来那圈
+			     ring_card_1760x200_r28 是 2px 纯白乘 6%，在近黑 fanart 上就是一条白条。 -->
 			<control type="image">
 				<width>1760</width>
 				<height>200</height>
-				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="28">shapes/round28.png</texture>
-			</control>
-			<control type="image">
-				<width>1760</width>
-				<height>200</height>
-				<texture colordiffuse="border_subtle">shapes/ring_card_1760x200_r28.png</texture>
+				<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="label">
 				<width>500</width>
@@ -64,10 +66,16 @@
 							<texture diffuse="masks/circle.png" background="true">$VAR[NaraImgListItemThumbDefDefaultActorSolid]</texture>
 						</control>
 						<control type="label">
-							<top>108</top>
+							<top>109</top>
 							<width>176</width>
-							<height>22</height>
-							<font>font12</font>
+							<height>20</height>
+							<!-- 18px（font10），和角色名同字号、靠颜色分主次。
+							     之前是 font12 的 22px：头像是 104，22px 相当于头像的 21%，
+							     而海报墙是 244 海报配 22px（9%）——这一行在整块面板里最抢眼。
+							     另外中文是方块字（占满 em box），英文小写只有 x-height，
+							     同字号下中文视觉高度约为英文的 1.4 倍，所以只降中文那行没意义，
+							     两行必须同字号才不会失衡。 -->
+							<font>font10</font>
 							<align>center</align>
 							<aligny>center</aligny>
 							<label>$INFO[ListItem.Label]</label>
@@ -104,10 +112,10 @@
 							<texture diffuse="masks/circle.png" background="true">$VAR[NaraImgListItemThumbDefDefaultActorSolid]</texture>
 						</control>
 						<control type="label">
-							<top>108</top>
+							<top>109</top>
 							<width>176</width>
-							<height>22</height>
-							<font>font12</font>
+							<height>20</height>
+							<font>font10</font>
 							<align>center</align>
 							<aligny>center</aligny>
 							<scroll>true</scroll>
