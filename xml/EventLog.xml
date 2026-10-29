@@ -163,7 +163,7 @@
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label></label>
-						<onclick></onclick>
+						<onclick>noop</onclick>
 						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<control type="radiobutton" id="22">
@@ -186,7 +186,7 @@
 						<textcolor>text_primary</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<label>$LOCALIZE[192]</label>
-						<onclick></onclick>
+						<onclick>noop</onclick>
 						<selectedcolor>text_primary</selectedcolor>
 					</control>
 					<control type="button" id="501">

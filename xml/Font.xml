@@ -74,12 +74,6 @@
 			<size>30</size>
 		</font>
 		<font>
-			<name>font23_narrow</name>
-			<filename>Inter-Unicode-Regular.ttf</filename>
-			<size>23</size>
-			<linespacing>0.8</linespacing>
-		</font>
-		<font>
 			<name>font25_narrow</name>
 			<filename>Inter-Unicode-Regular.ttf</filename>
 			<size>25</size>
@@ -89,12 +83,6 @@
 			<name>font27</name>
 			<filename>Inter-Unicode-Regular.ttf</filename>
 			<size>27</size>
-		</font>
-		<font>
-			<name>font27_narrow</name>
-			<filename>Inter-Unicode-Regular.ttf</filename>
-			<size>27</size>
-			<linespacing>0.8</linespacing>
 		</font>
 		<font>
 			<name>font32</name>
@@ -136,12 +124,6 @@
 			<name>font68_home_hero</name>
 			<filename>Inter-Unicode-Regular.ttf</filename>
 			<size>68</size>
-			<style>lighten</style>
-		</font>
-		<font>
-			<name>font_clock</name>
-			<filename>Inter-Unicode-Regular.ttf</filename>
-			<size>70</size>
 			<style>lighten</style>
 		</font>
 		<font>
@@ -232,11 +214,6 @@
 		</font>
 		<font>
 			<name>font52_title</name>
-			<filename>Inter-Unicode-Regular.ttf</filename>
-			<size>52</size>
-		</font>
-		<font>
-			<name>font_MainMenu</name>
 			<filename>Inter-Unicode-Regular.ttf</filename>
 			<size>52</size>
 		</font>

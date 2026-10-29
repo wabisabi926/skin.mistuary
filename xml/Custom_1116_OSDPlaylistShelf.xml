@@ -33,7 +33,6 @@
 				<width>1880</width>
 				<height>224</height>
 				<orientation>horizontal</orientation>
-				<defaultfocusposition>1</defaultfocusposition>
 				<scrolltime>220</scrolltime>
 				<preloaditems>1</preloaditems>
 				<onleft>6</onleft>

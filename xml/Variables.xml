@@ -1356,24 +1356,8 @@
 		<value condition="Control.HasFocus(6)">focus_foreground</value>
 		<value>text_primary</value>
 	</variable>
-	<variable name="FocusLayoutTextColor10Var">
-		<value condition="Control.HasFocus(10)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
 	<variable name="FocusLayoutTextColor11Var">
 		<value condition="Control.HasFocus(11)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor12Var">
-		<value condition="Control.HasFocus(12)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor13Var">
-		<value condition="Control.HasFocus(13)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor20Var">
-		<value condition="Control.HasFocus(20)">focus_foreground</value>
 		<value>text_primary</value>
 	</variable>
 	<variable name="FocusLayoutTextColor50Var">
@@ -1432,26 +1416,6 @@
 		<value condition="String.IsEqual(ListItem.DBType,song)">$VAR[InfoDiscVar,$LOCALIZE[427]: ,[CR]]$INFO[ListItem.TrackNumber,$LOCALIZE[554]: ,[CR]]$INFO[ListItem.Year,$LOCALIZE[345]: ,[CR]]$INFO[ListItem.Genre,,[CR]]$INFO[ListItem.Duration,$LOCALIZE[180]: ,[CR]]$INFO[ListItem.Playcount,$LOCALIZE[567]: ,[CR]]$INFO[ListItem.LastPlayed,$LOCALIZE[568]: ]</value>
 		<value condition="Window.IsActive(pictures)">$INFO[ListItem.Property(description),,[CR]]$INFO[ListItem.PictureCamMake,, ]$INFO[ListItem.PictureCamModel]</value>
 		<value>$VAR[ListBoxInfoVar]</value>
-	</variable>
-	<variable name="FocusLayoutTextColor120Var">
-		<value condition="Control.HasFocus(120)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor450Var">
-		<value condition="Control.HasFocus(450)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor451Var">
-		<value condition="Control.HasFocus(451)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor9010Var">
-		<value condition="Control.HasFocus(9010)">focus_foreground</value>
-		<value>text_primary</value>
-	</variable>
-	<variable name="FocusLayoutTextColor9000Var">
-		<value condition="Control.HasFocus(9000)">focus_foreground</value>
-		<value>text_primary</value>
 	</variable>
 	<variable name="FileManagerTypeVar">
 		<value condition="ListItem.IsFolder">$LOCALIZE[19076]</value>

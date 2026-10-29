@@ -182,7 +182,6 @@
 					<description>OK</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[186]</label>
 				</control>
 				<control type="button" id="26">
@@ -190,7 +189,6 @@
 					<description>Add Group</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[31044]</label>
 				</control>
 				<control type="button" id="27">
@@ -198,7 +196,6 @@
 					<description>Rename Group</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[31045]</label>
 				</control>
 				<control type="radiobutton" id="25">
@@ -206,9 +203,7 @@
 					<description>Hide Group</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[19289]</label>
-					<radiowidth>100</radiowidth>
 					<radioposy>13</radioposy>
 				</control>
 				<control type="button" id="28">
@@ -216,7 +211,6 @@
 					<description>Delete Group</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[31046]</label>
 				</control>
 				<control type="button" id="35">
@@ -224,7 +218,6 @@
 					<description>Regenerate Group Thumbnail</description>
 					<width>314</width>
 					<include>SettingsItemCommon</include>
-					<font>font25_title</font>
 					<label>$LOCALIZE[13315]</label>
 				</control>
 			</control>

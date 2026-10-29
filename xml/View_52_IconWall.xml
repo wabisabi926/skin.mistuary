@@ -23,7 +23,6 @@
 			<include>OpenClose_Right</include>
 			<include>Visible_Right</include>
 			<control type="panel" id="52">
-				<sharedglassbackdrop>true</sharedglassbackdrop>
 				<centerleft>51%</centerleft>
 				<top>0</top>
 				<width>92%</width>
