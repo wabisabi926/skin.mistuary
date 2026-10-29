@@ -124,11 +124,11 @@
 	<include name="NaraPowerMenuLegacyLayout">
 		<control type="group">
 			<centerleft>50%</centerleft>
-			<width>600</width>
+			<width>400</width>
 			<centertop>50%</centertop>
 			<height>700</height>
 			<include content="DialogBackgroundCommons">
-				<param name="width" value="600" />
+				<param name="width" value="400" />
 				<param name="height" value="80" />
 				<param name="header_label" value="$LOCALIZE[33060]" />
 				<param name="header_id" value="2" />
@@ -143,6 +143,30 @@
 						<label>$LOCALIZE[13012]</label>
 						<onclick>Quit()</onclick>
 						<visible>System.ShowExitButton</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[31774]</label>
+						<onclick>Powerdown()</onclick>
+						<visible>System.CanPowerDown</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13013]</label>
+						<onclick>Reset()</onclick>
+						<visible>System.CanReboot</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13011]</label>
+						<onclick>Suspend()</onclick>
+						<visible>System.CanSuspend</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13010]</label>
+						<onclick>Hibernate()</onclick>
+						<visible>System.CanHibernate</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[20183]</label>
+						<onclick>ReloadSkin()</onclick>
 					</item>
 				</content>
 			</control>
@@ -162,18 +186,31 @@
 			<texturenofocus />
 		</control>
 		<!-- 通用版：grouplist 无 texturebackground，改为独立背景层（高度按内容估算） -->
+		<!-- 宽度 400：最长标签「关闭系统电源」6 个字 × 26 ≈ 156px，左右各留 24 还绰绰有余。
+		     高度按**可见按钮数**分两层：88（标题）+ N×70 + 18（底部留白）。
+		     N=6 时 526、N=5 时 456。用 System.CanHibernate 区分 —— 平台有休眠才会多出「休眠」那一格，
+		     这样每个平台都刚好贴边，不会出现"板子比按钮多一块"。 -->
 		<control type="image">
 			<centerleft>50%</centerleft>
 			<top>180</top>
-			<width>600</width>
-			<height>176</height>
+			<width>400</width>
+			<height>526</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>System.CanHibernate</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>400</width>
+			<height>456</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.CanHibernate</visible>
 		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>103</defaultcontrol>
 			<centerleft>50%</centerleft>
 			<top>180</top>
-			<width>600</width>
+			<width>400</width>
 			<orientation>vertical</orientation>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onup>9000</onup>
@@ -192,7 +229,7 @@
 			</control>
 			<control type="button" id="103">
 				<left>24</left>
-				<width>552</width>
+				<width>352</width>
 				<height>70</height>
 				<font>font26</font>
 				<align>center</align>
@@ -201,6 +238,69 @@
 				<label>$LOCALIZE[13012]</label>
 				<onclick>Quit()</onclick>
 				<visible>System.ShowExitButton</visible>
+			</control>
+			<!-- 下面每个按钮都挂 Kodi 的**能力标志**：平台不支持就自动隐藏，
+			     不需要按 Windows / CoreELEC 分两套写。 -->
+			<control type="button" id="104">
+				<left>24</left>
+				<width>352</width>
+				<height>70</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[31774]</label>
+				<onclick>Powerdown()</onclick>
+				<visible>System.CanPowerDown</visible>
+			</control>
+			<control type="button" id="105">
+				<left>24</left>
+				<width>352</width>
+				<height>70</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[13013]</label>
+				<onclick>Reset()</onclick>
+				<visible>System.CanReboot</visible>
+			</control>
+			<control type="button" id="106">
+				<left>24</left>
+				<width>352</width>
+				<height>70</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[13011]</label>
+				<onclick>Dialog.Close(shutdownmenu)</onclick>
+				<onclick>Suspend()</onclick>
+				<visible>System.CanSuspend</visible>
+			</control>
+			<control type="button" id="107">
+				<left>24</left>
+				<width>352</width>
+				<height>70</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[13010]</label>
+				<onclick>Dialog.Close(shutdownmenu)</onclick>
+				<onclick>Hibernate()</onclick>
+				<visible>System.CanHibernate</visible>
+			</control>
+			<control type="button" id="108">
+				<left>24</left>
+				<width>352</width>
+				<height>70</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[20183]</label>
+				<onclick>ReloadSkin()</onclick>
 			</control>
 			<control type="group">
 				<height>18</height>

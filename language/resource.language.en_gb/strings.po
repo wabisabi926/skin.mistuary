@@ -1409,3 +1409,7 @@ msgstr "IMDb"
 msgctxt "#31767"
 msgid "Auto"
 msgstr "Auto"
+
+msgctxt "#31774"
+msgid "Power off"
+msgstr "Power off"
