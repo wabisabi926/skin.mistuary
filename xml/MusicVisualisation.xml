@@ -75,6 +75,7 @@
 				<aspectratio>keep</aspectratio>
 				<fadetime>320</fadetime>
 				<texture background="true" diffuse="shapes/mask_450x450_r12.png">$VAR[NaraMusicCoverVar]</texture>
+				<visible>!Skin.HasSetting(vinyl_mode)</visible>
 			</control>
 			<control type="grouplist" id="432">
 				<left>220</left>
@@ -83,11 +84,46 @@
 				<height>450</height>
 				<orientation>vertical</orientation>
 				<usecontrolcoords>true</usecontrolcoords>
+				<visible>!Skin.HasSetting(vinyl_mode)</visible>
 				<control type="image" id="433">
 					<width>450</width>
 					<height>450</height>
 					<colordiffuse>00FFFFFF</colordiffuse>
 					<texture>osd/nara/music-cover-sheen.png</texture>
+				</control>
+			</control>
+			<!-- 黑胶模式（设置 → 屏幕菜单式调节 → 黑胶唱片效果）。
+			     盘面 520 / 圆封面 340（封面占 65%，比例对齐主流音乐 App）。
+			     盘面底边 665，标题在 674，所以**不用动文字排版**。
+			     转速 24s/圈：暂停时条件动画会 reset 回 0°，周期拉长能把跳变压到最小。 -->
+			<control type="group" id="435">
+				<visible>Skin.HasSetting(vinyl_mode)</visible>
+				<control type="image">
+					<left>185</left>
+					<top>145</top>
+					<width>520</width>
+					<height>520</height>
+					<texture>osd/nara/vinyl-disc.png</texture>
+					<animation effect="rotate" start="0" end="360" loop="true" time="24000"
+					           center="auto" condition="Player.Playing">Conditional</animation>
+				</control>
+				<control type="image">
+					<left>275</left>
+					<top>235</top>
+					<width>340</width>
+					<height>340</height>
+					<texture background="true" diffuse="masks/circle.png">$VAR[NaraVinylCoverVar]</texture>
+					<animation effect="rotate" start="0" end="360" loop="true" time="24000"
+					           center="auto" condition="Player.Playing">Conditional</animation>
+				</control>
+				<control type="image">
+					<left>360</left>
+					<top>70</top>
+					<width>460</width>
+					<height>660</height>
+					<texture>osd/nara/vinyl-tonearm.png</texture>
+					<animation effect="rotate" start="-18" end="0" time="700" reversible="true"
+					           center="400,60" condition="Player.Playing">Conditional</animation>
 				</control>
 			</control>
 			<control type="label">

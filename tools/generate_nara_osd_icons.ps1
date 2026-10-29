@@ -103,14 +103,6 @@ Save-Icon 'process-info' {
   $g.DrawLine($p, 46, 44, 46, 14)
 }
 
-Save-Icon 'processing' {
-  param($g, $p)
-  foreach ($entry in @(@(14, 20, 50, 20, 26), @(14, 32, 50, 32, 40), @(14, 44, 50, 44, 31))) {
-    $g.DrawLine($p, $entry[0], $entry[1], $entry[2], $entry[3])
-    $g.DrawEllipse($p, $entry[4] - 4, $entry[1] - 4, 8, 8)
-  }
-}
-
 Save-Icon 'system' {
   param($g, $p)
   Draw-RoundedRectangle $g $p 17 17 30 30 3
@@ -121,25 +113,6 @@ Save-Icon 'system' {
     $g.DrawLine($p, 11, $offset, 17, $offset)
     $g.DrawLine($p, 47, $offset, 53, $offset)
   }
-}
-
-Save-Icon 'dolby-vision' {
-  param($g, $p)
-  Draw-Polyline $g $p ([float[]]@(14, 18, 32, 32, 14, 46, 14, 18))
-  Draw-Polyline $g $p ([float[]]@(50, 18, 32, 32, 50, 46, 50, 18))
-}
-
-Save-Icon 'status-ok' {
-  param($g, $p)
-  $g.DrawEllipse($p, 10, 10, 44, 44)
-  Draw-Polyline $g $p ([float[]]@(19, 33, 28, 42, 45, 22))
-}
-
-Save-Icon 'status-no' {
-  param($g, $p)
-  $g.DrawEllipse($p, 10, 10, 44, 44)
-  $g.DrawLine($p, 21, 21, 43, 43)
-  $g.DrawLine($p, 43, 21, 21, 43)
 }
 
 Save-Icon 'previous' {
@@ -292,10 +265,14 @@ Save-Icon 'repeat-one' {
   Draw-Polyline $g $p ([float[]]@(28, 29, 32, 26, 32, 38))
 }
 
-Save-Icon 'lyrics' {
+Save-Icon 'vinyl' {
   param($g, $p)
-  Draw-RoundedRectangle $g $p 13 13 38 38 5
-  $g.DrawLine($p, 21, 24, 43, 24)
-  $g.DrawLine($p, 21, 32, 39, 32)
-  $g.DrawLine($p, 21, 40, 34, 40)
+  # 黑胶：盘面 + 标签圈 + 轴心 + 搭在盘上的一小段唱臂
+  $g.DrawEllipse($p, 14, 14, 36, 36)
+  $g.DrawEllipse($p, 26, 26, 12, 12)
+  $brush = [System.Drawing.SolidBrush]::new($white)
+  $g.FillEllipse($brush, 30, 30, 4, 4)
+  $brush.Dispose()
+  $g.DrawLine($p, 50, 9, 41, 20)
+  $g.DrawLine($p, 41, 20, 45, 27)
 }
