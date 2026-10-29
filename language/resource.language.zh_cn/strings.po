@@ -1196,5 +1196,5 @@ msgid "Seek bar"
 msgstr "进度条"
 
 msgctxt "#31776"
-msgid "M / Left-Right: controls"
-msgstr "M / ←→：控制条"
+msgid "Left-Right: controls"
+msgstr "←→：控制条"

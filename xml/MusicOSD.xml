@@ -5,6 +5,6 @@
 	<onload condition="!Player.PauseEnabled">SetFocus(70048)</onload>
 	<depth>DepthOSD</depth>
 	<controls>
-		<include>NaraMusicPlayerControls</include>
+		<include content="NaraMusicPlayerControls" />
 	</controls>
 </window>

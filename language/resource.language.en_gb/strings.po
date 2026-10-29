@@ -1419,5 +1419,5 @@ msgid "Seek bar"
 msgstr "Seek bar"
 
 msgctxt "#31776"
-msgid "M / Left-Right: controls"
-msgstr "M / Left-Right: controls"
+msgid "Left-Right: controls"
+msgstr "Left-Right: controls"

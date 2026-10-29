@@ -8,6 +8,9 @@
 	     会直接报 "Misplaced [" 然后整条条件失效 —— 歌词脚本永远不启动。
 	     这里只判路径非空；插件真缺了 RunScript 自己会报错，不影响其它功能。 -->
 	<onload condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onload>
+	<!-- 兜底 OSD：有歌词时歌词窗口会在它上面再带一份 OSD，两边是同一套 include。
+	     这里先打开 MusicOSD，也能让 CU LRC 的 ACTION_OSD 不再重复开一个 MusicOSD。 -->
+	<onload condition="!Window.IsVisible(musicosd)">ActivateWindow(musicosd)</onload>
 	<onunload>Dialog.Close(script-cu-lrclyrics-main)</onunload>
 	<backgroundcolor>FF000000</backgroundcolor>
 	<controls>

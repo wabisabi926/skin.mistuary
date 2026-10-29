@@ -16,10 +16,10 @@
 			<scrolltime tween="sine">200</scrolltime>
 			<onup>110</onup>
 			<ondown>110</ondown>
-			<!-- 歌词列表是纵向列表，左右没有用途；拿来当打开 MusicOSD 的快捷键。
+			<!-- 歌词列表是纵向列表，左右没有用途；聚焦到同一窗口里的 OSD 播放键。
 			     上下键保留给 CU LRC 的选行/同步（插件自己会处理 ACTION_UPDOWN）。 -->
-			<onleft>ActivateWindow(10120)</onleft>
-			<onright>ActivateWindow(10120)</onright>
+			<onleft>602</onleft>
+			<onright>602</onright>
 			<itemlayout width="800" height="72">
 				<control type="label">
 					<width>790</width>
@@ -56,7 +56,11 @@
 			<align>right</align>
 			<textcolor>80FFFFFF</textcolor>
 			<label>$LOCALIZE[31776]</label>
-			<visible>!Window.IsVisible(musicosd)</visible>
 		</control>
+		<!-- OSD 和歌词放在同一个窗口，焦点可以在两者之间移动；
+		     MusicOSD 只作为没有歌词时的兜底。 -->
+		<include content="NaraMusicPlayerControls">
+			<param name="lyrics_id" value="110" />
+		</include>
 	</controls>
 </window>

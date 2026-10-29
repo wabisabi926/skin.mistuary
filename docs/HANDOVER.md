@@ -620,16 +620,17 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
   皮肤用 `xml/script-cu-lrclyrics-main.xml` 覆盖插件窗口，列表固定在屏幕右侧、
   无全屏遮罩；离开播放页时关闭。
   插件的取词顺序是「内嵌 → 同名 .lrc → 在线源」，本地有词就不会联网。
-- **控制条**：放在 `MusicOSD.xml`，**不自动打开**。歌词窗口有焦点时，按 OK/Menu
-  会由 CU LRC 自己 `ActivateWindow(musicosd)`（`lib/gui.py` 的 `ACTION_OSD`）；
-  按 Back / OK 关闭 OSD 后焦点回到歌词列表。没有歌词时，播放页按 OK/Menu 打开 OSD。
+- **控制条**：主控制条 include 在 `xml/script-cu-lrclyrics-main.xml` 里，和歌词列表
+  同窗口；`MusicOSD` 只作为没有歌词时的兜底（播放页 `onload` 会先打开它，
+  这样 CU LRC 的 `ACTION_OSD` 不会重复再开一个）。
+  歌词列表：↑/↓ 仍归 CU LRC 选行/同步，←/→ 聚焦同一窗口的 OSD 播放键。
+  OSD 按钮行：←/→ 切按钮，↑ 进度条，↓ 回歌词列表。
+  进度条：↑/↓ 回按钮行，←/→ seek；焦点控件是 `slider id=87`。
+  `NaraMusicPlayerControls` 通过 `lyrics_id` 参数决定按钮 ↓ 去 87 还是去歌词列表
+  （MusicOSD 默认 0，歌词窗口传 110）。
   **不要把 `NaraMusicPlayerControls` 塞回播放页**：Kodi 的 `<Visualisation>` 键位把
   ←→ 映射成快退/快进、↑↓ 映射成上一曲/下一曲，放在 visualisation 里的按钮永远
-  收不到方向键导航。
-  OSD 里 ←→ 在按钮间移动，↑/↓ 切到进度条；进度条聚焦时 ←→ seek。
-  进度条的焦点控件是 `slider id=87`（不要恢复成 HiddenObject）。
-  如果以后要做“OSD 常驻”，不要把 OSD 用 timer 顶在歌词窗口上面——会把歌词的
-  上下键锁死；应把 OSD include 进歌词窗口，做成单窗口焦点图。
+  收不到方向键导航。也不要用 timer 把 OSD 顶在歌词窗口上面——会把歌词上下键锁死。
 - **评分**：OSD 有「我的评分」按钮（`SetRating`，写 Kodi 用户评分）。
 - **背景**：默认图是 `media/osd/nara/music-background.jpg`（进 XBT）；
   用户可在「设置 → 外观 → 音乐背景」换图，变量
