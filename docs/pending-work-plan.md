@@ -1,6 +1,9 @@
 # 最终优化方案（2026-10-29）
 
-> 基线：`main` = `d29a225`（清理已提交），v1.2.0 已发布。**第 1 批清理已完成**，剩下的事见第八节。
+> 基线：`main` = `v1.2.1`（2026-10-29）。**第 1 批清理已完成**。
+> **2026-10-29 后续进度**：黑胶唱片（`c67ffb4`）和死变量 / 死 include（`9851941`）已完成；
+> §8 里“还剩 3 件事”的 ①③ 已落地。当前剩余事项、外部校验报告分诊与修复批次见
+> [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md)。
 > 这份是「文档 + 代码」全量复查的结论，分两块：**清理**（第 1–4 节）和**优化**（第 5–8 节）。
 > 每条都给**实测证据**；凡是我一开始判错、后来自己纠正的，都标了「⚠️ 别照做」。
 
@@ -196,9 +199,11 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | 文档失真 8 处 | ✅ 已对齐实测值 |
 | helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §3.1 |
 
-## 还剩 3 件事
+## 还剩 1 件事（2026-10-29 更新）
 
-### ① 黑胶唱片效果（用户点名要先做）　约 2 小时
+> ① 黑胶和 ③ 死变量清理已完成，正文保留作实现记录；当前只剩 ②。
+
+### ① 黑胶唱片效果 ✅ 已完成（`c67ffb4`）
 
 方案在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §2，技术已核实：
 `<animation effect="rotate" loop="true">` 能连续转（`GUIControlFactory.cpp:1148`），
@@ -217,7 +222,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 仓库位置（建议 `D:/下载/AI/script.mistuary.helper/` 独立仓库）、
 Emby token 来源、阶段 1 返回 Emby 直链还是 `plugin://plugin.video.emby`。
 
-### ③ 24 个死变量 + 6 个死 include　1 小时
+### ③ 24 个死变量 + 6 个死 include ✅ 已完成（`9851941`）
 
 `python tools/audit_skin.py --dead` 直接列。删前逐个确认——
 **`HomeVideoRowNavigation` 是活的**（经 `<param name="navigation">` → `$PARAM` 动态引用）。

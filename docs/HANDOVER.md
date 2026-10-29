@@ -4,6 +4,8 @@
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
 > **新接手的三步**：① 本文 §8 看现状与待办 ② `docs/pending-work-plan.md` 看还剩什么
 > ③ 要动音乐页或插件，读 `docs/vinyl-helper-plan.md`。
+> ④ 拿到外部校验报告（如 `docs/skin.mistuary_report.txt`）时，先读
+> `docs/report-triage-2026-10-29.md` 分诊，不要按 445 errors 全量修。
 
 ---
 
@@ -25,10 +27,9 @@
 
 `main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.1**
 （2026-10-29 已发版，tag `v1.2.1`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
-`Textures.xbt` **751 张 / 7.1 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **58 项**。
+`Textures.xbt` **754 张 / 7.3 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **58 项**。
 
-> **本地还有 1 个未推送的提交**（`0ebccc5`：删 33 张死图 + 新增 `vinyl-helper-plan.md`），
-> 见 §8.1。
+> 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
 ### 2026-10-29 本轮改动（已随 1.2.0 发布）
 
@@ -745,34 +746,33 @@ git status -sb              # 与远端的关系 + 工作区
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`，含「可选安装」契约 §3.1 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
+| 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
 | 设置页重排 | 4 类：首页 11 / 媒体 7 / 界面 5 / 播放 2（§5.3.2） |
 
-### 8.4 现在可以直接接着做的四件事
+### 8.4 现在可以直接接着做的三件事
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **音乐播放页黑胶唱片效果** | `docs/vinyl-helper-plan.md` §2（含动画写法、素材清单、**暂停回弹这个硬伤**） | 用户先认可硬伤 |
+| 1 | **外部校验报告 P0/P1** | [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md) | 先定兼容目标（保持 21+ / 只支持 22） |
 | 2 | **`script.mistuary.helper` 阶段 0 + 1** | `docs/helper-plugin-plan.md` + `vinyl-helper-plan.md` §3（骨架清单） | 定仓库位置 / token 来源 / 播放地址形态 |
-| 3 | **删 24 个死变量 + 6 个死 include** | `audit_skin.py --dead` 直接列出来 | 逐个确认（`HomeVideoRowNavigation` 是活的，别删） |
-| 4 | 背景兜底图 | `vinyl-helper-plan.md` §1 | 用户选 A/B/C（建议 A 不动） |
+| 3 | **Kodi 21 实机验证** | 见 §8.7 | 装 21.2 便携版，验双轨渲染 |
 
 ### 8.5 新接手先跑这五条
 
 ```bash
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
-python tools/audit_skin.py --dead                        # 24 变量 + 6 include（已知，未清）
+python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
 python -m unittest discover -s tools -p 'test_*.py'       # 58 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（4 项，都要用户点头）
+### 8.6 待决策（3 项，都要用户点头）
 
-1. **黑胶的暂停回弹**：Kodi 条件动画条件消失会 reset，唱片"啪"回 0°。接受还是不做？
+1. **兼容目标**：保持 Kodi 21+（推荐，补 3 个回退点）/ 只支持 Kodi 22 / 冲官方仓库。
 2. **helper 仓库位置**：`D:/下载/AI/script.mistuary.helper/`（独立仓库）可以吗？
 3. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
-4. **背景兜底**：A 不动 / B 换图 / C 按主题两张。
 
 ### 8.7 从没验证过的
 
