@@ -1413,3 +1413,11 @@ msgstr "Auto"
 msgctxt "#31774"
 msgid "Power off"
 msgstr "Power off"
+
+msgctxt "#31775"
+msgid "Seek bar"
+msgstr "Seek bar"
+
+msgctxt "#31776"
+msgid "M / Left-Right: controls"
+msgstr "M / Left-Right: controls"

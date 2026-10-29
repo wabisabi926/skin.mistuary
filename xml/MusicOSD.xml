@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol always="true">602</defaultcontrol>
+	<!-- 直播电台不能暂停，播放键会禁用；把焦点放到设置键，和原来播放页的行为一致。 -->
+	<onload condition="!Player.PauseEnabled">SetFocus(70048)</onload>
 	<depth>DepthOSD</depth>
 	<controls>
 		<include>NaraMusicPlayerControls</include>

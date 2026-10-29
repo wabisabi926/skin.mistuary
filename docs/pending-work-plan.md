@@ -180,7 +180,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | `script.mistuary.helper` P0/P1 | 规划完成（`helper-plugin-plan.md`），代码零行 | 独立仓库。**1.2.0 拿掉了演员/类型搜索，只有这条路能补回来** |
 | Kodi 21 实机 | 从没验过 | 双轨渲染只在 22.0-BETA2 上跑过。装便携版 30 分钟 |
 | 系统信息/事件日志底部文字区 | 待决策 | 建议保持现状（理由在 `skin-contracts.md`） |
-| `SettingsSystemInfo` 滚动条轨道 | 待决策 | 644 vs 被控控件 357，建议改成 357 |
+| `SettingsSystemInfo` 滚动条轨道 | ✅ 已改 | 644 → 357（`2cda76f`，含几何回归测试） |
 
 ---
 

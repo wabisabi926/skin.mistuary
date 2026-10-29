@@ -50,6 +50,7 @@
 		<value>$LOCALIZE[31701]</value>
 	</variable>
 	<variable name="NaraMusicControlLabelVar">
+		<value condition="Control.HasFocus(87)">$LOCALIZE[31775]</value>
 		<value condition="Control.HasFocus(600)">$LOCALIZE[210]</value>
 		<value condition="Control.HasFocus(607)">$LOCALIZE[209]</value>
 		<value condition="Control.HasFocus(602) + Player.Paused">$LOCALIZE[208]</value>
@@ -93,7 +94,7 @@
 		<radioposx>9</radioposx>
 		<radioposy>9</radioposy>
 		<onup>87</onup>
-		<ondown>noop</ondown>
+		<ondown>87</ondown>
 		<font />
 	</include>
 	<include name="NaraMusicOSDButtonPrimary">
@@ -112,7 +113,7 @@
 		<radioposx>9</radioposx>
 		<radioposy>9</radioposy>
 		<onup>87</onup>
-		<ondown>noop</ondown>
+		<ondown>87</ondown>
 		<font />
 	</include>
 
@@ -159,7 +160,7 @@
 			<itemgap>48</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
-			<ondown>noop</ondown>
+			<ondown>87</ondown>
 			<onleft>70049</onleft>
 			<onright>70054</onright>
 				<control type="group">
@@ -238,7 +239,7 @@
 			<itemgap>32</itemgap>
 			<orientation>horizontal</orientation>
 			<onup>87</onup>
-			<ondown>noop</ondown>
+			<ondown>87</ondown>
 			<onleft>603</onleft>
 			<onright>600</onright>
 				<control type="group">
@@ -391,14 +392,8 @@
 					<righttexture colordiffuse="FFFFFFFF">osd/nara/progress-nib.png</righttexture>
 					<visible>Player.Seeking</visible>
 				</control>
-				<control type="button" id="87">
-					<include>HiddenObject</include>
-					<onup>200</onup>
-					<ondown>200</ondown>
-					<onleft>StepBack</onleft>
-					<onright>StepForward</onright>
-				</control>
-				<control type="slider">
+				<!-- 进度条本身就是焦点目标：按钮按“上”到这里，左右步进找位置。 -->
+				<control type="slider" id="87">
 					<top>-5</top>
 					<width>100%</width>
 					<height>26</height>

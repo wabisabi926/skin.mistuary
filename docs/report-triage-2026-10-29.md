@@ -2,12 +2,11 @@
 
 > **交接用快照，不是长期规范。** 输入是 [`skin.mistuary_report.txt`](skin.mistuary_report.txt)
 > （生成于 2026-10-29 12:49，445 errors / 458 warnings），分诊基于 `f3426cc` / v1.2.1。
-> 随后并行开发提交了 `6c357c4`（音乐库背景兜底，只动 `Includes.xml` / `MyMusicNav.xml` /
-> `HANDOVER.md`，不影响本清单的代码行）。执行前先跑 `git status` / `git log origin/main..main`
-> —— 工作区可能还有别人的未提交改动。
+> 之后仓库又有并行提交（音乐库背景兜底、卡片格宽度、本分诊文档本身等），
+> **执行前以 `git log` / `git status` 为准**，不要照抄本文的提交快照。
 >
-> 并行改动已经提交，当前工作区只剩本分诊文档和报告未提交；不要再把
-> `Includes.xml` / `MyMusicNav.xml` 的改动混进修复提交。
+> 当前工作区若还有别人的未提交改动，不要把 `Includes.xml` / `MyMusicNav.xml` 之类的
+> 文件混进修复提交。
 
 ---
 
@@ -222,25 +221,25 @@ python tools/sync_to_kodi.py --loose
 
 ---
 
-## 6. 文档失真（截至 2026-10-29 写这份文档时）
+## 6. 文档失真（2026-10-29 已处理）
 
-| 位置 | 写的 | 实际 |
+| 位置 | 原先写的 | 处理 |
 |---|---|---|
-| `HANDOVER.md:28` | 751 张 / 7.1 MB | 754 张 / 7.3 MB |
-| `HANDOVER.md:30` | 还有 1 个未推送提交 `0ebccc5` | `main` 与 `origin/main` 同步 |
-| `HANDOVER.md §8.4` | 黑胶、删 24 死变量仍是待办 | 已在 `c67ffb4` / `9851941` 完成 |
-| `HANDOVER.md §8.5` | `--dead` 还有 24 变量 + 6 include | 实际 0 / 0 |
-| `pending-work-plan.md:3` | 基线 `d29a225` / v1.2.0，还剩 3 件事 | 现在 `f3426cc` / v1.2.1；黑胶和死变量已完成 |
-| `pending-work-plan.md:180` | 系统信息页滚动条待决策 | 已改为 357（`2cda76f`） |
+| `HANDOVER.md:28` | 751 张 / 7.1 MB | 已改为 754 张 / 7.3 MB |
+| `HANDOVER.md:30` | 还有 1 个未推送提交 `0ebccc5` | 已改为「以 §8.1 的 `git status -sb` 为准」，不再钉提交号 |
+| `HANDOVER.md §8.4` | 黑胶、删 24 死变量仍是待办 | 已改成当前三件事：报告 P0/P1、helper、Kodi 21 实机 |
+| `HANDOVER.md §8.5` | `--dead` 还有 24 变量 + 6 include | 已改为「应为 0 / 0」 |
+| `HANDOVER.md §8.6` | 黑胶暂停回弹、背景兜底仍待决策 | 已删除；保留兼容目标、helper 仓库、token 三项 |
+| `pending-work-plan.md` | 基线 `d29a225` / v1.2.0；还剩 3 件事；滚动条待决策 | 顶部已更新到 v1.2.1；①③ 标 ✅；滚动条标 ✅ |
 
-> 修文档时注意：`HANDOVER.md` 正在被并行改动，等它落地再改，别覆盖「三条铁律」那段。
+> `HANDOVER.md` 的「三条铁律」是并行开发刚提交的内容，本次只改状态行，没有动那一段。
 
 ---
 
 ## 7. 并行开发与提交纪律
 
-这个仓库可能有多个 agent 并行改。这份分诊写完后，`Includes.xml` / `MyMusicNav.xml`
-的音乐背景兜底已经作为 `6c357c4` 提交；随后又可能出现新的未提交改动。
+这个仓库可能有多个 agent 并行改。这份分诊写完后，音乐背景兜底、卡片格宽度、
+以及本分诊文档本身都已经被并行提交；随后仍可能出现新的未提交改动。
 **每次动手前先 `git status`，只 stage 自己改的文件。**
 
 固定动作：
@@ -275,7 +274,7 @@ audit_skin.py --orphans  0 张
 audit_skin.py --dead     0 变量 / 0 include
 unittest                 58 项 OK
 Textures.xbt             754 张 / 7.3 MB
-分诊时 main              f3426cc；随后 6c357c4 已本地提交
+分诊时 main              f3426cc；之后有并行提交（含本分诊文档）
 ```
 
 > 执行前以 `git status` / `git log origin/main..main` 为准，不要照抄这里的提交快照。

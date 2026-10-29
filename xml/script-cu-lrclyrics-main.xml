@@ -16,6 +16,10 @@
 			<scrolltime tween="sine">200</scrolltime>
 			<onup>110</onup>
 			<ondown>110</ondown>
+			<!-- 歌词列表是纵向列表，左右没有用途；拿来当打开 MusicOSD 的快捷键。
+			     上下键保留给 CU LRC 的选行/同步（插件自己会处理 ACTION_UPDOWN）。 -->
+			<onleft>ActivateWindow(10120)</onleft>
+			<onright>ActivateWindow(10120)</onright>
 			<itemlayout width="800" height="72">
 				<control type="label">
 					<width>790</width>
@@ -42,6 +46,17 @@
 		</control>
 		<control type="label" id="200">
 			<visible>false</visible>
+		</control>
+		<control type="label" id="201">
+			<left>960</left>
+			<top>780</top>
+			<width>800</width>
+			<height>26</height>
+			<font>font12</font>
+			<align>right</align>
+			<textcolor>80FFFFFF</textcolor>
+			<label>$LOCALIZE[31776]</label>
+			<visible>!Window.IsVisible(musicosd)</visible>
 		</control>
 	</controls>
 </window>

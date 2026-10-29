@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-	<onload condition="!Player.PauseEnabled">SetFocus(70048)</onload>
 	<!-- 歌词面板固定在播放页右侧：首次进入若未指定歌词插件，自动选中 CU LRC；
 	     已指定则在页面打开时自动启动歌词脚本（窗口覆盖文件已把列表放在右侧、无全屏遮罩），
 	     离开播放页时关闭歌词窗口。 -->
@@ -10,7 +9,6 @@
 	     这里只判路径非空；插件真缺了 RunScript 自己会报错，不影响其它功能。 -->
 	<onload condition="!String.IsEmpty(Skin.String(LyricScript_Path))">RunScript($INFO[Skin.String(LyricScript_Path)])</onload>
 	<onunload>Dialog.Close(script-cu-lrclyrics-main)</onunload>
-	<defaultcontrol always="true">602</defaultcontrol>
 	<backgroundcolor>FF000000</backgroundcolor>
 	<controls>
 		<include>NaraMusicPlayerBackground</include>
@@ -230,10 +228,6 @@
 					<visible>String.IsEmpty(Window(visualisation).Property(NaraMusic.NextTitle))</visible>
 				</control>
 			</control>
-		</control>
-		<control type="group">
-			<visible>!Window.IsVisible(musicosd)</visible>
-			<include>NaraMusicPlayerControls</include>
 		</control>
 	</controls>
 </window>
