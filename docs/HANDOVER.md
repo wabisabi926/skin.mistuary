@@ -176,9 +176,16 @@ tools/         自检、测试、贴图生成器、xbt_tool.py
 
 ```bash
 python tools/audit_skin.py          # 静态自检：缺失 include/变量/字体/贴图/字符串、浮窗遮蔽、设置读写配对
+python tools/audit_skin.py --orphans        # 反向：盘上有、XML 里没人引用的贴图
+python tools/audit_skin.py --dead           # 反向：定义了、没人用的变量 / include
 python tools/gen_techflag_vars.py --check   # 技术标识变量是否与 map 同步
 python -m unittest discover -s tools -p 'test_*.py'   # 单元测试
 ```
+
+`--orphans` / `--dead` 是**报告模式，永远返回 0**（不进 CI 闸门）——它们只能按字面匹配，
+动态引用（`$PARAM[...]` 传值、变量套变量）需要人工确认，所以不当作硬错误。
+它们存在的理由：`audit --strict` 只查"引用了但文件不存在"，查不出"文件在但没人用"，
+`media/settings/background.png`（1.87 MB）就是这么在包里躺了半个月。
 
 CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，任一失败就中止。
 
@@ -191,6 +198,7 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `gen_corner_masks.py` | `mask_*.png` **diffuse 圆角遮罩**（真圆角，见 §5.4.1）。`corner_*.png` 老式实色角部遮盖**已退役**，`MASKS` 表清空 |
 | `gen_techflag_icons.py` | `techflags/color/` 的技术标识图标（含冷门格式白字标兜底），并维护 IconMap；`--check` 供 CI |
 | `scan_rounded.py` | 列「应圆角但没挂 `diffuse`」的控件（A 类内容图）；`--all` 连透明 PNG 一起列 |
+| `gen_osd_filled_icons.py` | ~~OSD 实心图标~~ **2026-10-29 已删**：产物从没被引用，源 SVG 留在 `tools/osd_icons/` |
 | `gen_osd_filled_icons.py` | OSD 实心功能图标 |
 | `gen_music_cover.py` | 音乐播放页兜底封面（黑胶 + 唱臂） |
 | `generate_nara_cast_icon.py` | 演员图标 |
@@ -760,7 +768,11 @@ python tools/scan_rounded.py --all    # 连透明 PNG 一起列
 规划、契约、阶段验收全在 [`helper-plugin-plan.md`](helper-plugin-plan.md)，这里只列接手要点：
 
 - **定位**：皮肤的运行时脚本能力都进这一个插件（不要再建第二个 `script.mistuary.*`）。
-  独立仓库、GPL-3.0、只用标准库；皮肤只做软探测与回退，不声明硬依赖。
+  独立仓库、GPL-3.0、只用标准库。
+- **可选安装（2026-10-29 定）**：**不装就少功能，装了就多**。`addon.xml` **不写** `<import>`，
+  只用 `System.AddonIsEnabled` 软探测；缺插件时搜索回退本地 XSP、豆瓣胶囊隐藏、
+  代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §3.1。
+  ⚠️ 装/卸插件后要**重载皮肤**才生效（`<include condition>` 与 `<content>` 是加载时求值）。
 - **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（神医助手的中文分词/全拼只在服务端生效），
   皮肤容器在 `System.AddonIsEnabled(script.mistuary.helper)` 时切到插件路径，否则回退本地 XSP。
 - **P1 豆瓣评分**：复用 `plugin.video.themoviedb.helper-douban` 的 Legacy + Frodo 双通道，

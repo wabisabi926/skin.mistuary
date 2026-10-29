@@ -206,7 +206,7 @@ git add addon.xml changelog.txt && git commit -m "release: 1.2.1" && git push
 **风险**：CI 的 test job 挂了就不打包（1.2.0 卡过一次）。本地四件套先跑绿。
 **验收**：Actions 绿 + Releases 出现 v1.2.1。
 
-### ② 给 `audit_skin.py` 加两条反向检查　约 2 小时
+### ② 给 `audit_skin.py` 加两条反向检查　✅ 2026-10-29 已完成
 
 现在它只查"引用了但文件不存在"，不查"定义了没人用"——1.87 MB 的死图就是这么藏住的。
 
@@ -218,8 +218,15 @@ git add addon.xml changelog.txt && git commit -m "release: 1.2.1" && git push
   include 要算 `content="X"`、`<include …>X</include>`、**`$PARAM[...]` 间接引用**三种。
 - CI 的 test job 补 `gen_corner_masks --check`、`gen_rings --check`、`gen_glass_plates --check`。
 
-**验收**：`--orphans` 在删除前的那份代码上能报出 `settings/background.png`（拿 `git stash` 验）；
-`--dead` 报出的变量/include 数量和本文 2.1/2.2 一致。
+**实测结果（2026-10-29）**
+- `--orphans`：783 张里报出 **33 张 / 50.6 KB** 疑似未引用（`flags/ratings` 的
+  metacritic / popcorn / rtrotten / mdblist、`flags/starrating/1..10.png`、
+  `icons/sidemenu` 7 张、`osd/fullscreen/buttons` 4 张、`icons/search.png`、`lists/duration.png`）。
+  已经排除了 Kodi 按名字自己解析的贴图（`Overlay*.png` / `pointer_*.png` / `spinner.png` /
+  `defaultgenre.png` / `Default*.png`）和 12 个动态前缀。
+  **这批还没删**——等下一轮确认（都很小，共 50 KB）。
+- `--dead`：变量 312 个里 24 个没人引用、include 301 个里 6 个——**和 2.1 / 2.2 完全一致**。
+- CI 补了 `gen_corner_masks / gen_rings / gen_glass_plates --check` 一步。
 
 ### ③ 决定 4 张 `*_filled` 图标　2 分钟
 
