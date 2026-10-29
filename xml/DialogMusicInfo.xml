@@ -31,7 +31,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
 			</control>
 			<control type="image">
 				<left>-120</left>

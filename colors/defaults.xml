@@ -3,6 +3,8 @@
 	<!-- Base surfaces -->
 	<color name="background_base">FF000000</color>
 	<color name="primary_background">FF404040</color>
+	<!-- 详情页兜底：primary.jpg 是彩色渐变，不能被 25% 的 primary_background 压暗 -->
+	<color name="primary_background_info">FFFFFFFF</color>
 	<color name="surface_main">FF3A3542</color>
 	<color name="surface_panel">FF131218</color>
 	<color name="surface_dialog">FF18171E</color>

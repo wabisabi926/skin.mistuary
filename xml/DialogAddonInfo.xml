@@ -10,13 +10,14 @@
 			<include>FullScreenDimensions</include>
 			<animation effect="fade" start="0" end="100" time="220">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="180">WindowClose</animation>
-			<!-- 通用版：背景现在是随机 fanart，40% 遮罩 + 50% 面板会透出太多，
-			     遮罩加到 70%，面板保持玻璃质感 -->
+			<!-- 有 fanart 时用页面档遮罩（默认 sc_3 = 35%）；没有 fanart 时
+			     primary 用原色显示，遮罩降到 sc_2 = 27%，避免整页被压黑。
+			     （旧注释里的「70%」不存在，已纠正。） -->
 			<!-- 背景兜底：先铺 primary，再叠 fanart；没有 fanart 也不会露出上一页 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>
@@ -30,6 +31,12 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<texture colordiffuse="sc_2">colors/black.png</texture>
+				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<!-- 通用版：grouplist 无 texturebackground，改为独立背景层 -->
 			<!-- 与插件设置页（NaraSettingsDialogFrame）共用 GlassTint_dialog，两页观感一致 -->
