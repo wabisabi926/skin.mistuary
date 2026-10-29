@@ -2,13 +2,12 @@
 
 > 按 `xml/Includes_VideoTechnicalFlags.xml` 里 5 张 map 的**实际 key**逐个比对，
 > 大小写不敏感 + 别名归一（`h265/hvc1 → hevc`、`truehd_atmos → dolby_truehd_atmos` 等）。
-> 复现：`python docs/scratch/icon_coverage.py`
+> 复现脚本已随 `docs/scratch/` 清理丢失；下表是 2026-10-28 的素材库快照。
 
 合计 **109** 个取值需要图标。
 
 > **最终实现已覆盖全部取值**：素材库拿不到 logo 的 16 个冷门格式，由
 > `tools/gen_techflag_icons.py` 按显示名渲染成白字标。本表只反映"哪些能拿到真实 logo"。
-
 
 ## 一、素材库清单
 
@@ -29,7 +28,6 @@
 | 白色 +limasky 兜底 | 100/109 | `hdrvivid`、`hdr_vivid`、`mjpeg`、`prores`、`theora`、`av3a`、`9`、`11`、`13` |
 
 ## 三、分项明细（推荐组合）
-
 
 ### 彩色 fuse3+martian
 
@@ -62,8 +60,6 @@
 | 声道 | 10/13 | `9`、`11`、`13` |
 
 ## 四、手绘补充（11 个）
-
-样张：`docs/scratch/drawn-sample.png`（上排原生、下排手绘）。
 
 | 值 | 做法 |
 |---|---|

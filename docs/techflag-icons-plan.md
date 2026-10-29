@@ -319,9 +319,6 @@ DBID=0），仍然只显示评分。
 `NaraOnlineRatingsRow` 的 `inline_flags` 机制已删除（四处都改成"标识在上、评分在下"，
 这个开关没有调用者了）。`VideoTechnicalFlagsRow` 重新加回，四处复用。
 
-对比图：`docs/scratch/pill-color-compare.png`（五种底色 × 明暗背景）、
-`docs/scratch/layout-final.png`（终版版式）。
-
 ---
 
 ## 十三、终版（第三次修订，已实施）
@@ -356,8 +353,6 @@ DBID=0），仍然只显示评分。
 ### 视觉参数（不变）
 
 胶囊底 黑 40% `66000000` · 图标间距 12 · 文字内边距 14
-
-示意图：`docs/scratch/layout-merged-below.png`
 
 > 间距迭代记录：8 → 16（用户嫌小）→ **24（定稿）**。24 的依据：16 太挤、32 会让胶囊行
 > 与上文脱节；且简介是固定高度 textbox，文字短时框内本来就有空白，实际视觉间距已大于设定值。

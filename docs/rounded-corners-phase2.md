@@ -1,6 +1,6 @@
 # 圆角二期方案（待确认，未执行）
 
-> 2026-10-28 全库扫描后制定。扫描脚本：`docs/scratch/scan_rounded.py`。
+> 2026-10-28 全库扫描后制定。扫描脚本：`tools/scan_rounded.py`（已从 scratch 转正）。
 > 规范依据：`docs/HANDOVER.md` §5.4.1。**本文只描述改动，不改任何文件。**
 
 ---

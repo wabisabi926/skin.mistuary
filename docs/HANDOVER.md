@@ -658,13 +658,13 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 | 项 | 值 |
 |---|---|
-| HEAD | `0ebccc5`（删 33 张死图 + 新增 `vinyl-helper-plan.md`） |
-| 与远端 | **领先 1 个提交，未 push**（`origin/main` = `fc61e7e`） |
+| HEAD | `5e01582`（交接文档整体更新到 1.2.1 现状，§8.1–8.9 重写） |
+| 与远端 | **完全同步，0 领先**（`origin/main` = `5e01582`） |
 | 工作区 | 干净 |
 | 版本 | `addon.xml` = 1.2.1，`v1.2.1` 已发版 |
 | 贴图 | `Textures.xbt` 751 张 / 7.1 MB；`media/` 松散 PNG 750 张 |
 
-> 接手第一件事：`git push`（不涉及发版，版本号没变）。之后要发新版才升 `addon.xml`。
+> 没有待 push 的提交。要发新版才升 `addon.xml`（§6）。
 
 ### 8.2 发版记录
 
