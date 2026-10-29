@@ -2,8 +2,8 @@
 
 > 基线：`main` = `v1.2.1`（2026-10-29）。**第 1 批清理已完成**。
 > **2026-10-29 后续进度**：黑胶唱片（`c67ffb4`）和死变量 / 死 include（`9851941`）已完成；
-> §8 里“还剩 3 件事”的 ①③ 已落地。当前剩余事项、外部校验报告分诊与修复批次见
-> [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md)。
+> 外部校验报告的 P0 / P1 / P2 也已清完（`report-triage-2026-10-29.md`）。
+> 剩下只有 `script.mistuary.helper` 和 Kodi 21 实机验证，两项都需要用户拍板。
 > 这份是「文档 + 代码」全量复查的结论，分两块：**清理**（第 1–4 节）和**优化**（第 5–8 节）。
 > 每条都给**实测证据**；凡是我一开始判错、后来自己纠正的，都标了「⚠️ 别照做」。
 
@@ -95,44 +95,32 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 # 三、清理：工具与临时文件
 
-| 项 | 现状 | 建议 |
+| 项 | 现状 | 结论 |
 |---|---|---|
-| `docs/scratch/` | **17 MB / 62 个文件**（59 png + 1 svg + 1 xbt + README） | 清空前先做 3.1 |
-| `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本 | 删（git 历史里还有） |
-| `tools/preview.html` | 8 KB，早期配色预览 | 删或留，看你还用不用 |
+| `docs/scratch/` | 本地 20 MB，已 gitignore；7 处失效文档引用已修完 | 随时可清（`rm -rf docs/scratch/*`，只留 README），不影响仓库 |
+| `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本 | **保留**：HANDOVER §7 定为参考；`release.yml` 排除 `tools/`，不进包 |
+| `tools/preview.html` | 8 KB，早期配色预览 | 保留，无成本 |
 | `tools/music-cover-original.png` | **756 KB** 源图，`gen_music_cover.py` 的输入 | **保留**（删了封面就没法重新生成） |
 | `tools/osd_icons/*.svg` | 7 KB，OSD 图标矢量源 | 保留（生成器要用） |
 | `tools/test_nara_*.ps1` | 4 个 PowerShell 手动 UI 测试 | 保留，但没进 CI，属于"要人跑"的 |
 
-## 3.1　⚠️ `docs/scratch/` 里有 7 处文档引用，文件**已经全丢了**
+## 3.1　`docs/scratch/` 的 7 处失效引用（已修）
 
-| 文档 | 引用 | 实际 |
-|---|---|---|
-| `techflag-icon-coverage.md:5` | `python docs/scratch/icon_coverage.py` | **脚本不存在** |
-| `techflag-icon-coverage.md:66` | `docs/scratch/drawn-sample.png` | **不存在** |
-| `techflag-icons-plan.md:322` | `docs/scratch/pill-color-compare.png` | **不存在** |
-| `techflag-icons-plan.md:323` | `docs/scratch/layout-final.png` | **不存在** |
-| `techflag-icons-plan.md:360` | `docs/scratch/layout-merged-below.png` | **不存在** |
-| `rounded-corners-phase2.md:3` | `docs/scratch/scan_rounded.py` | 脚本已转正为 **`tools/scan_rounded.py`**，路径要改 |
-
-**做法**：清 scratch **之前**先处理这 7 处——要么改成 `tools/` 下的正式路径，
-要么删掉"复现/样张"这两句（图已经没了，留着是死链）。
-`icon_coverage.py` 建议**重写进 `tools/`**（它算的是 109 个取值的图标覆盖，是个有用的检查）。
+`techflag-icon-coverage.md` 改成"复现脚本已丢失，下表是 2026-10-28 快照"；
+`techflag-icons-plan.md` 里三张样张引用已删；`rounded-corners-phase2.md`
+指向已转正的 `tools/scan_rounded.py`。`icon_coverage.py` 暂未重写进 `tools/`，
+需要时按 `techflags/color/*` 与 5 张 map 重新实现。
 
 ---
 
-# 四、清理：文档失真（全部实测过）
+# 四、清理：文档失真（已全部处理）
 
-| 位置 | 写的 | 实际 |
-|---|---|---|
-| `docs/README.md:12` | techflags「**96 张**图标」 | **97 张**（audio 50 / hdr 6 / resolution 7 / video 34） |
-| `docs/README.md:33` | 透明度「21 处页面 / **25 处浮窗** / **29 处播放中**」 | 21 / **18** / **17**，另有 `NaraSettingsDialogTintVar` **15**、`NaraGlassScrimTintVar` **16** |
-| `docs/README.md` 自检块 | 单测「**46 项**」，缺 `gen_rings` / `scan_rounded` | **58 项** |
-| `docs/skin-contracts.md:277` | 单测「**42 项**全绿」 | **58 项** |
-| `docs/HANDOVER.md:644` | HEAD `efea1ff` | `f71a891`（v1.2.0 之后又推了 1 个文档提交） |
-| `docs/HANDOVER.md` §4 工具表 | 没有 `scan_rounded.py` | 已补进工具表 |
-| `addon.xml:31` | `<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面；` | 结尾是**分号**，应是句号 |
-| `addon.xml:19` | `<forum>http://forum.kodi.tv/</forum>` | 指向论坛首页，不是皮肤帖 |
+8 处已按实测值改写：README 的图标张数 / 透明度处数 / 单测项数，`skin-contracts`
+的 35 → 59 项与 xbt 662 → 751，HANDOVER 的去掉的提交号，工具表补 `scan_rounded.py`，
+`addon.xml` 免责声明结尾分号 → 句号。
+
+**唯一遗留**：`addon.xml:19` 的 `<forum>` 仍指向 `http://forum.kodi.tv/` 首页。
+没有皮肤帖的真实地址，不猜；拿到帖子 URL 再换。
 
 ---
 
@@ -201,7 +189,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 ## 还剩 1 件事（2026-10-29 更新）
 
-> ① 黑胶和 ③ 死变量清理已完成，正文保留作实现记录；当前只剩 ②。
+> ① 黑胶、③ 死变量清理、外部校验报告 P0/P1/P2 都已完成；当前只剩 ②（需要用户拍板）。
 
 ### ① 黑胶唱片效果 ✅ 已完成（`c67ffb4`）
 
@@ -233,15 +221,16 @@ Emby token 来源、阶段 1 返回 Emby 直链还是 `plugin://plugin.video.emb
 |---|---|
 | 背景兜底换图 | 有兜底（`extras/backgrounds/primary.jpg`，1920×1080 / 228 KB，`DefaultBackground` 里无条件绘制）。只是深色图和纯黑对比低，换图收益小 |
 | PVR 台标 9 处圆角 | 透明台标抠四角看不出来 |
-| `docs/scratch/` 清理 | 里面 7 处文档引用已失效，清之前要先修文档；17 MB 且 gitignore，不急 |
+| `docs/scratch/` 清理 | 20 MB 本地缓存、已 gitignore，删了不影响仓库；要清随时清 |
+| `<scroll>` 运行时条件（12 处） | 只认布尔字面量；"聚焦才滚动"要拆两套 label，收益只是长标题滚动 |
 
 **统一验收**
 
 ```bash
 python tools/audit_skin.py --strict                      # EXIT=0
 python tools/audit_skin.py --orphans                     # 0 张
-python tools/audit_skin.py --dead                        # 24 变量 + 6 include
-python -m unittest discover -s tools -p 'test_*.py'       # 58 项
+python tools/audit_skin.py --dead                        # 0 变量 / 0 include
+python -m unittest discover -s tools -p 'test_*.py'       # 59 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check \
   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 python tools/xbt_tool.py pack                            # 只有动过 media/

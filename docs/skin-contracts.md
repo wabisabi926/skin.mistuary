@@ -249,10 +249,10 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 cd /d "D:\下载\AI\skin.mistuary"
 set PY="C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe"
 
-%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 35 项全绿
+%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 59 项全绿
 %PY% tools/audit_skin.py --strict                      # 期望 EXIT=0
 %PY% tools/gen_techflag_vars.py --check                # 期望"与 map 同步"
-%PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 662/662
+%PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 751/751
 ```
 
 实机检查（重启 Kodi 后）：

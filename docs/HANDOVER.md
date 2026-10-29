@@ -27,7 +27,7 @@
 
 `main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.2.1**
 （2026-10-29 已发版，tag `v1.2.1`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
-`Textures.xbt` **754 张 / 7.3 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **58 项**。
+`Textures.xbt` **751 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **59 项**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -641,7 +641,7 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 - **歌词**：进入播放页时自动启动歌词插件（默认 `script.cu.lrclyrics`），
   OSD 里**没有**歌词按钮（那个位置让给了黑胶模式）。
   皮肤用 `xml/script-cu-lrclyrics-main.xml` 覆盖插件窗口，列表固定在屏幕右侧、
-  无全屏遮罩；离开播放页时关闭。
+  无全屏遮罩；关闭由插件自己处理（皮肤不再发 `Dialog.Close`）。
   插件的取词顺序是「内嵌 → 同名 .lrc → 在线源」，本地有词就不会联网。
 - **控制条**：主控制条 include 在 `xml/script-cu-lrclyrics-main.xml` 里，和歌词列表
   同窗口；`MusicOSD` 只作为没有歌词时的兜底（播放页 `onload` 会先打开它，
@@ -810,15 +810,15 @@ git status -sb              # 与远端的关系 + 工作区
 | 项 | 值 |
 |---|---|
 | 版本 | `addon.xml` = 1.2.1，`v1.2.1` 已发版 |
-| 贴图 | `Textures.xbt` 754 张 / 7.3 MB；`media/` 松散 PNG **752 张**（+1 张 jpg） |
-| 待打包 | 删了 `dialogs/dialog-bg.png` 但**还没重打包** —— 下次 `xbt_tool.py pack` 会变 **753 张** |
+| 贴图 | `Textures.xbt` 751 张 / 7.2 MB；`media/` 松散 PNG **750 张**（+1 张 jpg） |
+| 打包状态 | `xbt` 与 `media/` 一致（`unpack` 751/751），改过 png 才需要重打包 |
 
 > 要发新版才升 `addon.xml`（§6）。
 
 **开发机当前状态**：实机已经是**散图模式** —— `media/` 下没有 `Textures.xbt`，
 改 png 只需 F5 重载皮肤，不用重启（§0 第 3 条）。
 
-> 注意：实机 `media/` 里有 **843 张**松散 PNG，而仓库只有 752 张 —— 多出来的是历年
+> 注意：实机 `media/` 里有 **843 张**松散 PNG，而仓库只有 750 张 —— 多出来的是历年
 > 删除后残留的旧图（`--loose` 同步只覆盖不删除）。它们没有引用、不影响运行，
 > 想要干净可以整目录删掉重新同步一次。
 >
@@ -848,6 +848,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`，含「可选安装」契约 §3.1 |
+| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`（`main`，首个提交 `352e12e`）：阶段 0 骨架 + 阶段 1 服务端搜索已完成，58 项单测全绿，已同步到 `%APPDATA%\Kodi\addons\script.mistuary.helper`。豆瓣（P1）/ 代表集（P2）是空壳。**皮肤侧还没接分支**——`NaraSearchMoviesPathVar` 仍是纯 XSP，要等实机验证播放地址后再加 `$EXP[helper_ready]` 分支 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -872,7 +873,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 58 项
+python -m unittest discover -s tools -p 'test_*.py'       # 59 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 

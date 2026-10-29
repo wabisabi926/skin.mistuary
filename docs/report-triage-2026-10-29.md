@@ -249,7 +249,7 @@ audit --strict   EXIT=0
 audit --orphans  0 张
 audit --dead     0 变量 / 0 include
 unittest         59 项 OK
-Textures.xbt     754 张 / 7.3 MB
+Textures.xbt     751 张 / 7.2 MB
 ```
 
 执行前以 `git status` / `git log origin/main..main` 为准。

@@ -58,7 +58,7 @@ python tools/gen_techflag_vars.py --check                # 技术标识变量同
 python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
-python -m unittest discover -s tools -p 'test_*.py'      # 58 项
+python -m unittest discover -s tools -p 'test_*.py'      # 59 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 
