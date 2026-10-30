@@ -115,3 +115,25 @@ You should also get your employer (if you work as a programmer) or your school, 
      Yoyodyne, Inc., hereby disclaims all copyright interest in the program `Gnomovision' (which makes passes at compilers) written by James Hacker.
 
 signature of Ty Coon, 1 April 1989 Ty Coon, President of Vice
+
+
+================================================================================
+THIRD-PARTY NOTICES / 第三方素材声明
+================================================================================
+
+本皮肤（skin.mistuary）的**代码**适用上面的 GNU GPL v2；
+**美术素材**（配色、布局、图标重绘、背景图）适用 CC BY-SA 4.0；
+另有下列第三方素材，其原始许可要求"随副本一并分发声明"：
+
+  素材                          许可                许可全文位置
+  ---------------------------------------------------------------------------
+  衍生基础 Estuary / Estuary N   GPL v2 + CC BY-SA 4.0   本文件 / CC 官网
+  script.tinyppi 播放器图标      MIT                 CREDITS.md（含完整 MIT 正文）
+  Inter（含 CJK）字体            SIL OFL 1.1         fonts/OFL.txt
+  Arctic Fuse 2 类型图标         上游许可            CREDITS.md
+  Arctic Fuse 3 技术标识图标      CC BY-NC-SA 4.0     CREDITS.md
+
+**分发、再发布或二次打包时，必须同时提供 LICENSE（本文件）、CREDITS.md 和
+fonts/OFL.txt 三个文件。** 缺任何一个，上述素材的分发条件即不完整。
+
+CREDITS.md 里有每一项的来源仓库、抓取版本（commit）和完整声明文本。

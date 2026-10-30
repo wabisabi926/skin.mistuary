@@ -1,15 +1,54 @@
 # Mistuary（雾汐）
 
-雾汐｜轻量透明皮肤，基于 Nara 魔改的 Estuary N，支持透黑、透白双模式，建议搭配 Emby for kodi next gen 自动同步。
+雾汐｜轻量透明皮肤，衍生自 Estuary N，视频优先。支持**透黑 / 透白**双主题，
+三档独立透明度，原生 Kodi 21 Omega 及以上即可运行，**不需要任何内核改动**。
 
-Mistuary 是衍生自 Estuary N 的视频优先皮肤，面向**未做任何内核修改的 Kodi 21 Omega 及以上版本**，
-CoreELEC 设备同样可用。原分支依赖魔改内核的玻璃、圆角、slot 列表与稳定选中项扩展，
-均已换成普通贴图和标准控件，因此不需要定制内核即可运行。
+> 建议搭配 **Emby for Kodi next gen** 使用（媒体库自动同步、豆瓣评分）。
 
-### Kodi 21 与 22 的差异
+---
 
-皮肤同时支持 21 和 22，两版都能正常使用；22 独有的标签在 21 上会自动隐藏或退化为原值
-（`$MAP[]` 标签查表是 22 才加的，21 上技术标识显示 `DOLBYVISION`、`AC3` 这类原始值）：
+## 支持范围
+
+| 项 | 说明 |
+|---|---|
+| Kodi 版本 | **21 Omega 及以上**（22 有额外标签支持，见下文） |
+| 平台 | Windows / Linux / CoreELEC / Android 均可 |
+| 语言 | 简体中文、English |
+| 必需插件 | 无。装 Emby 插件会更好用，但不装也能跑 |
+
+## 安装
+
+**从压缩包安装（推荐）**
+
+1. 到 [Releases](https://github.com/wabisabi926/skin.mistuary/releases) 下载最新 `skin.mistuary-x.y.z.zip`
+2. Kodi → 设置 → 插件 → 从 zip 文件安装
+3. 设置 → 界面 → 皮肤 → 皮肤 → 选 **Mistuary**
+
+**手动安装**：把整个仓库目录放到 Kodi 的 `addons/` 下，目录名改成 `skin.mistuary`，重启 Kodi。
+
+## 主要功能
+
+- **三档透明度**：页面 / 浮窗 / 播放中，各 6 级（皮肤设置 → 外观），互不干扰
+- **详情页**：全屏沉浸式布局，演员栏默认收起，点图标展开
+- **评分胶囊**：豆瓣 / IMDb / TMDB / 烂番茄，按数据源自动取最多两个
+- **技术标识**：分辨率、编码、HDR 等做成图标，放在简介下方
+- **海报墙**：真圆角（遮罩裁切，不是盖角），焦点环贴边
+- **音乐**：播放页右侧歌词（CU LRC）、黑胶唱片模式、可替换播放背景
+- **电源菜单**：长按返回键，退出 / 重启 / 待机 / 休眠 / 设置，按平台能力自动显隐
+- **设置中心**：把 Kodi 原生设置和皮肤选项放在一起
+
+## 透黑 / 透白
+
+在「设置 → 界面 → 皮肤 → 颜色」切换：
+
+- `SKINDEFAULT` = 透黑（玻璃压黑，默认）
+- `light` = 透白（玻璃提白）
+
+面板统一走 `gl_1..6` 档位，由「皮肤设置 → 外观」的三个透明度设置控制；文字在两种模式下都是白色。
+
+## Kodi 21 与 22 的差异
+
+两版都能正常用。22 独有的标签在 21 上会自动隐藏或退化为原值：
 
 | 项目 | Kodi 22 | Kodi 21 |
 | --- | --- | --- |
@@ -19,140 +58,32 @@ CoreELEC 设备同样可用。原分支依赖魔改内核的玻璃、圆角、sl
 | PVR 客户端名 / 实例名 / 分组来源 / 媒体提供方 | 显示 | 整行自动隐藏 |
 | 频道台标 | `ListItem.ChannelLogo` | 回退 `Art(thumb)` / `EpgEventIcon` |
 
-- 电影与剧集详情页：全屏沉浸式布局，演员栏默认收起、点图标展开
-- 首页顶部导航、媒体库视图：统一海报标题与年份排版
-- 设置中心：把 Kodi 原生设置与皮肤选项放在一起
-- 透明度可调：页面 / 浮窗 / 播放中三档，各 6 级（皮肤设置 → 外观）
-- 详情页与首页主视觉的评分胶囊：豆瓣 / IMDb / TMDB / 烂番茄，最多同时两个
-- 音乐：播放页右侧歌词（CU LRC）、OSD 评分与歌词按钮、可替换的播放背景
-- 省略天气、电台与游戏浏览界面，仅维护英文和简体中文
+## 已知限制
 
-## 安装
-
-1. 下载本仓库，把整个目录放到 Kodi 的 `addons/` 下，目录名改为 `skin.mistuary`
-2. 重启 Kodi
-3. 设置 → 界面 → 皮肤 → 皮肤 → 选择 **Mistuary**
-
-## 透黑 / 透白
-
-两套主题都在「设置 → 界面 → 皮肤 → 颜色」里切换：
-
-- `SKINDEFAULT` = 透黑（玻璃压黑，默认）
-- `light` = 透白（玻璃提白）
-
-面板统一走 `gl_1..6` 档位，由「皮肤设置 → 外观」里的三个透明度设置控制
-（页面 / 浮窗 / 播放中，各 6 级）；文字在两种模式下都是白色。
-
-## 打包贴图
-
-改动 `media/` 里的图片后需要重新打包（Kodi 优先读 `Textures.xbt`）：
-
-```bash
-python tools/xbt_tool.py pack
-```
+- **安卓上电源菜单只有「退出 / 设置」**：Kodi 在安卓没有关机、重启的系统权限，皮肤补不了
+- **杜比视界档位（P7 / P7 FEL）只在 Kodi 22 显示**：Kodi 的播放信息里没有这个字段
+- **不维护天气、电台、游戏界面**：只保留视频、音乐、图片、PVR、插件
+- **只维护中英双语**：其他语言会显示英文
 
 ## 许可
 
-本皮肤同时包含**代码**与**美术素材**，两者许可不同；另外还有若干第三方素材，
-其原始许可要求"随副本一并分发声明"。本节的第三方声明必须随皮肤一起发布。
+本皮肤**代码**与**美术素材**许可不同，另有若干第三方素材：
 
-| 部分 | 许可 | 全文 |
-| --- | --- | --- |
-| 皮肤代码（`xml/`、`colors/`、`tools/`） | GNU GPL v2 | [`LICENSE`](LICENSE) |
-| 美术素材（配色、布局、图标重绘、背景图） | CC BY-SA 4.0 | <https://creativecommons.org/licenses/by-sa/4.0/> |
-| UI 字体 `fonts/Inter-Unicode-Regular.ttf` | SIL OFL 1.1 | [`fonts/OFL.txt`](fonts/OFL.txt) |
-| `script.tinyppi` 播放器图标 | MIT | 见下文 |
-| Arctic Fuse 2 类型图标 | 上游许可 | 见下文 |
+| 部分 | 许可 |
+| --- | --- |
+| 皮肤代码（`xml/`、`colors/`、`tools/`） | GNU GPL v2 —— 全文见 [`LICENSE`](LICENSE) |
+| 美术素材（配色、布局、图标重绘、背景图） | CC BY-SA 4.0 |
+| UI 字体 `fonts/Inter-Unicode-Regular.ttf` | SIL OFL 1.1 —— 全文见 [`fonts/OFL.txt`](fonts/OFL.txt) |
 
-### 来源与署名
+第三方素材的**完整来源、版本与许可声明**见 [`CREDITS.md`](CREDITS.md)
+（tinyppi 图标 MIT、Inter 字体 OFL、Arctic Fuse 类型图标与技术标识 CC BY-NC-SA）。
+分发或再发布时，`LICENSE`、`fonts/OFL.txt`、`CREDITS.md` 三个文件必须一起带上。
 
-本皮肤衍生自 **Estuary**（phil65 / Team Kodi）与 **Estuary N**，按上游许可保留署名：
+## 反馈
 
-- Estuary 代码：GNU GPL v2
-- Estuary 美术：CC BY-SA 4.0
-- Mistuary 自身的改动（配色、布局、玻璃面板、不透明度设置、图标重绘等）沿用同一许可：
-  代码部分 GPL v2，美术部分 CC BY-SA 4.0。
+问题、建议、皮肤想法都可以开 issue：
+<https://github.com/wabisabi926/skin.mistuary/issues>
 
-### script.tinyppi 播放器图标（MIT）
+---
 
-播放处理信息面板包含以下来自 script.tinyppi 的图标副本：
-
-- arrow-progress.png
-- camcorder.png
-- chart.png
-- check-circle.png
-- circle-xmark.png
-- dv-logo.png
-- layer-group.png
-- memory.png
-- volume.png
-
-Source: <https://github.com/CE-Repo/script.tinyppi>
-
-Source revision: 45ef08917b2a4943b25d71963553a907adad0259
-
-MIT License
-
-Copyright (c) 2026 U3knOwn
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-### Inter（含 CJK）字体（SIL OFL 1.1）
-
-皮肤字体 `fonts/Inter-Unicode-Regular.ttf` 是带有 CJK 字形的 Inter 构建版，
-拉丁与中文共用一套度量；它和 `resource.font.robotocjksc` 插件随附的
-`Inter-Unicode-Regular.ttf` 是同一个文件，未做修改。
-
-- 字族 / 版本（取自字体 name 表）：Inter / Version 4.000
-- 字形覆盖：49833 个字形，16502 个 CJK 统一表意文字，完整拉丁与 CJK 标点
-- 许可：SIL Open Font License 1.1 —— 全文见 [`fonts/OFL.txt`](fonts/OFL.txt)
-- Inter 上游：<https://github.com/rsms/inter>
-- 合并 CJK 的字体由 <https://github.com/jurialmunkey/resource.font.robotocjksc>
-  分发（插件打包用 Apache-2.0，字体本身适用上面的 OFL 声明）
-
-若想自行重建：用 fontTools.merge 合并 Inter（OFL）与 Noto Sans SC（OFL），
-产物仍是 OFL，可直接替换 `fonts/Inter-Unicode-Regular.ttf`，无需改动 `xml/Font.xml`。
-
-### Arctic Fuse 2 类型图标
-
-`media/genres/` 里的 27 张 PNG 原样复制自 Arctic Fuse 2 素材中的 `genres/` 目录；
-回退图标 `media/DefaultGenre.png` 原样复制自同一份素材里的 `DefaultGenres.png`。
-
-Source: <https://github.com/narapeka/skin.arctic.fuse.2>
-
-Upstream: <https://github.com/jurialmunkey/skin.arctic.fuse.2>
-
-Source revision: 91c6fd8f932879dbe57e789d4651052ae25fb567
-
-### 技术标识图标（`media/techflags/`）
-
-详情页技术标识行的彩色图标，来自 Arctic Fuse 3 系列皮肤，按原许可
-（CC BY-NC-SA 4.0）随副本分发；仅做了等比缩放与去留白，未改动图形本身：
-
-- `skin.arctic.fuse.3` → `media/flags/color/{resolution,source,audio,channels}`
-- `skin.arctic.fuse.3-avdvplus&p3i` → `media/flags/color/hdr`
-- `skin.arctic.zephyr.martian` → `media/flags/color/channels/12.png`（fuse3 只到 10）
-
-素材库没有对应 logo 的冷门格式（8K、HD DVD、ProRes、VHS、AVC、AV3A、WavPack 等 16 个），
-由 `tools/gen_techflag_icons.py` 用 Inter 字体渲染成同风格白字标，不涉及第三方美术。
-
-Upstream: `skin.arctic.fuse.3` / `skin.arctic.fuse.3-avdvplus&p3i` / `skin.arctic.zephyr.martian`
-（三者均为 CC BY-NC-SA 4.0 / 3.0，图形版权归原作者）
-
-重新生成：`python tools/gen_techflag_icons.py`
+<sub>开发相关（改皮肤、打包贴图、发版流程）见 [`docs/HANDOVER.md`](docs/HANDOVER.md)。</sub>
