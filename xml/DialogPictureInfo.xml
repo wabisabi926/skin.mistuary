@@ -7,7 +7,7 @@
 	<controls>
 		<!-- 信息侧栏原本只有一层 50% 玻璃，底下 50% 是清晰原图 → 补遮蔽层 -->
 		<include content="NaraDialogScrim">
-			<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />
+			<param name="tint" value="$VAR[NaraGlassFloatScrimVar]" />
 		</include>
 		<control type="group">
 			<centertop>50%</centertop>

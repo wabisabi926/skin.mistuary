@@ -14,7 +14,7 @@
 			<height>3240</height>
 			<animation effect="fade" start="0" end="100" time="120">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="90">WindowClose</animation>
-			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassFloatScrimVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<textcolor>text_primary</textcolor>

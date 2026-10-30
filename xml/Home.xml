@@ -1319,7 +1319,7 @@
 							<!-- 左上角菜单弹层：原来只有一层很透的固定底色、没有遮蔽层，
 							     压在 fanart 上等于没底。改成跟浮窗同一档。 -->
 							<include content="NaraDialogScrim">
-								<param name="tint" value="$VAR[NaraGlassScrimTintVar]" />
+								<param name="tint" value="$VAR[NaraGlassFloatScrimVar]" />
 							</include>
 							<control type="image">
 								<width>220</width>

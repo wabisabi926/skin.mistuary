@@ -1648,6 +1648,20 @@
 		<value>$LOCALIZE[31725]</value>
 	</variable>
 	<!-- 遮蔽层跟页面档联动：档位越高，页面外压得越重。 -->
+	<!-- 浮窗遮蔽：跟「浮窗透明度」档走，不再借用页面档。
+	     2026-10-30 改：原来浮窗借的是 NaraGlassScrimTintVar（页面档），
+	     用户调「页面透明度」会连带改变所有对话框的实际观感（合成 76%~88% 摆动）。
+	     浮窗默认第 4 档 → sc_4（43%），合成 1-(1-0.43)(1-0.71) = 83.5%，
+	     和文档里写的 83% 终于对上了（之前代码实际是 81%）。 -->
+	<variable name="NaraGlassFloatScrimVar">
+		<value condition="Skin.HasSetting(glass_float_op_1)">sc_1</value>
+		<value condition="Skin.HasSetting(glass_float_op_2)">sc_2</value>
+		<value condition="Skin.HasSetting(glass_float_op_3)">sc_3</value>
+		<value condition="Skin.HasSetting(glass_float_op_4)">sc_4</value>
+		<value condition="Skin.HasSetting(glass_float_op_5)">sc_5</value>
+		<value condition="Skin.HasSetting(glass_float_op_6)">sc_6</value>
+		<value>sc_4</value>
+	</variable>
 	<variable name="NaraGlassScrimTintVar">
 		<value condition="Skin.HasSetting(glass_page_op_1)">sc_1</value>
 		<value condition="Skin.HasSetting(glass_page_op_2)">sc_2</value>
@@ -1705,7 +1719,7 @@
 	     播放中打开设置是"临时看一眼"，把画面盖死就没法边看边调了。 -->
 	<variable name="NaraSettingsDialogScrimVar">
 		<value condition="Player.HasVideo | Player.HasAudio">scrim_osd</value>
-		<value>$VAR[NaraGlassScrimTintVar]</value>
+		<value>$VAR[NaraGlassFloatScrimVar]</value>
 	</variable>
 	<!-- 剧集页「代表集」补零：Kodi 的 Season/Episode 本身不带前导零。
 	     0-9 补成 00-09，10 及以上原样；Season/Episode 缺失时回退到「代表集」。 -->

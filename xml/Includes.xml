@@ -881,7 +881,7 @@
 		<param name="header_icon_size">48</param>
 		<param name="glass_style">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="darken_bg">true</param>
-		<param name="scrim">$VAR[NaraGlassScrimTintVar]</param>
+		<param name="scrim">$VAR[NaraGlassFloatScrimVar]</param>
 		<definition>
 			<control type="image">
 				<left>-2000</left>

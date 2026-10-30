@@ -6,7 +6,7 @@
 		<control type="image">
 			<width>100%</width>
 			<height>100%</height>
-			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassFloatScrimVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<width>100%</width>

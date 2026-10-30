@@ -17,7 +17,7 @@
 	     摆放顺序必须是：scrim → 点空白关闭按钮（如有）→ 面板 → 内容，
 	     否则面板内部点击会被 scrim 上的按钮吃掉。 -->
 	<include name="NaraDialogScrim">
-		<param name="tint">$VAR[NaraGlassScrimTintVar]</param>
+		<param name="tint">$VAR[NaraGlassFloatScrimVar]</param>
 		<definition>
 			<control type="image">
 				<left>-2000</left>
@@ -103,7 +103,7 @@
 		<control type="image">
 			<width>100%</width>
 			<height>100%</height>
-			<texture colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texture>
+			<texture colordiffuse="$VAR[NaraGlassFloatScrimVar]">colors/black.png</texture>
 		</control>
 		<control type="button">
 			<width>100%</width>
