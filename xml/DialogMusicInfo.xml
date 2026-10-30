@@ -23,8 +23,8 @@
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<centertop>50%</centertop>
-			<width>1920</width>
-			<height>1080</height>
+			<width>100%</width>
+			<height>100%</height>
 			<control type="image">
 				<left>-120</left>
 				<top>-80</top>

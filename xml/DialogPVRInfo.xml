@@ -10,9 +10,9 @@
 		</include>
 		<control type="group">
 			<centertop>50%</centertop>
-			<height>1080</height>
+			<height>100%</height>
 			<centerleft>50%</centerleft>
-			<width>1920</width>
+			<width>100%</width>
 			<control type="group">
 				<top>150</top>
 				<left>66</left>

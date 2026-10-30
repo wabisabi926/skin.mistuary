@@ -17,8 +17,8 @@
 		</control>
 
 		<control type="group" id="5190">
-			<width>1920</width>
-			<height>1080</height>
+			<width>100%</width>
+			<height>100%</height>
 			<include content="Animation_NaraFanartDetail">
 				<param name="source" value="movieset" />
 			</include>
