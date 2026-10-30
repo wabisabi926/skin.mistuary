@@ -287,15 +287,7 @@ msgstr ""
 
 #: /xml/Variables.xml
 
-msgctxt "#31054"
-msgid "Press Left to step back, or Right to step forward"
-msgstr ""
-
 #: /xml/Variables.xml
-
-msgctxt "#31055"
-msgid "Press Right to frame advance"
-msgstr ""
 
 #: /xml/MyMusicNav.xml /xml/MyVideoNav.xml
 
@@ -429,30 +421,14 @@ msgstr ""
 #. viewtype name
 #: /xml/View_52_IconWall.xml
 
-msgctxt "#31099"
-msgid "IconWall"
-msgstr ""
-
 #. viewtype name
 #: /xml/View_53_Shift.xml
-
-msgctxt "#31100"
-msgid "Shift"
-msgstr ""
 
 #. viewtype name
 #: /xml/View_54_InfoWall.xml
 
-msgctxt "#31101"
-msgid "InfoWall"
-msgstr ""
-
 #. viewtype name
 #: /xml/View_500_Wall.xml
-
-msgctxt "#31102"
-msgid "Wall"
-msgstr ""
 
 #: /xml/SmartPlaylistRule.xml
 
@@ -467,10 +443,6 @@ msgid "Your library is currently empty. In order to populate it with your person
 msgstr ""
 
 #: /xml/Variables.xml
-
-msgctxt "#31106"
-msgid "Teletext"
-msgstr ""
 
 #. viewtype name
 #: /xml/View_55_WideList.xml
@@ -492,10 +464,6 @@ msgid "Enter files section"
 msgstr ""
 
 #: /xml/Home.xml
-
-msgctxt "#31111"
-msgid "View your personal pictures or download one of the many image add-ons from the official repository."
-msgstr ""
 
 #: /xml/VideoOSD.xml
 
@@ -718,10 +686,6 @@ msgstr ""
 
 #: /xml/Includes_SettingsDialog.xml
 #. Button to select Player Process Info window
-
-msgctxt "#31597"
-msgid "Player info"
-msgstr ""
 
 #: /xml/DialogPlayerProcessInfo.xml
 #. Label to show the audio codec name
@@ -1066,15 +1030,7 @@ msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
 
-msgctxt "#31690"
-msgid "Decades"
-msgstr ""
-
 #: /xml/Includes_MediaMenu.xml
-
-msgctxt "#31691"
-msgid "Clear filters"
-msgstr ""
 
 #: /xml/Includes_MediaMenu.xml
 
@@ -1183,10 +1139,6 @@ msgid "Unknown language"
 msgstr ""
 
 #: /xml/Variables.xml
-
-msgctxt "#31716"
-msgid "External"
-msgstr ""
 
 #: /xml/Variables.xml
 

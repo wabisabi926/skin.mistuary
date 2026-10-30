@@ -198,14 +198,6 @@ msgctxt "#31052"
 msgid "filtered"
 msgstr "已筛选"
 
-msgctxt "#31054"
-msgid "Press Left to step back, or Right to step forward"
-msgstr "按左键后退，或按右键快进"
-
-msgctxt "#31055"
-msgid "Press Right to frame advance"
-msgstr "按右键逐帧前进"
-
 msgctxt "#31056"
 msgid "Go to playlist"
 msgstr "进入播放列表"
@@ -284,27 +276,11 @@ msgstr "选择 Kodi 用户配置文件[CR]登录并继续"
 
 #. viewtype name
 
-msgctxt "#31099"
-msgid "IconWall"
-msgstr "图标墙"
+#. viewtype name
 
 #. viewtype name
 
-msgctxt "#31100"
-msgid "Shift"
-msgstr "平移"
-
 #. viewtype name
-
-msgctxt "#31101"
-msgid "InfoWall"
-msgstr "信息墙"
-
-#. viewtype name
-
-msgctxt "#31102"
-msgid "Wall"
-msgstr "墙"
 
 msgctxt "#31103"
 msgid "Enter text here..."
@@ -313,10 +289,6 @@ msgstr "此处输入文本..."
 msgctxt "#31104"
 msgid "Your library is currently empty. In order to populate it with your personal media, enter \"Files\" section, add a media source and configure it. After the source has been added and indexed you will be able to browse your library."
 msgstr "你的资料库为空。要从你的媒体生成资料库，请进入“文件”区，添加媒体源并设置，当源被添加并索引后，你就能在资料库中浏览了。"
-
-msgctxt "#31106"
-msgid "Teletext"
-msgstr "图文字幕"
 
 #. viewtype name
 
@@ -333,10 +305,6 @@ msgstr "视频流"
 msgctxt "#31110"
 msgid "Enter files section"
 msgstr "进入文件区"
-
-msgctxt "#31111"
-msgid "View your personal pictures or download one of the many image add-ons from the official repository."
-msgstr "浏览你的个人图片或通过官方插件库图片插件下载。"
 
 msgctxt "#31112"
 msgid "Audio streams"
@@ -497,10 +465,6 @@ msgstr "本皮肤不提供游戏功能。"
 
 # empty strings from id 31179 to 31596
 #. Button to select Player Process Info window
-
-msgctxt "#31597"
-msgid "Player info"
-msgstr "播放器信息"
 
 #. Label to show the audio codec name
 
@@ -843,15 +807,7 @@ msgstr "加入时间"
 
 #: /xml/Includes_MediaMenu.xml
 
-msgctxt "#31690"
-msgid "Decades"
-msgstr "年代"
-
 #: /xml/Includes_MediaMenu.xml
-
-msgctxt "#31691"
-msgid "Clear filters"
-msgstr "清除筛选"
 
 #: /xml/Includes_MediaMenu.xml
 
@@ -960,10 +916,6 @@ msgid "Unknown language"
 msgstr "未知语言"
 
 #: /xml/Variables.xml
-
-msgctxt "#31716"
-msgid "External"
-msgstr "外挂"
 
 #: /xml/Variables.xml
 
