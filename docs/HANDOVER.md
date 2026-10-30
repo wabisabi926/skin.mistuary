@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.3.0）
+# 交接说明（Mistuary 1.3.1）
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
@@ -36,9 +36,9 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.3.0**
-（2026-10-29 发版，tag `v1.3.0`，CI 打包发布）。功能完整、静态自检全绿、工作区干净。
-`Textures.xbt` **751 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **59 项**。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.3.1**
+（2026-10-30，tag 待打）。功能完整、静态自检全绿、**工作区有未提交改动（见 §8.1.2）**。
+`Textures.xbt` **751 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **59 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -579,23 +579,6 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
    那是历史遗留的注释，不是活代码。
 
 
-### 5.5.1 播放页 OSD 的三条硬约束（2026-10-30 连翻三次换来的）
-
-| 想做的事 | 只能用 | **不能用** | 为什么 |
-|---|---|---|---|
-| 读当前播放的流信息 | `VideoPlayer.*`（`videoresolution` / `videocodec` / `audiocodec` / `audiochannels` / `hdrtype`） | **`ListItem.*`** | OSD 窗口没有 ListItem 上下文，取不到值 → visible 全假、整行消失 |
-| 杜比视界档位 P7 | 详情页的 `ListItem.HdrDetail` | `VideoPlayer.HdrDetail` | **Kodi 没有这个 info**，播放页永远拿不到档位 |
-| 图标查表 | 详情页那种 key 是 `$PARAM`（加载期替换成字面量） | `$MAP[Map,$INFO[...]]` | `$MAP` 不展开 `$INFO[]`，key 变字面量查不到 → 空贴图 |
-
-另外两条：
-
-- **`font13` 是 27px，不是"小字"**，`font_flag` 才是 18px。给 label 定 `<width>` 前先量：
-  `PIL.ImageFont.truetype(字体, size).getbbox(文字)[2]`。`23.976 FPS` 在 18px 下 99px、27px 下 148px。
-- **对话框叠对话框会透**：Kodi 从插件详情点「设置」不会关掉详情页，两层 71% 玻璃叠着，
-  详情页内容变成鬼影压在设置行上。解法是**让下面那层不画**
-  （`DialogAddonInfo` 根组加 `!Window.IsVisible(10140)`），不要加黑底、
-  也不要给设置页开"不跟透明度设置走"的旁路。
-
 ### 5.6 排查顺序
 
 某窗口不跟设置走时：① grep 写死的 `AARRGGBB` 板 → ② grep `<include condition=`
@@ -794,6 +777,65 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   合集（22 个，可用 `videodb://movies/sets/` 单独做页签）、Emby 索引里尚未同步到
   Kodi 库的条目（当时差 6 部电影 / 131 集）。
 
+### 5.9.2 评分圈按来源着色（方案已定，**未实施**）
+
+用户要求：为将来插件提供多评分源预留颜色区分（豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红）。
+
+**现在的数据现实**（2026-10-30 实测，742 部电影全查）：
+- 只有 `ratings.imdb` 有值，全部标 `default: true`
+- 约 80% 电影有 `ratings.tomatometerallcritics`（烂番茄）
+- **豆瓣、TMDb 字段根本不存在**
+- 所以**现在实施的话全部显示黄色**，这是预期效果，不是 bug
+
+**两条已验证的技术事实**：
+
+1. **`ListItem.RatingSource` 是空的** —— 皮肤层拿不到"当前 default 是哪个源"，
+   必须自己排优先级
+2. **`ListItem.Rating(<source>)` 语法可用**（实测 `Rating(imdb)` 返回 7.5），
+   且 `RatingMap` 是 `std::map<std::string, CRating>` —— **任意字符串都能当源名**，
+   插件 `setRating("douban", 8.5, 0, True)` 皮肤就能读到 `Rating(douban)`
+
+**实施步骤**：
+
+```xml
+<!-- 1. 颜色 token（colors/defaults.xml） -->
+<color name="rating_douban">FF00B51D</color>
+<color name="rating_imdb">FFF5C518</color>
+<color name="rating_tmdb">FF01B4E4</color>
+<color name="rating_rotten">FFFA320A</color>
+
+<!-- 2. 值和颜色用同一串条件（Variables.xml）—— 保证永不错位 -->
+<variable name="RatingValueVar">
+    <value condition="!String.IsEmpty(ListItem.Rating(douban))">$INFO[ListItem.Rating(douban)]</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(tmdb))">$INFO[ListItem.Rating(tmdb)]</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(themoviedb))">$INFO[ListItem.Rating(themoviedb)]</value>
+    <value>$INFO[ListItem.Rating]</value>
+</variable>
+<variable name="RatingColorVar">
+    <value condition="!String.IsEmpty(ListItem.Rating(douban))">rating_douban</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(tmdb))">rating_tmdb</value>
+    <value condition="!String.IsEmpty(ListItem.Rating(themoviedb))">rating_tmdb</value>
+    <value>rating_imdb</value>
+</variable>
+```
+
+**贴图要拆两张**（`colordiffuse` 是整体相乘，会把黑底也染色）：
+
+| 文件 | 内容 | 着色 |
+|---|---|---|
+| `badge_disc.png`（新） | 纯黑圆，50% 透明 | ❌ |
+| `badge_ring.png`（改） | 只有白环，内部透明 | ✅ `colordiffuse="$VAR[RatingColorVar]"` |
+
+**控件三层**：黑底 → 彩色环 → 数字（白色）。
+
+> ⚠️ **`$VAR` 在 `<textcolor>` 里不生效**（整段变透明），这是踩过的坑。
+> 所以**数字不能跟着变色**，只能靠环区分来源。
+
+**烂番茄要不要排进优先级**：待定。它是次评分，排进去会盖掉 IMDb 主分，
+建议**只作为颜色 token 备用**，等用户明确要求再说。
+
+---
+
 ## 6. 发版流程
 
 1. 改 `addon.xml` 的 `version`（**必须升**，否则 CI 判定"版本没变"直接跳过）
@@ -851,7 +893,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 
 ---
 
-## 8. 交接前状态（2026-10-29）
+## 8. 交接前状态（2026-10-30）
 
 ### 8.1 当前 git 状态
 
@@ -867,7 +909,7 @@ git status -sb              # 与远端的关系 + 工作区
 
 | 项 | 值 |
 |---|---|
-| 版本 | `addon.xml` = 1.3.0，`v1.3.0` 已发版 |
+| 版本 | `addon.xml` = 1.3.1，tag 待打 |
 | 贴图 | `Textures.xbt` 751 张 / 7.2 MB；`media/` 松散 PNG **750 张**（+1 张 jpg） |
 | 打包状态 | `xbt` 与 `media/` 一致（`unpack` 751/751），改过 png 才需要重打包 |
 
@@ -882,6 +924,52 @@ git status -sb              # 与远端的关系 + 工作区
 >
 > 发版前记得 `python tools/xbt_tool.py pack` 把散图打回包（§6）。
 
+### 8.1.1 本轮（1.3.1）改了什么 —— 2026-10-30
+
+**已提交并推送的 6 个**：
+
+| 提交 | 内容 |
+|---|---|
+| `3e43cf5` | 详情页 6 处文字加 `shadow_hard` 阴影（亮 fanart 下可读） |
+| `905689f` | 文档更正 + Emby 节点调研 |
+| `453e37b` | 海报墙 244×352 → 236×340，缝 16 → 24 |
+| `49c1fc0` | 卡片信息重排 + 状态图标绿色 + 图标素材统一 |
+| `b30e3e2` | 评分移到右上、边距统一 12px、垂直居中 |
+| `f17d8a3` | HANDOVER §5.9 / §5.9.1 更新 |
+
+**未提交（在工作区，可直接提交）**：
+
+- `addon.xml` 1.3.0 → **1.3.1**
+- `changelog.txt` 新增 1.3.1 段
+- `HANDOVER.md` / `pending-work-plan.md` 版本号
+- `media/Textures.xbt` 已重打包（751 张 / 7.2 MB，含新遮罩 `mask_236x340_r12`、新环 `ring_card_238x342_r13`、`badge_ring.png`）
+
+### 8.1.2 工作区里有两拨改动，**别混**
+
+**我的（未提交，可直接提交）**：
+
+```
+M addon.xml
+M changelog.txt
+M docs/HANDOVER.md
+M docs/pending-work-plan.md
+M media/Textures.xbt
+```
+
+**另一条线（helper 接线，别碰）**：
+
+```
+M docs/helper-plugin-plan.md
+M language/resource.language.en_gb/strings.po
+M language/resource.language.zh_cn/strings.po
+M tools/test_nara_search_navigation.py
+M xml/Includes_Search.xml
+M xml/SkinSettings.xml
+```
+
+> **`docs/HANDOVER.md` 两边都改过**：我改 §5.9 / §8，对方在 §8.9 加了 helper M1b 一行。
+> 提交时用 `git diff` 截自己的 hunk + `git apply --cached` 分开 stage，**不要 `git add` 整个文件**。
+
 ### 8.2 发版记录
 
 | 版本 | 要点 |
@@ -890,6 +978,7 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.2.0** | 真圆角（diffuse 遮罩）+ 播放条重排 + 搜索增强 + 主评分四档 |
 | **v1.2.1** | 包体 10.2 → 7.2 MB（清死图）+ 系统信息页滚动条 |
 | **v1.3.0** | 黑胶模式 + 音乐信息页重做 + 电源菜单 + 详情页背景兜底；Kodi 21 标签/导航修复 |
+| **v1.3.1** | 详情页文字阴影（亮背景可读）+ 海报墙间距 16→24 + 卡片信息重排（评分右上/状态左下/集数右下）+ 已看完绿色 |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -938,9 +1027,34 @@ python -m unittest discover -s tools -p 'test_*.py'       # 59 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（1 项，要用户点头）
+### 8.6 待决策（3 项，要用户点头）
 
 1. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
+
+2. **剧集「未看」仍显示眼睛**（2026-10-30，做不动）
+   一集没看的剧集（`0/21`）左下角也挂 `played-total`（实心眼睛），用户会误读成"看了一部分"。
+   **四种写法全试过，都不生效**：
+
+   | 写法 | 结果 |
+   |---|---|
+   | `Integer.IsGreater(Property(WatchedEpisodes),0)` | 0/21 照样显示 |
+   | `!String.IsEqual(Property(WatchedEpisodes),0)` | 同上 |
+   | 空 `<value>` 提前拦截 0 | 同上 |
+   | `String.IsEqual($INFO[Property(...)],0)` | 同上 |
+
+   **根因**：Kodi 条件表达式里「`ListItem.Property(...)` 对比数字字面量」不工作。
+   同变量的「已看完」那条能工作，是因为它比的是**两个 Property**。
+   **现状**：已回退到 1.3.0 行为（所有剧集都显示眼睛）。
+   **出路**：等 helper 插件给 ListItem 写一个 `Property(has_progress)`，用
+   `String.IsEqual(Property(has_progress),true)` 判断 —— 但**同样是 Property 对比字面量**，
+   落地前要先验证这个比较到底行不行。
+
+3. **评分圈按来源着色**（方案已定，未实施）
+   用户想要豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红，为将来插件多评分源预留。
+   方案见 §5.9.2（待写）。**关键约束**：`$VAR` 在 `<textcolor>` 里不生效，
+   所以只能给**环**着色（`colordiffuse`），数字保持白色。
+   贴图要拆成 `badge_disc.png`（黑底）+ `badge_ring.png`（白环，可着色）。
+
 
 > **播放地址已定，只剩实机验证**（2026-10-30 更正）：`lib/emby.py:56` 的 `play_url()`
 > 已经写成 `plugin://plugin.service.emby-next-gen/?mode=play&item=…`，退路是 Emby 直链。
@@ -1024,6 +1138,8 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
   代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §2。
   ⚠️ 装/卸插件后要**重载皮肤**才生效（`<include condition>` 与 `<content>` 是加载时求值）。
 - **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（中文分词/全拼只在服务端生效）。
+  皮肤侧 M1b 已接（`Includes_Search.xml` 的服务端路径 + 两套 content + 媒体分类开关），
+  **M1c 实机验证随 2.0.0 一起做**，1.x 不再推。
 - **P1 豆瓣评分**、**P2 代表集标识** 见规划文档。
 
 > ⚠️ 行为变化：1.2.0 起本地快速搜索不再匹配演员 / 导演 / 类型（见 §5.10），
