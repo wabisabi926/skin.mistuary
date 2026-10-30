@@ -28,13 +28,13 @@
 				     7×264 = 1848 吃掉了全部余量，直接掉成 6 列（面板 98% 之后可用宽度不足 1848，
 				     而且面板整体右移 50）。回到 260（7×260 = 1820）就恢复 7 列。
 				     要再调宽请先确认目标设备实际可用宽度，别按 1920 满屏算。 -->
-				<itemlayout height="430" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
+				<itemlayout height="418" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">
 						<top>10</top>
 						<include>InfoWallMovieLayout</include>
 					</control>
 				</itemlayout>
-				<focusedlayout height="430" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
+				<focusedlayout height="418" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<animation effect="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="130,224">Focus</animation>
@@ -126,7 +126,7 @@
 						</include>
 					</control>
 				</focusedlayout>
-				<itemlayout height="430" width="260" condition="Container.Content(favourites)">
+				<itemlayout height="418" width="260" condition="Container.Content(favourites)">
 					<control type="group">
 						<top>18</top>
 						<include content="InfoWallFavouriteLayout">
@@ -134,7 +134,7 @@
 						</include>
 					</control>
 				</itemlayout>
-				<focusedlayout height="430" width="260" condition="Container.Content(favourites)">
+				<focusedlayout height="418" width="260" condition="Container.Content(favourites)">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<top>18</top>
