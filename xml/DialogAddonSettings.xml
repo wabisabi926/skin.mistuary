@@ -2,6 +2,20 @@
 <window>
 	<defaultcontrol>5</defaultcontrol>
 	<controls>
+		<!-- 从插件详情点「设置」时 Kodi 不会关掉详情页，两个对话框叠着：
+		     详情页 71% 透 × 设置页 71% 透 = 详情页的标题 / 图标 / 按钮会变成鬼影
+		     压在设置行上（2026-10-30）。
+		     这里在窗口最底下铺一张和详情页同一张兜底背景
+		     （extras/backgrounds/primary.jpg，1920×1080，详情页也用它），
+		     把下层整个盖住 —— 设置面板照旧跟浮窗透明度走，
+		     透过面板看到的是「一张图」，不是另一个对话框的内容。
+		     只在详情页还开着时出现；从插件浏览器直接进设置时照旧看页面背景。 -->
+		<control type="image">
+			<visible>Window.IsVisible(10146)</visible>
+			<include>FullScreenDimensions</include>
+			<aspectratio>scale</aspectratio>
+			<texture>special://skin/extras/backgrounds/primary.jpg</texture>
+		</control>
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<centertop>50%</centertop>
