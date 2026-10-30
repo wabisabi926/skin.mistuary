@@ -243,7 +243,7 @@
 				<top>522</top>
 				<width>24</width>
 				<height>24</height>
-				<texture>$VAR[ItemStatusIconVar]</texture>
+				<texture colordiffuse="$VAR[StatusIconColorVar]">$VAR[ItemStatusIconVar]</texture>
 				<align>right</align>
 				<aligny>center</aligny>
 			</control>

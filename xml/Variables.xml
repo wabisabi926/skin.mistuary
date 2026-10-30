@@ -731,11 +731,18 @@
 		<value condition="Integer.IsGreater(ListItem.Playcount,0)">$INFO[ListItem.Overlay]</value>
 	</variable>
 	<!-- 状态图标的着色：只有「已看完」变绿，其余保持白色。
-	     条件必须和 ItemStatusIconVar 第一条（OverlayWatched）完全一致，
-	     否则会出现"图标是已看完的样子、颜色却不是绿的"这种错位。
+	     三条要分别对上 ItemStatusIconVar 里产出 OverlayWatched 的分支，否则会出现
+	     "图标是已看完的样子、颜色却不是绿的"这种错位：
+	       ① 剧集/季：WatchedEpisodes == TotalEpisodes
+	       ② 电影系列：Watched == Total
+	       ③ 电影 / 单集 / 音乐电视：Playcount > 0（走最后那条 $INFO[ListItem.Overlay]）
+	     ③ 必须排除「继续观看」和「正在播放」——那两条在 ItemStatusIconVar 里排得更靠前，
+	     图标是 OverlayWatchedResume / OverlayPlaying，不是对勾，上绿就错了。
 	     故意不给「继续看」上黄色：status_warning 已经是黄，两黄混在一起分不清。 -->
 	<variable name="StatusIconColorVar">
-		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes)) | String.IsEqual(Listitem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">status_done</value>
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes))">status_done</value>
+		<value condition="String.IsEqual(Listitem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">status_done</value>
+		<value condition="[String.IsEqual(Listitem.DBType,movie) | String.IsEqual(Listitem.DBType,episode) | String.IsEqual(Listitem.DBType,musicvideo)] + Integer.IsGreater(ListItem.Playcount,0) + !ListItem.IsResumable + !ListItem.IsPlaying">status_done</value>
 		<value>badge_foreground</value>
 	</variable>
 	<variable name="ItemTypeIconVar">
