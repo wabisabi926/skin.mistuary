@@ -253,13 +253,21 @@ UI 逻辑 / 打包合规」六个维度做的一次完整审计（v1.3.1 基线�
 ```bash
 python tools/audit_skin.py          # 静态自检：缺失 include/变量/字体/贴图/字符串、浮窗遮蔽、设置读写配对
 python tools/audit_skin.py --orphans        # 反向：盘上有、XML 里没人引用的贴图
-python tools/audit_skin.py --dead           # 反向：定义了、没人用的变量 / include
+python tools/audit_skin.py --dead           # 反向：没人用的变量 / include / 皮肤字符串
 python tools/gen_techflag_vars.py --check   # 技术标识变量是否与 map 同步
 python -m unittest discover -s tools -p 'test_*.py'   # 单元测试
 ```
 
 `--orphans` / `--dead` 是**报告模式，永远返回 0**（不进 CI 闸门）——它们只能按字面匹配，
 动态引用（`$PARAM[...]` 传值、变量套变量）需要人工确认，所以不当作硬错误。
+
+> **删皮肤字符串之前先跑 `--dead`，别自己 grep `$LOCALIZE`。**
+> 字符串有两种引用形态，只认第一种会误删：
+> ① `$LOCALIZE[31764]`；
+> ② `Skin.SelectBool(头部id, 31764|setting_name, …)` —— **头部和配对里的数字都是字符串 id**，
+>    都不走 `$LOCALIZE`。2026-10-30 就是因为只扫了 ①，把三档透明度标题和 TMDb/IMDb
+>    这 5 条正在用的字符串删掉了（已回滚）。
+> `string_refs()` 现在两种都认，`tools/test_audit_strings.py` 有 8 条用例钉着。
 它们存在的理由：`audit --strict` 只查"引用了但文件不存在"，查不出"文件在但没人用"，
 `media/settings/background.png`（1.87 MB）就是这么在包里躺了半个月。
 

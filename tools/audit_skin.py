@@ -78,6 +78,21 @@ SKIN_WRITE = re.compile(
 )
 SELECT_BOOL_ARGS = re.compile(r"Skin\.SelectBool\(([^)]*)\)")
 
+# SelectBool(头部id, 数字|设置名, ...) 里**两个数字都是字符串 id**，都不走 $LOCALIZE：
+#   头部 id 后面跟逗号，配对里的 id 后面跟竖线。
+# 2026-10-30 删"未引用字符串"时只扫了 $LOCALIZE，把这 5 条删错了
+# （31730/31731/31760 三档透明度标题、31764 TMDb、31766 IMDb）。
+SELECT_BOOL_IDS = re.compile(r"(?<![_\w])(\d+)\s*[|,]")
+
+
+def string_refs(text: str) -> set[str]:
+    """一条 XML 文本里引用到的全部字符串 id（$LOCALIZE + Skin.SelectBool）。"""
+    refs: set[str] = set(LOC_REF.findall(text))
+    for m in SELECT_BOOL_ARGS.finditer(text):
+        refs |= set(SELECT_BOOL_IDS.findall(m.group(1)))
+    return refs
+
+
 WRITE_BUILTINS_DOC = (
     "SetBool/SetString/SetNumeric/SetPath/SetAddon/SetImage/SetFile/SetColor/"
     "ToggleSetting/Reset + SelectBool 的 name|setting 对"
@@ -218,7 +233,7 @@ def main() -> int:
         for name in FONT_REF.findall(raw):
             if not name.startswith("$"):
                 fonts_used[name.strip()].append(path.name)
-        for name in LOC_REF.findall(raw):
+        for name in string_refs(raw):
             loc_used[name].append(path.name)
         for tex in TEXTURE_REF.findall(raw):
             if tex.strip():
@@ -483,6 +498,22 @@ def report_dead() -> int:
     print(f"\ninclude：定义 {total_incs} 个，没人引用 {len(set(dead_incs))} 个")
     for n in sorted(set(dead_incs)):
         print(f"    {n}")
+    # 皮肤字符串：定义了，但 $LOCALIZE 和 Skin.SelectBool 都没引用。
+    # 只扫 $LOCALIZE 会漏掉 SelectBool 里的 id（2026-10-30 因此删错 5 条）。
+    str_refs: set[str] = set()
+    for t in texts.values():
+        str_refs |= string_refs(t)
+    skin = {
+        line.split('"')[1].lstrip("#")
+        for po in LANG.glob("*/strings.po")
+        for line in po.read_text(encoding="utf-8", errors="replace").splitlines()
+        if line.startswith("msgctxt") and line.split('"')[1].lstrip("#").startswith("31")
+    }
+    dead_str = sorted(skin - str_refs)
+    print(f"\n皮肤字符串：定义 {len(skin)} 条，没人引用 {len(dead_str)} 条")
+    for n in dead_str:
+        print(f"    {n}")
+
     print("\n注意：动态引用（$PARAM[name] 传值、变量套变量）只能按字面匹配，"
           "删之前逐个确认；`HomeVideoRowNavigation` 那种是活的。")
     return 0
