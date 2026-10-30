@@ -120,7 +120,6 @@
 				</include>
 					<selected>!Skin.HasSetting(HomeMenuNoTVButton)</selected>
 					<onclick>Skin.ToggleSetting(HomeMenuNoTVButton)</onclick>
-					<visible>false</visible>
 				</control>
 <control type="button" id="6181">
 					<textcolor>text_primary</textcolor>
@@ -132,7 +131,6 @@
 					<onclick>SetProperty(settingsdialog_content,tvwidgets,home)</onclick>
 					<onclick>ActivateWindow(1101)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoTVButton)</enable>
-					<visible>false</visible>
 				</control>
 				<top>161</top>
 				<width>1315</width>
