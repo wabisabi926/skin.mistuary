@@ -122,6 +122,12 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
    那样会绕过图标分支。细节见下一节。
 5. **皮肤字符串 31000–31999 是自有区间**，`$LOCALIZE[31xxx]` 必须在 `language/*/strings.po` 里；
    31xxx 以下都是 Kodi 内置串，`audit_skin.py` 不会再报缺失。
+6. **插件列表的状态列用 `ListItem.Property(Addon.Status)`，不要用 `ListItem.AddonLifecycleType`**。
+   后者是"生命周期"（normal / deprecated / broken），跟启用状态无关——健康插件永远 normal，
+   所以插件被禁用后仍显示"正常"。`Addon.Status` 由 Kodi 在 `AddonsDirectory.cpp` 里按
+   **已禁用 > 有更新 > 已损坏 > 已弃用 > 已启用** 的优先级算好，是本地化文案，直接显示即可。
+   渲染入口统一在 `$VAR[NaraAddonListStatusVar]`（`Variables.xml`），
+   已禁用/已损坏 = `status_error`，有更新/已弃用 = `status_warning`，已启用 = 标签自身颜色。
 
 ### 4.1 技术标识图标（techflags）
 
