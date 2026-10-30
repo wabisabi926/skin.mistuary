@@ -23,10 +23,23 @@
 		<value condition="!String.IsEmpty(VideoPlayer.HdrType)">$VAR[NaraTechHdrPlayer]</value>
 		<value>SDR</value>
 	</variable>
+	<variable name="NaraOSDResolutionTextVar">
+		<!-- 只显示档位，不显示 3840×2160 —— 后者在 font19_title 下会被 maxwidth 截成 "3,840×2,1…"。
+		     优先用 VideoPlayer.VideoResolution（Kodi 自己判的档，和详情页同源）；
+		     取不到时退回画面高度 + P（"2160P"），也短，不会截断。 -->
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,480)">480P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,540)">540P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,576)">576P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,720)">720P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,1080)">1080P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">2160P</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,8K)">4320P</value>
+		<value>$INFO[Player.Process(videoheight),,P]</value>
+	</variable>
 	<include name="VideoOSDInfoBadge">
 		<param name="visible">true</param>
-		<param name="surface">C0EDEDED</param>
-		<param name="foreground">FF282828</param>
+		<param name="surface">66000000</param>
+		<param name="foreground">white</param>
 		<definition>
 			<control type="button">
 				<width min="40" max="$PARAM[maxwidth]">auto</width>
@@ -46,28 +59,33 @@
 		</definition>
 	</include>
 	<include name="VideoOSDInfoBadgeRow">
-		<param name="top">30</param>
-		<param name="surface">C0EDEDED</param>
-		<param name="foreground">FF282828</param>
+		<param name="bottom">168</param>
+		<param name="right">80</param>
+		<param name="surface">66000000</param>
+		<param name="foreground">white</param>
 		<definition>
 			<control type="grouplist">
-				<right>30</right>
-				<top>$PARAM[top]</top>
-				<width>1030</width>
+				<right>$PARAM[right]</right>
+				<bottom>$PARAM[bottom]</bottom>
+				<width>860</width>
 				<height>36</height>
 				<orientation>horizontal</orientation>
 				<align>right</align>
 				<itemgap>8</itemgap>
+				<!-- 位置在进度条上方、右对齐，与左侧标题同一水平带（标题 bottom 也是 168）。
+				     底 66000000 + 白字，和详情页技术标识、设置弹窗同一套透明。
+				     宽度按 font19_title 实测：HDR 190 / 分辨率 110 / 帧率 160 / 音频 280 / 声道 80，
+				     合计 820，行宽 860。标题让到 880 后两者不重叠。 -->
 				<include content="VideoOSDInfoBadge">
 					<param name="label" value="$VAR[VideoOSDHdrTypeVar]" />
-					<param name="maxwidth" value="200" />
+					<param name="maxwidth" value="190" />
 					<param name="surface" value="$PARAM[surface]" />
 					<param name="foreground" value="$PARAM[foreground]" />
 				</include>
 				<include content="VideoOSDInfoBadge">
-					<param name="label" value="$INFO[Player.Process(videowidth)]×$INFO[Player.Process(videoheight)]" />
-					<param name="maxwidth" value="158" />
-					<param name="visible" value="Integer.IsGreater(Player.Process(videowidth),0) + Integer.IsGreater(Player.Process(videoheight),0)" />
+					<param name="label" value="$VAR[NaraOSDResolutionTextVar]" />
+					<param name="maxwidth" value="110" />
+					<param name="visible" value="!String.IsEmpty(VideoPlayer.VideoResolution) | Integer.IsGreater(Player.Process(videoheight),0)" />
 					<param name="surface" value="$PARAM[surface]" />
 					<param name="foreground" value="$PARAM[foreground]" />
 				</include>
@@ -80,14 +98,14 @@
 				</include>
 				<include content="VideoOSDInfoBadge">
 					<param name="label" value="$VAR[NaraTechAudioPlayer]" />
-					<param name="maxwidth" value="305" />
+					<param name="maxwidth" value="280" />
 					<param name="visible" value="!String.IsEmpty(VideoPlayer.AudioCodec)" />
 					<param name="surface" value="$PARAM[surface]" />
 					<param name="foreground" value="$PARAM[foreground]" />
 				</include>
 				<include content="VideoOSDInfoBadge">
 					<param name="label" value="$INFO[VideoPlayer.AudioChannels(DefaultLayout)]" />
-					<param name="maxwidth" value="175" />
+					<param name="maxwidth" value="80" />
 					<param name="visible" value="!String.IsEmpty(VideoPlayer.AudioChannels(DefaultLayout))" />
 					<param name="surface" value="$PARAM[surface]" />
 					<param name="foreground" value="$PARAM[foreground]" />
@@ -107,6 +125,9 @@
 				<texture flipy="true" colordiffuse="5AFFFFFF">overlays/overlayfade.png</texture>
 			</control>
 			<control type="grouplist">
+				<!-- 原位。之前往下让是为了避开 1109 顶栏那行章节副标题，
+				     现在那条在 OSD 打开时已经整条隐藏（Custom_1109_TopBarOverlay），
+				     所以回到原始的 left 30 / top 30。 -->
 				<left>30</left>
 				<top>30</top>
 				<width>820</width>
@@ -138,7 +159,6 @@
 					<visible>VideoPlayer.Content(episodes) + !Window.IsVisible(1109)</visible>
 				</control>
 			</control>
-			<include content="VideoOSDInfoBadgeRow" />
 		</control>
 	</include>
 	<include name="VideoOSDPlaylistCard">

@@ -56,13 +56,17 @@
 			<control type="label">
 				<left>80</left>
 				<bottom>168</bottom>
-				<width>1400</width>
+				<width>880</width>
 				<height>40</height>
 				<font>font30_title</font>
 				<scroll>true</scroll>
 				<label>$VAR[NaraOSDPlayingTitleVar]</label>
 				<visible>!VideoPlayer.Content(livetv)</visible>
 			</control>
+			<!-- 技术标识：进度条上方右侧，右对齐到 80，与左边标题同一水平带（bottom 168）。
+			     深底 66000000 + 白字，和详情页技术标识、设置弹窗同一套透明。
+			     宽度 860，标题让到 880 后两者不重叠。 -->
+			<include content="VideoOSDInfoBadgeRow" />
 			<control type="label">
 				<left>80</left>
 				<top>68</top>

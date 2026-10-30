@@ -177,6 +177,12 @@
 			<animation effect="slide" end="0,-200" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation>
 			<animation effect="slide" start="0,-200" end="0,0" time="300" tween="cubic" easing="out">VisibleChange</animation>
 			<visible>Player.ShowInfo | Window.IsActive(fullscreeninfo) | Player.ShowTime | Window.IsActive(videoosd) | Window.IsActive(musicosd) | Window.IsActive(pvrosdchannels) | Window.IsActive(pvrchannelguide) + ![Player.Seeking | Player.HasPerformedSeek(3) | Player.Forwarding | Player.Rewinding | Player.Paused] | !String.IsEmpty(PVR.ChannelNumberInput)</visible>
+			<!-- OSD 打开时这一条整条不画（2026-10-30）：OSD 自己有 270px 顶栏渐变 +
+			     clearlogo + 标题，这里再画一条 105px 渐变和「章: 33/36 · 第 33 章」
+			     是重复的，而且会被 OSD 的 clearlogo 压住。
+			     注意上面那条 visible 里 `+` 比 `|` 优先，不能直接往末尾追加条件，
+			     必须另起一条 <visible> —— Kodi 会把同一控件上的多条 visible 用 AND 合并。 -->
+			<visible>!Window.IsActive(videoosd)</visible>
 			<depth>DepthBars</depth>
 			<control type="image">
 				<left>0</left>
