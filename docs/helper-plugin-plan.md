@@ -67,6 +67,22 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 
 服务端模式下**不要**给容器加 `sortby="sorttitle"`，否则相关度排序会被覆盖成字母序。
 
+### 这个坑具体怎么绕（2026-10-30 补）
+
+搜索页的两个结果容器（`Includes_Search.xml` 的 `fixedlist id=16101 / 16102`）
+**现在就写死了** `sortby="sorttitle" sortorder="ascending"`，两条路径共用同一个
+`<content>`。接服务端分支时必须处理，否则搜「三体」会按拼音字母序排出一堆 A 开头的。
+
+按优先级试：
+
+| 方案 | 做法 | 风险 |
+|---|---|---|
+| **A（首选）** | 直接删掉 `sortby` / `sortorder` | XSP 变量里已经带 `"order":{"method":"sorttitle"}`，本地排序靠它自己就够。**需实机确认** Kodi 默认排序不会盖掉 XSP 的 order |
+| B | 两套 `<content>` 用 `<include condition>` 在加载时切换 | 一定可行；「装/卸插件要重载皮肤」这条约束本来就有，可接受 |
+| C | `sortby="$VAR[...]"` | 大概率无效，`sortby` 是枚举属性，不走 info 展开 |
+
+A 能过就不用 B，A 挂了直接上 B，别在 C 上耗时间。
+
 ## 3. 版本契约
 
 | 皮肤功能 | 最低插件版本 |
@@ -96,6 +112,11 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 
 **皮肤侧一行都还没改**——所以现在装不装插件，搜索行为都一样。
 接分支是 M1b，单独一步，做完立刻验证降级。
+
+> **接线不必等播放地址验证**（2026-10-30 更正）：列表能不能显示、能不能点进去，
+> 和 `play_url` 通不通是两件事。播放路径要改也只是插件里一行，皮肤侧不用动。
+> 所以 M1b 可以直接做，与实机验证并行 —— 原稿写的"要等实机验证播放地址后再加分支"
+> 是错的顺序。
 
 ## 6. 歌词为什么不进插件
 

@@ -779,6 +779,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 系统信息 / 事件日志的底部文字区 | 这两页底部**故意**和 PVR 不一样：`SettingsSystemInfo` 没有"当前项"，底部 y 555–885 被内存/CPU 浮层占用，所以不挂帮助条；`EventLog` 用 `label id=70`（915, h40）+ `textbox id=71`（955, h60）拼成两行，合起来仍占 915–1015 那 100px。**如果希望三页底部完全一致，需要先决定这两页要不要让出那块区域** |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 2026-10-29 已改：`id=60` 轨道 644 → **357**（它服务的是 `textbox id=30`，193→550 高 357；写 644 会让滑块按两屏算比例）。几何回归测试已按页取期望值 |
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
+| 音乐「类别」行的 `EMBY DYNAMIC:` 前缀 | **皮肤层修不了**。Emby 把媒体库名写成 Kodi 的 `tag`（视频库有 `tag` 表），但**音乐库没有 tag 表**，只能退回动态节点。`String.Replace` 两种写法实测均失败。想改只有「Emby 端关动态节点」或「换成 `musicdb://genres/`」两条路，2026-10-30 决定不改。详见 `skin-contracts.md` §4.2 |
 | 歌词只对 CU LRC 有内嵌排版 | `xml/script-cu-lrclyrics-main.xml` 里硬编码了 `script.cu.lrclyrics` 的窗口和 `list id="110"`。**两种情况会失效**：① CU LRC 升级改了控件 id；② 用户在设置里换成别的歌词插件。表现是「右侧内嵌排版没了、歌词以插件自己的全屏界面出现」——**不报错、不影响播放**。歌词继续用 CU LRC 而不自建，理由见 `helper-plugin-plan.md` §6（用户最常用的"自动下载歌词"是自建做不了的那部分） |
 | 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型等服务端桥（§8.9）。**已拍板，不要加回来** |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
@@ -861,13 +862,13 @@ git status -sb              # 与远端的关系 + 工作区
 | 音乐信息页 v4 | 全幅两栏、452 封面、内置 7/8/10/12 隐藏 + SendClick（§5.8.1） |
 | 详情页背景兜底 | Video/Music/Addon 用 `primary_background_info`；Addon 无 fanart `sc_2`（§5.8.2） |
 
-### 8.4 现在可以直接接着做的两件事
+### 8.4 现在可以直接接着做的一件事
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **`script.mistuary.helper` 阶段 0 + 1** | `docs/helper-plugin-plan.md` + `vinyl-helper-plan.md` §3（骨架清单） | 定 token 来源 / 播放地址形态；皮肤侧再接 `$EXP[helper_ready]` |
-| 2 | **Kodi 21 实机验证** | 见 §8.7 | 装 21.2 便携版，验双轨渲染 |
+| 1 | **`script.mistuary.helper` 皮肤侧接线（M1b）** | `docs/helper-plugin-plan.md` §1 / §2 | 定 token 来源；搜索分支可直接接，**不依赖播放地址验证** |
 
+> **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
 > 外部校验报告的 P0 / P1 / P2 已在 1.3.0 清完，`report-triage-2026-10-29.md`
 > 里剩下的 `<scroll>` 与校验器噪音都是刻意不做的项。
 
@@ -881,20 +882,62 @@ python -m unittest discover -s tools -p 'test_*.py'       # 59 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（2 项，都要用户点头）
+### 8.6 待决策（1 项，要用户点头）
 
 1. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
-2. **helper 阶段 1 的播放地址**：返回 Emby 直链还是 `plugin://plugin.video.emby`？
 
+> **播放地址已定，只剩实机验证**（2026-10-30 更正）：`lib/emby.py:56` 的 `play_url()`
+> 已经写成 `plugin://plugin.service.emby-next-gen/?mode=play&item=…`，退路是 Emby 直链。
+> 搜索列表接线**不依赖**这条路径 —— 列表渲染失败不影响接线本身，播放路径要改也只是插件里一行。
+>
 > 兼容目标已定：**保持 Kodi 21+**（方案 A）。1.3.0 已补完 21 回退点，
 > 22 才有的标签继续双轨。
 
-### 8.7 从没验证过的
+### 8.7 Kodi 21 实机：已放弃（2026-10-30）
 
-**Kodi 21 实机**：双轨渲染（`$MAP` 在 21 上退化成原始值、13 个 v22 标签靠
-`!String.IsEmpty` 保护）**只在 22.0-BETA2 上跑过**。装 Kodi 21.2 便携版
-（解压即用、不动现有配置）→ 皮肤拷进 `portable_data/addons/` → 看四处：
-技术标识不出现 `$MAP[...]` 原文、详情页评分、字幕/音轨标签、PVR 台标回退。**风险 0。**
+**决定**：不做。双轨渲染（`$MAP` 在 21 上退化成原始值、13 个 v22 标签靠
+`!String.IsEmpty` 保护）**至今只在 22 系列上跑过**，21 上从没验证过。
+
+**为什么放弃**：21 的媒体库版本和 22 不兼容（`MyVideos131` vs `149`），
+便携环境就算搭对了也**没有媒体库**，只能验首页渲染和皮肤能否加载；
+详情页的技术标识 / 评分 / 音轨 / PVR 台标这四项**验不了**——
+要验得在 21 里重新连 Emby 同步一次库，成本远高于收益。
+
+**残留风险**：21 用户遇到问题我们没有任何实机依据。
+`report-triage-2026-10-29.md` 里的 21 回退点是按源码逐条比对得出的，不是实测。
+
+#### 事故记录（2026-10-30，务必别重犯）
+
+用 7z 解包 `kodi-21.3-Omega-x64.exe` 到 `D:\Kodi21-test\kodi21\`，
+但 **`portable_data` 建在了 exe 的上一级**（必须在 **exe 同级**）。
+Kodi 没认出便携模式，直接读写 `%APPDATA%\Kodi`，于是：
+
+```
+error: CSettings: unable to load settings from special://masterprofile/guisettings.xml,
+       creating new default settings
+```
+
+**Kodi 21 读不懂 22 的 `guisettings.xml`，不降级读取，直接新建默认设置并写回。**
+
+| 损失 | 状态 |
+|---|---|
+| `guisettings.xml` | 全量重置（界面 / 播放 / 字幕 / 音频 / 皮肤设置全丢） |
+| `lookandfeel.skin` | 变 `skin.applify`，22 加载失败回退 Estuary |
+| `locale.language` / `country` | 变 `en_gb` / `Australia (12h)` |
+| 数据库 / `addon_data` / `sources.xml` / `advancedsettings.xml` / `keymaps` | 全部完好 |
+
+修复：皮肤 / 语言 / 时区已改回。**皮肤设置一条没手写** —— 三个 tint 变量的兜底值
+就是文档默认（`NaraGlassPageTintVar`→`gl_3`、`FloatTintVar`→`gl_4`、
+`PlaybackDialogTintVar`→`gl_2`），不设置等于默认，手写 XML 反而有格式风险。
+用户仍需自己重设音频输出设备、直通、刷新率、播放器设置（21 默认值，无法恢复）。
+
+**三条教训**：
+
+1. Kodi 便携模式判据是 **exe 同级**的 `portable_data`，建之前先确认 exe 路径。
+2. 跨版本验任何东西，**启动前把 `%APPDATA%\Kodi` 改名成 `Kodi.disabled`**。
+   物理隔绝比"我建了 portable_data 应该没事"可靠一万倍。
+3. **启动前备份 `guisettings.xml`**。当时备份了 478 MB 的数据库，
+   却漏了这个几 KB 但**不可恢复**的文件。
 
 ### 8.8 给下一任的提醒
 

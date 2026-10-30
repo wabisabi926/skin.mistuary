@@ -149,6 +149,51 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
 
 ---
 
+### 4.2 Emby 节点 vs Kodi 库：首页各行读的是什么（2026-10-30 实测）
+
+首页各行读的节点分两类，名字表现完全不同：
+
+| 行 | `content_path` | 数据源 | 名字 |
+|---|---|---|---|
+| 电影「媒体库」 | `videodb://movies/tags/` | Kodi 库 `tag` 表 | ✅ 干净（华语电影…） |
+| 电视剧「媒体库」 | `videodb://tvshows/tags/` | 同上 | ✅ 干净 |
+| 音乐「类别」 | `library://music/` | **Emby 动态节点** | ❌ `EMBY DYNAMIC: xxx (music)` |
+| 电影/电视剧「类别」 | `library://movies/` 等 | 动态节点 | ❌ 同上（默认被 `home_no_*_categories_widget` 关掉） |
+
+**根因**：Emby Next Gen 把媒体库名写成 **Kodi 的 tag**——`MyVideos149.db` 的 `tag` 表实测 14 行
+（华语电影 / 外语电影 / 动画电影 / 国产剧 / Movies (Favorites)…），`tag_link` 1254 行。
+但 **Kodi 音乐库没有 tag 表**：`MyMusic84.db` 20 张表全查过，只有
+`album` / `artist` / `song` / `genre` / `art` / `source` 这些，**没有「媒体库分类」这个概念**。
+所以音乐拿不到干净库名，只能退回动态节点。
+
+**三条传递方式**：
+
+1. **Kodi 库同步**（`videodb://` / `musicdb://`）—— 条目写进数据库，最干净
+2. **动态节点**（`plugin://plugin.video.emby-next-gen/`）—— 实时查服务器，名字带 `EMBY:` 前缀
+3. **XSP 智能播放列表** —— 自定义规则，干净
+
+**皮肤层无法过滤列表项**。这两种写法**验证过都不行，别再试**：
+
+| 写法 | 实测结果 |
+|---|---|
+| `$INFO[String.Replace(ListItem.Label,EMBY DYNAMIC: ,)]` | 显示成 `EMBY DYNAMIC:`，库名整个丢掉 |
+| `$INFO[String.Replace($ESCINFO[ListItem.Label],EMBY DYNAMIC: ,)]` | 同样不成立 |
+
+原因：`$INFO[...]` 按逗号切参数，`String.Replace(a,b,c)` 的三段被当成 `info` / `prefix` / `suffix`，
+info 求值失败变空，只剩 prefix 显示出来。**Kodi 的字符串函数不能在 `<label>` 里这样用。**
+
+**真要改的话只有两条路**：
+
+- **Emby 服务器端**关掉动态节点（若有此选项，属 Emby 配置，不在皮肤层）
+- 把 `content_path` 换成 `musicdb://genres/`——实测 `genre` 表有 7 个干净流派：
+  国语流行 / 粤语流行 / 中国摇滚 / 台湾流行音乐 / 摇滚 / 原声音乐 / 国际流行。
+  代价是语义从「媒体库列表」变成「流派列表」
+
+> **2026-10-30 决定：不改。** 保留 `library://music/`，接受前缀。理由是「类别」行的语义
+> 就是媒体库列表，换成流派属于改功能而不是修 bug。
+
+---
+
 ## 五、设置页内容区标准（2026-10-27 统一）
 
 设置中心下的所有页面共用一套几何。**注意区分「内容矩形」和「视觉文字边界」**——

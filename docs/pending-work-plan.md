@@ -3,7 +3,8 @@
 > 基线：`main` = `v1.3.0`（2026-10-29）。**第 1 批清理已完成**。
 > **2026-10-29 后续进度**：黑胶唱片（`c67ffb4`）和死变量 / 死 include（`9851941`）已完成；
 > 外部校验报告的 P0 / P1 / P2 也已清完（`report-triage-2026-10-29.md`）。
-> 剩下只有 `script.mistuary.helper` 和 Kodi 21 实机验证，两项都需要用户拍板。
+> **2026-10-30 更新**：Kodi 21 实机验证已放弃（`HANDOVER.md` §8.7，含一次配置重置事故）；
+> 剩下只有 `script.mistuary.helper` 的皮肤侧接线和两个新功能。
 > 这份是「文档 + 代码」全量复查的结论，分两块：**清理**（第 1–4 节）和**优化**（第 5–8 节）。
 > 每条都给**实测证据**；凡是我一开始判错、后来自己纠正的，都标了「⚠️ 别照做」。
 
@@ -165,8 +166,8 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 | 项 | 状态 | 说明 |
 |---|---|---|
-| `script.mistuary.helper` P0/P1 | 规划完成（`helper-plugin-plan.md`），代码零行 | 独立仓库。**1.2.0 拿掉了演员/类型搜索，只有这条路能补回来** |
-| Kodi 21 实机 | 从没验过 | 双轨渲染只在 22.0-BETA2 上跑过。装便携版 30 分钟 |
+| `script.mistuary.helper` P0 | **插件侧已完成**（58 项单测），皮肤侧未接 | 独立仓库 `D:/下载/AI/script.mistuary.helper`。**1.2.0 拿掉了演员/类型搜索，只有这条路能补回来** |
+| Kodi 21 实机 | **已放弃**（2026-10-30） | 双轨渲染至今只在 22 系列上验过。21 的库版本不兼容、便携环境也没有媒体库，详情页四项验不了；尝试时出过配置重置事故，详见 `HANDOVER.md` §8.7 |
 | 系统信息/事件日志底部文字区 | 待决策 | 建议保持现状（理由在 `skin-contracts.md`） |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 已改 | 644 → 357（`2cda76f`，含几何回归测试） |
 
@@ -187,9 +188,10 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | 文档失真 8 处 | ✅ 已对齐实测值 |
 | helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §2 |
 
-## 还剩 1 件事（2026-10-29 更新）
+## 还剩 1 件事（2026-10-30 更新）
 
-> ① 黑胶、③ 死变量清理、外部校验报告 P0/P1/P2 都已完成；当前只剩 ②（需要用户拍板）。
+> ① 黑胶、③ 死变量清理、外部校验报告 P0/P1/P2 都已完成。
+> ② 的**插件侧已完成**（58 项单测全绿），只剩皮肤侧接线（M1b）。
 
 ### ① 黑胶唱片效果 ✅ 已完成（`c67ffb4`）
 
@@ -203,12 +205,27 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 素材要拆：`gen_music_cover.py` 现在把盘面 + 唱臂压成一张 768² 兜底图，
 要拆成 `vinyl-disc.png`（转）+ `vinyl-tonearm.png`（不转）。
 
-### ② `script.mistuary.helper` 阶段 0 + 1　半天 + 1 天
+### ② `script.mistuary.helper` 皮肤侧接线（M1b）　半天
 
-骨架清单在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §3，规划在
-[`helper-plugin-plan.md`](helper-plugin-plan.md)。**三个待定**：
-仓库位置（建议 `D:/下载/AI/script.mistuary.helper/` 独立仓库）、
-Emby token 来源、阶段 1 返回 Emby 直链还是 `plugin://plugin.video.emby`。
+**插件侧已完成**：独立仓库 `D:/下载/AI/script.mistuary.helper`（`main`，2 个提交），
+阶段 0 骨架 + 阶段 1 服务端搜索，58 项单测全绿，已同步实机。
+**但还没建远端仓库** —— 推不出去用户就装不了，这是当前的卡点。
+
+皮肤侧一行未改。接分支要动三处（详见 [`helper-plugin-plan.md`](helper-plugin-plan.md) §2）：
+
+1. `Includes_Search.xml` 的 `NaraSearchMoviesPathVar` / `NaraSearchTVShowsPathVar` 各加一条分支，
+   原 value 留作最后兜底
+2. `SkinSettings.xml` 媒体类（`grouplist id=610`）加 `hide_helper_search` 开关
+   —— **反向命名才能默认开**，`Skin.HasSetting` 在没设置过时返回 false
+3. 帮助条 + 两个语言文件各加一条（id 从 **31780** 起，31779 是当前最大值）
+
+**唯一待决策**：Emby token 来源（读插件配置 vs 让用户填）。
+播放地址代码已选 `emby-next-gen mode=play`，只剩实机验证，**不阻塞接线**。
+
+**最大的技术不确定点**：`<content sortby="sorttitle">` 写死在两个结果容器上
+（`Includes_Search.xml:674` / `:695`），服务端模式会覆盖相关度排序。
+优先试删掉它、靠 XSP 自带的 `order`；不行再用两套 `<content>` 按条件切换。
+见 [`helper-plugin-plan.md`](helper-plugin-plan.md) §2。
 
 ### ③ 24 个死变量 + 6 个死 include ✅ 已完成（`9851941`）
 
