@@ -5,6 +5,10 @@
 	<color name="primary_background">FF404040</color>
 	<!-- 详情页兜底：primary.jpg 是彩色渐变，不能被 25% 的 primary_background 压暗 -->
 	<color name="primary_background_info">FFFFFFFF</color>
+	<!-- 搜索页兜底背景：primary.jpg 压到 50%。
+	     25%（primary_background）太暗，用户仍会觉得"没有背景"；
+	     100%（primary_background_info）在结果网格后面偏抢画面。 -->
+	<color name="search_backdrop">FF808080</color>
 	<color name="surface_main">FF3A3542</color>
 	<color name="surface_panel">FF131218</color>
 	<color name="surface_dialog">FF18171E</color>

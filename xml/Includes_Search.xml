@@ -69,10 +69,12 @@
 		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(fanart)]</value>
 		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(fanart)]</value>
 	</variable>
+	<!-- 这里刻意不给 DefaultVideo.png 兜底：它只喂右侧那块"没有 fanart 时显示大海报"
+	     的面板，兜底会让那块面板顶着默认图冒出来，和下面的网格重复。
+	     面板的可见性自己会要求"有真海报"，所以空着就等于不显示。 -->
 	<variable name="NaraSearchPosterVar">
-		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(poster)]</value>
-		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(poster)]</value>
-		<value>DefaultVideo.png</value>
+		<value condition="$EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(poster))">$INFO[Container(16101).ListItem.Art(poster)]</value>
+		<value condition="$EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(poster))">$INFO[Container(16102).ListItem.Art(poster)]</value>
 	</variable>
 	<!-- Fuse 2 search keyboard input mapping. Kodi's Number actions provide the
 	     multi-tap letter entry while focus briefly sits on the hidden edit. -->
@@ -522,27 +524,31 @@
 
 
 	<include name="NaraSearchBackground">
-		<!-- Search results retain the information-dialog fanart treatment. The
-		     empty-query random backdrop matches Home's Files and Favorites sections. -->
+		<!-- 三层，自下而上：
+		     ① 兜底渐变 primary.jpg @50%（默认一直铺着，所以不需要纯黑底）
+		     ② 空查询随机剧照（同「文件 / 收藏夹」那一套数据源）
+		     ③ 搜索结果剧照（聚焦条目有 fanart 时）
+		     ②③ 都必须是 stretch：Kodi 的 aspectratio 只有 keep/scale/center/stretch，
+		     没有"放大并裁切"，用 scale 时非 16:9 的图会留缝、露出下层的渐变。 -->
 		<control type="image">
-			<width>1920</width>
-			<height>1080</height>
-			<texture>colors/black.png</texture>
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
+			<texture colordiffuse="search_backdrop">special://skin/extras/backgrounds/primary.jpg</texture>
 		</control>
-		<!-- Empty-query backdrop comes from Home's shared movie provider, including
-		     its persistent lock and just-unlocked session hold. -->
+		<!-- ② 空查询随机剧照：照「文件 / 收藏夹」的写法，只是改成 stretch 铺满 -->
 		<control type="image">
-			<width>1920</width>
-			<height>1080</height>
-			<aspectratio align="right">scale</aspectratio>
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
 			<fadetime>250</fadetime>
 			<texture background="true" colordiffuse="CCFFFFFF">$VAR[NaraSharedRandomFanartVar]</texture>
 			<visible>String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]</visible>
 		</control>
+		<!-- 剧照必须铺满：Kodi 的 aspectratio 只有 keep/scale/center/stretch，
+		     没有"放大并裁切"，所以只能用 stretch。16:9 的剧照完全不变形，
+		     非 16:9（例如 1.58）会被横向拉宽一点，作为全屏背景看不出来。 -->
 		<control type="image" id="16590">
-			<width>1920</width>
-			<height>1080</height>
-			<aspectratio align="right">scale</aspectratio>
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
 			<fadetime>350</fadetime>
 			<texture background="true">$VAR[NaraSearchFanartVar]</texture>
 			<include content="Animation_NaraFanartDetail">
@@ -552,7 +558,7 @@
 			<animation effect="fade" time="400">VisibleChange</animation>
 		</control>
 		<control type="image">
-			<width>1920</width>
+			<width>100%</width>
 			<height>220</height>
 			<aspectratio>stretch</aspectratio>
 			<texture flipy="true" colordiffuse="33FFFFFF">overlays/overlayfade.png</texture>
@@ -572,7 +578,8 @@
 		</control>
 		<control type="image">
 			<top>420</top>
-			<width>1920</width>
+			<!-- 宽度必须百分比：皮肤在 18:9（2160×1080）等分辨率下坐标空间不是 1920 -->
+			<width>100%</width>
 			<height>660</height>
 			<aspectratio>stretch</aspectratio>
 			<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
@@ -584,7 +591,7 @@
 		<control type="group">
 			<left>1250</left>
 			<top>100</top>
-			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + [[$EXP[NaraSearchMoviesActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16101).ListItem.Art(fanart))]] | [$EXP[NaraSearchTVShowsActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16102).ListItem.Art(fanart))]]]</visible>
+			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + [[$EXP[NaraSearchMoviesActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16101).ListItem.Art(fanart))] + !String.IsEmpty(Container(16101).ListItem.Art(poster))] | [$EXP[NaraSearchTVShowsActive] + [Skin.HasSetting(no_fanart) | String.IsEmpty(Container(16102).ListItem.Art(fanart))] + !String.IsEmpty(Container(16102).ListItem.Art(poster))]]</visible>
 			<animation effect="fade" time="400">VisibleChange</animation>
 			<control type="image">
 				<left>-24</left><top>-24</top><width>500</width><height>720</height>
@@ -599,7 +606,7 @@
 		</control>
 
 		<control type="group" id="16020">
-			<width>1920</width><height>1080</height>
+			<width>100%</width><height>1080</height>
 			<include content="NaraSearchHero">
 				<param name="container_id" value="16101" />
 				<param name="visible" value="!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + $EXP[NaraSearchKeyboardHidden]" />
@@ -729,7 +736,7 @@
 			</control>
 
 			<control type="label">
-				<left>0</left><top>510</top><width>1920</width><height>60</height>
+				<left>0</left><top>510</top><width>100%</width><height>60</height>
 				<font>font32_title</font>
 				<label>$LOCALIZE[284]</label>
 				<textcolor>text_muted</textcolor>
@@ -740,10 +747,10 @@
 		<!-- Animated hiding keeps the last keyboard key focusable for re-entry. -->
 		<control type="group" id="16010">
 			<depth>DepthSideBlade</depth>
-			<bottom>0</bottom><width>1920</width><height>360</height>
+			<bottom>0</bottom><width>100%</width><height>360</height>
 			<animation effect="slide" start="0,0" end="0,360" time="280" tween="cubic" easing="inout" reversible="true" condition="$EXP[NaraSearchKeyboardHidden]">Conditional</animation>
 			<control type="image">
-				<width>1920</width><height>100%</height>
+				<width>100%</width><height>100%</height>
 				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]">colors/white.png</texture>
 			</control>
 			<include>NaraSearchKeyboard</include>
