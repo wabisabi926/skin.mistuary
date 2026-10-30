@@ -6,10 +6,9 @@
 >
 > 本文只写**皮肤需要知道的那部分**：怎么调、怎么退、最低版本。
 
-> ⚠️ **正式接入排在 2.0.0（2026-10-30 用户定）**：1.x 只保留已经接上的软探测分支
-> （`Includes_Search.xml` 的 M1b 那套），**不再继续推进** M1c 验证和新功能接线；
-> 搜索 / 豆瓣评分 / 代表集技术标识三条统一在 2.0.0 一次做完。
-> 换句话说：**1.x 的功能改动不许依赖 helper 可用**，没装插件的路径才是主路径。
+> **正式接入随皮肤 1.4.0 发布（2026-10-30 用户定）**：M1b 搜索软探测和 M2 豆瓣评分
+> 已接在 `main`；1.x 仍保持可选安装，**不写硬依赖**，没装插件的路径才是主路径。
+> 剩余 M1c 实机验收（搜索 + 播放地址）；M3 代表集明确暂缓。
 
 ## 定位
 
@@ -21,7 +20,7 @@
 | # | 功能 | 不装插件时 | 状态 |
 |---|---|---|---|
 | 1 | 服务端搜索（中文 / 原名 / 全拼 / 首字母） | 本地 XSP（标题 `contains` + 首字母 `startswith`） | 皮肤侧已接（`a6b9f59`），演员/类型见 M1d |
-| 2 | 豆瓣评分（详情页胶囊） | 胶囊不显示，其余评分照常 | 未实现 |
+| 2 | 豆瓣评分（详情页胶囊） | 胶囊不显示，其余评分照常 | ✅ 已接（插件 0.2.0+，`79b7eba`） |
 | 3 | 代表集技术标识 | 皮肤自己的 `ListItemAbsolute(0)` 推断，行为不变 | 暂缓（收益为零，见插件 roadmap） |
 | 4 | 行级增强（首页豆瓣角标、节点名整理） | 无影响 | 可选，不排期 |
 
@@ -33,8 +32,8 @@
 ```
 plugin://script.mistuary.helper/?mode=search&type=movies&query=$INFO[Control.GetLabel(16999).index(1)]
 plugin://script.mistuary.helper/?mode=search&type=shows&query=<搜索词>
-RunScript(script.mistuary.helper,action=rating,type=movie,dbid=<id>)     # P1
-RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
+RunScript(script.mistuary.helper,action=rating,type=movie,dbid=<id>)     # M2
+RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 暂缓
 ```
 
 **`query` 必须是最后一个参数**——插件用 `raw.split("query=", 1)` 取值，
@@ -97,9 +96,9 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 
 | 皮肤功能 | 最低插件版本 |
 |---|---|
-| 服务端搜索 | 0.1.0 |
+| 服务端搜索 | 0.1.0（建议 0.2.1+，修 `resume:false` 污染） |
 | 详情页豆瓣 | 0.2.0 |
-| 代表集标识 | 0.3.0 |
+| 代表集标识 | 不适用（M3 暂缓，不承诺版本） |
 
 皮肤**不做版本比较**（Kodi 没有可靠的版本比较表达式）：旧版插件对新增功能
 什么都不写，皮肤自然隐藏，等价于没装。最低版本只写在 README / Release 说明里。
@@ -116,22 +115,30 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 
 | 项 | 状态 |
 |---|---|
-| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，首个提交 `352e12e` |
-| 已完成 | 骨架 + 搜索桥代码（58 项单测全绿）；M1b 皮肤侧已接并提交（`a6b9f59`） |
-| 未完成 | M1b 实机验证（M1c）、播放地址、豆瓣 M2、代表集 M3 |
-| 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper` |
+| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，已发布 `v0.2.0` / `v0.2.1` / `v0.2.2` |
+| 已完成 | 搜索桥 + 豆瓣评分（82 项单测全绿）；M1b 皮肤侧已接（`a6b9f59`），M2 已接（`79b7eba`） |
+| 未完成 | M1c 实机验收、播放地址；M1d / M3 暂缓或不做 |
+| 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper`（代码 0.2.2；插件版本号以安装包为准） |
 
-皮肤侧已接（`Includes_Search.xml` + `SkinSettings.xml` + 语言），**但插件在 Kodi 里是禁用状态**
-（`Addons33.db.enabled = 0`，2026-10-30 实测），所以开关隐藏、搜索仍走本地。
-M1c 第一步：设置 → 插件 → 我的插件 → 程序插件 → 启用 Mistuary Helper → 重载皮肤。
+皮肤侧已接（`Includes_Search.xml` + `SkinSettings.xml` + 语言），插件在 Kodi 里已启用
+（`Addons33.db.enabled = 1`，2026-10-30 复查）。装 / 启用后仍需重载皮肤，
+`<include condition>` 和容器 `<content>` 才会重新求值。
 
-启用后待验：装/开、装/关、禁用、卸载、只装 helper 没装 Emby 五种组合；
+待验：装/开、装/关、禁用、卸载、只装 helper 没装 Emby 五种组合；
 `RZD` 应为 3 条（服务端）而不是 1 条（本地）。演员/类型搜索尚未实现，见插件仓库 roadmap M1d。
 
 > **接线不必等播放地址验证**（2026-10-30 更正）：列表能不能显示、能不能点进去，
 > 和 `play_url` 通不通是两件事。播放路径要改也只是插件里一行，皮肤侧不用动。
 > 所以 M1b 可以直接做，与实机验证并行 —— 原稿写的"要等实机验证播放地址后再加分支"
 > 是错的顺序。
+
+## 5.1 已知问题（2026-10-30）
+
+| 问题 | 位置 | 说明 / 下一步 |
+|---|---|---|
+| 服务端搜索结果没有封面 | 插件 `emby.py` | Emby 返回 `ImageTags.Primary`，插件只读 `PrimaryImageTag`；修复后发 0.2.3 |
+| 搜索页背景没有兜底图 | 皮肤 `Includes_Search.xml` | 非空查询且无 fanart 时只剩纯黑层；需在 `NaraSearchBackground` 补 fallback 图 |
+| 搜索结果点击播放未验证 | 插件 `emby.py: play_url()` | `mode=play` 未实机验；直链兜底未实现 |
 
 ## 6. 歌词为什么不进插件
 

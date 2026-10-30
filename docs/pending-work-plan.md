@@ -1,11 +1,11 @@
 # 最终优化方案（2026-10-29）
 
-> 基线：`main` = `v1.3.1`（2026-10-30，tag 待打）。**第 1 批清理已完成**。
+> 基线：`main` = `v1.4.0`（2026-10-30，本次发版）。**第 1 批清理已完成**。
 > **2026-10-29 后续进度**：黑胶唱片（`c67ffb4`）和死变量 / 死 include（`9851941`）已完成；
 > 外部校验报告的 P0 / P1 / P2 也已清完（`report-triage-2026-10-29.md`）。
-> **2026-10-30 更新**：Kodi 21 实机验证已放弃（`HANDOVER.md` §8.7，含一次配置重置事故）；
-> 剩下只有 `script.mistuary.helper` 的皮肤侧接线和两个新功能 —— **但 helper 的正式接入
-> 已排到 2.0.0（2026-10-30 定）**，1.x 不再推进，见 `HANDOVER.md` §8.9。
+> **2026-10-30 更新**：M1b 搜索与 M2 豆瓣已在皮肤侧接好，插件已发布 0.2.2。
+> 当前只剩 **M1c 实机验收**、**搜索封面 / 背景兜底** 和 1.4.0 发版；
+> M1d / M3 / M4 暂缓或不做。Kodi 21 实机验证已放弃（`HANDOVER.md` §8.7）。
 > 这份是「文档 + 代码」全量复查的结论，分两块：**清理**（第 1–4 节）和**优化**（第 5–8 节）。
 > 每条都给**实测证据**；凡是我一开始判错、后来自己纠正的，都标了「⚠️ 别照做」。
 
@@ -118,7 +118,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 # 四、清理：文档失真（已全部处理）
 
 8 处已按实测值改写：README 的图标张数 / 透明度处数 / 单测项数，`skin-contracts`
-的 35 → 59 项与 xbt 662 → 751，HANDOVER 的去掉的提交号，工具表补 `scan_rounded.py`，
+的 35 → 当前 84 项与 xbt 662 → 当前 749 张，HANDOVER 的去掉的提交号，工具表补 `scan_rounded.py`，
 `addon.xml` 免责声明结尾分号 → 句号。
 
 **唯一遗留**：`addon.xml:19` 的 `<forum>` 仍指向 `http://forum.kodi.tv/` 首页。
@@ -167,7 +167,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 | 项 | 状态 | 说明 |
 |---|---|---|
-| `script.mistuary.helper` P0 | **插件侧已完成**（58 项单测），皮肤侧未接 | 独立仓库 `D:/下载/AI/script.mistuary.helper`。**1.2.0 拿掉了演员/类型搜索，只有这条路能补回来** |
+| `script.mistuary.helper` | **插件 0.2.2 已发布**（82 项单测），皮肤侧 M1b/M2 已接 | 独立仓库 `D:/下载/AI/script.mistuary.helper`。剩 M1c 实机验收；M1d 演员/类型暂缓 |
 | Kodi 21 实机 | **已放弃**（2026-10-30） | 双轨渲染至今只在 22 系列上验过。21 的库版本不兼容、便携环境也没有媒体库，详情页四项验不了；尝试时出过配置重置事故，详见 `HANDOVER.md` §8.7 |
 | 系统信息/事件日志底部文字区 | 待决策 | 建议保持现状（理由在 `skin-contracts.md`） |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 已改 | 644 → 357（`2cda76f`，含几何回归测试） |
@@ -182,62 +182,41 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 |---|---|
 | 发 1.2.1 | ✅ tag `v1.2.1` → `fc61e7e`，GitHub 已打包 |
 | 删 22 张死图 | ✅ `d29a225`，包体 10.2 → 7.2 MB |
-| 删 33 张死图 | ✅ `0ebccc5`（`--orphans` 首次实战），包体 → **7.1 MB / 751 张** |
+| 删 33 张死图 | ✅ `0ebccc5`（`--orphans` 首次实战），包体 → **7.1 MB / 751 张**（后删 2 张，现 749） |
 | `--orphans` / `--dead` | ✅ 已加，`--orphans` 复检 **0 张** |
 | 系统信息页滚动条 644 → 357 | ✅ 含几何回归测试 |
 | 4 张 `*_filled` + 生成器 | ✅ 已删（源 SVG 留在 `tools/osd_icons/`） |
 | 文档失真 8 处 | ✅ 已对齐实测值 |
 | helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §2 |
 
-## 还剩 1 件事（2026-10-30 更新）
+## 剩下的 3 件事（2026-10-30 更新）
 
-> ① 黑胶、③ 死变量清理、外部校验报告 P0/P1/P2 都已完成。
-> ② 的**插件侧已完成**（58 项单测全绿），只剩皮肤侧接线（M1b）。
+> 黑胶、死变量、外部校验报告 P0/P1/P2 都已完成；M1b/M2 已接，插件 0.2.2 已发。
+> 当前只剩：M1c 实机验收、搜索封面 / 背景兜底、皮肤 1.4.0 发版。
 
-### ① 黑胶唱片效果 ✅ 已完成（`c67ffb4`）
+### ① M1c 实机验收（搜索 + 播放）
 
-方案在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §2，技术已核实：
-`<animation effect="rotate" loop="true">` 能连续转（`GUIControlFactory.cpp:1148`），
-圆形遮罩直接用 256² 的 `masks/circle.png` 等比放大。
+- 五组降级：装/开、装/关、禁用、卸载、只装 helper 没装 Emby。
+- 搜索：`RZD` 3 条、中文、原名、全拼、`Tom & Jerry`、翻页、已看标记。
+- 播放：点一条搜索结果，确认 `mode=play` 能播；不通再考虑直链兜底。
+- 记录：把结果写进插件仓库 `docs/testing.md` §3.2 / §3.6。
 
-**先要用户认可一个硬伤**：Kodi 条件动画在条件消失时 reset，**暂停时唱片会"啪"回 0°**，
-没有 API 能停在当前角度。缓解是周期拉到 24s/圈 + `reversible`。
+### ② 搜索封面 / 背景兜底（已知问题）
 
-素材要拆：`gen_music_cover.py` 现在把盘面 + 唱臂压成一张 768² 兜底图，
-要拆成 `vinyl-disc.png`（转）+ `vinyl-tonearm.png`（不转）。
+- **封面**：Emby 返回 `ImageTags.Primary`，插件只读 `PrimaryImageTag`；修复在插件 `emby.py`。
+- **背景**：皮肤 `NaraSearchBackground` 在非空查询且无 fanart 时只剩纯黑；需要补 fallback 图。
+- 详细根因见 `HANDOVER.md` §8.10。
 
-### ② `script.mistuary.helper` 皮肤侧接线（M1b）　半天
+### ③ 皮肤 1.4.0 发版
 
-**插件侧已完成**：独立仓库 `D:/下载/AI/script.mistuary.helper`（`main`，2 个提交），
-阶段 0 骨架 + 阶段 1 服务端搜索，58 项单测全绿，已同步实机。
-**但还没建远端仓库** —— 推不出去用户就装不了，这是当前的卡点。
-
-皮肤侧一行未改。接分支要动三处（详见 [`helper-plugin-plan.md`](helper-plugin-plan.md) §2）：
-
-1. `Includes_Search.xml` 的 `NaraSearchMoviesPathVar` / `NaraSearchTVShowsPathVar` 各加一条分支，
-   原 value 留作最后兜底
-2. `SkinSettings.xml` 媒体类（`grouplist id=610`）加 `hide_helper_search` 开关
-   —— **反向命名才能默认开**，`Skin.HasSetting` 在没设置过时返回 false
-3. 帮助条 + 两个语言文件各加一条（id 从 **31780** 起，31779 是当前最大值）
-
-**唯一待决策**：Emby token 来源（读插件配置 vs 让用户填）。
-播放地址代码已选 `emby-next-gen mode=play`，只剩实机验证，**不阻塞接线**。
-
-**最大的技术不确定点**：`<content sortby="sorttitle">` 写死在两个结果容器上
-（`Includes_Search.xml:674` / `:695`），服务端模式会覆盖相关度排序。
-优先试删掉它、靠 XSP 自带的 `order`；不行再用两套 `<content>` 按条件切换。
-见 [`helper-plugin-plan.md`](helper-plugin-plan.md) §2。
-
-### ③ 24 个死变量 + 6 个死 include ✅ 已完成（`9851941`）
-
-`python tools/audit_skin.py --dead` 直接列。删前逐个确认——
-**`HomeVideoRowNavigation` 是活的**（经 `<param name="navigation">` → `$PARAM` 动态引用）。
+`addon.xml` 已升 1.4.0，changelog 已补；push 后由 CI 出 zip。
+发版前跑文末统一验收。
 
 ## 不建议做的
 
 | 项 | 为什么 |
 |---|---|
-| 背景兜底换图 | 有兜底（`extras/backgrounds/primary.jpg`，1920×1080 / 228 KB，`DefaultBackground` 里无条件绘制）。只是深色图和纯黑对比低，换图收益小 |
+| 背景兜底换图 | `DefaultBackground` 有 `primary.jpg` 兜底；但搜索页的 `NaraSearchBackground` 会用纯黑层盖住它，这是 ② 的已知问题，不是换图能解决 |
 | PVR 台标 9 处圆角 | 透明台标抠四角看不出来 |
 | `docs/scratch/` 清理 | 20 MB 本地缓存、已 gitignore，删了不影响仓库；要清随时清 |
 | `<scroll>` 运行时条件（12 处） | 只认布尔字面量；"聚焦才滚动"要拆两套 label，收益只是长标题滚动 |
@@ -248,7 +227,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 python tools/audit_skin.py --strict                      # EXIT=0
 python tools/audit_skin.py --orphans                     # 0 张
 python tools/audit_skin.py --dead                        # 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 59 项
+python -m unittest discover -s tools -p 'test_*.py'       # 84 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check \
   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 python tools/xbt_tool.py pack                            # 只有动过 media/

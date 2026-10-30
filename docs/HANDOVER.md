@@ -1,9 +1,10 @@
-# 交接说明（Mistuary 1.3.1）
+# 交接说明（Mistuary 1.4.0）
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
 > **新接手的三步**：① 本文 §8 看现状与待办 ② `docs/pending-work-plan.md` 看还剩什么
-> ③ 要动音乐页或插件，读 `docs/vinyl-helper-plan.md`。
+> ③ 要动音乐页读 `docs/vinyl-helper-plan.md`；要动插件读 `docs/helper-plugin-plan.md`
+> 和插件仓库 `docs/HANDOVER.md`。
 > ④ 拿到外部校验报告（如 `docs/skin.mistuary_report.txt`）时，先读
 > `docs/report-triage-2026-10-29.md` 分诊，不要按 445 errors 全量修。
 
@@ -43,9 +44,9 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.3.1**
-（2026-10-30，tag 待打）。功能完整、静态自检全绿、**工作区有未提交改动（见 §8.1.2）**。
-`Textures.xbt` **751 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **59 项全过**。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.4.0**
+（2026-10-30，本次发版）。功能完整、静态自检全绿；工作区状态以 `git status` 为准（见 §8.1.2）。
+`Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **84 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -116,7 +117,7 @@
 按"该不该圆角"分成三类，A 类全部补齐，B / C 类故意不做：
 
 - **A 类（卡片，全做）**：见下表。其中前 3 条已随 `f225819` 提交；后 9 条（含 8 张新遮罩）
-  **仍在暂存区外、未提交**（见 §8），交接到下一任前需要处理。
+  已随后续提交进入仓库；当前工作区状态以 `git status` 为准。
 - **B 类（贴边 hero 大图，故意不做）**：圆角会露出后面那层底色，反而难看。包括 `View_50_List`
   的 540×850 / 540×470（视频分支）、730×318，`View_54_InfoWall` 的 336×300 / 316×316 / 316×218。
   > **2026-10-29 试过又撤回**：给 `View_50_List` 540×470 的歌曲分支、`View_54_InfoWall` 的
@@ -132,11 +133,11 @@
 | `Includes_Home` 首页「类别」卡背景（两处） | 276×160 | `mask_276x160_r9`（新增） | 已提交 `f225819` |
 | `Includes_Search` 搜索 hero 海报（无 fanart 时） | 452×672 | `mask_452x672_r12`（复用） | 已提交 `f225819` |
 | `DialogMusicInfo` 封面（2026-10-29 重做） | 452×452 | `mask_452x452_r12`（新增） | 已落地 |
-| `View_55_WideList` 专辑图 / 横版图 | 340×340 / 438×246 | `mask_340x340_r12` / `mask_438x246_r12`（新增） | **未提交** |
-| `View_50_List` 列表预览 | 224×300 / 160×160 / 184×184 | `mask_224x300_r12` / `mask_160x160_r9` / `mask_184x184_r9`（新增） | **未提交** |
-| `Includes_VideoOSD` 播放列表缩略图 | 356×200 | `mask_356x200_r12`（新增） | **未提交** |
-| `DialogAddonInfo` 插件信息截图 | 656×312 | `mask_656x312_r12`（新增） | **未提交** |
-| `Includes_DialogVideoInfo_Cast` 演员头像 | 110×150 | `mask_110x150_r9`（新增） | **未提交** |
+| `View_55_WideList` 专辑图 / 横版图 | 340×340 / 438×246 | `mask_340x340_r12` / `mask_438x246_r12`（新增） | 已提交 |
+| `View_50_List` 列表预览 | 224×300 / 160×160 / 184×184 | `mask_224x300_r12` / `mask_160x160_r9` / `mask_184x184_r9`（新增） | 已提交 |
+| `Includes_VideoOSD` 播放列表缩略图 | 356×200 | `mask_356x200_r12`（新增） | 已提交 |
+| `DialogAddonInfo` 插件信息截图 | 656×312 | `mask_656x312_r12`（新增） | 已提交 |
+| `Includes_DialogVideoInfo_Cast` 演员头像 | 110×150 | `mask_110x150_r9`（新增） | 已提交 |
 
 > **2026-10-29 音乐信息页重做**：`DialogMusicInfo` 改用 `mask_452x452_r12`；
 > 旧的 `mask_570x570_r12` / `mask_190x190_r9` 已删除，生成器表同步移除。
@@ -178,7 +179,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（规划中） | 服务端搜索、豆瓣评分、剧集代表集标识 | 回退本地 XSP / 不显示豆瓣胶囊 |
+| `script.mistuary.helper`（可选，0.2.2 已发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
@@ -795,7 +796,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   中文标题和原名搜索不受影响。
 - **不要再加回 `actor` / `director` / `genre`**：一个 flat `or` 只能共用一个 operator，
   子串匹配会把演员名当命中（实测单字母 `Z` 命中 238/742 部、`S` 命中 371/742）。
-  人员与类型搜索归服务端桥（[`helper-plugin-plan.md`](helper-plugin-plan.md)）。
+  人员与类型搜索当前不支持（M1d 暂缓），见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
 - **首字母必须前缀匹配**：`contains` 会把首字母出现在词中的条目捞进来
   （`HZ` 命中 14 部 → 前缀只剩 4 部）。2026-10-28 已改 `startswith`。
 - **不要给结果列表加 `limit`**：`<content limit="30">` 会同时截断结果和标签计数。
@@ -906,7 +907,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 音乐「类别」行的 `EMBY DYNAMIC:` 前缀 | **皮肤层修不了**。Emby 把媒体库名写成 Kodi 的 `tag`（视频库有 `tag` 表），但**音乐库没有 tag 表**，只能退回动态节点。`String.Replace` 两种写法实测均失败。想改只有「Emby 端关动态节点」或「换成 `musicdb://genres/`」两条路，2026-10-30 决定不改。详见 `skin-contracts.md` §4.2 |
 | 歌词只对 CU LRC 有内嵌排版 | `xml/script-cu-lrclyrics-main.xml` 里硬编码了 `script.cu.lrclyrics` 的窗口和 `list id="110"`。**两种情况会失效**：① CU LRC 升级改了控件 id；② 用户在设置里换成别的歌词插件。表现是「右侧内嵌排版没了、歌词以插件自己的全屏界面出现」——**不报错、不影响播放**。歌词继续用 CU LRC 而不自建，理由见 `helper-plugin-plan.md` §6（用户最常用的"自动下载歌词"是自建做不了的那部分） |
-| 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型等服务端桥（§8.9）。**已拍板，不要加回来** |
+| 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型当前不支持（M1d 暂缓，§8.9）。**已拍板，不要加回来** |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
@@ -936,18 +937,18 @@ git status -sb              # 与远端的关系 + 工作区
 
 | 项 | 值 |
 |---|---|
-| 版本 | `addon.xml` = 1.3.1，tag 待打 |
-| 贴图 | `Textures.xbt` 751 张 / 7.2 MB；`media/` 松散 PNG **750 张**（+1 张 jpg） |
-| 打包状态 | `xbt` 与 `media/` 一致（`unpack` 751/751），改过 png 才需要重打包 |
+| 版本 | `addon.xml` = 1.4.0，本次发版 |
+| 贴图 | `Textures.xbt` 749 张 / 7.2 MB；`media/` 是 748 张 PNG + 1 张 JPG（另有 `LICENSE.txt`） |
+| 打包状态 | `xbt` 与 `media/` 一致（`unpack` 749/749），改过 png 才需要重打包 |
 
 > 要发新版才升 `addon.xml`（§6）。
 
 **开发机当前状态**：实机已经是**散图模式** —— `media/` 下没有 `Textures.xbt`，
 改 png 只需 F5 重载皮肤，不用重启（§0 第 3 条）。
 
-> 注意：实机 `media/` 里有 **843 张**松散 PNG，而仓库只有 750 张 —— 多出来的是历年
-> 删除后残留的旧图（`--loose` 同步只覆盖不删除）。它们没有引用、不影响运行，
-> 想要干净可以整目录删掉重新同步一次。
+> 注意：实机 `media/` 里可能残留历年删除的旧图（`--loose` 同步只覆盖不删除）。
+> 仓库当前是 748 张 PNG + 1 张 JPG；残留图没有引用、不影响运行，想要干净可以整目录删掉
+> 重新同步一次。
 >
 > 发版前记得 `python tools/xbt_tool.py pack` 把散图打回包（§6）。
 
@@ -964,38 +965,25 @@ git status -sb              # 与远端的关系 + 工作区
 | `b30e3e2` | 评分移到右上、边距统一 12px、垂直居中 |
 | `f17d8a3` | HANDOVER §5.9 / §5.9.1 更新 |
 
-**未提交（在工作区，可直接提交）**：
+**已提交并随 1.3.1 发布**：
 
 - `addon.xml` 1.3.0 → **1.3.1**
 - `changelog.txt` 新增 1.3.1 段
 - `HANDOVER.md` / `pending-work-plan.md` 版本号
-- `media/Textures.xbt` 已重打包（751 张 / 7.2 MB，含新遮罩 `mask_236x340_r12`、新环 `ring_card_238x342_r13`、`badge_ring.png`）
+- `media/Textures.xbt` 已重打包（当前 749 张 / 7.2 MB；`89b71a5` 又删了 2 张孤儿贴图）
 
-### 8.1.2 工作区里有两拨改动，**别混**
+### 8.1.2 1.4.0 本轮改了什么
 
-**我的（未提交，可直接提交）**：
+- `addon.xml` 1.3.1 → **1.4.0**，summary / description 补可选 helper
+- `changelog.txt` 新增 1.4.0 段（豆瓣评分、次评分来源、服务端搜索、已知问题）
+- `README.md`：749 张贴图、可选 helper 安装说明、已知问题
+- 详情页豆瓣评分接线：`DialogVideoInfo.xml` / `Includes_DialogVideoInfo_Hero.xml` / `Variables.xml`
+- 「次评分来源」设置：`SkinSettings.xml`
+- 文档同步：`HANDOVER.md` / `pending-work-plan.md` / `helper-plugin-plan.md` / `docs/README.md` / `skin-contracts.md`
+- 测试：`tools/test_nara_douban_rating.py`
 
-```
-M addon.xml
-M changelog.txt
-M docs/HANDOVER.md
-M docs/pending-work-plan.md
-M media/Textures.xbt
-```
-
-**另一条线（helper 接线，别碰）**：
-
-```
-M docs/helper-plugin-plan.md
-M language/resource.language.en_gb/strings.po
-M language/resource.language.zh_cn/strings.po
-M tools/test_nara_search_navigation.py
-M xml/Includes_Search.xml
-M xml/SkinSettings.xml
-```
-
-> **`docs/HANDOVER.md` 两边都改过**：我改 §5.9 / §8，对方在 §8.9 加了 helper M1b 一行。
-> 提交时用 `git diff` 截自己的 hunk + `git apply --cached` 分开 stage，**不要 `git add` 整个文件**。
+> 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
+> 另一个仓库 `script.mistuary.helper` 已发布 0.2.2，本次皮肤发版不包含它的代码。
 
 ### 8.2 发版记录
 
@@ -1006,6 +994,7 @@ M xml/SkinSettings.xml
 | **v1.2.1** | 包体 10.2 → 7.2 MB（清死图）+ 系统信息页滚动条 |
 | **v1.3.0** | 黑胶模式 + 音乐信息页重做 + 电源菜单 + 详情页背景兜底；Kodi 21 标签/导航修复 |
 | **v1.3.1** | 详情页文字阴影（亮背景可读）+ 海报墙间距 16→24 + 卡片信息重排（评分右上/状态左下/集数右下）+ 已看完绿色 |
+| **v1.4.0** | 详情页豆瓣评分（可选 helper 0.2.0+）+ 次评分来源四档 + 服务端搜索可用 + 豆瓣查询修复；已知：搜索无封面、搜索页无背景兜底 |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1023,7 +1012,7 @@ M xml/SkinSettings.xml
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`（`main`，首个提交 `352e12e`）：阶段 0 骨架 + 阶段 1 服务端搜索已完成，58 项单测全绿，已同步到 `%APPDATA%\Kodi\addons\script.mistuary.helper`。豆瓣（P1）/ 代表集（P2）是空壳。**皮肤侧还没接分支**——`NaraSearchMoviesPathVar` 仍是纯 XSP，要等实机验证播放地址后再加 `$EXP[helper_ready]` 分支 |
+| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，已发布 `v0.2.0` / `v0.2.1` / `v0.2.2`（82 项单测）：服务端搜索 + 豆瓣评分。皮肤侧 M1b（`a6b9f59`）与 M2（`79b7eba`）已接；剩 M1c 实机验收。M1d / M3 暂缓或不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1038,7 +1027,7 @@ M xml/SkinSettings.xml
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **`script.mistuary.helper` 皮肤侧接线（M1b）** | `docs/helper-plugin-plan.md` §1 / §2 | 定 token 来源；搜索分支可直接接，**不依赖播放地址验证** |
+| 1 | **M1c 实机验收（搜索 + 播放）** | `docs/helper-plugin-plan.md` §5、插件仓库 `docs/testing.md` §3 | 插件已启用；逐项跑降级矩阵，确认 `mode=play` 能播 |
 
 > **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
 > 外部校验报告的 P0 / P1 / P2 已在 1.3.0 清完，`report-triage-2026-10-29.md`
@@ -1050,15 +1039,13 @@ M xml/SkinSettings.xml
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 59 项
+python -m unittest discover -s tools -p 'test_*.py'       # 84 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（3 项，要用户点头）
+### 8.6 待决策（2 项，要用户点头）
 
-1. **helper 的 Emby token**：读 Emby 插件配置，还是让用户在插件设置里填？
-
-2. **剧集「未看」仍显示眼睛**（2026-10-30，做不动）
+1. **剧集「未看」仍显示眼睛**（2026-10-30，做不动）
    一集没看的剧集（`0/21`）左下角也挂 `played-total`（实心眼睛），用户会误读成"看了一部分"。
    **四种写法全试过，都不生效**：
 
@@ -1076,7 +1063,7 @@ python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   
    `String.IsEqual(Property(has_progress),true)` 判断 —— 但**同样是 Property 对比字面量**，
    落地前要先验证这个比较到底行不行。
 
-3. **评分圈按来源着色**（方案已定，未实施）
+2. **评分圈按来源着色**（方案已定，未实施）
    用户想要豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红，为将来插件多评分源预留。
    方案见 §5.9.2（待写）。**关键约束**：`$VAR` 在 `<textcolor>` 里不生效，
    所以只能给**环**着色（`colordiffuse`），数字保持白色。
@@ -1149,25 +1136,36 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。
   **但同步实机不用问**：改完自己跑 `sync_to_kodi.py --loose`（§0 第 4 条）。
 
-### 8.9 下一步：`script.mistuary.helper`（独立仓库）
+### 8.9 helper：1.4.0 接入状态
 
-> **正式接入排在 2.0.0（2026-10-30 用户定）**：1.x 不做 helper 的正式接入，
-> 皮肤侧现有软探测分支**保持原样、不再往前推**（M1b 已接的部分留着，不继续做 M1c）。
-> 搜索 / 豆瓣评分 / 代表集三条统一在 2.0.0 一次做完。1.x 的功能改动**不要**依赖插件可用性。
+- 插件 `script.mistuary.helper` 已发布 **0.2.2**（82 项单测）：服务端搜索 + 详情页豆瓣评分。
+- 皮肤侧 M1b 搜索（`a6b9f59`）与 M2 豆瓣（`79b7eba`）已接在 `main`；1.4.0 仍保持**可选安装**，
+  `addon.xml` 不写 `<import>`，只用 `System.AddonIsEnabled` 软探测。
+- **剩余 M1c**：五组降级矩阵、搜索结果、翻页、已看标记、播放地址。
+- 0.2.1 修了 Kodi 追加 `resume:false` 污染搜索词；0.2.2 修了 action 模式 `GetDirectory failed`。
+- **M1d 演员/导演/类型**暂缓；**M3 代表集**不做；**M4 行级增强**可选不排期。
+- 装/卸/启用插件后要**重载皮肤**；卸载后的回退是下一帧生效。
+- 规划与契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)；实现文档在
+  `D:\下载\AI\script.mistuary.helper\docs\`。
 
-规划、契约、阶段验收全在 [`helper-plugin-plan.md`](helper-plugin-plan.md)，
-骨架清单与三个待定项在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §3。要点：
+### 8.10 已知问题：搜索封面 / 背景兜底（2026-10-30）
 
-- **定位**：皮肤的运行时脚本能力都进这一个插件（不要再建第二个 `script.mistuary.*`）。
-  独立仓库、GPL-3.0、只用标准库。
-- **可选安装（2026-10-29 定）**：**不装就少功能，装了就多**。`addon.xml` **不写** `<import>`，
-  只用 `System.AddonIsEnabled` 软探测；缺插件时搜索回退本地 XSP、豆瓣胶囊隐藏、
-  代表集走皮肤自己的推断。降级表与四条硬约束见 `helper-plugin-plan.md` §2。
-  ⚠️ 装/卸插件后要**重载皮肤**才生效（`<include condition>` 与 `<content>` 是加载时求值）。
-- **P0 服务端搜索**：调 Emby `/Items?searchTerm=`（中文分词/全拼只在服务端生效）。
-  皮肤侧 M1b 已接（`Includes_Search.xml` 的服务端路径 + 两套 content + 媒体分类开关），
-  **M1c 实机验证随 2.0.0 一起做**，1.x 不再推。
-- **P1 豆瓣评分**、**P2 代表集标识** 见规划文档。
+**1. 服务端搜索结果没有封面**
 
-> ⚠️ 行为变化：1.2.0 起本地快速搜索不再匹配演员 / 导演 / 类型（见 §5.10），
-> 人员搜索要等服务端桥补回来。**交接时别当成 bug 又加回去。**
+- 现象：搜索结果卡片只有默认图标。
+- 根因：Emby `/Items?searchTerm=` 返回 `ImageTags: {"Primary": "..."}`，没有
+  `PrimaryImageTag`；插件 `lib/emby.py` 的 `normalize()` 只读 `PrimaryImageTag`，
+  所以 `image_tag` 为空，`render_search()` 不设 poster。
+- 修复方向：`image_tag` 回退读 `ImageTags.Primary`，同时改 `tests/test_emby.py`
+  夹具；修完发插件 0.2.3。
+
+**2. 搜索页背景没有兜底图**
+
+- 现象：非空查询且条目没有 fanart 时，搜索页只剩纯黑。
+- 根因：`Includes_Search.xml` 的 `NaraSearchBackground` 先画全屏 `colors/black.png`，
+  再画 `16590` fanart；`16590` 的 visible 要求 `!String.IsEmpty(...Art(fanart))`。
+  没有 fanart 时两层都不显示，`DefaultBackground` 的 `primary.jpg` 被黑层盖住。
+- 修复方向：在 `NaraSearchBackground` 加一张 fanart 为空时可见的 fallback 图
+  （`special://skin/extras/backgrounds/primary.jpg` 或专用背景），或给 `16590` 外层补 fallback。
+
+**3. 播放地址未验证**：`play_url()` 走 Emby `mode=play`，尚未实机点播。
