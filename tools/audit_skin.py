@@ -106,6 +106,7 @@ PANEL_TOKENS = (
 # 有这些 token 之一 = 该窗口有遮蔽层（或走的是自带遮蔽层的公共 include）
 SCRIM_TOKENS = (
     "scrim_dialog", "scrim_sheet", "scrim_osd", "NaraGlassScrimTintVar",
+    "NaraGlassFloatScrimVar",
     "NaraDialogScrim", "DialogBackgroundCommons", "NaraSettingsDialogFrame",
     "NaraPowerMenuLayout", "NaraStreamDialogBackground",
     "NaraMusicPlaylistBackground",
