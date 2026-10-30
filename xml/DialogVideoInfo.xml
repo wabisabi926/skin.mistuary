@@ -11,8 +11,8 @@
 	     只对电影/剧集请求，单集与季不显示豆瓣。 -->
 	<onload>ClearProperty(Mistuary.Rating.Status,home)</onload>
 	<!-- 标题可能带逗号，不能塞进 RunScript 参数；走窗口属性，插件在没有 IMDb 时按标题+年份兜底。 -->
-	<onload>SetProperty(Mistuary.Rating.Query,$INFO[ListItem.Title])</onload>
-	<onload>SetProperty(Mistuary.Rating.Year,$INFO[ListItem.Year])</onload>
+	<onload>SetProperty(Mistuary.Rating.Query,$ESCINFO[ListItem.Title],home)</onload>
+	<onload>SetProperty(Mistuary.Rating.Year,$ESCINFO[ListItem.Year],home)</onload>
 	<onload condition="System.AddonIsEnabled(script.mistuary.helper) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)]">RunScript(script.mistuary.helper,action=rating,type=$INFO[ListItem.DBType],dbid=$INFO[ListItem.DBID],imdb=$INFO[ListItem.IMDBNumber])</onload>
 	<onunload>ClearProperty(Mistuary.Rating.Status,home)</onunload>
 	<onunload>ClearProperty(Mistuary.Rating.Query,home)</onunload>
