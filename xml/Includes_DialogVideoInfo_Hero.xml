@@ -56,8 +56,9 @@
 		<param name="top">0</param>
 		<!-- 790 = 剧情简介的容器宽度，这一行的右边界必须和它一致，不能更宽。
 		     两个评分 + 5 个标识 + 集号 = 757，正好在 790 内；
-		     极端情况（双 HDR「DV P7 + HDR10」+ ATMOS）会到 953 —— grouplist 不裁剪也不滚动，
-		     超出部分画在简介右侧的空白区，不会盖住别的东西。 -->
+		     极端情况（双 HDR「DV P7 FEL + HDR10」+ ATMOS）会到 997
+		     （2026-10-30 档位小字改 font_flag 后 DV 胶囊 100→144）——
+		     grouplist 不裁剪也不滚动，超出部分画在简介右侧的空白区，不会盖住别的东西。 -->
 		<param name="width">790</param>
 		<param name="align">left</param>
 		<!-- inline_flags=true 时把技术标识并进同一条 grouplist（评分 + 标识同一行）。 -->

@@ -278,6 +278,8 @@
 
 	<!-- 图标胶囊：与评分项同款底板。图标框 48×28 垂直居中（top 4），
 	     可选小字跟在图标右侧，承载 Dolby Vision 的 P7/P8 档位。
+	     小字用 font_flag(18px) —— font13 在本皮肤是 27px，"P7 MEL" 要 75px，
+	     原来 24px 的宽度会把档位截成 "…"。
 	     图标本体不做 colordiffuse 染色 —— 彩色版必须保住原色。 -->
 	<include name="NaraTechnicalIconPill">
 		<param name="flag_visible">true</param>
@@ -287,6 +289,7 @@
 		     detail 可能是 $MAP[...]，展开后条件里出现 [ ，Kodi 21 的表达式解析器
 		     会在加载时报 "Misplaced ["（每部带杜比视界的片子刷两遍日志）。 -->
 		<param name="detail_visible">false</param>
+		<param name="detail_width">44</param>
 		<param name="width">72</param>
 		<definition>
 			<control type="group">
@@ -311,9 +314,9 @@
 				<control type="label">
 					<left>64</left>
 					<top>0</top>
-					<width>24</width>
+					<width>$PARAM[detail_width]</width>
 					<height>36</height>
-					<font>font13</font>
+					<font>font_flag</font>
 					<align>left</align>
 					<aligny>center</aligny>
 					<textcolor>white</textcolor>
@@ -334,6 +337,7 @@
 		<param name="label_raw"></param>
 		<param name="detail"></param>
 		<param name="detail_visible">false</param>
+		<param name="detail_width">44</param>
 		<param name="width">72</param>
 		<definition>
 			<include content="NaraTechnicalIconPill">
@@ -341,6 +345,7 @@
 				<param name="icon" value="$PARAM[icon]" />
 				<param name="detail" value="$PARAM[detail]" />
 			<param name="detail_visible" value="$PARAM[detail_visible]" />
+				<param name="detail_width" value="$PARAM[detail_width]" />
 				<param name="width" value="$PARAM[width]" />
 			</include>
 			<include content="NaraTechnicalTextPill">
@@ -355,15 +360,40 @@
 	<include name="NaraTechnicalHdrPill">
 		<param name="visible">true</param>
 		<definition>
-			<!-- 带档位：图标 + P7 小字，胶囊加宽到 96 -->
+			<!-- 带档位分三档，宽度按实测字宽定，避免胶囊里空一大块：
+			     ① P4~P9（2 字符，22px）      小字 24，胶囊 100
+			     ② P10 / P8.1 / P8.2 / P8.4   小字 44，胶囊 120（40px 是 "P8.4"）
+			     ③ P7 FEL / P7 MEL（59~64px） 小字 68，胶囊 144
+			     未知档位落到②（宁可留白也不截断）。 -->
 			<include content="NaraTechnicalFlag">
-				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail])" />
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],4) | String.IsEqual($PARAM[hdr_detail],5) | String.IsEqual($PARAM[hdr_detail],6) | String.IsEqual($PARAM[hdr_detail],7) | String.IsEqual($PARAM[hdr_detail],8) | String.IsEqual($PARAM[hdr_detail],9)]" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
 				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
 				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
 			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
+				<param name="detail_width" value="24" />
 				<param name="width" value="100" />
+			</include>
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail]) + !String.IsEqual($PARAM[hdr_detail],4) + !String.IsEqual($PARAM[hdr_detail],5) + !String.IsEqual($PARAM[hdr_detail],6) + !String.IsEqual($PARAM[hdr_detail],7) + !String.IsEqual($PARAM[hdr_detail],8) + !String.IsEqual($PARAM[hdr_detail],9) + !String.IsEqual($PARAM[hdr_detail],7fel) + !String.IsEqual($PARAM[hdr_detail],7mel)" />
+				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
+				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
+				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
+				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
+			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
+				<param name="detail_width" value="44" />
+				<param name="width" value="120" />
+			</include>
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],7fel) | String.IsEqual($PARAM[hdr_detail],7mel)]" />
+				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
+				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
+				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
+				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
+			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
+				<param name="detail_width" value="68" />
+				<param name="width" value="144" />
 			</include>
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + [!String.IsEqual($PARAM[hdr_type],dolbyvision) | String.IsEmpty($PARAM[hdr_detail])]" />
