@@ -185,6 +185,18 @@ jobs:
             --exclude='__pycache__/' \
             --exclude='*.pyc' \
             --exclude='tools/' \
+            --exclude='.vscode/' \
+            --exclude='.idea/' \
+            --exclude='.claude/' \
+            --exclude='.cursor/' \
+            --exclude='.DS_Store' \
+            --exclude='Thumbs.db' \
+            --exclude='desktop.ini' \
+            --exclude='*.log' \
+            --exclude='*.bak' \
+            --exclude='*.orig' \
+            --exclude='*.rej' \
+            --exclude='*.patch' \
             ./ "build/${ADDON_ID}/"
           # 发布包的 media/ 里只留 Textures.xbt，松散图片和子目录都不带
           find "build/${ADDON_ID}/media" -mindepth 1 -maxdepth 1 \
