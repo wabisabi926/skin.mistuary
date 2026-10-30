@@ -578,6 +578,23 @@ OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer
    那是历史遗留的注释，不是活代码。
 
 
+### 5.5.1 播放页 OSD 的三条硬约束（2026-10-30 连翻三次换来的）
+
+| 想做的事 | 只能用 | **不能用** | 为什么 |
+|---|---|---|---|
+| 读当前播放的流信息 | `VideoPlayer.*`（`videoresolution` / `videocodec` / `audiocodec` / `audiochannels` / `hdrtype`） | **`ListItem.*`** | OSD 窗口没有 ListItem 上下文，取不到值 → visible 全假、整行消失 |
+| 杜比视界档位 P7 | 详情页的 `ListItem.HdrDetail` | `VideoPlayer.HdrDetail` | **Kodi 没有这个 info**，播放页永远拿不到档位 |
+| 图标查表 | 详情页那种 key 是 `$PARAM`（加载期替换成字面量） | `$MAP[Map,$INFO[...]]` | `$MAP` 不展开 `$INFO[]`，key 变字面量查不到 → 空贴图 |
+
+另外两条：
+
+- **`font13` 是 27px，不是"小字"**，`font_flag` 才是 18px。给 label 定 `<width>` 前先量：
+  `PIL.ImageFont.truetype(字体, size).getbbox(文字)[2]`。`23.976 FPS` 在 18px 下 99px、27px 下 148px。
+- **对话框叠对话框会透**：Kodi 从插件详情点「设置」不会关掉详情页，两层 71% 玻璃叠着，
+  详情页内容变成鬼影压在设置行上。解法是**让下面那层不画**
+  （`DialogAddonInfo` 根组加 `!Window.IsVisible(10140)`），不要加黑底、
+  也不要给设置页开"不跟透明度设置走"的旁路。
+
 ### 5.6 排查顺序
 
 某窗口不跟设置走时：① grep 写死的 `AARRGGBB` 板 → ② grep `<include condition=`
@@ -987,9 +1004,14 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - **版本号没升 = 没发版**：push 会触发发版，"提交"和"发版"要分开确认（§6）。
 - 圆角机制只有一条正确路子：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件一致
   （§5.4.1）；`scale` 才写 `scalediffuse="false"`，`keep` **不要写**（写了等于没圆角）。
-- **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。同步到实机也一样，先问。
+- **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。
+  **但同步实机不用问**：改完自己跑 `sync_to_kodi.py --loose`（§0 第 4 条）。
 
 ### 8.9 下一步：`script.mistuary.helper`（独立仓库）
+
+> **正式接入排在 2.0.0（2026-10-30 用户定）**：1.x 不做 helper 的正式接入，
+> 皮肤侧现有软探测分支**保持原样、不再往前推**（M1b 已接的部分留着，不继续做 M1c）。
+> 搜索 / 豆瓣评分 / 代表集三条统一在 2.0.0 一次做完。1.x 的功能改动**不要**依赖插件可用性。
 
 规划、契约、阶段验收全在 [`helper-plugin-plan.md`](helper-plugin-plan.md)，
 骨架清单与三个待定项在 [`vinyl-helper-plan.md`](vinyl-helper-plan.md) §3。要点：
