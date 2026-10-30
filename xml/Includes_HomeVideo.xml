@@ -198,5 +198,7 @@
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)">$INFO[Container(6700).ListItem.Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800) + String.IsEqual(Container(6800).ListItem.Property(node.type),target_folder)">$INFO[Container(6800).ListItem(-1).Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800)">$INFO[Container(6800).ListItem.Art(fanart)]</value>
+		<!-- 首页 Hero 背景兜底：选中的条目没有 fanart 时用 primary.jpg -->
+		<value>special://skin/extras/backgrounds/primary.jpg</value>
 	</variable>
 </includes>

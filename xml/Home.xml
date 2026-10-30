@@ -1004,6 +1004,9 @@
 			</control>
 			<control type="group">
 				<depth>DepthBars</depth>
+				<!-- 必须给宽度：下面 8 条底板用 centerleft 50% 居中，
+				     父容器没有 width 时百分比会解析成 0、条会跑到屏幕外。 -->
+				<width>100%</width>
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<!-- Auto-width buttons use their rendered label widths, so optional
 				     sections collapse without any width or position bookkeeping. -->
@@ -1016,13 +1019,14 @@
 				       中文 5 个 612 / +音乐 724 / +电视 724 / 都有 836
 				       英文 5 个 770 / +音乐 903 / +电视 865 / 都有 998
 				     **改标签文字或字号后必须重测这 8 个数字。**
-				     left 是算出来的 (1920 - 宽度) / 2，不是 centerleft 50% ——
-				     这个 group 没写 width，百分比会解析成 0，条会跑到屏幕左边缘外。
+				     定位用 centerleft 50%：父 group 已显式给 width 100%，
+				     所以任何分辨率（1920 / 2160 / 2560…）都会自动居中，
+				     不要再改回写死的 left = (1920 - 宽度) / 2。
 				     导航条是常驻元素，不是浮窗：用卡片档的轻玻璃（40%），
 				     跟浮窗档（78%）走会变成一条死黑的条。 -->
 				<!-- 5 个（隐藏音乐 + 电视）：中文 612 / 英文 770 -->
 				<control type="image">
-					<left>654</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>612</width>
 					<height>60</height>
@@ -1030,7 +1034,7 @@
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
 				</control>
 				<control type="image">
-					<left>575</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>770</width>
 					<height>60</height>
@@ -1039,7 +1043,7 @@
 				</control>
 				<!-- 6 个（+音乐）：中文 724 / 英文 903 -->
 				<control type="image">
-					<left>598</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>724</width>
 					<height>60</height>
@@ -1047,7 +1051,7 @@
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
 				</control>
 				<control type="image">
-					<left>508</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>903</width>
 					<height>60</height>
@@ -1056,7 +1060,7 @@
 				</control>
 				<!-- 6 个（+电视）：中文 724 / 英文 865 -->
 				<control type="image">
-					<left>598</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>724</width>
 					<height>60</height>
@@ -1064,7 +1068,7 @@
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
 				</control>
 				<control type="image">
-					<left>527</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>865</width>
 					<height>60</height>
@@ -1073,7 +1077,7 @@
 				</control>
 				<!-- 7 个（都有）：中文 836 / 英文 998 -->
 				<control type="image">
-					<left>542</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>836</width>
 					<height>60</height>
@@ -1081,7 +1085,7 @@
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
 				</control>
 				<control type="image">
-					<left>461</left>
+					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>998</width>
 					<height>60</height>
@@ -1091,7 +1095,8 @@
 				<control type="grouplist" id="9000">
 					<left>0</left>
 					<top>20</top>
-					<width>1920</width>
+					<!-- 与上面 8 条底板同步：两边都 100% + 居中，任何分辨率下都对齐。 -->
+					<width>100%</width>
 					<height>60</height>
 					<orientation>horizontal</orientation>
 					<align>center</align>

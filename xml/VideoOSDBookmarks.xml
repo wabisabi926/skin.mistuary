@@ -38,7 +38,7 @@
 			<control type="textbox">
 				<left>0</left>
 				<top>1</top>
-				<width>1920</width>
+				<width>100%</width>
 				<height>410</height>
 				<align>center</align>
 				<aligny>center</aligny>
