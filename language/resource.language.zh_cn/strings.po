@@ -1219,3 +1219,15 @@ msgctxt "#31781"
 msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
 msgstr "装了 Mistuary Helper 后走 Emby 服务端，演员、类型、全拼和别名都能搜到。装完或卸掉插件后要重载皮肤才生效。"
 
+
+msgctxt "#31782"
+msgid "Secondary rating source"
+msgstr "次评分来源"
+
+msgctxt "#31783"
+msgid "Rotten Tomatoes"
+msgstr "烂番茄"
+
+msgctxt "#31784"
+msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
+msgstr "主评分旁边显示哪一颗。自动优先豆瓣（需插件），其次 TMDb，最后烂番茄。"

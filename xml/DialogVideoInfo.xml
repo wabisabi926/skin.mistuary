@@ -7,6 +7,16 @@
 	<onload>SetProperty(infobackground,$ESCINFO[ListItem.Art(fanart)],home)</onload>
 	<!-- Keep the backdrop owner stable while other modal dialogs are open. -->
 	<onload>SetProperty(VideoInfo.FanartSource,$VAR[NaraVideoInfoFanartSourceVar])</onload>
+	<!-- 豆瓣评分来自可选插件：先清掉上一条的状态，避免详情页切换时闪旧分数；
+	     只对电影/剧集请求，单集与季不显示豆瓣。 -->
+	<onload>ClearProperty(Mistuary.Rating.Status,home)</onload>
+	<!-- 标题可能带逗号，不能塞进 RunScript 参数；走窗口属性，插件在没有 IMDb 时按标题+年份兜底。 -->
+	<onload>SetProperty(Mistuary.Rating.Query,$INFO[ListItem.Title])</onload>
+	<onload>SetProperty(Mistuary.Rating.Year,$INFO[ListItem.Year])</onload>
+	<onload condition="System.AddonIsEnabled(script.mistuary.helper) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)]">RunScript(script.mistuary.helper,action=rating,type=$INFO[ListItem.DBType],dbid=$INFO[ListItem.DBID],imdb=$INFO[ListItem.IMDBNumber])</onload>
+	<onunload>ClearProperty(Mistuary.Rating.Status,home)</onunload>
+	<onunload>ClearProperty(Mistuary.Rating.Query,home)</onunload>
+	<onunload>ClearProperty(Mistuary.Rating.Year,home)</onunload>
 	<onunload>ClearProperty(infobackground,home)</onunload>
 	<onunload>ClearProperty(VideoInfo.More,home)</onunload>
 	<controls>

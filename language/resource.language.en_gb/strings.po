@@ -1442,3 +1442,15 @@ msgctxt "#31781"
 msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
 msgstr "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
 
+
+msgctxt "#31782"
+msgid "Secondary rating source"
+msgstr "Secondary rating source"
+
+msgctxt "#31783"
+msgid "Rotten Tomatoes"
+msgstr "Rotten Tomatoes"
+
+msgctxt "#31784"
+msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
+msgstr "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."

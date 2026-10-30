@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
+	<!-- 豆瓣插件分数：只在详情页 onload 写入、离开时清除；次评分档位由设置 715 决定。 -->
+	<expression name="NaraRatingDoubanReady">String.IsEqual(Window(home).Property(Mistuary.Rating.Status),ok)</expression>
+	<expression name="NaraRatingSecondaryAuto">Skin.HasSetting(rating_sec_auto) | [!Skin.HasSetting(rating_sec_tmdb) + !Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_douban)]</expression>
 	<!-- 评分胶囊。Kodi 20+ 支持按类型读评分：`ListItem.Rating(<type>)`，
 	     默认类型用 `ListItem.Rating` 读。**一行最多两个胶囊**，优先级：
 	     豆瓣 > IMDb > TMDB > 烂番茄（豆瓣和 IMDb 是同一个字段，由设置二选一，天然互斥）。
@@ -137,15 +140,24 @@
 				<!-- 次评分 ①：TMDB。**类型名两个刮削器不一样**：
 				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
 				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
+				<!-- 次评分 ①：豆瓣（可选插件）。自动档下它优先，TMDB / 烂番茄让位。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="[!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))] + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(themoviedb))" />
+					<param name="visible" value="$EXP[NaraRatingDoubanReady] + !Skin.HasSetting(douban_rating) + [!$EXP[NaraRatingSecondaryAuto] | Skin.HasSetting(rating_sec_douban)] + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season)" />
+					<param name="icon" value="flags/ratings/douban.png" />
+					<param name="label" value="$INFO[Window(10000).Property(Mistuary.Rating.Douban)]" />
+				</include>
+				<!-- 次评分 ②：TMDB。**类型名两个刮削器不一样**：
+				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
+				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
+				<include content="NaraOnlineRatingItem">
+					<param name="visible" value="[!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))] + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(themoviedb)) + [!Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_douban)] + [Skin.HasSetting(rating_sec_tmdb) | [$EXP[NaraRatingSecondaryAuto] + [!$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating)]]]" />
 					<param name="icon" value="flags/ratings/tmdb.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]$INFO[$PARAM[item_prefix].Rating(themoviedb)]" />
 				</include>
 				<!-- 次评分 ②：影评人评分（Emby 的 CriticRating/10，只有电影写）。
 				     **TMDB 有值时让位**，这样一行永远不超过两个胶囊。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + [!Skin.HasSetting(rating_sec_tmdb) + !Skin.HasSetting(rating_sec_douban)] + [Skin.HasSetting(rating_sec_rt) | [$EXP[NaraRatingSecondaryAuto] + String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEmpty($PARAM[item_prefix].Rating(themoviedb)) + [!$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating)]]]" />
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
 				</include>
