@@ -120,16 +120,16 @@
 		<control type="image">
 			<centerleft>50%</centerleft>
 			<top>180</top>
-			<width>400</width>
-			<height>526</height>
+			<width>340</width>
+			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			<visible>System.CanHibernate</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
 			<top>180</top>
-			<width>400</width>
-			<height>456</height>
+			<width>340</width>
+			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			<visible>!System.CanHibernate</visible>
 		</control>
@@ -137,27 +137,39 @@
 			<defaultcontrol>103</defaultcontrol>
 			<centerleft>50%</centerleft>
 			<top>180</top>
-			<width>400</width>
+			<width>340</width>
 			<orientation>vertical</orientation>
 			<usecontrolcoords>true</usecontrolcoords>
 			<onup>9000</onup>
 			<ondown>9000</ondown>
 			<height max="780">auto</height>
 			<control type="group">
-				<height>88</height>
+				<height>64</height>
 				<control type="label" id="2">
-					<left>32</left>
-					<top>16</top>
-					<width>470</width>
-					<height>56</height>
+					<left>24</left>
+					<top>8</top>
+					<width>292</width>
+					<height>48</height>
 					<font>font32</font>
 					<label>$LOCALIZE[33060]</label>
 				</control>
 			</control>
+			<!-- 标题下的分隔线：把「电源」和下面一组动作分开。
+			     面板宽 340，按钮区左右各留 24 → 线宽 292。 -->
+			<control type="group">
+				<height>6</height>
+				<control type="image">
+					<left>24</left>
+					<top>2</top>
+					<width>292</width>
+					<height>1</height>
+					<texture colordiffuse="separator_subtle">dialogs/separator-grey.png</texture>
+				</control>
+			</control>
 			<control type="button" id="103">
 				<left>24</left>
-				<width>352</width>
-				<height>70</height>
+				<width>292</width>
+				<height>60</height>
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -166,24 +178,15 @@
 				<onclick>Quit()</onclick>
 				<visible>System.ShowExitButton</visible>
 			</control>
-			<!-- 下面每个按钮都挂 Kodi 的**能力标志**：平台不支持就自动隐藏，
-			     不需要按 Windows / CoreELEC 分两套写。 -->
-			<control type="button" id="104">
-				<left>24</left>
-				<width>352</width>
-				<height>70</height>
-				<font>font26</font>
-				<align>center</align>
-				<aligny>center</aligny>
-				<include>NaraDialogActionTextures</include>
-				<label>$LOCALIZE[31774]</label>
-				<onclick>Powerdown()</onclick>
-				<visible>System.CanPowerDown</visible>
-			</control>
+			<!-- 顺序原则：**第一项必须安全**（它是 defaultcontrol，遥控器手滑按到 OK 时
+			     最坏只是退出 Kodi），其余按"从轻到重"排：重启 → 待机 → 休眠 → 关机。
+			     「设置」属于另一类，压在最底下。
+			     每个按钮都挂 Kodi 的**能力标志**（`System.Can*`）：平台不支持就自动隐藏，
+			     不需要按 Windows / CoreELEC / 安卓分几套写。 -->
 			<control type="button" id="105">
 				<left>24</left>
-				<width>352</width>
-				<height>70</height>
+				<width>292</width>
+				<height>60</height>
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -194,8 +197,8 @@
 			</control>
 			<control type="button" id="106">
 				<left>24</left>
-				<width>352</width>
-				<height>70</height>
+				<width>292</width>
+				<height>60</height>
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -207,8 +210,8 @@
 			</control>
 			<control type="button" id="107">
 				<left>24</left>
-				<width>352</width>
-				<height>70</height>
+				<width>292</width>
+				<height>60</height>
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
@@ -218,19 +221,33 @@
 				<onclick>Hibernate()</onclick>
 				<visible>System.CanHibernate</visible>
 			</control>
-			<control type="button" id="108">
+			<control type="button" id="104">
 				<left>24</left>
-				<width>352</width>
-				<height>70</height>
+				<width>292</width>
+				<height>60</height>
 				<font>font26</font>
 				<align>center</align>
 				<aligny>center</aligny>
 				<include>NaraDialogActionTextures</include>
-				<label>$LOCALIZE[20183]</label>
-				<onclick>ReloadSkin()</onclick>
+				<label>$LOCALIZE[31774]</label>
+				<onclick>Powerdown()</onclick>
+				<visible>System.CanPowerDown</visible>
+			</control>
+			<!-- 原来是「重载皮肤」（ReloadSkin），开发动作，普通用户用不到；
+			     换成「设置」——高频入口，和首页那个入口同一个窗口。 -->
+			<control type="button" id="108">
+				<left>24</left>
+				<width>292</width>
+				<height>60</height>
+				<font>font26</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<include>NaraDialogActionTextures</include>
+				<label>$LOCALIZE[5]</label>
+				<onclick>ActivateWindow(settings)</onclick>
 			</control>
 			<control type="group">
-				<height>18</height>
+				<height>12</height>
 			</control>
 		</control>
 	</include>

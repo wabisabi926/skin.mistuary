@@ -149,7 +149,7 @@
 （`Includes_VideoTechnicalFlags.xml` 里 206 条 key → 图标的映射），
 `tools/gen_techflag_icons.py` 负责生成（含冷门格式的白字标兜底）并维护 IconMap；
 评分与技术标识合并成一行、整体移到简介下方。设计取舍与坐标见
-`docs/techflag-icons-plan.md`，素材来源与许可见 README 的第三方声明段。
+`docs/techflag-icons-plan.md`，素材来源与许可见根目录 `CREDITS.md`。
 
 ---
 
@@ -186,7 +186,8 @@
 
 ```
 addon.xml  changelog.txt  README.md
-LICENSE        GNU GPL v2 全文（代码部分；GitHub 靠它识别许可）
+LICENSE        GNU GPL v2 全文 + 第三方素材声明摘要（GitHub 靠它识别许可）
+CREDITS.md     第三方素材的完整来源/版本/许可正文（OFL、CC BY-SA 要求随副本分发）
 xml/            全部窗口与 include
 colors/         defaults.xml（透黑）/ light.xml（透白，只写差异色）
 fonts/          Inter-Unicode-Regular.ttf（自带 CJK，见 §5.1）

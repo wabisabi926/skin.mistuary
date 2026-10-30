@@ -78,6 +78,7 @@
 	<!-- Control states -->
 	<color name="control_unfocused">71FFFFFF</color>
 	<color name="separator">AAFFFFFF</color>
+	<color name="separator_subtle">59FFFFFF</color>
 
 	<!-- 玻璃底色不再有固定别名：所有面板统一走下面的 gl_* 档位，
 	     由「页面透明度 / 浮窗透明度 / 播放中透明度」三个设置驱动。 -->
