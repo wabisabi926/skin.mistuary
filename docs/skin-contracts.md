@@ -133,12 +133,13 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
 
 | 项 | 约定 |
 |---|---|
-| 入口 | `NaraTechnicalFlag`（图标 / 文字双分支）→ `NaraTechnicalIconPill` / `NaraTechnicalTextPill` |
+| 入口 | `NaraTechnicalFlag` → `NaraTechnicalIconPill`（**只有图标一条路径**，见 4.1.1） |
 | 图标路径 | `techflags/color/<类别>/<原始值>.png`，由 `NaraTechnical*IconMap` 查表 |
 | 生成脚本 | `tools/gen_techflag_icons.py`（`--check` 供 CI） |
 | 素材规格 | 96×56 画布（约 2:1），显示框 48×28；胶囊 72（DV 带档位 100），itemgap 8 |
 | 评分胶囊 | `NaraOnlineRatingItem` 同款底板：114（IMDb 128），内边距 12 |
-| 开关 | `hide_techflag_icons`，关掉 = 回到纯文字胶囊 |
+| 开关 | `hide_techflag_icons`，关掉 = **整行不显示技术标识**（2026-10-31 起不再是"换成文字"） |
+| HDR 槽位 | 只出两颗：主 HDR（优先 `HdrType`，没有才用 `HdrType.1`）+ 第二种不同的 HDR |
 | 位置 | 四处（详情页 / 首页 / 搜索 / 海报视图 51）**全部并入评分行**：`NaraOnlineRatingsRow` + `inline_flags=true`；已无独立行组件 |
 
 **三条硬约束**：
@@ -152,6 +153,22 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
 3. **声道不用图标，只出文字。** 素材按声道数命名且图上印死了布局文字，而
    `5.1.2`/`7.1` 同为 8 声道、`5.1.4`/`7.1.2` 同为 10 声道，图必然说谎。
    `skin.estuary.nara` 的「Atmos 码 + 声道数」推断在本机片库不成立（DB 里没有 `*_atmos`）。
+
+---
+
+### 4.1.1 Kodi 条件求值：三个已经踩过的坑（2026-10-31）
+
+**Kodi 的条件一旦求值失败，一律按 `true` 处理。** 所有"互补二选一"的写法在这种前提下都会同时成立。
+
+| 写法 | 实测症状 | 正确做法 |
+|---|---|---|
+| `String.IsEqual($PARAM[hdr_detail],5)` —— 裸数字 | 4 个按档位互斥的变体全部命中，一格画出 4 颗 DV 胶囊 | 数字也当字符串，加引号：`&quot;5&quot;` |
+| `<include content="X" condition="…$PARAM[y]…">` | `$PARAM` 在解析 include 时**不替换** → 条件恒 false（或恒 true）：整段 XML 消失，或该消失的还在 | 用外层 `<control type="group">` 的 `<visible>` 分流；`<visible>` 里的 `$PARAM` 是正常替换的 |
+| 条件里引用一个值是 `$MAP[...]` 的参数（如 `String.IsEmpty($PARAM[icon])`） | `$MAP` 在条件里不展开，字面量里的 `[` 让整条条件解析失败 → 两条分支一起 false，整排标识消失 | 不要在条件里引用 `$MAP` 参数；判"有没有图标"要换数据源 |
+
+**由此定下的结构**：技术标识只有一条渲染路径（图标胶囊），"图标 / 文字"不再靠条件切换；
+`NaraTechnicalTextPill` 只剩声道那一颗直接调用。`$EXP[...]` 也别再用来做互斥判据
+（`String.StartsWith(System.BuildVersion,21)` 在 22.0-RC1 上同样失效）。
 
 ---
 
@@ -197,6 +214,27 @@ info 求值失败变空，只剩 prefix 显示出来。**Kodi 的字符串函数
 
 > **2026-10-30 决定：不改。** 保留 `library://music/`，接受前缀。理由是「类别」行的语义
 > 就是媒体库列表，换成流派属于改功能而不是修 bug。
+
+---
+
+### 4.3 首页剧集行的技术标识：两级隐藏探针（2026-10-31）
+
+剧集（show 层级）没有文件级流信息，`ListItem.VideoResolution` 恒为空。首页 hero 的做法和详情页
+`5100`（季）→ `5101`（集）同构，但首页没有分集货架，所以自己造两级 1×1 隐藏列表：
+
+| 控件 | id | content |
+|---|---|---|
+| `HomeHeroSeasonProbe` | `season_id`（如 `620095`） | `videodb://tvshows/titles/<DBID>/` + `sortby=season ascending limit=1` |
+| `HomeHeroEpisodeProbe` | `episode_id`（如 `620096`） | `$INFO[Container(<season_id>).ListItem.FolderPath]` + `sortby=episode ascending limit=1` |
+
+- **id 必须由 `Home.xml` 逐处传字面量**（电影 6 个英雄区 + 剧集 5 个，每个一对）。
+  不要写 `$PARAM[list_id]95` 这种拼接——动态拼出来的容器 id 进条件/内容路径必翻车。
+- 两个探针**总是生成**，加载与否交给各自的 `<visible>`（季探针判 `DBType=tvshow + DBID>0`，
+  集探针判季列表 `NumItems>0`）。不可见的容器不取数据，电影分区零开销。
+- 评分行按 `DBType` 拆两条，用 **group 的 `<visible>`** 分流；电影那条的参数与详情页逐字相同，
+  剧集那条多传 `technical_episode_prefix = Container(<episode_id>).ListItemAbsolute(0)`。
+- **已知数据限制**：库里没有 streamdetails 的剧集（本机 517 部里 7 部）不会出标识；
+  第一季是 S00 特辑的（9 部）会先拿到特辑。
 
 ---
 

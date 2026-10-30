@@ -189,6 +189,19 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 | 文档失真 8 处 | ✅ 已对齐实测值 |
 | helper「可选安装」契约 | ✅ `helper-plugin-plan.md` §2 |
 
+## 2026-10-31 已修（`8fd80d8`）
+
+交接文档里那三个「新发现的问题」已全部关闭，另外顺手收了三个：
+
+| 项 | 结果 |
+|---|---|
+| 搜索 hero 没有技术标识 | 根因在 helper：没请求 `MediaSources`、没调 `addStreamInfo`。helper 侧已补 |
+| 电视剧卡片没有 4K / Blu-ray 角标 | 角标是 Emby 叠在海报图里的，剧集层级没有文件流信息 → 皮肤侧无解，不再尝试 |
+| 电视剧小组件右侧留白 | 搜索网格去掉写死 `width=1780`；卡片槽 240→252（2160 上 8 列刚好铺满） |
+| 技术标识一格画出 3~4 颗 | 三个条件求值坑，见 `skin-contracts.md` §4.1.1 |
+| 首页剧集行没有技术标识 | 两级隐藏探针（季→集）取第一集当代表集，见 §4.3 |
+| 首页豆瓣次评分不显示 | 皮肤改读库里的 `rating` 行；helper 双写 `douban` + `metacritic` |
+
 ## 剩下的 3 件事（2026-10-30 更新）
 
 > 黑胶、死变量、外部校验报告 P0/P1/P2 都已完成；M1b/M2 已接，插件 0.2.2 已发。
