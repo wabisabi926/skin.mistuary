@@ -86,6 +86,11 @@
 	<include name="NaraMediaMenuChoiceItem">
 		<param name="visible">true</param>
 		<param name="onclick_condition">true</param>
+		<!-- Second action slot. Only the title row needs it: movies and TV shows are
+		     sorted by sorttitle, movie sets have no sorttitle column and fall back to
+		     label, so one row has to dispatch two different sort methods. -->
+		<param name="onclick_alt"></param>
+		<param name="onclick_alt_condition">false</param>
 		<definition>
 			<control type="radiobutton" id="$PARAM[control_id]">
 				<width>384</width>
@@ -109,6 +114,7 @@
 				<label>$PARAM[label]</label>
 				<selected>$PARAM[selected]</selected>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick]</onclick>
+				<onclick condition="$PARAM[onclick_alt_condition]">$PARAM[onclick_alt]</onclick>
 				<onright>50</onright>
 				<onback>50</onback>
 				<visible>$PARAM[visible]</visible>
@@ -143,52 +149,6 @@
 					<width>364</width>
 					<height>1</height>
 					<texture colordiffuse="28FFFFFF">colors/white.png</texture>
-				</control>
-			</control>
-		</definition>
-	</include>
-	<include name="NaraMediaMenuBrowseList">
-		<definition>
-			<control type="group">
-				<control type="list" id="$PARAM[list_id]">
-					<left>0</left>
-					<top>144</top>
-					<width>384</width>
-					<height>896</height>
-					<scrolltime>180</scrolltime>
-					<onup>$PARAM[list_id]</onup>
-					<onright>50</onright>
-					<onback>$PARAM[list_id]</onback>
-					<itemlayout width="384" height="48">
-						<control type="image">
-							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture colordiffuse="text_primary" border="7">shapes/round7.png</texture>
-							<visible>ListItem.IsSelected</visible>
-						</control>
-						<control type="label">
-							<left>54</left><width>308</width><height>48</height>
-							<font>font12</font><aligny>center</aligny><textcolor>text_secondary</textcolor>
-							<label>$INFO[ListItem.Label]</label>
-						</control>
-					</itemlayout>
-					<focusedlayout width="384" height="48">
-						<control type="image">
-							<width>384</width><height>48</height>
-							<texture colordiffuse="glass_focus_light">colors/white.png</texture>
-							<include>Animation_FocusTextureFade</include>
-						</control>
-						<control type="image">
-							<left>20</left><top>17</top><width>14</width><height>14</height>
-							<texture colordiffuse="text_primary" border="7">shapes/round7.png</texture>
-							<visible>ListItem.IsSelected</visible>
-						</control>
-						<control type="label">
-							<left>54</left><width>308</width><height>48</height>
-							<font>font12</font><aligny>center</aligny>
-							<textcolor>text_primary</textcolor><selectedcolor>text_primary</selectedcolor>
-							<label>$INFO[ListItem.Label]</label>
-						</control>
-					</focusedlayout>
 				</control>
 			</control>
 		</definition>
@@ -269,42 +229,12 @@
 				<font>font_nara_media_menu_title</font><textcolor>text_primary</textcolor>
 				<label>$VAR[BreadcrumbsVideoVar]</label>
 			</control>
-			<!-- Draw the compact focus disc at its final size with Kodi's rounded-corner
-			     shader. This avoids minifying the padded 120 px round-button bitmap. -->
-			<control type="image">
-				<left>337</left><top>15</top><width>28</width><height>28</height>
-				<texture colordiffuse="glass_focus_light" border="14">shapes/round14.png</texture>
-				<visible>Control.HasFocus(9151)</visible>
-			</control>
-			<control type="radiobutton" id="9151">
-				<textcolor>text_primary</textcolor>
-				<left>330</left><top>8</top><width>42</width><height>42</height>
-				<font></font>
-				<label>$LOCALIZE[31691]</label>
-				<align>center</align><aligny>center</aligny>
-				<!-- The dedicated 64 px texture is optically centered and rendered in a
-				     centered 28 px box; its visible arrow is approximately 19 x 19 px. -->
-				<radioposx>7</radioposx><radioposy>7</radioposy>
-				<radiowidth>28</radiowidth><radioheight>28</radioheight>
-				<texturefocus />
-				<texturenofocus />
-				<textureradioonfocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioonfocus>
-				<textureradioonnofocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioonnofocus>
-				<textureradioofffocus colordiffuse="text_primary">icons/mediamenu/clear-filters.png</textureradioofffocus>
-				<textureradiooffnofocus colordiffuse="text_secondary">icons/mediamenu/clear-filters.png</textureradiooffnofocus>
-				<selected>[$EXP[nara_video_library_advanced_filters] + [!String.IsEmpty(Window.Property(NaraMediaMenu.Genre)) | !String.IsEmpty(Window.Property(NaraMediaMenu.Decade)) | !String.IsEmpty(Window.Property(NaraMediaMenu.Rating))]] | !String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100]) | !$EXP[nara_video_library_title_sort] | !Container.SortDirection(ascending)</selected>
-				<onclick>noop</onclick>
-				<onleft>9151</onleft><onright>50</onright><onup>9151</onup><ondown>9120</ondown><onback>50</onback>
-			</control>
 			<control type="grouplist" id="9120">
 				<left>18</left><top>78</top><width>348</width><height>40</height>
 				<orientation>horizontal</orientation>
 				<align>left</align>
 				<itemgap>8</itemgap>
-				<onleft>9120</onleft><onright>50</onright><onup>9151</onup>
-				<ondown condition="String.IsEqual(Window.Property(NaraMediaMenu.Browse),genres)">9171</ondown>
-				<ondown condition="String.IsEqual(Window.Property(NaraMediaMenu.Browse),years)">9181</ondown>
-				<ondown condition="String.IsEqual(Window.Property(NaraMediaMenu.Browse),ratings)">9191</ondown>
+				<onleft>9120</onleft><onright>50</onright><onup>9120</onup>
 				<ondown>9111</ondown>
 				<include content="NaraMediaMenuViewPill"><param name="control_id" value="9121" /><param name="label" value="$LOCALIZE[31683]" /><param name="onclick" value="Container.SetViewMode(50)" /></include>
 				<include content="NaraMediaMenuViewPill"><param name="control_id" value="9122" /><param name="label" value="$LOCALIZE[31685]" /><param name="onclick" value="Container.SetViewMode(51)" /></include>
@@ -328,29 +258,21 @@
 				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9112" /><param name="count_control_id" value="9212" /><param name="label" value="$LOCALIZE[16101]" /><param name="count_label" value="$INFO[Window.Property(NaraMediaMenu.UnwatchedCount)]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])" /></include>
 				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9113" /><param name="count_control_id" value="9213" /><param name="label" value="$LOCALIZE[16102]" /><param name="count_label" value="$INFO[Window.Property(NaraMediaMenu.WatchedCount)]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /></include>
 				<include content="NaraMediaMenuDivider"><param name="control_id" value="9202" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
-				<include content="NaraMediaMenuSectionLabel"><param name="control_id" value="9203" /><param name="label" value="$LOCALIZE[31687]" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
-				<include content="NaraMediaMenuNavItem"><param name="control_id" value="9116" /><param name="label" value="$LOCALIZE[135]" /><param name="label2" value="$INFO[Window.Property(NaraMediaMenu.Genre)]" /><param name="icon" value="icons/mediamenu/genres.png" /><param name="selected" value="!String.IsEmpty(Window.Property(NaraMediaMenu.Genre))" /><param name="onclick" value="noop" /><param name="close_menu" value="false" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
-				<include content="NaraMediaMenuNavItem"><param name="control_id" value="9117" /><param name="label" value="$LOCALIZE[31690]" /><param name="label2" value="$INFO[Window.Property(NaraMediaMenu.Decade)]" /><param name="icon" value="icons/mediamenu/years.png" /><param name="selected" value="!String.IsEmpty(Window.Property(NaraMediaMenu.Decade))" /><param name="onclick" value="noop" /><param name="close_menu" value="false" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
-				<include content="NaraMediaMenuNavItem"><param name="control_id" value="9118" /><param name="label" value="$LOCALIZE[563]" /><param name="label2" value="$INFO[Window.Property(NaraMediaMenu.Rating)]" /><param name="icon" value="icons/menumarks/star.png" /><param name="selected" value="!String.IsEmpty(Window.Property(NaraMediaMenu.Rating))" /><param name="onclick" value="noop" /><param name="close_menu" value="false" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
+				<!-- 筛选交给 Kodi 原生媒体筛选对话框（Action(Filter) → CGUIDialogMediaFilter）。
+				     它走 DialogSettings.xml，皮肤底部本来就有 OK(28) / 取消(29) / 清除(30)，
+				     所以不用另建对话框 XML。原来那三行「类型 / 年代 / 评分」+ 三个空 list
+				     是从 Estuary N 带进来的骨架，数据源和属性写入都没有，已删。 -->
+				<include content="NaraMediaMenuNavItem"><param name="control_id" value="9116" /><param name="label" value="$LOCALIZE[31687]" /><param name="label2" /><param name="icon" value="icons/mediamenu/genres.png" /><param name="selected" value="Container.Filtered" /><param name="onclick" value="Action(Filter)" /><param name="close_menu" value="true" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
 				<include content="NaraMediaMenuDivider"><param name="control_id" value="9204" /><param name="visible" value="Control.IsEnabled(3)" /></include>
 				<include content="NaraMediaMenuSectionLabel"><param name="control_id" value="9205" /><param name="label" value="$LOCALIZE[31688]" /><param name="visible" value="Control.IsEnabled(3)" /></include>
-				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9131" /><param name="label" value="$LOCALIZE[556]" /><param name="selected" value="$EXP[nara_video_library_title_sort]" /><param name="onclick" value="noop" /><param name="visible" value="Control.IsEnabled(3)" /></include>
-				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9132" /><param name="label" value="$LOCALIZE[562]" /><param name="selected" value="Container.SortMethod(16)" /><param name="onclick" value="noop" /><param name="visible" value="Control.IsEnabled(3)" /></include>
-				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9133" /><param name="label" value="$LOCALIZE[563]" /><param name="selected" value="Container.SortMethod(17)" /><param name="onclick" value="noop" /><param name="visible" value="Control.IsEnabled(3)" /></include>
-				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9134" /><param name="label" value="$LOCALIZE[31689]" /><param name="selected" value="Container.SortMethod(40)" /><param name="onclick" value="noop" /><param name="visible" value="Control.IsEnabled(3)" /></include>
+				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9131" /><param name="label" value="$LOCALIZE[556]" /><param name="selected" value="$EXP[nara_video_library_title_sort]" /><param name="onclick" value="Container.SetSortMethod(29)" /><param name="onclick_condition" value="!Container.Content(sets)" /><param name="onclick_alt" value="Container.SetSortMethod(1)" /><param name="onclick_alt_condition" value="Container.Content(sets)" /><param name="visible" value="Control.IsEnabled(3)" /></include>
+				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9132" /><param name="label" value="$LOCALIZE[562]" /><param name="selected" value="Container.SortMethod(16)" /><param name="onclick" value="Container.SetSortMethod(16)" /><param name="visible" value="Control.IsEnabled(3)" /></include>
+				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9133" /><param name="label" value="$LOCALIZE[563]" /><param name="selected" value="Container.SortMethod(17)" /><param name="onclick" value="Container.SetSortMethod(17)" /><param name="visible" value="Control.IsEnabled(3)" /></include>
+				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9134" /><param name="label" value="$LOCALIZE[31689]" /><param name="selected" value="Container.SortMethod(40)" /><param name="onclick" value="Container.SetSortMethod(40)" /><param name="visible" value="Control.IsEnabled(3)" /></include>
 				<include content="NaraMediaMenuDivider"><param name="control_id" value="9206" /><param name="visible" value="Control.IsEnabled(4)" /></include>
 				<include content="NaraMediaMenuSectionLabel"><param name="control_id" value="9207" /><param name="label" value="$LOCALIZE[31032]" /><param name="visible" value="Control.IsEnabled(4)" /></include>
 				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9141" /><param name="label" value="$LOCALIZE[584]" /><param name="selected" value="Container.SortDirection(ascending)" /><param name="onclick_condition" value="!Container.SortDirection(ascending)" /><param name="onclick" value="Container.SetSortDirection" /><param name="visible" value="Control.IsEnabled(4)" /></include>
 				<include content="NaraMediaMenuChoiceItem"><param name="control_id" value="9142" /><param name="label" value="$LOCALIZE[585]" /><param name="selected" value="Container.SortDirection(descending)" /><param name="onclick_condition" value="!Container.SortDirection(descending)" /><param name="onclick" value="Container.SetSortDirection" /><param name="visible" value="Control.IsEnabled(4)" /></include>
-			</control>
-			<control type="group" id="9173">
-				<include content="NaraMediaMenuBrowseList"><param name="list_id" value="9171" /></include>
-			</control>
-			<control type="group" id="9183">
-				<include content="NaraMediaMenuBrowseList"><param name="list_id" value="9181" /></include>
-			</control>
-			<control type="group" id="9193">
-				<include content="NaraMediaMenuBrowseList"><param name="list_id" value="9191" /></include>
 			</control>
 		</definition>
 	</include>
