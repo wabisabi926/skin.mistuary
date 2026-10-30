@@ -137,20 +137,20 @@
 	<include name="UserRatingContent">
 		<visible>!String.IsEmpty($PARAM[infolabel])</visible>
 		<control type="image">
-			<left>3</left>
-			<top>-3</top>
-			<width>44</width>
-			<height>44</height>
+			<left>8</left>
+			<top>8</top>
+			<width>40</width>
+			<height>40</height>
 			<aspectratio>keep</aspectratio>
-			<texture colordiffuse="badge_surface">overlays/badge.png</texture>
+			<texture>overlays/badge_ring.png</texture>
 		</control>
 		<control type="label">
-			<left>3</left>
-			<top>-3</top>
+			<left>8</left>
+			<top>8</top>
 			<align>center</align>
 			<aligny>center</aligny>
-			<width>44</width>
-			<height>44</height>
+			<width>40</width>
+			<height>40</height>
 			<font>font20_title</font>
 			<textcolor>badge_foreground</textcolor>
 			<label>$INFO[$PARAM[infolabel]]</label>

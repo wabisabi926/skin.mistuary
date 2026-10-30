@@ -345,6 +345,7 @@
 		<!-- 艺术图片 -->
 		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
 		<value condition="Control.HasFocus(6067)">$LOCALIZE[31745]</value>
+		<value condition="Control.HasFocus(714)">$LOCALIZE[31781]</value>
 		<!-- 主菜单项 -->
 		<value condition="Control.HasFocus(611)">$LOCALIZE[31746]</value>
 		<value condition="Control.HasFocus(6111)">$LOCALIZE[31747]</value>
@@ -728,6 +729,14 @@
 		<value condition="ListItem.IsResumable">overlays/watched/OverlayResume.png</value>
 		<value condition="ListItem.HasArchive">windows/pvr/archive.png</value>
 		<value condition="Integer.IsGreater(ListItem.Playcount,0)">$INFO[ListItem.Overlay]</value>
+	</variable>
+	<!-- 状态图标的着色：只有「已看完」变绿，其余保持白色。
+	     条件必须和 ItemStatusIconVar 第一条（OverlayWatched）完全一致，
+	     否则会出现"图标是已看完的样子、颜色却不是绿的"这种错位。
+	     故意不给「继续看」上黄色：status_warning 已经是黄，两黄混在一起分不清。 -->
+	<variable name="StatusIconColorVar">
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes)) | String.IsEqual(Listitem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">status_done</value>
+		<value>badge_foreground</value>
 	</variable>
 	<variable name="ItemTypeIconVar">
 		<value condition="ListItem.IsCollection">overlays/set.png</value>

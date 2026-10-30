@@ -72,6 +72,8 @@
 	<color name="status_recording">FFCE4421</color>
 	<color name="status_warning">D7FFCD3C</color>
 	<color name="status_error">FFFF453A</color>
+	<!-- 已看完的状态图标着色。和 progress_watched 同色，语义统一（进度条走完 = 图标变绿）。 -->
+	<color name="status_done">FF03B585</color>
 
 	<!-- Control states -->
 	<color name="control_unfocused">71FFFFFF</color>
