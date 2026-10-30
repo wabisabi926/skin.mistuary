@@ -12,6 +12,13 @@
 	<variable name="NaraSearchNumber7"><value>7</value></variable>
 	<variable name="NaraSearchNumber8"><value>8</value></variable>
 	<variable name="NaraSearchNumber9"><value>9</value></variable>
+	<!-- 第二排数字行（16994）的开关键，固定写 123：原来这个键只写 "0"，
+	     没人看得出它是"切到数字键盘"的开关。
+	     不跟着 NumbersVisible 翻转（做过 ABC/123 两档，但列表项 label 只在
+	     条目重绘时才重新解析，切完会慢半拍），展开后靠下面那排 1–9 自己说话。
+	     走变量是因为裸数字 label 会被 Kodi 当成 $LOCALIZE[123]。
+	     第二排那个真正的 0 仍用 NaraSearchNumber0，不受影响。 -->
+	<variable name="NaraSearchNumberToggleLabel"><value>123</value></variable>
 
 	<!--
 		Search is an XSP filter evaluated by the video database. The query matches
@@ -239,7 +246,7 @@
 				<item><label>Y</label><onclick>SetFocus(16999)</onclick><include>NaraSearchInputY</include><onclick>SetFocus(16992)</onclick></item>
 				<item><label>Z</label><onclick>SetFocus(16999)</onclick><include>NaraSearchInputZ</include><onclick>SetFocus(16992)</onclick></item>
 				<item>
-					<label>$VAR[NaraSearchNumber0]</label>
+					<label>$VAR[NaraSearchNumberToggleLabel]</label>
 					<onclick condition="!String.IsEmpty(Window(home).Property(Search.NumbersVisible))">ClearProperty(Search.NumbersVisible,home)</onclick>
 					<onclick condition="String.IsEmpty(Window(home).Property(Search.NumbersVisible))">SetProperty(Search.NumbersVisible,True,home)</onclick>
 					<onclick condition="String.IsEmpty(Window(home).Property(Search.NumbersVisible))">SetFocus(16994)</onclick>
