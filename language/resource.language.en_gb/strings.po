@@ -1433,3 +1433,12 @@ msgstr "Back"
 msgctxt "#31779"
 msgid "Music info"
 msgstr "Music info"
+
+msgctxt "#31780"
+msgid "Use Emby server search"
+msgstr "Use Emby server search"
+
+msgctxt "#31781"
+msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
+msgstr "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
+

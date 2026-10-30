@@ -1210,3 +1210,12 @@ msgstr "返回"
 msgctxt "#31779"
 msgid "Music info"
 msgstr "音乐信息"
+
+msgctxt "#31780"
+msgid "Use Emby server search"
+msgstr "使用 Emby 服务端搜索"
+
+msgctxt "#31781"
+msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
+msgstr "装了 Mistuary Helper 后走 Emby 服务端，演员、类型、全拼和别名都能搜到。装完或卸掉插件后要重载皮肤才生效。"
+

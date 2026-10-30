@@ -378,11 +378,13 @@ class SearchDrawerTests(unittest.TestCase):
 
 
     def test_search_uses_prefix_initials_and_text_fields_only(self):
-        """首字母必须前缀匹配；人员/类型字段会淹没单字母查询，交给服务端桥。"""
-        variables = {node.get('name'): node.findtext('value') for node in SEARCH.findall('variable')}
+        """本地 XSP 兜底：首字母前缀匹配；人员/类型字段会淹没单字母查询，交给服务端桥。"""
+        variables = {node.get('name'): node for node in SEARCH.findall('variable')}
         for name, media_type in (('NaraSearchMoviesPathVar', 'movies'),
                                  ('NaraSearchTVShowsPathVar', 'tvshows')):
-            path = variables[name]
+            values = variables[name].findall('value')
+            # 本地 XSP 永远是最后一条兜底，插件分支只能加在它前面
+            path = values[-1].text
             self.assertIn('"rules":{"or":[', path)
             self.assertIn('"type":"%s"' % media_type, path)
             for field in ('title', 'originaltitle'):
@@ -391,9 +393,31 @@ class SearchDrawerTests(unittest.TestCase):
             self.assertNotIn('"field":"sorttitle","operator":"contains"', path)
             for field in ('actor', 'director', 'genre'):
                 self.assertNotIn('"field":"%s"' % field, path)
-        # limit 会同时截断结果和标签计数（旧值 30），搜索列表必须不设上限。
+
+            # 服务端分支排在最前，query 必须是最后一个参数
+            server = values[0]
+            self.assertIn('plugin://script.mistuary.helper/?mode=search', server.text)
+            self.assertTrue(server.text.endswith(
+                'query=$INFO[Control.GetLabel(16999).index(1)]'))
+            self.assertIn('$EXP[helper_search_ready]', server.get('condition'))
+            self.assertIn('!Skin.HasSetting(helper_search_off)', server.get('condition'))
+
+        # 探测插件和自己的 Emby 插件同时可用才走服务端
+        ready = EXPRESSIONS['helper_search_ready']
+        self.assertIn('System.AddonIsEnabled(script.mistuary.helper)', ready)
+        self.assertIn('System.AddonIsEnabled(plugin.service.emby-next-gen)', ready)
+
+        # 服务端容器不能写 sortby，否则相关度会被字母序覆盖
+        self.assertIsNone(
+            INCLUDES['NaraSearchMoviesContentServer'].find('content').get('sortby'))
+        self.assertIsNone(
+            INCLUDES['NaraSearchTVShowsContentServer'].find('content').get('sortby'))
+        self.assertEqual(
+            INCLUDES['NaraSearchMoviesContentLocal'].find('content').get('sortby'), 'sorttitle')
+
+        # 列表控件改为按来源切换 include，不能再写死一个 content
         for control_id in (16101, 16102):
-            self.assertIsNone(CONTROLS[control_id].find('content').get('limit'))
+            self.assertIsNone(CONTROLS[control_id].find('content'))
 
 
 if __name__ == '__main__':

@@ -25,12 +25,31 @@
 		see docs/helper-plugin-plan.md §6. The lists deliberately carry no limit:
 		the tab counters must show the real totals.
 	-->
+	<!-- 服务端搜索：插件和自己都装了、Emby 也启用时才走。
+	     插件只是"多一个来源"，路径变量最后一行始终是本地 XSP 兜底。 -->
+	<expression name="helper_search_ready">System.AddonIsEnabled(script.mistuary.helper) + System.AddonIsEnabled(plugin.service.emby-next-gen)</expression>
 	<variable name="NaraSearchMoviesPathVar">
+		<value condition="$EXP[helper_search_ready] + !Skin.HasSetting(helper_search_off) + !String.IsEmpty(Control.GetLabel(16999).index(1))">plugin://script.mistuary.helper/?mode=search&amp;type=movies&amp;query=$INFO[Control.GetLabel(16999).index(1)]</value>
 		<value condition="!String.IsEmpty(Control.GetLabel(16999).index(1))">videodb://movies/titles/?xsp={"order":{"direction":"ascending","ignorefolders":0,"method":"sorttitle"},"rules":{"or":[{"field":"title","operator":"contains","value":["$INFO[Control.GetLabel(16999).index(1)]"]},{"field":"originaltitle","operator":"contains","value":["$INFO[Control.GetLabel(16999).index(1)]"]},{"field":"sorttitle","operator":"startswith","value":["$INFO[Control.GetLabel(16999).index(1)]"]}]},"type":"movies"}</value>
 	</variable>
 	<variable name="NaraSearchTVShowsPathVar">
+		<value condition="$EXP[helper_search_ready] + !Skin.HasSetting(helper_search_off) + !String.IsEmpty(Control.GetLabel(16999).index(1))">plugin://script.mistuary.helper/?mode=search&amp;type=shows&amp;query=$INFO[Control.GetLabel(16999).index(1)]</value>
 		<value condition="!String.IsEmpty(Control.GetLabel(16999).index(1))">videodb://tvshows/titles/?xsp={"order":{"direction":"ascending","ignorefolders":0,"method":"sorttitle"},"rules":{"or":[{"field":"title","operator":"contains","value":["$INFO[Control.GetLabel(16999).index(1)]"]},{"field":"originaltitle","operator":"contains","value":["$INFO[Control.GetLabel(16999).index(1)]"]},{"field":"sorttitle","operator":"startswith","value":["$INFO[Control.GetLabel(16999).index(1)]"]}]},"type":"tvshows"}</value>
 	</variable>
+	<!-- 两种来源的容器属性不同：本地 XSP 自带 order，但仍显式写 sortby 保证顺序；
+	     服务端要保留相关度排序，不能写 sortby。装/卸插件后重载皮肤才切换。 -->
+	<include name="NaraSearchMoviesContentLocal">
+		<content sortby="sorttitle" sortorder="ascending" target="videos" browse="never">$VAR[NaraSearchMoviesPathVar]</content>
+	</include>
+	<include name="NaraSearchMoviesContentServer">
+		<content target="videos" browse="never">$VAR[NaraSearchMoviesPathVar]</content>
+	</include>
+	<include name="NaraSearchTVShowsContentLocal">
+		<content sortby="sorttitle" sortorder="ascending" target="videos" browse="never">$VAR[NaraSearchTVShowsPathVar]</content>
+	</include>
+	<include name="NaraSearchTVShowsContentServer">
+		<content target="videos" browse="never">$VAR[NaraSearchTVShowsPathVar]</content>
+	</include>
 	<!-- Keep the active result type independent from the order in which the two
 	     asynchronous directory providers finish. A valid explicit tab choice wins;
 	     otherwise movies are the deterministic default, falling back to TV only
@@ -671,7 +690,8 @@
 					<include content="NaraSearchPosterLayout"><param name="focused" value="Control.HasFocus(16101)" /><param name="titlecolor" value="text_primary" /></include>
 				</focusedlayout>
 				<onclick>Info</onclick>
-				<content sortby="sorttitle" sortorder="ascending" target="videos" browse="never">$VAR[NaraSearchMoviesPathVar]</content>
+				<include condition="$EXP[helper_search_ready] + !Skin.HasSetting(helper_search_off)">NaraSearchMoviesContentServer</include>
+				<include condition="!$EXP[helper_search_ready] | Skin.HasSetting(helper_search_off)">NaraSearchMoviesContentLocal</include>
 				<enable>$EXP[NaraSearchMoviesActive]</enable>
 				<visible>!String.IsEmpty(Control.GetLabel(16999).index(1))</visible>
 				<animation effect="fade" start="100" end="0" time="0" condition="!$EXP[NaraSearchMoviesActive]">Conditional</animation>
@@ -694,7 +714,8 @@
 					<include content="NaraSearchPosterLayout"><param name="focused" value="Control.HasFocus(16102)" /><param name="titlecolor" value="text_primary" /></include>
 				</focusedlayout>
 				<onclick>Info</onclick>
-				<content sortby="sorttitle" sortorder="ascending" target="videos" browse="never">$VAR[NaraSearchTVShowsPathVar]</content>
+				<include condition="$EXP[helper_search_ready] + !Skin.HasSetting(helper_search_off)">NaraSearchTVShowsContentServer</include>
+				<include condition="!$EXP[helper_search_ready] | Skin.HasSetting(helper_search_off)">NaraSearchTVShowsContentLocal</include>
 				<enable>$EXP[NaraSearchTVShowsActive]</enable>
 				<visible>!String.IsEmpty(Control.GetLabel(16999).index(1))</visible>
 				<animation effect="fade" start="100" end="0" time="0" condition="!$EXP[NaraSearchTVShowsActive]">Conditional</animation>

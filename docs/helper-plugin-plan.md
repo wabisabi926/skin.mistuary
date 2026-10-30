@@ -31,7 +31,7 @@
 ## 1. 调用方式
 
 ```
-plugin://script.mistuary.helper/?mode=search&type=movies&query=<搜索词>
+plugin://script.mistuary.helper/?mode=search&type=movies&query=$INFO[Control.GetLabel(16999).index(1)]
 plugin://script.mistuary.helper/?mode=search&type=shows&query=<搜索词>
 RunScript(script.mistuary.helper,action=rating,type=movie,dbid=<id>)     # P1
 RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
@@ -57,36 +57,40 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # P2
 1. **皮肤侧只加分支，不替换**：新条件写进已有 `<variable>`，原来那行无条件 `<value>` 永远留在最后。
 2. 任何分支都必须有"未装"兜底，**兜底是当前已有行为**，不是空白。
 3. 插件返回空 / 报错 / 超时 → 按"没装"处理，**不弹错误框**。
-4. 设置开关 `helper_search` 默认开，但**未装插件时整行隐藏**——别给用户一个拨不动的开关。
+4. 设置开关 `helper_search_off`（反向命名 = 默认开），**插件或 Emby 不可用时整行隐藏**——别给用户一个拨不动的开关。
 
 ### 皮肤侧写法
 
+皮肤实际写法（`xml/Includes_Search.xml`）：
+
 ```xml
-<expression name="helper_ready">System.AddonIsEnabled(script.mistuary.helper)</expression>
+<expression name="helper_search_ready">System.AddonIsEnabled(script.mistuary.helper) + System.AddonIsEnabled(plugin.service.emby-next-gen)</expression>
 
 <variable name="NaraSearchMoviesPathVar">
-    <value condition="$EXP[helper_ready] + Skin.HasSetting(helper_search)">plugin://script.mistuary.helper/?mode=search&amp;type=movies&amp;query=</value>
-    <value>library://video/movies/...</value>
+    <value condition="$EXP[helper_search_ready] + !Skin.HasSetting(helper_search_off) + !String.IsEmpty(Control.GetLabel(16999).index(1))">plugin://script.mistuary.helper/?mode=search&amp;type=movies&amp;query=$INFO[Control.GetLabel(16999).index(1)]</value>
+    <value condition="!String.IsEmpty(Control.GetLabel(16999).index(1))">videodb://...</value>
 </variable>
 ```
 
-服务端模式下**不要**给容器加 `sortby="sorttitle"`，否则相关度排序会被覆盖成字母序。
+两个 fixedlist（`16101` 电影 / `16102` 剧集）不再写死 `<content>`，
+改为按来源 include 两套：
 
-### 这个坑具体怎么绕（2026-10-30 补）
+| include | 容器属性 |
+|---|---|
+| `NaraSearch*ContentLocal` | `sortby="sorttitle" sortorder="ascending"` |
+| `NaraSearch*ContentServer` | **不写 `sortby`**，保留服务端相关度 |
 
-搜索页的两个结果容器（`Includes_Search.xml` 的 `fixedlist id=16101 / 16102`）
-**现在就写死了** `sortby="sorttitle" sortorder="ascending"`，两条路径共用同一个
-`<content>`。接服务端分支时必须处理，否则搜「三体」会按拼音字母序排出一堆 A 开头的。
+**接线点一览**：
 
-按优先级试：
+| 文件 | 内容 |
+|---|---|
+| `Includes_Search.xml` | `helper_search_ready` expression；两个路径变量；4 个 content include；两个容器的 include 条件 |
+| `SkinSettings.xml` | 媒体分类的 `id=714` 开关，`Skin.ToggleSetting(helper_search_off)`，`visible="$EXP[helper_search_ready]"` |
+| `Variables.xml` | 帮助条 `Control.HasFocus(714)` |
+| `language/*.po` | 31780 开关名、31781 帮助 |
 
-| 方案 | 做法 | 风险 |
-|---|---|---|
-| **A（首选）** | 直接删掉 `sortby` / `sortorder` | XSP 变量里已经带 `"order":{"method":"sorttitle"}`，本地排序靠它自己就够。**需实机确认** Kodi 默认排序不会盖掉 XSP 的 order |
-| B | 两套 `<content>` 用 `<include condition>` 在加载时切换 | 一定可行；「装/卸插件要重载皮肤」这条约束本来就有，可接受 |
-| C | `sortby="$VAR[...]"` | 大概率无效，`sortby` 是枚举属性，不走 info 展开 |
-
-A 能过就不用 B，A 挂了直接上 B，别在 C 上耗时间。
+> 排序方案最终用 **B**（两套 content），没有用 A（直接删 `sortby`）：
+> 本地 XSP 是没装插件用户的唯一路径，不能拿它做实验。
 
 ## 3. 版本契约
 
@@ -96,7 +100,8 @@ A 能过就不用 B，A 挂了直接上 B，别在 C 上耗时间。
 | 详情页豆瓣 | 0.2.0 |
 | 代表集标识 | 0.3.0 |
 
-低于要求按"未装"处理，避免用户装了早期测试版却拿到半截数据。
+皮肤**不做版本比较**（Kodi 没有可靠的版本比较表达式）：旧版插件对新增功能
+什么都不写，皮肤自然隐藏，等价于没装。最低版本只写在 README / Release 说明里。
 
 ## 4. 一个必须写进用户文档的坑
 
@@ -111,12 +116,12 @@ A 能过就不用 B，A 挂了直接上 B，别在 C 上耗时间。
 | 项 | 状态 |
 |---|---|
 | 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，首个提交 `352e12e` |
-| 已完成 | 骨架 + 搜索桥代码（58 项单测全绿） |
-| 未完成 | **皮肤侧分支未接**、播放地址未实机验证、豆瓣 P1、代表集 P2 |
+| 已完成 | 骨架 + 搜索桥代码（58 项单测全绿）；**M1b 皮肤侧已接**（2026-10-30） |
+| 未完成 | M1b 实机验证（M1c）、播放地址、豆瓣 M2、代表集 M3 |
 | 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper` |
 
-**皮肤侧一行都还没改**——所以现在装不装插件，搜索行为都一样。
-接分支是 M1b，单独一步，做完立刻验证降级。
+皮肤侧已接（`Includes_Search.xml` + `SkinSettings.xml` + 语言），
+**待实机验证**：装/开、装/关、卸载、只装 helper 没装 Emby 四种组合。
 
 > **接线不必等播放地址验证**（2026-10-30 更正）：列表能不能显示、能不能点进去，
 > 和 `play_url` 通不通是两件事。播放路径要改也只是插件里一行，皮肤侧不用动。
