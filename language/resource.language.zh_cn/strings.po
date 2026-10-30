@@ -1183,3 +1183,7 @@ msgstr "烂番茄"
 msgctxt "#31784"
 msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
 msgstr "主评分旁边显示哪一颗。自动优先豆瓣（需插件），其次 TMDb，最后烂番茄。"
+
+msgctxt "#31785"
+msgid "Enabled"
+msgstr "已启用"

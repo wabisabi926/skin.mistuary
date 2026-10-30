@@ -118,7 +118,7 @@
 					<textcolor>text_primary</textcolor>
 					<left>80</left>
 					<top>0</top>
-					<right>140</right>
+					<right>200</right>
 					<height>74</height>
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
@@ -126,13 +126,13 @@
 				<control type="label">
 					<right>16</right>
 					<top>0</top>
-					<width>120</width>
+					<width>180</width>
 					<height>74</height>
 					<align>right</align>
 					<aligny>center</aligny>
 					<font>font12</font>
 					<textcolor>text_secondary</textcolor>
-					<label>$INFO[ListItem.AddonLifecycleType]</label>
+					<label>$VAR[NaraAddonListStatusVar]</label>
 				</control>
 			</itemlayout>
 			<focusedlayout height="74" width="1315">
@@ -156,7 +156,7 @@
 				<control type="label">
 					<left>80</left>
 					<top>0</top>
-					<right>140</right>
+					<right>200</right>
 					<height>74</height>
 					<aligny>center</aligny>
 					<label>$INFO[ListItem.Label]</label>
@@ -166,13 +166,13 @@
 				<control type="label">
 					<right>16</right>
 					<top>0</top>
-					<width>120</width>
+					<width>180</width>
 					<height>74</height>
 					<align>right</align>
 					<aligny>center</aligny>
 					<font>font12</font>
 					<textcolor>text_secondary</textcolor>
-					<label>$INFO[ListItem.AddonLifecycleType]</label>
+					<label>$VAR[NaraAddonListStatusVar]</label>
 				</control>
 			</focusedlayout>
 		</control>

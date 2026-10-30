@@ -1478,6 +1478,19 @@
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultAddon.png</value>
 	</variable>
+	<!-- 插件列表右侧状态列。
+	     不要用 ListItem.AddonLifecycleType —— 那是"生命周期"（normal/deprecated/broken），
+	     跟启用状态无关，健康插件永远是 normal，所以禁用后仍显示"正常"。
+	     ListItem.Property(Addon.Status) 是 Kodi 在 AddonsDirectory 里按
+	     已禁用 > 有更新 > 已损坏 > 已弃用 > 已启用 的优先级算好的本地化文案，直接用即可。
+	     颜色：已禁用/已损坏 = 红（功能已失效），有更新/已弃用 = 黄（有变化但可用），
+	     已启用 = 跟随标签自身的 text_secondary。 -->
+	<variable name="NaraAddonListStatusVar">
+		<!-- 已启用用自有串 #31785：Kodi 的 #305 中文译成「启用」，和「已禁用」不是一套措辞。 -->
+		<value condition="String.IsEqual(ListItem.Property(Addon.Status),$LOCALIZE[305])">$LOCALIZE[31785]</value>
+		<value condition="[String.IsEqual(ListItem.Property(Addon.Status),$LOCALIZE[24023]) | String.IsEqual(ListItem.Property(Addon.Status),$LOCALIZE[24098])]">[COLOR status_error]$INFO[ListItem.Property(Addon.Status)][/COLOR]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(Addon.Status))">[COLOR status_warning]$INFO[ListItem.Property(Addon.Status)][/COLOR]</value>
+	</variable>
 	<variable name="NaraImgIconOrFolder">
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultFolder.png</value>

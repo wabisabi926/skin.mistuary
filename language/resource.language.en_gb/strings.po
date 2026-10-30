@@ -1406,3 +1406,7 @@ msgstr "Rotten Tomatoes"
 msgctxt "#31784"
 msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
 msgstr "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
+
+msgctxt "#31785"
+msgid "Enabled"
+msgstr "Enabled"
