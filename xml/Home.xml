@@ -150,36 +150,48 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_inprogress_widget)">
 						<param name="id" value="5001001"/>
 						<param name="list_id" value="5100"/>
+						<param name="season_id" value="510095"/>
+						<param name="episode_id" value="510096"/>
 						<param name="metadata" value="$INFO[Container(5100).ListItem.Year]$INFO[Container(5100).ListItem.Duration,  &#183;  ]$INFO[Container(5100).ListItem.Genre,  &#183;  ]"/>
 						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.movies.Hero)) | String.IsEqual(Window(home).Property(Home.movies.Hero),5100)"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
 						<param name="id" value="5200001"/>
 						<param name="list_id" value="5200"/>
+						<param name="season_id" value="520095"/>
+						<param name="episode_id" value="520096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5200)"/>
 						<param name="metadata" value="$INFO[Container(5200).ListItem.Year]$INFO[Container(5200).ListItem.Duration,  &#183;  ]$INFO[Container(5200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_premieres_widget)">
 						<param name="id" value="5800001"/>
 						<param name="list_id" value="5800"/>
+						<param name="season_id" value="580095"/>
+						<param name="episode_id" value="580096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5800)"/>
 						<param name="metadata" value="$INFO[Container(5800).ListItem.Year]$INFO[Container(5800).ListItem.Duration,  &#183;  ]$INFO[Container(5800).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_highrated_widget)">
 						<param name="id" value="5300001"/>
 						<param name="list_id" value="5300"/>
+						<param name="season_id" value="530095"/>
+						<param name="episode_id" value="530096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5300)"/>
 						<param name="metadata" value="$INFO[Container(5300).ListItem.Year]$INFO[Container(5300).ListItem.Duration,  &#183;  ]$INFO[Container(5300).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_random_widget)">
 						<param name="id" value="5400001"/>
 						<param name="list_id" value="5400"/>
+						<param name="season_id" value="540095"/>
+						<param name="episode_id" value="540096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5400)"/>
 						<param name="metadata" value="$INFO[Container(5400).ListItem.Year]$INFO[Container(5400).ListItem.Duration,  &#183;  ]$INFO[Container(5400).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_sets_widget)">
 						<param name="id" value="5600001"/>
 						<param name="list_id" value="5600"/>
+						<param name="season_id" value="560095"/>
+						<param name="episode_id" value="560096"/>
 						<param name="collection" value="true"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5600)"/>
 						<param name="metadata" value="$INFO[Container(5600).ListItem.Year]$INFO[Container(5600).ListItem.Duration,  &#183;  ]$INFO[Container(5600).ListItem.Genre,  &#183;  ]"/>
@@ -458,30 +470,40 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_inprogress_widget)">
 						<param name="id" value="6001001"/>
 						<param name="list_id" value="6100"/>
+						<param name="season_id" value="610095"/>
+						<param name="episode_id" value="610096"/>
 						<param name="metadata" value="$INFO[Container(6100).ListItem.Year]$INFO[Container(6100).ListItem.Genre,  &#183;  ]"/>
 						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.tvshows.Hero)) | String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100)"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
 						<param name="id" value="6200001"/>
 						<param name="list_id" value="6200"/>
+						<param name="season_id" value="620095"/>
+						<param name="episode_id" value="620096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)"/>
 						<param name="metadata" value="$INFO[Container(6200).ListItem.Year]$INFO[Container(6200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_premieres_widget)">
 						<param name="id" value="6700001"/>
 						<param name="list_id" value="6700"/>
+						<param name="season_id" value="670095"/>
+						<param name="episode_id" value="670096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)"/>
 						<param name="metadata" value="$INFO[Container(6700).ListItem.Year]$INFO[Container(6700).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_highrated_widget)">
 						<param name="id" value="6300001"/>
 						<param name="list_id" value="6300"/>
+						<param name="season_id" value="630095"/>
+						<param name="episode_id" value="630096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6300)"/>
 						<param name="metadata" value="$INFO[Container(6300).ListItem.Year]$INFO[Container(6300).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_random_widget)">
 						<param name="id" value="6800001"/>
 						<param name="list_id" value="6800"/>
+						<param name="season_id" value="680095"/>
+						<param name="episode_id" value="680096"/>
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6800)"/>
 						<param name="metadata" value="$INFO[Container(6800).ListItem.Year]$INFO[Container(6800).ListItem.Genre,  &#183;  ]"/>
 					</include>

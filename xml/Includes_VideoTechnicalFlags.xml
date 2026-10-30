@@ -243,6 +243,9 @@
 		<param name="font">font_flag</param>
 		<param name="flag_label_raw"></param>
 		<definition>
+			<!-- 只留一颗。原来按 $EXP[nara_kodi21] 在「映射文字」和「原始值」之间二选一，
+			     那个表达式在 22.0-RC1 上两边都成立，同一格会画出两颗胶囊。
+			     映射文字本身在 Kodi 21 也只是标签，不参与条件解析，用一份就够。 -->
 			<control type="button">
 				<width>auto</width>
 				<height>36</height>
@@ -256,22 +259,7 @@
 				<texturefocus colordiffuse="66000000" border="4">shapes/round4.png</texturefocus>
 				<texturenofocus colordiffuse="66000000" border="4">shapes/round4.png</texturenofocus>
 				<label>[B][UPPERCASE]$PARAM[flag_label][/UPPERCASE][/B]</label>
-				<visible>$PARAM[flag_visible] + !$EXP[nara_kodi21]</visible>
-			</control>
-			<control type="button">
-				<width>auto</width>
-				<height>36</height>
-				<align>center</align>
-				<aligny>center</aligny>
-				<textoffsetx>14</textoffsetx>
-				<font>$PARAM[font]</font>
-				<textcolor>white</textcolor>
-				<focusedcolor>white</focusedcolor>
-				<disabledcolor>white</disabledcolor>
-				<texturefocus colordiffuse="66000000" border="4">shapes/round4.png</texturefocus>
-				<texturenofocus colordiffuse="66000000" border="4">shapes/round4.png</texturenofocus>
-				<label>[B][UPPERCASE]$PARAM[flag_label_raw][/UPPERCASE][/B]</label>
-				<visible>$PARAM[flag_visible] + $EXP[nara_kodi21]</visible>
+				<visible>$PARAM[flag_visible]</visible>
 			</control>
 		</definition>
 	</include>
@@ -340,18 +328,19 @@
 		<param name="detail_width">44</param>
 		<param name="width">72</param>
 		<definition>
+			<!-- 只有图标胶囊一条路径 —— 原来「有图标走图标 / 否则走文字」是两条互补条件，
+			     条件求值一出问题 Kodi 就两边都判 true，同一格里画出图标版 + 文字版。
+			     现在结构上只可能画一颗：hide_techflag_icons 的语义从「换成文字」
+			     改成「整行不显示技术标识」。
+			     另外**不能把 $PARAM[icon] 写进条件**：它是 $MAP[...]，条件里不展开，
+			     字面量里的 [ 会让整条条件解析失败。 -->
 			<include content="NaraTechnicalIconPill">
-				<param name="flag_visible" value="$PARAM[visible] + !Skin.HasSetting(hide_techflag_icons) + !$EXP[nara_kodi21]" />
+				<param name="flag_visible" value="$PARAM[visible] + !Skin.HasSetting(hide_techflag_icons)" />
 				<param name="icon" value="$PARAM[icon]" />
 				<param name="detail" value="$PARAM[detail]" />
 			<param name="detail_visible" value="$PARAM[detail_visible]" />
 				<param name="detail_width" value="$PARAM[detail_width]" />
 				<param name="width" value="$PARAM[width]" />
-			</include>
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + [Skin.HasSetting(hide_techflag_icons) | $EXP[nara_kodi21]]" />
-				<param name="flag_label" value="$PARAM[label]" />
-				<param name="flag_label_raw" value="$PARAM[label_raw]" />
 			</include>
 		</definition>
 	</include>
@@ -366,7 +355,7 @@
 			     ③ P7 FEL / P7 MEL（59~64px） 小字 68，胶囊 144
 			     未知档位落到②（宁可留白也不截断）。 -->
 			<include content="NaraTechnicalFlag">
-				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],4) | String.IsEqual($PARAM[hdr_detail],5) | String.IsEqual($PARAM[hdr_detail],6) | String.IsEqual($PARAM[hdr_detail],7) | String.IsEqual($PARAM[hdr_detail],8) | String.IsEqual($PARAM[hdr_detail],9)]" />
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],&quot;4&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;5&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;6&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;7&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;8&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;9&quot;)]" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
 				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
 				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
@@ -376,7 +365,7 @@
 				<param name="width" value="100" />
 			</include>
 			<include content="NaraTechnicalFlag">
-				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail]) + !String.IsEqual($PARAM[hdr_detail],4) + !String.IsEqual($PARAM[hdr_detail],5) + !String.IsEqual($PARAM[hdr_detail],6) + !String.IsEqual($PARAM[hdr_detail],7) + !String.IsEqual($PARAM[hdr_detail],8) + !String.IsEqual($PARAM[hdr_detail],9) + !String.IsEqual($PARAM[hdr_detail],7fel) + !String.IsEqual($PARAM[hdr_detail],7mel)" />
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail]) + !String.IsEqual($PARAM[hdr_detail],&quot;4&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;5&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;6&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;7&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;8&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;9&quot;) + !String.IsEqual($PARAM[hdr_detail],7fel) + !String.IsEqual($PARAM[hdr_detail],7mel)" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
 				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
 				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
@@ -416,31 +405,24 @@
 				<param name="label_raw" value="$INFO[$PARAM[resolution]]" />
 			</include>
 
-			<!-- Primary HDR: prefer stream 1, then the base value, then stream 2. -->
+			<!-- HDR 只出两颗：主 HDR 一颗 + 第二种不同的 HDR 一颗。
+			     原来 5 个槽位（type_1 / type / type_2 各一颗 + 两种"第二 HDR"组合）在 Emby
+			     同时写 HdrType、HdrType.1、HdrType.2 时会重复出胶囊（实测 DV P7 出了两颗）。
+			     主 HDR 优先取条目自身的 HdrType，没有才退回 HdrType.1。 -->
 			<include content="NaraTechnicalHdrPill">
-				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type_1])" />
-				<param name="hdr_type" value="$PARAM[hdr_type_1]" />
-				<param name="hdr_detail" value="$PARAM[hdr_detail_1]" />
-			</include>
-			<include content="NaraTechnicalHdrPill">
-				<param name="visible" value="$PARAM[visible] + String.IsEmpty($PARAM[hdr_type_1]) + !String.IsEmpty($PARAM[hdr_type])" />
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type])" />
 				<param name="hdr_type" value="$PARAM[hdr_type]" />
 				<param name="hdr_detail" value="$PARAM[hdr_detail]" />
 			</include>
 			<include content="NaraTechnicalHdrPill">
-				<param name="visible" value="$PARAM[visible] + String.IsEmpty($PARAM[hdr_type_1]) + String.IsEmpty($PARAM[hdr_type]) + !String.IsEmpty($PARAM[hdr_type_2])" />
-				<param name="hdr_type" value="$PARAM[hdr_type_2]" />
-				<param name="hdr_detail" value="$PARAM[hdr_detail_2]" />
+				<param name="visible" value="$PARAM[visible] + String.IsEmpty($PARAM[hdr_type]) + !String.IsEmpty($PARAM[hdr_type_1])" />
+				<param name="hdr_type" value="$PARAM[hdr_type_1]" />
+				<param name="hdr_detail" value="$PARAM[hdr_detail_1]" />
 			</include>
 
-			<!-- A distinct second HDR type remains an independent capsule. -->
+			<!-- 第二种 HDR：必须和主 HDR 的两个来源都不同，否则不画。 -->
 			<include content="NaraTechnicalHdrPill">
-				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type_1]) + !String.IsEmpty($PARAM[hdr_type_2]) + !String.IsEqual($PARAM[hdr_type_1],$PARAM[hdr_type_2])" />
-				<param name="hdr_type" value="$PARAM[hdr_type_2]" />
-				<param name="hdr_detail" value="$PARAM[hdr_detail_2]" />
-			</include>
-			<include content="NaraTechnicalHdrPill">
-				<param name="visible" value="$PARAM[visible] + String.IsEmpty($PARAM[hdr_type_1]) + !String.IsEmpty($PARAM[hdr_type]) + !String.IsEmpty($PARAM[hdr_type_2]) + !String.IsEqual($PARAM[hdr_type],$PARAM[hdr_type_2])" />
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type_2]) + !String.IsEqual($PARAM[hdr_type_2],$PARAM[hdr_type]) + !String.IsEqual($PARAM[hdr_type_2],$PARAM[hdr_type_1])" />
 				<param name="hdr_type" value="$PARAM[hdr_type_2]" />
 				<param name="hdr_detail" value="$PARAM[hdr_detail_2]" />
 			</include>
@@ -469,7 +451,7 @@
 			     声道只用文字，不做图标：素材按声道数命名，而 5.1.2 与 7.1 都是 8 声道、
 			     5.1.4 与 7.1.2 都是 10 声道，图标必然说谎。文字如实反映 Kodi 报的布局串。 -->
 			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_channels])" />
+				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_channels]) + !Skin.HasSetting(hide_techflag_icons)" />
 				<param name="flag_label" value="$INFO[$PARAM[audio_channels]]" />
 				<param name="font" value="font13" />
 			</include>
@@ -479,13 +461,17 @@
 	<!-- Public shared component. Callers only identify the item source and placement; source
 	     selection, aliases, dual HDR, Dolby Vision detail and missing-value compaction stay here. -->
 	<!-- 按 item 前缀取流信息。电影/单集用条目本身的流标签；
-	     剧集（show 层级）本身没有流信息。详情页例外：它把分集货架 5101 的第一集
-	     作为 item_prefix 传进来，走条目自己的流标签。搜索/首页的 show 行仍只能读
-	     TvShowRepresentative.* 属性 —— 目前没有组件写这组属性（皮肤里没有，
-	     Emby for Kodi 也不写），所以这些行实际不显示技术标识；分支保留给脚本方案。 -->
+	     剧集（show 层级）本身没有流信息，所以走 episode_prefix —— 由调用方传一个
+	     「隐藏分集容器的第一集」进来（详情页 Container(5101)、首页 Container(<list_id>95)），
+	     和电影走同一套读取逻辑。不传时 episode_prefix 默认等于 ListItem，
+	     剧集行就是没有标识（搜索页的剧集标签页属于这种情况）。 -->
 	<include name="VideoTechnicalFlagsByPrefix">
 		<param name="visible">true</param>
 		<param name="item_prefix">ListItem</param>
+		<!-- 剧集（show 层级）本身没有流信息。传一个「代表集」的前缀进来（首页/详情页都是
+		     隐藏分集容器的 ListItemAbsolute(0)），就能和电影一样读真实流标签。
+		     不传时退回 ListItem —— 和条目自身相同，剧集行就是没有标识。 -->
+		<param name="episode_prefix">ListItem</param>
 		<definition>
 			<include content="VideoTechnicalFlagsContent">
 				<param name="visible" value="$PARAM[visible] + !String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
@@ -503,16 +489,16 @@
 
 			<include content="VideoTechnicalFlagsContent">
 				<param name="visible" value="$PARAM[visible] + String.IsEqual($PARAM[item_prefix].DBType,tvshow)" />
-				<param name="resolution" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoResolution)" />
-				<param name="hdr_type" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType)" />
-				<param name="hdr_detail" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail)" />
-				<param name="hdr_type_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.1)" />
-				<param name="hdr_detail_1" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.1)" />
-				<param name="hdr_type_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrType.2)" />
-				<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(TvShowRepresentative.HdrDetail.2)" />
-				<param name="video_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.VideoCodec)" />
-				<param name="audio_codec" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioCodec)" />
-				<param name="audio_channels" value="$PARAM[item_prefix].Property(TvShowRepresentative.AudioChannels)" />
+				<param name="resolution" value="$PARAM[episode_prefix].VideoResolution" />
+				<param name="hdr_type" value="$PARAM[episode_prefix].HdrType" />
+				<param name="hdr_detail" value="$PARAM[episode_prefix].HdrDetail" />
+				<param name="hdr_type_1" value="$PARAM[episode_prefix].Property(HdrType.1)" />
+				<param name="hdr_detail_1" value="$PARAM[episode_prefix].Property(HdrDetail.1)" />
+				<param name="hdr_type_2" value="$PARAM[episode_prefix].Property(HdrType.2)" />
+				<param name="hdr_detail_2" value="$PARAM[episode_prefix].Property(HdrDetail.2)" />
+				<param name="video_codec" value="$PARAM[episode_prefix].VideoCodec" />
+				<param name="audio_codec" value="$PARAM[episode_prefix].AudioCodec" />
+				<param name="audio_channels" value="$PARAM[episode_prefix].AudioChannels(DefaultLayout)" />
 			</include>
 		</definition>
 	</include>

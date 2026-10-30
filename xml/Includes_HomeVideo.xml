@@ -35,7 +35,49 @@
 			</control>
 		</definition>
 	</include>
+	<!-- 首页剧集的「代表集」探针：两级隐藏列表，和详情页 5100（季）→ 5101（集）同构。
+	     A 取第一季（sortby season，limit 1），B 用 A 的 FolderPath 取该季第一集。
+	     不走 videodb://tvshows/titles/<id>/-1/-1/ 那种"全部分集"路径 —— 实测取不到东西。
+	     id 一律由调用方传**字面量**（Home.xml 里写 620095/620096 这类数字），
+	     不在 XML 里拼 $PARAM[list_id]95：动态拼出来的容器 id 塞进条件/内容路径会让
+	     Kodi 的条件求值失败并按 true 处理（上一轮就是这么把电影的胶囊画成 4 颗的）。 -->
+	<include name="HomeHeroSeasonProbe">
+		<param name="list_id"></param>
+		<param name="season_id"></param>
+		<definition>
+			<control type="list" id="$PARAM[season_id]">
+				<left>-10</left>
+				<top>-10</top>
+				<width>1</width>
+				<height>1</height>
+				<enable>false</enable>
+				<itemlayout width="1" height="1" />
+				<focusedlayout width="1" height="1" />
+				<content sortby="season" sortorder="ascending" limit="1" target="videos" browse="never">videodb://tvshows/titles/$INFO[Container($PARAM[list_id]).ListItem.DBID]/</content>
+				<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow) + Integer.IsGreater(Container($PARAM[list_id]).ListItem.DBID,0)</visible>
+			</control>
+		</definition>
+	</include>
+	<include name="HomeHeroEpisodeProbe">
+		<param name="season_id"></param>
+		<param name="episode_id"></param>
+		<definition>
+			<control type="list" id="$PARAM[episode_id]">
+				<left>-10</left>
+				<top>-10</top>
+				<width>1</width>
+				<height>1</height>
+				<enable>false</enable>
+				<itemlayout width="1" height="1" />
+				<focusedlayout width="1" height="1" />
+				<content sortby="episode" sortorder="ascending" limit="1" target="videos" browse="never">$INFO[Container($PARAM[season_id]).ListItem.FolderPath]</content>
+				<visible>Integer.IsGreater(Container($PARAM[season_id]).NumItems,0)</visible>
+			</control>
+		</definition>
+	</include>
 	<include name="HomeVideoHeroDetails">
+		<param name="season_id"></param>
+		<param name="episode_id"></param>
 		<definition>
 			<control type="group">
 				<left>80</left>
@@ -69,13 +111,45 @@
 					<textcolor>text_secondary</textcolor>
 					<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 				</control>
-				<!-- 评分 + 技术标识同一行，放在简介下方。 -->
-				<include content="NaraOnlineRatingsRow">
-					<param name="top" value="191" />
-					<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
-					<param name="inline_flags" value="true" />
-					<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+				<!-- 剧集代表集探针：每个英雄区都会生成，但只有剧集分区的 <visible> 成立才会加载内容
+				     （不可见的容器不取数据，电影分区零开销）。season_id / episode_id 由 Home.xml
+				     逐处传字面量 —— include 上**不能**用 condition="!String.IsEmpty($PARAM[...])"：
+				     解析 include 时 $PARAM 还没替换，String.IsEmpty 拿到空串，整个 include 会被跳过，
+				     容器根本不存在（诊断行显示 S= E= 都是空的，就是这个原因）。 -->
+				<include content="HomeHeroSeasonProbe">
+					<param name="list_id" value="$PARAM[list_id]" />
+					<param name="season_id" value="$PARAM[season_id]" />
 				</include>
+				<include content="HomeHeroEpisodeProbe">
+					<param name="season_id" value="$PARAM[season_id]" />
+					<param name="episode_id" value="$PARAM[episode_id]" />
+				</include>
+				<!-- 两条评分行用**外层 group 的 visible** 分流，不能用 include 的 condition：
+				     condition 属性里 $PARAM 不替换，条件求值失败 → 电影那条永远 true、剧集那条永远
+				     false，结果剧集用的是电影参数（episode_prefix 退回 ListItem）→ 标识全空。 -->
+				<!-- 电影：参数与详情页逐字相同，多一个都不传。 -->
+				<control type="group">
+					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
+					<include content="NaraOnlineRatingsRow">
+						<param name="top" value="191" />
+						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+						<param name="inline_flags" value="true" />
+						<param name="technical_visible" value="true" />
+						<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+					</include>
+				</control>
+				<!-- 剧集：单独一条，只影响剧集。技术标识借隐藏分集列表的第一集。 -->
+				<control type="group">
+					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
+					<include content="NaraOnlineRatingsRow">
+						<param name="top" value="191" />
+						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+						<param name="inline_flags" value="true" />
+						<param name="technical_visible" value="Integer.IsGreater(Container($PARAM[episode_id]).NumItems,0)" />
+						<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+						<param name="technical_episode_prefix" value="Container($PARAM[episode_id]).ListItemAbsolute(0)" />
+					</include>
+				</control>
 			</control>
 		</definition>
 	</include>

@@ -687,7 +687,9 @@
 			</control>
 
 			<control type="fixedlist" id="16101">
-				<left>70</left><top>667</top><width>1780</width><height>413</height>
+				<!-- 不要写死宽度：1780 是按 1920 算的，2160 屏上右边会空出 310px。
+				     用 left/right 让 Kodi 按屏幕宽度算。卡片槽 252 → 2160 屏 8 列 = 2016，余 4px。 -->
+				<left>70</left><top>667</top><right>70</right><height>413</height>
 				<include>NaraSearchResultsLift</include>
 				<orientation>horizontal</orientation>
 				<movement>6</movement>
@@ -699,8 +701,8 @@
 				<onup>16201</onup>
 				<ondown>16992</ondown>
 				<onback>9000</onback>
-				<itemlayout width="240" height="400"><include content="NaraSearchPosterLayout" /></itemlayout>
-				<focusedlayout width="240" height="400">
+				<itemlayout width="252" height="400"><include content="NaraSearchPosterLayout" /></itemlayout>
+				<focusedlayout width="252" height="400">
 					<include content="NaraSearchPosterLayout"><param name="focused" value="Control.HasFocus(16101)" /><param name="titlecolor" value="text_primary" /></include>
 				</focusedlayout>
 				<onclick>Info</onclick>
@@ -711,7 +713,9 @@
 				<animation effect="fade" start="100" end="0" time="0" condition="!$EXP[NaraSearchMoviesActive]">Conditional</animation>
 			</control>
 			<control type="fixedlist" id="16102">
-				<left>70</left><top>667</top><width>1780</width><height>413</height>
+				<!-- 不要写死宽度：1780 是按 1920 算的，2160 屏上右边会空出 310px。
+				     用 left/right 让 Kodi 按屏幕宽度算。卡片槽 252 → 2160 屏 8 列 = 2016，余 4px。 -->
+				<left>70</left><top>667</top><right>70</right><height>413</height>
 				<include>NaraSearchResultsLift</include>
 				<orientation>horizontal</orientation>
 				<movement>6</movement>
@@ -723,8 +727,8 @@
 				<onup>16202</onup>
 				<ondown>16992</ondown>
 				<onback>9000</onback>
-				<itemlayout width="240" height="400"><include content="NaraSearchPosterLayout" /></itemlayout>
-				<focusedlayout width="240" height="400">
+				<itemlayout width="252" height="400"><include content="NaraSearchPosterLayout" /></itemlayout>
+				<focusedlayout width="252" height="400">
 					<include content="NaraSearchPosterLayout"><param name="focused" value="Control.HasFocus(16102)" /><param name="titlecolor" value="text_primary" /></include>
 				</focusedlayout>
 				<onclick>Info</onclick>

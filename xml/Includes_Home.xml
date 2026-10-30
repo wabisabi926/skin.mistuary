@@ -119,6 +119,9 @@
 	<include name="HomeFocusedItemHero">
 		<param name="visible">true</param>
 		<param name="collection">false</param>
+		<!-- 剧集分区传一个静态数字（如 620095），电影分区用默认 0 = 不生成代表集探针 -->
+		<param name="season_id"></param>
+		<param name="episode_id"></param>
 		<definition>
 			<control type="group" id="$PARAM[id]">
 				<height>528</height>
@@ -211,6 +214,8 @@
 					</control>
 					<include content="HomeVideoHeroDetails" condition="!$PARAM[collection]">
 						<param name="list_id" value="$PARAM[list_id]" />
+						<param name="season_id" value="$PARAM[season_id]" />
+						<param name="episode_id" value="$PARAM[episode_id]" />
 					</include>
 					<include condition="$PARAM[collection]">HomeMovieSetHeroDetails</include>
 				</control>
@@ -760,6 +765,8 @@
 				<left>70</left>
 				<top>50</top>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
+				<!-- 左右各留 70，卡片槽宽 252：2160 屏上 8 列 = 2016，余 4px —— 整排都是完整海报。
+				     （240 时 2020/240 = 8 列余 100，第 9 张会被切一半，右边还留一条黑边。） -->
 				<right>70</right>
 				<height>415</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
@@ -780,14 +787,14 @@
 				<include content="HomeRememberFanartOnUnfocus">
 					<param name="list_id" value="$PARAM[list_id]"/>
 				</include>
-				<itemlayout width="240" height="410">
+				<itemlayout width="252" height="410">
 					<include content="NaraSearchPosterLayout">
 						<param name="show_year" value="true" />
 						<param name="poster_texture" value="$INFO[ListItem.Art(poster)]" />
 						<param name="poster_background" value="colors/black.png" />
 					</include>
 				</itemlayout>
-				<focusedlayout width="240" height="410">
+				<focusedlayout width="252" height="410">
 					<include content="NaraSearchPosterLayout">
 						<param name="focused" value="Control.HasFocus($PARAM[list_id])" />
 						<param name="show_year" value="true" />
@@ -1052,7 +1059,7 @@
 				</include>
 				<visible>$PARAM[visible]</visible>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
-				<itemlayout width="324" height="$PARAM[item_height]">
+				<itemlayout width="308" height="$PARAM[item_height]">
 					<control type="group">
 						<left>60</left>
 						<control type="image">
@@ -1105,7 +1112,7 @@
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout width="324" height="$PARAM[item_height]">
+				<focusedlayout width="308" height="$PARAM[item_height]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<left>60</left>
