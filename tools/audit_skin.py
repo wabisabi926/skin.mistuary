@@ -29,6 +29,21 @@ XML = ROOT / "xml"
 MEDIA = ROOT / "media"
 LANG = ROOT / "language"
 
+# 贴图存在性：三种写法都要认，否则会漏报（或误报）
+#   ① 相对 media/ 的短名（`shapes/glass20.png`）—— 皮肤里最常见
+#   ② `special://skin/...` —— 根目录下的 libraryart/ extras/ resources/ 都走这条
+#   ③ `special://xbmc/` `special://temp/` —— Kodi 自己的，不在包里，一律当存在
+# 含 `$` 的是动态路径（`libraryart/$INFO[ListItem.Label].jpg`），静态查不了，跳过。
+def texture_exists(tex: str) -> bool:
+    if not tex or "$" in tex:
+        return True
+    if tex.startswith("special://xbmc/") or tex.startswith("special://temp/"):
+        return True
+    if tex.startswith("special://"):
+        return (ROOT / tex.replace("special://skin/", "")).exists()
+    return (MEDIA / tex).exists()
+
+
 INCLUDE_REF = re.compile(r"<include(?:\s+content=\"([^\"]+)\"|\s*>([^<]+)</include>)")
 VAR_REF = re.compile(r"\$VAR\[([^\]]+)\]")
 LOC_REF = re.compile(r"\$LOCALIZE\[(\d+)\]")
@@ -259,15 +274,6 @@ def main() -> int:
     missing_include = {k: v for k, v in includes_used.items() if k not in includes_defined}
     missing_var = {k: v for k, v in variables_used.items() if k not in variables_defined}
     missing_font = {k: v for k, v in fonts_used.items() if k not in fonts_defined}
-
-    def texture_exists(tex: str) -> bool:
-        if not tex or "$" in tex:
-            return True
-        if tex.startswith("special://xbmc/") or tex.startswith("special://temp/"):
-            return True
-        if tex.startswith("special://"):
-            return (ROOT / tex.replace("special://skin/", "")).exists()
-        return (MEDIA / tex).exists()
 
     missing_texture = {k: v for k, v in textures_used.items() if not texture_exists(k)}
 
