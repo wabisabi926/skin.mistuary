@@ -233,6 +233,7 @@
 					<width>800</width>
 					<height>104</height>
 					<font>font60</font>
+					<shadowcolor>shadow_hard</shadowcolor>
 					<aligny>center</aligny>
 					<scroll>true</scroll>
 					<label>$PARAM[hero_title]</label>
@@ -243,6 +244,7 @@
 					<width>790</width>
 					<height>40</height>
 					<font>font30_title</font>
+					<shadowcolor>shadow_hard</shadowcolor>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
 					<label>$PARAM[episode_label]</label>
@@ -253,6 +255,7 @@
 					<width>810</width>
 					<height>38</height>
 					<font>font13</font>
+					<shadowcolor>shadow_hard</shadowcolor>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
 					<label>$PARAM[metadata_label]</label>
@@ -263,6 +266,7 @@
 					<width>800</width>
 					<height>38</height>
 					<font>font25</font>
+					<shadowcolor>shadow_hard</shadowcolor>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
 					<label>$PARAM[tagline_label]</label>
@@ -297,6 +301,7 @@
 						<width>790</width>
 						<height>$PARAM[synopsis_height]</height>
 						<font>font13</font>
+						<shadowcolor>shadow_hard</shadowcolor>
 						<textcolor>text_secondary</textcolor>
 						<label fallback="19055">$PARAM[synopsis_label]</label>
 						<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll) + !Window.IsActive(1102)</autoscroll>
@@ -308,6 +313,7 @@
 						<width>790</width>
 						<height>$PARAM[tv_synopsis_height]</height>
 						<font>font13</font>
+						<shadowcolor>shadow_hard</shadowcolor>
 						<textcolor>text_secondary</textcolor>
 						<label fallback="19055">$PARAM[synopsis_label]</label>
 						<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll) + !Window.IsActive(1102)</autoscroll>
