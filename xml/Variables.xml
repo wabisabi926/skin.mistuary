@@ -1494,10 +1494,12 @@
 	<!-- 插件图标兜底：Kodi 不解析 image 上的 <fallback> 子标签（只有
 	     <label fallback="..."> 属性有效），所以缺图标时原来会空白。 -->
 	<variable name="NaraImgAddonBrowserIcon">
+		<value condition="!String.IsEmpty(Container(50).ListItem.Art(thumb))">$INFO[Container(50).ListItem.Art(thumb)]</value>
 		<value condition="!String.IsEmpty(Container(50).ListItem.Icon)">$INFO[Container(50).ListItem.Icon]</value>
 		<value>DefaultAddon.png</value>
 	</variable>
 	<variable name="NaraImgAddonListItemIcon">
+		<value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
 		<value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
 		<value>DefaultAddon.png</value>
 	</variable>
