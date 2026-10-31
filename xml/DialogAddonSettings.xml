@@ -49,8 +49,8 @@
 			</control>
 			<!-- 设置级别（基础 / 标准 / 高级 / 专家）：沉到窗口底部，
 			     和右侧「确定 / 取消 / 默认」同一水平线（都在 top 797、h 65）。
-			     文字左对齐 + textoffsetx 24，和上面分类列表的条目对齐
-			     （NaraSettingsCategoryButton 也是 24）；居中会显得比列表右一截。 -->
+			     textoffsetx 32 而不是 24：button 自身有 8px 内边距，实测 24 会让
+			     文字比上面分类列表左 8px；补到 32 才和列表条目左边缘对齐。 -->
 			<control type="button" id="20">
 				<left>32</left>
 				<top>797</top>
@@ -58,7 +58,7 @@
 				<height>65</height>
 				<font>font26</font>
 				<align>left</align>
-				<textoffsetx>24</textoffsetx>
+				<textoffsetx>32</textoffsetx>
 				<onclick>SettingsLevelChange</onclick>
 				<onleft>5</onleft>
 				<onright>9000</onright>
