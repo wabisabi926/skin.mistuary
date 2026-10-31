@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.5.0）
+# 交接说明（Mistuary 1.5.1）
 
 > ⚠️ **最新状态看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
 > 那份是 2026-10-30 夜的短期交接（今天改了什么、还剩哪三件事、分辨率约束、
@@ -51,8 +51,8 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.5.0（本次发版）**。
-原计划单独发布的 1.4.1（tag 已撤回）与后续修复全部合并进 1.5.0。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.5.1（待发；`addon.xml` 仍 1.5.0，发版时升）**。
+原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）连同后续修复全部合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **85 项全过**。
 
@@ -187,7 +187,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.3.2 已发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
+| `script.mistuary.helper`（可选，0.3.3 待发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
@@ -660,7 +660,7 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 
 Emby 库主评分固定 1 颗；次评分在详情页最多 1 颗（豆瓣或烂番茄）。
 
-**评分行的规则**（2026-10-31 定稿，随 1.5.0）：
+**评分行的规则**（2026-10-31 定稿，随 1.5.1）：
 
 - **主评分四档互斥、手选优先**（设置 707）：TMDb / IMDb / 豆瓣（神医助手覆盖）/
   自动（仅本地刮削）。数值永远读 `ListItem.Rating`（Emby 的 `CommunityRating`），
@@ -989,7 +989,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 已发布 0.3.2，本次皮肤发版不包含它的代码。
+> 另一个仓库 `script.mistuary.helper` 本地已改到 0.3.3（未发布），本次皮肤发版不包含它的代码。
 
 ### 8.2 发版记录
 
@@ -1001,14 +1001,14 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.3.0** | 黑胶模式 + 音乐信息页重做 + 电源菜单 + 详情页背景兜底；Kodi 21 标签/导航修复 |
 | **v1.3.1** | 详情页文字阴影（亮背景可读）+ 海报墙间距 16→24 + 卡片信息重排（评分右上/状态左下/集数右下）+ 已看完绿色 |
 | **v1.4.0** | 详情页豆瓣评分（可选 helper 0.2.0+）+ 次评分来源四档 + 服务端搜索可用 + 豆瓣查询修复；已知：搜索无封面、搜索页无背景兜底 |
-| **v1.5.0** | 状态图标区分未看/部分/看完 + 主评分四档定稿（TMDb/IMDb/豆瓣/自动）+ 移除次评分设置 + 技术标识/评分行条件修复 + 2160 百分比适配 + 搜索背景重排。**含原 1.4.1 全部改动，1.4.1 tag 已撤回** |
+| **v1.5.1** | 状态图标区分未看/部分/看完 + 主评分四档定稿（TMDb/IMDb/豆瓣/自动）+ 移除次评分设置 + 技术标识/评分行条件修复 + 2160 百分比适配 + 搜索背景重排。**含原 1.4.1 与 1.5.0 的全部改动；两个 tag/Release 均已撤回** |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
 > 后来 `5020f1f` 把版本号退回 1.1.1、再重新升到 1.2.0 才发出去。
 > **教训**：CI 失败后要重发**同版本**，走 `workflow_dispatch` + `force=true`。
-> **1.4.1**：已撤回 tag（远端删除、本地同步删除）；其全部改动并入 **1.5.0** 一起发布，
-> 不需要 force，也不存在「Release 已存在」的闸门问题。
+> **1.4.1 / 1.5.0**：两个 tag/Release 均已撤回；改动并入 **1.5.1** 一起发布。
+> 不存在「Release 已存在」的闸门问题。
 
 ### 8.3 最近两天做过什么（免得重做）
 
@@ -1021,7 +1021,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，已发布到 `v0.3.2`（91 项单测）：服务端搜索 + 豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 库同步（默认关闭）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d / M3 暂缓或不做 |
+| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，本地已改到 0.3.3（未发布，91 项单测）：服务端搜索 + 豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 库同步（默认关闭）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d / M3 暂缓或不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1036,7 +1036,7 @@ git status -sb              # 与远端的关系 + 工作区
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **发 1.5.0**（本次） | `changelog.txt` 1.5.0 段、§6 发版流程 | `addon.xml` 已是 1.5.0 → commit + push，CI 自动打包建 Release |
+| 1 | **发 1.5.1**（本次） | `changelog.txt` 1.5.1 段、§6 发版流程 | `addon.xml` 待升 1.5.1 → commit + push，CI 自动打包建 Release |
 | 2 | M1d 搜索补齐（演员 / 类型） | 插件仓库 `docs/roadmap.md` §M1d | 用户确认需求后再开工 |
 
 > **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
@@ -1049,29 +1049,15 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 84 项
+python -m unittest discover -s tools -p 'test_*.py'       # 85 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
-### 8.6 待决策（2 项，要用户点头）
+### 8.6 待决策（1 项，要用户点头）
 
-1. **剧集「未看」仍显示眼睛**（2026-10-30，做不动）
-   一集没看的剧集（`0/21`）左下角也挂 `played-total`（实心眼睛），用户会误读成"看了一部分"。
-   **四种写法全试过，都不生效**：
-
-   | 写法 | 结果 |
-   |---|---|
-   | `Integer.IsGreater(Property(WatchedEpisodes),0)` | 0/21 照样显示 |
-   | `!String.IsEqual(Property(WatchedEpisodes),0)` | 同上 |
-   | 空 `<value>` 提前拦截 0 | 同上 |
-   | `String.IsEqual($INFO[Property(...)],0)` | 同上 |
-
-   **根因**：Kodi 条件表达式里「`ListItem.Property(...)` 对比数字字面量」不工作。
-   同变量的「已看完」那条能工作，是因为它比的是**两个 Property**。
-   **现状**：已回退到 1.3.0 行为（所有剧集都显示眼睛）。
-   **出路**：等 helper 插件给 ListItem 写一个 `Property(has_progress)`，用
-   `String.IsEqual(Property(has_progress),true)` 判断 —— 但**同样是 Property 对比字面量**，
-   落地前要先验证这个比较到底行不行。
+1. ~~**剧集「未看」仍显示眼睛**~~ —— **已解决**（本轮 `a88d0df`）：
+   `ItemStatusIconVar` 改用 `PlayCount` / `TotalEpisodes` 判断，纯 Kodi 库也有兜底；
+   未看不再挂眼睛，看了一部分才挂。旧的 `Property(has_progress)` 方案不再需要。
 
 2. **评分圈按来源着色**（方案已定，未实施）
    用户想要豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红，为将来插件多评分源预留。
@@ -1148,12 +1134,14 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 
 ### 8.9 helper：接入状态（2026-10-31）
 
-- 插件 `script.mistuary.helper` 已发布 **0.3.2**（91 项单测）：服务端搜索 +
+- 插件 `script.mistuary.helper` 本地已改到 **0.3.3**（未发布，91 项单测）：服务端搜索 +
   详情页豆瓣评分 + 豆瓣分库同步（默认关闭）。
 - 0.3.x 起豆瓣分优先读 StrmAssistant 的 Emby `/Douban/RatingsByImdb`，失败才回退
   豆瓣公开接口；窗口属性新增 `Mistuary.Rating.Source`（emby / douban）。
+- 0.3.3（待发）把设置拆成服务器 / 搜索 / 豆瓣评分 / 评分同步 / 日志与诊断五类，
+  豆瓣评分同步默认改为**关**（写库无消费方），服务器页新增「测试 Emby 连接」。
 - 皮肤侧 M1b 搜索与 M2 豆瓣已接；**M1c 实机验收已完成**（含播放）。
-- 1.5.0 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
+- 1.5.1 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
   插件写的 `rating_type=douban` 暂无消费方。
 - **M1d 演员/导演/类型**暂缓；**M3 代表集**不做（皮肤用两级探针自行解决）；
   **M4 行级增强**可选不排期。
