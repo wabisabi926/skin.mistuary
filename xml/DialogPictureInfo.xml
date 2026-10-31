@@ -19,15 +19,18 @@
 				<include>OpenClose_Left</include>
 				<top>160</top>
 				<control type="image">
+					<!-- 用 right 锚定而不是写死 width：右侧信息栏是 right=70 / w=510，
+					     左边缘永远在 W-580。这里 right=570 → 与信息栏重叠 10px，
+					     和 1920 下的原始观感一致；2160 屏上不会再空出 230px。 -->
 					<left>70</left>
-					<width>1280</width>
+					<right>570</right>
 					<height>820</height>
 					<include>NaraDialogGlassTexture</include>
 				</control>
 				<control type="image">
 					<left>120</left>
+					<right>620</right>
 					<top>50</top>
-					<width>1180</width>
 					<height>720</height>
 					<aspectratio aligny="center">keep</aspectratio>
 					<bordertexture colordiffuse="border_alpha">colors/black.png</bordertexture>

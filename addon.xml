@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="skin.mistuary" name="Mistuary" version="1.5.1" provider-name="wabisabi926">
 	<requires>
-		<import addon="xbmc.gui" version="5.17.0"/>
+		<!-- 5.18.0 = Kodi 22。代码里用了 20 处 $MAP[]（Kodi 22 才引入），
+		     21 上不展开、技术标识会显示成 $MAP[...] 原文。与其留一个没验证过的
+		     兼容分支，不如直接声明只支持 22 —— 见 docs/audit-2026-10-31.md 🟡2-1。 -->
+		<import addon="xbmc.gui" version="5.18.0"/>
 	</requires>
 	<extension point="xbmc.gui.skin" debugging="false">
 		<res width="1920" height="1440" aspect="4:3" default="false" folder="xml" />
