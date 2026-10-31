@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.mistuary" name="Mistuary" version="1.5.1" provider-name="wabisabi926">
+<addon id="skin.mistuary" name="Mistuary" version="1.5.2" provider-name="wabisabi926">
 	<requires>
 		<!-- 5.18.0 = Kodi 22。代码里用了 20 处 $MAP[]（Kodi 22 才引入），
 		     21 上不展开、技术标识会显示成 $MAP[...] 原文。与其留一个没验证过的
