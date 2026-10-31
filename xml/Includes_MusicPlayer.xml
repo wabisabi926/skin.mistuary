@@ -91,10 +91,10 @@
 		<texturenofocus />
 		<width>61</width>
 		<height>61</height>
-		<radiowidth>43</radiowidth>
-		<radioheight>43</radioheight>
-		<radioposx>9</radioposx>
-		<radioposy>9</radioposy>
+		<radiowidth>50</radiowidth>
+		<radioheight>50</radioheight>
+		<radioposx>5</radioposx>
+		<radioposy>5</radioposy>
 		<onup>87</onup>
 		<ondown>$PARAM[ondown]</ondown>
 		<font />
@@ -103,20 +103,20 @@
 	<include name="NaraMusicOSDButtonPrimary">
 		<param name="ondown">87</param>
 		<definition>
-		<textureradioonfocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonfocus>
-		<textureradioonnofocus colordiffuse="FF14141A">$PARAM[texture]</textureradioonnofocus>
-		<textureradioofffocus colordiffuse="FF14141A">$PARAM[texture]</textureradioofffocus>
-		<textureradiooffnofocus colordiffuse="FF14141A">$PARAM[texture]</textureradiooffnofocus>
+		<textureradioonfocus colordiffuse="text_primary">$PARAM[texture]</textureradioonfocus>
+		<textureradioonnofocus colordiffuse="text_primary">$PARAM[texture]</textureradioonnofocus>
+		<textureradioofffocus colordiffuse="text_primary">$PARAM[texture]</textureradioofffocus>
+		<textureradiooffnofocus colordiffuse="text_primary">$PARAM[texture]</textureradiooffnofocus>
 		<textureradioondisabled colordiffuse="66FFFFFF">$PARAM[texture]</textureradioondisabled>
 		<textureradiooffdisabled colordiffuse="66FFFFFF">$PARAM[texture]</textureradiooffdisabled>
 		<texturefocus border="30" colordiffuse="glass_focus_medium">shapes/round30.png</texturefocus>
 		<texturenofocus />
 		<width>61</width>
 		<height>61</height>
-		<radiowidth>43</radiowidth>
-		<radioheight>43</radioheight>
-		<radioposx>9</radioposx>
-		<radioposy>9</radioposy>
+		<radiowidth>50</radiowidth>
+		<radioheight>50</radioheight>
+		<radioposx>5</radioposx>
+		<radioposy>5</radioposy>
 		<onup>87</onup>
 		<ondown>$PARAM[ondown]</ondown>
 		<font />
@@ -188,19 +188,11 @@
 				<control type="group">
 					<width>61</width>
 			<height>61</height>
-			<!-- 主键：全场唯一的实心元素，给视线一个落点 -->
-			<control type="image">
-				<left>2.5</left>
-				<top>2.5</top>
-				<width>56</width>
-				<height>56</height>
-				<texture colordiffuse="F2FFFFFF">shapes/round30.png</texture>
-			</control>
 					<control type="radiobutton" id="602">
 						<onleft>600</onleft>
 						<onright>607</onright>
-						<textureradioonfocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonfocus>
-						<textureradioonnofocus colordiffuse="FF14141A">osd/nara/play.png</textureradioonnofocus>
+						<textureradioonfocus colordiffuse="text_primary">osd/nara/play.png</textureradioonfocus>
+						<textureradioonnofocus colordiffuse="text_primary">osd/nara/play.png</textureradioonnofocus>
 						<textureradioondisabled colordiffuse="66FFFFFF">osd/nara/play.png</textureradioondisabled>
 						<include content="NaraMusicOSDButtonPrimary">
 						<param name="ondown" value="$PARAM[ondown]" />
