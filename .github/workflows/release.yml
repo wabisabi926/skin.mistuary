@@ -61,6 +61,12 @@ jobs:
       - name: Generated variables in sync
         run: python tools/gen_techflag_vars.py --check
 
+      # 首页遮罩判据依赖 HomeFanartVar / HomeVideoHeroFanartVar 的分支：
+      # 改变量而忘了同步 Includes_Home.xml 的三条表达式时，这里会失败，
+      # 避免「某个分区的真剧照不压暗、明显比别处亮」这种只在截图上才发现的错。
+      - name: Home fanart mask conditions in sync
+        run: python tools/check_home_fanart_mask.py --check
+
       # 只校验已入库的图标产物与 IconMap/TextMap 是否对齐，不依赖本机的源皮肤素材
       - name: Technical flag icons in sync
         run: python tools/gen_techflag_icons.py --check
