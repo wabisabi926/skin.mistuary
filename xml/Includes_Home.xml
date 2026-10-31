@@ -1022,6 +1022,7 @@
 		<param name="background_art_condition">false</param>
 		<param name="additional_movie_items">false</param>
 		<param name="additional_tvshow_items">false</param>
+		<param name="additional_music_items">false</param>
 		<param name="dynamic_content">true</param>
 		<param name="visible">true</param>
 		<param name="browse">auto</param>
@@ -1194,6 +1195,7 @@
 				</focusedlayout>
 				<include condition="$PARAM[additional_movie_items]" content="MovieSubmenuItems" />
 				<include condition="$PARAM[additional_tvshow_items]" content="TVShowSubmenuItems" />
+				<include condition="$PARAM[additional_music_items]" content="MusicSubmenuItems" />
 				<include condition="$PARAM[dynamic_content]" content="WidgetListCategoriesContent">
 					<param name="widget_target" value="$PARAM[widget_target]"/>
 					<param name="item_limit" value="$PARAM[item_limit]"/>
@@ -1274,6 +1276,119 @@
 				<label>$LOCALIZE[20388]</label>
 				<onclick>ActivateWindow(videos,videodb://tvshows/studios/,return)</onclick>
 				<thumb>DefaultStudios.png</thumb>
+			</item>
+		</content>
+	</include>
+
+	<!-- 音乐「类别」行的固定节点列表。
+	     不用 library://music/ 那个动态节点树 —— 它会把 Emby 插件写进
+	     userdata/library/music/ 的 emby_*.xml 一起列出来（继续观看、EMBY DYNAMIC: xxx 等）。
+	     这里按 Kodi 自带的 17 个节点（userdata/library/music/ 里非 emby_ 的那些）逐个写死，
+	     顺序沿用节点文件里的 order。Kodi 升级增删节点时需要手动同步这里。 -->
+	<include name="MusicSubmenuItems">
+		<content>
+			<item>
+				<label>$LOCALIZE[135]</label>
+				<onclick>ActivateWindow(Music,library://music/genres.xml,return)</onclick>
+				<icon>DefaultMusicGenres.png</icon>
+				<thumb>DefaultMusicGenres.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[133]</label>
+				<onclick>ActivateWindow(Music,library://music/artists.xml,return)</onclick>
+				<icon>DefaultMusicArtists.png</icon>
+				<thumb>DefaultMusicArtists.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[132]</label>
+				<onclick>ActivateWindow(Music,library://music/albums.xml,return)</onclick>
+				<icon>DefaultMusicAlbums.png</icon>
+				<thumb>DefaultMusicAlbums.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[1050]</label>
+				<onclick>ActivateWindow(Music,library://music/singles.xml,return)</onclick>
+				<icon>DefaultMusicSongs.png</icon>
+				<thumb>DefaultMusicSongs.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[134]</label>
+				<onclick>ActivateWindow(Music,library://music/songs.xml,return)</onclick>
+				<icon>DefaultMusicSongs.png</icon>
+				<thumb>DefaultMusicSongs.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[652]</label>
+				<onclick>ActivateWindow(Music,library://music/years.xml,return)</onclick>
+				<icon>DefaultMusicYears.png</icon>
+				<thumb>DefaultMusicYears.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[271]</label>
+				<onclick>ActivateWindow(Music,library://music/top100/,return)</onclick>
+				<icon>DefaultMusicTop100.png</icon>
+				<thumb>DefaultMusicTop100.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[359]</label>
+				<onclick>ActivateWindow(Music,library://music/recentlyaddedalbums.xml,return)</onclick>
+				<icon>DefaultMusicRecentlyAdded.png</icon>
+				<thumb>DefaultMusicRecentlyAdded.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[517]</label>
+				<onclick>ActivateWindow(Music,library://music/recentlyplayedalbums.xml,return)</onclick>
+				<icon>DefaultMusicRecentlyPlayed.png</icon>
+				<thumb>DefaultMusicRecentlyPlayed.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[38074]</label>
+				<onclick>ActivateWindow(Music,library://music/boxsets.xml,return)</onclick>
+				<icon>DefaultSets.png</icon>
+				<thumb>DefaultSets.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[521]</label>
+				<onclick>ActivateWindow(Music,library://music/compilations.xml,return)</onclick>
+				<icon>DefaultMusicCompilations.png</icon>
+				<thumb>DefaultMusicCompilations.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[20389]</label>
+				<onclick>ActivateWindow(Music,library://music/musicvideos/,return)</onclick>
+				<icon>DefaultMusicVideos.png</icon>
+				<thumb>DefaultMusicVideos.png</thumb>
+				<visible>Library.HasContent(MusicVideos)</visible>
+			</item>
+			<item>
+				<label>$LOCALIZE[136]</label>
+				<onclick>ActivateWindow(Music,library://music/playlists.xml,return)</onclick>
+				<icon>DefaultMusicPlaylists.png</icon>
+				<thumb>DefaultMusicPlaylists.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[29994]</label>
+				<onclick>ActivateWindow(Music,library://music/musicroles/,return)</onclick>
+				<icon>DefaultMusicRoles.png</icon>
+				<thumb>DefaultMusicRoles.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[39031]</label>
+				<onclick>ActivateWindow(Music,library://music/sources.xml,return)</onclick>
+				<icon>DefaultMusicSources.png</icon>
+				<thumb>DefaultMusicSources.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[744]</label>
+				<onclick>ActivateWindow(Music,library://music/files.xml,return)</onclick>
+				<icon>DefaultFolder.png</icon>
+				<thumb>DefaultFolder.png</thumb>
+			</item>
+			<item>
+				<label>$LOCALIZE[1038]</label>
+				<onclick>ActivateWindow(Music,library://music/addons.xml,return)</onclick>
+				<icon>DefaultAddonMusic.png</icon>
+				<thumb>DefaultAddonMusic.png</thumb>
 			</item>
 		</content>
 	</include>

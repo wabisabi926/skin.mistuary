@@ -770,10 +770,11 @@
 						<include>WidgetGroupListCommon</include>
 						<pagecontrol>7010</pagecontrol>
 						<include content="WidgetListCategories" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_music_categories_widget)">
-							<param name="content_path" value="library://music/"/>
 							<param name="widget_header" value="$LOCALIZE[31148]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7900"/>
+							<param name="additional_music_items" value="true"/>
+							<param name="dynamic_content" value="false"/>
 						</include>
 						<include content="WidgetListSquare" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_music_recentlyplayedalbums_widget)">
 							<param name="content_path" value="musicdb://recentlyplayedalbums"/>
