@@ -398,11 +398,9 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 2. PVR → 分组管理，左右两个频道列表都能出频道
 3. 首页「文件」里点不同文件源卡片，进对应目录（配两个源测）
 4. 播放中按 `O`，「显示输出」那行有值（`System.ScreenMode`）
-5. 详情页技术标识：22 上 `4K UHD` / `DOLBY VISION`；21 上 `4K` / `DOLBYVISION`，
-   **不能出现 `$MAP[` 原文**
+5. 详情页技术标识：`4K UHD` / `DOLBY VISION`，**不能出现 `$MAP[` 原文**
 
-想在 21 上验：装个 **Kodi 21.2 便携版**（解压即用，不动现有配置），
-把皮肤拷到它的 `portable_data/addons/` 下跑一遍。
+> 1.5.2 起只支持 Kodi 22，Kodi 21 的验收项已作废（见 `HANDOVER.md` §5.2）。
 
 ---
 ### 6.4 已修：`<texture fallback="...">` 在官方 Kodi 上完全无效（原 69 处）

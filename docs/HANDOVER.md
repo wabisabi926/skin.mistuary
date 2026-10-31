@@ -51,7 +51,8 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.5.1（待发；`addon.xml` 仍 1.5.0，发版时升）**。
+`main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
+版本 **1.5.1（已发）；1.5.2 待发**。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）连同后续修复全部合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **85 项全过**。
@@ -375,25 +376,29 @@ Python 两个（`unittest`，纯逻辑校验，CI 也会跑）：
 `Font.xml` 全部 47 处 `<filename>` 指向它。粗体由 `FT_Outline_Embolden` 合成。
 **文件名用原始名，不要缩写。**
 
-### 5.2 Kodi 21 兼容：双轨渲染
+### 5.2 只支持 Kodi 22（2026-10-31 改定）
 
-`addon.xml` 声明 `xbmc.gui 5.17.0`（= Kodi 21）。22 才有的能力靠双轨：
-- `$MAP[]` / `<map>`（21 会原样显示表达式）
-- 13 个新标签（`ListItem.HdrDetail` 等）21 上为空，被 `!String.IsEmpty` 保护
+`addon.xml` 声明 `xbmc.gui 5.18.0`（= Kodi 22）。**1.5.2 起不再兼容 Kodi 21。**
 
-判据：`System.BuildVersion` 以 `21` 开头 → `$EXP[nara_kodi21]`。
-OSD 的技术标识走生成的 `$VAR[NaraTechHdrPlayer]` / `NaraTechAudioPlayer`。
+原因：技术标识用 `$MAP[]` 做「值 → 图标」映射，这是 22 才引入的语法，21 不展开、
+会把 `$MAP[NaraTechnicalHdrIconMap,dv]` 原样画在屏幕上。1.5.1 及以前还有
+`$EXP[nara_kodi21]` 的双轨分支，但两版行为差异越修越多、21 也从没实机验证过
+（见 §8.7），索性砍掉，只留一条渲染路径 —— 少一个分支就少一类
+「只有某种设备上才复现」的 bug。
 
-**Kodi 22-only 清单（跑外部校验器时先看这里，别当成 bug 修）：**
+Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装上了但界面是坏的」。
+还在 21 上的人用 1.5.1 及以前的版本。
 
-| 类型 | 名称 | 21 上的表现 |
+**Kodi 22 才有的标签 / 窗口（跑外部校验器时先看这里，别当成 bug 修）：**
+
+| 类型 | 名称 | 备注 |
 |---|---|---|
-| 窗口名 | `dialogselectvideo` / `dialogselectaudio` / `dialogselectsubtitle`（12300–12302） | 条件恒假，走兜底分支 |
+| 窗口名 | `dialogselectvideo` / `dialogselectaudio` / `dialogselectsubtitle`（12300–12302） | 旧版本靠兜底分支，现直接用 |
 | 窗口名 | `RadioProviders`（10713） | 同上 |
-| 标签 | `HdrDetail` / `TitleExtraInfo` / `EpisodePart` / `MediaProviders` / `Bookmarks` | 空，多数有 `!String.IsEmpty` 保护 |
-| 标签 | `SubtitleCodec` / `SubtitleName` / `AudioLanguageEx` | 字幕编码、音轨语言缺失；音轨语言已用 `$VAR[NaraAudioLanguageVar]` 回退到 `VideoPlayer.AudioLanguage` |
+| 标签 | `HdrDetail` / `TitleExtraInfo` / `EpisodePart` / `MediaProviders` / `Bookmarks` | 均配 `!String.IsEmpty` 保护 |
+| 标签 | `SubtitleCodec` / `SubtitleName` / `AudioLanguageEx` | 字幕编码、音轨语言扩展名 |
 | 标签 | `VideoStreamCount` / `PVRClientName` / `PVRInstanceName` / `PVRGroupOrigin` / `PVR.ClientCount` | 已分别改用 `HasVideoVersions` 或接受为空 |
-| 标签 | `ListItem.ChannelLogo` / `ListItem.DecodedFileNameAndPath` | 版本列表路径统一用 `FileNameAndPath`；`DialogPVRInfo` 的台标在 21 上会落到 `Art(thumb)` / `EpgEventIcon` 分支，`MyPVRGuide` 的台标 21 上为空（未改，见分诊 §3） |
+| 标签 | `ListItem.ChannelLogo` / `ListItem.DecodedFileNameAndPath` | 版本列表路径统一用 `FileNameAndPath` |
 
 **不要写的写法：**
 - `<scroll>` 只认布尔字面量，写 `Control.HasFocus(...)` 会被判非法且不生效；
@@ -1012,6 +1017,7 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.3.1** | 详情页文字阴影（亮背景可读）+ 海报墙间距 16→24 + 卡片信息重排（评分右上/状态左下/集数右下）+ 已看完绿色 |
 | **v1.4.0** | 详情页豆瓣评分（可选 helper 0.2.0+）+ 次评分来源四档 + 服务端搜索可用 + 豆瓣查询修复；已知：搜索无封面、搜索页无背景兜底 |
 | **v1.5.1** | 状态图标区分未看/部分/看完 + 主评分四档定稿（TMDb/IMDb/豆瓣/自动）+ 移除次评分设置 + 技术标识/评分行条件修复 + 2160 百分比适配 + 搜索背景重排 + 用户评分徽标补 definition + 详情页豆瓣次评分修复 + 插件图标读 thumb + 设置级别按钮下沉。**含原 1.4.1 与 1.5.0 的全部改动；两个 tag/Release 均已撤回** |
+| **v1.5.2**（待发） | **只支持 Kodi 22**（`xbmc.gui` 5.17.0 → 5.18.0，砍掉 21 双轨）+ 图片浏览对话框改双向锚定（2160 屏不再空一条）。改动来自 `docs/audit-2026-10-31.md` 的 🟡2-1 / 🟡2-2 |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1077,8 +1083,8 @@ python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   
 > 已经写成 `plugin://plugin.service.emby-next-gen/?mode=play&item=…`，退路是 Emby 直链。
 > 搜索列表接线**不依赖**这条路径 —— 列表渲染失败不影响接线本身，播放路径要改也只是插件里一行。
 >
-> 兼容目标已定：**保持 Kodi 21+**（方案 A）。1.3.0 已补完 21 回退点，
-> 22 才有的标签继续双轨。
+> 兼容目标**已改为 Kodi 22 only**（2026-10-31，见 §5.2）。原来定的「保持 Kodi 21+」
+> 已作废：21 的回退分支在 1.5.2 里删掉了，`addon.xml` 声明 `xbmc.gui 5.18.0`。
 
 ### 8.7 Kodi 21 实机：已放弃（2026-10-30）
 
