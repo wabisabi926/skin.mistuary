@@ -19,7 +19,7 @@
 
 | # | 功能 | 不装插件时 | 状态 |
 |---|---|---|---|
-| 1 | 服务端搜索（中文 / 原名 / 全拼 / 首字母） | 本地 XSP（标题 `contains` + 首字母 `startswith`） | 皮肤侧已接（`a6b9f59`），演员/类型见 M1d |
+| 1 | 服务端搜索（中文 / 原名 / 全拼 / 首字母） | 本地 XSP（标题 `contains` + 首字母 `startswith`） | 皮肤侧已接（`a6b9f59`）；演员/类型 0.3.4 起支持（仅非 ASCII） |
 | 2 | 豆瓣评分（详情页胶囊） | 胶囊不显示，其余评分照常 | ✅ 已接（插件 0.2.0+，`79b7eba`）；1.5.1 起次评分只在详情页显示豆瓣 |
 | 3 | 代表集技术标识 | 皮肤自己的 `ListItemAbsolute(0)` 推断，行为不变 | 暂缓（收益为零，见插件 roadmap） |
 | 4 | 行级增强（首页豆瓣角标、节点名整理） | 无影响 | 可选，不排期 |
@@ -115,10 +115,10 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 
 
 | 项 | 状态 |
 |---|---|
-| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，本地已改到 0.3.3（未发布，91 项单测） |
-| 已完成 | 搜索桥 + 详情页豆瓣；M1b / M2 / M1c 完成。0.3.3 起设置分 5 类、同步默认关（写库无消费方）、服务器页可测连接 |
+| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，本地已改到 0.3.4（未发布，99 项单测） |
+| 已完成 | 搜索桥 + 详情页豆瓣；M1b / M2 / M1c 完成。0.3.3 起设置分 5 类、同步默认关；0.3.4 起非 ASCII 查询并入演员/类型 |
 | 未完成 | M1d 演员/类型（暂缓）；M3 不做；M4 可选不排期 |
-| 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper`（实机仍是 0.3.2，待同步 0.3.3） |
+| 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper`（实机仍是 0.3.2，待同步 0.3.4） |
 
 皮肤侧已接（`Includes_Search.xml` + `SkinSettings.xml` + 语言），插件在 Kodi 里已启用
 （`Addons33.db.enabled = 1`，2026-10-30 复查）。装 / 启用后仍需重载皮肤，

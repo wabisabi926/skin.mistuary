@@ -70,6 +70,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
 | `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:245`（主评分来源四档） | `SelectBool` |
+| `rating_sec_auto` / `rating_sec_douban` / `rating_sec_rt` / `rating_sec_off` | `SkinSettings.xml:253`（次评分来源四档） | `SelectBool` |
 | `helper_search_off` | `SkinSettings.xml:272`（媒体分类，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
@@ -81,14 +82,16 @@ TMDb / IMDb / 豆瓣（神医助手覆盖）/ 自动（仅本地刮削）。
 `Rating(tmdb/trakt/imdb)`。**TMDb 是默认档**：没选自动 / IMDb / 豆瓣时按 TMDb 画。
 **不要让自动识别排在设置前面**：E4K 打开「Set imdb as default rating provider」会把
 `CommunityRating` 补写成 imdb 类型，届时类型字段恒等于默认分，设置就失效了。
-次评分**没有设置项**：详情页有插件豆瓣分就先显示豆瓣，否则显示烂番茄（`tomatometerallcritics`）。
+次评分四档：自动 / 豆瓣 / 烂番茄 / 关闭（设置 715）。自动 = 详情页有插件豆瓣分
+（且与主分不同）→ 豆瓣，否则 → 烂番茄；手选固定来源，关闭则整颗隐藏。
+主评分是豆瓣时次评分走烂番茄，不会出现两颗都不显示。
 
 `circle_none`、`OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项，
-`rating_src_tmdb` 是"默认档位"（变量用无条件 `<value>` 兜底），它们都不会出现在
-`Skin.HasSetting(...)` 里，因此分别列入 `audit_skin.py` 的 `RESET_ONLY_SETTINGS` 与
-`DEFAULT_ONLY_SETTINGS` 白名单。
+`rating_src_tmdb` / `rating_sec_auto` 是"默认档位"（变量用无条件 `<value>` 兜底），
+它们都不会出现在 `Skin.HasSetting(...)` 里，因此分别列入 `audit_skin.py` 的
+`RESET_ONLY_SETTINGS` 与 `DEFAULT_ONLY_SETTINGS` 白名单。
 
-现状（`python tools/audit_skin.py` 输出）：**90 读 / 93 写，有读无写 0、有写无读 0**。
+现状（`python tools/audit_skin.py` 输出）：**94 读 / 97 写，有读无写 0、有写无读 0**。
 
 ### helper 软探测契约（`script.mistuary.helper`）
 

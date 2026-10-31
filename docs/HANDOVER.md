@@ -187,7 +187,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.3.3 待发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
+| `script.mistuary.helper`（可选，0.3.4 待发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
@@ -667,8 +667,10 @@ Emby 库主评分固定 1 颗；次评分在详情页最多 1 颗（豆瓣或烂
   图标按所选档位画；只有选「自动」才比对 `Rating(tmdb/trakt/imdb)`。TMDb 是默认档：
   没选自动 / IMDb / 豆瓣时按 TMDb 画。自动识别不能排在设置前面——E4K 补写的 imdb
   类型会让它永久命中 IMDb（2026-10-28 实测：怎么切都显示 IMDb）。
-- **次评分只保留一条**：详情页有插件豆瓣分 → 豆瓣；否则 → 烂番茄
-  （`tomatometerallcritics`，只有电影）。**没有 TMDB 次评分**；列表 / 首页不显示豆瓣。
+- **次评分只保留一条**（设置 715，四档：自动 / 豆瓣 / 烂番茄 / 关闭）：
+  自动 = 详情页有插件豆瓣分（且与主分不同）→ 豆瓣，否则 → 烂番茄；
+  手选豆瓣/烂番茄固定来源，选关闭则整颗隐藏。主评分是豆瓣时次评分走烂番茄，
+  不会再出现「两颗都不显示」。**没有 TMDB 次评分**；列表 / 首页不显示豆瓣。
   豆瓣分由 `script.mistuary.helper` 0.3.x 提供：优先读 Emby `/Douban/RatingsByImdb`
   （与神医助手同源），失败回退豆瓣公开接口，写 `Window.Property(Mistuary.Rating.*)`。
 
@@ -802,7 +804,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   中文标题和原名搜索不受影响。
 - **不要再加回 `actor` / `director` / `genre`**：一个 flat `or` 只能共用一个 operator，
   子串匹配会把演员名当命中（实测单字母 `Z` 命中 238/742 部、`S` 命中 371/742）。
-  人员与类型搜索当前不支持（M1d 暂缓），见 [`helper-plugin-plan.md`](helper-plugin-plan.md)。
+  本地搜索仍不支持人员/类型；服务端桥 0.3.4 起支持中文演员名与类型（非 ASCII 查询才并入）。
 - **首字母必须前缀匹配**：`contains` 会把首字母出现在词中的条目捞进来
   （`HZ` 命中 14 部 → 前缀只剩 4 部）。2026-10-28 已改 `startswith`。
 - **不要给结果列表加 `limit`**：`<content limit="30">` 会同时截断结果和标签计数。
@@ -811,9 +813,14 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   合集（22 个，可用 `videodb://movies/sets/` 单独做页签）、Emby 索引里尚未同步到
   Kodi 库的条目（当时差 6 部电影 / 131 集）。
 
-### 5.9.2 评分圈按来源着色（方案已定，**未实施**）
+### 5.9.2 评分圈按来源着色（已实施，2026-10-31）
 
-用户要求：为将来插件提供多评分源预留颜色区分（豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红）。
+实现方式：`RatingCircle` 的环 `overlays/badge_ring.png` 加
+`colordiffuse="$VAR[NaraRatingRingColorVar]"`，按设置 707 的主评分来源取色
+（豆瓣绿 `FF2BB24C` / IMDb 黄 `FFF5C518` / TMDb 蓝 `FF01B4E4` / 自动或未知=白）；
+数字仍用 `badge_foreground`，因为 `$VAR` 在 `<textcolor>` 里不生效。
+
+用户要求：为多评分源预留颜色区分（豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红）。
 
 **现在的数据现实**（2026-10-30 实测，742 部电影全查）：
 - 只有 `ratings.imdb` 有值，全部标 `default: true`
@@ -913,7 +920,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
 | 音乐「类别」行的 `EMBY DYNAMIC:` 前缀 | **皮肤层修不了**。Emby 把媒体库名写成 Kodi 的 `tag`（视频库有 `tag` 表），但**音乐库没有 tag 表**，只能退回动态节点。`String.Replace` 两种写法实测均失败。想改只有「Emby 端关动态节点」或「换成 `musicdb://genres/`」两条路，2026-10-30 决定不改。详见 `skin-contracts.md` §4.2 |
 | 歌词只对 CU LRC 有内嵌排版 | `xml/script-cu-lrclyrics-main.xml` 里硬编码了 `script.cu.lrclyrics` 的窗口和 `list id="110"`。**两种情况会失效**：① CU LRC 升级改了控件 id；② 用户在设置里换成别的歌词插件。表现是「右侧内嵌排版没了、歌词以插件自己的全屏界面出现」——**不报错、不影响播放**。歌词继续用 CU LRC 而不自建，理由见 `helper-plugin-plan.md` §6（用户最常用的"自动下载歌词"是自建做不了的那部分） |
-| 本地搜索不含人员/类型 | 1.2.0 起快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀；演员、导演、类型当前不支持（M1d 暂缓，§8.9）。**已拍板，不要加回来** |
+| 本地搜索不含人员/类型 | 1.2.0 起本地快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀，**不要加回来**；人员/类型走服务端桥（0.3.4+，仅中文查询并入） |
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
@@ -989,7 +996,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 本地已改到 0.3.3（未发布），本次皮肤发版不包含它的代码。
+> 另一个仓库 `script.mistuary.helper` 本地已改到 0.3.4（未发布），本次皮肤发版不包含它的代码。
 
 ### 8.2 发版记录
 
@@ -1021,7 +1028,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，本地已改到 0.3.3（未发布，91 项单测）：服务端搜索 + 豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 库同步（默认关闭）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d / M3 暂缓或不做 |
+| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，本地已改到 0.3.4（未发布，99 项单测）：服务端搜索 + 豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 库同步（默认关闭）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1037,7 +1044,7 @@ git status -sb              # 与远端的关系 + 工作区
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
 | 1 | **发 1.5.1**（本次） | `changelog.txt` 1.5.1 段、§6 发版流程 | `addon.xml` 待升 1.5.1 → commit + push，CI 自动打包建 Release |
-| 2 | M1d 搜索补齐（演员 / 类型） | 插件仓库 `docs/roadmap.md` §M1d | 用户确认需求后再开工 |
+| 2 | 首字母严格性（`RZD` 只出 1 条） | 插件 `docs/roadmap.md` §M1d | 可选，等需求 |
 
 > **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
 > 外部校验报告的 P0 / P1 / P2 已在 1.3.0 清完，`report-triage-2026-10-29.md`
@@ -1059,11 +1066,8 @@ python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   
    `ItemStatusIconVar` 改用 `PlayCount` / `TotalEpisodes` 判断，纯 Kodi 库也有兜底；
    未看不再挂眼睛，看了一部分才挂。旧的 `Property(has_progress)` 方案不再需要。
 
-2. **评分圈按来源着色**（方案已定，未实施）
-   用户想要豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红，为将来插件多评分源预留。
-   方案见 §5.9.2（待写）。**关键约束**：`$VAR` 在 `<textcolor>` 里不生效，
-   所以只能给**环**着色（`colordiffuse`），数字保持白色。
-   贴图要拆成 `badge_disc.png`（黑底）+ `badge_ring.png`（白环，可着色）。
+2. ~~**评分圈按来源着色**~~ —— **已实施**（2026-10-31）：
+   `NaraRatingRingColorVar` 按 707 给 `badge_ring.png` 着色，数字保持白色。
 
 
 > **播放地址已定，只剩实机验证**（2026-10-30 更正）：`lib/emby.py:56` 的 `play_url()`
@@ -1134,7 +1138,7 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 
 ### 8.9 helper：接入状态（2026-10-31）
 
-- 插件 `script.mistuary.helper` 本地已改到 **0.3.3**（未发布，91 项单测）：服务端搜索 +
+- 插件 `script.mistuary.helper` 本地已改到 **0.3.4**（未发布，99 项单测）：服务端搜索 +
   详情页豆瓣评分 + 豆瓣分库同步（默认关闭）。
 - 0.3.x 起豆瓣分优先读 StrmAssistant 的 Emby `/Douban/RatingsByImdb`，失败才回退
   豆瓣公开接口；窗口属性新增 `Mistuary.Rating.Source`（emby / douban）。
@@ -1143,7 +1147,7 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - 皮肤侧 M1b 搜索与 M2 豆瓣已接；**M1c 实机验收已完成**（含播放）。
 - 1.5.1 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
   插件写的 `rating_type=douban` 暂无消费方。
-- **M1d 演员/导演/类型**暂缓；**M3 代表集**不做（皮肤用两级探针自行解决）；
+- **M1d 演员/导演/类型**：0.3.4 起支持非 ASCII 查询并入结果（纯字母不扩展）；**M3 代表集**不做（皮肤用两级探针自行解决）；
   **M4 行级增强**可选不排期。
 - 装/卸/启用插件后要**重载皮肤**；卸载后的回退是下一帧生效。
 - 规划与契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)；实现文档在

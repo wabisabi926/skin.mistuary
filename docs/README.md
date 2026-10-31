@@ -24,7 +24,7 @@
 `tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
-`script.mistuary.helper`（可选，0.3.3 待发布），都是"装了才启用"的可选增强，没有硬依赖。
+`script.mistuary.helper`（可选，0.3.4 待发布），都是"装了才启用"的可选增强，没有硬依赖。
 helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；权威文档在插件仓库 `docs/`。
 
 > **已知问题（2026-10-30）**：服务端搜索结果暂不显示封面；条目没有 fanart 时搜索页背景
