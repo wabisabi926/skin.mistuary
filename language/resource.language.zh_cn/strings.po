@@ -1168,8 +1168,24 @@ msgid "Use Emby server search"
 msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
-msgstr "装了 Mistuary Helper 后走 Emby 服务端，中文、原名、全拼和首字母都能搜到。装完或卸掉插件后要重载皮肤才生效。"
+msgid "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
+msgstr "装了 Mistuary Helper 后走 Emby 服务端：中文、原名、全拼、首字母，以及中文的演员名与类型都能搜到。装完或卸掉插件后要重载皮肤才生效。"
+
+msgctxt "#31782"
+msgid "Secondary rating source"
+msgstr "次评分来源"
+
+msgctxt "#31783"
+msgid "Rotten Tomatoes"
+msgstr "烂番茄"
+
+msgctxt "#31784"
+msgid "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
+msgstr "主评分旁边显示哪一颗：自动优先豆瓣（需插件），否则烂番茄；也可固定豆瓣 / 烂番茄或关闭。"
+
+msgctxt "#31792"
+msgid "Off"
+msgstr "关闭"
 
 msgctxt "#31785"
 msgid "Enabled"

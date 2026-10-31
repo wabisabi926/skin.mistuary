@@ -130,11 +130,13 @@
 				</include>
 				<include content="UserRatingContent" condition="Skin.HasSetting(circle_rating)">
 					<param name="infolabel" value="ListItem.Rating" />
+					<param name="color" value="$VAR[NaraRatingRingColorVar]" />
 				</include>
 			</control>
 		</definition>
 	</include>
 	<include name="UserRatingContent">
+		<param name="color">white</param>
 		<visible>!String.IsEmpty($PARAM[infolabel])</visible>
 		<control type="image">
 			<left>8</left>
@@ -142,7 +144,7 @@
 			<width>40</width>
 			<height>40</height>
 			<aspectratio>keep</aspectratio>
-			<texture>overlays/badge_ring.png</texture>
+			<texture colordiffuse="$PARAM[color]">overlays/badge_ring.png</texture>
 		</control>
 		<control type="label">
 			<left>8</left>

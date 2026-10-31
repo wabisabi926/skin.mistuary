@@ -245,6 +245,15 @@
 					<onclick>Skin.SelectBool(31733, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31790|douban_rating, 31791|rating_src_auto)</onclick>
 					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
 				</control>
+<control type="button" id="715">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31782]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31782, 31767|rating_sec_auto, 31765|rating_sec_douban, 31783|rating_sec_rt, 31792|rating_sec_off)</onclick>
+					<label2>$VAR[NaraSecondaryRatingSourceVar]</label2>
+				</control>
 <control type="button" id="708">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31047]</label>

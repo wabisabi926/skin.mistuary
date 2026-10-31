@@ -1391,8 +1391,24 @@ msgid "Use Emby server search"
 msgstr "Use Emby server search"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
-msgstr "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
+msgid "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
+msgstr "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
+
+msgctxt "#31782"
+msgid "Secondary rating source"
+msgstr "Secondary rating source"
+
+msgctxt "#31783"
+msgid "Rotten Tomatoes"
+msgstr "Rotten Tomatoes"
+
+msgctxt "#31784"
+msgid "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
+msgstr "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
+
+msgctxt "#31792"
+msgid "Off"
+msgstr "Off"
 
 msgctxt "#31785"
 msgid "Enabled"

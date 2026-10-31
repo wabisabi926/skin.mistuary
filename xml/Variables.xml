@@ -205,6 +205,20 @@
 		<value condition="Skin.HasSetting(rating_src_auto)">$LOCALIZE[31767]</value>
 		<value>TMDb</value>
 	</variable>
+	<!-- 次评分来源（设置 715）：自动 = 有豆瓣分先豆瓣、否则烂番茄；也可固定或关闭 -->
+	<variable name="NaraSecondaryRatingSourceVar">
+		<value condition="Skin.HasSetting(rating_sec_douban)">$LOCALIZE[31765]</value>
+		<value condition="Skin.HasSetting(rating_sec_rt)">$LOCALIZE[31783]</value>
+		<value condition="Skin.HasSetting(rating_sec_off)">$LOCALIZE[31792]</value>
+		<value>$LOCALIZE[31767]</value>
+	</variable>
+	<!-- 主评分环的颜色：按 707 选的来源区分（自动/未知用白） -->
+	<variable name="NaraRatingRingColorVar">
+		<value condition="Skin.HasSetting(douban_rating)">FF2BB24C</value>
+		<value condition="Skin.HasSetting(rating_src_imdb)">FFF5C518</value>
+		<value condition="Skin.HasSetting(rating_src_tmdb)">FF01B4E4</value>
+		<value>FFFFFFFF</value>
+	</variable>
 	<variable name="AlbumOnClickActionLabel2Var">
 		<value condition="Skin.HasSetting(album_onclick_browse)">$LOCALIZE[37015]</value>
 		<value condition="Skin.HasSetting(album_onclick_play)">$LOCALIZE[208]</value>
@@ -340,6 +354,7 @@
 		<value condition="Control.HasFocus(709)">$LOCALIZE[31773]</value>
 		<value condition="Control.HasFocus(706)">$LOCALIZE[31739]</value>
 		<value condition="Control.HasFocus(707)">$LOCALIZE[31740]</value>
+		<value condition="Control.HasFocus(715)">$LOCALIZE[31784]</value>
 		<value condition="Control.HasFocus(708)">$LOCALIZE[31741]</value>
 		<value condition="Control.HasFocus(711)">$LOCALIZE[31742]</value>
 		<value condition="Control.HasFocus(712)">$LOCALIZE[31761]</value>
