@@ -102,6 +102,16 @@ python tools/sync_to_kodi.py
 
 ## 5. 提交与版本号
 
+- **三个动作必须分开确认，用户用词是精确的**：
+
+  | 用户说 | 只做 |
+  |---|---|
+  | **递交 / 提交** | `git commit`，**不 push** |
+  | **推送 / 上传 GitHub** | `git push` |
+  | **发版 / 打 tag** | 升 `addon.xml` 版本 + push（触发 CI 打包建 Release） |
+
+  **"递交"不等于"推送"**（2026-10-31 用户明确纠正）：只说递交时，commit 完就停，
+  把提交列表报给用户，等下一次"推送"指令。
 - 提交信息沿用 conventional commits（`feat` / `fix` / `docs` / `chore` / `release` + 中文描述）
 - **版本号只在用户明确要求发版时才升**；改代码不升版本不会触发 CI 打包，这是设计
 - 推送前先本地跑一遍 CI 的检查：
