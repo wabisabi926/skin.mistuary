@@ -529,7 +529,9 @@
 		     ② 空查询随机剧照（同「文件 / 收藏夹」那一套数据源）
 		     ③ 搜索结果剧照（聚焦条目有 fanart 时）
 		     ②③ 都必须是 stretch：Kodi 的 aspectratio 只有 keep/scale/center/stretch，
-		     没有"放大并裁切"，用 scale 时非 16:9 的图会留缝、露出下层的渐变。 -->
+		     没有"放大并裁切"，用 scale 时非 16:9 的图会留缝、露出下层的渐变。
+		     ②（空查询）也要吃同一套蒙层 + 左侧渐变，否则 80% 直接叠在深色兜底上
+		     会明显比首页亮一档（2026-10-31 统一口径）。 -->
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio>stretch</aspectratio>
@@ -566,14 +568,14 @@
 		<include content="NaraFanartReveal">
 			<param name="source" value="16590" />
 			<param name="enabled" value="[Control.HasFocus(16101) | Control.HasFocus(16102)] + !System.HasActiveModalDialog" />
-			<param name="visible" value="!Skin.HasSetting(no_fanart) + [[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]]" />
+			<param name="visible" value="!Skin.HasSetting(no_fanart) + [[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))] | [String.IsEmpty(Control.GetLabel(16999).index(1)) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]]]" />
 		</include>
 		<control type="image">
 			<width>1200</width>
 			<height>1080</height>
 			<aspectratio>stretch</aspectratio>
 			<texture>overlays/detail-left-scrim.png</texture>
-			<visible>[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]</visible>
+			<visible>[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(16102).ListItem.Art(fanart))] | [String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]]</visible>
 			<animation effect="fade" time="400">VisibleChange</animation>
 		</control>
 		<control type="image">
