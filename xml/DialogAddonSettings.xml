@@ -47,15 +47,20 @@
 					<param name="text" value="text_primary" />
 				</include>
 			</control>
+			<!-- 设置级别（基础 / 标准 / 高级 / 专家）：沉到窗口底部，
+			     和右侧「确定 / 取消 / 默认」同一水平线（都在 top 797、h 65）。
+			     原来是 top 712，比按钮行高 85px，左右两栏底边不齐（777 vs 862）。
+			     文字居中，因为按钮占满 350 宽的左栏，左对齐会显得贴边。 -->
 			<control type="button" id="20">
 				<left>32</left>
-				<top>712</top>
+				<top>797</top>
 				<width>350</width>
 				<height>65</height>
 				<font>font26</font>
+				<align>center</align>
 				<onclick>SettingsLevelChange</onclick>
-				<onleft>9000</onleft>
-				<onright>5</onright>
+				<onleft>5</onleft>
+				<onright>9000</onright>
 				<onup>3</onup>
 				<ondown>3</ondown>
 				<texturefocus colordiffuse="glass_focus_medium" border="14">shapes/round14.png</texturefocus>
