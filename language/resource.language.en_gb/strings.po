@@ -1056,6 +1056,10 @@ msgctxt "#31697"
 msgid "Favourites as landscape"
 msgstr "Favourites as landscape"
 
+msgctxt "#31698"
+msgid "Favourites as landscape"
+msgstr "Show favourites as 16:9 cards. Off keeps the portrait poster layout."
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr ""

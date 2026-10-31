@@ -833,6 +833,10 @@ msgctxt "#31697"
 msgid "Favourites as landscape"
 msgstr "收藏夹用横版"
 
+msgctxt "#31698"
+msgid "Favourites as landscape"
+msgstr "收藏夹用横版卡片显示。关掉是竖版海报，和电影 / 电视剧一致"
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr "正在读取歌词…"

@@ -978,11 +978,15 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
+								<!-- 兜底用收藏夹专用的 DefaultFavourites.png（256×256、透明底白星），
+								     不能用 DefaultVideo.png —— 那张是 256×392 的竖版海报、不透明，
+								     塞进 320×180 会拉成一片纯白。
+								     不加 mask 遮罩：星星本身透明底，遮罩反而会裁掉。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
 								<control type="progress">
@@ -1033,11 +1037,15 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
+								<!-- 兜底用收藏夹专用的 DefaultFavourites.png（256×256、透明底白星），
+								     不能用 DefaultVideo.png —— 那张是 256×392 的竖版海报、不透明，
+								     塞进 320×180 会拉成一片纯白。
+								     不加 mask 遮罩：星星本身透明底，遮罩反而会裁掉。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
 								<control type="image">

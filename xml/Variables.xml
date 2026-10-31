@@ -349,6 +349,7 @@
 	     行级覆盖 23 个设置行；其余页仍回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
 		<value condition="Control.HasFocus(702)">$LOCALIZE[31736]</value>
+		<value condition="Control.HasFocus(716)">$LOCALIZE[31698]</value>
 		<value condition="Control.HasFocus(710)">$LOCALIZE[31737]</value>
 		<value condition="Control.HasFocus(705)">$LOCALIZE[31738]</value>
 		<value condition="Control.HasFocus(709)">$LOCALIZE[31773]</value>
