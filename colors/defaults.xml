@@ -2,13 +2,12 @@
 <colors>
 	<!-- Base surfaces -->
 	<color name="background_base">FF000000</color>
-	<color name="primary_background">FF404040</color>
-	<!-- 详情页兜底：primary.jpg 是彩色渐变，不能被 25% 的 primary_background 压暗 -->
+	<!-- primary.jpg 兜底背景一律不压：这张图本身平均亮度只有 75/255（深蓝紫渐变），
+	     再乘 25% 只剩 19/255，等于没有背景（2026-10-31 用户反馈「黑乎乎」）。
+	     三个名字保留，是为了以后想单独调某一处；默认全是 100%。 -->
+	<color name="primary_background">FFFFFFFF</color>
 	<color name="primary_background_info">FFFFFFFF</color>
-	<!-- 搜索页兜底背景：primary.jpg 压到 50%。
-	     25%（primary_background）太暗，用户仍会觉得"没有背景"；
-	     100%（primary_background_info）在结果网格后面偏抢画面。 -->
-	<color name="search_backdrop">FF808080</color>
+	<color name="search_backdrop">FFFFFFFF</color>
 	<color name="surface_main">FF3A3542</color>
 	<color name="surface_panel">FF131218</color>
 	<color name="surface_dialog">FF18171E</color>
