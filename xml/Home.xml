@@ -89,6 +89,8 @@
 				<param name="source" value="9090" />
 				<param name="enabled" value="$EXP[NaraHomeFanartSettledRow] + !System.HasActiveModalDialog" />
 				<param name="resting_opacity" value="20" />
+				<!-- 遮罩只在「真图」上出现；走 primary.jpg 兜底时不压暗（判据见 Includes_Home.xml）。 -->
+				<param name="visible" value="!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]] | [[!String.IsEqual(Window(home).Property(Home.Section),files) + !String.IsEqual(Window(home).Property(Home.Section),favorites)] + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]]" />
 			</include>
 			<!-- Keep the navigation and clock legible over bright fanart. Reuse the
 			     lower scrim texture upside down so it fades from the top edge. -->
@@ -117,7 +119,7 @@
 				<include content="Animation_NaraScrimFocus">
 					<param name="condition" value="$EXP[NaraHomeFanartFocused]" />
 				</include>
-				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
+				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]</visible>
 			</control>
 			<control type="image">
 				<top>420</top>
@@ -127,7 +129,7 @@
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
 				<animation effect="slide" start="0,0" end="0,100" time="260" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoExpanded]">Conditional</animation>
-				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
+				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]</visible>
 			</control>
 		</control>
 		<control type="group">
