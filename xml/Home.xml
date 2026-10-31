@@ -948,21 +948,32 @@
 							</control>
 						</focusedlayout>
 						<!-- 横版（皮肤设置 → 收藏夹用横版 打开时生效）。
-						     收藏夹内容混杂（视频 / 插件 / 文件夹），竖版海报对没有 poster 的条目
-						     只能落默认图；横版卡片走 landscape → fanart → 默认 三态兜底。
-						     卡片几何和 HomeContinueWatchingRail 的横版卡片一致（320×180 + mask_320x180_r9），
-						     **改那边记得同步这边** —— 两处是复制关系，没有抽成公共 include 是为了不动
-						     「继续观看」行的现有结构。 -->
+						     图层（从下到上）：半透明底板 → 五角星 → landscape → fanart → libraryart 封面。
+						     **收藏夹条目本身不带真 art**：favourites.xml 里的 thumb 是 Emby 的 noimage 占位图，
+						     所以横版不画 thumb，封面一律按名字套 special://skin/libraryart/<名字>.jpg，
+						     套不上就露五角星。
+						     **不放大、不加阴影、不画进度条**（进度条在文件夹条目上会渲染成一条白线压住标题）。
+						     历史：v1 深色底板+阴影+无焦点提示（否）；v2 276×160 媒体库风格（否）；
+						           v3 焦点环；v4 环改常驻（否）；v5 跳过 poster；v6 标题卡内（否）；
+						           v7 封面在 thumb 之下被盖掉；v8 = 本版。 -->
 						<itemlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<left>13</left>
 								<top>8</top>
+								<!-- 半透明底板：和「EMBY DYNAMIC」那张卡同款（跟随设置里的页面透明度） -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
-									<texture>dialogs/dialog-bg-nobo.png</texture>
-									<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-									<bordersize>20</bordersize>
+									<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="12">shapes/round12.png</texture>
+								</control>
+								<!-- 五角星放最底层：封面 / 横版素材都没有时才露出来 -->
+								<control type="image">
+									<left>124</left>
+									<top>54</top>
+									<width>72</width>
+									<height>72</height>
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 								</control>
 								<control type="image">
 									<width>320</width>
@@ -978,49 +989,39 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 文件夹封面：收藏夹里的「华语电影」这类条目有 poster（那张拼贴封面），
-								     原来漏读，所以直接落到星星。 -->
+								<!-- 封面放最上层：收藏夹的 Art(thumb) 是 Emby 的 noimage 占位图，
+								     画在下面会被它盖掉。机制沿用皮肤「媒体库封面」：libraryart/<名字>.jpg，
+								     内置目录只认 .jpg；设置里指定了自定义目录时 png 先、jpg 后。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(poster)]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(ListItem.Art(poster))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
+									<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + !String.IsEmpty(ListItem.Art(thumb))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].png</texture>
+									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
-								<!-- 最后一层：文件夹图标，没有图标才落白星。
-								     96×96 居中 —— 原来给 320×180 + keep，256×256 的星星会被撑到
-								     180 高、占满整张卡，看着像巨型五角星。 -->
 								<control type="image">
-									<left>125</left>
-									<top>50</top>
-									<width>96</width>
-									<height>96</height>
-									<aspectratio>keep</aspectratio>
-									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(thumb))</visible>
-								</control>
-								<control type="progress">
-									<top>177</top>
 									<width>320</width>
-									<height>3</height>
-									<reveal>true</reveal>
-									<texturebg border="8,0,8,0" colordiffuse="00FFFFFF">progress/card_progress_r8.png</texturebg>
-									<midtexture border="8,0,8,0" colordiffuse="progress_playback">progress/card_progress_r8.png</midtexture>
-									<info>ListItem.Progress</info>
-									<visible>!Integer.IsEqual(ListItem.Progress,0)</visible>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
+									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
+								<!-- 标题在卡片下面居中 -->
 								<control type="label">
 									<top>190</top>
 									<width>320</width>
-									<height>28</height>
-									<font>font12</font>
+									<height>42</height>
+									<font>font22</font>
+									<align>center</align>
+									<aligny>center</aligny>
+									<textcolor>text_primary</textcolor>
 									<scroll>false</scroll>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
@@ -1029,16 +1030,22 @@
 						<focusedlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<depth>DepthContentPopout</depth>
-								<animation effect="zoom" start="100" end="104" time="200" tween="sine" easing="inout" center="173,98">Focus</animation>
-								<animation effect="zoom" start="104" end="100" time="200" tween="sine" easing="inout" center="173,98">UnFocus</animation>
 								<left>13</left>
 								<top>8</top>
+								<!-- 半透明底板：和「EMBY DYNAMIC」那张卡同款（跟随设置里的页面透明度） -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
-									<texture>dialogs/dialog-bg-nobo.png</texture>
-									<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
-									<bordersize>20</bordersize>
+									<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="12">shapes/round12.png</texture>
+								</control>
+								<!-- 五角星放最底层：封面 / 横版素材都没有时才露出来 -->
+								<control type="image">
+									<left>124</left>
+									<top>54</top>
+									<width>72</width>
+									<height>72</height>
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 								</control>
 								<control type="image">
 									<width>320</width>
@@ -1054,57 +1061,49 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 文件夹封面：收藏夹里的「华语电影」这类条目有 poster（那张拼贴封面），
-								     原来漏读，所以直接落到星星。 -->
+								<!-- 封面放最上层：收藏夹的 Art(thumb) 是 Emby 的 noimage 占位图，
+								     画在下面会被它盖掉。机制沿用皮肤「媒体库封面」：libraryart/<名字>.jpg，
+								     内置目录只认 .jpg；设置里指定了自定义目录时 png 先、jpg 后。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(poster)]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(ListItem.Art(poster))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
+									<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + !String.IsEmpty(ListItem.Art(thumb))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].png</texture>
+									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
-								<!-- 最后一层：文件夹图标，没有图标才落白星。
-								     96×96 居中 —— 原来给 320×180 + keep，256×256 的星星会被撑到
-								     180 高、占满整张卡，看着像巨型五角星。 -->
 								<control type="image">
-									<left>125</left>
-									<top>50</top>
-									<width>96</width>
-									<height>96</height>
-									<aspectratio>keep</aspectratio>
-									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(thumb))</visible>
-								</control>
-								<!-- 这里原本有一圈焦点描边，用的是
-								     `<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>`。
-								     focus_surface 是 FFEDEDED（近乎纯白、不透明），border 让它走九宫格
-								     铺满 324×184 —— 聚焦时整张卡片被一块白色圆角块盖住。
-								     首页「继续观看」行的焦点表现是「放大 4% + 标题变色」，没有描边环，
-								     这里照做，保持两行一致。 -->
-								<control type="progress">
-									<top>177</top>
 									<width>320</width>
-									<height>3</height>
-									<reveal>true</reveal>
-									<texturebg border="8,0,8,0" colordiffuse="00FFFFFF">progress/card_progress_r8.png</texturebg>
-									<midtexture border="8,0,8,0" colordiffuse="progress_playback">progress/card_progress_r8.png</midtexture>
-									<info>ListItem.Progress</info>
-									<visible>!Integer.IsEqual(ListItem.Progress,0)</visible>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
+									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
 								</control>
+								<!-- 焦点环：只有聚焦的那张有 -->
+								<control type="image">
+									<left>-1</left>
+									<top>-1</top>
+									<width>322</width>
+									<height>182</height>
+									<texture colordiffuse="focus_media">shapes/ring_card_322x182_r10.png</texture>
+									<include>Animation_FocusTextureFade</include>
+								</control>
+								<!-- 标题在卡片下面居中 -->
 								<control type="label">
 									<top>190</top>
 									<width>320</width>
-									<height>28</height>
-									<font>font12</font>
-									<scroll>false</scroll>
-									<textcolor>focus_foreground</textcolor>
+									<height>42</height>
+									<font>font22</font>
+									<align>center</align>
+									<aligny>center</aligny>
+									<textcolor>text_primary</textcolor>
+									<scroll>true</scroll>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
 							</control>
