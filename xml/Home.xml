@@ -948,14 +948,14 @@
 							</control>
 						</focusedlayout>
 						<!-- 横版（皮肤设置 → 收藏夹用横版 打开时生效）。
-						     图层（从下到上）：半透明底板 → 五角星 → landscape → fanart → libraryart 封面。
-						     **收藏夹条目本身不带真 art**：favourites.xml 里的 thumb 是 Emby 的 noimage 占位图，
-						     所以横版不画 thumb，封面一律按名字套 special://skin/libraryart/<名字>.jpg，
-						     套不上就露五角星。
+						     图层（从下到上）：半透明底板 → 五角星 → landscape → fanart → 自己的缩略图。
+						     **不再按名字套 libraryart**：库名和收藏夹同名时会串封面（2026-10-31 用户提出），
+						     收藏夹想要封面就在收藏夹窗口的上下文菜单里「Choose thumbnail」，
+						     那张会写进 favourites.xml 的 thumb 属性；Emby 自动塞的 noimage 占位图会被过滤。
 						     **不放大、不加阴影、不画进度条**（进度条在文件夹条目上会渲染成一条白线压住标题）。
-						     历史：v1 深色底板+阴影+无焦点提示（否）；v2 276×160 媒体库风格（否）；
-						           v3 焦点环；v4 环改常驻（否）；v5 跳过 poster；v6 标题卡内（否）；
-						           v7 封面在 thumb 之下被盖掉；v8 = 本版。 -->
+						     历史：v1 深色底板+阴影（否）；v2 276×160 媒体库风格（否）；v3 焦点环；
+						           v4 环常驻（否）；v5 跳过 poster；v6 标题卡内（否）；v7 封面被 thumb 盖掉；
+						           v8 封面在 thumb 之上；v9 = 本版（改用自己的缩略图）。 -->
 						<itemlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<left>13</left>
@@ -966,7 +966,7 @@
 									<height>180</height>
 									<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="12">shapes/round12.png</texture>
 								</control>
-								<!-- 五角星放最底层：封面 / 横版素材都没有时才露出来 -->
+								<!-- 五角星放最底层：没有缩略图 / 没有横版素材时才露出来 -->
 								<control type="image">
 									<left>124</left>
 									<top>54</top>
@@ -989,29 +989,15 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 封面放最上层：收藏夹的 Art(thumb) 是 Emby 的 noimage 占位图，
-								     画在下面会被它盖掉。机制沿用皮肤「媒体库封面」：libraryart/<名字>.jpg，
-								     内置目录只认 .jpg；设置里指定了自定义目录时 png 先、jpg 后。 -->
+								<!-- 封面 = 收藏夹自己的缩略图：Kodi 收藏夹窗口 → 上下文菜单 →「Choose thumbnail」，
+								     存进 favourites.xml 的 thumb 属性。Emby 会自动塞一张 noimage 占位图
+								     （黑底印着「Tag / Movie」），那种要过滤掉，否则整张卡发黑。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
-									<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
-								</control>
-								<control type="image">
-									<width>320</width>
-									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].png</texture>
-									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
-								</control>
-								<control type="image">
-									<width>320</width>
-									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
-									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+									<visible>!String.IsEmpty(ListItem.Art(thumb)) + !String.Contains(ListItem.Art(thumb),noimage)</visible>
 								</control>
 								<!-- 标题在卡片下面居中 -->
 								<control type="label">
@@ -1038,7 +1024,7 @@
 									<height>180</height>
 									<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="12">shapes/round12.png</texture>
 								</control>
-								<!-- 五角星放最底层：封面 / 横版素材都没有时才露出来 -->
+								<!-- 五角星放最底层：没有缩略图 / 没有横版素材时才露出来 -->
 								<control type="image">
 									<left>124</left>
 									<top>54</top>
@@ -1061,29 +1047,15 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 封面放最上层：收藏夹的 Art(thumb) 是 Emby 的 noimage 占位图，
-								     画在下面会被它盖掉。机制沿用皮肤「媒体库封面」：libraryart/<名字>.jpg，
-								     内置目录只认 .jpg；设置里指定了自定义目录时 png 先、jpg 后。 -->
+								<!-- 封面 = 收藏夹自己的缩略图：Kodi 收藏夹窗口 → 上下文菜单 →「Choose thumbnail」，
+								     存进 favourites.xml 的 thumb 属性。Emby 会自动塞一张 noimage 占位图
+								     （黑底印着「Tag / Movie」），那种要过滤掉，否则整张卡发黑。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
 									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
-									<visible>String.IsEmpty(Skin.String(library_art_folder))</visible>
-								</control>
-								<control type="image">
-									<width>320</width>
-									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].png</texture>
-									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
-								</control>
-								<control type="image">
-									<width>320</width>
-									<height>180</height>
-									<aspectratio scalediffuse="false">scale</aspectratio>
-									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
-									<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+									<visible>!String.IsEmpty(ListItem.Art(thumb)) + !String.Contains(ListItem.Art(thumb),noimage)</visible>
 								</control>
 								<!-- 焦点环：只有聚焦的那张有 -->
 								<control type="image">
