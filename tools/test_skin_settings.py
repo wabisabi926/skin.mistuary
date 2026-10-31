@@ -175,6 +175,19 @@ class RatingSourcePrecedenceTest(unittest.TestCase):
         self.assertIn("|rating_src_auto", settings)
 
 
+class IncludeParamDefinitionTest(unittest.TestCase):
+    """定义里带 <param> 的 include 必须有 <definition>，否则 Kodi 会整条丢弃。"""
+
+    def test_param_includes_have_definition(self):
+        bad = []
+        for path in sorted(XML_DIR.glob("*.xml")):
+            root = ET.parse(path).getroot()
+            for inc in root.iter("include"):
+                if inc.get("name") and inc.find("param") is not None and inc.find("definition") is None:
+                    bad.append("%s:%s" % (path.name, inc.get("name")))
+        self.assertEqual(bad, [], "带 param 却没有 definition 的 include: %s" % bad)
+
+
 class SecondaryRatingSourceTest(unittest.TestCase):
     """次评分来源（设置 715）：自动 / 豆瓣 / 烂番茄 / 关闭，手动优先。"""
 
@@ -186,9 +199,11 @@ class SecondaryRatingSourceTest(unittest.TestCase):
     def test_douban_branch_respects_manual_choice(self):
         hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
         douban = hero.split("次评分 ①：豆瓣", 1)[1].split("次评分 ②", 1)[0]
-        self.assertIn("Window.IsVisible(videoinfo)", douban)
+        self.assertIn("Window.IsVisible(12003)", douban)
         self.assertIn("rating_sec_rt", douban)
         self.assertIn("rating_sec_off", douban)
+        # 手选豆瓣时即使与主评分同值也显示；自动档才用“不同值”去重
+        self.assertIn("[Skin.HasSetting(rating_sec_douban) |", douban)
 
     def test_rotten_tomatoes_no_longer_blocked_by_main_douban(self):
         """主评分是豆瓣时也必须能显示烂番茄，否则两颗都不出现。"""

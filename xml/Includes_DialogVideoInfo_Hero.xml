@@ -138,14 +138,14 @@
 				<!-- 次评分 ①：豆瓣（仅详情页，助手实时取分并写窗口属性）。
 				     与主评分同值 / 主评分就是豆瓣 / 手选烂番茄或关闭时都不显示。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="Window.IsVisible(videoinfo) + $EXP[NaraRatingDoubanReady] + !Skin.HasSetting(douban_rating) + !String.IsEqual($PARAM[item_prefix].Rating,Window(10000).Property(Mistuary.Rating.Douban)) + !Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_off)" />
+					<param name="visible" value="Window.IsVisible(12003) + $EXP[NaraRatingDoubanReady] + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_off) + [Skin.HasSetting(rating_sec_douban) | !String.IsEqual($PARAM[item_prefix].Rating,Window(10000).Property(Mistuary.Rating.Douban))]" />
 					<param name="icon" value="flags/ratings/douban.png" />
 					<param name="label" value="$INFO[Window(10000).Property(Mistuary.Rating.Douban)]" />
 				</include>
 				<!-- 次评分 ②：烂番茄（Emby 的 CriticRating/10，只有电影写）。
 				     豆瓣次评分没显示时才让位；手选豆瓣或关闭时隐藏。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + !Skin.HasSetting(rating_sec_douban) + !Skin.HasSetting(rating_sec_off) + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season) + [!Window.IsVisible(videoinfo) | !$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating) | String.IsEqual($PARAM[item_prefix].Rating,Window(10000).Property(Mistuary.Rating.Douban)) | Skin.HasSetting(rating_sec_rt)]" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + !Skin.HasSetting(rating_sec_douban) + !Skin.HasSetting(rating_sec_off) + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season) + [!Window.IsVisible(12003) | !$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating) | String.IsEqual($PARAM[item_prefix].Rating,Window(10000).Property(Mistuary.Rating.Douban)) | Skin.HasSetting(rating_sec_rt)]" />
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
 				</include>
