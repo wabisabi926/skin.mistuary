@@ -734,8 +734,14 @@
 		<value>text_primary</value>
 	</variable>
 	<variable name="ItemStatusIconVar">
-		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes)) | String.IsEqual(ListItem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">OverlayWatched.png</value>
-		<value condition="String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,set) | String.IsEqual(ListItem.DBType,season)">lists/played-total.png</value>
+		<!-- 已看完：先用 Emby 属性，但必须确认总数非空（否则「空 == 空」会把无数据的条目误判成已看完）；
+		     纯 Kodi 库没有 Emby 属性时，退回 Kodi 库自己算的 PlayCount / TotalEpisodes。 -->
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + !String.IsEmpty(ListItem.Property(TotalEpisodes)) + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes))">OverlayWatched.png</value>
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEmpty(ListItem.Property(TotalEpisodes)) + !String.IsEmpty(ListItem.TotalEpisodes) + Integer.IsGreater(ListItem.PlayCount,0) + String.IsEqual(ListItem.PlayCount,ListItem.TotalEpisodes)">OverlayWatched.png</value>
+		<value condition="String.IsEqual(ListItem.DBtype,set) + !String.IsEmpty(ListItem.Property(Total)) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">OverlayWatched.png</value>
+		<!-- 只给「看了一部分」的条目眼睛；一集没看留空 -->
+		<value condition="[String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBType,season)] + [Integer.IsGreater(ListItem.Property(WatchedEpisodes),0) | Integer.IsGreater(ListItem.PlayCount,0)]">lists/played-total.png</value>
+		<value condition="String.IsEqual(ListItem.DBtype,set) + Integer.IsGreater(ListItem.Property(Watched),0)">lists/played-total.png</value>
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
 		<value condition="ListItem.HasReminder">icons/pvr/timers/bell.png</value>
 		<value condition="ListItem.HasTimer">icons/pvr/timers/recording.png</value>
@@ -755,8 +761,9 @@
 	     图标是 OverlayWatchedResume / OverlayPlaying，不是对勾，上绿就错了。
 	     故意不给「继续看」上黄色：status_warning 已经是黄，两黄混在一起分不清。 -->
 	<variable name="StatusIconColorVar">
-		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes))">status_done</value>
-		<value condition="String.IsEqual(Listitem.DBtype,set) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">status_done</value>
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + !String.IsEmpty(ListItem.Property(TotalEpisodes)) + String.IsEqual(ListItem.Property(WatchedEpisodes),ListItem.Property(TotalEpisodes))">status_done</value>
+		<value condition="[String.IsEqual(Listitem.DBType,tvshow) | String.IsEqual(Listitem.DBType,season)] + String.IsEmpty(ListItem.Property(TotalEpisodes)) + !String.IsEmpty(ListItem.TotalEpisodes) + Integer.IsGreater(ListItem.PlayCount,0) + String.IsEqual(ListItem.PlayCount,ListItem.TotalEpisodes)">status_done</value>
+		<value condition="String.IsEqual(Listitem.DBtype,set) + !String.IsEmpty(ListItem.Property(Total)) + String.IsEqual(ListItem.Property(Watched),ListItem.Property(Total))">status_done</value>
 		<value condition="[String.IsEqual(Listitem.DBType,movie) | String.IsEqual(Listitem.DBType,episode) | String.IsEqual(Listitem.DBType,musicvideo)] + Integer.IsGreater(ListItem.Playcount,0) + !ListItem.IsResumable + !ListItem.IsPlaying">status_done</value>
 		<value>badge_foreground</value>
 	</variable>
