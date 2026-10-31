@@ -58,6 +58,16 @@
 			<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
 			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + [String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites) | [String.IsEqual(Window(home).Property(Home.Section),search) + String.IsEmpty(Control.GetLabel(16999).index(1))]]</visible>
 		</control>
+		<!-- 兜底：随机剧照取不到时垫 primary.jpg。窗口底色是 FF000000，
+		     不垫这层就是纯黑（用户 2026-10-31 反馈「有时候是黑底」）。
+		     no_fanart 打开时必须一起隐藏 —— 兜底不能绕过这个设置。 -->
+		<control type="image">
+			<depth>DepthBackground</depth>
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
+			<texture colordiffuse="FFFFFFFF">special://skin/extras/backgrounds/primary.jpg</texture>
+			<visible>[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + [String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasAudio | Player.HasGame] + [String.IsEqual(Window(home).Property(Home.Section),favorites) | !Window.IsVisible(movieinformation)]</visible>
+		</control>
 		<!-- Files and Favorites use the same dimmed shared backdrop. -->
 		<control type="image">
 			<depth>DepthBackground</depth>
