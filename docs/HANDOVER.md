@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.4.0）
+# 交接说明（Mistuary 1.5.0）
 
 > ⚠️ **最新状态看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
 > 那份是 2026-10-30 夜的短期交接（今天改了什么、还剩哪三件事、分辨率约束、
@@ -48,9 +48,10 @@
 
 ## 1. 一句话现状
 
-`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.4.0**
-（2026-10-30，本次发版）。功能完整、静态自检全绿；工作区状态以 `git status` 为准（见 §8.1.2）。
-`Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **84 项全过**。
+`main` 分支上的通用版皮肤，**Kodi 21 及以上**可用，版本 **1.5.0（本次发版）**。
+原计划单独发布的 1.4.1（tag 已撤回）与后续修复全部合并进 1.5.0。
+工作区状态以 `git status` 为准（见 §8.1.2）。
+`Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **85 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -183,7 +184,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.2.2 已发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
+| `script.mistuary.helper`（可选，0.3.2 已发布） | 服务端搜索、豆瓣评分 | 回退本地 XSP / 不显示豆瓣胶囊 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
@@ -646,39 +647,37 @@ Kodi 20+ 的视频信息标签支持**多个带类型的评分**：
 
 1. **电影和剧集的 TMDB 类型名不一样** —— 电影写 `themoviedb`、剧集写 `tmdb`（两个刮削器各写各的）。
    只读其中一个会漏一半。皮肤两个都读，标签直接拼接（同一条目只会命中一个）。
-2. Emby **不写** `imdb` / `tmdb` / `metacritic` 类型，`UserRating` 也不写
-   （个人评分圆标显示的是 Kodi 自己的 `SetRating` 星标，与影评人分无关）。
+2. Emby 默认只写 `default`；但 E4K 打开「Set imdb as default rating provider」
+   （默认开）时，会把 `CommunityRating` **补写成 `imdb` 类型**，`Rating(imdb)` 恒等于
+   `Rating`。所以类型字段不能拿来判断"用户想看哪个来源"。
 
 Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:91-92`，
 `videos.py` / `episode.py` / `series.py` / `musicvideo.py` 同构，都只有 `default` 一行
 （`videos.py` / `movies.py` 多一行 `tomatometerallcritics`）。
 
-因此 Emby 库下：电影最多 2 颗胶囊（默认 + 烂番茄），剧集/单集只有 1 颗。
+Emby 库主评分固定 1 颗；次评分在详情页最多 1 颗（豆瓣或烂番茄）。
 
-**豆瓣覆盖**：StrmAssistant（神医助手）的「豆瓣评分覆盖」会把 Emby 的 `CommunityRating`
-改写成豆瓣分，同步到 Kodi 后仍是 `default` 类型——Kodi 侧**没有任何来源标志**，
-无法自动判断是豆瓣还是 IMDb。皮肤用设置 707「主评分来源」（自动 / TMDb / IMDb / 豆瓣）
-只切换第一颗胶囊的图标，数值都读 `ListItem.Rating`。
+**评分行的规则**（2026-10-31 定稿，随 1.5.0）：
 
-**手选优先，自动识别只在「自动」档生效**（2026-10-28 修正）。原因：Emby 插件
-（`plugin.service.emby-next-gen` 的 `Set imdb as default rating provider`，默认开）
-会把 `CommunityRating` 补写成 **imdb 类型**的评分，`Rating(imdb)` 恒等于 `Rating`。
-自动识别若排在前面，有类型字段的条目永远命中 IMDb，设置 707 就完全失效（实测现象：
-怎么切都显示 IMDb）。用户指定来源后只按档位画图标；「自动」= 三档手动设置全假，
-随时可以切回去。
-
-**一行最多两个胶囊**：主评分是同一个字段、由 707 四档互斥决定，所以"最多两个"
-退化成一条规则——**烂番茄给 TMDB 让位**（TMDB 有值时烂番茄隐藏）。
-优先顺序：豆瓣 > IMDb > TMDb；「自动」时按 TMDb → Trakt → IMDb 识别，最后默认 TMDb。
+- **主评分四档互斥、手选优先**（设置 707）：TMDb / IMDb / 豆瓣（神医助手覆盖）/
+  自动（仅本地刮削）。数值永远读 `ListItem.Rating`（Emby 的 `CommunityRating`），
+  图标按所选档位画；只有选「自动」才比对 `Rating(tmdb/trakt/imdb)`。TMDb 是默认档：
+  没选自动 / IMDb / 豆瓣时按 TMDb 画。自动识别不能排在设置前面——E4K 补写的 imdb
+  类型会让它永久命中 IMDb（2026-10-28 实测：怎么切都显示 IMDb）。
+- **次评分只保留一条**：详情页有插件豆瓣分 → 豆瓣；否则 → 烂番茄
+  （`tomatometerallcritics`，只有电影）。**没有 TMDB 次评分**；列表 / 首页不显示豆瓣。
+  豆瓣分由 `script.mistuary.helper` 0.3.x 提供：优先读 Emby `/Douban/RatingsByImdb`
+  （与神医助手同源），失败回退豆瓣公开接口，写 `Window.Property(Mistuary.Rating.*)`。
 
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。
 
 **TMDbHelper 的豆瓣分进不来**：它写在 list item 的 infoproperties（`douban_rating`），
 而且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
-皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到。接入方式（`script.mistuary.helper`
-调豆瓣双通道、写 `Window.Property(Mistuary.Rating.*)`）见
-[`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；实现细节见插件仓库 `D://下载//AI//script.mistuary.helper//docs//contract.md`。
+皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到；本项目改用
+`script.mistuary.helper`（摘要见 [`helper-plugin-plan.md`](helper-plugin-plan.md)，
+实现细节见插件仓库 `docs/contract.md`）。helper 0.3.x 的库同步（写 `rating_type=douban`）
+当前**没有被皮肤消费**——列表 / 首页不显示豆瓣次评分。
 
 ### 5.8 音乐播放页：歌词 / 评分 / 背景
 
@@ -863,8 +862,8 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 > ⚠️ **`$VAR` 在 `<textcolor>` 里不生效**（整段变透明），这是踩过的坑。
 > 所以**数字不能跟着变色**，只能靠环区分来源。
 
-**烂番茄要不要排进优先级**：待定。它是次评分，排进去会盖掉 IMDb 主分，
-建议**只作为颜色 token 备用**，等用户明确要求再说。
+**烂番茄的定位**（2026-10-31 定稿）：只做次评分，不进主评分优先级。
+详情页有插件豆瓣分时让位给豆瓣，否则显示烂番茄；主评分四档见 §5.7。
 
 ---
 
@@ -987,7 +986,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 已发布 0.2.2，本次皮肤发版不包含它的代码。
+> 另一个仓库 `script.mistuary.helper` 已发布 0.3.2，本次皮肤发版不包含它的代码。
 
 ### 8.2 发版记录
 
@@ -999,11 +998,14 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.3.0** | 黑胶模式 + 音乐信息页重做 + 电源菜单 + 详情页背景兜底；Kodi 21 标签/导航修复 |
 | **v1.3.1** | 详情页文字阴影（亮背景可读）+ 海报墙间距 16→24 + 卡片信息重排（评分右上/状态左下/集数右下）+ 已看完绿色 |
 | **v1.4.0** | 详情页豆瓣评分（可选 helper 0.2.0+）+ 次评分来源四档 + 服务端搜索可用 + 豆瓣查询修复；已知：搜索无封面、搜索页无背景兜底 |
+| **v1.5.0** | 状态图标区分未看/部分/看完 + 主评分四档定稿（TMDb/IMDb/豆瓣/自动）+ 移除次评分设置 + 技术标识/评分行条件修复 + 2160 百分比适配 + 搜索背景重排。**含原 1.4.1 全部改动，1.4.1 tag 已撤回** |
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
 > 后来 `5020f1f` 把版本号退回 1.1.1、再重新升到 1.2.0 才发出去。
 > **教训**：CI 失败后要重发**同版本**，走 `workflow_dispatch` + `force=true`。
+> **1.4.1**：已撤回 tag（远端删除、本地同步删除）；其全部改动并入 **1.5.0** 一起发布，
+> 不需要 force，也不存在「Release 已存在」的闸门问题。
 
 ### 8.3 最近两天做过什么（免得重做）
 
@@ -1016,7 +1018,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，已发布 `v0.2.0` / `v0.2.1` / `v0.2.2`（82 项单测）：服务端搜索 + 豆瓣评分。皮肤侧 M1b（`a6b9f59`）与 M2（`79b7eba`）已接；剩 M1c 实机验收。M1d / M3 暂缓或不做 |
+| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，已发布到 `v0.3.2`（91 项单测）：服务端搜索 + 豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 库同步（默认关闭）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d / M3 暂缓或不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1027,11 +1029,12 @@ git status -sb              # 与远端的关系 + 工作区
 | 音乐信息页 v4 | 全幅两栏、452 封面、内置 7/8/10/12 隐藏 + SendClick（§5.8.1） |
 | 详情页背景兜底 | Video/Music/Addon 用 `primary_background_info`；Addon 无 fanart `sc_2`（§5.8.2） |
 
-### 8.4 现在可以直接接着做的一件事
+### 8.4 现在可以直接接着做的事
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **M1c 实机验收（搜索 + 播放）** | `docs/helper-plugin-plan.md` §5、插件仓库 `docs/testing.md` §3 | 插件已启用；逐项跑降级矩阵，确认 `mode=play` 能播 |
+| 1 | **发 1.5.0**（本次） | `changelog.txt` 1.5.0 段、§6 发版流程 | `addon.xml` 已是 1.5.0 → commit + push，CI 自动打包建 Release |
+| 2 | M1d 搜索补齐（演员 / 类型） | 插件仓库 `docs/roadmap.md` §M1d | 用户确认需求后再开工 |
 
 > **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
 > 外部校验报告的 P0 / P1 / P2 已在 1.3.0 清完，`report-triage-2026-10-29.md`
@@ -1140,36 +1143,27 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。
   **但同步实机不用问**：改完自己跑 `sync_to_kodi.py --loose`（§0 第 4 条）。
 
-### 8.9 helper：1.4.0 接入状态
+### 8.9 helper：接入状态（2026-10-31）
 
-- 插件 `script.mistuary.helper` 已发布 **0.2.2**（82 项单测）：服务端搜索 + 详情页豆瓣评分。
-- 皮肤侧 M1b 搜索（`a6b9f59`）与 M2 豆瓣（`79b7eba`）已接在 `main`；1.4.0 仍保持**可选安装**，
-  `addon.xml` 不写 `<import>`，只用 `System.AddonIsEnabled` 软探测。
-- **剩余 M1c**：五组降级矩阵、搜索结果、翻页、已看标记、播放地址。
-- 0.2.1 修了 Kodi 追加 `resume:false` 污染搜索词；0.2.2 修了 action 模式 `GetDirectory failed`。
-- **M1d 演员/导演/类型**暂缓；**M3 代表集**不做；**M4 行级增强**可选不排期。
+- 插件 `script.mistuary.helper` 已发布 **0.3.2**（91 项单测）：服务端搜索 +
+  详情页豆瓣评分 + 豆瓣分库同步（默认关闭）。
+- 0.3.x 起豆瓣分优先读 StrmAssistant 的 Emby `/Douban/RatingsByImdb`，失败才回退
+  豆瓣公开接口；窗口属性新增 `Mistuary.Rating.Source`（emby / douban）。
+- 皮肤侧 M1b 搜索与 M2 豆瓣已接；**M1c 实机验收已完成**（含播放）。
+- 1.5.0 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
+  插件写的 `rating_type=douban` 暂无消费方。
+- **M1d 演员/导演/类型**暂缓；**M3 代表集**不做（皮肤用两级探针自行解决）；
+  **M4 行级增强**可选不排期。
 - 装/卸/启用插件后要**重载皮肤**；卸载后的回退是下一帧生效。
 - 规划与契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)；实现文档在
   `D:\下载\AI\script.mistuary.helper\docs\`。
 
-### 8.10 已知问题：搜索封面 / 背景兜底（2026-10-30）
+### 8.10 已知问题：搜索封面 / 背景兜底（已解决）
 
-**1. 服务端搜索结果没有封面**
+- **搜索封面**：插件 `c4ac966`（0.3.0+）让 `image_tag` 回退读 `ImageTags.Primary`，
+  并返回 backdrop；实机已确认有封面。
+- **搜索背景兜底**：皮肤 `baae9ef` 重排了 `NaraSearchBackground`（百分比 + 渐变 +
+  随机剧照 / 结果剧照两级）；无 fanart 时不再纯黑。
+- **播放地址**：`mode=play` 已随 M1c 实机通过。
 
-- 现象：搜索结果卡片只有默认图标。
-- 根因：Emby `/Items?searchTerm=` 返回 `ImageTags: {"Primary": "..."}`，没有
-  `PrimaryImageTag`；插件 `lib/emby.py` 的 `normalize()` 只读 `PrimaryImageTag`，
-  所以 `image_tag` 为空，`render_search()` 不设 poster。
-- 修复方向：`image_tag` 回退读 `ImageTags.Primary`，同时改 `tests/test_emby.py`
-  夹具；修完发插件 0.2.3。
-
-**2. 搜索页背景没有兜底图**
-
-- 现象：非空查询且条目没有 fanart 时，搜索页只剩纯黑。
-- 根因：`Includes_Search.xml` 的 `NaraSearchBackground` 先画全屏 `colors/black.png`，
-  再画 `16590` fanart；`16590` 的 visible 要求 `!String.IsEmpty(...Art(fanart))`。
-  没有 fanart 时两层都不显示，`DefaultBackground` 的 `primary.jpg` 被黑层盖住。
-- 修复方向：在 `NaraSearchBackground` 加一张 fanart 为空时可见的 fallback 图
-  （`special://skin/extras/backgrounds/primary.jpg` 或专用背景），或给 `16590` 外层补 fallback。
-
-**3. 播放地址未验证**：`play_url()` 走 Emby `mode=play`，尚未实机点播。
+历史细节保留在 `docs/handover-2026-10-30.md` 与插件仓库 `docs/roadmap.md`。

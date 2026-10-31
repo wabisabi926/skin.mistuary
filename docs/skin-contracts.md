@@ -69,23 +69,39 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
-| `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:81`（主评分来源四档） | `SelectBool` |
+| `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:245`（主评分来源四档） | `SelectBool` |
+| `helper_search_off` | `SkinSettings.xml:272`（媒体分类，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
-**主评分来源四档互斥，读取端 `NaraOnlineRatingsRow` 里手选优先**：只要用户指定了来源
-（`douban_rating` / `rating_src_imdb` / `rating_src_tmdb` 任一为真），就只按档位画图标；
-选「自动」（`rating_src_auto`，三档手动全假，等同于从未设置）时才比对
-`Rating(tmdb/trakt/imdb)` 自动识别，最后默认 TMDb。
-**不要让自动识别排在设置前面**：Emby 插件（`Set imdb as default rating provider`，默认开）
-会把 `CommunityRating` 补写成 imdb 类型，届时有类型字段的条目永远命中 IMDb，设置就失效了。
+**主评分来源四档互斥**（`NaraOnlineRatingsRow`，2026-10-31 定稿）：
+TMDb / IMDb / 豆瓣（神医助手覆盖）/ 自动（仅本地刮削）。
+数值永远读 `ListItem.Rating`，图标按所选档位画；只有 `rating_src_auto` 才比对
+`Rating(tmdb/trakt/imdb)`。**TMDb 是默认档**：没选自动 / IMDb / 豆瓣时按 TMDb 画。
+**不要让自动识别排在设置前面**：E4K 打开「Set imdb as default rating provider」会把
+`CommunityRating` 补写成 imdb 类型，届时类型字段恒等于默认分，设置就失效了。
+次评分**没有设置项**：详情页有插件豆瓣分就先显示豆瓣，否则显示烂番茄（`tomatometerallcritics`）。
 
-`circle_none`、`OriginalTitleFormat_Default` 和 `rating_src_auto` 是 `SelectBool` 里的
-"恢复默认"选项：选中它等于把同组其它开关全置假，**自己永远不会被读取**（读取端只看
-其余三档是否为假），所以它们在 `audit_skin.py` 的"有写无读"统计里被列入白名单（`RESET_ONLY_SETTINGS`）。
+`circle_none`、`OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项，
+`rating_src_tmdb` 是"默认档位"（变量用无条件 `<value>` 兜底），它们都不会出现在
+`Skin.HasSetting(...)` 里，因此分别列入 `audit_skin.py` 的 `RESET_ONLY_SETTINGS` 与
+`DEFAULT_ONLY_SETTINGS` 白名单。
 
-现状（`python tools/audit_skin.py` 输出）：**88 读 / 91 写，有读无写 0、有写无读 0**。
+现状（`python tools/audit_skin.py` 输出）：**90 读 / 93 写，有读无写 0、有写无读 0**。
+
+### helper 软探测契约（`script.mistuary.helper`）
+
+- 前置条件：`System.AddonIsEnabled(script.mistuary.helper)` **且**
+  `System.AddonIsEnabled(plugin.service.emby-next-gen)`（表达式 `helper_search_ready`）。
+- **搜索**：容器内容切到
+  `plugin://script.mistuary.helper/?mode=search&type=movies|shows&query=<原始词>`
+  （`query` 必须是最后一个参数）；开关 714 写 `helper_search_off`（反向，默认开），
+  插件或 Emby 不可用时整行隐藏，容器回退本地 XSP。
+- **详情页豆瓣**：`DialogVideoInfo` 的 `onload` 调 `action=rating`；皮肤只读
+  `Window(home).Property(Mistuary.Rating.Douban / .Votes / .Status / .FetchedAt)`，
+  `Status != ok` 时隐藏胶囊。列表 / 首页不读这些属性。
+- 权威契约在插件仓库 `docs/contract.md`；改调用方式先改那边。
 
 ---
 

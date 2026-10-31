@@ -7,12 +7,12 @@
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
-| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b/M2 已接，剩 M1c 实机验收。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
+| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b/M2/M1c 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
 | [`vinyl-helper-plan.md`](vinyl-helper-plan.md) | 做音乐播放页的黑胶唱片效果、或开始搭 `script.mistuary.helper` 前。含动画可行性核实、素材清单、骨架文件职责、暂停回弹等硬伤 |
-| [`pending-work-plan.md`](pending-work-plan.md) | **还剩什么没做**。M1c 实机验收、搜索封面/背景兜底、1.4.0 发版；Kodi 21 实机验证已放弃（见 HANDOVER §8.7） |
+| [`pending-work-plan.md`](pending-work-plan.md) | **还剩什么没做**。只剩发 1.5.0（本次）与 M1d 是否开工；Kodi 21 实机验证已放弃（见 HANDOVER §8.7） |
 | [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md) | **外部校验报告怎么读**。456 errors / 448 warnings 的分诊：哪些是 CRLF 假阳性、哪些是 Kodi 22 双轨、哪些是真 bug；含修复批次、Kodi 21 回退点和待决策项 |
 | [`repo-layout-plan.md`](repo-layout-plan.md) | **历史资料**。2026-10-27 把 `extras/` 归位成素材目录、构建工具移到 `tools/` 的整改记录 |
 
@@ -24,7 +24,7 @@
 `tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
-`script.mistuary.helper`（可选，0.2.2 已发布），都是"装了才启用"的可选增强，没有硬依赖。
+`script.mistuary.helper`（可选，0.3.2 已发布），都是"装了才启用"的可选增强，没有硬依赖。
 helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；权威文档在插件仓库 `docs/`。
 
 > **已知问题（2026-10-30）**：服务端搜索结果暂不显示封面；条目没有 fanart 时搜索页背景
