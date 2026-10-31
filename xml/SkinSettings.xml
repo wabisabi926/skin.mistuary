@@ -22,14 +22,27 @@
 				<onup>700</onup>
 				<ondown>700</ondown>
 				<visible>Container(9000).HasFocus(1)</visible>
-				<control type="radiobutton" id="611">
+<control type="radiobutton" id="6110">
 					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[342]</label>
+					<label>$LOCALIZE[137]</label>
 					<include content="NaraSettingsRow">
 					<param name="text" value="text_primary" />
 				</include>
-					<selected>!Skin.HasSetting(HomeMenuNoMovieButton)</selected>
-					<onclick>Skin.ToggleSetting(HomeMenuNoMovieButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoSearchButton)</selected>
+					<onclick>Skin.ToggleSetting(HomeMenuNoSearchButton)</onclick>
+				</control>
+<control type="button" id="611">
+					<textoffsetx>28</textoffsetx>
+					<textoffsety>0</textoffsety>
+					<height>76</height>
+					<font>font26</font>
+					<aligny>center</aligny>
+					<textcolor>text_primary</textcolor>
+					<disabledcolor>text_primary</disabledcolor>
+					<label>$LOCALIZE[342]</label>
+					<texturefocus />
+					<texturenofocus />
+					<enable>false</enable>
 				</control>
 <control type="button" id="6111">
 					<textcolor>text_primary</textcolor>
@@ -40,7 +53,6 @@
 					<onclick>SetProperty(settingsdialog_header,$LOCALIZE[31040] - $LOCALIZE[342],home)</onclick>
 					<onclick>SetProperty(settingsdialog_content,moviewidgets,home)</onclick>
 					<onclick>ActivateWindow(1101)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)</enable>
 				</control>
 <control type="button" id="627">
 					<textcolor>text_primary</textcolor>
@@ -50,16 +62,19 @@
 				</include>
 					<onclick>Skin.SelectBool(31176, 37015|movieset_onclick_browse, 13362|movieset_onclick_continuewatching, 12021|movieset_onclick_playfrombeginning, 10008|movieset_onclick_playnext, 13347|movieset_onclick_queue)</onclick>
 					<label2>$VAR[MovieSetOnClickActionLabel2Var]</label2>
-					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)</enable>
 				</control>
-<control type="radiobutton" id="612">
+<control type="button" id="612">
+					<textoffsetx>28</textoffsetx>
+					<textoffsety>0</textoffsety>
+					<height>76</height>
+					<font>font26</font>
+					<aligny>center</aligny>
 					<textcolor>text_primary</textcolor>
+					<disabledcolor>text_primary</disabledcolor>
 					<label>$LOCALIZE[20343]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<selected>!Skin.HasSetting(HomeMenuNoTVShowButton)</selected>
-					<onclick>Skin.ToggleSetting(HomeMenuNoTVShowButton)</onclick>
+					<texturefocus />
+					<texturenofocus />
+					<enable>false</enable>
 				</control>
 <control type="button" id="6121">
 					<textcolor>text_primary</textcolor>
@@ -70,7 +85,6 @@
 					<onclick>SetProperty(settingsdialog_header,$LOCALIZE[31040] - $LOCALIZE[20343],home)</onclick>
 					<onclick>SetProperty(settingsdialog_content,tvshowwidgets,home)</onclick>
 					<onclick>ActivateWindow(1101)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)</enable>
 				</control>
 <control type="button" id="626">
 					<textcolor>text_primary</textcolor>
@@ -80,7 +94,6 @@
 				</include>
 					<onclick>Skin.SelectBool(31175, 37015|tvshow_onclick_browse, 13362|tvshow_onclick_continuewatching, 12021|tvshow_onclick_playfrombeginning, 10008|tvshow_onclick_playnext, 13347|tvshow_onclick_queue)</onclick>
 					<label2>$VAR[TVShowOnClickActionLabel2Var]</label2>
-					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)</enable>
 				</control>
 <control type="radiobutton" id="613">
 					<textcolor>text_primary</textcolor>
@@ -131,6 +144,15 @@
 					<onclick>SetProperty(settingsdialog_content,tvwidgets,home)</onclick>
 					<onclick>ActivateWindow(1101)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoTVButton)</enable>
+				</control>
+<control type="radiobutton" id="619">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[10134]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<selected>!Skin.HasSetting(HomeMenuNoFavoritesButton)</selected>
+					<onclick>Skin.ToggleSetting(HomeMenuNoFavoritesButton)</onclick>
 				</control>
 				<top>161</top>
 				<width>1315</width>
