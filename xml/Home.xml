@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol>9000</defaultcontrol>
-	<!-- Apply the Estuary N home-menu defaults once. The marker prevents later
-	     home visits from overriding a user's explicit menu choices. -->
+	<!-- 首次进入首页时应用默认导航：只留 搜索 / 电影 / 电视剧 / 文件 四个。
+	     marker 名沿用 NaraHomeMenuDefaultsMusicTVOff（旧名，改名会让老用户的
+	     手动选择被重置），它表示「默认值已经应用过」，之后不再覆盖用户的选择。 -->
 	<onload condition="!Skin.HasSetting(NaraHomeMenuDefaultsMusicTVOff)">Skin.SetBool(HomeMenuNoMusicButton)</onload>
 	<onload condition="!Skin.HasSetting(NaraHomeMenuDefaultsMusicTVOff)">Skin.SetBool(HomeMenuNoTVButton)</onload>
+	<onload condition="!Skin.HasSetting(NaraHomeMenuDefaultsMusicTVOff)">Skin.SetBool(HomeMenuNoFavoritesButton)</onload>
 	<onload condition="!Skin.HasSetting(NaraHomeMenuDefaultsMusicTVOff)">Skin.SetBool(NaraHomeMenuDefaultsMusicTVOff)</onload>
 	<!-- Only choose the initial section once. Returning from a child window must
 	     leave Kodi's remembered home control intact. -->
-	<onload condition="String.IsEmpty(Window(home).Property(Home.Section)) + !Skin.HasSetting(HomeMenuNoMovieButton)">SetFocus(9012)</onload>
-	<onload condition="String.IsEmpty(Window(home).Property(Home.Section)) + Skin.HasSetting(HomeMenuNoMovieButton)">SetFocus(9011)</onload>
+	<onload condition="String.IsEmpty(Window(home).Property(Home.Section))">SetFocus(9012)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),15010)">SetFocus(15010)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),9017)">SetFocus(9017)</onload>
 	<onload>ClearProperty(Home.FileReturnControl,home)</onload>
@@ -1175,79 +1176,26 @@
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
 				<!-- Auto-width buttons use their rendered label widths, so optional
 				     sections collapse without any width or position bookkeeping. -->
-				<!-- 导航条背景。宽度 = 当前可见标签的总宽，四种组合 × 中英文各一条，互斥显示。
-				     只有「音乐」「电视直播」两个标签可隐藏（HomeMenuNoMusicButton / HomeMenuNoTVButton），
-				     所以组合只有 4 种，不需要按 2^7 穷举。
-				     实测（font_home_tabs 26px + textoffsetx 30×2，itemgap 0），
-				     文案取自 Kodi 语言包：中文 搜索/电影/电视剧/音乐/电视/收藏夹/文件，
-				     英文 Search/Movies/TV shows/Music/TV/Favourites/File：
-				       中文 5 个 612 / +音乐 724 / +电视 724 / 都有 836
-				       英文 5 个 770 / +音乐 903 / +电视 865 / 都有 998
-				     **改标签文字或字号后必须重测这 8 个数字。**
-				     定位用 centerleft 50%：父 group 已显式给 width 100%，
-				     所以任何分辨率（1920 / 2160 / 2560…）都会自动居中，
-				     不要再改回写死的 left = (1920 - 宽度) / 2。
-				     导航条是常驻元素，不是浮窗：用卡片档的轻玻璃（40%），
-				     跟浮窗档（78%）走会变成一条死黑的条。 -->
-				<!-- 5 个（隐藏音乐 + 电视）：中文 612 / 英文 770 -->
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>612</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>770</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<!-- 6 个（+音乐）：中文 724 / 英文 903 -->
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>724</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>903</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<!-- 6 个（+电视）：中文 724 / 英文 865 -->
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>724</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<control type="image">
-					<centerleft>50%</centerleft>
-					<top>20</top>
-					<width>865</width>
-					<height>60</height>
-					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
-				</control>
-				<!-- 7 个（都有）：中文 836 / 英文 998 -->
+				<!-- BEGIN generated: home nav plates (tools/gen_home_nav_plates.py) -->
+				<!-- 导航条背景。宽度 = 当前可见标签的总宽。
+				     固定显示：电影 / 电视剧 / 文件；可隐藏：搜索 / 音乐 / 电视 / 收藏夹 → 16 种组合 × 中英文 = 32 条。
+				     每个标签的宽度 = 文本宽 + textoffsetx×2(60)，实测（font_home_tabs 26px）：
+				       中文 搜索112 电影112 电视剧138 音乐112 电视112 收藏夹138 文件112
+				       英文 Search147 Movies149 TV shows182 Music133 TV95 Favourites190 File102
+				     中文 5 个 612 / +音乐 724 / +电视 724 / 都有 836；英文 770 / 903 / 865 / 998。
+				     **这一段由 tools/gen_home_nav_plates.py 生成，不要手改**；
+				     改标签文字、字号或增删开关后重新跑它（加 check 参数可校验）。
+				     电影 / 电视剧 / 文件 固定显示（2026-10-31 用户决定），所以组合只有 4 个开关。
+				     以后想让某个标签也能隐藏：把它从 ALWAYS 挪进 TOGGLE 重跑本脚本即可。
+				     定位用 centerleft 50%：父 group 已显式给 width 100%，任何分辨率都自动居中。 -->
+				<!-- 全部显示 -->
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
 					<width>836</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1255,8 +1203,264 @@
 					<width>998</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
 				</control>
+				<!-- 电视 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>724</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>903</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 音乐 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>724</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>865</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>724</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>851</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>698</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>808</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 音乐、电视 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>612</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>770</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、电视 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>612</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>756</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、音乐 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>612</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>718</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 电视、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>586</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>713</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 音乐、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>586</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>675</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>586</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>661</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、音乐、电视 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>500</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>623</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 音乐、电视、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>474</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>580</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、电视、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>474</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>566</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、音乐、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>474</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>528</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- 搜索、音乐、电视、收藏夹 -->
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>362</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<control type="image">
+					<centerleft>50%</centerleft>
+					<top>20</top>
+					<width>433</width>
+					<height>60</height>
+					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+				</control>
+				<!-- END generated: home nav plates -->
 				<control type="grouplist" id="9000">
 					<left>0</left>
 					<top>20</top>
@@ -1293,6 +1497,7 @@
 						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</ondown>
 						<ondown>16992</ondown>
 						<onclick>SetFocus(16992)</onclick>
+						<visible>!Skin.HasSetting(HomeMenuNoSearchButton)</visible>
 					</control>
 					<control type="togglebutton" id="9012">
 						<width min="80" max="240">auto</width>
@@ -1316,7 +1521,6 @@
 						<onclick condition="Library.HasContent(movies) + Skin.HasSetting(home_no_movies_categories_widget) + System.GetBool(myvideos.flatten)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
 						<onclick condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_categories_widget)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
 						<onclick condition="!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
-						<visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
 					</control>
 					<control type="togglebutton" id="9013">
 						<width min="80" max="240">auto</width>
@@ -1340,7 +1544,6 @@
 						<onclick condition="Library.HasContent(tvshows) + Skin.HasSetting(home_no_tvshows_categories_widget) + System.GetBool(myvideos.flatten)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</onclick>
 						<onclick condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_categories_widget)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</onclick>
 						<onclick condition="!Library.HasContent(tvshows)">ActivateWindow(Videos,sources://video/,return)</onclick>
-						<visible>!Skin.HasSetting(HomeMenuNoTVShowButton)</visible>
 					</control>
 					<control type="togglebutton" id="9014">
 						<width min="80" max="240">auto</width>
@@ -1403,6 +1606,7 @@
 						<onup>noop</onup>
 						<ondown>14000</ondown>
 						<onclick>noop</onclick>
+						<visible>!Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
 					</control>
 					<control type="togglebutton" id="9017">
 						<width min="80" max="240">auto</width>
