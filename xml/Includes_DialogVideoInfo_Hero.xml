@@ -104,23 +104,23 @@
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + Skin.HasSetting(rating_src_tmdb)" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_auto)" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <!-- 主评分 · 三档都没选时才自动判断（本地刮削库类型字段有效；E4K 库会误判成 IMDb，不建议用自动）。 -->
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + Skin.HasSetting(rating_src_auto) + !String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(trakt)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + Skin.HasSetting(rating_src_auto) + !String.IsEmpty($PARAM[item_prefix].Rating(trakt)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
           <param name="icon" value="flags/ratings/trakt.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(imdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + Skin.HasSetting(rating_src_auto) + !String.IsEmpty($PARAM[item_prefix].Rating(imdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt))" />
           <param name="icon" value="flags/ratings/imdb.png" />
           <param name="icon_width" value="46" />
           <param name="icon_height" value="23" />
@@ -131,7 +131,7 @@
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + Skin.HasSetting(rating_src_auto) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb))" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>

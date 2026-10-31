@@ -1227,8 +1227,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
 
 msgctxt "#31740"
-msgid "A picked source is shown as-is; with Auto, the item's rating type decides: Kodi-scraped items carry TMDb/IMDb types, while Emby items are typed by the add-on (usually IMDb). Pick Douban when the helper add-on's Douban override is on."
-msgstr "A picked source is shown as-is; with Auto, the item's rating type decides: Kodi-scraped items carry TMDb/IMDb types, while Emby items are typed by the add-on (usually IMDb). Pick Douban when the helper add-on's Douban override is on."
+msgid "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
+msgstr "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
@@ -1391,22 +1391,18 @@ msgid "Use Emby server search"
 msgstr "Use Emby server search"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
-msgstr "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
-
-
-msgctxt "#31782"
-msgid "Secondary rating source"
-msgstr "Secondary rating source"
-
-msgctxt "#31783"
-msgid "Rotten Tomatoes"
-msgstr "Rotten Tomatoes"
-
-msgctxt "#31784"
-msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
-msgstr "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
+msgid "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
+msgstr "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
 
 msgctxt "#31785"
 msgid "Enabled"
 msgstr "Enabled"
+
+msgctxt "#31790"
+msgid "Douban (StrmAssistant override)"
+msgstr "Douban (StrmAssistant override)"
+
+msgctxt "#31791"
+msgid "Auto (local scraping only)"
+msgstr "Auto (local scraping only)"
+

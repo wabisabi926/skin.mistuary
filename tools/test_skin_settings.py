@@ -74,10 +74,11 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
 
     def test_reset_only_options_are_declared(self):
         """恢复默认选项必须留在白名单里，否则会一直被报成有写无读。"""
-        self.assertEqual(
-            RESET_ONLY_SETTINGS,
-            {"circle_none", "OriginalTitleFormat_Default", "rating_src_auto"},
-        )
+        self.assertEqual(RESET_ONLY_SETTINGS, {"circle_none", "OriginalTitleFormat_Default"})
+
+    def test_default_only_options_are_declared(self):
+        """默认档位没有显式读取，必须留在 DEFAULT_ONLY 白名单里。"""
+        self.assertEqual(DEFAULT_ONLY_SETTINGS, {"rating_src_tmdb"})
 
 
 class RepoSkinSettingsTest(unittest.TestCase):
@@ -109,19 +110,14 @@ class RepoSkinSettingsTest(unittest.TestCase):
 
 
 class RatingSourcePrecedenceTest(unittest.TestCase):
-    """主评分来源：手选档位必须压过类型自动识别。
+    """主评分来源：四档（TMDb / IMDb / 豆瓣 / 自动）显式互斥。
 
-    回归理由（2026-10-28 实测）：Emby 插件默认把 `CommunityRating` 补写成 imdb 类型
-    （`emby-next-gen` 的 `Set imdb as default rating provider` 默认开），于是
-    `Rating(imdb)` 恒等于 `Rating`。自动识别只要排在设置前面，有类型字段的条目就永远
-    命中 IMDb，设置 707「主评分来源」怎么切都没反应。
+    回归理由：Emby 插件会把 `CommunityRating` 补写成 imdb 类型（`Rating(imdb)`
+    恒等于 `Rating`），类型字段不能当成「用户想显示什么」。所以手选三档只按开关
+    画图标，自动识别必须显式选「自动」才跑；TMDb 档同时是「都没选」时的兜底。
     """
 
-    GUARDS = (
-        "!Skin.HasSetting(douban_rating)",
-        "!Skin.HasSetting(rating_src_imdb)",
-        "!Skin.HasSetting(rating_src_tmdb)",
-    )
+    AUTO_GUARD = "Skin.HasSetting(rating_src_auto)"
 
     @classmethod
     def setUpClass(cls):
@@ -140,7 +136,11 @@ class RatingSourcePrecedenceTest(unittest.TestCase):
     def _split(self):
         manual, auto = [], []
         for i, p in enumerate(self.items):
-            (auto if all(g in p["visible"] for g in self.GUARDS) else manual).append((i, p))
+            visible = p["visible"]
+            # 手动 TMDb 兜底写的是 !Skin.HasSetting(rating_src_auto)，
+            # 不能只按子串判断，否则会被误分进自动组。
+            is_auto = self.AUTO_GUARD in visible and f"!{self.AUTO_GUARD}" not in visible
+            (auto if is_auto else manual).append((i, p))
         return manual, auto
 
     def test_manual_branches_cover_the_three_sources(self):
@@ -156,13 +156,13 @@ class RatingSourcePrecedenceTest(unittest.TestCase):
             for typed in ("Rating(tmdb)", "Rating(trakt)", "Rating(imdb)"):
                 self.assertNotIn(typed, p["visible"], f"手选分支不能依赖 {typed}")
 
-    def test_auto_detect_requires_no_manual_choice(self):
+    def test_auto_branches_require_explicit_auto(self):
         _, auto = self._split()
         # TMDb / Trakt / IMDb 三条 + 都没匹配上的 TMDb 兜底
         self.assertEqual(len(auto), 4)
         for _, p in auto:
-            for guard in self.GUARDS:
-                self.assertIn(guard, p["visible"])
+            self.assertIn(self.AUTO_GUARD, p["visible"])
+            self.assertNotIn(f"!{self.AUTO_GUARD}", p["visible"])
 
     def test_manual_branches_render_before_auto_detect(self):
         manual, auto = self._split()
@@ -172,7 +172,7 @@ class RatingSourcePrecedenceTest(unittest.TestCase):
     def test_auto_option_can_clear_manual_choice(self):
         """设置 707 必须留一档「自动」，否则选过档位就再也回不到自动识别。"""
         settings = (XML_DIR / "SkinSettings.xml").read_text(encoding="utf-8")
-        self.assertIn("31767|rating_src_auto", settings)
+        self.assertIn("|rating_src_auto", settings)
 
 
 class VideoInfoAutoScrollTest(unittest.TestCase):

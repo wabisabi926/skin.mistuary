@@ -1004,8 +1004,8 @@ msgid "Shows your own rating by default. Pick Rating for source ratings, or None
 msgstr "主评分位默认显示个人评分；可选来源评分或不显示。"
 
 msgctxt "#31740"
-msgid "A picked source is shown as-is; with Auto, the item's rating type decides: Kodi-scraped items carry TMDb/IMDb types, while Emby items are typed by the add-on (usually IMDb). Pick Douban when the helper add-on's Douban override is on."
-msgstr "指定来源后按其显示；选“自动”时按评分类型识别：Kodi 本地刮削带 TMDb/IMDb 类型；Emby 同步的条目由插件标注（通常为 IMDb）；开了神医助手豆瓣覆盖请选 Douban。"
+msgid "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
+msgstr "与 Emby 库的首选抓取器一致：TheMovieDb 选 TMDb，OMDb 选 IMDb；豆瓣仅限神医助手覆盖模式，自动仅限 Kodi 本地刮削。"
 
 msgctxt "#31741"
 msgid "Follows the language setting by default. Or show the original title only, or both."
@@ -1129,7 +1129,7 @@ msgstr "TMDb"
 
 msgctxt "#31765"
 msgid "Douban"
-msgstr "Douban"
+msgstr "豆瓣"
 
 msgctxt "#31766"
 msgid "IMDb"
@@ -1168,22 +1168,18 @@ msgid "Use Emby server search"
 msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on, so cast, genre, pinyin and aliases work like the Emby app. Reload the skin after installing or removing the add-on."
-msgstr "装了 Mistuary Helper 后走 Emby 服务端，演员、类型、全拼和别名都能搜到。装完或卸掉插件后要重载皮肤才生效。"
-
-
-msgctxt "#31782"
-msgid "Secondary rating source"
-msgstr "次评分来源"
-
-msgctxt "#31783"
-msgid "Rotten Tomatoes"
-msgstr "烂番茄"
-
-msgctxt "#31784"
-msgid "Extra rating next to the main one. Auto prefers the helper add-on's Douban score, then TMDb, then Rotten Tomatoes."
-msgstr "主评分旁边显示哪一颗。自动优先豆瓣（需插件），其次 TMDb，最后烂番茄。"
+msgid "Search through the Mistuary Helper add-on for Chinese titles, original titles, full pinyin and initials. Reload the skin after installing or removing the add-on."
+msgstr "装了 Mistuary Helper 后走 Emby 服务端，中文、原名、全拼和首字母都能搜到。装完或卸掉插件后要重载皮肤才生效。"
 
 msgctxt "#31785"
 msgid "Enabled"
 msgstr "已启用"
+
+msgctxt "#31790"
+msgid "Douban (StrmAssistant override)"
+msgstr "豆瓣（神医助手覆盖模式）"
+
+msgctxt "#31791"
+msgid "Auto (local scraping only)"
+msgstr "自动（仅本地刮削）"
+
