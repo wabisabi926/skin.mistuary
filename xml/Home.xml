@@ -978,16 +978,33 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 兜底用收藏夹专用的 DefaultFavourites.png（256×256、透明底白星），
-								     不能用 DefaultVideo.png —— 那张是 256×392 的竖版海报、不透明，
-								     塞进 320×180 会拉成一片纯白。
-								     不加 mask 遮罩：星星本身透明底，遮罩反而会裁掉。 -->
+								<!-- 文件夹封面：收藏夹里的「华语电影」这类条目有 poster（那张拼贴封面），
+								     原来漏读，所以直接落到星星。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(poster)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(ListItem.Art(poster))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + !String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<!-- 最后一层：文件夹图标，没有图标才落白星。
+								     96×96 居中 —— 原来给 320×180 + keep，256×256 的星星会被撑到
+								     180 高、占满整张卡，看着像巨型五角星。 -->
+								<control type="image">
+									<left>125</left>
+									<top>50</top>
+									<width>96</width>
+									<height>96</height>
 									<aspectratio>keep</aspectratio>
 									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(thumb))</visible>
 								</control>
 								<control type="progress">
 									<top>177</top>
@@ -1037,16 +1054,33 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 								</control>
-								<!-- 兜底用收藏夹专用的 DefaultFavourites.png（256×256、透明底白星），
-								     不能用 DefaultVideo.png —— 那张是 256×392 的竖版海报、不透明，
-								     塞进 320×180 会拉成一片纯白。
-								     不加 mask 遮罩：星星本身透明底，遮罩反而会裁掉。 -->
+								<!-- 文件夹封面：收藏夹里的「华语电影」这类条目有 poster（那张拼贴封面），
+								     原来漏读，所以直接落到星星。 -->
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(poster)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(ListItem.Art(poster))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + !String.IsEmpty(ListItem.Art(thumb))</visible>
+								</control>
+								<!-- 最后一层：文件夹图标，没有图标才落白星。
+								     96×96 居中 —— 原来给 320×180 + keep，256×256 的星星会被撑到
+								     180 高、占满整张卡，看着像巨型五角星。 -->
+								<control type="image">
+									<left>125</left>
+									<top>50</top>
+									<width>96</width>
+									<height>96</height>
 									<aspectratio>keep</aspectratio>
 									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
-									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(thumb))</visible>
 								</control>
 								<control type="image">
 									<left>-2</left>
