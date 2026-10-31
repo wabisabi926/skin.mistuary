@@ -1029,8 +1029,8 @@
 						<focusedlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<depth>DepthContentPopout</depth>
-								<animation effect="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="173,98">Focus</animation>
-								<animation effect="zoom" start="106" end="100" time="200" tween="sine" easing="inout" center="173,98">UnFocus</animation>
+								<animation effect="zoom" start="100" end="104" time="200" tween="sine" easing="inout" center="173,98">Focus</animation>
+								<animation effect="zoom" start="104" end="100" time="200" tween="sine" easing="inout" center="173,98">UnFocus</animation>
 								<left>13</left>
 								<top>8</top>
 								<control type="image">
@@ -1082,13 +1082,12 @@
 									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(thumb))</visible>
 								</control>
-								<control type="image">
-									<left>-2</left>
-									<top>-2</top>
-									<width>324</width>
-									<height>184</height>
-									<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>
-								</control>
+								<!-- 这里原本有一圈焦点描边，用的是
+								     `<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>`。
+								     focus_surface 是 FFEDEDED（近乎纯白、不透明），border 让它走九宫格
+								     铺满 324×184 —— 聚焦时整张卡片被一块白色圆角块盖住。
+								     首页「继续观看」行的焦点表现是「放大 4% + 标题变色」，没有描边环，
+								     这里照做，保持两行一致。 -->
 								<control type="progress">
 									<top>177</top>
 									<width>320</width>
