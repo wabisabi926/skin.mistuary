@@ -328,11 +328,11 @@ height 又加 56 的结果。那两行设置比 PVR 页高 32px，用户一眼�
 
 | 项 | 值 |
 |---|---|
-| 源码 | `D:\下载\AI\skin.mistuary`（分支 `universal`，与 `origin/main` 同源） |
-| 实机皮肤目录 | `C:\Users\liwl\AppData\Roaming\Kodi\addons\skin.mistuary` |
+| 源码 | `<仓库根>`（分支 `universal`，与 `origin/main` 同源） |
+| 实机皮肤目录 | `%APPDATA%\Kodi\addons\skin.mistuary` |
 | 实机 Kodi | **22.0-RC1**（build version code `21.90.901`，build 20260927） |
-| 日志 | `C:\Users\liwl\AppData\Roaming\Kodi\kodi.log` |
-| Python（带 Pillow） | `C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe` |
+| 日志 | `%APPDATA%\Kodi\kodi.log` |
+| Python（带 Pillow） | `<python>` |
 | 贴图打包 | `python tools/xbt_tool.py pack`（662 张 → 7.6 MB） |
 
 > 实机 Kodi 会随用户升级而变（BETA2 → RC1 就是一次）。看版本别看本文档，
@@ -341,8 +341,8 @@ height 又加 56 的结果。那两行设置比 PVR 页高 32px，用户一眼�
 **部署命令**（改完代码必须同步，用户靠这个实机验证）：
 
 ```powershell
-$src = "D:\下载\AI\skin.mistuary"
-$dst = "C:\Users\liwl\AppData\Roaming\Kodi\addons\skin.mistuary"
+$src = "<仓库根>"
+$dst = "%APPDATA%\Kodi\addons\skin.mistuary"
 robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore /NJH /NJS /NDL /NP /NFL
 ```
 
@@ -354,8 +354,8 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 ## 5. 验证（现在就能跑）
 
 ```bash
-cd /d "D:\下载\AI\skin.mistuary"
-set PY="C:\Users\liwl\AppData\Local\Programs\Python\Python312\python.exe"
+cd /d "<仓库根>"
+set PY="<python>"
 
 %PY% -m unittest discover -s tools -p "test_*.py"     # 期望 84 项全绿
 %PY% tools/audit_skin.py --strict                      # 期望 EXIT=0

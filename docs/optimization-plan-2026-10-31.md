@@ -1,7 +1,7 @@
 # 皮肤 + 插件全量梳理与优化方案（2026-10-31）
 
-> 范围：`D:\Downloads\ai\skin.mistuary`（1.5.0，工作区含 1.5.1 未提交改动）
-> 和 `D:\Downloads\ai\script.mistuary.helper`（0.3.3，未提交）。
+> 范围：`<仓库根>`（1.5.0，工作区含 1.5.1 未提交改动）
+> 和 `<插件仓库根>`（0.3.3，未提交）。
 > **本文只出方案，未改任何代码。**
 > 基线证据：皮肤 `audit_skin.py --strict` 全 0、`--orphans` 0 张、`--dead` 0 项、
 > 89 项单测全绿；helper 101 项单测全绿。
@@ -96,7 +96,7 @@ Kodi 只加载 `addon.xml` 声明的入口，所以**不会崩**，但：
 
 **修法**：删除上述 8 项（**保留** `addon.xml` `default.py` `lib/` `resources/` `tests/`
 `tools/` `changelog.txt` `icon.png` `fanart.jpg` `__pycache__`）。
-删之前建议先 `tar` 一份到 `D:\Downloads\ai\_backup\`。
+删之前建议先 `tar` 一份到 `<备份目录>\`。
 
 **风险**：极低。这些文件不被 addon.xml 引用。
 

@@ -1,7 +1,7 @@
 # script.mistuary.helper（皮肤侧摘要）
 
 > **本文是摘要，不是权威。** 实现细节、进度表、测试策略都在插件仓库：
-> `D:\下载\AI\script.mistuary.helper\docs\`
+> `<插件仓库根>\docs\`
 > （`roadmap.md` / `architecture.md` / `contract.md` / `testing.md`）
 >
 > 本文只写**皮肤需要知道的那部分**：怎么调、怎么退、最低版本。
@@ -115,7 +115,7 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 
 
 | 项 | 状态 |
 |---|---|
-| 插件仓库 | `D:\下载\AI\script.mistuary.helper`，`main`，本地已改到 0.3.3（未发布，101 项单测） |
+| 插件仓库 | `<插件仓库根>`，`main`，本地已改到 0.3.3（未发布，101 项单测） |
 | 已完成 | 搜索桥 + 详情页豆瓣；M1b / M2 / M1c 完成。0.3.3 起：设置 4 类（覆盖项进专家）、帮助条、非 ASCII 查询并入演员/类型、首字母前缀严格；评分同步已移除 |
 | 未完成 | M1d 演员/类型（暂缓）；M3 不做；M4 可选不排期 |
 | 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper`（实机已是 0.3.3） |

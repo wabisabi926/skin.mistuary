@@ -1031,7 +1031,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `D:\下载\AI\script.mistuary.helper`，本地已改到 0.3.3（未发布，102 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
+| **helper 插件落地** | 独立仓库 `<插件仓库根>`，本地已改到 0.3.3（未发布，102 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1154,7 +1154,7 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
   **M4 行级增强**可选不排期。
 - 装/卸/启用插件后要**重载皮肤**；卸载后的回退是下一帧生效。
 - 规划与契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)；实现文档在
-  `D:\下载\AI\script.mistuary.helper\docs\`。
+  `<插件仓库根>\docs\`。
 
 ### 8.10 已知问题：搜索封面 / 背景兜底（已解决）
 
