@@ -2,9 +2,6 @@
 <includes>
 	<!-- 豆瓣插件分数：只在详情页 onload 写入、离开时清除；次评分档位由设置 715 决定。 -->
 	<expression name="NaraRatingDoubanReady">String.IsEqual(Window(home).Property(Mistuary.Rating.Status),ok)</expression>
-	<!-- 默认评分是否就是豆瓣分：有 douban 行且两值相等 → 主胶囊应画豆瓣，而不是按设置画 IMDb/TMDb。 -->
-	<expression name="NaraDefaultIsDouban">!String.IsEmpty(ListItem.Rating(douban)) + String.IsEqual(ListItem.Rating,ListItem.Rating(douban))</expression>
-	<expression name="NaraRatingSecondaryAuto">Skin.HasSetting(rating_sec_auto) | [!Skin.HasSetting(rating_sec_tmdb) + !Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_douban)]</expression>
 	<!-- 评分胶囊。Kodi 20+ 支持按类型读评分：`ListItem.Rating(<type>)`，
 	     默认类型用 `ListItem.Rating` 读。**一行最多两个胶囊**，优先级：
 	     豆瓣 > IMDb > TMDB > 烂番茄（豆瓣和 IMDb 是同一个字段，由设置二选一，天然互斥）。
@@ -84,29 +81,19 @@
 				<align>$PARAM[align]</align>
 				<itemgap>12</itemgap>
 				<usecontrolcoords>true</usecontrolcoords>
-				<!-- 主评分：Emby 的 CommunityRating（默认类型）。
-				     开「豆瓣评分覆盖」= 神医助手已经把 CommunityRating 改写成豆瓣分；
-				     关 = 原样按 IMDb 显示。两者互斥（同一个字段），
-				     所以"最多两个"只需要让烂番茄给 TMDB 让位，不用算别的。
+				<!-- 主评分：Emby 的 CommunityRating（每个库单一来源）。
+				     来源由 Emby 库的评分抓取器决定（TheMovieDb / OMDb / TheTVDB 都会写），
+				     皮肤按「主评分来源」手选图标，三处（库 / E4K / 皮肤）保持一致。
 				     IMDb 词标是 2:1，用 46×23 的图标框；豆瓣是方形徽标，用默认 28×28。 -->
-        <!-- 主评分 · 手选优先（设置 707）。类型字段不能当依据：Emby 插件
-             ("Set imdb as default rating provider"，默认开) 会把 CommunityRating
-             补写成 imdb 类型，Rating(imdb) 恒等于 Rating，自动识别就会永久压过设置。
-             所以只要用户选过档位，就只按档位画图标。 -->
-        <!-- 默认评分实测等于豆瓣分（Emby 开着豆瓣覆盖）→ 主胶囊直接画豆瓣，
-             不受“评分来源”手选设置影响；否则按下面的档位/自动判断。 -->
-        <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !String.IsEmpty($PARAM[item_prefix].Rating(douban)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(douban))" />
-          <param name="icon" value="flags/ratings/douban.png" />
-          <param name="label" value="$INFO[$PARAM[item_prefix].Rating(douban)]" />
-        </include>
+        <!-- 主评分 · 手选优先（设置 707）。类型字段不能当依据：E4K 会把 CommunityRating
+             标成 imdb 类型，自动识别会误判；所以只要用户选过档位，就只按档位画图标。 -->
         <include content="NaraOnlineRatingItem">
           <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + Skin.HasSetting(douban_rating)" />
           <param name="icon" value="flags/ratings/douban.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + Skin.HasSetting(rating_src_imdb)" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + Skin.HasSetting(rating_src_imdb)" />
           <param name="icon" value="flags/ratings/imdb.png" />
           <param name="icon_width" value="46" />
           <param name="icon_height" value="23" />
@@ -117,24 +104,23 @@
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + !Skin.HasSetting(rating_src_imdb) + Skin.HasSetting(rating_src_tmdb)" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + Skin.HasSetting(rating_src_tmdb)" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
-        <!-- 主评分 · 三档都没选时才自动判断（Kodi 刮削会写类型字段）。
-             判定顺序：TMDb → Trakt → IMDb，都匹配不上按 TMDb 兜底。 -->
+        <!-- 主评分 · 三档都没选时才自动判断（本地刮削库类型字段有效；E4K 库会误判成 IMDb，不建议用自动）。 -->
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(trakt)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(trakt)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb))" />
           <param name="icon" value="flags/ratings/trakt.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(imdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEmpty($PARAM[item_prefix].Rating(imdb)) + String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt))" />
           <param name="icon" value="flags/ratings/imdb.png" />
           <param name="icon_width" value="46" />
           <param name="icon_height" value="23" />
@@ -145,48 +131,22 @@
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
-          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !$EXP[NaraDefaultIsDouban] + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb))" />
+          <param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating) + !Skin.HasSetting(douban_rating) + !Skin.HasSetting(rating_src_imdb) + !Skin.HasSetting(rating_src_tmdb) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(trakt)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(imdb))" />
           <param name="icon" value="flags/ratings/tmdb.png" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
-				<!-- 次评分 ①：TMDB。**类型名两个刮削器不一样**：
-				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
-				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
-				<!-- 次评分 ①：豆瓣（可选插件）。自动档下它优先，TMDB / 烂番茄让位。
-				     **优先读库里那条 `rating_type=douban` 的记录**（助手后台服务写进去的），
-				     这样首页 / 搜索 / 库视图都能逐条显示，不依赖窗口属性。
-				     窗口属性只在详情页窗口内当兜底（那是刚实时取到的分）。 -->
+				<!-- 次评分 ①：豆瓣（仅详情页，助手实时取分并写窗口属性）。
+				     列表/海报墙读不到分类型评分，窗口属性也只在详情页有效，所以这里限定 videoinfo。
+				     与主评分同值时省略，避免同一数字出现两遍。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(douban)) + !Skin.HasSetting(douban_rating) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(douban)) + [!$EXP[NaraRatingSecondaryAuto] | Skin.HasSetting(rating_sec_douban)] + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season)" />
-					<param name="icon" value="flags/ratings/douban.png" />
-					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(douban)]" />
-				</include>
-				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="Window.IsVisible(videoinfo) + String.IsEmpty($PARAM[item_prefix].Rating(douban)) + $EXP[NaraRatingDoubanReady] + !Skin.HasSetting(douban_rating) + [!$EXP[NaraRatingSecondaryAuto] | Skin.HasSetting(rating_sec_douban)] + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season)" />
+					<param name="visible" value="Window.IsVisible(videoinfo) + $EXP[NaraRatingDoubanReady] + !Skin.HasSetting(douban_rating) + !String.IsEqual($PARAM[item_prefix].Rating,Window(10000).Property(Mistuary.Rating.Douban))" />
 					<param name="icon" value="flags/ratings/douban.png" />
 					<param name="label" value="$INFO[Window(10000).Property(Mistuary.Rating.Douban)]" />
 				</include>
-				<!-- 兜底槽：实测 Kodi 22.0-RC1(21.90.901) 的 `Rating(douban)` 可以正常读取
-				     （2026-10-31 用《你的名字。》验证：豆瓣 8.5 正常显示）。
-				     助手仍会把同一个分写进 `metacritic`（本库没人用），用于兼容读不出自定义类型的
-				     其他 Kodi 版本；这里在 douban 为空时才兜一层。 -->
+				<!-- 次评分 ②：烂番茄（Emby 的 CriticRating/10，只有电影写）。
+				     没有豆瓣分时才显示；剧集/季没有该通道，自然隐藏。 -->
 				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="String.IsEmpty($PARAM[item_prefix].Rating(douban)) + !String.IsEmpty($PARAM[item_prefix].Rating(metacritic)) + !Skin.HasSetting(douban_rating) + [!$EXP[NaraRatingSecondaryAuto] | Skin.HasSetting(rating_sec_douban)] + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season)" />
-					<param name="icon" value="flags/ratings/douban.png" />
-					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(metacritic)]" />
-				</include>
-				<!-- 次评分 ②：TMDB。**类型名两个刮削器不一样**：
-				     电影写 `themoviedb`、剧集/季/单集写 `tmdb`（Kodi 官方刮削器各写各的）。
-				     同一个条目只会命中其中一个，所以标签直接拼起来不会重复。 -->
-				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="[!String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) | !String.IsEmpty($PARAM[item_prefix].Rating(themoviedb))] + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(tmdb)) + !String.IsEqual($PARAM[item_prefix].Rating,$PARAM[item_prefix].Rating(themoviedb)) + [!Skin.HasSetting(rating_sec_rt) + !Skin.HasSetting(rating_sec_douban)] + [Skin.HasSetting(rating_sec_tmdb) | [$EXP[NaraRatingSecondaryAuto] + [String.IsEmpty($PARAM[item_prefix].Rating(douban)) + [!$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating)]]]]" />
-					<param name="icon" value="flags/ratings/tmdb.png" />
-					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tmdb)]$INFO[$PARAM[item_prefix].Rating(themoviedb)]" />
-				</include>
-				<!-- 次评分 ②：影评人评分（Emby 的 CriticRating/10，只有电影写）。
-				     **TMDB 有值时让位**，这样一行永远不超过两个胶囊。 -->
-				<include content="NaraOnlineRatingItem">
-					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + [!Skin.HasSetting(rating_sec_tmdb) + !Skin.HasSetting(rating_sec_douban)] + [Skin.HasSetting(rating_sec_rt) | [$EXP[NaraRatingSecondaryAuto] + String.IsEmpty($PARAM[item_prefix].Rating(tmdb)) + String.IsEmpty($PARAM[item_prefix].Rating(themoviedb)) + [String.IsEmpty($PARAM[item_prefix].Rating(douban)) + [!$EXP[NaraRatingDoubanReady] | Skin.HasSetting(douban_rating)]]]]" />
+					<param name="visible" value="!String.IsEmpty($PARAM[item_prefix].Rating(tomatometerallcritics)) + !Skin.HasSetting(douban_rating) + !$EXP[NaraRatingDoubanReady] + !String.IsEqual($PARAM[item_prefix].DBType,episode) + !String.IsEqual($PARAM[item_prefix].DBType,season)" />
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
 				</include>
