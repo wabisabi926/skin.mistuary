@@ -124,40 +124,36 @@
 				<height>270</height>
 				<texture flipy="true" colordiffuse="5AFFFFFF">overlays/overlayfade.png</texture>
 			</control>
-			<control type="grouplist">
-				<!-- 原位。之前往下让是为了避开 1109 顶栏那行章节副标题，
-				     现在那条在 OSD 打开时已经整条隐藏（Custom_1109_TopBarOverlay），
-				     所以回到原始的 left 30 / top 30。 -->
+			<!-- logo 单独定位（右移 35、下移 20）；标题/副标题保持原位，不受 logo 移动影响。 -->
+			<control type="image">
+				<left>65</left>
+				<top>50</top>
+				<width>356</width>
+				<height>100</height>
+				<texture>$VAR[PlayerClearLogoVar]</texture>
+				<aspectratio align="left" aligny="top">keep</aspectratio>
+				<visible>!String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(clearlogo))</visible>
+			</control>
+			<control type="label">
 				<left>30</left>
 				<top>30</top>
 				<width>820</width>
-				<height>166</height>
-				<orientation>vertical</orientation>
-				<itemgap>6</itemgap>
-				<control type="image">
-					<width>356</width>
-					<height>100</height>
-					<texture>$VAR[PlayerClearLogoVar]</texture>
-					<aspectratio align="left" aligny="top">keep</aspectratio>
-					<visible>!String.IsEmpty(Player.Art(tvshow.clearlogo)) | !String.IsEmpty(Player.Art(clearlogo))</visible>
-				</control>
-				<control type="label">
-					<width>820</width>
-					<height>50</height>
-					<font>font36_title</font>
-					<label>$VAR[NowPlayingBreadcrumbsVar]</label>
-					<scroll>true</scroll>
-					<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + String.IsEmpty(Player.Art(clearlogo)) + [VideoPlayer.Content(livetv) | !Player.HasVideo]</visible>
-				</control>
-				<control type="label">
-					<width>820</width>
-					<height>34</height>
-					<font>font12</font>
-					<label>$INFO[VideoPlayer.Season,S]$INFO[VideoPlayer.Episode,E]$INFO[VideoPlayer.Title, · ]</label>
-					<textcolor>text_secondary</textcolor>
-					<scroll>true</scroll>
-					<visible>VideoPlayer.Content(episodes) + !Window.IsVisible(1109)</visible>
-				</control>
+				<height>50</height>
+				<font>font36_title</font>
+				<label>$VAR[NowPlayingBreadcrumbsVar]</label>
+				<scroll>true</scroll>
+				<visible>String.IsEmpty(Player.Art(tvshow.clearlogo)) + String.IsEmpty(Player.Art(clearlogo)) + [VideoPlayer.Content(livetv) | !Player.HasVideo]</visible>
+			</control>
+			<control type="label">
+				<left>30</left>
+				<top>136</top>
+				<width>820</width>
+				<height>34</height>
+				<font>font12</font>
+				<label>$INFO[VideoPlayer.Season,S]$INFO[VideoPlayer.Episode,E]$INFO[VideoPlayer.Title, · ]</label>
+				<textcolor>text_secondary</textcolor>
+				<scroll>true</scroll>
+				<visible>VideoPlayer.Content(episodes) + !Window.IsVisible(1109)</visible>
 			</control>
 		</control>
 	</include>
