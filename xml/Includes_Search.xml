@@ -321,13 +321,18 @@
 					<texture colordiffuse="$PARAM[focus_color]">shapes/ring_card_216x323_r13.png</texture>
 					<visible>$PARAM[focused]</visible>
 				</control>
+				<!-- 已播 / 续看 / 录制状态：和海报墙（InfoWallMovieLayout）同款 —— 左下角 28×28。
+				     图标走 $VAR[ItemStatusIconVar]（区分 已看完 / 续看 / 正在播放 / 录制 / 提醒），
+				     颜色走 $VAR[StatusIconColorVar]（只有真的看完才变绿）。
+				     坐标按本布局的 214×321 海报换算：距海报左边 12、距底边 11 → (22, 293)。
+				     旧版是 right 17 / top 298 的 24×24 固定 OverlayWatched，位置在右下还溢出 11px，
+				     而且看了一半的条目也会显示绿色对勾。 -->
 				<control type="image">
-					<right>17</right>
-					<top>298</top>
-					<width>24</width>
-					<height>24</height>
-					<texture colordiffuse="progress_watched">OverlayWatched.png</texture>
-					<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
+					<left>22</left>
+					<top>293</top>
+					<width>28</width>
+					<height>28</height>
+					<texture colordiffuse="$VAR[StatusIconColorVar]">$VAR[ItemStatusIconVar]</texture>
 				</control>
 				<control type="label">
 					<left>3</left>

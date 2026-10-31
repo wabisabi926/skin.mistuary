@@ -74,8 +74,8 @@ class StatusIconTests(unittest.TestCase):
                 else:
                     plain.append(path.name)
         self.assertEqual(plain, [], '这些地方的状态图标没有接着色变量：%s' % plain)
-        self.assertEqual(len(coloured), 5,
-                         '状态图标应共有 5 处（海报卡 / 列表 x2 / 首页 x2），实际 %d 处' % len(coloured))
+        self.assertEqual(len(coloured), 6,
+                         '状态图标应共有 6 处（海报墙卡 / 缩略面板 / 列表 / 首页 x2 / 共用海报卡布局），实际 %d 处' % len(coloured))
 
 
 if __name__ == '__main__':
