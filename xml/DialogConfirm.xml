@@ -13,20 +13,28 @@
 				<param name="height" value="400" />
 				<param name="header_label" value="" />
 				<param name="header_id" value="1" />
+				<!-- 右上 vendor 图标：原来 48/11/10 比标题还大、还高 7px。缩到 32、top 30
+				     → 图标中心 46 与标题块中心（18+56/2）对齐；right 48 与正文左边距等宽，
+				     左右留白对称（面板宽 915，两边都是 48）。 -->
+				<param name="header_icon_size" value="32" />
+				<param name="header_icon_right" value="48" />
+				<param name="header_icon_top" value="30" />
 			</include>
 			<control type="textbox" id="9">
 				<textcolor>text_primary</textcolor>
-				<left>30</left>
-				<top>82</top>
-				<width>855</width>
-				<height>165</height>
+				<!-- 原来 left 30 / top 82：比标题（left 48）左移 18px，且与标题块底（74）只隔 8px。
+				     现在与标题同一左内边距 48，下移 10px 到 92；右内边距保持 30（915-48-30=837）。 -->
+				<left>48</left>
+				<top>92</top>
+				<width>837</width>
+				<height>155</height>
 				<label></label>
 				<autoscroll time="3000" delay="4000" repeat="5000">true</autoscroll>
 			</control>
 			<control type="progress" id="20">
-				<left>30</left>
+				<left>48</left>
 				<top>262</top>
-				<width>855</width>
+				<width>837</width>
 				<height>24</height>
 				<info>System.Progressbar</info>
 			</control>
