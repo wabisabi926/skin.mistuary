@@ -829,6 +829,10 @@ msgstr "锁定背景"
 
 #: /xml/MusicVisualisation.xml
 
+msgctxt "#31697"
+msgid "Favourites as landscape"
+msgstr "收藏夹用横版"
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr "正在读取歌词…"

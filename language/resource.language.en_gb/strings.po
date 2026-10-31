@@ -1052,6 +1052,10 @@ msgstr ""
 
 #: /xml/MusicVisualisation.xml
 
+msgctxt "#31697"
+msgid "Favourites as landscape"
+msgstr "Favourites as landscape"
+
 msgctxt "#31700"
 msgid "Loading lyrics…"
 msgstr ""

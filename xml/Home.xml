@@ -928,7 +928,7 @@
 						<orientation>vertical</orientation>
 						<pagecontrol>14010</pagecontrol>
 						<visible>Integer.IsGreater(Container(14100).NumItems,0) | Container(14100).IsUpdating</visible>
-						<itemlayout width="260" height="430">
+						<itemlayout width="260" height="430" condition="!Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<top>18</top>
 								<include content="InfoWallFavouriteLayout">
@@ -936,7 +936,7 @@
 								</include>
 							</control>
 						</itemlayout>
-						<focusedlayout width="260" height="430">
+						<focusedlayout width="260" height="430" condition="!Skin.HasSetting(home_fav_landscape)">
 							<control type="group">
 								<depth>DepthContentPopout</depth>
 								<top>18</top>
@@ -945,6 +945,127 @@
 								<include content="InfoWallFavouriteLayout">
 									<param name="focused" value="true" />
 								</include>
+							</control>
+						</focusedlayout>
+						<!-- 横版（皮肤设置 → 收藏夹用横版 打开时生效）。
+						     收藏夹内容混杂（视频 / 插件 / 文件夹），竖版海报对没有 poster 的条目
+						     只能落默认图；横版卡片走 landscape → fanart → 默认 三态兜底。
+						     卡片几何和 HomeContinueWatchingRail 的横版卡片一致（320×180 + mask_320x180_r9），
+						     **改那边记得同步这边** —— 两处是复制关系，没有抽成公共 include 是为了不动
+						     「继续观看」行的现有结构。 -->
+						<itemlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
+							<control type="group">
+								<left>13</left>
+								<top>8</top>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<texture>dialogs/dialog-bg-nobo.png</texture>
+									<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+									<bordersize>20</bordersize>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(landscape)]</texture>
+									<visible>!String.IsEmpty(ListItem.Art(landscape))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+								</control>
+								<control type="progress">
+									<top>177</top>
+									<width>320</width>
+									<height>3</height>
+									<reveal>true</reveal>
+									<texturebg border="8,0,8,0" colordiffuse="00FFFFFF">progress/card_progress_r8.png</texturebg>
+									<midtexture border="8,0,8,0" colordiffuse="progress_playback">progress/card_progress_r8.png</midtexture>
+									<info>ListItem.Progress</info>
+									<visible>!Integer.IsEqual(ListItem.Progress,0)</visible>
+								</control>
+								<control type="label">
+									<top>190</top>
+									<width>320</width>
+									<height>28</height>
+									<font>font12</font>
+									<scroll>false</scroll>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+							</control>
+						</itemlayout>
+						<focusedlayout width="347" height="250" condition="Skin.HasSetting(home_fav_landscape)">
+							<control type="group">
+								<depth>DepthContentPopout</depth>
+								<animation effect="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="173,98">Focus</animation>
+								<animation effect="zoom" start="106" end="100" time="200" tween="sine" easing="inout" center="173,98">UnFocus</animation>
+								<left>13</left>
+								<top>8</top>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<texture>dialogs/dialog-bg-nobo.png</texture>
+									<bordertexture border="21" infill="false">overlays/shadow.png</bordertexture>
+									<bordersize>20</bordersize>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(landscape)]</texture>
+									<visible>!String.IsEmpty(ListItem.Art(landscape))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(fanart)]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart))</visible>
+								</control>
+								<control type="image">
+									<left>-2</left>
+									<top>-2</top>
+									<width>324</width>
+									<height>184</height>
+									<texture colordiffuse="focus_surface" border="12">shapes/round12.png</texture>
+								</control>
+								<control type="progress">
+									<top>177</top>
+									<width>320</width>
+									<height>3</height>
+									<reveal>true</reveal>
+									<texturebg border="8,0,8,0" colordiffuse="00FFFFFF">progress/card_progress_r8.png</texturebg>
+									<midtexture border="8,0,8,0" colordiffuse="progress_playback">progress/card_progress_r8.png</midtexture>
+									<info>ListItem.Progress</info>
+									<visible>!Integer.IsEqual(ListItem.Progress,0)</visible>
+								</control>
+								<control type="label">
+									<top>190</top>
+									<width>320</width>
+									<height>28</height>
+									<font>font12</font>
+									<scroll>false</scroll>
+									<textcolor>focus_foreground</textcolor>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
 							</control>
 						</focusedlayout>
 						<content>favourites://</content>

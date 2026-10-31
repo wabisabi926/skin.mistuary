@@ -188,6 +188,15 @@
 					<onclick>Skin.ToggleSetting(autoscroll)</onclick>
 					<selected>Skin.HasSetting(autoscroll)</selected>
 				</control>
+<control type="radiobutton" id="716">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31697]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(home_fav_landscape)</onclick>
+					<selected>Skin.HasSetting(home_fav_landscape)</selected>
+				</control>
 				<top>161</top>
 				<width>1315</width>
 				<height>708</height>
