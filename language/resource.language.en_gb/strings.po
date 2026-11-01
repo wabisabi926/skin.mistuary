@@ -1368,10 +1368,6 @@ msgctxt "#31775"
 msgid "Seek bar"
 msgstr "Seek bar"
 
-msgctxt "#31776"
-msgid "Left-Right: controls"
-msgstr "Left-Right: controls"
-
 msgctxt "#31777"
 msgid "Not rated"
 msgstr "Not rated"
