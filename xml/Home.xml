@@ -179,6 +179,14 @@
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5800)"/>
 						<param name="metadata" value="$INFO[Container(5800).ListItem.Year]$INFO[Container(5800).ListItem.Duration,  &#183;  ]$INFO[Container(5800).ListItem.Genre,  &#183;  ]"/>
 					</include>
+					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + Skin.HasSetting(home_movies_unwatched_widget)">
+						<param name="id" value="5750001"/>
+						<param name="list_id" value="5750"/>
+						<param name="season_id" value="575095"/>
+						<param name="episode_id" value="575096"/>
+						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5750)"/>
+						<param name="metadata" value="$INFO[Container(5750).ListItem.Year]$INFO[Container(5750).ListItem.Duration,  &#183;  ]$INFO[Container(5750).ListItem.Genre,  &#183;  ]"/>
+					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_highrated_widget)">
 						<param name="id" value="5300001"/>
 						<param name="list_id" value="5300"/>
@@ -306,9 +314,37 @@
 									<param name="section" value="movies"/>
 									<param name="pages_id" value="5001"/>
 									<param name="onup" value="5201"/>
-									<param name="ondown" value="5301"/>
+									<param name="ondown" value="5701"/>
 									<param name="page" value="poster"/>
 									<param name="hero_id" value="5800"/>
+									<param name="update_hero" value="true"/>
+								</include>
+							</include>
+						</include>
+						<include content="HomeVideoPage">
+							<param name="id" value="5701"/>
+							<param name="visible" value="[Integer.IsGreater(Container(5750).NumItems,0) | Container(5750).IsUpdating]"/>
+							<include content="HomeVideoPageContent">
+								<param name="top" value="500"/>
+								<param name="slide_distance" value="96"/>
+								<param name="slide_time" value="420"/>
+								<param name="fade_time" value="260"/>
+								<param name="active" value="String.IsEqual(Window(home).Property(Home.movies.Row),5750)"/>
+								<include content="WidgetListPoster" condition="Library.HasContent(movies) + Skin.HasSetting(home_movies_unwatched_widget)">
+									<param name="content_path" value="special://skin/extras/playlists/home_unwatched_movies.xsp"/>
+									<param name="widget_limit" value="20"/>
+									<param name="widget_header" value="$LOCALIZE[31797]"/>
+									<param name="widget_target" value="videos"/>
+									<param name="list_id" value="5750"/>
+									<param name="onclick_condition" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
+									<param name="onclick_action" value="ActivateWindow(videos,special://skin/extras/playlists/all_unwatched_movies.xsp,return)"/>
+									<param name="navigation" value="HomeVideoRowNavigation"/>
+									<param name="section" value="movies"/>
+									<param name="pages_id" value="5001"/>
+									<param name="onup" value="5801"/>
+									<param name="ondown" value="5301"/>
+									<param name="page" value="poster"/>
+									<param name="hero_id" value="5750"/>
 									<param name="update_hero" value="true"/>
 								</include>
 							</include>
@@ -332,7 +368,7 @@
 									<param name="navigation" value="HomeVideoRowNavigation"/>
 									<param name="section" value="movies"/>
 									<param name="pages_id" value="5001"/>
-									<param name="onup" value="5801"/>
+									<param name="onup" value="5701"/>
 									<param name="ondown" value="5401"/>
 									<param name="page" value="poster"/>
 									<param name="hero_id" value="5300"/>
@@ -499,6 +535,14 @@
 						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6700)"/>
 						<param name="metadata" value="$INFO[Container(6700).ListItem.Year]$INFO[Container(6700).ListItem.Genre,  &#183;  ]"/>
 					</include>
+					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + Skin.HasSetting(home_tvshows_unwatched_widget)">
+						<param name="id" value="6750001"/>
+						<param name="list_id" value="6750"/>
+						<param name="season_id" value="675095"/>
+						<param name="episode_id" value="675096"/>
+						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6750)"/>
+						<param name="metadata" value="$INFO[Container(6750).ListItem.Year]$INFO[Container(6750).ListItem.Genre,  &#183;  ]"/>
+					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_highrated_widget)">
 						<param name="id" value="6300001"/>
 						<param name="list_id" value="6300"/>
@@ -626,9 +670,38 @@
 									<param name="section" value="tvshows"/>
 									<param name="pages_id" value="6001"/>
 									<param name="onup" value="6201"/>
-									<param name="ondown" value="6301"/>
+									<param name="ondown" value="6751"/>
 									<param name="page" value="poster"/>
 									<param name="hero_id" value="6700"/>
+									<param name="update_hero" value="true"/>
+								</include>
+							</include>
+						</include>
+						<include content="HomeVideoPage">
+							<param name="id" value="6751"/>
+							<param name="visible" value="[Integer.IsGreater(Container(6750).NumItems,0) | Container(6750).IsUpdating]"/>
+							<include content="HomeVideoPageContent">
+								<param name="top" value="500"/>
+								<param name="slide_distance" value="96"/>
+								<param name="slide_time" value="420"/>
+								<param name="fade_time" value="260"/>
+								<param name="active" value="String.IsEqual(Window(home).Property(Home.tvshows.Row),6750)"/>
+								<include content="WidgetListPoster" condition="Library.HasContent(tvshows) + Skin.HasSetting(home_tvshows_unwatched_widget)">
+									<param name="content_path" value="special://skin/extras/playlists/home_unwatched_tvshows.xsp"/>
+									<param name="widget_header" value="$LOCALIZE[31797]"/>
+									<param name="widget_target" value="videos"/>
+									<param name="list_id" value="6750"/>
+									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
+									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
+									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_unwatched_tvshows.xsp,return)"/>
+									<param name="navigation" value="HomeVideoRowNavigation"/>
+									<param name="section" value="tvshows"/>
+									<param name="pages_id" value="6001"/>
+									<param name="onup" value="6701"/>
+									<param name="ondown" value="6301"/>
+									<param name="page" value="poster"/>
+									<param name="hero_id" value="6750"/>
 									<param name="update_hero" value="true"/>
 								</include>
 							</include>
@@ -654,7 +727,7 @@
 									<param name="navigation" value="HomeVideoRowNavigation"/>
 									<param name="section" value="tvshows"/>
 									<param name="pages_id" value="6001"/>
-									<param name="onup" value="6701"/>
+									<param name="onup" value="6751"/>
 									<param name="ondown" value="6801"/>
 									<param name="page" value="poster"/>
 									<param name="hero_id" value="6300"/>
@@ -1002,6 +1075,21 @@
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
 									<visible>!String.IsEmpty(ListItem.Art(thumb)) + !String.Contains(ListItem.Art(thumb),noimage)</visible>
 								</control>
+								<!-- 自定义封面：<收藏夹封面文件夹>/horizontal/收藏夹名.png|jpg，最上层覆盖；缺图时自动露出下面的默认封面 -->
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(favorites_art_folder)]horizontal/$INFO[ListItem.Label].png</texture>
+									<visible>!String.IsEmpty(Skin.String(favorites_art_folder))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(favorites_art_folder)]horizontal/$INFO[ListItem.Label].jpg</texture>
+									<visible>!String.IsEmpty(Skin.String(favorites_art_folder))</visible>
+								</control>
 								<!-- 标题在卡片下面居中 -->
 								<control type="label">
 									<top>190</top>
@@ -1059,6 +1147,21 @@
 									<aspectratio scalediffuse="false">scale</aspectratio>
 									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[ListItem.Art(thumb)]</texture>
 									<visible>!String.IsEmpty(ListItem.Art(thumb)) + !String.Contains(ListItem.Art(thumb),noimage)</visible>
+								</control>
+								<!-- 自定义封面：<收藏夹封面文件夹>/horizontal/收藏夹名.png|jpg，最上层覆盖；缺图时自动露出下面的默认封面 -->
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(favorites_art_folder)]horizontal/$INFO[ListItem.Label].png</texture>
+									<visible>!String.IsEmpty(Skin.String(favorites_art_folder))</visible>
+								</control>
+								<control type="image">
+									<width>320</width>
+									<height>180</height>
+									<aspectratio scalediffuse="false">scale</aspectratio>
+									<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(favorites_art_folder)]horizontal/$INFO[ListItem.Label].jpg</texture>
+									<visible>!String.IsEmpty(Skin.String(favorites_art_folder))</visible>
 								</control>
 								<!-- 焦点环：只有聚焦的那张有 -->
 								<control type="image">

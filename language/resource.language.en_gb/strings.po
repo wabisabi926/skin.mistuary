@@ -1419,3 +1419,19 @@ msgstr "Auto (local scraping only)"
 msgctxt "#31793"
 msgid "Automatically hide music OSD"
 msgstr "Automatically hide music OSD"
+
+msgctxt "#31794"
+msgid "Music OSD auto-close time (seconds)"
+msgstr "Music OSD auto-close time (seconds)"
+
+msgctxt "#31795"
+msgid "Favorites cover folder"
+msgstr "Favorites cover folder"
+
+msgctxt "#31796"
+msgid "Not set"
+msgstr "Not set"
+
+msgctxt "#31797"
+msgid "All unwatched"
+msgstr "All unwatched"

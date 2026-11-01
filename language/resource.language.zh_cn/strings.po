@@ -1198,3 +1198,19 @@ msgstr "自动（仅本地刮削）"
 msgctxt "#31793"
 msgid "Automatically hide music OSD"
 msgstr "自动隐藏音乐 OSD"
+
+msgctxt "#31794"
+msgid "Music OSD auto-close time (seconds)"
+msgstr "音乐 OSD 自动关闭时间（秒）"
+
+msgctxt "#31795"
+msgid "Favorites cover folder"
+msgstr "收藏夹封面文件夹"
+
+msgctxt "#31796"
+msgid "Not set"
+msgstr "未设置"
+
+msgctxt "#31797"
+msgid "All unwatched"
+msgstr "全部未看"

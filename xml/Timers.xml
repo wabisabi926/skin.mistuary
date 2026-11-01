@@ -9,11 +9,18 @@
         <onstop>Dialog.Close(videoosd)</onstop>
     </timer>
     <timer>
+        <name>musicosdidle</name>
+        <description>Tracks idle time while audio plays; resets on input, drives the music OSD visibility</description>
+        <start reset="true">Player.HasAudio + Skin.HasSetting(MusicOSDAutoClose)</start>
+        <reset>!System.IdleTime(1) | Player.Seeking | Player.HasPerformedSeek(1) | Player.Paused</reset>
+        <stop>!Player.HasAudio | !Skin.HasSetting(MusicOSDAutoClose)</stop>
+    </timer>
+    <timer>
         <name>closemusicosdwindow</name>
-        <description>Closes the MusicOSD window after 4s without input (if auto hide is enabled)</description>
+        <description>Closes the MusicOSD window after the configured time without input (if auto hide is enabled)</description>
         <start reset="true">Window.IsActive(musicosd) + Skin.HasSetting(MusicOSDAutoClose)</start>
-        <reset>!System.IdleTime(1) | Window.IsVisible(1113) | Window.IsVisible(1114)</reset>
-        <stop>!Window.IsActive(musicosd) | Integer.IsGreaterOrEqual(Skin.TimerElapsedSecs(closemusicosdwindow), 4)</stop>
+        <reset>!System.IdleTime(1) | Window.IsVisible(1113) | Window.IsVisible(1114) | Player.Seeking | Player.HasPerformedSeek(1) | Player.Paused | Control.HasFocus(87)</reset>
+        <stop>!Window.IsActive(musicosd) | String.IsEmpty(Skin.String(MusicOSDAutoCloseTime)) + Integer.IsGreaterOrEqual(Skin.TimerElapsedSecs(closemusicosdwindow), 4) | !String.IsEmpty(Skin.String(MusicOSDAutoCloseTime)) + Integer.IsGreaterOrEqual(Skin.TimerElapsedSecs(closemusicosdwindow),Skin.Numeric(MusicOSDAutoCloseTime))</stop>
         <onstop>Dialog.Close(musicosd)</onstop>
     </timer>
     <timer>

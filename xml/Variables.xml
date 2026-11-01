@@ -390,6 +390,10 @@
 		<value condition="!String.IsEmpty(Skin.String(OSDAutoCloseTime))">$INFO[Skin.String(OSDAutoCloseTime)]</value>
 		<value condition="String.IsEmpty(Skin.String(OSDAutoCloseTime))">4</value> <!-- Default value -->
 	</variable>
+	<variable name="SkinSettingMusicOSDAutoCloseTime">
+		<value condition="!String.IsEmpty(Skin.String(MusicOSDAutoCloseTime))">$INFO[Skin.String(MusicOSDAutoCloseTime)]</value>
+		<value condition="String.IsEmpty(Skin.String(MusicOSDAutoCloseTime))">4</value> <!-- Default value -->
+	</variable>
 	<variable name="VolumeIconVar">
 		<value condition="Player.Muted">dialogs/volume/mute.png</value>
 		<value condition="Integer.IsGreater(Player.Volume,66)">dialogs/volume/volume.png</value>
@@ -1476,6 +1480,10 @@
 	<variable name="LibraryArtFolderLabel">
 		<value condition="String.IsEmpty(Skin.String(library_art_folder))">$LOCALIZE[31720]</value>
 		<value>$INFO[Skin.String(library_art_folder)]</value>
+	</variable>
+	<variable name="FavoritesArtFolderLabel">
+		<value condition="String.IsEmpty(Skin.String(favorites_art_folder))">$LOCALIZE[31796]</value>
+		<value>$INFO[Skin.String(favorites_art_folder)]</value>
 	</variable>
 	<!-- 贴图占位兜底：Kodi 的 <texture> 不支持 fallback 属性，
 	     取不到图时什么都不会画。这里按 (主标签, 占位图) 组合各建一个变量，

@@ -121,9 +121,10 @@
 		<control type="group">
 			<bottom>0</bottom>
 			<height>160</height>
-			<!-- 闲置 4 秒隐藏。用 System.IdleTime 而不是计时器+Skin 标志：
-			     标志在计时器停止后没人清，方向键回来时条还是隐藏的（实机踩过）。 -->
-			<visible>!Skin.HasSetting(MusicOSDAutoClose) | !System.IdleTime(4) | Window.IsVisible(musicosd) | Player.Seeking</visible>
+			<!-- 按设置秒数隐藏（默认 4 秒）；seek / 暂停 / 进度条聚焦时保持。
+			     唤醒用 System.IdleTime，不用 Skin 标志：标志在计时器停止后没人清，
+			     方向键回来时条还是隐藏的（实机踩过）。 -->
+			<visible>!Skin.HasSetting(MusicOSDAutoClose) | !System.IdleTime(1) | [String.IsEmpty(Skin.String(MusicOSDAutoCloseTime)) + Integer.IsLess(Skin.TimerElapsedSecs(musicosdidle), 4)] | [!String.IsEmpty(Skin.String(MusicOSDAutoCloseTime)) + Integer.IsLess(Skin.TimerElapsedSecs(musicosdidle), Skin.Numeric(MusicOSDAutoCloseTime))] | Window.IsVisible(musicosd) | Player.Seeking | Player.Paused | Control.HasFocus(87)</visible>
 			<animation effect="fade" start="0" end="100" time="180" tween="sine" easing="out">VisibleChange</animation>
 			<!-- 去胶囊底后图标压在亮背景上看不清，补一层自下而上的柔和压暗。
 			     只压底部 220px，不影响封面和歌词。 -->

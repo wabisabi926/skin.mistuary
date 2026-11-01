@@ -219,6 +219,15 @@
 					<onclick>Skin.ToggleSetting(home_fav_landscape)</onclick>
 					<selected>Skin.HasSetting(home_fav_landscape)</selected>
 				</control>
+				<control type="button" id="717">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31795]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetPath(favorites_art_folder)</onclick>
+					<label2>$VAR[FavoritesArtFolderLabel]</label2>
+				</control>
 				<top>161</top>
 				<width>1315</width>
 				<height>708</height>
@@ -352,6 +361,16 @@
 				</include>
 					<selected>Skin.HasSetting(MusicOSDAutoClose)</selected>
 					<onclick>Skin.ToggleSetting(MusicOSDAutoClose)</onclick>
+				</control>
+				<control type="button" id="631">
+					<textcolor>text_primary</textcolor>
+					<label>- $LOCALIZE[31794]</label>
+					<label2>$VAR[SkinSettingMusicOSDAutoCloseTime]</label2>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetNumeric(MusicOSDAutoCloseTime)</onclick>
+					<enable>Skin.HasSetting(MusicOSDAutoClose)</enable>
 				</control>
 				<top>161</top>
 				<width>1315</width>

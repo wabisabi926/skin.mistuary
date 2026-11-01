@@ -332,6 +332,13 @@
 			<onclick>Skin.ToggleSetting(home_no_movies_premieres_widget)</onclick>
 			<selected>!Skin.HasSetting(home_no_movies_premieres_widget)</selected>
 		</control>
+		<control type="radiobutton" id="22110">
+			<textcolor>text_primary</textcolor>
+			<include>NaraSkinSettingButton</include>
+			<label>$LOCALIZE[31797]</label>
+			<onclick>Skin.ToggleSetting(home_movies_unwatched_widget)</onclick>
+			<selected>Skin.HasSetting(home_movies_unwatched_widget)</selected>
+		</control>
 		<control type="radiobutton" id="22104">
 			<textcolor>text_primary</textcolor>
 			<include>NaraSkinSettingButton</include>
@@ -399,6 +406,13 @@
 			<label>$LOCALIZE[31712]</label>
 			<onclick>Skin.ToggleSetting(home_no_tvshows_premieres_widget)</onclick>
 			<selected>!Skin.HasSetting(home_no_tvshows_premieres_widget)</selected>
+		</control>
+		<control type="radiobutton" id="22111">
+			<textcolor>text_primary</textcolor>
+			<include>NaraSkinSettingButton</include>
+			<label>$LOCALIZE[31797]</label>
+			<onclick>Skin.ToggleSetting(home_tvshows_unwatched_widget)</onclick>
+			<selected>Skin.HasSetting(home_tvshows_unwatched_widget)</selected>
 		</control>
 		<control type="radiobutton" id="22104">
 			<textcolor>text_primary</textcolor>
