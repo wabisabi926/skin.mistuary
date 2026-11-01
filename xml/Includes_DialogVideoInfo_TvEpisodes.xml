@@ -152,6 +152,7 @@
 				<onup>5100</onup>
 				<ondown>5101</ondown>
 				<onclick>Action(Play)</onclick>
+				<onclick>Dialog.Close(movieinformation,true)</onclick>
 				<itemlayout width="356" height="224">
 					<control type="group">
 						<left>10</left>

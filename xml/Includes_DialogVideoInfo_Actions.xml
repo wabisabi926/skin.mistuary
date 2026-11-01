@@ -69,6 +69,7 @@
 						<onleft>5003</onleft>
 						<onright>5001</onright>
 						<onclick condition="String.IsEqual(ListItem.DBType,tvshow)">PlayMedia(videodb://tvshows/titles/$INFO[ListItem.DBID]/,resume,tvshowtarget)</onclick>
+						<onclick condition="String.IsEqual(ListItem.DBType,tvshow)">Dialog.Close(movieinformation,true)</onclick>
 						<onclick condition="!String.IsEqual(ListItem.DBType,tvshow)">SendClick(8)</onclick>
 					</control>
 				</control>
