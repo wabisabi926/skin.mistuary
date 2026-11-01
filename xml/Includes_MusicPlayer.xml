@@ -121,6 +121,10 @@
 		<control type="group">
 			<bottom>0</bottom>
 			<height>160</height>
+			<!-- 闲置 4 秒隐藏。用 System.IdleTime 而不是计时器+Skin 标志：
+			     标志在计时器停止后没人清，方向键回来时条还是隐藏的（实机踩过）。 -->
+			<visible>!Skin.HasSetting(MusicOSDAutoClose) | !System.IdleTime(4) | Window.IsVisible(musicosd) | Player.Seeking</visible>
+			<animation effect="fade" start="0" end="100" time="180" tween="sine" easing="out">VisibleChange</animation>
 			<!-- 去胶囊底后图标压在亮背景上看不清，补一层自下而上的柔和压暗。
 			     只压底部 220px，不影响封面和歌词。 -->
 			<!-- overlayfade.png 本身就是「上透明、下实」，不要再加 flipy（会翻成上实下透明，变成一条硬边黑带）。 -->

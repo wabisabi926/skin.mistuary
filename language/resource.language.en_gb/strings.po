@@ -1420,3 +1420,6 @@ msgctxt "#31791"
 msgid "Auto (local scraping only)"
 msgstr "Auto (local scraping only)"
 
+msgctxt "#31793"
+msgid "Automatically hide music OSD"
+msgstr "Automatically hide music OSD"
