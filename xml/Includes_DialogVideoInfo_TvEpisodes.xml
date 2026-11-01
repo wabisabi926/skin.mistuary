@@ -64,7 +64,7 @@
 			     action-bar cast icon, same as movies. -->
 			<control type="list" id="5100">
 				<left>80</left>
-				<top>788</top>
+				<top>770</top>
 				<width>1760</width>
 				<height>58</height>
 				<visible>!Skin.HasSetting(nara_cast_open)</visible>
@@ -105,7 +105,7 @@
 			     36 px gaps fit the row even when every label reaches its cap. -->
 			<control type="grouplist">
 				<left>80</left>
-				<top>788</top>
+				<top>770</top>
 				<width>1760</width>
 				<height>52</height>
 				<orientation>horizontal</orientation>
@@ -140,7 +140,7 @@
 			     the active scroll direction is preloaded. -->
 			<control type="panel" id="5101">
 				<left>70</left>
-				<top>850</top>
+				<top>830</top>
 				<width>1780</width>
 				<height>228</height>
 				<orientation>horizontal</orientation>
