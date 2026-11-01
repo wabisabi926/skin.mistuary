@@ -91,7 +91,7 @@
           <height>56</height>
           <orientation>horizontal</orientation>
           <onup>87</onup>
-          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">Nara.OSDPlaylistShelf</ondown>
+          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">ActivateWindow(1116)</ondown>
           <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
           <onleft>87</onleft>
           <onright>70046</onright>
@@ -133,7 +133,7 @@
           <height>56</height>
           <orientation>horizontal</orientation>
           <onup>87</onup>
-          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">Nara.OSDPlaylistShelf</ondown>
+          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">ActivateWindow(1116)</ondown>
           <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
           <onleft>603</onleft>
           <onright>70046</onright>
