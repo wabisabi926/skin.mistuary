@@ -14,8 +14,6 @@
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),15010)">SetFocus(15010)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),9017)">SetFocus(9017)</onload>
 	<onload>ClearProperty(Home.FileReturnControl,home)</onload>
-	<!-- Keep the drawer hidden during the initial visibility pass when returning from settings. -->
-	<onload>ClearProperty(Search.SettingsTransition,home)</onload>
 	<!-- Record file-entry focus at departure; opening settings must not reuse an old file selection. -->
 	<onunload>ClearProperty(Home.FileReturnControl,home)</onunload>
 	<onunload condition="Window.Next(filemanager) + Control.HasFocus(15010)">SetProperty(Home.FileReturnControl,15010,home)</onunload>
@@ -86,9 +84,6 @@
 			<include>FullScreenDimensions</include>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
 			<include content="NaraFanartReveal">
-				<param name="source" value="9090" />
-				<param name="enabled" value="$EXP[NaraHomeFanartSettledRow] + !System.HasActiveModalDialog" />
-				<param name="resting_opacity" value="20" />
 				<!-- 遮罩只在「真图」上出现；走 primary.jpg 兜底时不压暗（判据见 Includes_Home.xml）。 -->
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]] | [[!String.IsEqual(Window(home).Property(Home.Section),files) + !String.IsEqual(Window(home).Property(Home.Section),favorites)] + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]]" />
 			</include>
@@ -783,7 +778,6 @@
 							<param name="widget_header" value="$LOCALIZE[517]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7100"/>
-							<param name="fallback_icon" value="DefaultMusicAlbums.png"/>
 							<param name="onclick_condition" value="true"/>
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]"/>
 						</include>
@@ -792,7 +786,6 @@
 							<param name="widget_header" value="$LOCALIZE[359]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7200"/>
-							<param name="fallback_icon" value="DefaultMusicAlbums.png"/>
 							<param name="onclick_condition" value="true"/>
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]"/>
 						</include>
@@ -802,7 +795,6 @@
 							<param name="widget_target" value="music"/>
 							<param name="browse_mode" value="never"/>
 							<param name="list_id" value="7300"/>
-							<param name="fallback_icon" value="DefaultMusicAlbums.png"/>
 							<param name="onclick_condition" value="true"/>
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]"/>
 						</include>
@@ -812,14 +804,12 @@
 							<param name="widget_target" value="music"/>
 							<param name="browse_mode" value="never"/>
 							<param name="list_id" value="7400"/>
-							<param name="fallback_icon" value="DefaultMusicArtists.png"/>
 						</include>
 						<include content="WidgetListSquare" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_music_unplayedalbums_widget)">
 							<param name="content_path" value="special://skin/extras/playlists/home_unplayed_albums.xsp"/>
 							<param name="widget_header" value="$LOCALIZE[31014]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7500"/>
-							<param name="fallback_icon" value="DefaultMusicAlbums.png"/>
 							<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 							<param name="onclick_action" value="$VAR[AlbumOnClickActionVar]"/>
 							<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
@@ -830,7 +820,6 @@
 							<param name="widget_header" value="$LOCALIZE[31011]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7600"/>
-							<param name="fallback_icon" value="DefaultMusicAlbums.png"/>
 							<param name="sortby" value="playcount"/>
 							<param name="sortorder" value="descending"/>
 							<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>

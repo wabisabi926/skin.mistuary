@@ -20,7 +20,6 @@
 				<onleft>9001</onleft>
 				<include content="NaraDialogButtonSpacing">
 					<param name="value" value="8" />
-					<param name="legacy" value="-20" />
 				</include>
 				<control type="button" id="22">
 					<textcolor>text_primary</textcolor>
@@ -100,7 +99,6 @@
 				<orientation>vertical</orientation>
 				<include content="NaraSettingsSimpleListLayout">
 					<param name="width" value="600" />
-					<param name="list_id" value="10" />
 					<param name="focuscolor" value="glass_focus_medium" />
 					<param name="focusedselectedcolor" value="text_primary" />
 				</include>
@@ -127,13 +125,11 @@
 					<param name="id" value="20" />
 					<param name="label" value="$LOCALIZE[186]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="21" />
 					<param name="label" value="$LOCALIZE[222]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<height>300</height>
 			</control>

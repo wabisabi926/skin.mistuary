@@ -169,7 +169,6 @@
 				<height>600</height>
 				<include content="NaraDialogButtonSpacing">
 					<param name="value" value="8" />
-					<param name="legacy" value="-20" />
 				</include>
 				<align>center</align>
 				<orientation>vertical</orientation>

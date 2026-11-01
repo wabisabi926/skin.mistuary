@@ -110,7 +110,6 @@
 		<param name="info_update">0</param>
 		<param name="focus_textcolor">focus_foreground</param>
 		<param name="focus_surface">focus_surface</param>
-		<param name="focus_radius">0</param>
 		<definition>
 			<itemlayout height="100" infoupdate="$PARAM[info_update]">
 				<control type="progress">

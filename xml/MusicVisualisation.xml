@@ -193,41 +193,12 @@
 				     不在 Kodi 的 WindowTranslator 里，不能用 Window.IsVisible 查。 -->
 				<visible>String.IsEmpty(Window(home).Property(culrc.guirunning))</visible>
 				<include>NaraMusicLyricsFade</include>
-				<control type="grouplist">
-					<width>800</width>
-					<height>260</height>
-					<orientation>vertical</orientation>
-					<itemgap>16</itemgap>
-					<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.NextTitle))</visible>
-					<control type="label">
-						<height>32</height>
-						<font>font12</font>
-						<textcolor>80FFFFFF</textcolor>
-						<label>$VAR[NaraMusicNextHeadingVar]</label>
-					</control>
-					<control type="textbox">
-						<width>790</width>
-						<height min="48" max="112">auto</height>
-						<font>font36_title</font>
-						<textcolor>DFFFFFFF</textcolor>
-						<label>$INFO[Window(visualisation).Property(NaraMusic.NextTitle)]</label>
-					</control>
-					<control type="label">
-						<height>40</height>
-						<font>font27</font>
-						<textcolor>80FFFFFF</textcolor>
-						<label>$INFO[Window(visualisation).Property(NaraMusic.NextArtist)]</label>
-						<scroll>true</scroll>
-						<visible>!String.IsEmpty(Window(visualisation).Property(NaraMusic.NextArtist))</visible>
-					</control>
-				</control>
 				<control type="label">
 					<top>80</top>
 					<height>48</height>
 					<font>font27</font>
 					<textcolor>80FFFFFF</textcolor>
-					<label>$VAR[NaraMusicLyricsStatusVar]</label>
-					<visible>String.IsEmpty(Window(visualisation).Property(NaraMusic.NextTitle))</visible>
+					<label>$LOCALIZE[31701]</label>
 				</control>
 			</control>
 		</control>

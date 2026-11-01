@@ -26,8 +26,6 @@
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(501).ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">
-				<param name="source" value="5090" />
-				<param name="enabled" value="Control.HasFocus(501) + !System.HasActiveModalDialog" />
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(501).ListItem.Art(fanart))" />
 			</include>
 			<control type="image">

@@ -115,7 +115,6 @@
 					<param name="id" value="7" />
 					<param name="label" value="$LOCALIZE[222]" />
 					<param name="width" value="244" />
-					<param name="legacy_width" value="244" />
 				</include>
 				<width>244</width>
 			</control>

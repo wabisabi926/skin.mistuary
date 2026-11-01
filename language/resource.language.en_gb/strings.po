@@ -568,12 +568,6 @@ msgctxt "#31148"
 msgid "Categories"
 msgstr ""
 
-#: /xml/Includes.xml
-
-msgctxt "#31153"
-msgid "You do not have any add-ons of this type installed. Enter the add-on browser to download add-ons created by our community."
-msgstr ""
-
 #: /xml/VideoOSDBookmarks.xml
 
 msgctxt "#31155"
@@ -1059,10 +1053,6 @@ msgstr "Favourites as landscape"
 msgctxt "#31698"
 msgid "Favourites as landscape"
 msgstr "Show favourites as 16:9 cards. Off keeps the portrait poster layout."
-
-msgctxt "#31700"
-msgid "Loading lyrics…"
-msgstr ""
 
 #: /xml/MusicVisualisation.xml
 

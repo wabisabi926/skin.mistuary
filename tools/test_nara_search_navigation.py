@@ -8,11 +8,6 @@ from xml.etree import ElementTree as ET
 XML = Path(__file__).resolve().parents[1] / 'xml'
 SEARCH = ET.parse(XML / 'Includes_Search.xml').getroot()
 HOME = ET.parse(XML / 'Home.xml').getroot()
-SETTINGS_HUB = ET.parse(XML / 'Custom_1115_SettingsHub.xml').getroot()
-SETTINGS_ENTRY = ET.parse(XML / 'Includes_Settings.xml').find(
-    './/include[@name="NaraSettingsHubEntry"]//control[@type="button"]')
-SETTINGS_ENTRY = ET.fromstring(ET.tostring(SETTINGS_ENTRY, encoding='unicode').replace(
-    '$PARAM[modal]', 'True').replace('$PARAM[target]', 'interfacesettings'))
 INCLUDES = {node.get('name'): node for node in SEARCH.findall('include')}
 EXPRESSIONS = {node.get('name'): node.text for node in SEARCH.findall('expression')}
 
@@ -55,8 +50,6 @@ class Navigation:
         self.properties = {'Home.Section': 'search', **properties}
         self.focused = 9011
         self.modal = False
-        self.home_active = True
-        self.settings_target = ''
         self.positions = {16992: 0, 16994: 0, 16101: 0, 16102: 0}
         self.input_actions = []
 
@@ -75,7 +68,6 @@ class Navigation:
                                          else self.counts[int(m[2])] == int(m[3])), condition)
         condition = condition.replace('ControlGroup(16010).HasFocus()', str(self.focused in KEYBOARD_IDS))
         condition = condition.replace('System.HasActiveModalDialog', str(self.modal))
-        condition = condition.replace('Window.IsActive(home)', str(self.home_active))
         condition = condition.replace('!', ' not ').replace('+', ' and ').replace('|', ' or ')
         condition = condition.replace('[', '(').replace(']', ')')
         if re.sub(r'True|False|\band\b|\bor\b|\bnot\b|[()\s]', '', condition):
@@ -104,10 +96,6 @@ class Navigation:
                 self.properties[match[1]] = match[2]
             elif match := re.fullmatch(r'ClearProperty\(([^,]+),home\)', action):
                 self.properties.pop(match[1], None)
-            elif match := re.fullmatch(r'SetProperty\(SettingsHub.Target,([^,]+),1115\)', action):
-                self.settings_target = match[1]
-            elif action == 'Dialog.Close(1115)':
-                self.modal = False
             elif match := re.fullmatch(r'SetFocus\((\d+)\)', action):
                 self.focus(int(match[1]))
             elif action.startswith('Number') or action == 'Backspace':
@@ -285,73 +273,6 @@ class SearchDrawerTests(unittest.TestCase):
             self.assertEqual(n.hidden(), hidden)
             self.assertEqual(n.focused, focus)
             self.assertEqual(n.properties, properties)
-
-    def test_settings_destination_keeps_drawer_hidden_through_home_reinitialization(self):
-        for was_hidden in ('', 'true'):
-            with self.subTest(was_hidden=was_hidden):
-                n = Navigation('AB', 4, **{'Search.KeyboardHidden': was_hidden})
-                n.focused = 804
-                original = dict(n.properties)
-                n.modal = True
-                n.actions(SETTINGS_HUB, 'onload')
-                n.actions(SETTINGS_ENTRY, 'onclick')
-                self.assertEqual(n.settings_target, 'interfacesettings')
-                self.assertFalse(n.modal)
-                self.assertTrue(n.hidden(), 'Drawer reopened during dialog/Home close animations')
-                self.assertEqual(n.focused, 804)
-                self.assertEqual(n.query, 'AB')
-
-                cleanup = ET.Element('window')
-                cleanup.extend(node for node in HOME.findall('onunload')
-                               if node.text.startswith('ClearProperty('))
-                n.actions(cleanup, 'onunload')
-
-                # Home initializes its animation positions before reopening the settings hub.
-                initialized_hidden = n.hidden()
-                self.assertTrue(initialized_hidden, 'Home initialized the drawer open on return')
-                cleanup = ET.Element('window')
-                cleanup.extend(node for node in HOME.findall('onload')
-                               if node.text.startswith('ClearProperty('))
-                n.actions(cleanup, 'onload')
-                self.assertEqual(n.properties, original)
-                self.assertEqual(n.hidden(), bool(was_hidden), 'Direct Home return left stale suppression')
-
-                n.modal = True
-                n.actions(SETTINGS_HUB, 'onload')
-                self.assertEqual(n.hidden(), initialized_hidden, 'Drawer must not animate when the hub reopens')
-                n.modal = False
-                self.assertEqual(n.hidden(), bool(was_hidden))
-                self.assertEqual(n.properties, original)
-
-    def test_settings_cancel_and_failed_navigation_preserve_drawer_state(self):
-        for was_hidden in ('', 'true'):
-            for select_destination in (False, True):
-                with self.subTest(was_hidden=was_hidden, select_destination=select_destination):
-                    n = Navigation(**{'Search.KeyboardHidden': was_hidden})
-                    n.focused = 804
-                    original = dict(n.properties)
-                    n.modal = True
-                    n.actions(SETTINGS_HUB, 'onload')
-                    if select_destination:
-                        n.actions(SETTINGS_ENTRY, 'onclick')
-                        self.assertTrue(n.hidden())
-                        # A refused destination reopens the hub without unloading Home.
-                        n.modal = True
-                        n.actions(SETTINGS_HUB, 'onload')
-                    n.modal = False
-                    self.assertEqual(n.hidden(), bool(was_hidden))
-                    self.assertEqual(n.properties, original)
-
-    def test_settings_from_other_windows_or_home_sections_do_not_hide_search(self):
-        for home_active, section in ((False, 'search'), (True, 'movies')):
-            with self.subTest(home_active=home_active, section=section):
-                n = Navigation(**{'Home.Section': section})
-                n.home_active = home_active
-                original = dict(n.properties)
-                n.modal = True
-                n.actions(SETTINGS_HUB, 'onload')
-                n.actions(SETTINGS_ENTRY, 'onclick')
-                self.assertEqual(n.properties, original)
 
     def test_layout_reserves_digits_and_keeps_results_above_drawer(self):
         letters = CONTROLS[16992]

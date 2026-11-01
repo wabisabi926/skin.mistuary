@@ -17,7 +17,6 @@
 					<right>-20</right>
 					<width>634</width>
 					<include content="RightListPanel">
-						<param name="list_id" value="503" />
 					</include>
 					<control type="scrollbar" id="503600">
 						<left>20</left>

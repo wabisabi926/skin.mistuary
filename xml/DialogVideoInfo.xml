@@ -95,7 +95,6 @@
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">
-				<param name="source" value="5900" />
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))" />
 			</include>
 			<!-- Detail-only left reading scrim. A dedicated horizontal texture

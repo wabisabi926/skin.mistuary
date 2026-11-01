@@ -227,25 +227,21 @@
 					<param name="id" value="26" />
 					<param name="label" value="$LOCALIZE[137]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="29" />
 					<param name="label" value="$LOCALIZE[190]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="28" />
 					<param name="label" value="$LOCALIZE[13007]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="25" />
 					<param name="label" value="$LOCALIZE[222]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 			</control>
 		</control>

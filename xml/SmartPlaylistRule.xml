@@ -61,7 +61,6 @@
 				</control>
 				<include content="NaraDialogButtonSpacing">
 					<param name="value" value="8" />
-					<param name="legacy" value="0" />
 				</include>
 			</control>
 			<control type="grouplist" id="9000">

@@ -8,10 +8,7 @@
 		<value>fallback</value>
 	</variable>
 	<include name="NaraFanartReveal">
-		<param name="source">0</param>
-		<param name="enabled">true</param>
 		<param name="visible">true</param>
-		<param name="resting_opacity">16</param>
 		<definition>
 			<control type="image">
 				<left>-960</left>

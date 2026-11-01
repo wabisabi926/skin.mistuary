@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<expression name="nara_settings_osd">Window.IsActive(osdvideosettings) | Window.IsActive(osdaudiosettings) | Window.IsActive(osdsubtitlesettings) | Window.IsActive(osdcmssettings)</expression>
-	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(1115) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
+	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
 	<include name="NaraSettingsBackground">
 		<definition>
 			<include>DefaultBackground</include>
@@ -198,7 +198,6 @@
 		<param name="left">noop</param>
 		<param name="right">noop</param>
 		<param name="secondary">false</param>
-		<param name="modal">false</param>
 		<definition>
 			<control type="group">
 				<left>$PARAM[x]</left>
@@ -219,11 +218,7 @@
 					<textcolor>text_primary</textcolor>
 					<selectedcolor>text_primary</selectedcolor>
 					<texturefocus colordiffuse="glass_focus_light" border="18">shapes/round18.png</texturefocus>
-					<onclick condition="$PARAM[modal]">SetProperty(SettingsHub.Target,$PARAM[target],1115)</onclick>
-					<!-- Keep the drawer hidden through the dialog and Home close animations. -->
-					<onclick condition="$PARAM[modal] + Window.IsActive(home) + String.IsEqual(Window(home).Property(Home.Section),search)">SetProperty(Search.SettingsTransition,true,home)</onclick>
-					<onclick condition="$PARAM[modal]">Dialog.Close(1115)</onclick>
-					<onclick condition="!$PARAM[modal]">ActivateWindow($PARAM[target])</onclick>
+					<onclick>ActivateWindow($PARAM[target])</onclick>
 				</control>
 				<control type="image">
 					<left>24</left>
@@ -269,7 +264,6 @@
 		</definition>
 	</include>
 	<include name="NaraSettingsHub">
-		<param name="modal">false</param>
 		<definition>
 			<control type="group">
 				<centerleft>50%</centerleft>
@@ -293,7 +287,6 @@
 					<param name="down" value="105" />
 					<param name="left" value="104" />
 					<param name="right" value="102" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="102" />
@@ -305,7 +298,6 @@
 					<param name="down" value="106" />
 					<param name="left" value="101" />
 					<param name="right" value="103" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="103" />
@@ -317,7 +309,6 @@
 					<param name="down" value="107" />
 					<param name="left" value="102" />
 					<param name="right" value="104" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<!-- 通用版：这个磁贴原本是坏的（标签 $LOCALIZE[70127] 解析为空、
 				     目标窗口 narapekasettings 是原魔改内核的设置窗口、本皮肤不存在），
@@ -333,7 +324,6 @@
 					<param name="down" value="108" />
 					<param name="left" value="103" />
 					<param name="right" value="101" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="105" />
@@ -346,7 +336,6 @@
 					<param name="down" value="109" />
 					<param name="left" value="108" />
 					<param name="right" value="106" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="106" />
@@ -359,7 +348,6 @@
 					<param name="down" value="110" />
 					<param name="left" value="105" />
 					<param name="right" value="107" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="107" />
@@ -372,7 +360,6 @@
 					<param name="down" value="111" />
 					<param name="left" value="106" />
 					<param name="right" value="108" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="108" />
@@ -385,7 +372,6 @@
 					<param name="down" value="112" />
 					<param name="left" value="107" />
 					<param name="right" value="105" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="109" />
@@ -400,7 +386,6 @@
 					<param name="right" value="110" />
 					<param name="secondary" value="true" />
 					<param name="height" value="106" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="110" />
@@ -415,7 +400,6 @@
 					<param name="right" value="111" />
 					<param name="secondary" value="true" />
 					<param name="height" value="106" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="111" />
@@ -430,7 +414,6 @@
 					<param name="right" value="112" />
 					<param name="secondary" value="true" />
 					<param name="height" value="106" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<include content="NaraSettingsHubEntry">
 					<param name="id" value="112" />
@@ -445,7 +428,6 @@
 					<param name="right" value="109" />
 					<param name="secondary" value="true" />
 					<param name="height" value="106" />
-					<param name="modal" value="$PARAM[modal]" />
 				</include>
 				<control type="image">
 					<left>52</left>

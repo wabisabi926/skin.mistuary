@@ -875,7 +875,6 @@
 	     几何：封面 221×221（遮盖 r9）+ 环 227×227 r12（外扩 3px、描边 3px →
 	     环内缘半径正好 9，与遮盖弧度对齐），描边正好填满那 3px，视觉上紧贴图片。 -->
 	<include name="HomeWidgetAlbumCard">
-		<param name="fallback_image">DefaultFolder.png</param>
 		<param name="main_label">$INFO[ListItem.Artist]</param>
 		<param name="sub_label">$INFO[ListItem.Title]</param>
 		<param name="single_label">$INFO[ListItem.Label]</param>
@@ -954,7 +953,6 @@
 		<param name="visible">True</param>
 		<param name="sortorder">ascending</param>
 		<param name="widget_limit">20</param>
-		<param name="fallback_icon">DefaultAudio.png</param>
 		<param name="onclick_condition">false</param>
 		<param name="onclick_action">noop</param>
 		<param name="onclick_condition_2">false</param>
@@ -1042,10 +1040,8 @@
 		<param name="additional_music_items">false</param>
 		<param name="dynamic_content">true</param>
 		<param name="visible">true</param>
-		<param name="browse">auto</param>
 		<param name="focus_zoom">104</param>
 		<param name="label_font">font25_narrow</param>
-		<param name="glass_corner_radius">32</param>
 		<definition>
 			<include content="CategoryLabel">
 				<param name="label">$PARAM[widget_header]</param>

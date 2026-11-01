@@ -9,7 +9,7 @@
 `--orphans` / `--dead` 是**报告模式**，永远返回 0（只提示，不进 CI 闸门）。
 
 退出码：发现"硬错误"（XML 解析失败、缺失 include / 变量 / 字体 / 贴图、
-$MAP 缺 Kodi 21 守卫）返回 1；只有软提示（皮肤字符串缺失）返回 0。
+$MAP 与 addon.xml 的 xbmc.gui 版本不匹配）返回 1；只有软提示（皮肤字符串缺失）返回 0。
 `--strict` 时软提示也算失败。
 
 皮肤设置的"有读无写 / 有写无读"只做提示，不影响退出码——设置可能由外部
@@ -28,6 +28,28 @@ ROOT = Path(__file__).resolve().parent.parent
 XML = ROOT / "xml"
 MEDIA = ROOT / "media"
 LANG = ROOT / "language"
+
+
+def addon_gui_version() -> tuple[int, int]:
+    """从 addon.xml 读取 xbmc.gui 最低版本；读不到按 0.0 处理。"""
+    try:
+        root = ET.parse(ROOT / "addon.xml").getroot()
+    except (ET.ParseError, OSError):
+        return (0, 0)
+    import_el = root.find("./requires/import[@addon='xbmc.gui']")
+    if import_el is None or not import_el.get("version"):
+        return (0, 0)
+    try:
+        parts = [int(part) for part in import_el.get("version").split(".")[:2]]
+    except ValueError:
+        return (0, 0)
+    while len(parts) < 2:
+        parts.append(0)
+    return (parts[0], parts[1])
+
+
+GUI_VERSION = addon_gui_version()
+MAP_SUPPORTED = GUI_VERSION >= (5, 18)
 
 # 贴图存在性：三种写法都要认，否则会漏报（或误报）
 #   ① 相对 media/ 的短名（`shapes/glass20.png`）—— 皮肤里最常见
@@ -68,12 +90,12 @@ FORK_ATTRS = [
     "playbacktarget", "checkautoplaynextitem", "focusplaying",
 ]
 
-# 只在 Kodi 22 才有的写法（21 上会原样显示成表达式文本）
+# 只在 Kodi 22 才有的写法；addon.xml 声明 xbmc.gui 5.18.0 后才允许使用。
 KODI22_ONLY = ["$MAP[", "$ESCMAP["]
 
 # Kodi 的 GUIControlFactory::GetTexture 只解析这些属性，其余一律静默忽略。
 # fallback= 是 Kodi 22 新增的贴图级兜底（官方 Estuary 22 大量使用），
-# 缺图时显示占位贴图；Kodi 21 会忽略该属性，只影响兜底效果，不会报错。
+# 缺图时显示占位贴图；更老的 Kodi 会忽略该属性，只影响兜底效果，不会报错。
 TEXTURE_ATTRS_OK = {
     "border", "infill", "flipx", "flipy", "diffuse",
     "colordiffuse", "background", "mipmap", "subpixel",
@@ -142,8 +164,7 @@ SCRIM_TOKENS = (
 )
 # 有意不加全屏遮蔽的浮窗：
 #   DialogNotification       瞬时提示条，加全屏遮蔽会干扰观看
-#   Custom_1100_AddonLauncher 整页（不是浮窗），靠自己的背景层压暗
-SCRIM_EXEMPT = {"DialogNotification.xml", "Custom_1100_AddonLauncher.xml"}
+SCRIM_EXEMPT = {"DialogNotification.xml"}
 
 HARDCODED_BLACK_SCRIM = re.compile(
     r'colordiffuse="([0-9A-Fa-f]{8})"[^>]*>colors/black\.png'
@@ -202,7 +223,6 @@ def main() -> int:
     kodi22_hits: dict[str, list[str]] = defaultdict(list)
     texture_attr_hits: dict[str, list[str]] = defaultdict(list)
     parse_errors: list[str] = []
-    has_kodi21_guard = False
     raw_texts: list[tuple[str, str]] = []
 
     for path in files:
@@ -223,8 +243,6 @@ def main() -> int:
                 variables_defined.add(node.get("name"))
             elif tag == "font" and node.find("name") is not None:
                 fonts_defined.add((node.find("name").text or "").strip())
-            elif tag == "expression" and node.get("name") == "nara_kodi21":
-                has_kodi21_guard = True
 
             # 只统计真实节点：注释已被 ElementTree 丢弃，不会误报
             for attr_name in node.attrib:
@@ -302,8 +320,9 @@ def main() -> int:
     print(f"\n## 仅 Kodi 22 支持的写法：{len(kodi22_hits)} 类")
     for token, where in sorted(kodi22_hits.items()):
         print(f"  - {token}  ← {', '.join(sorted(set(where)))}")
-    if kodi22_hits and not has_kodi21_guard:
-        print("  ! 用了 $MAP 却没有 nara_kodi21 表达式，Kodi 21 上会原样显示表达式文本")
+    if kodi22_hits and not MAP_SUPPORTED:
+        print("  ! 用了 $MAP，但 addon.xml 的 xbmc.gui 版本低于 5.18.0；"
+              "Kodi 21 上会原样显示表达式文本")
 
     print(f"\n## Kodi 不解析的 <texture> 属性：{len(texture_attr_hits)} 类")
     if texture_attr_hits:
@@ -365,7 +384,7 @@ def main() -> int:
         print("\n## 贴图引用总数", len(textures_used))
 
     if (parse_errors or missing_include or missing_var or missing_font or missing_texture
-            or (kodi22_hits and not has_kodi21_guard)):
+            or (kodi22_hits and not MAP_SUPPORTED)):
         return 1
     if strict and missing_loc:
         return 1

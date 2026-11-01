@@ -32,7 +32,6 @@
 				<scrolltime>200</scrolltime>
 				<include content="NaraSettingsSimpleListLayout">
 					<param name="width" value="880" />
-					<param name="list_id" value="3" />
 					<param name="selectedcolor" value="focus_indicator" />
 					<param name="focusedselectedcolor" value="text_primary" />
 					<param name="labelright" value="70" />
@@ -192,19 +191,16 @@
 					<param name="id" value="5" />
 					<param name="label" value="" />
 					<param name="width" value="244" />
-					<param name="legacy_width" value="244" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="8" />
 					<param name="label" value="" />
 					<param name="width" value="244" />
-					<param name="legacy_width" value="244" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="7" />
 					<param name="label" value="$LOCALIZE[222]" />
 					<param name="width" value="244" />
-					<param name="legacy_width" value="244" />
 				</include>
 				<width>244</width>
 			</control>
@@ -383,7 +379,6 @@
 				<scrolltime>200</scrolltime>
 				<include content="DefaultSimpleListLayout">
 					<param name="width" value="880" />
-					<param name="list_id" value="3" />
 				</include>
 			</control>
 			<control type="fixedlist" id="6">
@@ -581,7 +576,6 @@
 				<include>NaraStreamDialogVerticalOffset</include>
 				<include content="DefaultSimpleListLayout">
 					<param name="width" value="1000" />
-					<param name="list_id" value="3" />
 				</include>
 			</control>
 			<control type="fixedlist" id="6">
@@ -797,7 +791,6 @@
 				<include>NaraStreamDialogVerticalOffset</include>
 				<include content="DefaultSimpleListLayout">
 					<param name="width" value="1000" />
-					<param name="list_id" value="3" />
 				</include>
 			</control>
 			<control type="fixedlist" id="6">
@@ -989,7 +982,6 @@
 				<scrolltime>200</scrolltime>
 				<include content="NaraSettingsSimpleListLayout">
 					<param name="width" value="916" />
-					<param name="list_id" value="3" />
 					<param name="selectedcolor" value="text_primary" />
 					<param name="focusedselectedcolor" value="text_primary" />
 					<param name="labelright" value="70" />

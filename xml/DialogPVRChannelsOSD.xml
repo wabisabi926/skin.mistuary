@@ -32,7 +32,6 @@
 						<param name="list_id" value="11" />
 						<param name="focus_textcolor" value="text_primary" />
 						<param name="focus_surface" value="glass_focus_medium" />
-						<param name="focus_radius" value="4" />
 						<param name="label1" value="$INFO[ListItem.Label]" />
 						<param name="has_status_icon" value="true" />
 						<param name="info_update" value="5000" />

@@ -3,8 +3,6 @@
 	<include name="InfoWallPictureLayout">
 		<param name="focused">false</param>
 		<param name="textcolor">text_primary</param>
-		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
-		<param name="focus_border">2</param>
 		<param name="focus_left">-13.727273</param>
 		<param name="focus_top">-23.727273</param>
 		<param name="focus_width">403.454546</param>
@@ -56,15 +54,12 @@
 		</definition>
 	</include>
 	<include name="InfoWallMusicLayout">
-		<param name="fallback_image">DefaultFolder.png</param>
 		<param name="main_label">$INFO[ListItem.Artist]</param>
 		<param name="sub_label">$INFO[ListItem.Title]</param>
 		<param name="single_label">$INFO[ListItem.Label]</param>
 		<param name="focused">false</param>
 		<param name="textcolor">text_primary</param>
 		<param name="subtextcolor">text_secondary</param>
-		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
-		<param name="focus_border">2</param>
 		<param name="focus_left">-13.727273</param>
 		<param name="focus_top">-13.727273</param>
 		<param name="focus_width">343.454546</param>
@@ -148,14 +143,11 @@
 		<param name="main_label">$INFO[ListItem.Title]</param>
 		<param name="sub_label">$INFO[ListItem.TVShowTitle]</param>
 		<param name="thumb_label">$INFO[ListItem.Season,,x]$INFO[ListItem.Episode]</param>
-		<param name="fallback_image">DefaultTVShows.png</param>
 		<param name="focused">false</param>
 		<param name="textcolor">text_primary</param>
 		<param name="subtextcolor">text_secondary</param>
 		<param name="progresscolor">progress_playback</param>
 		<param name="progress_height">1</param>
-		<!-- Native 2 px focus outline with a 14 px outer radius and 12 px glow. -->
-		<param name="focus_border">2</param>
 		<param name="focus_left">-13.727273</param>
 		<param name="focus_top">-3.727273</param>
 		<param name="focus_width">343.454546</param>
@@ -314,7 +306,6 @@
 		     环外半径 13 = 遮罩半径 12 + 1，圆心与海报圆角同心（12−1+13 = 12+12 = 24）。
 		     **不要加 bordersize**：有它控件会变成 CGUIBorderedImage 走九宫格，
 		     而描边环必须是 1:1 整图（见 tools/gen_rings.py 的文件头）。 -->
-		<param name="focus_border">2</param>
 		<param name="focus_left">11</param>
 		<param name="focus_top">-1</param>
 		<param name="focus_width">238</param>
@@ -428,7 +419,6 @@
 		<param name="caption_title_color">text_primary</param>
 		<param name="caption_year_color">text_secondary</param>
 		<!-- 和 InfoWallMovieLayout 对齐：环外扩 1px、半径 = 遮罩半径 + 1（内缘压进海报 2px）。 -->
-		<param name="focus_border">2</param>
 		<param name="focus_left">11</param>
 		<param name="focus_top">-1</param>
 		<param name="focus_width">238</param>
@@ -566,7 +556,6 @@
 						<left>40</left>
 						<include content="InfoWallMusicLayout">
 							<param name="focused" value="true" />
-							<param name="focus_border" value="2" />
 							<param name="focus_left" value="-13.608696" />
 							<param name="focus_top" value="-13.608696" />
 							<param name="focus_width" value="343.217392" />

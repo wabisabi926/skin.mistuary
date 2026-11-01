@@ -17,10 +17,6 @@
 		<value condition="String.IsEmpty(Container.PluginName)">$INFO[ListItem.FolderPath]</value>
 		<value></value>
 	</variable>
-	<variable name="AddonCountLabel">
-		<value condition="Integer.IsGreater(System.AddonUpdateCount,0)">$INFO[System.AddonUpdateCount]</value>
-		<value>$INFO[System.AddonUpdateCount,[COLOR grey],[/COLOR]]</value>
-	</variable>
 	<variable name="NowPlayingSublabelVar">
 		<value condition="VideoPlayer.Content(musicvideos)">$INFO[VideoPlayer.Artist]$INFO[VideoPlayer.Album, - ]</value>
 		<value condition="VideoPlayer.Content(episodes)">$INFO[VideoPlayer.TvShowTitle]</value>
@@ -637,13 +633,6 @@
 	<variable name="PlayerClearLogoVar">
 		<value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
 		<value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
-	</variable>
-	<variable name="AddonsFanartVar">
-		<value condition="Skin.HasSetting(no_fanart)"></value>
-		<value condition="Window.IsActive(musicinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo)">$INFO[Window(home).Property(infobackground)]</value>
-		<value condition="!String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
-		<!-- 插件启动器背景兜底：条目没有 fanart 时用 primary.jpg（no_fanart 分支在前，仍返回空） -->
-		<value>special://skin/extras/backgrounds/primary.jpg</value>
 	</variable>
 	<variable name="HomeNavSearchTextColorVar">
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),search) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus">text_primary</value>
@@ -1598,7 +1587,7 @@
 		<value condition="!String.IsEmpty(Skin.String(Nara.MusicBackground))">$INFO[Skin.String(Nara.MusicBackground)]</value>
 		<value>osd/nara/music-background.jpg</value>
 	</variable>
-	<!-- BEGIN generated: technical flag maps (Kodi 21 compatible) -->
+	<!-- BEGIN generated: technical flag maps -->
 	<variable name="NaraTechHdrPlayer">
 		<value condition="String.IsEqual(VideoPlayer.HdrType,dolbyvision)">DOLBY VISION</value>
 		<value condition="String.IsEqual(VideoPlayer.HdrType,hdr10plus)">HDR10+</value>
@@ -1660,7 +1649,7 @@
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,wmav2)">WMA</value>
 		<value>$INFO[VideoPlayer.AudioCodec]</value>
 	</variable>
-	<!-- END generated: technical flag maps (Kodi 21 compatible) -->
+	<!-- END generated: technical flag maps -->
 
 	<!-- 首页方块 widget（专辑/歌手）的封面。
 	     不能直接用 InfoWallThumbVar：它的兜底是 DefaultVideo.png（平均亮度只有 37，几乎全黑），

@@ -21,10 +21,6 @@
 		<value condition="String.IsEmpty(MusicPlayer.Album)">$INFO[MusicPlayer.Year]</value>
 		<value>$INFO[MusicPlayer.Album]$INFO[MusicPlayer.Year, · ]</value>
 	</variable>
-	<variable name="NaraMusicNextHeadingVar">
-		<value condition="Playlist.IsRepeatOne">$LOCALIZE[596]</value>
-		<value>$LOCALIZE[19031]</value>
-	</variable>
 	<variable name="NaraMusicMuteLabelVar">
 		<value condition="Player.Muted">$LOCALIZE[16041]</value>
 		<value>$LOCALIZE[16039]</value>
@@ -44,10 +40,6 @@
 	<variable name="NaraMusicShuffleColorVar">
 		<value condition="Playlist.IsRandom">FFFFFFFF</value>
 		<value>80FFFFFF</value>
-	</variable>
-	<variable name="NaraMusicLyricsStatusVar">
-		<value condition="String.IsEqual(Window(visualisation).Property(NaraMusic.LyricsLoading),true)">$LOCALIZE[31700]</value>
-		<value>$LOCALIZE[31701]</value>
 	</variable>
 	<variable name="NaraMusicControlLabelVar">
 		<value condition="Control.HasFocus(87)">$LOCALIZE[31775]</value>

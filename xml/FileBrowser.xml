@@ -29,27 +29,23 @@
 					<param name="id" value="413" />
 					<param name="label" value="$LOCALIZE[186]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="414" />
 					<param name="label" value="$LOCALIZE[222]" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="415" />
 					<param name="label" value="$LOCALIZE[119]" />
 					<param name="visible" value="Control.IsEnabled(415)" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="416" />
 					<param name="label" value="$LOCALIZE[749]" />
 					<param name="visible" value="Control.IsEnabled(416)" />
 					<param name="width" value="260" />
-					<param name="legacy_width" value="260" />
 				</include>
 			</control>
 			<control type="image">

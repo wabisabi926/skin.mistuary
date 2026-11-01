@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """把 Includes_VideoTechnicalFlags.xml 里的 <map> 展开成条件 <variable>。
 
-背景：`$MAP[]` 是 Kodi 22 才加的标签查表语法，21 的解析器只认
-`$INFO/$ESCINFO/$VAR/$ESCVAR`（见 21.2 的 guiinfo/GUIInfoLabel.cpp）。
+背景：`$MAP[]` 是 Kodi 22 的标签查表语法。addon.xml 已声明
+`xbmc.gui 5.18.0`（Kodi 22 only），所以不再保留 Kodi 21 的退化分支。
 
 凡是"标签名写死"的地方（例如 `VideoPlayer.AudioCodec`），用 `String.IsEqual`
-条件链就能还原出和 `$MAP` 一样的显示名，21/22 都能用。
+条件链就能还原出和 `$MAP` 一样的显示名。
 "标签名由 `$PARAM` 传入"的地方（详情页技术标识，容器 id 会变）无法用静态变量表达，
-那里保留 `$MAP`，并用 `$EXP[nara_kodi21]` 在 21 上退化成原始值。
+那里保留 `$MAP`。
 
 本脚本只生成"标签名固定"的那一族（Player），写进 Variables.xml 的标记区间，
 可重复执行；`--check` 供 CI 校验是否与 map 同步。
@@ -28,8 +28,8 @@ XML = ROOT / "xml"
 SRC = XML / "Includes_VideoTechnicalFlags.xml"
 DST = XML / "Variables.xml"
 
-BEGIN = "\t<!-- BEGIN generated: technical flag maps (Kodi 21 compatible) -->"
-END = "\t<!-- END generated: technical flag maps (Kodi 21 compatible) -->"
+BEGIN = "\t<!-- BEGIN generated: technical flag maps -->"
+END = "\t<!-- END generated: technical flag maps -->"
 
 # map 名 -> (变量名中缀, VideoPlayer 命名空间下的标签名)
 MAPS = {

@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <colors>
 	<!-- Base surfaces -->
-	<color name="background_base">FF000000</color>
 	<!-- primary.jpg 兜底背景一律不压：这张图本身平均亮度只有 75/255（深蓝紫渐变），
 	     再乘 25% 只剩 19/255，等于没有背景（2026-10-31 用户反馈「黑乎乎」）。
 	     三个名字保留，是为了以后想单独调某一处；默认全是 100%。 -->
 	<color name="primary_background">FFFFFFFF</color>
 	<color name="primary_background_info">FFFFFFFF</color>
 	<color name="search_backdrop">FFFFFFFF</color>
-	<color name="surface_main">FF3A3542</color>
-	<color name="surface_panel">FF131218</color>
-	<color name="surface_dialog">FF18171E</color>
-	<color name="surface_dialog_header">FF201E27</color>
-	<color name="surface_subtle">12FFFFFF</color>
 	<color name="surface_raised">33FFFFFF</color>
 	<!-- Foreground hierarchy -->
 	<color name="text_primary">FFEDEDED</color>
 	<color name="text_secondary">B3EDEDED</color>
 	<color name="text_muted">80EDEDED</color>
 	<color name="text_disabled">4DEDEDED</color>
-	<color name="text_subtle">1FEDEDED</color>
 
 	<!-- Focus hierarchy -->
 	<color name="focus_surface">FFEDEDED</color>
@@ -38,7 +31,6 @@
 	<!-- Persistent selection -->
 	<color name="selection_surface">33FFFFFF</color>
 	<color name="selection_foreground">E7EDEDED</color>
-	<color name="badge_surface">E7181818</color>
 	<color name="badge_foreground">FFEDEDED</color>
 
 	<!-- Borders and separators -->
@@ -49,23 +41,13 @@
 	<color name="artwork_background">66FFFFFF</color>
 	<color name="artwork_background_opaque">FF808080</color>
 	<color name="artwork_movieset_background">B3FFFFFF</color>
-	<color name="artwork_dim">44FFFFFF</color>
-	<color name="artwork_placeholder">FF555555</color>
-	<color name="opacity_soft">80FFFFFF</color>
 	<color name="opacity_medium">A0FFFFFF</color>
 	<color name="opacity_high">CCFFFFFF</color>
 	<color name="opacity_strong">E6FFFFFF</color>
-	<color name="overlay_subtle">66000000</color>
-	<color name="overlay_soft">80000000</color>
-	<color name="overlay_medium">B3000000</color>
-	<color name="overlay_strong">E7000000</color>
 	<color name="card_caption_surface">D916151C</color>
 
 	<!-- Depth shadows; text does not use shadows -->
-	<color name="shadow_soft">1A000000</color>
 	<color name="shadow_hard">80000000</color>
-	<color name="shadow_opaque">FF000000</color>
-	<color name="shadow_none">00000000</color>
 
 	<!-- Progress and semantic status -->
 	<color name="progress_track">60FFFFFF</color>
@@ -117,30 +99,18 @@
 	<!-- ===== 浮窗遮蔽层（scrim）=====
 	     与玻璃面板分工：scrim 管「底噪」（把底下的画面压到认不出），
 	     玻璃面板管「质感」（中心实、边缘化开）。
-	     实际生效的是上面的 sc_1..5 档位；下面这三个是固定用途 / 兼容别名。 -->
-	<color name="scrim_dialog">99000000</color>
-	<color name="scrim_sheet">8C000000</color>
+	     实际生效的是上面的 sc_1..6 档位；scrim_osd 是播放中浮窗的固定 30% 遮蔽。 -->
 	<color name="scrim_osd">4D000000</color>
 
 	<!-- 实心浅底上的深色文字（目前只有详情页的播放键在用） -->
 	<color name="ink_primary">FF14141A</color>
 
 	<!-- Existing names retained as compatibility aliases -->
-	<color name="secondary_background">1FFFFFFF</color>
-	<color name="dialog_tint">FF18171E</color>
-	<color name="dialog_header_tint">FF201E27</color>
 	<color name="background">FF000000</color>
-	<color name="bg_image">B3FFFFFF</color>
-	<color name="bg_overlay">60FFFFFF</color>
 	<color name="black">FF000000</color>
 	<color name="white">FFEDEDED</color>
 	<color name="grey">B3EDEDED</color>
-	<color name="poster_year">E7EDEDED</color>
-	<color name="blue">FFEDEDED</color>
 	<color name="red">FFCE4421</color>
-	<color name="button_focus">FFEDEDED</color>
-	<color name="button_alt_focus">B3EDEDED</color>
-	<color name="text_shadow">00000000</color>
 	<color name="border_alpha">1FFFFFFF</color>
 	<color name="disabled">4DEDEDED</color>
 	<color name="selected">E7EDEDED</color>

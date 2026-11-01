@@ -27,7 +27,6 @@
 				<visible>Control.IsVisible(55)</visible>
 				<include>Visible_Left</include>
 				<include content="WideListPreview">
-					<param name="fallback_image" value="$PARAM[preview_fallback]" />
 				</include>
 			</control>
 			<control type="group">
@@ -248,7 +247,6 @@
 		</definition>
 	</include>
 	<include name="WideListPreview">
-		<param name="fallback_image">DefaultFolder.png</param>
 		<definition>
 			<control type="group">
 				<depth>DepthContentPanel</depth>

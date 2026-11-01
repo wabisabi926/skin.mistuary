@@ -182,26 +182,6 @@
 				<onright>50</onright>
 				<onback>50</onback>
 			</control>
-			<!-- The negative top offset overlays the count on the preceding choice without
-			     changing the scrolling layout. Its unique ID keeps grouplist navigation intact. -->
-			<control type="group" id="$PARAM[count_control_id]">
-				<left>310</left>
-				<top>-48</top>
-				<width>54</width>
-				<height>48</height>
-				<control type="label">
-					<width>54</width><height>48</height>
-					<font>font10</font><align>right</align><aligny>center</aligny>
-					<textcolor>text_secondary</textcolor><label>$PARAM[count_label]</label>
-					<visible>!Control.HasFocus($PARAM[control_id])</visible>
-				</control>
-				<control type="label">
-					<width>54</width><height>48</height>
-					<font>font10</font><align>right</align><aligny>center</aligny>
-					<textcolor>text_primary</textcolor><label>$PARAM[count_label]</label>
-					<visible>Control.HasFocus($PARAM[control_id])</visible>
-				</control>
-			</control>
 		</definition>
 	</include>
 	<include name="NaraVideoLibraryMediaMenuList">
@@ -254,9 +234,9 @@
 				<onup>9120</onup><ondown>9120</ondown>
 				<onleft>9110</onleft><onright>50</onright><onback>50</onback>
 				<include content="NaraMediaMenuSectionLabel"><param name="control_id" value="9201" /><param name="label" value="$LOCALIZE[31684]" /></include>
-				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9111" /><param name="count_control_id" value="9211" /><param name="label" value="$LOCALIZE[16100]" /><param name="count_label" value="$INFO[Window.Property(NaraMediaMenu.AllCount)]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])" /></include>
-				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9112" /><param name="count_control_id" value="9212" /><param name="label" value="$LOCALIZE[16101]" /><param name="count_label" value="$INFO[Window.Property(NaraMediaMenu.UnwatchedCount)]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])" /></include>
-				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9113" /><param name="count_control_id" value="9213" /><param name="label" value="$LOCALIZE[16102]" /><param name="count_label" value="$INFO[Window.Property(NaraMediaMenu.WatchedCount)]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /></include>
+				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9111" /><param name="label" value="$LOCALIZE[16100]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])" /></include>
+				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9112" /><param name="label" value="$LOCALIZE[16101]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16102])" /></include>
+				<include content="NaraMediaMenuWatchedChoice"><param name="control_id" value="9113" /><param name="label" value="$LOCALIZE[16102]" /><param name="one_click_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16101])" /><param name="two_clicks_from" value="String.IsEqual(Control.GetLabel(10),$LOCALIZE[16100])" /></include>
 				<include content="NaraMediaMenuDivider"><param name="control_id" value="9202" /><param name="visible" value="$EXP[nara_video_library_advanced_filters]" /></include>
 				<!-- 筛选交给 Kodi 原生媒体筛选对话框（Action(Filter) → CGUIDialogMediaFilter）。
 				     它走 DialogSettings.xml，皮肤底部本来就有 OK(28) / 取消(29) / 清除(30)，

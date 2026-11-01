@@ -64,7 +64,7 @@
 	<expression name="NaraSearchMoviesActive">Integer.IsGreater(Container(16101).NumItems,0) + [!String.IsEqual(Window(home).Property(Search.ActiveType),tvshows) | Integer.IsEqual(Container(16102).NumItems,0)]</expression>
 	<expression name="NaraSearchTVShowsActive">Integer.IsGreater(Container(16102).NumItems,0) + [String.IsEqual(Window(home).Property(Search.ActiveType),tvshows) | Integer.IsEqual(Container(16101).NumItems,0)]</expression>
 	<expression name="NaraSearchHasResults">!String.IsEmpty(Control.GetLabel(16999).index(1)) + [Integer.IsGreater(Container(16101).NumItems,0) | Integer.IsGreater(Container(16102).NumItems,0)]</expression>
-	<expression name="NaraSearchKeyboardHidden">!String.IsEqual(Window(home).Property(Home.Section),search) | System.HasActiveModalDialog | !String.IsEmpty(Window(home).Property(Search.SettingsTransition)) | [!ControlGroup(16010).HasFocus() + !String.IsEmpty(Window(home).Property(Search.KeyboardHidden))]</expression>
+	<expression name="NaraSearchKeyboardHidden">!String.IsEqual(Window(home).Property(Home.Section),search) | System.HasActiveModalDialog | [!ControlGroup(16010).HasFocus() + !String.IsEmpty(Window(home).Property(Search.KeyboardHidden))]</expression>
 	<variable name="NaraSearchFanartVar">
 		<value condition="$EXP[NaraSearchMoviesActive]">$INFO[Container(16101).ListItem.Art(fanart)]</value>
 		<value condition="$EXP[NaraSearchTVShowsActive]">$INFO[Container(16102).ListItem.Art(fanart)]</value>
@@ -571,8 +571,6 @@
 			<texture flipy="true" colordiffuse="33FFFFFF">overlays/overlayfade.png</texture>
 		</control>
 		<include content="NaraFanartReveal">
-			<param name="source" value="16590" />
-			<param name="enabled" value="[Control.HasFocus(16101) | Control.HasFocus(16102)] + !System.HasActiveModalDialog" />
 			<param name="visible" value="!Skin.HasSetting(no_fanart) + [[!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [!String.IsEmpty(Control.GetLabel(16999).index(1)) + $EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))] | [String.IsEmpty(Control.GetLabel(16999).index(1)) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]]]" />
 		</include>
 		<control type="image">

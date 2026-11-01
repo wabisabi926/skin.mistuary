@@ -235,17 +235,13 @@
 	</map>
 
 	<!-- A 36px-high rounded surface reproduces the reference capsule without a dedicated asset.
-	     Two buttons share the same surface: Kodi 22+ uses the $MAP lookup (friendly names),
-	     Kodi 21 has no $MAP and falls back to the raw stream value. grouplist skips the hidden
-	     one when laying out (GUIControlGroupList checks IsVisible), so only one capsule shows. -->
+	     Callers pass the mapped label; flag_visible decides whether the capsule is laid out. -->
 	<include name="NaraTechnicalTextPill">
 		<param name="flag_visible">true</param>
 		<param name="font">font_flag</param>
-		<param name="flag_label_raw"></param>
 		<definition>
-			<!-- 只留一颗。原来按 $EXP[nara_kodi21] 在「映射文字」和「原始值」之间二选一，
-			     那个表达式在 22.0-RC1 上两边都成立，同一格会画出两颗胶囊。
-			     映射文字本身在 Kodi 21 也只是标签，不参与条件解析，用一份就够。 -->
+			<!-- 只留一颗。不要再用双轨条件：条件求值失败时同一格会画出两颗胶囊。
+			     映射文字只作为标签传入，不参与条件解析。 -->
 			<control type="button">
 				<width>auto</width>
 				<height>36</height>
@@ -274,8 +270,7 @@
 		<param name="icon"></param>
 		<param name="detail"></param>
 		<!-- 小字是否显示：必须用布尔参数，不能写 String.IsEmpty($PARAM[detail])。
-		     detail 可能是 $MAP[...]，展开后条件里出现 [ ，Kodi 21 的表达式解析器
-		     会在加载时报 "Misplaced ["（每部带杜比视界的片子刷两遍日志）。 -->
+		     detail 可能是 $MAP[...]，展开后条件里出现 [，会让条件解析失败。 -->
 		<param name="detail_visible">false</param>
 		<param name="detail_width">44</param>
 		<param name="width">72</param>
@@ -315,14 +310,11 @@
 		</definition>
 	</include>
 
-	<!-- 单个技术标识的唯一入口：有图标走图标，其余情况（Kodi 21 / 开关关闭 / 素材缺图）
-	     走原来的文字胶囊。两条互斥，grouplist 会跳过隐藏的那条，不会占位。
-	     素材缺图的判定就是 icon 参数为空 —— IconMap 里没有这个 key。 -->
+	<!-- 单个技术标识的唯一入口：只有图标胶囊一条路径。
+	     hide_techflag_icons 时整行不显示；素材缺图不会自动改走文字胶囊。 -->
 	<include name="NaraTechnicalFlag">
 		<param name="visible">true</param>
 		<param name="icon"></param>
-		<param name="label"></param>
-		<param name="label_raw"></param>
 		<param name="detail"></param>
 		<param name="detail_visible">false</param>
 		<param name="detail_width">44</param>
@@ -357,8 +349,6 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],&quot;4&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;5&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;6&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;7&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;8&quot;) | String.IsEqual($PARAM[hdr_detail],&quot;9&quot;)]" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
-				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
-				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
 			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
 				<param name="detail_width" value="24" />
@@ -367,8 +357,6 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + !String.IsEmpty($PARAM[hdr_detail]) + !String.IsEqual($PARAM[hdr_detail],&quot;4&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;5&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;6&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;7&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;8&quot;) + !String.IsEqual($PARAM[hdr_detail],&quot;9&quot;) + !String.IsEqual($PARAM[hdr_detail],7fel) + !String.IsEqual($PARAM[hdr_detail],7mel)" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
-				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
-				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
 			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
 				<param name="detail_width" value="44" />
@@ -377,8 +365,6 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + String.IsEqual($PARAM[hdr_type],dolbyvision) + [String.IsEqual($PARAM[hdr_detail],7fel) | String.IsEqual($PARAM[hdr_detail],7mel)]" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
-				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail], ]" />
-				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]$INFO[$PARAM[hdr_detail], ]" />
 				<param name="detail" value="$MAP[NaraTechnicalDolbyVisionProfileTextMap,$PARAM[hdr_detail]]" />
 			<param name="detail_visible" value="!String.IsEmpty($PARAM[hdr_detail])" />
 				<param name="detail_width" value="68" />
@@ -387,8 +373,6 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[hdr_type]) + [!String.IsEqual($PARAM[hdr_type],dolbyvision) | String.IsEmpty($PARAM[hdr_detail])]" />
 				<param name="icon" value="$MAP[NaraTechnicalHdrIconMap,$PARAM[hdr_type]]" />
-				<param name="label" value="$MAP[NaraTechnicalHdrTextMap,$PARAM[hdr_type]]" />
-				<param name="label_raw" value="$INFO[$PARAM[hdr_type]]" />
 			</include>
 		</definition>
 	</include>
@@ -401,8 +385,6 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[resolution])" />
 				<param name="icon" value="$MAP[NaraTechnicalResolutionIconMap,$PARAM[resolution]]" />
-				<param name="label" value="$MAP[NaraTechnicalResolutionTextMap,$PARAM[resolution]]" />
-				<param name="label_raw" value="$INFO[$PARAM[resolution]]" />
 			</include>
 
 			<!-- HDR 只出两颗：主 HDR 一颗 + 第二种不同的 HDR 一颗。
@@ -430,22 +412,16 @@
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[video_codec])" />
 				<param name="icon" value="$MAP[NaraTechnicalVideoCodecIconMap,$PARAM[video_codec]]" />
-				<param name="label" value="$MAP[NaraTechnicalVideoCodecTextMap,$PARAM[video_codec]]" />
-				<param name="label_raw" value="$INFO[$PARAM[video_codec]]" />
 			</include>
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_codec])" />
 				<param name="icon" value="$MAP[NaraTechnicalAudioCodecIconMap,$PARAM[audio_codec]]" />
-				<param name="label" value="$MAP[NaraTechnicalAudioCodecTextMap,$PARAM[audio_codec]]" />
-				<param name="label_raw" value="$INFO[$PARAM[audio_codec]]" />
 			</include>
 			<!-- Atmos 叠加徽章：fuse3 同款做法 —— AudioCodec 里出现 atmos 就多一枚。
 			     truehd_atmos / eac3_ddp_atmos 的编码图标本身已印着 ATMOS，这两种不再重复叠加。 -->
 			<include content="NaraTechnicalFlag">
 				<param name="visible" value="$PARAM[visible] + String.Contains($PARAM[audio_codec],atmos) + !String.IsEqual($PARAM[audio_codec],truehd_atmos) + !String.IsEqual($PARAM[audio_codec],eac3_ddp_atmos)" />
 				<param name="icon" value="audio/atmos" />
-				<param name="label" value="ATMOS" />
-				<param name="label_raw" value="ATMOS" />
 			</include>
 			<!-- Language is intentionally omitted.
 			     声道只用文字，不做图标：素材按声道数命名，而 5.1.2 与 7.1 都是 8 声道、

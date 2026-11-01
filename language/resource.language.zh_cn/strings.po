@@ -376,10 +376,6 @@ msgctxt "#31148"
 msgid "Categories"
 msgstr "类别"
 
-msgctxt "#31153"
-msgid "You do not have any add-ons of this type installed. Enter the add-on browser to download add-ons created by our community."
-msgstr "尚未安装此类插件。请到插件浏览器下载我们社区创建的插件。"
-
 msgctxt "#31155"
 msgid "No bookmarks created yet."
 msgstr "尚未创建书签。"
@@ -836,10 +832,6 @@ msgstr "收藏夹用横版"
 msgctxt "#31698"
 msgid "Favourites as landscape"
 msgstr "收藏夹用横版卡片显示。关掉是竖版海报，和电影 / 电视剧一致"
-
-msgctxt "#31700"
-msgid "Loading lyrics…"
-msgstr "正在读取歌词…"
 
 #: /xml/MusicVisualisation.xml
 

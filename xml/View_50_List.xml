@@ -704,7 +704,6 @@
 		</definition>
 	</include>
 	<include name="ListThumbInfoPanel">
-		<param name="fallback_image"></param>
 		<param name="flip_bg">false</param>
 		<definition>
 			<control type="group">

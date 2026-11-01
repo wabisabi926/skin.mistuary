@@ -91,7 +91,6 @@
 		</definition>
 	</include>
 	<include name="NaraDialogButtonSpacing">
-		<param name="legacy">dialogbuttons_itemgap</param>
 		<param name="value">16</param>
 		<definition>
 			<include content="NaraDialogButtonItemGap">
@@ -308,9 +307,6 @@
 		<value>text_primary</value>
 	</variable>
 	<variable name="NaraDialogFocusLayoutTextColor50Var">
-		<value>text_primary</value>
-	</variable>
-	<variable name="NaraDialogFocusLayoutTextColor9000Var">
 		<value>text_primary</value>
 	</variable>
 	<include name="NaraDialogSettingsRowHeight">

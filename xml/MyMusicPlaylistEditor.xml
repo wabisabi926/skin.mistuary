@@ -103,9 +103,7 @@
 		<include>BottomBar</include>
 		<include content="BottomBarTwoListInfo">
 			<param name="left_container_id">50</param>
-			<param name="left_scrollbar_id">60</param>
 			<param name="right_container_id">100</param>
-			<param name="right_scrollbar_id">61</param>
 		</include>
 	</controls>
 </window>
