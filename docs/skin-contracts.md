@@ -45,10 +45,10 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | 分组 | 键 | 说明 |
 |---|---|---|
 | 首页菜单 | `HomeMenuNoMovieButton`、`HomeMenuNoMusicButton`、`HomeMenuNoTVButton`、`HomeMenuNoTVShowButton` | 隐藏顶部导航项；`NaraHomeMenuDefaultsMusicTVOff` 是"首次运行给音乐/电视默认关掉"的一次性标记 |
-| 首页小组件 | `home_no_<section>_<widget>_widget`（约 22 个） | 逐个小组件的开关，命名规则固定为 `home_no_` + 段名 + 组件名 + `_widget` |
+| 首页小组件 | `home_no_<section>_<widget>_widget`（约 22 个） | 逐个小组件的开关，命名规则固定为 `home_no_` + 段名 + 组件名 + `_widget`；例外：`home_movies_unwatched_widget` / `home_tvshows_unwatched_widget` 是正向开关，默认关 |
 | 视觉 | `no_fanart`（12 处读取）、`hide_background_fanart`、`animate_background_fanart`、`hide_mediaflags`、`hide_techflag_icons`、`show_musicvideoposter` | 背景与媒体标识开关 |
-| 播放 | `autoscroll`、`OSDAutoClose`、`OSDAutoCloseTime`、`MusicOSDAutoClose`、`nara_cast_open` | 自动滚动 / 视频 OSD 自动关闭 / 音乐 OSD 自动隐藏 / 演员栏展开 |
-| 数据 | `Nara.MusicBackground`、`Nara.SharedRandomFanart.LockedPath`、`library_art_folder` | 字符串型；`LockedPath` 表示"用户手动锁定的背景" |
+| 播放 | `autoscroll`、`OSDAutoClose`、`OSDAutoCloseTime`、`MusicOSDAutoClose`、`MusicOSDAutoCloseTime`、`nara_cast_open` | 自动滚动 / 视频 OSD 自动关闭 / 音乐 OSD 自动隐藏 / 时间 / 演员栏展开 |
+| 数据 | `Nara.MusicBackground`、`Nara.SharedRandomFanart.LockedPath`、`library_art_folder`、`favorites_art_folder` | 字符串型；`LockedPath` 表示"用户手动锁定的背景"；收藏夹封面目录下分 `horizontal/` / `vertical/` |
 | 一次性标记 | `NaraHomeMenuDefaultsMusicTVOff` | `onload` 里判断后立刻 SetBool，避免重复初始化 |
 
 **写入内置函数有 11 个，判断"有没有写入入口"时必须搜全**：
@@ -67,7 +67,11 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `album_onclick_*` | `SkinSettings.xml:198` | `SelectBool` |
 | `OriginalTitleFormat_*` | `SkinSettings.xml:68` | `SelectBool` |
 | `OSDAutoCloseTime` | `SkinSettings.xml:250` | `SetNumeric` |
-| `MusicOSDAutoClose` | `SkinSettings.xml:354` | `ToggleSetting` |
+| `MusicOSDAutoClose` | `SkinSettings.xml:363` | `ToggleSetting` |
+| `MusicOSDAutoCloseTime` | `SkinSettings.xml:372` | `SetNumeric` |
+| `favorites_art_folder` | `SkinSettings.xml:228` | `SetPath` |
+| `home_movies_unwatched_widget` | `Includes_SettingsDialog.xml:339` | `ToggleSetting` |
+| `home_tvshows_unwatched_widget` | `Includes_SettingsDialog.xml:414` | `ToggleSetting` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
 | `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:245`（主评分来源四档） | `SelectBool` |
