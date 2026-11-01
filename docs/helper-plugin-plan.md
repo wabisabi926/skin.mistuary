@@ -23,7 +23,7 @@
 | 2 | 豆瓣评分（详情页胶囊） | 胶囊不显示，其余评分照常 | ✅ 已接（插件 0.2.0+，`79b7eba`）；1.5.1 起次评分只在详情页显示豆瓣 |
 | 3 | 代表集技术标识 | 皮肤自己的 `ListItemAbsolute(0)` 推断，行为不变 | 暂缓（收益为零，见插件 roadmap） |
 | 4 | 行级增强（首页豆瓣角标、节点名整理） | 无影响 | 可选，不排期 |
-| 5 | 播放列表补全（同季 / 同文件夹） | 无（Kodi 原生只播当前项） | ✅ 插件 0.3.4，默认关；事件驱动 service、不轮询 |
+| 5 | 播放列表补全（媒体库剧集按季 / 文件夹播放按目录） | 无（Kodi 原生只播当前项） | ✅ 插件 0.3.4，两个开关默认关（视频与音乐）；事件驱动 service、不轮询 |
 
 **明确不做**：**轮询型**常驻 service（0.3.4 的补全服务是事件驱动、默认关）、
 播放代理 / 转码、写 Kodi 库或皮肤设置、自建歌词（歌词继续用 `script.cu.lrclyrics`，见 §6）。
@@ -86,7 +86,7 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 
 | 文件 | 内容 |
 |---|---|
 | `Includes_Search.xml` | `helper_search_ready` expression；两个路径变量；4 个 content include；两个容器的 include 条件 |
-| `SkinSettings.xml` | 媒体分类的 `id=714` 开关，`Skin.ToggleSetting(helper_search_off)`，`visible="$EXP[helper_search_ready]"` |
+| `SkinSettings.xml` | 皮肤助手页的 `id=714` 开关，`Skin.ToggleSetting(helper_search_off)`，`visible="$EXP[helper_search_ready]"` |
 | `Variables.xml` | 帮助条 `Control.HasFocus(714)` |
 | `language/*.po` | 31780 开关名、31781 帮助 |
 
@@ -116,8 +116,8 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 
 
 | 项 | 状态 |
 |---|---|
-| 插件仓库 | `<插件仓库根>`，`main`，本地已改到 0.3.4（未发布，110 项单测） |
-| 已完成 | 搜索桥 + 详情页豆瓣；M1b / M2 / M1c 完成。0.3.3 起：设置 4 类（覆盖项进专家）、帮助条、非 ASCII 查询并入演员/类型、首字母前缀严格；评分同步已移除。0.3.4：播放列表补全（同季 / 同文件夹，默认关） |
+| 插件仓库 | `<插件仓库根>`，`main`，本地已改到 0.3.4（待发，132 项单测） |
+| 已完成 | 搜索桥 + 详情页豆瓣；M1b / M2 / M1c 完成。0.3.3 起：设置 4 类（覆盖项进专家）、帮助条、非 ASCII 查询并入演员/类型、首字母前缀严格；评分同步已移除。0.3.4：播放列表补全（两个独立开关：媒体库剧集按季补全 / 文件夹播放按目录补全，视频与音乐，默认关）。皮肤侧新增「皮肤助手」页（服务端搜索开关 + 打开插件设置） |
 | 未完成 | M1d 演员/类型（暂缓）；M3 不做；M4 可选不排期 |
 | 已同步实机 | `%APPDATA%\Kodi\addons\script.mistuary.helper`（实机已是 0.3.4） |
 

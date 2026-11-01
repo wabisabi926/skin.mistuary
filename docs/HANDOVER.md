@@ -53,6 +53,7 @@
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
 版本以 `addon.xml` 为准（当前 **1.6.0**）；历史发版记录见 §8.2。
+下一版 1.7.0 的改动见 `changelog.txt` 顶部「未发布」段；helper 0.3.4 同批待发。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
@@ -188,7 +189,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.3.4 待发布） | 服务端搜索、豆瓣评分、播放列表补全 | 回退本地 XSP / 不显示豆瓣胶囊 / Kodi 原生只播当前项 |
+| `script.mistuary.helper`（可选，0.3.4 待发） | 服务端搜索、豆瓣评分、播放列表补全 | 回退本地 XSP / 不显示豆瓣胶囊 / Kodi 原生只播当前项 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
@@ -1042,7 +1043,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
-| **helper 插件落地** | 独立仓库 `<插件仓库根>`，本地已改到 0.3.4（未发布，110 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全（同季 / 同文件夹，默认关）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
+| **helper 插件落地** | 独立仓库 `<插件仓库根>`，本地已改到 0.3.4（待发，132 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全（两个独立开关：媒体库剧集按季补全 / 文件夹播放按目录补全，视频与音乐，默认关）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1154,12 +1155,13 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 
 ### 8.9 helper：接入状态（2026-10-31）
 
-- 插件 `script.mistuary.helper` 本地已改到 **0.3.4**（未发布，110 项单测）：服务端搜索 + 播放列表补全 +
-  详情页豆瓣评分。
+- 插件 `script.mistuary.helper` 本地已改到 **0.3.4**（待发，132 项单测）：服务端搜索 + 播放列表补全 +
+  详情页豆瓣评分。补全为两个独立开关（媒体库剧集按季 / 文件夹播放按目录），视频与音乐都支持，
+  默认关；电影 `season=-1` 误判和 HTTP 流目录列举报错已修。
 - 0.3.x 起豆瓣分优先读 StrmAssistant 的 Emby `/Douban/RatingsByImdb`，失败才回退
   豆瓣公开接口；窗口属性新增 `Mistuary.Rating.Source`（emby / douban）。
-- 0.3.3（待发）设置改为 Emby 服务器 / 搜索 / 豆瓣评分 / 日志与诊断四类，
-  覆盖项收进「专家」，每项设置都有底部帮助条；新增「测试 Emby 连接」。
+- 0.3.3 的设置改动（4 分类、逐项帮助条、专家级覆盖项）已并入 0.3.4 发布；
+  新增「测试 Emby 连接」。
 - 皮肤侧 M1b 搜索与 M2 豆瓣已接；**M1c 实机验收已完成**（含播放）。
 - 1.5.1 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
   插件写的 `rating_type=douban` 暂无消费方。

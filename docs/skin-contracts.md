@@ -76,7 +76,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
 | `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:245`（主评分来源四档） | `SelectBool` |
 | `rating_sec_auto` / `rating_sec_douban` / `rating_sec_rt` / `rating_sec_off` | `SkinSettings.xml:253`（次评分来源四档） | `SelectBool` |
-| `helper_search_off` | `SkinSettings.xml:272`（媒体分类，反向开关） | `ToggleSetting` |
+| `helper_search_off` | `SkinSettings.xml:383`（皮肤助手页，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
