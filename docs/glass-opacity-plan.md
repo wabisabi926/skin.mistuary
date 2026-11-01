@@ -9,6 +9,14 @@
 >
 > **2026-10-29 更新**：音乐信息页已按电影详情页重做——全幅背景、无玻璃面板。
 > §3.2 里的 `DialogMusicInfo` 行只作为历史盘点，当前实现见 HANDOVER §5.8.1。
+>
+> **2026-11-01 更新**：`Custom_1100_AddonLauncher` 和 `Custom_1115_SettingsHub` 已删除；
+> 本文涉及它们的行、以及开头的窗口数量统计保留为历史快照，
+> `audit_skin.py` 的遮蔽豁免也已同步移除。
+>
+> **2026-11-01 颜色清理**：实际实现已经改为 `gl_*` / `sc_*` / `scrim_osd`；
+> 本文中的 `scrim_dialog`、`scrim_sheet`、`overlay_*`、`surface_*`、`shadow_*` 等旧 token
+> 已从 `colors/defaults.xml` 删除，相关段落只作历史记录，不要照抄。
 
 ---
 

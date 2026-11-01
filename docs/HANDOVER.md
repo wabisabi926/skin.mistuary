@@ -1,12 +1,12 @@
-# 交接说明（Mistuary 1.5.1）
+# 交接说明（Mistuary 1.6.0）
 
-> ⚠️ **最新状态看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
-> 那份是 2026-10-30 夜的短期交接（今天改了什么、还剩哪三件事、分辨率约束、
-> 踩过的坑），接手先读那份。本文是长期文档，讲依赖、工具链与发版。
+> ⚠️ **短期交接快照看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
+> 那份是 2026-10-30 夜的短期交接（当时改了什么、还剩哪三件事、分辨率约束、
+> 踩过的坑）；本文是长期文档，讲依赖、工具链与发版，现状以 `addon.xml` / `git status` 为准。
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
-> **新接手的三步**：① 本文 §8 看现状与待办 ② `docs/pending-work-plan.md` 看还剩什么
+> **新接手的三步**：① 本文 §8 看现状与待办 ② `docs/README.md` 看文档索引
 > ③ 要动音乐页读 `docs/vinyl-helper-plan.md`；要动插件读 `docs/helper-plugin-plan.md`
 > 和插件仓库 `docs/HANDOVER.md`。
 > ④ 拿到外部校验报告（如 `docs/skin.mistuary_report.txt`）时，先读
@@ -52,10 +52,10 @@
 ## 1. 一句话现状
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
-版本 **1.5.1（已发）；1.5.2 待发**。
-原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）连同后续修复全部合并进 1.5.1。
+版本以 `addon.xml` 为准（当前 **1.6.0**）；历史发版记录见 §8.2。
+原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
-`Textures.xbt` **749 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **85 项全过**。
+`Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -177,7 +177,7 @@
 `addon.xml` 只有一条依赖：
 
 ```xml
-<import addon="xbmc.gui" version="5.17.0"/>
+<import addon="xbmc.gui" version="5.18.0"/>
 ```
 
 `tools/` 里的所有 `.py` / `.ps1` 都是**构建期工具**，不参与运行，也不进发布包。
@@ -956,6 +956,8 @@ git status -sb              # 与远端的关系 + 工作区
 
 稳定的只有这几项：
 
+> 下表是 **2026-10-30 的发版快照**；当前版本、贴图数量和测试项数以 §1 与 `git` 为准。
+
 | 项 | 值 |
 |---|---|
 | 版本 | `addon.xml` = 1.4.0，本次发版 |
@@ -1019,6 +1021,8 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.5.1** | 状态图标区分未看/部分/看完 + 主评分四档定稿（TMDb/IMDb/豆瓣/自动）+ 移除次评分设置 + 技术标识/评分行条件修复 + 2160 百分比适配 + 搜索背景重排 + 用户评分徽标补 definition + 详情页豆瓣次评分修复 + 插件图标读 thumb + 设置级别按钮下沉。**含原 1.4.1 与 1.5.0 的全部改动；两个 tag/Release 均已撤回** |
 | **v1.5.2**（待发） | **只支持 Kodi 22**（`xbmc.gui` 5.17.0 → 5.18.0，砍掉 21 双轨）+ 图片浏览对话框改双向锚定（2160 屏不再空一条）。改动来自 `docs/audit-2026-10-31.md` 的 🟡2-1 / 🟡2-2 |
 
+> **当前版本以 `addon.xml` 为准（1.6.0）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
+
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
 > 后来 `5020f1f` 把版本号退回 1.1.1、再重新升到 1.2.0 才发出去。
@@ -1048,7 +1052,9 @@ git status -sb              # 与远端的关系 + 工作区
 | 音乐信息页 v4 | 全幅两栏、452 封面、内置 7/8/10/12 隐藏 + SendClick（§5.8.1） |
 | 详情页背景兜底 | Video/Music/Addon 用 `primary_background_info`；Addon 无 fanart `sc_2`（§5.8.2） |
 
-### 8.4 现在可以直接接着做的事
+### 8.4 发版前检查（2026-10-30 快照）
+
+> 1.6.0 已发；下表保留作发版流程参考，“发 1.5.1”这一行已过时。当前版本以 `addon.xml` 为准。
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
@@ -1065,7 +1071,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 85 项
+python -m unittest discover -s tools -p 'test_*.py'       # 86 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 

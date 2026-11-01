@@ -1,6 +1,6 @@
 # docs/ 索引
 
-皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 两份待办 + 两份历史资料，另加一份报告分诊。**
+皮肤 `skin.mistuary`（Mistuary）的开发文档。**三份必读 + 三份专题 + 历史资料与报告。**
 
 | 文件 | 什么时候读 |
 |---|---|
@@ -12,15 +12,16 @@
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
 | [`vinyl-helper-plan.md`](vinyl-helper-plan.md) | 做音乐播放页的黑胶唱片效果、或开始搭 `script.mistuary.helper` 前。含动画可行性核实、素材清单、骨架文件职责、暂停回弹等硬伤 |
-| [`pending-work-plan.md`](pending-work-plan.md) | **还剩什么没做**。只剩发 1.5.1（本次）与 M1d 是否开工；Kodi 21 实机验证已放弃（见 HANDOVER §8.7） |
+| [`pending-work-plan.md`](pending-work-plan.md) | **历史方案（2026-10-29，已归档）**。清理项已执行，仅作背景；当前发版状态看 `addon.xml` / `HANDOVER.md` |
 | [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md) | **外部校验报告怎么读**。456 errors / 448 warnings 的分诊：哪些是 CRLF 假阳性、哪些是 Kodi 22 双轨、哪些是真 bug；含修复批次、Kodi 21 回退点和待决策项 |
+| [`skin.mistuary_report.txt`](skin.mistuary_report.txt) | **历史外部报告原文**（2026-10-29）。只看分诊结论，不要按原文逐条修 |
 | [`repo-layout-plan.md`](repo-layout-plan.md) | **历史资料**。2026-10-27 把 `extras/` 归位成素材目录、构建工具移到 `tools/` 的整改记录 |
 
 ---
 
 ## 运行时依赖
 
-**皮肤本体不需要任何 Python 脚本。** `addon.xml` 只依赖 `xbmc.gui 5.17.0`。
+**皮肤本体不需要任何 Python 脚本。** `addon.xml` 只依赖 `xbmc.gui 5.18.0`。
 `tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
@@ -45,7 +46,8 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）
 - **描边环**：一律 1:1 整张图（`tools/gen_rings.py` 生成），**不要 border**，
   而且必须是该卡片**最后绘制**的控件。配遮罩时：环 = 卡片 +2、环半径 = 遮罩半径 +1
   （内缘压进海报 2px，环才贴得住）。**不要给环加 `bordersize`**（会走九宫格）。
-- **不要相信 `Window.Property(NaraMusic.*)`**：全皮肤无人写入，是死属性。
+- **`Window.Property(NaraMusic.*)` 已清理**：原先无写入方的下一首/歌词状态死属性 UI
+  已在 2026-11-01 删除；以后要恢复，先补写入方（helper service 或 CU LRC 补丁）。
 - **`<include condition="X">` 是加载时求值的**，按运行时状态切外观只能用 `<visible>` / `$VAR`。
 - **panel 不裁剪子控件**：想让行尾不露半张卡，得让"下一张起点 ≥ 1920"。
 - **排查「某窗口不跟设置走」**：① grep 写死的 `AARRGGBB` 板 → ② grep `<include condition=`
@@ -61,7 +63,7 @@ python tools/gen_techflag_vars.py --check                # 技术标识变量同
 python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
-python -m unittest discover -s tools -p 'test_*.py'      # 84 项
+python -m unittest discover -s tools -p 'test_*.py'      # 86 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 

@@ -32,7 +32,7 @@
 | `NaraMediaMenu.Browse` | — | — | 只在 `onunload` 里 Clear，是**历史残留** |
 
 **新增属性时的规矩**：写在 Home 上就一律带 `,home`；对话框关闭路径里必须有 `ClearProperty`，
-否则下次打开会沿用上一次的值（`Search.SettingsTransition` 就是为此加的）。
+否则下次打开会沿用上一次的值（`VideoOSDPlaylist.FocusControl` 就是关闭时 Clear 的例子）。
 
 ---
 
@@ -357,10 +357,10 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 cd /d "<仓库根>"
 set PY="<python>"
 
-%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 84 项全绿
+%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 86 项全绿
 %PY% tools/audit_skin.py --strict                      # 期望 EXIT=0
 %PY% tools/gen_techflag_vars.py --check                # 期望"与 map 同步"
-%PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 749/749
+%PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 739/739
 ```
 
 实机检查（重启 Kodi 后）：
@@ -446,6 +446,6 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
   压到 640 × 360 后只有 1.24 MB（JPEG q86 + progressive，等比居中裁剪不变形）。
 - 原图备份在 `.workbuddy-ai/backup/libraryart-originals/`（该目录被 git 忽略，
   也不会同步到实机之外的地方）。
-- 这批图**不入库**（`.gitignore` 里排除 `libraryart/*.jpg|png`），发布包里也没有，
-  所以终端用户装上后看到的是文件夹图标——这是设计如此，`libraryart/README.txt` 已说明。
+- 这批图**随仓库入库并随包发布**（2026-10-28 起，`.gitignore` 不再排除），
+  终端用户装完即可看到分类封面；`libraryart/README.txt` 说明可替换成自己的封面目录。
 - 内置目录**只认 .jpg**（自定义封面目录 png/jpg 都支持）。
