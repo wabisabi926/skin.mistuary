@@ -344,6 +344,10 @@
 	     变量自上而下取第一条成立的 value，分类条件会一直成立，放前面就轮不到行级了。
 	     行级覆盖 23 个设置行；其余页仍回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
+		<value condition="Container(9000).HasFocus(5) + !System.HasAddon(script.mistuary.helper)">$LOCALIZE[31801]</value>
+		<value condition="Container(9000).HasFocus(5)">$LOCALIZE[31799]</value>
+		<value condition="Control.HasFocus(719) + !System.HasAddon(script.mistuary.helper)">$LOCALIZE[31801]</value>
+		<value condition="Control.HasFocus(719)">$LOCALIZE[31799]</value>
 		<value condition="Control.HasFocus(702)">$LOCALIZE[31736]</value>
 		<value condition="Control.HasFocus(716)">$LOCALIZE[31698]</value>
 		<value condition="Control.HasFocus(710)">$LOCALIZE[31737]</value>

@@ -1435,3 +1435,19 @@ msgstr "Not set"
 msgctxt "#31797"
 msgid "All unwatched"
 msgstr "All unwatched"
+
+msgctxt "#31798"
+msgid "Skin helper"
+msgstr "Skin helper"
+
+msgctxt "#31799"
+msgid "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
+msgstr "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
+
+msgctxt "#31800"
+msgid "Open helper settings"
+msgstr "Open helper settings"
+
+msgctxt "#31801"
+msgid "Mistuary Helper is not installed"
+msgstr "Mistuary Helper is not installed"

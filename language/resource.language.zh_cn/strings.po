@@ -1214,3 +1214,19 @@ msgstr "未设置"
 msgctxt "#31797"
 msgid "All unwatched"
 msgstr "全部未看"
+
+msgctxt "#31798"
+msgid "Skin helper"
+msgstr "皮肤助手"
+
+msgctxt "#31799"
+msgid "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
+msgstr "Mistuary Helper 提供搜索、豆瓣评分与播放列表补全；这里打开它的设置。"
+
+msgctxt "#31800"
+msgid "Open helper settings"
+msgstr "打开插件设置"
+
+msgctxt "#31801"
+msgid "Mistuary Helper is not installed"
+msgstr "需要安装 Mistuary Helper"
