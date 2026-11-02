@@ -187,6 +187,13 @@
 		<value condition="String.IsEqual(ListItem.Path,addons://all/)">$INFO[ListItem.AddonOrigin,, - ]$INFO[ListItem.AddonVersion]</value>
 		<value>$INFO[ListItem.AddonCreator,, - ]$INFO[ListItem.AddonVersion]</value>
 	</variable>
+	<!-- 主页左侧最后一个按钮：CoreELEC 关机；能退出就退出；否则有电源能力就关机；再否则开电源菜单。 -->
+	<variable name="HomeExitLabelVar">
+		<value condition="System.AddonIsEnabled(service.coreelec.settings) | System.AddonIsEnabled(service.libreelec.settings)">$LOCALIZE[31774]</value>
+		<value condition="System.ShowExitButton">$LOCALIZE[13012]</value>
+		<value condition="System.CanPowerDown">$LOCALIZE[31774]</value>
+		<value>$LOCALIZE[31816]</value>
+	</variable>
 	<variable name="RatingSettingLabel2Var">
 		<value condition="Skin.HasSetting(circle_rating)">$LOCALIZE[31807]</value>
 		<value condition="Skin.HasSetting(circle_userrating)">$LOCALIZE[38018]</value>

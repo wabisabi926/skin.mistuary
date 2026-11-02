@@ -1507,3 +1507,7 @@ msgstr "Append the rest of the folder when playback starts from a folder; playba
 msgctxt "#31815"
 msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
 msgstr "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
+
+msgctxt "#31816"
+msgid "Power"
+msgstr "Power"

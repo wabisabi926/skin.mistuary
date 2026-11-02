@@ -1286,3 +1286,7 @@ msgstr "视频或音乐从文件夹起播时，将同目录其余条目加入队
 msgctxt "#31815"
 msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
 msgstr "本季最后一集起播时，把下一季第一集加入队列；配合“按季补全”使用。"
+
+msgctxt "#31816"
+msgid "Power"
+msgstr "电源"

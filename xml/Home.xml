@@ -1918,7 +1918,7 @@
 								<top>162</top>
 								<width>208</width>
 								<height>52</height>
-								<label>$LOCALIZE[13012]</label>
+								<label>$VAR[HomeExitLabelVar]</label>
 								<font>font_home_nav</font>
 								<align>center</align>
 								<aligny>center</aligny>
@@ -1932,8 +1932,10 @@
 								<onright>804</onright>
 								<onback>804</onback>
 								<onclick>SetFocus(804)</onclick>
-								<onclick condition="System.ShowExitButton">Quit()</onclick>
-								<onclick condition="!System.ShowExitButton">ActivateWindow(shutdownmenu)</onclick>
+								<onclick condition="System.AddonIsEnabled(service.coreelec.settings) | System.AddonIsEnabled(service.libreelec.settings)">Powerdown()</onclick>
+								<onclick condition="!System.AddonIsEnabled(service.coreelec.settings) + !System.AddonIsEnabled(service.libreelec.settings) + System.ShowExitButton">Quit()</onclick>
+								<onclick condition="!System.AddonIsEnabled(service.coreelec.settings) + !System.AddonIsEnabled(service.libreelec.settings) + !System.ShowExitButton + System.CanPowerDown">Powerdown()</onclick>
+								<onclick condition="!System.AddonIsEnabled(service.coreelec.settings) + !System.AddonIsEnabled(service.libreelec.settings) + !System.ShowExitButton + !System.CanPowerDown">ActivateWindow(shutdownmenu)</onclick>
 							</control>
 						</control>
 					</control>
