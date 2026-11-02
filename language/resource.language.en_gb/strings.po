@@ -129,8 +129,8 @@ msgstr ""
 #: /xml/SkinSettings.xml
 
 msgctxt "#31024"
-msgid "Choose rating to display for media items"
-msgstr ""
+msgid "Rating circle"
+msgstr "Rating circle"
 
 #: /xml/Home.xml
 #: /xml/MyFavourites.xml
@@ -610,8 +610,8 @@ msgstr ""
 #: /xml/SkinSettings.xml
 
 msgctxt "#31168"
-msgid "Show posters instead of thumbs for musicvideos"
-msgstr ""
+msgid "Music video posters"
+msgstr "Music video posters"
 
 #. Description label for skin settings area
 #: /xml/Variables.xml
@@ -633,15 +633,15 @@ msgstr "How the on-screen controls behave during playback."
 #. Setting Automatically close video OSD
 
 msgctxt "#31172"
-msgid "Automatically close video OSD"
-msgstr ""
+msgid "Automatically hide video OSD"
+msgstr "Automatically hide video OSD"
 
 #: /xml/SkinSettings.xml
 #. Setting auto close time for video osd
 
 msgctxt "#31173"
-msgid "Video OSD autoclose time (seconds)"
-msgstr ""
+msgid "Video OSD hide delay (seconds)"
+msgstr "Video OSD hide delay (seconds)"
 
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a music album
@@ -1047,8 +1047,8 @@ msgstr ""
 #: /xml/MusicVisualisation.xml
 
 msgctxt "#31697"
-msgid "Favourites as landscape"
-msgstr "Favourites as landscape"
+msgid "Favourites as landscape cards"
+msgstr "Favourites as landscape cards"
 
 msgctxt "#31698"
 msgid "Favourites as landscape"
@@ -1213,92 +1213,92 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "Auto-scroll long plots instead of paging. Off by default."
 
 msgctxt "#31737"
-msgid "Uses the skin's own libraryart folder by default. Custom covers must match library names."
-msgstr "Uses the skin's own libraryart folder by default. Custom covers must match library names."
+msgid "Covers come from the skin's libraryart folder; custom art must match library names."
+msgstr "Covers come from the skin's libraryart folder; custom art must match library names."
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
 msgstr "Show resolution, audio and subtitle badges in media info. On by default."
 
 msgctxt "#31739"
-msgid "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
-msgstr "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
+msgid "Card badge: My rating (yours), Media rating (library source), or None. None by default."
+msgstr "Card badge: My rating (yours), Media rating (library source), or None. None by default."
 
 msgctxt "#31740"
-msgid "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
-msgstr "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
+msgid "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
+msgstr "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
 
 msgctxt "#31741"
-msgid "Follows the language setting by default. Or show the original title only, or both."
-msgstr "Follows the language setting by default. Or show the original title only, or both."
+msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
+msgstr "Follows the language setting; or fixes the original title, or the order of original/localised titles."
 
 msgctxt "#31742"
-msgid "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
-msgstr "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
+msgid "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
+msgstr "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
 
 msgctxt "#31743"
-msgid "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
-msgstr "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
+msgid "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
+msgstr "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
 
 msgctxt "#31744"
-msgid "Use item fanart as the page background, falling back to the default image. On by default."
-msgstr "Use item fanart as the page background, falling back to the default image. On by default."
+msgid "Use item fanart as the page background; the default image is used when missing. On by default."
+msgstr "Use item fanart as the page background; the default image is used when missing. On by default."
 
 msgctxt "#31745"
-msgid "Show posters for music videos in lists; off shows video thumbnails. Off by default."
-msgstr "Show posters for music videos in lists; off shows video thumbnails. Off by default."
+msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
+msgstr "Show posters for music videos in lists; off shows thumbnails. Off by default."
 
 msgctxt "#31746"
-msgid "Hides the Movies entry from the main menu when off. On by default."
-msgstr "Hides the Movies entry from the main menu when off. On by default."
+msgid "Show Movies in the main menu. On by default."
+msgstr "Show Movies in the main menu. On by default."
 
 msgctxt "#31747"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "What this row shows, e.g. recently added, continue watching, random."
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "Content shown in this row: recently added, continue watching, random, etc."
 
 msgctxt "#31748"
-msgid "Browse opens the set by default; or play directly or queue it."
-msgstr "Browse opens the set by default; or play directly or queue it."
+msgid "Default action: Browse. Alternatively play or queue the item."
+msgstr "Default action: Browse. Alternatively play or queue the item."
 
 msgctxt "#31749"
-msgid "Hides the TV shows entry from the main menu when off. On by default."
-msgstr "Hides the TV shows entry from the main menu when off. On by default."
+msgid "Show TV shows in the main menu. On by default."
+msgstr "Show TV shows in the main menu. On by default."
 
 msgctxt "#31750"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "What this row shows, e.g. recently added, continue watching, random."
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "Content shown in this row: recently added, continue watching, random, etc."
 
 msgctxt "#31751"
-msgid "Browse opens the episode list by default; or play directly or queue it."
-msgstr "Browse opens the episode list by default; or play directly or queue it."
+msgid "Default action: Browse. Alternatively play or queue the episode."
+msgstr "Default action: Browse. Alternatively play or queue the episode."
 
 msgctxt "#31752"
-msgid "Hides the Music entry from the main menu when off. On by default."
-msgstr "Hides the Music entry from the main menu when off. On by default."
+msgid "Show Music in the main menu. On by default."
+msgstr "Show Music in the main menu. On by default."
 
 msgctxt "#31753"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "What this row shows, e.g. recently added, continue watching, random."
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "Content shown in this row: recently added, continue watching, random, etc."
 
 msgctxt "#31754"
-msgid "Browse opens the album by default; or play directly or queue it."
-msgstr "Browse opens the album by default; or play directly or queue it."
+msgid "Default action: Browse. Alternatively play or queue the album."
+msgstr "Default action: Browse. Alternatively play or queue the album."
 
 msgctxt "#31755"
-msgid "Hides the TV entry from the main menu when off. On by default."
-msgstr "Hides the TV entry from the main menu when off. On by default."
+msgid "Show TV in the main menu. On by default."
+msgstr "Show TV in the main menu. On by default."
 
 msgctxt "#31756"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "What this row shows, e.g. recently added, continue watching, random."
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "Content shown in this row: recently added, continue watching, random, etc."
 
 msgctxt "#31757"
-msgid "Hide the OSD automatically while playing. Off by default."
-msgstr "Hide the OSD automatically while playing. Off by default."
+msgid "Hide the OSD automatically during playback. Off by default."
+msgstr "Hide the OSD automatically during playback. Off by default."
 
 msgctxt "#31758"
-msgid "Seconds before the OSD hides. 4 by default."
-msgstr "Seconds before the OSD hides. 4 by default."
+msgid "Delay before the OSD hides. 4 seconds by default."
+msgstr "Delay before the OSD hides. 4 seconds by default."
 
 msgctxt "#31768"
 msgid "Vinyl record effect"
@@ -1385,8 +1385,8 @@ msgid "Use Emby server search"
 msgstr "Use Emby server search"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
-msgstr "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
+msgid "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
+msgstr "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
 
 msgctxt "#31782"
 msgid "Secondary rating source"
@@ -1394,11 +1394,11 @@ msgstr "Secondary rating source"
 
 msgctxt "#31783"
 msgid "Rotten Tomatoes"
-msgstr "Rotten Tomatoes"
+msgstr "Tomatometer"
 
 msgctxt "#31784"
-msgid "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
-msgstr "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
+msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
+msgstr "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
 
 msgctxt "#31792"
 msgid "Off"
@@ -1421,8 +1421,8 @@ msgid "Automatically hide music OSD"
 msgstr "Automatically hide music OSD"
 
 msgctxt "#31794"
-msgid "Music OSD auto-close time (seconds)"
-msgstr "Music OSD auto-close time (seconds)"
+msgid "Music OSD hide delay (seconds)"
+msgstr "Music OSD hide delay (seconds)"
 
 msgctxt "#31795"
 msgid "Favorites cover folder"
@@ -1441,13 +1441,69 @@ msgid "Skin helper"
 msgstr "Skin helper"
 
 msgctxt "#31799"
-msgid "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
-msgstr "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
+msgid "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
+msgstr "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
 
 msgctxt "#31800"
-msgid "Open helper settings"
-msgstr "Open helper settings"
+msgid "Advanced settings"
+msgstr "Advanced settings"
 
 msgctxt "#31801"
 msgid "Mistuary Helper is not installed"
 msgstr "Mistuary Helper is not installed"
+
+msgctxt "#31802"
+msgid "Show Search in the main menu. On by default."
+msgstr "Show Search in the main menu. On by default."
+
+msgctxt "#31803"
+msgid "Show Favourites in the main menu. On by default."
+msgstr "Show Favourites in the main menu. On by default."
+
+msgctxt "#31804"
+msgid "Cover folder for landscape favourite cards; leave empty to use default covers."
+msgstr "Cover folder for landscape favourite cards; leave empty to use default covers."
+
+msgctxt "#31805"
+msgid "Hide the music OSD automatically during playback. Off by default."
+msgstr "Hide the music OSD automatically during playback. Off by default."
+
+msgctxt "#31806"
+msgid "Delay before the music OSD hides. 4 seconds by default."
+msgstr "Delay before the music OSD hides. 4 seconds by default."
+
+msgctxt "#31807"
+msgid "Media rating"
+msgstr "Media rating"
+
+msgctxt "#31808"
+msgid "Douban rating"
+msgstr "Douban rating"
+
+msgctxt "#31809"
+msgid "Playlist: rest of season"
+msgstr "Playlist: rest of season"
+
+msgctxt "#31810"
+msgid "Playlist: rest of folder"
+msgstr "Playlist: rest of folder"
+
+msgctxt "#31811"
+msgid "Playlist: next season"
+msgstr "Playlist: next season"
+
+msgctxt "#31812"
+msgid "Show Douban ratings on the info page; no requests when off."
+msgstr "Show Douban ratings on the info page; no requests when off."
+
+msgctxt "#31813"
+msgid "Append the rest of the season when a library episode starts; playback is not interrupted."
+msgstr "Append the rest of the season when a library episode starts; playback is not interrupted."
+
+msgctxt "#31814"
+msgid "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
+msgstr "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
+
+msgctxt "#31815"
+msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
+msgstr "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."

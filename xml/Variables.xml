@@ -188,7 +188,7 @@
 		<value>$INFO[ListItem.AddonCreator,, - ]$INFO[ListItem.AddonVersion]</value>
 	</variable>
 	<variable name="RatingSettingLabel2Var">
-		<value condition="Skin.HasSetting(circle_rating)">$LOCALIZE[563]</value>
+		<value condition="Skin.HasSetting(circle_rating)">$LOCALIZE[31807]</value>
 		<value condition="Skin.HasSetting(circle_userrating)">$LOCALIZE[38018]</value>
 		<value>$LOCALIZE[16018]</value>
 	</variable>
@@ -342,7 +342,7 @@
 	</variable>
 	<!-- 皮肤设置页的帮助条。**行级条件必须放在分类级前面** ——
 	     变量自上而下取第一条成立的 value，分类条件会一直成立，放前面就轮不到行级了。
-	     行级覆盖 23 个设置行；其余页仍回落到分类说明。 -->
+	     行级覆盖 34 个设置行；其余页仍回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
 		<value condition="Container(9000).HasFocus(5) + !System.HasAddon(script.mistuary.helper)">$LOCALIZE[31801]</value>
 		<value condition="Container(9000).HasFocus(5)">$LOCALIZE[31799]</value>
@@ -350,6 +350,7 @@
 		<value condition="Control.HasFocus(719)">$LOCALIZE[31799]</value>
 		<value condition="Control.HasFocus(702)">$LOCALIZE[31736]</value>
 		<value condition="Control.HasFocus(716)">$LOCALIZE[31698]</value>
+		<value condition="Control.HasFocus(717)">$LOCALIZE[31804]</value>
 		<value condition="Control.HasFocus(710)">$LOCALIZE[31737]</value>
 		<value condition="Control.HasFocus(705)">$LOCALIZE[31738]</value>
 		<value condition="Control.HasFocus(709)">$LOCALIZE[31773]</value>
@@ -364,7 +365,12 @@
 		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
 		<value condition="Control.HasFocus(6067)">$LOCALIZE[31745]</value>
 		<value condition="Control.HasFocus(714)">$LOCALIZE[31781]</value>
+		<value condition="Control.HasFocus(720)">$LOCALIZE[31812]</value>
+		<value condition="Control.HasFocus(721)">$LOCALIZE[31813]</value>
+		<value condition="Control.HasFocus(722)">$LOCALIZE[31814]</value>
+		<value condition="Control.HasFocus(723)">$LOCALIZE[31815]</value>
 		<!-- 主菜单项 -->
+		<value condition="Control.HasFocus(6110)">$LOCALIZE[31802]</value>
 		<value condition="Control.HasFocus(611)">$LOCALIZE[31746]</value>
 		<value condition="Control.HasFocus(6111)">$LOCALIZE[31747]</value>
 		<value condition="Control.HasFocus(627)">$LOCALIZE[31748]</value>
@@ -376,9 +382,12 @@
 		<value condition="Control.HasFocus(625)">$LOCALIZE[31754]</value>
 		<value condition="Control.HasFocus(618)">$LOCALIZE[31755]</value>
 		<value condition="Control.HasFocus(6181)">$LOCALIZE[31756]</value>
+		<value condition="Control.HasFocus(619)">$LOCALIZE[31803]</value>
 		<!-- 屏幕菜单式调节 -->
 		<value condition="Control.HasFocus(623)">$LOCALIZE[31757]</value>
 		<value condition="Control.HasFocus(624)">$LOCALIZE[31758]</value>
+		<value condition="Control.HasFocus(630)">$LOCALIZE[31805]</value>
+		<value condition="Control.HasFocus(631)">$LOCALIZE[31806]</value>
 		<value condition="Container(9000).HasFocus(1)">$LOCALIZE[31129]</value>
 		<value condition="Container(9000).HasFocus(2)">$LOCALIZE[31130]</value>
 		<value condition="Container(9000).HasFocus(3)">$LOCALIZE[31169]</value>

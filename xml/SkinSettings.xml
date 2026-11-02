@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol>9000</defaultcontrol>
+	<onload condition="System.AddonIsEnabled(script.mistuary.helper)">RunScript(script.mistuary.helper,action=settings_snapshot)</onload>
 	<backgroundcolor>background</backgroundcolor>
 	<controls>
 		<include>NaraSettingsBackground</include>
@@ -233,21 +234,41 @@
 				<height>708</height>
 			</control>
 			<control type="grouplist" id="610">
-				<left>0</left>
-				<onleft>9000</onleft>
-				<onright>60</onright>
-				<onup>610</onup>
-				<pagecontrol>60</pagecontrol>
-				<ondown>610</ondown>
-				<visible>Container(9000).HasFocus(2)</visible>
-				<control type="button" id="710">
+<control type="button" id="707">
 					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31719]</label>
+					<label>$LOCALIZE[31733]</label>
 					<include content="NaraSettingsRow">
 					<param name="text" value="text_primary" />
 				</include>
-					<onclick>Skin.SetPath(library_art_folder)</onclick>
-					<label2>$VAR[LibraryArtFolderLabel]</label2>
+					<onclick>Skin.SelectBool(31733, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31790|douban_rating, 31791|rating_src_auto)</onclick>
+					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
+				</control>
+<control type="button" id="715">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31782]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31782, 31767|rating_sec_auto, 31765|rating_sec_douban, 31783|rating_sec_rt, 31792|rating_sec_off)</onclick>
+					<label2>$VAR[NaraSecondaryRatingSourceVar]</label2>
+				</control>
+<control type="button" id="706">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31024]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31024, 38018|circle_userrating, 31807|circle_rating, 16018|circle_none)</onclick>
+					<label2>$VAR[RatingSettingLabel2Var]</label2>
+				</control>
+<control type="button" id="708">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31047]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
+					<label2>$VAR[OriginalTitleSetting]</label2>
 				</control>
 <control type="radiobutton" id="705">
 					<textcolor>text_primary</textcolor>
@@ -267,42 +288,6 @@
 					<onclick>Skin.ToggleSetting(hide_techflag_icons)</onclick>
 					<selected>!Skin.HasSetting(hide_techflag_icons)</selected>
 				</control>
-<control type="button" id="706">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31024]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31024, 38018|circle_userrating, 563|circle_rating, 16018|circle_none)</onclick>
-					<label2>$VAR[RatingSettingLabel2Var]</label2>
-				</control>
-<control type="button" id="707">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31733]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31733, 31764|rating_src_tmdb, 31766|rating_src_imdb, 31790|douban_rating, 31791|rating_src_auto)</onclick>
-					<label2>$VAR[NaraDefaultRatingSourceVar]</label2>
-				</control>
-<control type="button" id="715">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31782]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31782, 31767|rating_sec_auto, 31765|rating_sec_douban, 31783|rating_sec_rt, 31792|rating_sec_off)</onclick>
-					<label2>$VAR[NaraSecondaryRatingSourceVar]</label2>
-				</control>
-<control type="button" id="708">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31047]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SelectBool(31047, 571|OriginalTitleFormat_Default, 31049|OriginalTitleFormat_Only, 31050|OriginalTitleFormat_1st, 31051|OriginalTitleFormat_2nd)</onclick>
-					<label2>$VAR[OriginalTitleSetting]</label2>
-				</control>
 <control type="radiobutton" id="6067">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31168]</label>
@@ -311,6 +296,22 @@
 				</include>
 					<onclick>Skin.ToggleSetting(show_musicvideoposter)</onclick>
 					<selected>Skin.HasSetting(show_musicvideoposter)</selected>
+				</control>
+				<left>0</left>
+				<onleft>9000</onleft>
+				<onright>60</onright>
+				<onup>610</onup>
+				<pagecontrol>60</pagecontrol>
+				<ondown>610</ondown>
+				<visible>Container(9000).HasFocus(2)</visible>
+				<control type="button" id="710">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31719]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetPath(library_art_folder)</onclick>
+					<label2>$VAR[LibraryArtFolderLabel]</label2>
 				</control>
 				<top>161</top>
 				<width>1315</width>
@@ -383,6 +384,46 @@
 					<onclick>Skin.ToggleSetting(helper_search_off)</onclick>
 					<selected>!Skin.HasSetting(helper_search_off)</selected>
 					<visible>$EXP[helper_search_ready]</visible>
+				</control>
+				<control type="radiobutton" id="720">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31808]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=douban_enabled)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.DoubanEnabled),true)</selected>
+					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
+				</control>
+				<control type="radiobutton" id="721">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31809]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=playlist_completion_season)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.PlaylistSeason),true)</selected>
+					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
+				</control>
+				<control type="radiobutton" id="722">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31810]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=playlist_completion_folder)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.PlaylistFolder),true)</selected>
+					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
+				</control>
+				<control type="radiobutton" id="723">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31811]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=playlist_completion_next_season)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.PlaylistNextSeason),true)</selected>
+					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
 				</control>
 				<control type="button" id="719">
 					<textcolor>text_primary</textcolor>

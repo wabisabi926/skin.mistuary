@@ -93,8 +93,8 @@ msgid "Viewtype"
 msgstr "视图类型"
 
 msgctxt "#31024"
-msgid "Choose rating to display for media items"
-msgstr "选择媒体项目要显示的评分"
+msgid "Rating circle"
+msgstr "卡片评分"
 
 msgctxt "#31025"
 msgid "No favourites found. You can add items from media and other views by using the context menu."
@@ -405,8 +405,8 @@ msgstr "动态背景"
 #. Label of a setting
 
 msgctxt "#31168"
-msgid "Show posters instead of thumbs for musicvideos"
-msgstr "对于音乐电视，显示海报而不是缩略图"
+msgid "Music video posters"
+msgstr "音乐视频显示海报"
 
 #. Description label for skin settings area
 
@@ -424,14 +424,14 @@ msgstr "设置播放时屏幕控制条的行为。"
 #. Setting Automatically close video OSD
 
 msgctxt "#31172"
-msgid "Automatically close video OSD"
-msgstr "自动关闭视频 OSD"
+msgid "Automatically hide video OSD"
+msgstr "自动隐藏视频 OSD"
 
 #. Setting auto close time for video osd
 
 msgctxt "#31173"
-msgid "Video OSD autoclose time (seconds)"
-msgstr "视频 OSD 自动关闭时间（秒）"
+msgid "Video OSD hide delay (seconds)"
+msgstr "视频 OSD 隐藏延迟（秒）"
 
 #. Setting to control the default action for a music album
 
@@ -826,8 +826,8 @@ msgstr "锁定背景"
 #: /xml/MusicVisualisation.xml
 
 msgctxt "#31697"
-msgid "Favourites as landscape"
-msgstr "收藏夹用横版"
+msgid "Favourites as landscape cards"
+msgstr "收藏夹横版卡片"
 
 msgctxt "#31698"
 msgid "Favourites as landscape"
@@ -925,7 +925,7 @@ msgstr "无可用字幕"
 
 msgctxt "#31719"
 msgid "Media library cover folder"
-msgstr "媒体库封面文件夹"
+msgstr "媒体库封面目录"
 
 msgctxt "#31720"
 msgid "Not set"
@@ -989,95 +989,95 @@ msgstr "启动时以选定用户自动登录，跳过用户选择界面。"
 
 msgctxt "#31736"
 msgid "Auto-scroll long plots instead of paging. Off by default."
-msgstr "剧情较长时自动滚动，替代手动翻页。默认关闭。"
+msgstr "长剧情自动滚动，替代手动翻页。默认关闭。"
 
 msgctxt "#31737"
-msgid "Uses the skin's own libraryart folder by default. Custom covers must match library names."
-msgstr "默认使用皮肤自带的 libraryart 目录；自定义封面须与媒体库同名。"
+msgid "Covers come from the skin's libraryart folder; custom art must match library names."
+msgstr "封面取自皮肤 libraryart 目录；自定义封面须与媒体库同名。"
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
-msgstr "在影片信息中显示分辨率、音轨与字幕标识。默认开启。"
+msgstr "在媒体信息中显示分辨率、音轨与字幕标识。默认开启。"
 
 msgctxt "#31739"
-msgid "Shows your own rating by default. Pick Rating for source ratings, or None to hide."
-msgstr "主评分位默认显示个人评分；可选来源评分或不显示。"
+msgid "Card badge: My rating (yours), Media rating (library source), or None. None by default."
+msgstr "卡片角标：我的评分（自己打的）、媒体评分（媒体库来源），或无。默认无。"
 
 msgctxt "#31740"
-msgid "Match the Emby library scraper: TheMovieDb → TMDb, OMDb → IMDb. Douban applies to the StrmAssistant override only; Auto to Kodi local scraping."
-msgstr "与 Emby 库的首选抓取器一致：TheMovieDb 选 TMDb，OMDb 选 IMDb；豆瓣仅限神医助手覆盖模式，自动仅限 Kodi 本地刮削。"
+msgid "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
+msgstr "自动跟随 Emby 的首选刮削器（TMDb / IMDb）；豆瓣依赖 StrmAssistant 覆盖。"
 
 msgctxt "#31741"
-msgid "Follows the language setting by default. Or show the original title only, or both."
-msgstr "标题默认跟随语言设置；可选仅显示原始标题，或原名与译名并列。"
+msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
+msgstr "默认跟随语言设置；也可固定原始标题，或调整原名/译名的先后顺序。"
 
 msgctxt "#31742"
-msgid "Controls page panels, the settings hub and sidebar, and page cards. Higher levels are more opaque. Balanced by default."
-msgstr "控制页面面板、设置中心与侧栏、页面卡片。档位越高越不透明，默认“平衡”。"
+msgid "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
+msgstr "页面、设置中心/侧栏与卡片的不透明度；档位越高越不透明。默认平衡。"
 
 msgctxt "#31743"
-msgid "Controls playback OSD, video/music OSD settings and player controls. Higher levels are more opaque. Light by default."
-msgstr "控制播放 OSD、视频与音乐 OSD 设置、播放控制条。档位越高越不透明，默认“通透”。"
+msgid "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
+msgstr "播放 OSD 与播放控制条的不透明度；档位越高越不透明。默认通透。"
 
 msgctxt "#31744"
-msgid "Use item fanart as the page background, falling back to the default image. On by default."
-msgstr "以作品背景图作为页面背景，缺图时使用默认图。默认开启。"
+msgid "Use item fanart as the page background; the default image is used when missing. On by default."
+msgstr "使用作品背景图；缺图时用默认背景。默认开启。"
 
 msgctxt "#31745"
-msgid "Show posters for music videos in lists; off shows video thumbnails. Off by default."
-msgstr "列表中音乐视频显示海报；关闭则显示视频缩略图。默认关闭。"
+msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
+msgstr "音乐视频在列表中显示海报；关闭后显示缩略图。默认关闭。"
 
 msgctxt "#31746"
-msgid "Hides the Movies entry from the main menu when off. On by default."
-msgstr "关闭后主菜单不再显示“电影”。默认开启。"
+msgid "Show Movies in the main menu. On by default."
+msgstr "在主菜单显示“电影”。默认开启。"
 
 msgctxt "#31747"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "选择该行显示的内容，如最近添加、继续观看、随机推荐。"
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31748"
-msgid "Browse opens the set by default; or play directly or queue it."
-msgstr "默认“浏览”进入系列详情；亦可直接播放或加入播放列表。"
+msgid "Default action: Browse. Alternatively play or queue the item."
+msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
 
 msgctxt "#31749"
-msgid "Hides the TV shows entry from the main menu when off. On by default."
-msgstr "关闭后主菜单不再显示“电视剧”。默认开启。"
+msgid "Show TV shows in the main menu. On by default."
+msgstr "在主菜单显示“电视剧”。默认开启。"
 
 msgctxt "#31750"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "选择该行显示的内容，如最近添加、继续观看、随机推荐。"
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31751"
-msgid "Browse opens the episode list by default; or play directly or queue it."
-msgstr "默认“浏览”进入剧集列表；亦可直接播放或加入播放列表。"
+msgid "Default action: Browse. Alternatively play or queue the episode."
+msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
 
 msgctxt "#31752"
-msgid "Hides the Music entry from the main menu when off. On by default."
-msgstr "关闭后主菜单不再显示“音乐”。默认开启。"
+msgid "Show Music in the main menu. On by default."
+msgstr "在主菜单显示“音乐”。默认开启。"
 
 msgctxt "#31753"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "选择该行显示的内容，如最近添加、继续观看、随机推荐。"
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31754"
-msgid "Browse opens the album by default; or play directly or queue it."
-msgstr "默认“浏览”进入专辑；亦可直接播放或加入播放列表。"
+msgid "Default action: Browse. Alternatively play or queue the album."
+msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
 
 msgctxt "#31755"
-msgid "Hides the TV entry from the main menu when off. On by default."
-msgstr "关闭后主菜单不再显示“电视”。默认开启。"
+msgid "Show TV in the main menu. On by default."
+msgstr "在主菜单显示“电视”。默认开启。"
 
 msgctxt "#31756"
-msgid "What this row shows, e.g. recently added, continue watching, random."
-msgstr "选择该行显示的内容，如最近添加、继续观看、随机推荐。"
+msgid "Content shown in this row: recently added, continue watching, random, etc."
+msgstr "该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31757"
-msgid "Hide the OSD automatically while playing. Off by default."
-msgstr "播放时无操作自动隐藏 OSD。默认关闭。"
+msgid "Hide the OSD automatically during playback. Off by default."
+msgstr "播放时自动隐藏 OSD。默认关闭。"
 
 msgctxt "#31758"
-msgid "Seconds before the OSD hides. 4 by default."
-msgstr "自动隐藏前的等待秒数。默认 4 秒。"
+msgid "Delay before the OSD hides. 4 seconds by default."
+msgstr "OSD 自动隐藏前的等待时间，默认 4 秒。"
 
 msgctxt "#31768"
 msgid "Vinyl record effect"
@@ -1164,8 +1164,8 @@ msgid "Use Emby server search"
 msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
-msgid "Search through the Mistuary Helper add-on: Chinese titles, original titles, full pinyin, initials, plus Chinese cast names and genres. Reload the skin after installing or removing the add-on."
-msgstr "装了 Mistuary Helper 后走 Emby 服务端：中文、原名、全拼、首字母，以及中文的演员名与类型都能搜到。装完或卸掉插件后要重载皮肤才生效。"
+msgid "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
+msgstr "通过 Emby 服务端搜索原名、全拼与首字母；中文演员/类型需能输入中文。启用或卸载插件后重载皮肤。"
 
 msgctxt "#31782"
 msgid "Secondary rating source"
@@ -1173,11 +1173,11 @@ msgstr "次评分来源"
 
 msgctxt "#31783"
 msgid "Rotten Tomatoes"
-msgstr "烂番茄"
+msgstr "烂番茄新鲜度"
 
 msgctxt "#31784"
-msgid "Extra rating next to the main one: Auto prefers Douban (helper add-on), otherwise Rotten Tomatoes; or fix one source."
-msgstr "主评分旁边显示哪一颗：自动优先豆瓣（需插件），否则烂番茄；也可固定豆瓣 / 烂番茄或关闭。"
+msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
+msgstr "次评分显示在主评分旁：自动优先豆瓣（需插件），否则烂番茄影评人新鲜度（Tomatometer）；可固定来源或关闭。"
 
 msgctxt "#31792"
 msgid "Off"
@@ -1200,12 +1200,12 @@ msgid "Automatically hide music OSD"
 msgstr "自动隐藏音乐 OSD"
 
 msgctxt "#31794"
-msgid "Music OSD auto-close time (seconds)"
-msgstr "音乐 OSD 自动关闭时间（秒）"
+msgid "Music OSD hide delay (seconds)"
+msgstr "音乐 OSD 隐藏延迟（秒）"
 
 msgctxt "#31795"
 msgid "Favorites cover folder"
-msgstr "收藏夹封面文件夹"
+msgstr "收藏夹封面目录"
 
 msgctxt "#31796"
 msgid "Not set"
@@ -1220,13 +1220,69 @@ msgid "Skin helper"
 msgstr "皮肤助手"
 
 msgctxt "#31799"
-msgid "Mistuary Helper provides search, Douban ratings and playlist completion; open its settings here."
-msgstr "Mistuary Helper 提供搜索、豆瓣评分与播放列表补全；这里打开它的设置。"
+msgid "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
+msgstr "Mistuary Helper 提供搜索、豆瓣评分与播放列表补全；高级选项在插件设置里。"
 
 msgctxt "#31800"
-msgid "Open helper settings"
-msgstr "打开插件设置"
+msgid "Advanced settings"
+msgstr "高级设置"
 
 msgctxt "#31801"
 msgid "Mistuary Helper is not installed"
-msgstr "需要安装 Mistuary Helper"
+msgstr "未安装 Mistuary Helper"
+
+msgctxt "#31802"
+msgid "Show Search in the main menu. On by default."
+msgstr "在主菜单显示“搜索”。默认开启。"
+
+msgctxt "#31803"
+msgid "Show Favourites in the main menu. On by default."
+msgstr "在主菜单显示“收藏夹”。默认开启。"
+
+msgctxt "#31804"
+msgid "Cover folder for landscape favourite cards; leave empty to use default covers."
+msgstr "收藏夹横版卡片的封面目录；留空使用默认封面。"
+
+msgctxt "#31805"
+msgid "Hide the music OSD automatically during playback. Off by default."
+msgstr "播放音乐时自动隐藏 OSD。默认关闭。"
+
+msgctxt "#31806"
+msgid "Delay before the music OSD hides. 4 seconds by default."
+msgstr "音乐 OSD 自动隐藏前的等待时间，默认 4 秒。"
+
+msgctxt "#31807"
+msgid "Media rating"
+msgstr "媒体评分"
+
+msgctxt "#31808"
+msgid "Douban rating"
+msgstr "豆瓣评分"
+
+msgctxt "#31809"
+msgid "Playlist: rest of season"
+msgstr "播放列表：按季补全"
+
+msgctxt "#31810"
+msgid "Playlist: rest of folder"
+msgstr "播放列表：按目录补全"
+
+msgctxt "#31811"
+msgid "Playlist: next season"
+msgstr "播放列表：跨季继续"
+
+msgctxt "#31812"
+msgid "Show Douban ratings on the info page; no requests when off."
+msgstr "详情页显示豆瓣评分；关闭后不再请求。"
+
+msgctxt "#31813"
+msgid "Append the rest of the season when a library episode starts; playback is not interrupted."
+msgstr "剧集起播时，将本季其余剧集加入队列；不打断当前播放。"
+
+msgctxt "#31814"
+msgid "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
+msgstr "视频或音乐从文件夹起播时，将同目录其余条目加入队列；不打断当前播放。"
+
+msgctxt "#31815"
+msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
+msgstr "本季最后一集起播时，把下一季第一集加入队列；配合“按季补全”使用。"
