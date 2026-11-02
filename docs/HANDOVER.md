@@ -189,7 +189,7 @@
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.3.4 待发） | 服务端搜索、豆瓣评分、播放列表补全 | 回退本地 XSP / 不显示豆瓣胶囊 / Kodi 原生只播当前项 |
+| `script.mistuary.helper`（可选，0.3.4 已发布） | 服务端搜索、豆瓣评分、播放列表补全 | 回退本地 XSP / 不显示豆瓣胶囊 / Kodi 原生只播当前项 |
 
 都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
