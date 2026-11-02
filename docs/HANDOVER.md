@@ -667,6 +667,9 @@ Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:
 
 Emby 库主评分固定 1 颗；次评分在详情页最多 1 颗（豆瓣或烂番茄）。
 
+**「烂番茄」明确指影评人新鲜度（Tomatometer，`tomatometerallcritics` = Emby 的 `CriticRating`），
+不是观众爆米花指数（Popcornmeter）；只有电影有，且设置里的选项也写作「烂番茄新鲜度」。**
+
 **评分行的规则**（2026-10-31 定稿，随 1.5.1）：
 
 - **主评分四档互斥、手选优先**（设置 707）：TMDb / IMDb / 豆瓣（神医助手覆盖）/
@@ -1168,7 +1171,7 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - 1.5.1 起主评分四档、次评分 豆瓣→烂番茄；**列表 / 首页不显示豆瓣次评分**，
   插件写的 `rating_type=douban` 暂无消费方。
 - **M1d 演员/导演/类型**：0.3.3 起支持非 ASCII 查询并入结果，2–4 位 ASCII 首字母按前缀严格匹配；**M3 代表集**不做（皮肤用两级探针自行解决）；
-  **M4 行级增强**可选不排期。
+  **M4 行级增强**不做（首页行拿不到逐条插件属性，节点名无法由皮肤改写）。
 - 装/卸/启用插件后要**重载皮肤**；卸载后的回退是下一帧生效。
 - 规划与契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)；实现文档在
   `<插件仓库根>\docs\`。
