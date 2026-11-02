@@ -1932,8 +1932,8 @@
 								<onright>804</onright>
 								<onback>804</onback>
 								<onclick>SetFocus(804)</onclick>
-								<onclick condition="System.CanPowerDown">Powerdown()</onclick>
-								<onclick condition="!System.CanPowerDown">Quit()</onclick>
+								<onclick condition="System.ShowExitButton">Quit()</onclick>
+								<onclick condition="!System.ShowExitButton">ActivateWindow(shutdownmenu)</onclick>
 							</control>
 						</control>
 					</control>
