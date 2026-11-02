@@ -1225,8 +1225,8 @@ msgid "Card badge: My rating (yours), Media rating (library source), or None. No
 msgstr "Card badge: My rating (yours), Media rating (library source), or None. None by default."
 
 msgctxt "#31740"
-msgid "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
-msgstr "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
+msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
+msgstr "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."

@@ -1004,8 +1004,8 @@ msgid "Card badge: My rating (yours), Media rating (library source), or None. No
 msgstr "卡片角标：我的评分（自己打的）、媒体评分（媒体库来源），或无。默认无。"
 
 msgctxt "#31740"
-msgid "Auto follows the Emby scraper (TMDb / IMDb); Douban requires the StrmAssistant override."
-msgstr "自动跟随 Emby 的首选刮削器（TMDb / IMDb）；豆瓣依赖 StrmAssistant 覆盖。"
+msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
+msgstr "自动按媒体库里的评分类型标签判断（TMDb / IMDb）；无法判断时按 TMDb 显示。"
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
