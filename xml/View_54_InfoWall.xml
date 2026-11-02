@@ -86,9 +86,8 @@
 				<top>0</top>
 				<width>316</width>
 				<height>316</height>
-				<texture background="true">$VAR[InfoWallThumbVar]</texture>
-				<aspectratio>keep</aspectratio>
-				<bordersize>20</bordersize>
+				<texture background="true" diffuse="shapes/mask_316x316_r12.png" scalediffuse="false">$VAR[InfoWallThumbVar]</texture>
+				<aspectratio>scale</aspectratio>
 			</control>
 			<control type="image">
 				<left>20</left>

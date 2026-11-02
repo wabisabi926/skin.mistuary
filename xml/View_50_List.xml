@@ -395,6 +395,8 @@
 				<include content="NaraList50PreviewSurface">
 					<param name="height" value="740" />
 				</include>
+				<!-- 视频类宽图：730×318 原样显示；音乐（歌曲/专辑/艺术家）是方图，
+				     走下面带圆角的 318²。 -->
 				<control type="image">
 					<left>36</left>
 					<top>36</top>
@@ -403,6 +405,17 @@
 					<aspectratio>keep</aspectratio>
 					<fadetime>200</fadetime>
 					<texture background="true">$VAR[NaraList50PreviewThumbVar]</texture>
+					<visible>!String.IsEqual(Container(50).ListItem.DBType,song) + !String.IsEqual(Container(50).ListItem.DBType,album) + !String.IsEqual(Container(50).ListItem.DBType,artist)</visible>
+				</control>
+				<control type="image">
+					<left>242</left>
+					<top>36</top>
+					<width>318</width>
+					<height>318</height>
+					<aspectratio>scale</aspectratio>
+					<fadetime>200</fadetime>
+					<texture background="true" diffuse="shapes/mask_318x318_r12.png" scalediffuse="false">$VAR[NaraList50PreviewThumbVar]</texture>
+					<visible>String.IsEqual(Container(50).ListItem.DBType,song) | String.IsEqual(Container(50).ListItem.DBType,album) | String.IsEqual(Container(50).ListItem.DBType,artist)</visible>
 				</control>
 				<control type="textbox">
 					<left>36</left>
@@ -556,11 +569,11 @@
 					<control type="image">
 						<left>58</left>
 						<top>80</top>
-						<width>540</width>
+						<width>470</width>
 						<height>470</height>
-						<aspectratio aligny="bottom">keep</aspectratio>
+						<aspectratio>scale</aspectratio>
 						<fadetime>300</fadetime>
-						<texture background="true">$VAR[NaraImgPlayerIconDefDefaultAudio]</texture>
+						<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[NaraImgPlayerIconDefDefaultAudio]</texture>
 					</control>
 					<control type="group">
 						<left>301</left>
@@ -715,11 +728,11 @@
 				<control type="image">
 					<left>30</left>
 					<top>80</top>
-					<width>540</width>
+					<width>470</width>
 					<height>470</height>
-					<aspectratio aligny="bottom">keep</aspectratio>
+					<aspectratio>scale</aspectratio>
 					<fadetime>300</fadetime>
-					<texture background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[IconWallThumbVar]</texture>
 					<visible>!String.IsEqual(ListItem.DbType,episode) + !String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="image">
@@ -735,11 +748,11 @@
 				<control type="image">
 					<left>30</left>
 					<top>80</top>
-					<width>540</width>
+					<width>470</width>
 					<height>470</height>
-					<aspectratio aligny="bottom">keep</aspectratio>
+					<aspectratio>scale</aspectratio>
 					<fadetime>300</fadetime>
-					<texture background="true">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[IconWallThumbVar]</texture>
 					<visible>String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="group">

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-xbt_tool.py - Kodi 皮肤 Textures.xbt (XBT v2) 打包/解包工具 (纯 Python, 仅依赖 Pillow)
+xbt_tool.py - Kodi 皮肤 Textures.xbt (XBT v3) 打包/解包工具 (纯 Python, 仅依赖 Pillow)
 
 用法:
   python xbt_tool.py pack   [输入目录] [-o 输出.xbt]     # 默认: 打包 <脚本目录>/media -> media/Textures.xbt
   python xbt_tool.py unpack <文件.xbt> [-o 输出目录]     # 解包 XBT 为 PNG 图片
 
 说明:
-  - XBT v2 容器格式与 Kodi 19~22+ 兼容 (Kodi 22 的 XBTF_VERSION_MIN='2')。
+  - 写 XBT v3（Kodi 22 起官方打包器的版本）。读取端只要求 version >= '2'，
+    v2/v3 的头部与帧结构相同，区别只是版本字节；皮肤 1.7.0 起只支持 Kodi 22，
+    因此直接写 v3。
   - 贴图统一存储为未压缩 A8R8G8B8 (BGRA 字节序, 与官方 TexturePacker 相同),
     全不透明的贴图置 XB_FMT_OPAQUE (0x10000) 标志。
   - 帧数据用 LZO1X 压缩 (与官方 liblzo lzo1x 兼容); 压缩无收益时存原始数据。
@@ -307,7 +309,7 @@ def lzo1x_decompress(data):
 
 
 # ---------------------------------------------------------------------------
-# XBT v2 容器
+# XBT v3 容器（头部与 v2 同构，只是版本字节为 '3'）
 # ---------------------------------------------------------------------------
 
 XB_FMT_A8R8G8B8 = 0x10
@@ -368,7 +370,7 @@ def pack(input_dir, output_file, verify=True):
 
     with open(output_file, 'wb') as f:
         f.write(b'XBTF')
-        f.write(b'2')
+        f.write(b'3')
         f.write(struct.pack('<I', len(entries)))
         for rel, w, h, fmt, packed_size, unpacked_size, duration, off in entries:
             path_mem = rel.encode('utf-8')[:255]
