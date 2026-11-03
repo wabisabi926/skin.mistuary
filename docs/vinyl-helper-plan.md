@@ -33,7 +33,7 @@
   └─ 组内第二层（id=31111）：MediaFanartVar 的 fanart / 剧照      ← 叠在上面
 ```
 
-- 设置页另有 `NaraSettingsBackground` = `DefaultBackground` + primary.jpg + 一个隐藏的随机 fanart 列表。
+- 设置页另有 `NaraSettingsBackground` = `DefaultBackground`（primary.jpg 兜底）+ 真图时的黑隔层 + 一个隐藏的随机 fanart 列表。
 - `no_fanart` 开关只把 fanart 清空（`MediaFanartVar` 返回空），**primary.jpg 还在**。
 - 20 个窗口声明了 `<backgroundcolor>`（`background` = `FF000000` 纯黑），那是**兜底色**，不是兜底图。
 
