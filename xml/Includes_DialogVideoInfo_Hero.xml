@@ -11,10 +11,12 @@
 	     取不到的类型返回空字符串，对应胶囊自动隐藏。详见 docs/HANDOVER.md §5.7。 -->
 	<include name="NaraOnlineRatingItem">
 		<!-- 每个评分是一枚胶囊：底板 + 徽标 + 分数，与技术标识同款外观。
-		     宽度 = 左右内边距 12×2 + 内容宽度；文字框给 44（"8.9" 实测 42px，"10.0" 会裁掉末位边缘 —— 实际不会出现）。
+		     宽度 = 左右内边距 12×2 + 内容宽度；文字框给 56：
+		     Inter 27px 实测 "8.9" = 42px、"10.0" = 53px。库里实际有 821 条 IMDb +
+		     25 条烂番茄正好是 10.0（如《东邪西毒：终极版》），原来 44px 会裁掉末位。
 		     图标框按素材比例传参：方形徽标（烂番茄/TMDb/Metacritic/豆瓣）28×28，
 		     IMDb 词标是 2:1，给 46×23 才不至于比分数小一大截。 -->
-		<param name="width">102</param>
+		<param name="width">108</param>
 		<param name="visible">false</param>
 		<param name="icon"></param>
 		<param name="label"></param>
@@ -23,7 +25,7 @@
 		<param name="icon_top">4</param>
 		<param name="pad">12</param>
 		<param name="label_left">46</param>
-		<param name="label_width">44</param>
+		<param name="label_width">56</param>
 		<definition>
 			<control type="group">
 				<width>$PARAM[width]</width>
@@ -32,7 +34,7 @@
 				<control type="image">
 					<width>$PARAM[width]</width>
 					<height>36</height>
-					<texture border="4" colordiffuse="66000000">shapes/round4.png</texture>
+					<texture border="4" colordiffuse="4D000000">shapes/round4.png</texture>
 				</control>
 				<control type="image">
 					<left>$PARAM[pad]</left>
@@ -47,6 +49,7 @@
 					<width>$PARAM[label_width]</width>
 					<height>36</height>
 					<font>font13</font>
+					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[label]</label>
 				</control>
@@ -72,6 +75,12 @@
 		<param name="technical_episode_prefix">ListItem</param>
 		<param name="technical_caption"></param>
 		<param name="technical_caption_visible">false</param>
+		<!-- 可选：在评分后面接一段元数据（首页 Hero 的「年份 · 时长 · 类型」）。
+		     默认不可见，其余调用点完全不受影响。放在评分与标识之间，
+		     这样有评分时元数据自动右移，没有评分时从左边起排。 -->
+		<param name="metadata"></param>
+		<param name="metadata_visible">false</param>
+		<param name="metadata_width">600</param>
 		<definition>
 			<control type="grouplist">
 				<top>$PARAM[top]</top>
@@ -99,8 +108,8 @@
           <param name="icon_height" value="23" />
           <param name="icon_top" value="6" />
           <param name="label_left" value="64" />
-          <param name="label_width" value="44" />
-          <param name="width" value="120" />
+          <param name="label_width" value="56" />
+          <param name="width" value="126" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
@@ -126,8 +135,8 @@
           <param name="icon_height" value="23" />
           <param name="icon_top" value="6" />
           <param name="label_left" value="64" />
-          <param name="label_width" value="44" />
-          <param name="width" value="120" />
+          <param name="label_width" value="56" />
+          <param name="width" value="126" />
           <param name="label" value="$INFO[$PARAM[item_prefix].Rating]" />
         </include>
         <include content="NaraOnlineRatingItem">
@@ -149,6 +158,19 @@
 					<param name="icon" value="flags/ratings/rtfresh.png" />
 					<param name="label" value="$INFO[$PARAM[item_prefix].Rating(tomatometerallcritics)]" />
 				</include>
+
+				<!-- 可选元数据：与评分同一条流（首页 Hero 用来放年份/时长/类型）。
+				     宽度固定但位置由 grouplist 自动排，评分 0/1/2 颗都能自动补位。 -->
+				<control type="label">
+					<width>$PARAM[metadata_width]</width>
+					<height>36</height>
+					<font>font13</font>
+					<textcolor>text_secondary</textcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<label>$PARAM[metadata]</label>
+					<visible>$PARAM[metadata_visible]</visible>
+				</control>
 
 				<include content="VideoTechnicalFlagsByPrefix">
 					<param name="visible" value="$PARAM[inline_flags] + $PARAM[technical_visible]" />

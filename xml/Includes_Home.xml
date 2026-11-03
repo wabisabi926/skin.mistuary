@@ -193,28 +193,19 @@
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Label]</label>
 						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItem.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
-					<control type="label">
+					<!-- 紧凑态元数据 + 评分：同一条横向 grouplist，评分在前、年份/时长/类型在后。
+					     评分 0 / 1 / 2 颗都能自动补位，不再写死 left 580 / right 900。 -->
+					<control type="group">
 						<left>80</left>
 						<top>202</top>
-						<width>600</width>
-						<height>40</height>
-						<font>font13</font>
-						<textcolor>text_secondary</textcolor>
-						<scroll>true</scroll>
-						<label>$PARAM[metadata]</label>
-						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
-					</control>
-					<!-- 紧凑态评分胶囊：与元数据同一行、贴右侧对齐（右缘 x=900，与简介右缘对齐），
-					     不占用纵向空间；只有一颗评分时靠右，不会停在这一行中间 -->
-					<control type="group">
-						<left>580</left>
-						<top>205</top>
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
 						<include content="NaraOnlineRatingsRow">
 							<param name="top" value="0" />
-							<param name="width" value="320" />
-							<param name="align" value="right" />
+							<param name="width" value="820" />
+							<param name="align" value="left" />
 							<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+							<param name="metadata" value="$PARAM[metadata]" />
+							<param name="metadata_visible" value="true" />
 						</include>
 					</control>
 					<control type="textbox">

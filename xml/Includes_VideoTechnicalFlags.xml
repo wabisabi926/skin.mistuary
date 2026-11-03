@@ -252,8 +252,8 @@
 				<textcolor>white</textcolor>
 				<focusedcolor>white</focusedcolor>
 				<disabledcolor>white</disabledcolor>
-				<texturefocus colordiffuse="66000000" border="4">shapes/round4.png</texturefocus>
-				<texturenofocus colordiffuse="66000000" border="4">shapes/round4.png</texturenofocus>
+				<texturefocus colordiffuse="4D000000" border="4">shapes/round4.png</texturefocus>
+				<texturenofocus colordiffuse="4D000000" border="4">shapes/round4.png</texturenofocus>
 				<label>[B][UPPERCASE]$PARAM[flag_label][/UPPERCASE][/B]</label>
 				<visible>$PARAM[flag_visible]</visible>
 			</control>
@@ -282,7 +282,7 @@
 				<control type="image">
 					<width>$PARAM[width]</width>
 					<height>36</height>
-					<texture border="4" colordiffuse="66000000">shapes/round4.png</texture>
+					<texture border="4" colordiffuse="4D000000">shapes/round4.png</texture>
 				</control>
 				<control type="image">
 					<left>12</left>
