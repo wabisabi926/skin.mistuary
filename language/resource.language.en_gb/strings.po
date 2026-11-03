@@ -1513,5 +1513,5 @@ msgid "Power"
 msgstr "Power"
 
 msgctxt "#31817"
-msgid "Switch to Android"
-msgstr "Switch to Android"
+msgid "Reboot to Android"
+msgstr "Reboot to Android"

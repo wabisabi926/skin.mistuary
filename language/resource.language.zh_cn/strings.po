@@ -1292,5 +1292,5 @@ msgid "Power"
 msgstr "电源"
 
 msgctxt "#31817"
-msgid "Switch to Android"
-msgstr "切换到安卓"
+msgid "Reboot to Android"
+msgstr "重启到安卓"
