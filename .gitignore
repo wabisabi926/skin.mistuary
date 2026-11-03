@@ -13,5 +13,8 @@ __pycache__/
 docs/scratch/*
 !docs/scratch/README.md
 
+# 图片预览工具的临时输出（背景对比图等，不入库）
+vibe_images/
+
 # 打包暂存目录（release.yml 生成）
 build/
