@@ -111,18 +111,17 @@
 			<texturefocus />
 			<texturenofocus />
 		</control>
-		<!-- 通用版：grouplist 无 texturebackground，改为独立背景层（高度按内容估算） -->
-		<!-- 宽度 400：最长标签「关闭系统电源」6 个字 × 26 ≈ 156px，左右各留 24 还绰绰有余。
-		     高度按**可见按钮数**分两层：88（标题）+ N×70 + 18（底部留白）。
-		     N=6 时 526、N=5 时 456。用 System.CanHibernate 区分 —— 平台有休眠才会多出「休眠」那一格，
-		     这样每个平台都刚好贴边，不会出现"板子比按钮多一块"。 -->
+		<!-- 通用版：grouplist 无 texturebackground，改为独立背景层。
+		     高度 = 82 + 60 × 可见项数（标题 64 + 分隔线 6 + 底部留白 12，每个按钮 60）。
+		     前六条覆盖能关机/重启的桌面与 CE 平台，按「休眠 / 退出 / 待机」组合分档；
+		     后两条覆盖 Android（不能关机 / 重启，只剩退出和设置）。 -->
 		<control type="image">
 			<centerleft>50%</centerleft>
 			<top>180</top>
 			<width>340</width>
 			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.CanHibernate</visible>
+			<visible>System.CanHibernate + System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -130,10 +129,58 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.CanHibernate</visible>
+			<visible>System.CanHibernate + !System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>382</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.CanHibernate + System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>322</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.CanHibernate + System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>322</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.CanHibernate + !System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>262</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.CanHibernate + !System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>202</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>142</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>!System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
 		</control>
 		<control type="grouplist" id="9000">
-			<defaultcontrol>103</defaultcontrol>
+			<defaultcontrol>108</defaultcontrol>
 			<centerleft>50%</centerleft>
 			<top>180</top>
 			<width>340</width>
@@ -177,9 +224,8 @@
 				<onclick>Quit()</onclick>
 				<visible>System.ShowExitButton</visible>
 			</control>
-			<!-- 顺序原则：**第一项必须安全**（它是 defaultcontrol，遥控器手滑按到 OK 时
-			     最坏只是退出 Kodi），其余按"从轻到重"排：重启 → 待机 → 休眠 → 关机。
-			     「设置」属于另一类，压在最底下。
+			<!-- 顺序原则：动作从轻到重排（重启 → 待机 → 休眠 → 关机），「设置」压在最底下。
+			     defaultcontrol 指向「设置」（108）：它在所有平台都可见，遥控器误按也不会重启或关机。
 			     每个按钮都挂 Kodi 的**能力标志**（`System.Can*`）：平台不支持就自动隐藏，
 			     不需要按 Windows / CoreELEC / 安卓分几套写。 -->
 			<control type="button" id="105">
