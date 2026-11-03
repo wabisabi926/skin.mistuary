@@ -18,3 +18,6 @@ vibe_images/
 
 # 打包暂存目录（release.yml 生成）
 build/
+
+# 调试日志（临时放根目录排查用，不入库）
+kodi.log
