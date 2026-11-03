@@ -322,7 +322,6 @@
 					<param name="label" value="$LOCALIZE[31721]" />
 					<param name="icon" value="skinsettings" />
 					<param name="target" value="skinsettings" />
-					<param name="up" value="23" />
 					<param name="down" value="108" />
 					<param name="left" value="103" />
 					<param name="right" value="101" />
@@ -438,7 +437,8 @@
 					<height>1</height>
 					<texture colordiffuse="30FFFFFF">colors/white.png</texture>
 				</control>
-				<control type="button" id="23">
+				<!-- 平台标识只做显示，不可聚焦、没有点击动作。 -->
+				<control type="label">
 					<left>1110</left>
 					<top>32</top>
 					<width>170</width>
@@ -446,19 +446,10 @@
 					<font>font24</font>
 					<label>LibreELEC</label>
 					<visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
-					<onclick>RunAddon(service.libreelec.settings)</onclick>
-					<onleft>104</onleft>
-					<onright>104</onright>
-					<onup>104</onup>
-					<ondown>104</ondown>
-					<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
-					<texturenofocus />
-					<focusedcolor>text_primary</focusedcolor>
+					<aligny>center</aligny>
 					<textcolor>text_primary</textcolor>
-					<selectedcolor>text_primary</selectedcolor>
 				</control>
-				<!-- 通用版：CoreELEC 系统上显示对应的设置入口（与 LibreELEC 按钮互斥） -->
-				<control type="button" id="24">
+				<control type="label">
 					<left>1110</left>
 					<top>32</top>
 					<width>170</width>
@@ -466,19 +457,9 @@
 					<font>font24</font>
 					<label>CoreELEC</label>
 					<visible>System.AddonIsEnabled(service.coreelec.settings)</visible>
-					<onclick>RunAddon(service.coreelec.settings)</onclick>
-					<onleft>104</onleft>
-					<onright>104</onright>
-					<onup>104</onup>
-					<ondown>104</ondown>
-					<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
-					<texturenofocus />
-					<focusedcolor>text_primary</focusedcolor>
+					<aligny>center</aligny>
 					<textcolor>text_primary</textcolor>
-					<selectedcolor>text_primary</selectedcolor>
 				</control>
-				<!-- 通用版：既非 LibreELEC 也非 CoreELEC 时不显示平台按钮，
-				     皮肤设置入口由设置网格里的磁贴提供 -->
 			</control>
 		</definition>
 	</include>
