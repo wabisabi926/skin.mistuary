@@ -108,9 +108,9 @@
 
 `AddonBrowser`、`EventLog`、`SkinSettings`、`SettingsCategory`、`SettingsProfile`、`SettingsSystemInfo`
 都用 `glass_frosted` 50% 当**整页底板**，下面压的是 `NaraSettingsBackground`：
-fanart 以 `A0FFFFFF`（63% 不透明度）叠在不透明黑隔层上（真图时），再叠 `1A000000` 10%；
-兜底 `primary.jpg` 由 `DefaultBackground` 提供。
-**面板 50% + 背景保持 63% 亮度** = 亮部直接透上来。
+`primary.jpg` 兜底 → `33000000` 20% 轻遮罩 → fanart `8CFFFFFF`（55%）→ `1A000000` 10%。
+2026-11-03 把原来的不透明黑隔层换成了这层 20% 轻遮罩。
+**面板 50% + fanart 55% × 兜底 80%** = 亮部直接透上来。
 
 ---
 
