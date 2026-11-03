@@ -1290,3 +1290,7 @@ msgstr "本季最后一集起播时，把下一季第一集加入队列；配合
 msgctxt "#31816"
 msgid "Power"
 msgstr "电源"
+
+msgctxt "#31817"
+msgid "Switch to Android"
+msgstr "切换到安卓"

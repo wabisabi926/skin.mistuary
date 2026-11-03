@@ -1511,3 +1511,7 @@ msgstr "When the last episode of a season starts, queue the first episode of the
 msgctxt "#31816"
 msgid "Power"
 msgstr "Power"
+
+msgctxt "#31817"
+msgid "Switch to Android"
+msgstr "Switch to Android"
