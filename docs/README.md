@@ -5,6 +5,7 @@
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
+| [`handover-2026-11-03.md`](handover-2026-11-03.md) | **最近一次交接快照**（2026-11-03）：当天本地改动、未发布项、遗留问题 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
 | [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b/M2/M1c 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
@@ -25,7 +26,7 @@
 `tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
-`script.mistuary.helper`（可选，0.3.4 已发布），都是"装了才启用"的可选增强，没有硬依赖。
+`script.mistuary.helper`（可选，0.3.5 已发布），都是"装了才启用"的可选增强，没有硬依赖。
 helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；权威文档在插件仓库 `docs/`。
 
 > **历史问题（2026-10-30，已解决）**：服务端搜索结果封面与无 fanart 时的搜索背景
@@ -48,6 +49,9 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）
   （内缘压进海报 2px，环才贴得住）。**不要给环加 `bordersize`**（会走九宫格）。
 - **`Window.Property(NaraMusic.*)` 已清理**：原先无写入方的下一首/歌词状态死属性 UI
   已在 2026-11-01 删除；以后要恢复，先补写入方（helper service 或 CU LRC 补丁）。
+- **背景遮罩**：真剧照压暗、`primary.jpg` 兜底不压；判据在 `Includes_Home.xml` 的三条
+  `expression`，改 `HomeFanartVar` / `HomeVideoHeroFanartVar` 必须同步，
+  `check_home_fanart_mask.py --check` 会拦。见 HANDOVER §5.11。
 - **`<include condition="X">` 是加载时求值的**，按运行时状态切外观只能用 `<visible>` / `$VAR`。
 - **panel 不裁剪子控件**：想让行尾不露半张卡，得让"下一张起点 ≥ 1920"。
 - **排查「某窗口不跟设置走」**：① grep 写死的 `AARRGGBB` 板 → ② grep `<include condition=`
@@ -60,6 +64,9 @@ python tools/audit_skin.py --strict                      # 静态自检，必须
 python tools/audit_skin.py --orphans                     # 反向：没人引用的贴图（应 0 张）
 python tools/audit_skin.py --dead                        # 反向：没人用的变量 / include
 python tools/gen_techflag_vars.py --check                # 技术标识变量同步
+python tools/gen_techflag_icons.py --check               # 技术标识图标 / IconMap / TextMap 对齐
+python tools/gen_home_nav_plates.py --check              # 首页导航底板与生成结果一致
+python tools/check_home_fanart_mask.py --check           # 首页遮罩判据与背景变量分支一致
 python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件

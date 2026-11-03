@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.8.1）
+# 交接说明（Mistuary 1.8.2）
 
 > ⚠️ **短期交接快照看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
 > 那份是 2026-10-30 夜的短期交接（当时改了什么、还剩哪三件事、分辨率约束、
@@ -52,8 +52,9 @@
 ## 1. 一句话现状
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
-版本以 `addon.xml` 为准（当前 **1.8.1**）；历史发版记录见 §8.2。
-本版改动见 `changelog.txt` 顶部 1.8.1 段；helper 0.3.5 已发布。
+版本以 `addon.xml` 为准（当前 **1.8.2**，即最近一次发布）；历史发版记录见 §8.2。
+最近一次发布说明见 `changelog.txt` 顶部 1.8.2 段；当轮改动上下文见
+[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.5 已发布。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
@@ -266,6 +267,9 @@ python tools/audit_skin.py          # 静态自检：缺失 include/变量/字�
 python tools/audit_skin.py --orphans        # 反向：盘上有、XML 里没人引用的贴图
 python tools/audit_skin.py --dead           # 反向：没人用的变量 / include / 皮肤字符串
 python tools/gen_techflag_vars.py --check   # 技术标识变量是否与 map 同步
+python tools/gen_techflag_icons.py --check  # 技术标识图标与 IconMap / TextMap 是否对齐
+python tools/gen_home_nav_plates.py --check # 首页导航底板是否与生成结果一致
+python tools/check_home_fanart_mask.py --check  # 首页遮罩判据是否与背景变量分支一致
 python -m unittest discover -s tools -p 'test_*.py'   # 单元测试
 ```
 
@@ -300,6 +304,14 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 | `generate_nara_fanart_mask.py` | fanart 遮罩 |
 | `generate_nara_osd_icons.ps1` | OSD 图标（PowerShell） |
 | `generate_nara_settings_icons.ps1` | 设置图标（PowerShell） |
+
+### 专项校验（2026-11-03 补）
+
+| 脚本 | 校验 |
+|---|---|
+| `gen_home_nav_plates.py --check` | `Home.xml` 导航底板是否与「文字宽 + 60、100% 居中」的生成结果一致 |
+| `check_home_fanart_mask.py --check` | 首页遮罩三条 `expression` 与 `HomeFanartVar` / `HomeVideoHeroFanartVar` 的容器分支是否一致；表达式里是否混进了 `$EXP` 等非法写法 |
+| `dedupe_favourites.py` | 收藏夹同名条目去重（维护脚本，不进 CI） |
 
 #### 开发期用散包，递交/发版才打包（2026-10-28 定）
 
@@ -612,6 +624,11 @@ Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装�
    正确做法：用独立的布尔参数（`<param name="xxx_visible">true</param>` +
    `<visible>$PARAM[xxx_visible]</visible>`），或用 `<visible>` 分开写多条。
    **排查时先 `grep "Misplaced\|Error parsing boolean" kodi.log`** —— 一眼就能看到。
+   **补充（2026-10-31）**：`<expression>` 内部同样不能出现 `$EXP[...]` / `$VAR[...]` ——
+   Kodi 的 `InfoExpression::Parse` 把 `[` / `]` 当分组运算符，`$EXP[...]` 会被拆成
+   未注册的 operand，整条表达式判 `false`（源码见 `InfoExpression.cpp` 与
+   `GUIInfoManager.cpp` 的 `Register`）。表达式之间**不能互引**，只能由 `<visible>`
+   直接引用表达式。
 5. **对话框只有玻璃一套，别再找"旧面"** —— 历史上曾有第二条不透明旧面
    （`NaraDialogLegacy*`），由 `nara_dialog_glass` 表达式切换。它被废弃有两个原因：
    ① `<include condition="X">` 是**加载时**求值的，窗口在播放中被加载过一次就永久钉死；
@@ -885,6 +902,51 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 **烂番茄的定位**（2026-10-31 定稿）：只做次评分，不进主评分优先级。
 详情页有插件豆瓣分时让位给豆瓣，否则显示烂番茄；主评分四档见 §5.7。
 
+### 5.11 背景遮罩：真图压暗、兜底不压（2026-10-31 定）
+
+- 首页 / 搜索 / 文件收藏夹统一口径：**真剧照加遮罩，`primary.jpg` 兜底不加**
+- 判据是 `xml/Includes_Home.xml` 的三条 `expression`：
+  - `NaraHomeFanartSubItems`：当前条目 fanart、文件夹行前一张卡、Emby 封面
+  - `NaraHomeFanartSubHero`：Hero 行 11 个容器 id（5100/5200/5300/5800/5400/5600、
+    6100/6200/6300/6700/6800），含 `target_folder` 前卡；导航聚焦且 Hero 为空时
+    走 `Container(5100)` / `Container(6100)`
+  - `NaraHomeFanartSubOther`：`Home.LastMovieFanart` / `Home.LastTVShowFanart` / 音乐分区
+  - Files / Favorites 另走「共享随机剧照存在」这一支
+- **不能只查 `Container.ListItem.Art(fanart)`**：Hero、文件夹行、`Last*Fanart`、
+  音乐背景、Emby 封面都会漏遮罩，表现为导航聚焦或文件夹行突然变亮
+- 改 `Variables.xml` 的 `HomeFanartVar` 或 `Includes_HomeVideo.xml` 的
+  `HomeVideoHeroFanartVar` 时**必须同步**；`tools/check_home_fanart_mask.py --check`
+  会拦截漏掉的容器 id 和丢失的 `target_folder` 门
+
+### 5.12 播放/暂停图标：音乐与视频共用一套（2026-10-31 定）
+
+- 视频 OSD（`NaraVideoOSDPlayButton`）和音乐 OSD（`NaraMusicOSDButtonPrimary`）
+  都引用 `osd/nara/play.png` / `pause.png`（画布 64×64），不是两套图标
+- 视频：按钮 52×52、图标 50×50、`text_primary`、无底板（聚焦才出 `button-fo.png`）
+- 音乐：按钮 61×61、图标 50×50、`text_primary`；主键**不再加 56×56 白色实心圆底**，
+  聚焦用 `glass_focus_medium`
+- 对照图见 `docs/playpause-compare.png`
+
+### 5.13 OK 弹窗：DialogConfirm 是唯一底版
+
+- Kodi 的 `CGUIDialogOK` 固定加载 `DialogConfirm.xml`（源码 `GUIDialogOK.cpp`），
+  改它 = 改所有 OK 提示框（“游戏运行失败”“操作失败”等）
+- 内边距：标题与正文都 left **48**；正文 top **92**、width **837**、height **155**
+  （底边仍是 247，不挤进度条）；进度条同步 left 48 / width 837
+- 右上角 vendor 图标 32×32，`right 48` / `top 30`：中心 46 与标题块中心对齐，
+  左右留白都是 48
+
+### 5.14 评分胶囊尺寸（2026-11-03 定）
+
+- 方形徽标（豆瓣 / TMDb / 烂番茄 / trakt）：胶囊宽 **108** =
+  内边距 12 + 图标 28 + 文字左起 46 + 文字框 56 + 右距 6
+- IMDb 词标（2:1）：胶囊宽 **126**（图标 46×23、文字左起 64）
+- 文字框 **56**：Inter 27px 实测 `8.9` = 42px、`10.0` = 53px。库里真实有
+  **821 条 IMDb + 25 条烂番茄** 评分为 10.0（如《东邪西毒：终极版》），
+  44px 会裁掉末位 —— 不要再把文字框缩回去
+- 分数在 56px 框内**居中**：3 位 / 4 位分数左右留白对称
+- 底板 `4D000000`（30%）；视频 OSD 与插件弹窗仍是 `66000000`（40%），不要一起改
+
 ---
 
 ## 6. 发版流程
@@ -919,6 +981,11 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 - 写"为什么"比写"改了哪个参数"有用。参数细节留给 git log 和 docs。
 - **不要写开发工具。** `tools/` 整个目录都不进包，用户拿不到那些脚本，
   写进 changelog 只会让人以为包里有 .py。changelog 只写用户能看到的变化。
+- **一条一行，尽量控制在 40 字内。** 不换行展开解释；抽样数量、根因、调研过程写进
+  `docs/`，不进 changelog。
+- **用 Kodi 术语**：窗口 / 控件 / grouplist / label / fanart / OSD / 底板 / 遮罩。
+  不写"优化体验""打磨细节"这类空话，写法参照 1.5.x 及更早的段落。
+- **数值写「旧 → 新」**，不写成"从 A 改为 B，因为……"，结论先行。
 
 ---
 
@@ -937,6 +1004,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
+| 文件管理器点 flac/wav 弹「游戏运行失败」 | **未解决**。Kodi 内核把音频条目判成 game（`CFileItem::IsGame()`），`PlayerCoreFactory` 在算完规则后 `if (item.IsGame()) players={"RetroPlayer"}` 直接覆盖，所以 `playercorefactory.xml` 规则**无效**（已实测并删除测试文件）。本机没有任何 game client，疑 nightly 判定 bug。下一步开 debug 日志复现，抓 `CPlayerCoreFactory::GetPlayers` / `RetroPlayer` / `FillInGameClient`。规避：从音乐库 / Emby 播放 |
 
 > **已修（2026-10-27）**：`ListItem.BMP` → `ListItem.BPM`（BPM 徽标现在能显示了）；
 > `ListItem.MusicBitsPerSample` 那条删掉了 —— Kodi 没有列表项位深标签，
@@ -1029,8 +1097,9 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.7.0** | 音乐 OSD 自动隐藏 + 收藏夹自定义封面 + 全部未看首页行 + 皮肤助手页；电视剧详情页起播直接全屏 |
 | **v1.8.0** | 皮肤助手页直接开关豆瓣/播放列表补全/跨季 + 设置帮助整理 + 卡片评分口径统一 + 音乐封面圆角 |
 | **v1.8.1** | 主页「退出」按平台执行（退出 / 关机 / 电源菜单）+ 自动评分帮助修正 |
+| **v1.8.2** | 首页 Hero 评分左移并与年份同一条 grouplist + 评分胶囊加宽/居中（10.0 不再裁）+ 底板 30% + 首页卡片标题居中 / 集数右下 + 设置页背景 20% 轻遮罩 |
 
-> **当前版本以 `addon.xml` 为准（1.8.1）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
+> **当前版本以 `addon.xml` 为准（1.8.2）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1187,3 +1256,12 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - **播放地址**：`mode=play` 已随 M1c 实机通过。
 
 历史细节保留在 `docs/handover-2026-10-30.md` 与插件仓库 `docs/roadmap.md`。
+
+### 8.11 2026-11-03 当日改动（未发布）
+
+> 详见 [`handover-2026-11-03.md`](handover-2026-11-03.md)。
+
+- `39eccde`：清理 Home / 设置页重复的 `primary.jpg` 兜底层；设置页真图下加不透明黑隔层
+- `5cc2af0`：首页卡片标题居中、集数移到缩略图右下角（纯白 + 黑阴影）；`.gitignore` 加 `vibe_images/`
+- `2793d17`：设置页不透明黑隔层 → **20% 轻遮罩**，剧照不透明度 63% → **55%**，紫色兜底保留
+- `changelog.txt` 顶部当前是「未发布 设置页背景」段；发版时改成正式版本号
