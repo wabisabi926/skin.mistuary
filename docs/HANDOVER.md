@@ -54,7 +54,8 @@
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
 版本以 `addon.xml` 为准（当前 **1.8.3**，即最近一次发布）；历史发版记录见 §8.2。
 最近一次发布说明见 `changelog.txt` 顶部 1.8.3 段；当轮改动上下文见
-[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.5 已发布。
+[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.6 已发布
+（修发布包漏 `service.py`）。`main` 上还有未发布改动（重启到安卓等），见 §8.11。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
@@ -947,6 +948,54 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 - 分数在 56px 框内**居中**：3 位 / 4 位分数左右留白对称
 - 底板 `4D000000`（30%）；视频 OSD 与插件弹窗仍是 `66000000`（40%），不要一起改
 
+### 5.15 文件播放记录（文件模式，2026-11-03 定方案，未实现）
+
+**目标**：从文件 / 文件夹播放的视频，下次打开能续播。
+
+**Kodi 现状**：只给库内条目存 resume；文件条目没有 `files` / `bookmark` 记录，
+所以关掉再开不会提示继续。皮肤侧也没有任何续播元素。
+
+**机制**（不自建数据库）：
+
+```text
+service (helper) --JSON-RPC--> Files.SetFileDetails(file, media=video, resume)
+  -> CVideoLibrary::UpdateResumePoint -> AddBookMarkToFile -> AddFile
+  -> MyVideos*.db 的 files + bookmark(type=resume)
+视频窗口列目录 -> GetPlayCounts 按路径填回 ListItem
+  -> ListItem.IsResumable / ResumeTime / PercentPlayed
+  -> Kodi 原生「从 xx:xx 继续」提示
+```
+
+- **判定**：`Player.GetActivePlayers` 的 `type == video`；`Player.GetItem` 的 `type`
+  是 `movie/episode/musicvideo` 的（有库 ID）交给 Kodi，不重复写。
+- **路径**：只收真实路径（`/`、`smb://`、`nfs://`、`.strm`、`.iso`）；
+  排除 `plugin://`、`pvr://`、`http(s)://`、目录。
+- **写入时机**：起播后每 30 秒 + 暂停 / 拖动 / 停止；结束或剩余 ≤8% 时写 `position: 0` 清除。
+- **阈值**：起播 180 秒内不写；与 Kodi 默认 `ignoresecondsatstart=180` /
+  `ignorepercentatend=8` 一致。`totaltime <= 0` 时跳过。
+- **开关**：helper 设置 `file_resume`（默认开），`skin_bridge` 暴露
+  `Mistuary.Helper.FileResume`；皮肤助手页加「文件播放记录」开关（31818/31819）。
+- **皮肤标记**：`View_50_List` 行内加 3px 进度条 + 右侧 `ListItem.ResumeTime`，
+  条件 `ListItem.IsResumable`；行高不变。
+- **读取成本**：helper 与皮肤都不遍历目录，全部由 Kodi 列目录时批量完成。
+
+**限制**
+
+| 项 | 说明 |
+|---|---|
+| 清理媒体库 | `CleanDatabase` 会删除没有 movie/episode 关联的 `files` 行，续播点随之丢失 |
+| 改名 / 移动 | 记录按完整路径存，改名后等于新文件 |
+| 纯文件管理器窗口 | 不加载视频库，看不到标记也没有原生提示；只视频「文件」节点有效 |
+| Kodi 关闭续播 | 读 `myvideos.resume`，为假时不写 |
+| 库内条目 | 跳过，Kodi 已经处理 |
+| 与 Playback Resumer 同装 | 会重复写同一个 bookmark，无害；建议只留一个 |
+
+**备选**：直接安装 `script.service.playbackresumer`，它用同一套
+`Files.SetFileDetails` 机制；缺点是多一个依赖、设置不在皮肤助手页。
+
+**实施顺序**：helper 0.3.7（`lib/file_resume.py` + service + 设置 + 单测）
+→ 皮肤开关与列表标记 → 文档 / changelog → 发版。
+
 ---
 
 ## 6. 发版流程
@@ -1258,11 +1307,20 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 
 历史细节保留在 `docs/handover-2026-10-30.md` 与插件仓库 `docs/roadmap.md`。
 
-### 8.11 2026-11-03 当日改动（未发布）
+### 8.11 2026-11-03 当日改动
 
 > 详见 [`handover-2026-11-03.md`](handover-2026-11-03.md)。
+> **1.8.3 已发**；下面标「未发」的是 1.8.3 之后仍在 `main` 的改动，下次升版本一起进包。
 
 - `39eccde`：清理 Home / 设置页重复的 `primary.jpg` 兜底层；设置页真图下加不透明黑隔层
 - `5cc2af0`：首页卡片标题居中、集数移到缩略图右下角（纯白 + 黑阴影）；`.gitignore` 加 `vibe_images/`
 - `2793d17`：设置页不透明黑隔层 → **20% 轻遮罩**，剧照不透明度 63% → **55%**，紫色兜底保留
-- `changelog.txt` 顶部当前是「未发布 设置页背景」段；发版时改成正式版本号
+- `d3d0c9d` / `d20a74d` / `ceaca5e`：1.8.2 发版（Hero 评分重排、胶囊加宽、文档）
+- `5e92db6`：设置中心 LibreELEC / CoreELEC 标签改为纯显示（不可聚焦）
+- `82797c9`：首页末项固定「电源」并打开电源菜单；菜单高度按 `System.Can*` 适配
+- `a4b5206`：**release 1.8.3**
+- `b114052`（未发）：CoreELEC 电源菜单新增「重启到安卓」，16 条背景高度
+- `efc4ae8`（未发）：`.gitignore` 忽略根目录 `kodi.log`
+- `9d9022a`（未发）：31817 文案「切换到安卓」→「重启到安卓」
+- helper 仓库 `aee200f` / `0c54c64`：**0.3.6** 发布包补上 `service.py`
+  （此前 Release zip 里的播放列表补全服务从未启动，CE 日志报 `service.py` 不存在）
