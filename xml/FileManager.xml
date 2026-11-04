@@ -86,8 +86,8 @@
 			<top>174</top>
 			<height>54</height>
 			<control type="label">
-				<left>1170</left>
-				<width>200</width>
+				<left>1213</left>
+				<width>160</width>
 				<height>54</height>
 				<font>font12_large</font>
 				<align>left</align>
@@ -164,7 +164,7 @@
 					</control>
 					<control type="label">
 						<left>85</left>
-						<width>1080</width>
+						<width>1000</width>
 						<height>78</height>
 						<font>font13</font>
 						<aligny>center</aligny>
@@ -172,8 +172,8 @@
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 					<control type="label">
-						<left>1170</left>
-						<width>200</width>
+						<left>1213</left>
+						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>
@@ -249,17 +249,34 @@
 					</control>
 					<control type="label">
 						<left>85</left>
-						<width>1080</width>
+						<width>1000</width>
 						<height>78</height>
 						<font>font13</font>
 						<aligny>center</aligny>
 						<textcolor>text_primary</textcolor>
 						<label>$INFO[ListItem.Label]</label>
 						<scroll>true</scroll>
+						<visible>!String.IsEqual(Window(home).Property(Mistuary.FileResume.HasResume),true)</visible>
 					</control>
 					<control type="label">
-						<left>1170</left>
-						<width>200</width>
+						<left>85</left>
+						<width>1000</width>
+						<height>78</height>
+						<font>font13</font>
+						<aligny>center</aligny>
+						<textcolor>text_primary</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+						<scroll>true</scroll>
+						<visible>String.IsEqual(Window(home).Property(Mistuary.FileResume.HasResume),true)</visible>
+					</control>
+					<include content="FileResumeRing">
+						<param name="left" value="1129" />
+						<param name="top" value="19" />
+						<param name="size" value="40" />
+					</include>
+					<control type="label">
+						<left>1213</left>
+						<width>160</width>
 						<height>78</height>
 						<font>font12_large</font>
 						<align>left</align>

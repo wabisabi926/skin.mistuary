@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window id="1115" type="dialog">
+	<defaultcontrol always="true">10</defaultcontrol>
+	<include>Animation_DialogPopupOpenClose</include>
+	<depth>DepthDialog+</depth>
+	<onload>SetFocus(10)</onload>
+	<controls>
+		<include content="NaraDialogScrim">
+			<param name="tint" value="$VAR[NaraGlassFloatScrimVar]" />
+		</include>
+		<control type="button">
+			<include>FullScreenDimensions</include>
+			<texturefocus />
+			<texturenofocus />
+			<onclick>Action(close)</onclick>
+		</control>
+		<control type="group">
+			<centerleft>50%</centerleft>
+			<centertop>50%</centertop>
+			<width>560</width>
+			<height>180</height>
+			<!-- 与 OSD 设置同一块 round20 实体板；档位跟「浮窗透明度」，这是模态决策窗。 -->
+			<control type="image">
+				<width>560</width>
+				<height>180</height>
+				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/round20.png</texture>
+			</control>
+			<control type="button">
+				<width>560</width>
+				<height>180</height>
+				<texturefocus />
+				<texturenofocus />
+				<onclick>noop</onclick>
+			</control>
+			<include content="FileResumeDialogButton">
+				<param name="id" value="10" />
+				<param name="left" value="80" />
+				<param name="top" value="38" />
+				<param name="label" value="$INFO[Window(home).Property(Mistuary.ResumeDialog.Continue)]" />
+				<param name="width" value="400" />
+				<param name="onclick" value="SetProperty(Mistuary.ResumeDialog.Choice,continue,home)" />
+			</include>
+			<include content="FileResumeDialogButton">
+				<param name="id" value="11" />
+				<param name="left" value="80" />
+				<param name="top" value="98" />
+				<param name="label" value="$INFO[Window(home).Property(Mistuary.ResumeDialog.Start)]" />
+				<param name="width" value="400" />
+				<param name="onclick" value="SetProperty(Mistuary.ResumeDialog.Choice,start,home)" />
+			</include>
+		</control>
+	</controls>
+</window>

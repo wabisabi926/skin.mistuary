@@ -425,6 +425,16 @@
 					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.PlaylistNextSeason),true)</selected>
 					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
 				</control>
+				<control type="radiobutton" id="724">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31818]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=file_resume)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.FileResume),true)</selected>
+					<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
+				</control>
 				<control type="button" id="719">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31800]</label>

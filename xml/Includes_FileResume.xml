@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<!-- 文件管理器 10003 焦点行圆环。
+	     helper 把当前焦点行的 Mistuary.FileResume.* 写到 Window(home)；
+	     PercentKey 由 FileResumeRingVar 静态映射到贴图，数字已烘焙进帧。 -->
+	<include name="FileResumeRing">
+		<param name="left" default="1129" />
+		<param name="top" default="19" />
+		<param name="size" default="40" />
+		<definition>
+			<control type="image">
+				<left>$PARAM[left]</left>
+				<top>$PARAM[top]</top>
+				<width>$PARAM[size]</width>
+				<height>$PARAM[size]</height>
+				<texture>$VAR[FileResumeRingVar]</texture>
+				<visible>String.IsEqual(Window(home).Property(Mistuary.FileResume.HasResume),true)</visible>
+			</control>
+		</definition>
+	</include>
+	<include name="FileResumeDialogButton">
+		<param name="id" />
+		<param name="label" />
+		<param name="left" default="0" />
+		<param name="top" default="0" />
+		<param name="width" default="160" />
+		<param name="onup" default="10" />
+		<param name="ondown" default="11" />
+		<param name="onclick" />
+		<definition>
+			<control type="button" id="$PARAM[id]">
+				<left>$PARAM[left]</left>
+				<top>$PARAM[top]</top>
+				<width>$PARAM[width]</width>
+				<height>44</height>
+				<onup>$PARAM[onup]</onup>
+				<ondown>$PARAM[ondown]</ondown>
+				<font>font13</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$PARAM[label]</label>
+				<texturefocus colordiffuse="focus_surface" border="14">shapes/round14.png</texturefocus>
+				<texturenofocus colordiffuse="glass_focus_medium" border="14">shapes/round14.png</texturenofocus>
+				<textcolor>text_primary</textcolor>
+				<focusedcolor>focus_foreground</focusedcolor>
+				<selectedcolor>focus_foreground</selectedcolor>
+				<onclick>$PARAM[onclick]</onclick>
+			</control>
+		</definition>
+	</include>
+</includes>

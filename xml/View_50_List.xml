@@ -121,6 +121,29 @@
 						<textcolor>$VAR[NaraList50FocusedMetaColorVar]</textcolor>
 						<selectedcolor>$VAR[NaraList50FocusedMetaColorVar]</selectedcolor>
 					</control>
+					<control type="label">
+						<left>700</left>
+						<right>22</right>
+						<bottom>10</bottom>
+						<height>18</height>
+						<align>right</align>
+						<aligny>center</aligny>
+						<font>font10</font>
+						<label>$LOCALIZE[31820] $INFO[ListItem.ResumeTime]</label>
+						<textcolor>$VAR[NaraList50FocusedMetaColorVar]</textcolor>
+						<visible>ListItem.IsResumable</visible>
+					</control>
+					<control type="progress">
+						<left>96</left>
+						<right>22</right>
+						<bottom>4</bottom>
+						<height>3</height>
+						<reveal>true</reveal>
+						<texturebg border="4,0,4,0" colordiffuse="progress_track">progress/card_progress_r4.png</texturebg>
+						<midtexture border="4,0,4,0" colordiffuse="progress_playback">progress/card_progress_r4.png</midtexture>
+						<info>ListItem.PercentPlayed</info>
+						<visible>ListItem.IsResumable</visible>
+					</control>
 				</focusedlayout>
 				<itemlayout height="84">
 					<control type="image">
@@ -168,6 +191,29 @@
 						<font>font12</font>
 						<label>$VAR[NaraList50SecondaryMetaVar]</label>
 						<textcolor>text_muted</textcolor>
+					</control>
+					<control type="label">
+						<left>700</left>
+						<right>22</right>
+						<bottom>10</bottom>
+						<height>18</height>
+						<align>right</align>
+						<aligny>center</aligny>
+						<font>font10</font>
+						<label>$LOCALIZE[31820] $INFO[ListItem.ResumeTime]</label>
+						<textcolor>text_muted</textcolor>
+						<visible>ListItem.IsResumable</visible>
+					</control>
+					<control type="progress">
+						<left>96</left>
+						<right>22</right>
+						<bottom>4</bottom>
+						<height>3</height>
+						<reveal>true</reveal>
+						<texturebg border="4,0,4,0" colordiffuse="progress_track">progress/card_progress_r4.png</texturebg>
+						<midtexture border="4,0,4,0" colordiffuse="progress_playback">progress/card_progress_r4.png</midtexture>
+						<info>ListItem.PercentPlayed</info>
+						<visible>ListItem.IsResumable</visible>
 					</control>
 				</itemlayout>
 			</control>

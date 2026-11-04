@@ -26,7 +26,7 @@
 `tools/` 全是构建期工具，不进发布包。
 
 皮肤会探测 `plugin.service.emby-next-gen`、`script.embuary.info` 和
-`script.mistuary.helper`（可选，0.3.5 已发布），都是"装了才启用"的可选增强，没有硬依赖。
+`script.mistuary.helper`（可选，0.3.6 已发布；本地 0.3.7 未发），都是"装了才启用"的可选增强，没有硬依赖。
 helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）；权威文档在插件仓库 `docs/`。
 
 > **历史问题（2026-10-30，已解决）**：服务端搜索结果封面与无 fanart 时的搜索背景
@@ -69,6 +69,7 @@ python tools/gen_home_nav_plates.py --check              # 首页导航底板与
 python tools/check_home_fanart_mask.py --check           # 首页遮罩判据与背景变量分支一致
 python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐全（30 张）
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
+python tools/gen_resume_ring.py --check                  # 续播圆环 101 帧与生成器一致
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
 python -m unittest discover -s tools -p 'test_*.py'      # 86 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包

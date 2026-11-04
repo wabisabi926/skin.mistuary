@@ -948,53 +948,92 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 - 分数在 56px 框内**居中**：3 位 / 4 位分数左右留白对称
 - 底板 `4D000000`（30%）；视频 OSD 与插件弹窗仍是 `66000000`（40%），不要一起改
 
-### 5.15 文件播放记录（文件模式，2026-11-03 定方案，未实现）
+### 5.15 文件播放记录（2026-11-04 定稿，已实现未发）
 
-**目标**：从文件 / 文件夹播放的视频，下次打开能续播。
+**目标**：从文件管理器播放的视频，下次打开能续播。
 
-**Kodi 现状**：只给库内条目存 resume；文件条目没有 `files` / `bookmark` 记录，
-所以关掉再开不会提示继续。皮肤侧也没有任何续播元素。
+**两个入口**
 
-**机制**（不自建数据库）：
+| 入口 | Kodi 窗口 | 原生续播 | 本方案 |
+|---|---|---|---|
+| 设置 → 文件管理器；首页「文件」源卡片（`target=filemanager`） | 10003 `WINDOW_FILES` | 不支持 | helper 弹窗 + 焦点行圆环 |
+| 视频 → 文件 | 10025 `WINDOW_VIDEO_NAV` | 支持 | Kodi 原生，helper 只做镜像 |
 
-```text
-service (helper) --JSON-RPC--> Files.SetFileDetails(file, media=video, resume)
-  -> CVideoLibrary::UpdateResumePoint -> AddBookMarkToFile -> AddFile
-  -> MyVideos*.db 的 files + bookmark(type=resume)
-视频窗口列目录 -> GetPlayCounts 按路径填回 ListItem
-  -> ListItem.IsResumable / ResumeTime / PercentPlayed
-  -> Kodi 原生「从 xx:xx 继续」提示
-```
+**数据两层**
 
-- **判定**：`Player.GetActivePlayers` 的 `type == video`；`Player.GetItem` 的 `type`
-  是 `movie/episode/musicvideo` 的（有库 ID）交给 Kodi，不重复写。
-- **路径**：只收真实路径（`/`、`smb://`、`nfs://`、`.strm`、`.iso`）；
-  排除 `plugin://`、`pvr://`、`http(s)://`、目录。
-- **写入时机**：起播后每 30 秒 + 暂停 / 拖动 / 停止；结束或剩余 ≤8% 时写 `position: 0` 清除。
-- **阈值**：起播 180 秒内不写；与 Kodi 默认 `ignoresecondsatstart=180` /
-  `ignorepercentatend=8` 一致。`totaltime <= 0` 时跳过。
-- **开关**：helper 设置 `file_resume`（默认开），`skin_bridge` 暴露
-  `Mistuary.Helper.FileResume`；皮肤助手页加「文件播放记录」开关（31818/31819）。
-- **皮肤标记**：`View_50_List` 行内加 3px 进度条 + 右侧 `ListItem.ResumeTime`，
-  条件 `ListItem.IsResumable`；行高不变。
-- **读取成本**：helper 与皮肤都不遍历目录，全部由 Kodi 列目录时批量完成。
+| 层 | 位置 | 写什么 | 频率 |
+|---|---|---|---|
+| 账本 | `userdata/addon_data/script.mistuary.helper/resume.db`（SQLite WAL） | 所有非库内视频/STRM 的进度 | 每 30 秒 + 暂停/拖动/停止/切集 |
+| Kodi 镜像 | `MyVideos*.db`，只走 JSON-RPC `Files.SetFileDetails` | 让 10025 拿到原生弹窗和 `ListItem.IsResumable` | 关键节点 + 每 5 分钟兜底 |
+
+- **不直接打开 `MyVideos.db`**，不依赖它的表结构；Kodi 自己加锁、开事务。
+- 账本主键：统一斜杠、去尾斜杠、**保留大小写**；另存 `key_fold` 做大小写回退（Windows/SMB）。
+- `.strm` 用 `.strm` 文件本身作 key，不用解析后的 http 地址。
+- 只收真实路径（`/`、`smb://`、`nfs://`、`.strm`、`.iso`）；排除 `plugin://`、`pvr://`、`http(s)://`、目录、带库 ID 的条目。
+- 起播 180 秒内不写；剩余 ≤8% 清除；读 `advancedsettings` 的 `ignoresecondsatstart` / `ignorepercentatend`。
+- `myvideos.resume` 关闭时一律不写。
+- 账本启动时清 90 天前记录，上限 5000 条；`Monitor.onCleanFinished` 后从账本恢复到 Kodi（最多 500 条，文件不存在会跳过）。
+
+**行为**
+
+- **10003 弹窗**：播放开始后打开皮肤自定义窗口 **1115**（`Custom_1115_FileResume.xml`，560×180）：
+  无标题、无正文，上下两个 400×44 按钮（间距 16），
+  文案「从 01:07 继续播放」/「从头播放」；时间补两位分钟（超过 1 小时仍 `1:23:45`）。
+  `<onload>SetFocus(10)</onload>` 保证默认焦点在「继续播放」。
+  返回/点空白 = 取消：停止播放并保留记录；从头播放 = 删除该文件记录并 seek 到 0。无 vendor 图标、无圆环预览。
+  `FileResumeDialogButton` 里的 `<label>$PARAM[label]</label>` 不能省，否则按钮只剩空底板（2026-11-04 实机）。
+  原通用 `DialogSelect`（1220×750）不再用于这里。
+  播放开始后 helper 先暂停、再弹窗；选完才 seek / 恢复 / 停止。
+  面板用与 OSD 设置相同的 `round20` 实体板（不是 glass20 渐变）；
+  遮蔽与档位走 `NaraGlassFloatScrimVar` / `NaraGlassFloatTintVar`（浮窗档，合成 83.5%），
+  因为这是必须做选择的模态窗，不是边看边调的 OSD。要与 OSD 完全一致时改用
+  `NaraSettingsDialogTintVar` / `NaraSettingsDialogScrimVar`（播放中档 61.5%）。
+- **10003 焦点行圆环**：helper 仅在 `Window.IsActive(10003)` 时每 0.1 秒读当前焦点项（只查内存字典），把 `Mistuary.FileResume.HasResume / Percent / PercentKey` 写到 `Window(home)`；皮肤聚焦行读属性。
+  - 位置：文件名与修改时间之间，40px。文件名列统一 1000，日期列从 1170 移到 **1213**（宽 160），
+    文件名末尾到日期的距离由 85 增到 **128**（+50%）；圆环 left **1129**，正好在 44 / 44 中间。
+  - 账本没有记录时回退 Kodi/Emby 的 `Files.GetFileDetails` 续播点（按路径缓存 10 秒），
+    与弹窗口径一致；否则只在账本里的文件才显示圆环。
+  - 配色：绿弧 `#89C19F` = 已播，白轨 `60FFFFFF` = 全长；百分比数字**烘焙在每帧里**（白色 14px，不带 `%`），与弧长同源，不再用独立 label，因此不会出现贴图在、数字空的情况；**不显示具体时间**。
+  - 圆环帧无暗色圆底，中心透明。
+  - `PercentKey` 是 `000`–`100` 三位字符串，经 `FileResumeRingVar` 101 条静态映射到 `progress/resume_ring/ring_XXX.png`。
+  - 焦点切换瞬间 `ListItem.FolderPath` 会短暂为空：先保留上一次属性，持续空 0.2 秒才清；换行时 helper 先隐藏旧圆环、30ms 后再发新值，缩短上一行进度的残留；只有焦点落到文件夹行、读到非空文件路径后查不到记录、或离开 10003 时才立即清。
+  - 只有 `total>0` 的记录才显示圆环：原生续播点只有位置没有总长时按无记录处理，避免退出播放后先闪一个 0%。
+  - **不做 ListItem 属性注入**——Kodi 内置文件管理器的控件 Python 拿不到（`Window.getControl(20)` 报 Non-Existent Control），原生 `ListItem.IsResumable` 在 10003 也是 false；所以常显只能走自定义「继续观看」聚合页或插件式列表。
+- **带参数的 include 必须用 `<definition>` 包住控件**；否则 `$PARAM[left/top/size]` 解析为空，
+  控件尺寸变 0，圆环静默不显示（2026-11-04 实测）。圆环贴图用 `FileResumeRingVar`
+  101 条静态映射（`000`–`100`），不再走动态贴图路径。
+- **10025**：`View_50_List` 加 3px 进度条 + 右侧「续播 h:mm:ss」，条件 `ListItem.IsResumable`。
+- 库内条目（movie/episode/musicvideo）跳过，Kodi / Emby 已处理。
+- 文件夹连播切换条目时不当成新会话，不重复弹窗；**同一个文件在 120 秒内重新打开仍会弹窗**（按路径判断，
+  只有路径不同的自动连播才跳过）。
+
+**落点**
+
+- helper（本地未发，版本仍 0.3.6）：`lib/file_resume.py`、`service.py`、`resources/settings.xml`（`file_resume` 默认开）、`lib/skin_bridge.py`、`lib/i18n.py`、`tests/test_file_resume.py`
+- 皮肤（本地未发，版本仍 1.8.3）：`xml/FileManager.xml`、`xml/Includes_FileResume.xml`、`xml/Includes.xml`、`xml/Custom_1115_FileResume.xml`、`xml/Variables.xml`（`FileResumeRingVar`）、`tools/gen_resume_ring.py`、`media/progress/resume_ring/*.png`（101 帧）
 
 **限制**
 
 | 项 | 说明 |
 |---|---|
-| 清理媒体库 | `CleanDatabase` 会删除没有 movie/episode 关联的 `files` 行，续播点随之丢失 |
+| 纯 http(s) 直链 | 不记录；`.strm` 记的是 `.strm` 文件路径 |
 | 改名 / 移动 | 记录按完整路径存，改名后等于新文件 |
-| 纯文件管理器窗口 | 不加载视频库，看不到标记也没有原生提示；只视频「文件」节点有效 |
-| Kodi 关闭续播 | 读 `myvideos.resume`，为假时不写 |
-| 库内条目 | 跳过，Kodi 已经处理 |
-| 与 Playback Resumer 同装 | 会重复写同一个 bookmark，无害；建议只留一个 |
+| 清理媒体库 | Kodi 只保留视频源内且仍存在的 `files` 行；账本会尝试恢复，但只覆盖最近 90 天且文件仍存在 |
+| 10003 圆环 | 依赖 helper 轮询（0.4 秒），属性最多滞后一个轮询周期；**只在焦点行显示**。Kodi 内置 FileManager 的控件 Python 拿不到，逐行常显需另做「继续观看」聚合页/插件式列表 |
+| Kodi 镜像粒度 | 崩溃时最多丢 5 分钟；正常停止/暂停会立即写 |
+| 与 `script.service.playbackresumer` 同装 | 写同一个 bookmark，无害；建议只留一个 |
 
-**备选**：直接安装 `script.service.playbackresumer`，它用同一套
-`Files.SetFileDetails` 机制；缺点是多一个依赖、设置不在皮肤助手页。
+**实机验证（2026-11-04，Windows Kodi 22 RC1）**
 
-**实施顺序**：helper 0.3.7（`lib/file_resume.py` + service + 设置 + 单测）
-→ 皮肤开关与列表标记 → 文档 / changelog → 发版。
+1. `.strm` 的 `Player.GetItem.file` 返回 `.strm` 本体路径（不是解析后的 URL），`type=unknown`
+2. `Window.Previous(filemanager)` 在 10003 起播时为真
+3. 再播后弹出 1115 紧凑弹窗（560×180）：两个上下按钮「从 10:00 继续播放」「从头播放」；默认「继续播放」，回车跳到 10:00；返回停止并保留记录
+4. 10003 焦点行圆环属性 true / 7 / 007，圆环取 `ring_007.png`；离开窗口清空
+5. 额外修复：`Player.GetItem` 的 properties 不能带 `type`/`id`；30 秒采样器必须过 180 秒阈值；
+   文件管理器 `ListItem.Path` 是目录，聚焦项完整路径在 `ListItem.FolderPath`
+
+> `Files.GetDirectory` / `Files.GetFileDetails` 只对**已配置媒体源**内的路径生效；
+> `Files.SetFileDetails` 不受此限。非源路径以 `resume.db` 账本为准。
 
 ---
 
@@ -1128,7 +1167,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码，当前 1.8.1 与 helper 0.3.5 均已发布。
+> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码，当前 1.8.3 与 helper 0.3.6 均已发布（本地含未发布的 helper 0.3.7 文件播放记录）。
 
 ### 8.2 发版记录
 

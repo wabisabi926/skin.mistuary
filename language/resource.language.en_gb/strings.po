@@ -1515,3 +1515,11 @@ msgstr "Power"
 msgctxt "#31817"
 msgid "Reboot to Android"
 msgstr "Reboot to Android"
+
+msgctxt "#31818"
+msgid "File playback resume"
+msgstr "File playback resume"
+
+msgctxt "#31820"
+msgid "Resume"
+msgstr "Resume"

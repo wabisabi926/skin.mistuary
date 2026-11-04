@@ -1294,3 +1294,11 @@ msgstr "电源"
 msgctxt "#31817"
 msgid "Reboot to Android"
 msgstr "重启到安卓"
+
+msgctxt "#31818"
+msgid "File playback resume"
+msgstr "文件播放记录"
+
+msgctxt "#31820"
+msgid "Resume"
+msgstr "续播"
