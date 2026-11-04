@@ -2,11 +2,23 @@
 <includes>
 	<expression name="nara_settings_osd">Window.IsActive(osdvideosettings) | Window.IsActive(osdaudiosettings) | Window.IsActive(osdsubtitlesettings) | Window.IsActive(osdcmssettings)</expression>
 	<expression name="nara_settings_context">Window.IsActive(playersettings) | Window.IsActive(mediasettings) | Window.IsActive(interfacesettings) | Window.IsActive(systemsettings) | Window.IsActive(servicesettings) | Window.IsActive(pvrsettings) | Window.IsActive(skinsettings) | Window.IsActive(profiles) | Window.IsActive(systeminfo) | Window.IsActive(addonsettings) | Window.IsActive(networksetup) | Window.IsActive(contentsettings) | Window.IsActive(10162) | Window.IsActive(10163)</expression>
+	<!-- 设置页共享剧照的显隐。中性底色和剧照层共用这一条，
+	     避免两套条件各自漂移，出现灰底/紫底闪一下。 -->
+	<expression name="nara_settings_shared_fanart_visible">!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</expression>
 	<include name="NaraSettingsBackground">
 		<definition>
 			<include>DefaultBackground</include>
-			<!-- 兜底由 DefaultBackground 里的 primary.jpg 提供。原不透明黑隔层改为 20% 轻遮罩：
-			     压暗兜底和紫色透出，同时不过度压暗剧照。 -->
+			<!-- 有真剧照时，先用中性灰顶替 primary，去掉蓝紫底；
+			     显隐与下面的剧照层共用同一个表达式。
+			     它放在 20% 遮罩下面，所以原来的 20% / 10% 两层 alpha
+			     都不用改，亮度和现状一致。 -->
+			<control type="group">
+				<include>FullScreenDimensions</include>
+				<visible>$EXP[nara_settings_shared_fanart_visible]</visible>
+				<include>NaraNeutralFanartBase</include>
+			</control>
+			<!-- 兜底由 DefaultBackground 里的 primary.jpg 提供。20% 轻遮罩：
+			     有剧照时压中性底，无剧照时压 primary；两层都不过度压暗。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
@@ -31,7 +43,7 @@
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true" colordiffuse="8CFFFFFF">$VAR[NaraFileManagerRandomFanartVar]</texture>
-				<visible>!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</visible>
+				<visible>$EXP[nara_settings_shared_fanart_visible]</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>

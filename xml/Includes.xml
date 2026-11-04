@@ -800,6 +800,20 @@
 			<texture colordiffuse="66000000">colors/black.png</texture>
 		</control>
 	</include>
+	<!-- 半透明剧照下面的中性底色。
+	     设置页/文件管理/搜索的剧照是半透明叠在 primary.jpg 上的，
+	     primary 的平均色偏蓝紫（约 63,77,110），会把剧照染成紫灰。
+	     真剧照出现时用这块 #4D4D4D 顶替 primary；它的平均亮度
+	     （约 76/255）与 primary 几乎一致，所以原有 alpha / 黑层都不用动。
+	     显隐由调用方用同一个表达式控制，避免与剧照层条件漂移。 -->
+	<include name="NaraNeutralFanartBase">
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
+			<fadetime>250</fadetime>
+			<texture colordiffuse="FF4D4D4D">colors/white.png</texture>
+		</control>
+	</include>
 	<include name="DialogBackgroundCommons">
 		<!-- darken_bg 以前从未声明默认值、也没有调用点传它，遮蔽层能显示纯属运气：
 		     Kodi 的 CGUIControlFactory::GetConditionalVisibility 用 `if (!node->NoChildren())`
