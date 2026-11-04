@@ -957,22 +957,21 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 | 入口 | Kodi 窗口 | 原生续播 | 本方案 |
 |---|---|---|---|
 | 设置 → 文件管理器；首页「文件」源卡片（`target=filemanager`） | 10003 `WINDOW_FILES` | 不支持 | helper 弹窗 + 焦点行圆环 |
-| 视频 → 文件 | 10025 `WINDOW_VIDEO_NAV` | 支持 | Kodi 原生，helper 只做镜像 |
+| 视频 → 文件 | 10025 `WINDOW_VIDEO_NAV` | 支持 | Kodi 原生；helper 不记、不弹窗、不写点 |
 
-**数据两层**
+**数据一层**
 
 | 层 | 位置 | 写什么 | 频率 |
 |---|---|---|---|
-| 账本 | `userdata/addon_data/script.mistuary.helper/resume.db`（SQLite WAL） | 所有非库内视频/STRM 的进度 | 每 30 秒 + 暂停/拖动/停止/切集 |
-| Kodi 镜像 | `MyVideos*.db`，只走 JSON-RPC `Files.SetFileDetails` | 让 10025 拿到原生弹窗和 `ListItem.IsResumable` | 关键节点 + 每 5 分钟兜底 |
+| 账本 | `userdata/addon_data/script.mistuary.helper/resume.db`（SQLite WAL） | 只记 10003 里的视频/STRM 进度 | 每 30 秒 + 暂停/拖动/停止/切集 |
 
-- **不直接打开 `MyVideos.db`**，不依赖它的表结构；Kodi 自己加锁、开事务。
+- **不写 `MyVideos.db` / Kodi 原生续播点**，也不依赖 `myvideos.resume` 开关；账本没有时只读回退已有原生点，不写回。
 - 账本主键：统一斜杠、去尾斜杠、**保留大小写**；另存 `key_fold` 做大小写回退（Windows/SMB）。
 - `.strm` 用 `.strm` 文件本身作 key，不用解析后的 http 地址。
-- 只收真实路径（`/`、`smb://`、`nfs://`、`.strm`、`.iso`）；排除 `plugin://`、`pvr://`、`http(s)://`、目录、带库 ID 的条目。
+- 只收真实路径（`/`、`smb://`、`nfs://`、`.strm`、`.iso`、UNC 等）；排除 `plugin://`、`pvr://`、目录、带库 ID 的条目；`http(s)://` 默认排除，可在 helper 设置里打开。
 - 起播 180 秒内不写；剩余 ≤8% 清除；读 `advancedsettings` 的 `ignoresecondsatstart` / `ignorepercentatend`。
-- `myvideos.resume` 关闭时一律不写。
-- 账本启动时清 90 天前记录，上限 5000 条；`Monitor.onCleanFinished` 后从账本恢复到 Kodi（最多 500 条，文件不存在会跳过）。
+- 不依赖 `myvideos.resume`；本版本不写任何 Kodi 原生续播点。
+- 保留默认 90 天 / 5000 条，可在 helper 设置里调整；启动时 + 每 6 小时清理；清理媒体库不再触发原生恢复。
 
 **行为**
 
@@ -1002,7 +1001,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 - **带参数的 include 必须用 `<definition>` 包住控件**；否则 `$PARAM[left/top/size]` 解析为空，
   控件尺寸变 0，圆环静默不显示（2026-11-04 实测）。圆环贴图用 `FileResumeRingVar`
   101 条静态映射（`000`–`100`），不再走动态贴图路径。
-- **10025**：`View_50_List` 加 3px 进度条 + 右侧「续播 h:mm:ss」，条件 `ListItem.IsResumable`。
+- **10025**：`View_50_List` 的 3px 进度条 + 「续播 h:mm:ss」仍按 Kodi 原生 `ListItem.IsResumable` 显示；helper 不再为它写原生续播点。
 - 库内条目（movie/episode/musicvideo）跳过，Kodi / Emby 已处理。
 - 文件夹连播切换条目时不当成新会话，不重复弹窗；**同一个文件在 120 秒内重新打开仍会弹窗**（按路径判断，
   只有路径不同的自动连播才跳过）。
@@ -1016,12 +1015,11 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 
 | 项 | 说明 |
 |---|---|
-| 纯 http(s) 直链 | 不记录；`.strm` 记的是 `.strm` 文件路径 |
+| 纯 http(s) 直链 | 默认不记录；可在 helper 设置打开；`.strm` 仍记 `.strm` 文件路径 |
 | 改名 / 移动 | 记录按完整路径存，改名后等于新文件 |
-| 清理媒体库 | Kodi 只保留视频源内且仍存在的 `files` 行；账本会尝试恢复，但只覆盖最近 90 天且文件仍存在 |
-| 10003 圆环 | 依赖 helper 轮询（0.4 秒），属性最多滞后一个轮询周期；**只在焦点行显示**。Kodi 内置 FileManager 的控件 Python 拿不到，逐行常显需另做「继续观看」聚合页/插件式列表 |
-| Kodi 镜像粒度 | 崩溃时最多丢 5 分钟；正常停止/暂停会立即写 |
-| 与 `script.service.playbackresumer` 同装 | 写同一个 bookmark，无害；建议只留一个 |
+| 清理媒体库 | 不影响账本；helper 不再从账本恢复 Kodi 原生续播点 |
+| 10003 圆环 | 依赖 helper 轮询（0.1 秒），属性最多滞后一个轮询周期；**只在焦点行显示**。Kodi 内置 FileManager 的控件 Python 拿不到，逐行常显需另做「继续观看」聚合页/插件式列表 |
+| 原生续播点 | helper 不写；只读回退 Kodi/Emby 已有的续播点 |
 
 **实机验证（2026-11-04，Windows Kodi 22 RC1）**
 
@@ -1033,7 +1031,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
    文件管理器 `ListItem.Path` 是目录，聚焦项完整路径在 `ListItem.FolderPath`
 
 > `Files.GetDirectory` / `Files.GetFileDetails` 只对**已配置媒体源**内的路径生效；
-> `Files.SetFileDetails` 不受此限。非源路径以 `resume.db` 账本为准。
+> 本轮只读回退，不再用 `Files.SetFileDetails` 写点；非源路径以 `resume.db` 账本为准。
 
 ---
 
