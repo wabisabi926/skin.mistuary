@@ -1,4 +1,4 @@
-# 交接说明（Mistuary 1.8.3）
+# 交接说明（Mistuary 1.9.0）
 
 > ⚠️ **短期交接快照看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
 > 那份是 2026-10-30 夜的短期交接（当时改了什么、还剩哪三件事、分辨率约束、
@@ -52,10 +52,10 @@
 ## 1. 一句话现状
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
-版本以 `addon.xml` 为准（当前 **1.8.3**，即最近一次发布）；历史发版记录见 §8.2。
-最近一次发布说明见 `changelog.txt` 顶部 1.8.3 段；当轮改动上下文见
-[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.6 已发布
-（修发布包漏 `service.py`）。`main` 上还有未发布改动（重启到安卓等），见 §8.11。
+版本以 `addon.xml` 为准（当前 **1.9.0**，即最近一次发布）；历史发版记录见 §8.2。
+最近一次发布说明见 `changelog.txt` 顶部 1.9.0 段；上一轮改动上下文见
+[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.7 已发布
+（文件播放记录：10003 续播圆环 + 续播询问）。`main` 与 `origin/main` 同步。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 工作区状态以 `git status` 为准（见 §8.1.2）。
 `Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
@@ -443,8 +443,9 @@ Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装�
 | 5 厚实 | 84% | 50% | 92% |
 | 6 实心 | 97% | 58% | 99% |
 
-链路：三个设置共用同一套 `gl_1..6`；**遮蔽 `sc_1..6` 只跟页面档**（遮蔽干的是"把页面压暗"，
-属于页面，不属于浮窗）。
+链路：三个设置共用同一套 `gl_1..6`；**遮蔽分两条，各跟各的档**（2026-10-30 改）：
+页面级遮蔽跟页面档，浮窗级遮蔽跟浮窗档。原来浮窗借用页面档，
+用户调「页面透明度」会连带改变所有对话框的观感（合成在 76%~88% 之间摆）。
 
 | 变量 | 来源 | 用在哪 |
 |---|---|---|
@@ -452,7 +453,8 @@ Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装�
 | `NaraGlassFloatTintVar` | 浮窗档 | 对话框、插件详情/设置、菜单、键盘、非播放时的设置选择框 |
 | `NaraPlaybackDialogTintVar` | 播放中档 | 播放 OSD 全系 + 播放控制条 |
 | `NaraSettingsDialogTintVar` | 播放中档 / 浮窗档（按是否播放切换） | 视频/音乐 OSD 设置、播放中的设置选择框 |
-| `NaraGlassScrimTintVar` | 页面档 | 所有遮蔽层（播放中改走 `scrim_osd`） |
+| `NaraGlassScrimTintVar` | 页面档 | 页面级遮蔽：整屏页面、`DialogVideoInfo` / `DialogAddonInfo`、侧栏、`NaraPageScrim`（播放中改走 `scrim_osd`） |
+| `NaraGlassFloatScrimVar` | 浮窗档 | 浮窗级遮蔽：对话框共用底、`NaraDialogScrim`、电源菜单、键盘、图片/PVR 信息、右键菜单、文本查看器、Home 左上角菜单弹层、设置类对话框 |
 
 **为什么换维度**：用户感知的是"我在看片 / 我在翻页面 / 我打开了一个浮窗"，不是"这是浮窗还是页面面板"。
 浮窗压在页面之上、底下还有内容要透出来，所以它要比页面更实 —— 三档默认值就是按这个顺序排的
@@ -948,7 +950,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 - 分数在 56px 框内**居中**：3 位 / 4 位分数左右留白对称
 - 底板 `4D000000`（30%）；视频 OSD 与插件弹窗仍是 `66000000`（40%），不要一起改
 
-### 5.15 文件播放记录（2026-11-04 定稿，已实现未发）
+### 5.15 文件播放记录（2026-11-04 定稿，随 1.9.0 发布）
 
 **目标**：从文件管理器播放的视频，下次打开能续播。
 
@@ -1008,8 +1010,8 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 
 **落点**
 
-- helper（本地未发，版本仍 0.3.6）：`lib/file_resume.py`、`service.py`、`resources/settings.xml`（`file_resume` 默认开）、`lib/skin_bridge.py`、`lib/i18n.py`、`tests/test_file_resume.py`
-- 皮肤（本地未发，版本仍 1.8.3）：`xml/FileManager.xml`、`xml/Includes_FileResume.xml`、`xml/Includes.xml`、`xml/Custom_1115_FileResume.xml`、`xml/Variables.xml`（`FileResumeRingVar`）、`tools/gen_resume_ring.py`、`media/progress/resume_ring/*.png`（101 帧）
+- helper（随 0.3.7 发布）：`lib/file_resume.py`、`service.py`、`resources/settings.xml`（`file_resume` 默认开）、`lib/skin_bridge.py`、`lib/i18n.py`、`tests/test_file_resume.py`
+- 皮肤（随 1.9.0 发布）：`xml/FileManager.xml`、`xml/Includes_FileResume.xml`、`xml/Includes.xml`、`xml/Custom_1115_FileResume.xml`、`xml/Variables.xml`（`FileResumeRingVar`）、`tools/gen_resume_ring.py`、`media/progress/resume_ring/*.png`（101 帧）
 
 **限制**
 
@@ -1165,7 +1167,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码，当前 1.8.3 与 helper 0.3.6 均已发布（本地含未发布的 helper 0.3.7 文件播放记录）。
+> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码，当前 1.9.0 与 helper 0.3.7 均已发布。
 
 ### 8.2 发版记录
 
@@ -1185,8 +1187,9 @@ git status -sb              # 与远端的关系 + 工作区
 | **v1.8.1** | 主页「退出」按平台执行（退出 / 关机 / 电源菜单）+ 自动评分帮助修正 |
 | **v1.8.2** | 首页 Hero 评分左移并与年份同一条 grouplist + 评分胶囊加宽/居中（10.0 不再裁）+ 底板 30% + 首页卡片标题居中 / 集数右下 + 设置页背景 20% 轻遮罩 |
 | **v1.8.3** | 首页末项固定「电源」并打开电源菜单 + 电源菜单高度按 `System.Can*` 适配（Windows/CE/Android 不再多出空白）+ 设置中心平台标签改为纯显示 |
+| **v1.9.0** | 文件播放记录（10003 焦点行续播圆环 + 起播续播询问 + 设置项，需 helper 0.3.7）+ 列表续播进度与时间 + 文件管理器列宽（日期 1170→1213、文件名 1080→1000）+ CoreELEC 电源菜单「重启到安卓」+ 设置页剧照中性底（去紫灰） |
 
-> **当前版本以 `addon.xml` 为准（1.8.3）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
+> **当前版本以 `addon.xml` 为准（1.9.0）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1347,7 +1350,7 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 ### 8.11 2026-11-03 当日改动
 
 > 详见 [`handover-2026-11-03.md`](handover-2026-11-03.md)。
-> **1.8.3 已发**；下面标「未发」的是 1.8.3 之后仍在 `main` 的改动，下次升版本一起进包。
+> **1.8.3 已发**；标「未发」的三条已随 **1.9.0** 进包。
 
 - `39eccde`：清理 Home / 设置页重复的 `primary.jpg` 兜底层；设置页真图下加不透明黑隔层
 - `5cc2af0`：首页卡片标题居中、集数移到缩略图右下角（纯白 + 黑阴影）；`.gitignore` 加 `vibe_images/`
@@ -1356,8 +1359,21 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - `5e92db6`：设置中心 LibreELEC / CoreELEC 标签改为纯显示（不可聚焦）
 - `82797c9`：首页末项固定「电源」并打开电源菜单；菜单高度按 `System.Can*` 适配
 - `a4b5206`：**release 1.8.3**
-- `b114052`（未发）：CoreELEC 电源菜单新增「重启到安卓」，16 条背景高度
-- `efc4ae8`（未发）：`.gitignore` 忽略根目录 `kodi.log`
-- `9d9022a`（未发）：31817 文案「切换到安卓」→「重启到安卓」
+- `b114052`（随 1.9.0 发）：CoreELEC 电源菜单新增「重启到安卓」，16 条背景高度
+- `efc4ae8`（随 1.9.0 发）：`.gitignore` 忽略根目录 `kodi.log`
+- `9d9022a`（随 1.9.0 发）：31817 文案「切换到安卓」→「重启到安卓」
 - helper 仓库 `aee200f` / `0c54c64`：**0.3.6** 发布包补上 `service.py`
   （此前 Release zip 里的播放列表补全服务从未启动，CE 日志报 `service.py` 不存在）
+
+### 8.12 2026-11-04 当日改动（随 1.9.0 发布）
+
+- `49cc54c`：**文件播放记录**。10003 焦点行 40px 续播圆环（101 帧、百分比烘焙在贴图里、
+  无暗底）+ 1115 两行续播弹窗（`round20` + 浮窗档，默认焦点「继续播放」）+
+  设置页「文件播放记录」开关 + 列表视图续播进度条与「续播 h:mm:ss」；
+  文件管理器日期列 `1170 → 1213`、文件名列 `1080 → 1000`，中间留出 40px 圆环位。
+  详见 §5.15。
+- `24dd1ce`：文档同步 10003 范围、保留设置与「不写原生续播点」。
+- `a990266`：设置页半透明剧照改用中性底 `FF4D4D4D`（`NaraNeutralFanartBase`），
+  去掉 `primary.jpg` 平均色（约 `63,77,110`）带来的紫灰罩；显隐与剧照层共用
+  `$EXP[nara_settings_shared_fanart_visible]`，避免两层条件漂移。
+- helper 仓库 `bcc3656`：**release 0.3.7**（文件播放记录首次发布）。
