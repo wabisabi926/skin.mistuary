@@ -74,9 +74,9 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `home_tvshows_unwatched_widget` | `Includes_SettingsDialog.xml:414` | `ToggleSetting` |
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
-| `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:245`（主评分来源四档） | `SelectBool` |
-| `rating_sec_auto` / `rating_sec_douban` / `rating_sec_rt` / `rating_sec_off` | `SkinSettings.xml:253`（次评分来源四档） | `SelectBool` |
-| `helper_search_off` | `SkinSettings.xml:383`（皮肤助手页，反向开关） | `ToggleSetting` |
+| `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:243`（媒体页 707，主评分来源四档） | `SelectBool` |
+| `rating_sec_auto` / `rating_sec_douban` / `rating_sec_rt` / `rating_sec_off` | `SkinSettings.xml:252`（媒体页 715，次评分来源四档） | `SelectBool` |
+| `helper_search_off` | `SkinSettings.xml:331`（媒体页 714，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
 首页「媒体库」卡片的封面顺序（`Includes_Home.xml` → `HomeMediaLibraryArtwork`）：
@@ -119,6 +119,10 @@ TMDb / IMDb / 豆瓣 / 自动。手选时读对应类型，读不到才退回 `L
 - **详情页豆瓣兜底**：`Rating(douban)` 为空时，`DialogVideoInfo` 的 `onload` 调
   `action=rating`；皮肤只读 `Window(home).Property(Mistuary.Rating.Douban / .Votes / .Status / .FetchedAt)`，
   `Status != ok` 时隐藏胶囊。列表 / 首页不触发联网。
+- **详情页联网取豆瓣 720**：`RunScript(script.mistuary.helper,action=toggle_setting,key=douban_enabled)`
+  （`SkinSettings.xml:261`），皮肤读 `Mistuary.Helper.DoubanEnabled`。关闭后 helper 的
+  `lib/douban.py` 直接返回、不写 `Mistuary.Rating.*`；库里已有的 `Rating(douban)` 不受影响。
+  715 选烂番茄/关闭或主评分选豆瓣时，该行隐藏（`!rating_sec_rt + !rating_sec_off + !douban_rating`）。
 - 权威契约在插件仓库 `docs/contract.md`；改调用方式先改那边。
 
 ---

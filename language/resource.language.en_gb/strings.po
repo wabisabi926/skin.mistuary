@@ -1226,7 +1226,7 @@ msgstr "Card badge: My rating (yours), Media rating (library source), or None. N
 
 msgctxt "#31740"
 msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
-msgstr "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
+msgstr "Shows the library's rating type (TMDb or IMDb); TMDb when unknown."
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
@@ -1385,8 +1385,8 @@ msgid "Use Emby server search"
 msgstr "Use Emby server search"
 
 msgctxt "#31781"
-msgid "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
-msgstr "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
+msgid "Search via Emby for original titles, pinyin and initials. Cast and genre need Chinese input."
+msgstr "Search via Emby for original titles, pinyin and initials. Cast and genre need Chinese input."
 
 msgctxt "#31782"
 msgid "Secondary rating source"
@@ -1398,7 +1398,7 @@ msgstr "Tomatometer"
 
 msgctxt "#31784"
 msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
-msgstr "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
+msgstr "Secondary rating: Douban first, then Rotten Tomatoes; source can be fixed."
 
 msgctxt "#31792"
 msgid "Off"
@@ -1436,21 +1436,13 @@ msgctxt "#31797"
 msgid "All unwatched"
 msgstr "All unwatched"
 
-msgctxt "#31798"
-msgid "Skin helper"
-msgstr "Skin helper"
-
 msgctxt "#31799"
-msgid "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
-msgstr "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
+msgid "Add-on options: server, cache, rating sync and cleanup."
+msgstr "Add-on options: server, cache, rating sync and cleanup."
 
 msgctxt "#31800"
 msgid "Advanced settings"
 msgstr "Advanced settings"
-
-msgctxt "#31801"
-msgid "Mistuary Helper is not installed"
-msgstr "Mistuary Helper is not installed"
 
 msgctxt "#31802"
 msgid "Show Search in the main menu. On by default."
@@ -1478,7 +1470,7 @@ msgstr "Media rating"
 
 msgctxt "#31808"
 msgid "Douban rating"
-msgstr "Douban rating"
+msgstr "Fetch Douban on the info page"
 
 msgctxt "#31809"
 msgid "Playlist: rest of season"
@@ -1493,20 +1485,20 @@ msgid "Playlist: next season"
 msgstr "Playlist: next season"
 
 msgctxt "#31812"
-msgid "Show Douban ratings on the info page; no requests when off."
-msgstr "Show Douban ratings on the info page; no requests when off."
+msgid "Show Douban rating capsules on the info page; stop requesting when off."
+msgstr "Fetch Douban for the secondary rating on the info page; on by default, skipped when already stored."
 
 msgctxt "#31813"
-msgid "Append the rest of the season when a library episode starts; playback is not interrupted."
-msgstr "Append the rest of the season when a library episode starts; playback is not interrupted."
+msgid "Queue the rest of the season when a library episode starts."
+msgstr "Queue the rest of the season when a library episode starts."
 
 msgctxt "#31814"
-msgid "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
-msgstr "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
+msgid "Queue the rest of the folder when playback starts from a folder."
+msgstr "Queue the rest of the folder when playback starts from a folder. On by default."
 
 msgctxt "#31815"
-msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
-msgstr "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
+msgid "Queue the first episode of the next season after the last one starts."
+msgstr "Queue the first episode of the next season after the last one starts."
 
 msgctxt "#31816"
 msgid "Power"
@@ -1527,3 +1519,11 @@ msgstr "Resume"
 msgctxt "#31821"
 msgid "Sync library covers now"
 msgstr "Sync library covers now"
+
+msgctxt "#31822"
+msgid "Remember playback position for videos opened from the file manager."
+msgstr "Remember playback position for videos opened from the file manager."
+
+msgctxt "#31823"
+msgid "Fetch library covers from Emby; file names must match library names."
+msgstr "Fetch library covers from Emby; file names must match library names."

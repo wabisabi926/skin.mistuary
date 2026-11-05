@@ -1005,7 +1005,7 @@ msgstr "卡片角标：我的评分（自己打的）、媒体评分（媒体库
 
 msgctxt "#31740"
 msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
-msgstr "自动按媒体库里的评分类型标签判断（TMDb / IMDb）；无法判断时按 TMDb 显示。"
+msgstr "按库内评分类型显示 TMDb 或 IMDb；无法判断时用 TMDb。"
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
@@ -1164,8 +1164,8 @@ msgid "Use Emby server search"
 msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
-msgid "Search via Emby: original titles, full pinyin and initials. Chinese cast/genre queries need Chinese input. Reload the skin after enabling or removing the add-on."
-msgstr "通过 Emby 服务端搜索原名、全拼与首字母；中文演员/类型需能输入中文。启用或卸载插件后重载皮肤。"
+msgid "Search via Emby for original titles, pinyin and initials. Cast and genre need Chinese input."
+msgstr "经 Emby 服务端检索原名、全拼与首字母；演员、类型须中文输入。"
 
 msgctxt "#31782"
 msgid "Secondary rating source"
@@ -1177,7 +1177,7 @@ msgstr "烂番茄新鲜度"
 
 msgctxt "#31784"
 msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
-msgstr "次评分显示在主评分旁：自动优先豆瓣（需插件），否则烂番茄影评人新鲜度（Tomatometer）；可固定来源或关闭。"
+msgstr "次评分显示在主评分旁：优先豆瓣，其次烂番茄；可固定来源。"
 
 msgctxt "#31792"
 msgid "Off"
@@ -1215,21 +1215,13 @@ msgctxt "#31797"
 msgid "All unwatched"
 msgstr "全部未看"
 
-msgctxt "#31798"
-msgid "Skin helper"
-msgstr "皮肤助手"
-
 msgctxt "#31799"
-msgid "Mistuary Helper adds search, Douban ratings and playlist completion; advanced options are in the add-on settings."
-msgstr "Mistuary Helper 提供搜索、豆瓣评分与播放列表补全；高级选项在插件设置里。"
+msgid "Add-on options: server, cache, rating sync and cleanup."
+msgstr "插件高级选项：服务器、缓存、评分同步与清理。"
 
 msgctxt "#31800"
 msgid "Advanced settings"
 msgstr "高级设置"
-
-msgctxt "#31801"
-msgid "Mistuary Helper is not installed"
-msgstr "未安装 Mistuary Helper"
 
 msgctxt "#31802"
 msgid "Show Search in the main menu. On by default."
@@ -1257,7 +1249,7 @@ msgstr "媒体评分"
 
 msgctxt "#31808"
 msgid "Douban rating"
-msgstr "豆瓣评分"
+msgstr "详情页联网取豆瓣"
 
 msgctxt "#31809"
 msgid "Playlist: rest of season"
@@ -1272,20 +1264,20 @@ msgid "Playlist: next season"
 msgstr "播放列表：跨季继续"
 
 msgctxt "#31812"
-msgid "Show Douban ratings on the info page; no requests when off."
-msgstr "详情页显示豆瓣评分；关闭后不再请求。"
+msgid "Show Douban rating capsules on the info page; stop requesting when off."
+msgstr "次评分用豆瓣或自动时，详情页联网补分，默认开启；库里已有不请求。"
 
 msgctxt "#31813"
-msgid "Append the rest of the season when a library episode starts; playback is not interrupted."
-msgstr "剧集起播时，将本季其余剧集加入队列；不打断当前播放。"
+msgid "Queue the rest of the season when a library episode starts."
+msgstr "剧集起播时将本季其余集入队，不打断播放。"
 
 msgctxt "#31814"
-msgid "Append the rest of the folder when playback starts from a folder; playback is not interrupted."
-msgstr "视频或音乐从文件夹起播时，将同目录其余条目加入队列；不打断当前播放。"
+msgid "Queue the rest of the folder when playback starts from a folder."
+msgstr "文件夹起播时将同目录其余条目入队；默认开启。"
 
 msgctxt "#31815"
-msgid "When the last episode of a season starts, queue the first episode of the next season. Works with "rest of season"."
-msgstr "本季最后一集起播时，把下一季第一集加入队列；配合“按季补全”使用。"
+msgid "Queue the first episode of the next season after the last one starts."
+msgstr "末集起播时将下一季首集入队，需配合按季补全。"
 
 msgctxt "#31816"
 msgid "Power"
@@ -1306,3 +1298,11 @@ msgstr "续播"
 msgctxt "#31821"
 msgid "Sync library covers now"
 msgstr "立即同步媒体库封面"
+
+msgctxt "#31822"
+msgid "Remember playback position for videos opened from the file manager."
+msgstr "文件管理器中的视频记录播放进度，起播时提供继续播放。"
+
+msgctxt "#31823"
+msgid "Fetch library covers from Emby; file names must match library names."
+msgstr "从 Emby 拉取媒体库封面；文件名须与库名一致。"

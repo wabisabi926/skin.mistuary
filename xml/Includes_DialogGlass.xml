@@ -121,7 +121,7 @@
 			<width>340</width>
 			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + System.CanHibernate + System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + System.CanHibernate + System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -129,7 +129,7 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + System.CanHibernate + !System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + System.CanHibernate + !System.ShowExitButton + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -137,7 +137,7 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -145,7 +145,7 @@
 			<width>340</width>
 			<height>322</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -153,7 +153,7 @@
 			<width>340</width>
 			<height>322</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + !System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + !System.ShowExitButton + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -161,7 +161,7 @@
 			<width>340</width>
 			<height>262</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + !System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + !System.CanHibernate + !System.ShowExitButton + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -169,7 +169,7 @@
 			<width>340</width>
 			<height>202</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -177,7 +177,7 @@
 			<width>340</width>
 			<height>142</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>!System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + !System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanReboot + !System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -185,7 +185,7 @@
 			<width>340</width>
 			<height>502</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -193,7 +193,7 @@
 			<width>340</width>
 			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -201,7 +201,7 @@
 			<width>340</width>
 			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -209,7 +209,7 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + System.ShowExitButton + !System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -217,7 +217,7 @@
 			<width>340</width>
 			<height>442</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -225,7 +225,7 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -233,7 +233,7 @@
 			<width>340</width>
 			<height>382</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanHibernate + System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
 		</control>
 		<control type="image">
 			<centerleft>50%</centerleft>
@@ -241,7 +241,26 @@
 			<width>340</width>
 			<height>322</height>
 			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
-			<visible>System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+			<visible>!System.Platform.Windows + System.AddonIsEnabled(service.coreelec.settings) + !System.ShowExitButton + !System.CanHibernate + !System.CanSuspend + System.CanReboot + System.CanPowerDown</visible>
+		</control>
+		<!-- Windows：按用户要求只保留「退出 / 设置」，高度回到 202 / 142。
+		     2 项 = 82 + 60×2 = 202；只有设置 = 82 + 60 = 142。
+		     注意条件里不能带括号或 |，Kodi 解析失败会按 true 处理。 -->
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>202</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>System.Platform.Windows + System.ShowExitButton</visible>
+		</control>
+		<control type="image">
+			<centerleft>50%</centerleft>
+			<top>180</top>
+			<width>340</width>
+			<height>142</height>
+			<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
+			<visible>System.Platform.Windows + !System.ShowExitButton</visible>
 		</control>
 		<control type="grouplist" id="9000">
 			<defaultcontrol>108</defaultcontrol>
@@ -302,7 +321,7 @@
 				<include>NaraDialogActionTextures</include>
 				<label>$LOCALIZE[13013]</label>
 				<onclick>Reset()</onclick>
-				<visible>System.CanReboot</visible>
+				<visible>System.CanReboot + !System.Platform.Windows</visible>
 			</control>
 			<control type="button" id="106">
 				<left>24</left>
@@ -315,7 +334,7 @@
 				<label>$LOCALIZE[13011]</label>
 				<onclick>Dialog.Close(shutdownmenu)</onclick>
 				<onclick>Suspend()</onclick>
-				<visible>System.CanSuspend</visible>
+				<visible>System.CanSuspend + !System.Platform.Windows</visible>
 			</control>
 			<control type="button" id="107">
 				<left>24</left>
@@ -328,7 +347,7 @@
 				<label>$LOCALIZE[13010]</label>
 				<onclick>Dialog.Close(shutdownmenu)</onclick>
 				<onclick>Hibernate()</onclick>
-				<visible>System.CanHibernate</visible>
+				<visible>System.CanHibernate + !System.Platform.Windows</visible>
 			</control>
 			<control type="button" id="104">
 				<left>24</left>
@@ -340,7 +359,7 @@
 				<include>NaraDialogActionTextures</include>
 				<label>$LOCALIZE[31774]</label>
 				<onclick>Powerdown()</onclick>
-				<visible>System.CanPowerDown</visible>
+				<visible>System.CanPowerDown + !System.Platform.Windows</visible>
 			</control>
 			<!-- CoreELEC 双系统：先写启动标志，再重启；非 CE 平台隐藏。 -->
 			<control type="button" id="109">

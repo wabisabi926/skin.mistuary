@@ -94,10 +94,10 @@ RunScript(script.mistuary.helper,action=techflags,dbid=<剧集 id>)        # M3 
 | 文件 | 内容 |
 |---|---|
 | `Includes_Search.xml` | `helper_search_ready` expression；两个路径变量；4 个 content include；两个容器的 include 条件 |
-| `SkinSettings.xml` | 皮肤助手页 `onload` 调 `settings_snapshot`；`714` 搜索开关、`720–723` 豆瓣/按季/按目录/跨季，均走插件设置桥 |
-| 设置桥 | 插件把四个 bool 写成 `Mistuary.Helper.*` 窗口属性；皮肤只读属性、点击 `toggle_setting` |
-| `Variables.xml` | 帮助条 `Control.HasFocus(714)` |
-| `language/*.po` | 31780 开关名、31781 帮助 |
+| `SkinSettings.xml` | `onload` 调 `settings_snapshot`；媒体页 `714` 搜索开关 / `720` 详情页联网取豆瓣，播放页 `721–724` 按季/按目录/跨季/文件记录，均走插件设置桥 |
+| 设置桥 | 插件把五个 bool 写成 `Mistuary.Helper.*` 窗口属性；皮肤只读属性、点击 `toggle_setting` |
+| `Variables.xml` | 帮助条 `Control.HasFocus(714 / 720 / 721–725)` |
+| `language/*.po` | 31780/31781 搜索、31808/31812 豆瓣、31813–31815 补全、31822 文件记录、31823 封面同步 |
 
 > 排序方案最终用 **B**（两套 content），没有用 A（直接删 `sortby`）：
 > 本地 XSP 是没装插件用户的唯一路径，不能拿它做实验。
