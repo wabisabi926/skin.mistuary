@@ -5,7 +5,7 @@
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
-| [`handover-2026-11-03.md`](handover-2026-11-03.md) | **最近一次交接快照**（2026-11-03）：当天本地改动、未发布项、遗留问题 |
+| [`handover-2026-11-03.md`](handover-2026-11-03.md) | **已归档的交接快照**（2026-11-03）。当天本地改动与遗留；其中的「未发」项已随 1.9.0 进包，只作当时记录 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
 | [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b/M2/M1c 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
