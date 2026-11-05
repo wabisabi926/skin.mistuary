@@ -4,10 +4,10 @@
 而不是因为路径写法不认识、一律放过去了。皮肤里有三种贴图写法：
 
     ① shapes/glass20.png                    ← 相对 media/
-    ② special://skin/libraryart/x.jpg       ← 根目录（libraryart / extras / resources）
+    ② special://skin/extras/artwork/x.jpg   ← 根目录（extras / resources）
     ③ special://xbmc/...                    ← Kodi 自己的，不在包里
 
-另外含 `$` 的是动态路径（`libraryart/$INFO[ListItem.Label].jpg`），
+另外含 `$` 的是动态路径（`library_icons/$INFO[ListItem.Label].png`），
 静态查不了，只能放行 —— 2026-10-30 日志里 `libraryart/临时.png` 加载失败就是这么来的：
 分类名在运行时才知道，皮肤和审计都判断不了。
 """
@@ -29,13 +29,13 @@ class TextureExistsTest(unittest.TestCase):
     def test_relative_media_path_missing(self):
         self.assertFalse(texture_exists("shapes/definitely-not-here.png"))
 
-    def test_special_skin_libraryart_exists(self):
-        """② special://skin/ 指向仓库根目录，libraryart 走这条。"""
-        self.assertTrue(texture_exists("special://skin/libraryart/default.jpg"))
+    def test_special_skin_extras_artwork_exists(self):
+        """② special://skin/ 指向仓库根目录。"""
+        self.assertTrue(texture_exists("special://skin/extras/artwork/library-default.jpg"))
 
-    def test_special_skin_libraryart_missing(self):
-        """② 缺失时**必须报出来** —— 这是审计能覆盖 libraryart 的证据。"""
-        self.assertFalse(texture_exists("special://skin/libraryart/不存在的封面.jpg"))
+    def test_special_skin_extras_artwork_missing(self):
+        """② 缺失时**必须报出来** —— 这是审计能覆盖根目录素材的证据。"""
+        self.assertFalse(texture_exists("special://skin/extras/artwork/不存在的封面.jpg"))
 
     def test_special_skin_extras_exists(self):
         self.assertTrue(texture_exists("special://skin/extras/backgrounds/primary.jpg"))
@@ -46,7 +46,8 @@ class TextureExistsTest(unittest.TestCase):
 
     def test_dynamic_path_is_skipped(self):
         """含 $ 的动态路径无法静态判断，一律放行。"""
-        self.assertTrue(texture_exists("special://skin/libraryart/$INFO[ListItem.Label].jpg"))
+        self.assertTrue(texture_exists(
+            "special://profile/addon_data/script.mistuary.helper/library_icons/$INFO[ListItem.Label].png"))
 
     def test_empty_is_ok(self):
         self.assertTrue(texture_exists(""))

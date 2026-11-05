@@ -177,25 +177,28 @@
 
 ## 2. 运行时依赖
 
-### 皮肤本体不需要任何 Python 脚本
+### 皮肤本体不含 Python 脚本，但依赖 Mistuary Helper
 
-`addon.xml` 只有一条依赖：
+`addon.xml` 的依赖：
 
 ```xml
 <import addon="xbmc.gui" version="5.18.0"/>
+<import addon="script.mistuary.helper" version="0.0.0"/>
 ```
 
+`script.mistuary.helper` 自 **2026-11-05** 起是**硬依赖**（用户决定）：未安装 /
+被禁用时，Kodi 会判定依赖不满足，皮肤**无法加载**。安装顺序必须是先装插件再切皮肤。
 `tools/` 里的所有 `.py` / `.ps1` 都是**构建期工具**，不参与运行，也不进发布包。
 
-### 皮肤会"探测"两个第三方插件，但都不是必需
+### 皮肤探测两个第三方插件
 
 | 插件 | 用在哪 | 没装会怎样 |
 |---|---|---|
 | `plugin.service.emby-next-gen` | 首页媒体库栏目、分类 widget 的显示条件 | 只是不显示那几行，其余正常 |
 | `script.embuary.info` | 演员头像点击查人 | 点击无反应 |
-| `script.mistuary.helper`（可选，0.3.7 已发布） | 服务端搜索、豆瓣评分、播放列表补全、文件播放记录 | 回退本地 XSP / 不显示豆瓣胶囊 / Kodi 原生只播当前项 / 无续播记录 |
+| `script.mistuary.helper`（**必需**） | 服务端搜索、豆瓣评分、媒体库封面同步、播放列表补全、文件播放记录 | 皮肤**不加载**（`addon.xml` 硬依赖） |
 
-都用 `System.AddonIsEnabled()` / `System.HasAddon()` 保护，**没有硬依赖**。
+两个可选插件用 `System.AddonIsEnabled()` / `System.HasAddon()` 做运行时保护。
 `script.mistuary.helper` 是**独立仓库**，契约与阶段规划见
 [`helper-plugin-plan.md`](helper-plugin-plan.md)；**不要塞进皮肤包**
 （Kodi 不允许 skin addon 携带可执行脚本）。
@@ -217,13 +220,19 @@ language/       resource.language.*/strings.po
 media/          松散图片 + Textures.xbt（打包后只带 xbt）
 extras/         随包素材，运行时用 special://skin/extras/... 引用
   backgrounds/    运行时背景图（primary.jpg）
+  artwork/        首页媒体库卡片兜底图（library-default.jpg）
   playlists/      widget 用的播放列表（*.xsp）
-libraryart/     分类封面（按「分类名.jpg」匹配；2026-10-28 起随包发布，24 张封面 + default.jpg，约 1.4MB）
 ```
 
 > `extras/` 这个名字是 Arctic 系皮肤的约定（jurialmunkey / narapeka 一脉）：
 > **随包发布的素材**放这里，图片不进 `Textures.xbt`，是松散文件，用户可以直接替换。
 > 不要把它和构建工具混在一起——构建工具在 `tools/`。
+
+> 首页「媒体库」卡片的分区封面全部由 Mistuary Helper 同步：
+> `addon_data/script.mistuary.helper/library_icons/<库名>.png`。
+> Helper 给每个库都写文件（Emby 没设封面时写 1×1 透明占位），所以皮肤那层永远能加载。
+> 优先级：自定义目录 > Helper 同步 > `extras/artwork/library-default.jpg`。
+> E4K 本身不导出库封面，别去找它的 `libraryart` / `library_icons` 目录。
 
 ### 不进发布包的（`release.yml` 里显式排除）
 
@@ -1164,7 +1173,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | addon 简介措辞 | ✅ 2026-10-28 已补：中英两条 description 都写了「（同时最多两个）」/「(up to two at a time)」，随 1.2.0 发 |
 | 系统信息 / 事件日志的底部文字区 | 这两页底部**故意**和 PVR 不一样：`SettingsSystemInfo` 没有"当前项"，底部 y 555–885 被内存/CPU 浮层占用，所以不挂帮助条；`EventLog` 用 `label id=70`（915, h40）+ `textbox id=71`（955, h60）拼成两行，合起来仍占 915–1015 那 100px。**如果希望三页底部完全一致，需要先决定这两页要不要让出那块区域** |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 2026-10-29 已改：`id=60` 轨道 644 → **357**（它服务的是 `textbox id=30`，193→550 高 357；写 644 会让滑块按两屏算比例）。几何回归测试已按页取期望值 |
-| 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名，要么补 `libraryart/<新名字>.jpg` |
+| 首页「类别」行的名字 | 显示的是 Emby 插件节点名（`EMBY DYNAMIC: 音乐 (music)`），皮肤层无法截断字符串。要么在 Emby 里改库名（Helper 下次同步会跟着改名），要么在「自定义媒体库封面目录」里放 `<新名字>.jpg` |
 | 音乐「类别」行的 `EMBY DYNAMIC:` 前缀 | **皮肤层修不了**。Emby 把媒体库名写成 Kodi 的 `tag`（视频库有 `tag` 表），但**音乐库没有 tag 表**，只能退回动态节点。`String.Replace` 两种写法实测均失败。想改只有「Emby 端关动态节点」或「换成 `musicdb://genres/`」两条路，2026-10-30 决定不改。详见 `skin-contracts.md` §4.2 |
 | 歌词只对 CU LRC 有内嵌排版 | `xml/script-cu-lrclyrics-main.xml` 里硬编码了 `script.cu.lrclyrics` 的窗口和 `list id="110"`。**两种情况会失效**：① CU LRC 升级改了控件 id；② 用户在设置里换成别的歌词插件。表现是「右侧内嵌排版没了、歌词以插件自己的全屏界面出现」——**不报错、不影响播放**。歌词继续用 CU LRC 而不自建，理由见 `helper-plugin-plan.md` §6（用户最常用的"自动下载歌词"是自建做不了的那部分） |
 | 本地搜索不含人员/类型 | 1.2.0 起本地快速搜索只匹配 `title` / `originaltitle` / `sorttitle` 前缀，**不要加回来**；人员/类型走服务端桥（0.3.3+，仅中文查询并入） |
@@ -1326,7 +1335,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 圆角二期 | 全库收口，30 张 diffuse 遮罩、8 环 + 1 细边（§5.4.1） |
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
-| 插件规划 | `docs/helper-plugin-plan.md`（摘要），含「可选安装」契约 §2 |
+| 插件规划 | `docs/helper-plugin-plan.md`（摘要），含 Helper 契约 §2（2026-11-05 起为硬依赖） |
 | **helper 插件落地** | 独立仓库 `<插件仓库根>`，**0.3.7 已发布**（197 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全（两个独立开关：媒体库剧集按季补全 / 文件夹播放按目录补全，视频与音乐，默认关）+ 文件播放记录（10003 弹窗与焦点行圆环，10025 走原生镜像）。皮肤侧 M1b / M2 已接，M1c 实机验收已完成；M1d 演员/类型已完成（仅非 ASCII 查询）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |

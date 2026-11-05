@@ -79,6 +79,16 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `helper_search_off` | `SkinSettings.xml:383`（皮肤助手页，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
+首页「媒体库」卡片的封面顺序（`Includes_Home.xml` → `HomeMediaLibraryArtwork`）：
+
+1. 自定义目录 `library_art_folder`（png/jpg）
+2. Mistuary Helper 同步的 `addon_data/script.mistuary.helper/library_icons/<库名>.png`
+   —— Helper 为每个库都写文件，缺封面时写 1×1 透明占位，所以这层不会 404
+3. `special://skin/extras/artwork/library-default.jpg` + 库名文字
+
+E4K 不导出库封面（没有 `library_icons` 或 `libraryart` 目录），别再引用
+`plugin.service.emby-next-gen/libraryart/`。
+
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
 **主评分来源四档互斥**（`NaraOnlineRatingsRow`，2026-10-31 定稿）：
@@ -98,9 +108,12 @@ TMDb / IMDb / 豆瓣（神医助手覆盖）/ 自动（仅本地刮削）。
 
 现状（`python tools/audit_skin.py` 输出）：**94 读 / 97 写，有读无写 0、有写无读 0**。
 
-### helper 软探测契约（`script.mistuary.helper`）
+### helper 契约（`script.mistuary.helper`）
 
-- 前置条件：`System.AddonIsEnabled(script.mistuary.helper)` **且**
+- **硬依赖**：2026-11-05 起 `addon.xml` 声明 `<import addon="script.mistuary.helper" version="0.0.0"/>`，
+  未安装 / 被禁用时皮肤**不加载**。运行时分支仍保留 `System.AddonIsEnabled(...)` 判断，
+  防止插件在会话中被禁用后控件失效。
+- 搜索的前置条件：`System.AddonIsEnabled(script.mistuary.helper)` **且**
   `System.AddonIsEnabled(plugin.service.emby-next-gen)`（表达式 `helper_search_ready`）。
 - **搜索**：容器内容切到
   `plugin://script.mistuary.helper/?mode=search&type=movies|shows&query=<原始词>`
@@ -408,11 +421,12 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 日志里剩余的无害噪声（不用管）：
 
-- `libraryart/<分类名>.png` 加载失败 —— 皮肤按"先 png 后 jpg"试两种扩展名，
-  而 `libraryart/` 里只有 jpg，所以每个分类必然报一条 png 缺失，jpg 正常。
-  只有 `临时` 是连 jpg 都没有（用户自己的分类没配封面）。
 - `special://masterprofile/Thumbnails/...` 失败 —— Emby 插件缩略图，与皮肤无关。
 - `EMBY.emby.http: Websocket receive interrupted` —— 网络，与皮肤无关。
+
+> 首页媒体库卡片以前会给缺封面的库打 `libraryart/<库名>.jpg` 加载失败日志。
+> 2026-11-05 起 Helper 为每个库都写 `library_icons/<库名>.png`（缺封面写透明占位），
+> 这条噪声已经归零。唯一残留是用户自配「自定义封面目录」但目录里缺图时。
 
 1. 字体变成 Inter（中文正常、粗体正常）
 2. PVR → 分组管理，左右两个频道列表都能出频道
@@ -459,13 +473,16 @@ grep -c "invalid include definition" %APPDATA%\Kodi\kodi.log    # 期望 0
 
 ---
 
-### 6.5 素材规格：`libraryart/` 分类封面
+### 6.5 素材规格：媒体库卡片封面
 
-- **推荐 640 × 360（16:9）**。卡片本身是 320 × 180，用 2 倍是为了焦点放大时不糊；
-  再大纯属浪费——2026-10-26 之前那批是 1920 × 1080，24 张共 19.16 MB，
-  压到 640 × 360 后只有 1.24 MB（JPEG q86 + progressive，等比居中裁剪不变形）。
-- 原图备份在 `.workbuddy-ai/backup/libraryart-originals/`（该目录被 git 忽略，
-  也不会同步到实机之外的地方）。
-- 这批图**随仓库入库并随包发布**（2026-10-28 起，`.gitignore` 不再排除），
-  终端用户装完即可看到分类封面；`libraryart/README.txt` 说明可替换成自己的封面目录。
-- 内置目录**只认 .jpg**（自定义封面目录 png/jpg 都支持）。
+- 皮肤不再内置任何分区封面：`libraryart/` 已删除（2026-11-05），只剩
+  `extras/artwork/library-default.jpg` 这一张兜底图（640 × 360，深色干净底）。
+- 真实封面由 Helper 同步到 `addon_data/script.mistuary.helper/library_icons/<库名>.png`。
+  **Helper 为每个库都写文件**：Emby 没设封面时写 1×1 全透明 PNG 占位，
+  透明像素露出下层的兜底图与库名 label。这样皮肤那层永远不会加载失败。
+- 兜底图**必须保留**：Emby 某个库没设封面、Helper 还没同步完、Emby 离线时，
+  卡片最终都落到这张图上。想换图直接覆盖同名文件。
+- 用户自备封面走「设置 - 界面 - 媒体库封面文件夹」的自定义目录，png / jpg 都支持，
+  文件名须与库名完全一致。这是唯一会主动尝试不存在文件的图层，缺图时会有日志。
+- 原 24 张内置图的原图仍在 `.workbuddy-ai/backup/libraryart-originals/`（被 git 忽略），
+  需要恢复时从那里拷回。

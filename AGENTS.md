@@ -92,11 +92,20 @@
 ## 4. 改完必须同步到 Kodi
 
 ```bash
-python tools/sync_to_kodi.py
+python tools/sync_to_kodi.py            # 皮肤（开发期可加 --loose）
+cd D:/Downloads/AI/script.mistuary.helper && python tools/sync_to_kodi.py   # 插件
 ```
 
 目标路径按平台推导（`%APPDATA%\Kodi\addons\skin.mistuary` / `~/.kodi/addons/...`），
 换电脑不用改脚本。**不要用符号链接 / 目录联接**（用户嫌慢）。
+
+**两个仓库都要同步，改动涉及哪边就跑哪边**：
+
+| 改了 | 同步 | 生效方式 |
+|---|---|---|
+| 皮肤 XML / 贴图 / 语言 | 皮肤仓库脚本 | 重载皮肤 |
+| 皮肤 `addon.xml` 依赖 / 版本号 | 皮肤仓库脚本 | **完全退出 Kodi 再打开** |
+| 插件代码（含 `service.py`） | 插件仓库脚本 | **完全退出 Kodi 再打开**（service 只在启动时拉起） |
 
 同步后用 md5 抽查关键文件，确认真的写进去了。
 

@@ -525,21 +525,21 @@
 		<param name="texture">$VAR[NaraImgArtThumbOrIcon]</param>
 		<param name="bg_cond">false</param>
 		<definition>
-			<!-- 通用兜底：没配封面的分类统一显示 libraryart/default.jpg。
-			     放在最底层，所以 Emby 库封面、按库名匹配的封面都会盖住它；
-			     三样都没有时它就是最终显示的那张，不会再露出文件夹图标。
-			     这张图随皮肤发布（.gitignore 里特意放行），用户可以直接替换成自己的图。 -->
+			<!-- 通用兜底：没配封面的库统一显示 extras/artwork/library-default.jpg。
+			     放在最底层，所以 Helper 同步封面、自定义目录封面都会盖住它；
+			     都没有时它就是最终显示的那张，不会再露出文件夹图标。
+			     这张图随皮肤发布（松散文件，不进 Textures.xbt），用户可以直接替换。 -->
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
 				<width>320</width>
 				<height>180</height>
 				<aspectratio scalediffuse="false">scale</aspectratio>
-				<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/default.jpg</texture>
+				<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/extras/artwork/library-default.jpg</texture>
 			</control>
 			<!-- 兜底库名：画在 default.jpg 之上、其它封面层之下。Kodi 无法运行时
 			     判断封面文件是否存在，靠图层遮挡实现——真实封面是不透明图，会盖住
-			     名字；都没有时名字留在兜底图上，没配封面的分类也能在卡面认出库名。 -->
+			     名字；都没有时名字留在兜底图上，没配封面的库也能在卡面认出库名。 -->
 			<control type="label">
 				<left>0</left>
 				<top>0</top>
@@ -563,16 +563,19 @@
 				<visible>$PARAM[bg_cond]</visible>
 			</control>
 			<!-- 通用版：媒体库封面逐层兜底。
-			     优先级：Emby for Kodi NextGen 导出封面 > 自定义媒体库封面目录 > 皮肤内置 libraryart > default.jpg。
-			     文件名必须与库名完全一致（如「华语电影.jpg」）。内置目录只认 .jpg；
-			     自定义目录支持 png/jpg；缺图时上层透明，由下一层继续兜底。 -->
+			     优先级：自定义媒体库封面目录 > Mistuary Helper 同步 > default.jpg。
+			     Helper 给每个库都写 library_icons/<库名>.png（Emby 没设封面时写
+			     1×1 透明占位），所以这一层永远能加载，不会产生贴图缺失日志。
+			     自定义目录支持 png/jpg；文件名必须与库名完全一致（如「华语电影.jpg」）；
+			     缺图时上层透明，由下一层继续兜底。 -->
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
 				<width>320</width>
 				<height>180</height>
 				<aspectratio scalediffuse="false">scale</aspectratio>
-				<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://skin/libraryart/$INFO[ListItem.Label].jpg</texture>
+				<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://profile/addon_data/script.mistuary.helper/library_icons/$INFO[ListItem.Label].png</texture>
+				<visible>System.AddonIsEnabled(script.mistuary.helper)</visible>
 			</control>
 			<control type="image">
 				<left>0</left>
@@ -591,15 +594,6 @@
 				<aspectratio scalediffuse="false">scale</aspectratio>
 				<texture background="true" diffuse="shapes/mask_320x180_r9.png">$INFO[Skin.String(library_art_folder)]$INFO[ListItem.Label].jpg</texture>
 				<visible>!String.IsEmpty(Skin.String(library_art_folder))</visible>
-			</control>
-			<control type="image">
-				<left>0</left>
-				<top>0</top>
-				<width>320</width>
-				<height>180</height>
-				<aspectratio scalediffuse="false">scale</aspectratio>
-				<texture background="true" diffuse="shapes/mask_320x180_r9.png">special://profile/addon_data/plugin.service.emby-next-gen/libraryart/$INFO[ListItem.Label].jpg</texture>
-				<visible>System.AddonIsEnabled(plugin.service.emby-next-gen)</visible>
 			</control>
 		</definition>
 	</include>

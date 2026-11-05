@@ -55,14 +55,15 @@ skin.mistuary/
 ├── extras/                       ← 随包发布的素材（新，进包）
 │   ├── backgrounds/primary.jpg   ← 原 backgrounds/
 │   └── playlists/*.xsp           ← 原 playlists/（38 个）
-├── libraryart/                   ← 用户自备分类封面（留在根目录：体积大、可替换、gitignore）
+├── extras/artwork/               ← 首页媒体库卡片兜底图（library-default.jpg）
 ├── tools/                        ← 构建期工具（原 extras/，不进包）
 ├── docs/                         ← 文档（不进包）
 └── .github/                      ← CI（不进包）
 ```
 
-为什么 `libraryart/` 不搬：它是**用户自己放图**的目录（`.gitignore` 只留 `default.jpg`），
-路径一旦变化，已部署的 25 张封面就失效；而且它不在 AF 的 `extras/` 约定里。
+> **2026-11-05 更新**：`libraryart/` 已整个删除，唯一保留的兜底图移到了
+> `extras/artwork/library-default.jpg`；分区封面改由 Mistuary Helper 从 Emby 同步。
+> 下面这段是当时的取舍记录，保留作历史。
 
 为什么 `backgrounds/` 要搬进 `extras/`：它就是 AF 的 `extras/backgrounds` 语义（可替换背景），
 现在只有一个 `primary.jpg`，将来要做"背景包选择"时直接往里加图即可，不用再动结构。
@@ -149,7 +150,7 @@ python tools/gen_techflag_vars.py --check
 |---|---|
 | 发布包 | `extras/` 首次进包（约 620 KB：backgrounds 224K + home-images 349K + playlists 46K） |
 | 已部署的实机 | 路径变化，必须重新 `robocopy /MIR` 一次；旧目录会被镜像删除 |
-| 用户自定义 | 无（`libraryart/` 不动；`extras/` 里的文件本来就随包） |
+| 用户自定义 | 无（`extras/` 里的文件本来就随包；分区封面走「自定义媒体库封面目录」） |
 | 回滚 | 三步 `git mv` 反向 + 还原 3 个文件即可，不涉及数据 |
 
 ---

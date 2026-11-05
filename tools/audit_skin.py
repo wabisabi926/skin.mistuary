@@ -53,9 +53,9 @@ MAP_SUPPORTED = GUI_VERSION >= (5, 18)
 
 # 贴图存在性：三种写法都要认，否则会漏报（或误报）
 #   ① 相对 media/ 的短名（`shapes/glass20.png`）—— 皮肤里最常见
-#   ② `special://skin/...` —— 根目录下的 libraryart/ extras/ resources/ 都走这条
+#   ② `special://skin/...` —— 根目录下的 extras/ resources/ 都走这条
 #   ③ `special://xbmc/` `special://temp/` —— Kodi 自己的，不在包里，一律当存在
-# 含 `$` 的是动态路径（`libraryart/$INFO[ListItem.Label].jpg`），静态查不了，跳过。
+# 含 `$` 的是动态路径（`library_icons/$INFO[ListItem.Label].png`），静态查不了，跳过。
 def texture_exists(tex: str) -> bool:
     if not tex or "$" in tex:
         return True
