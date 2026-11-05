@@ -192,9 +192,9 @@
 		<value condition="Skin.HasSetting(circle_userrating)">$LOCALIZE[38018]</value>
 		<value>$LOCALIZE[16018]</value>
 	</variable>
-	<!-- 默认评分（ListItem.Rating）的来源：Emby 的 CommunityRating 不带来源信息，
-	     StrmAssistant 的「豆瓣评分覆盖」会把它改写成豆瓣分，皮肤无法自动分辨，故提供手动切换；
-	     第一颗胶囊的图标与数值分别由评分行里的两种胶囊 + 本变量决定 -->
+	<!-- 默认评分（ListItem.Rating）的来源：本仓库的 E4K fork 会把它归到具体类型
+	     （tmdb / imdb / trakt / douban），官方 E4K 只有 default；皮肤优先按类型判断，
+	     判不出来时回落到手动档位。手动档位只影响显示，不改变数值来源。 -->
 	<variable name="NaraDefaultRatingSourceVar">
 		<value condition="Skin.HasSetting(douban_rating)">$LOCALIZE[31765]</value>
 		<value condition="Skin.HasSetting(rating_src_imdb)">IMDb</value>
@@ -208,11 +208,15 @@
 		<value condition="Skin.HasSetting(rating_sec_off)">$LOCALIZE[31792]</value>
 		<value>$LOCALIZE[31767]</value>
 	</variable>
-	<!-- 主评分环的颜色：按 707 选的来源区分（自动/未知用白） -->
+	<!-- 主评分环的颜色：手选档位优先；自动档按“默认值等于哪个类型”判断（本地电影是 themoviedb），
+	     都判不出来用白色。 -->
 	<variable name="NaraRatingRingColorVar">
 		<value condition="Skin.HasSetting(douban_rating)">FF2BB24C</value>
 		<value condition="Skin.HasSetting(rating_src_imdb)">FFF5C518</value>
 		<value condition="Skin.HasSetting(rating_src_tmdb)">FF01B4E4</value>
+		<value condition="!String.IsEmpty(ListItem.Rating(douban)) + String.IsEqual(ListItem.Rating,ListItem.Rating(douban))">FF2BB24C</value>
+		<value condition="[!String.IsEmpty(ListItem.Rating(tmdb)) + String.IsEqual(ListItem.Rating,ListItem.Rating(tmdb))] | [!String.IsEmpty(ListItem.Rating(themoviedb)) + String.IsEqual(ListItem.Rating,ListItem.Rating(themoviedb))]">FF01B4E4</value>
+		<value condition="!String.IsEmpty(ListItem.Rating(imdb)) + String.IsEqual(ListItem.Rating,ListItem.Rating(imdb))">FFF5C518</value>
 		<value>FFFFFFFF</value>
 	</variable>
 	<variable name="AlbumOnClickActionLabel2Var">
