@@ -8,6 +8,7 @@
 			<centerleft>50%</centerleft>
 			<width>1115</width>
 			<include content="DialogBackgroundCommons">
+				<param name="header_left" value="20" />
 				<param name="glass_style" value="$VAR[NaraPlaybackDialogTintVar]" />
 				<param name="width" value="1115" />
 				<param name="height" value="440" />

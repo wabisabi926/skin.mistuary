@@ -10,6 +10,7 @@
 			<height>780</height>
 			<include>Animation_DialogPopupVisible</include>
 			<include content="DialogBackgroundCommons">
+				<param name="header_left" value="20" />
 				<param name="width" value="1760" />
 				<param name="height" value="780" />
 				<param name="header_id" value="2" />

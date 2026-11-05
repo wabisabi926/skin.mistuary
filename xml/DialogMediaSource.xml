@@ -9,6 +9,7 @@
 			<centerleft>50%</centerleft>
 			<width>1200</width>
 			<include content="DialogBackgroundCommons">
+				<param name="header_left" value="32" />
 				<param name="width" value="1200" />
 				<param name="height" value="630" />
 				<param name="header_label" value="$LOCALIZE[13406]" />

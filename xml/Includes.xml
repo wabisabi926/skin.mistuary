@@ -776,9 +776,9 @@
 		</definition>
 	</include>
 	<include name="DialogHeaderIcon">
-		<param name="right" default="10" />
-		<param name="top" default="11" />
-		<param name="size" default="48" />
+		<param name="right" default="60" />
+		<param name="top" default="36" />
+		<param name="size" default="32" />
 		<definition>
 			<control type="image">
 				<right>$PARAM[right]</right>
@@ -819,9 +819,11 @@
 		<param name="height">438</param>
 		<param name="header_label"></param>
 		<param name="header_id">1</param>
-		<param name="header_icon_right">10</param>
-		<param name="header_icon_top">11</param>
-		<param name="header_icon_size">48</param>
+		<!-- 标题左边距，按各弹窗正文的左距传，保证标题和内容左对齐 -->
+		<param name="header_left">48</param>
+		<param name="header_icon_right">60</param>
+		<param name="header_icon_top">36</param>
+		<param name="header_icon_size">32</param>
 		<param name="glass_style">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="darken_bg">true</param>
 		<param name="scrim">$VAR[NaraGlassFloatScrimVar]</param>
@@ -867,11 +869,11 @@
 				<!-- 标题内边距：左 48 / 上 18（垂直居中后文字上沿离面板边缘约 32px）。
 				     原来 left 40 / top 0，文字几乎贴着圆角，看着像"超出面板"。 -->
 				<control type="label" id="$PARAM[header_id]">
-					<left>48</left>
-					<top>18</top>
-					<right>100</right>
-					<height>56</height>
-					<font>font32_title</font>
+					<left>$PARAM[header_left]</left>
+					<top>24</top>
+					<right>130</right>
+					<height>52</height>
+					<font>font28_title</font>
 					<textcolor>text_primary</textcolor>
 					<label>$PARAM[header_label]</label>
 					<aligny>center</aligny>

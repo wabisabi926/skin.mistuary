@@ -9,6 +9,7 @@
 			<centerleft>50%</centerleft>
 			<width>1820</width>
 			<include content="DialogBackgroundCommons">
+				<param name="header_left" value="32" />
 				<param name="width" value="1820" />
 				<param name="height" value="995" />
 				<param name="header_label" value="$VAR[PVRGroupMgrHeader]$INFO[Container(13).ListItem.Label, - ,]" />

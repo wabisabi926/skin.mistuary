@@ -10,6 +10,7 @@
 			<height>750</height>
 			<width>1220</width>
 			<include content="DialogBackgroundCommons">
+				<param name="header_left" value="20" />
 				<param name="width" value="1220" />
 				<param name="height" value="750" />
 				<param name="header_label" value="" />

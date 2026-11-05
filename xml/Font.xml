@@ -191,6 +191,11 @@
 			<filename>Inter-Unicode-Regular.ttf</filename>
 			<size>30</size>
 		</font>
+		<font>
+			<name>font28_title</name>
+			<filename>Inter-Unicode-Regular.ttf</filename>
+			<size>28</size>
+		</font>
 
 		<font>
 			<name>font32_title</name>
