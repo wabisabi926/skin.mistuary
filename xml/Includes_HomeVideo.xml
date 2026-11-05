@@ -4,9 +4,12 @@
 		<value condition="String.IsEmpty(ListItem.Art(poster))">focus_card_surface</value>
 		<value>focus_media</value>
 	</variable>
-	<expression name="NaraHomeMovieLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(5700).NumItems,0) | Container(5700).IsUpdating]</expression>
-	<expression name="NaraHomeTVShowLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]</expression>
-	<expression name="NaraHomeVideoSingleRow">[String.IsEqual(Window(home).Property(Home.Section),movies) + [String.IsEmpty(Window(home).Property(Home.movies.Page)) | String.IsEqual(Window(home).Property(Home.movies.Page),first)] + !$EXP[NaraHomeMovieLibrariesVisible]] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + [String.IsEmpty(Window(home).Property(Home.tvshows.Page)) | String.IsEqual(Window(home).Property(Home.tvshows.Page),first)] + !$EXP[NaraHomeTVShowLibrariesVisible]]</expression>
+	<!-- 电影第一屏第二行（最近加入且未看）是否存在：决定第一屏走单行还是双行布局。
+	     这一行不再依赖 Emby，只看 5200 有没有内容。 -->
+	<expression name="NaraHomeMovieRecentRailVisible">[Integer.IsGreater(Container(5200).NumItems,0) | Container(5200).IsUpdating]</expression>
+	<!-- 剧集第一屏第二行（最近加入的剧集）是否存在：同样不再依赖 Emby，只看 6200 有没有内容。 -->
+	<expression name="NaraHomeTVShowRecentRailVisible">[Integer.IsGreater(Container(6200).NumItems,0) | Container(6200).IsUpdating]</expression>
+	<expression name="NaraHomeVideoSingleRow">[String.IsEqual(Window(home).Property(Home.Section),movies) + [String.IsEmpty(Window(home).Property(Home.movies.Page)) | String.IsEqual(Window(home).Property(Home.movies.Page),first)] + !$EXP[NaraHomeMovieRecentRailVisible]] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + [String.IsEmpty(Window(home).Property(Home.tvshows.Page)) | String.IsEqual(Window(home).Property(Home.tvshows.Page),first)] + !$EXP[NaraHomeTVShowRecentRailVisible]]</expression>
 	<expression name="NaraHomeVideoExpanded">$EXP[NaraHomeVideoSingleRow] | [String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Page),poster)] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Page),poster)]</expression>
 	<include name="HomeVideoPage">
 		<param name="always_first_row">false</param>
