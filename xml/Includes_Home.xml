@@ -249,6 +249,8 @@
 		<param name="sub_label_visible">false</param>
 		<param name="progress_info">ListItem.PercentPlayed</param>
 		<param name="media_row_visible">false</param>
+		<!-- 尾部占位：最后一行（第二屏的媒体库行）传 false，避免多出一段可滚动空白 -->
+		<param name="tail_spacer">true</param>
 		<definition>
 			<control type="label" id="$PARAM[list_id]667">
 				<left>55</left>
@@ -505,12 +507,12 @@
 			<include content="HomeRailSpacer">
 				<param name="id" value="$PARAM[list_id]668"/>
 				<param name="height" value="327"/>
-				<param name="visible" value="$PARAM[media_row_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
+				<param name="visible" value="$PARAM[tail_spacer] + $PARAM[media_row_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
 			</include>
 			<include content="HomeRailSpacer">
 				<param name="id" value="$PARAM[list_id]669"/>
 				<param name="height" value="256"/>
-				<param name="visible" value="![$PARAM[media_row_visible]] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
+				<param name="visible" value="$PARAM[tail_spacer] + ![$PARAM[media_row_visible]] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
 			</include>
 		</definition>
 	</include>

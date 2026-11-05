@@ -206,7 +206,7 @@
 						<include>HomeVideoGroupListCommon</include>
 						<include content="HomeVideoPage">
 							<param name="id" value="5002"/>
-							<param name="visible" value="[Integer.IsGreater(Container(5100).NumItems,0) | Container(5100).IsUpdating] | $EXP[NaraHomeMovieLibrariesVisible]"/>
+							<param name="visible" value="[Integer.IsGreater(Container(5100).NumItems,0) | Container(5100).IsUpdating] | $EXP[NaraHomeMovieRecentRailVisible]"/>
 							<include content="HomeVideoPageContent">
 								<param name="top" value="0"/>
 								<param name="active" value="String.IsEmpty(Window(home).Property(Home.movies.Page)) | String.IsEqual(Window(home).Property(Home.movies.Page),first)"/>
@@ -225,7 +225,7 @@
 										<param name="widget_header" value="$LOCALIZE[31010]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="5100"/>
-										<param name="media_row_visible" value="$EXP[NaraHomeMovieLibrariesVisible]"/>
+										<param name="media_row_visible" value="$EXP[NaraHomeMovieRecentRailVisible]"/>
 										<param name="onclick_condition" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 										<param name="onclick_action" value="ActivateWindow(videos,special://skin/extras/playlists/all_inprogress_movies.xsp,return)"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
@@ -237,20 +237,22 @@
 										<param name="hero_id" value="5100"/>
 										<param name="update_hero" value="true"/>
 									</include>
-									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
-										<param name="content_path" value="videodb://movies/tags/"/>
-										<param name="widget_header" value="$LOCALIZE[31616]"/>
+									<!-- 第一屏第二行：最近加入且未看的电影。卡片与「正在观看」同款横版剧照，
+									     聚焦时左侧 Hero / 背景跟随当前卡片（容器 5200 已有完整 Hero 分支）。 -->
+									<include content="HomeContinueWatchingRail" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
+										<param name="content_path" value="special://skin/extras/playlists/home_recent_unwatched_movies.xsp"/>
+										<param name="widget_limit" value="20"/>
+										<param name="widget_header" value="$LOCALIZE[20386]"/>
 										<param name="widget_target" value="videos"/>
-										<param name="list_id" value="5700"/>
-										<param name="item_limit" value="30"/>
-										<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
+										<param name="list_id" value="5200"/>
+										<param name="tail_spacer" value="false"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
 										<param name="section" value="movies"/>
 										<param name="pages_id" value="5001"/>
 										<param name="onup" value="0"/>
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
-										<param name="hero_id" value="5100"/>
+										<param name="hero_id" value="5200"/>
 										<param name="update_hero" value="true"/>
 									</include>
 								</control>
@@ -258,28 +260,29 @@
 						</include>
 						<include content="HomeVideoPage">
 							<param name="id" value="5201"/>
-							<param name="visible" value="[Integer.IsGreater(Container(5200).NumItems,0) | Container(5200).IsUpdating]"/>
+							<param name="visible" value="[Integer.IsGreater(Container(5700).NumItems,0) | Container(5700).IsUpdating]"/>
 							<include content="HomeVideoPageContent">
 								<param name="top" value="500"/>
 								<param name="slide_distance" value="96"/>
 								<param name="slide_time" value="420"/>
 								<param name="fade_time" value="260"/>
-								<param name="active" value="String.IsEqual(Window(home).Property(Home.movies.Row),5200)"/>
-								<include content="WidgetListPoster" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
-									<param name="content_path" value="special://skin/extras/playlists/home_recent_unwatched_movies.xsp"/>
-									<param name="widget_limit" value="20"/>
-									<param name="widget_header" value="$LOCALIZE[20386]"/>
+								<param name="active" value="String.IsEqual(Window(home).Property(Home.movies.Row),5700)"/>
+								<!-- 第二屏：媒体库从第一屏移到这里，卡片样式保持原样。 -->
+								<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
+									<param name="content_path" value="videodb://movies/tags/"/>
+									<param name="widget_header" value="$LOCALIZE[31616]"/>
 									<param name="widget_target" value="videos"/>
-									<param name="list_id" value="5200"/>
-									<param name="onclick_condition" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="ActivateWindow(videos,special://skin/extras/playlists/all_recent_unwatched_movies.xsp,return)"/>
+									<param name="list_id" value="5700"/>
+									<param name="item_limit" value="30"/>
+									<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
 									<param name="section" value="movies"/>
 									<param name="pages_id" value="5001"/>
 									<param name="onup" value="5002"/>
 									<param name="ondown" value="5801"/>
 									<param name="page" value="poster"/>
-									<param name="hero_id" value="5200"/>
+									<!-- 与原来第一屏的媒体库行一致：浏览库分类时左侧继续显示「正在观看」的 Hero -->
+									<param name="hero_id" value="5100"/>
 									<param name="update_hero" value="true"/>
 								</include>
 							</include>
@@ -553,7 +556,7 @@
 						<include>HomeVideoGroupListCommon</include>
 						<include content="HomeVideoPage">
 							<param name="id" value="6002"/>
-							<param name="visible" value="[Integer.IsGreater(Container(6100).NumItems,0) | Container(6100).IsUpdating] | $EXP[NaraHomeTVShowLibrariesVisible]"/>
+							<param name="visible" value="[Integer.IsGreater(Container(6100).NumItems,0) | Container(6100).IsUpdating] | $EXP[NaraHomeTVShowRecentRailVisible]"/>
 							<include content="HomeVideoPageContent">
 								<param name="top" value="0"/>
 								<param name="active" value="String.IsEmpty(Window(home).Property(Home.tvshows.Page)) | String.IsEqual(Window(home).Property(Home.tvshows.Page),first)"/>
@@ -574,7 +577,7 @@
 										<param name="widget_header" value="$LOCALIZE[626]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="6100"/>
-										<param name="media_row_visible" value="$EXP[NaraHomeTVShowLibrariesVisible]"/>
+										<param name="media_row_visible" value="$EXP[NaraHomeTVShowRecentRailVisible]"/>
 										<param name="sub_label" value="$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes),/]"/>
 										<param name="sub_label_visible" value="!String.IsEmpty(ListItem.Property(TotalEpisodes))"/>
 										<param name="progress_info" value="ListItem.Property(WatchedEpisodePercent)"/>
@@ -589,20 +592,27 @@
 										<param name="hero_id" value="6100"/>
 										<param name="update_hero" value="true"/>
 									</include>
-									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
-										<param name="content_path" value="videodb://tvshows/tags/"/>
-										<param name="widget_header" value="$LOCALIZE[31616]"/>
+									<!-- 第一屏第二行：最近加入的剧集。卡片与「继续观看」同款横版剧照，
+									     聚焦时左侧 Hero / 背景跟随当前卡片（容器 6200 已有完整 Hero 分支）。 -->
+									<include content="HomeContinueWatchingRail" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
+										<param name="content_path" value="special://skin/extras/playlists/home_recent_unwatched_tvshows.xsp"/>
+										<param name="widget_limit" value="20"/>
+										<param name="widget_header" value="$LOCALIZE[31618]"/>
 										<param name="widget_target" value="videos"/>
-										<param name="list_id" value="6600"/>
-										<param name="item_limit" value="30"/>
-										<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
+										<param name="list_id" value="6200"/>
+										<param name="tail_spacer" value="false"/>
+										<param name="sub_label" value="$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes),/]"/>
+										<param name="sub_label_visible" value="!String.IsEmpty(ListItem.Property(TotalEpisodes))"/>
+										<param name="progress_info" value="ListItem.Property(WatchedEpisodePercent)"/>
+										<param name="onclick_condition" value="true"/>
+										<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
 										<param name="section" value="tvshows"/>
 										<param name="pages_id" value="6001"/>
 										<param name="onup" value="0"/>
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
-										<param name="hero_id" value="6100"/>
+										<param name="hero_id" value="6200"/>
 										<param name="update_hero" value="true"/>
 									</include>
 								</control>
@@ -610,30 +620,29 @@
 						</include>
 						<include content="HomeVideoPage">
 							<param name="id" value="6201"/>
-							<param name="visible" value="[Integer.IsGreater(Container(6200).NumItems,0) | Container(6200).IsUpdating]"/>
+							<param name="visible" value="[Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]"/>
 							<include content="HomeVideoPageContent">
 								<param name="top" value="500"/>
 								<param name="slide_distance" value="96"/>
 								<param name="slide_time" value="420"/>
 								<param name="fade_time" value="260"/>
-								<param name="active" value="String.IsEqual(Window(home).Property(Home.tvshows.Row),6200)"/>
-								<include content="WidgetListPoster" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
-									<param name="content_path" value="special://skin/extras/playlists/home_recent_unwatched_tvshows.xsp"/>
-									<param name="widget_limit" value="20"/>
-									<param name="widget_header" value="$LOCALIZE[31618]"/>
+								<param name="active" value="String.IsEqual(Window(home).Property(Home.tvshows.Row),6600)"/>
+								<!-- 第二屏：媒体库从第一屏移到这里，卡片样式保持原样。 -->
+								<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
+									<param name="content_path" value="videodb://tvshows/tags/"/>
+									<param name="widget_header" value="$LOCALIZE[31616]"/>
 									<param name="widget_target" value="videos"/>
-									<param name="list_id" value="6200"/>
-									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
-									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_recent_unwatched_tvshows.xsp,return)"/>
+									<param name="list_id" value="6600"/>
+									<param name="item_limit" value="30"/>
+									<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
 									<param name="section" value="tvshows"/>
 									<param name="pages_id" value="6001"/>
 									<param name="onup" value="6002"/>
 									<param name="ondown" value="6701"/>
 									<param name="page" value="poster"/>
-									<param name="hero_id" value="6200"/>
+									<!-- 与原来第一屏的媒体库行一致：浏览库分类时左侧继续显示「继续观看」的 Hero -->
+									<param name="hero_id" value="6100"/>
 									<param name="update_hero" value="true"/>
 								</include>
 							</include>
