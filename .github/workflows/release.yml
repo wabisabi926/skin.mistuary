@@ -57,6 +57,7 @@ jobs:
           python tools/gen_corner_masks.py --check
           python tools/gen_rings.py --check
           python tools/gen_glass_plates.py --check
+          python tools/gen_fanart_overlay.py --check
 
       - name: Generated variables in sync
         run: python tools/gen_techflag_vars.py --check
