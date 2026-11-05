@@ -1188,12 +1188,12 @@ msgid "Enabled"
 msgstr "已启用"
 
 msgctxt "#31790"
-msgid "Douban (StrmAssistant override)"
-msgstr "豆瓣（神医助手覆盖模式）"
+msgid "Douban (StrmAssistant)"
+msgstr "豆瓣（神医助手）"
 
 msgctxt "#31791"
-msgid "Auto (local scraping only)"
-msgstr "自动（仅本地刮削）"
+msgid "Auto"
+msgstr "自动"
 
 msgctxt "#31793"
 msgid "Automatically hide music OSD"

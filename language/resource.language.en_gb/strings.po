@@ -1409,12 +1409,12 @@ msgid "Enabled"
 msgstr "Enabled"
 
 msgctxt "#31790"
-msgid "Douban (StrmAssistant override)"
-msgstr "Douban (StrmAssistant override)"
+msgid "Douban (StrmAssistant)"
+msgstr "Douban (StrmAssistant)"
 
 msgctxt "#31791"
-msgid "Auto (local scraping only)"
-msgstr "Auto (local scraping only)"
+msgid "Auto"
+msgstr "Auto"
 
 msgctxt "#31793"
 msgid "Automatically hide music OSD"
