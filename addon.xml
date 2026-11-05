@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="skin.mistuary" name="Mistuary" version="1.9.0" provider-name="wabisabi926">
 	<requires>
-		<!-- 5.18.0 = Kodi 22。代码里用了 20 处 $MAP[]（Kodi 22 才引入），
-		     21 上不展开、技术标识会显示成 $MAP[...] 原文。与其留一个没验证过的
-		     兼容分支，不如直接声明只支持 22 —— 见 docs/audit-2026-10-31.md 🟡2-1。 -->
 		<import addon="xbmc.gui" version="5.18.0"/>
 	</requires>
 	<extension point="xbmc.gui.skin" debugging="false">
@@ -19,16 +16,39 @@
 	<extension point="xbmc.addon.metadata">
 		<platform>all</platform>
 		<license>CC BY-SA 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0, MIT, SIL OFL 1.1</license>
-		<forum>http://forum.kodi.tv/</forum>
+		<forum>https://github.com/wabisabi926/skin.mistuary/issues</forum>
 		<source>https://github.com/wabisabi926/skin.mistuary</source>
 		<assets>
 			<icon>resources/icon.png</icon>
 			<fanart>resources/fanart.jpg</fanart>
 		</assets>
-		<summary lang="zh">雾汐｜轻量透明皮肤，可选搭配 Emby for Kodi NextGen 与 Mistuary Helper，支持多评分展示</summary>
-		<summary lang="en">Mistuary - Lightweight transparent skin, optionally pairs with Emby for Kodi NextGen and Mistuary Helper, with multi-rating support</summary>
-		<description lang="zh">基于 Estuary N 改造，画面优先。原生适配 Emby for Kodi NextGen 动态节点；安装可选插件 Mistuary Helper 后，详情页可显示豆瓣评分，并与 IMDb、TMDB、烂番茄评分并存（同时最多两个）。保留透黑/透白双主题，页面、浮窗、播放透明度可调。</description>
-		<description lang="en">Estuary N based video-first skin. Natively compatible with Emby for Kodi NextGen dynamic nodes. With the optional Mistuary Helper add-on, the video info dialog shows Douban ratings alongside IMDb, TMDB and Rotten Tomatoes (up to two at a time). Features dark &amp; light transparent themes with adjustable transparency for pages, popups and playback overlay.</description>
+		<summary lang="zh">雾汐｜Kodi 22 轻量透明皮肤，可选 Emby for Kodi NextGen 与 Mistuary Helper</summary>
+		<summary lang="en">Lightweight transparent skin for Kodi 22, optionally with Emby for Kodi NextGen and Mistuary Helper</summary>
+		<description lang="zh">基于 Estuary N 改造的小而美皮肤，需要 Kodi 22 及以上。
+不装任何插件即可使用；搭配 Emby for Kodi NextGen 可原生适配动态节点。
+
+可选插件 Mistuary Helper 带来：服务端中文搜索、详情页豆瓣评分、
+播放列表补全（按季 / 按目录 / 跨季），以及文件播放记录 ——
+在文件管理器里播过的视频会记住进度，下次起播可选择「继续播放」，
+焦点行还有圆环显示已播比例（Kodi 原生只对库内条目续播）。
+
+详情页评分支持 TMDb / IMDb / 豆瓣 / 烂番茄（同时最多两个），
+技术标识按分辨率 / HDR / 杜比视界档位 / 编码 / 声道图标化。
+透黑、透白双主题，页面 / 浮窗 / 播放中三档透明度各 6 级可调；
+8 套屏幕比例自适应（16:9 / 18:9 / 21:9 等），另有音乐黑胶模式与电源菜单。</description>
+		<description lang="en">A compact, polished skin built on Estuary N. Requires Kodi 22 or newer.
+Works without any add-on; with Emby for Kodi NextGen it natively follows dynamic nodes.
+
+The optional Mistuary Helper add-on adds server-side Chinese search, Douban ratings
+in the video info dialog, playlist completion (by season / by folder / next season),
+and file playback resume - videos played from the file manager remember their position,
+offer “resume from h:mm:ss” on the next start, and show a progress ring on the focused
+row (Kodi only resumes library items natively).
+
+Ratings from TMDb / IMDb / Douban / Rotten Tomatoes (up to two at a time); technical flags
+are shown as icons (resolution, HDR, Dolby Vision profile, codecs, channels).
+Dark and light transparent themes with six levels each for pages, popups and playback;
+eight aspect ratios supported, plus a vinyl mode and a power menu.</description>
 		<disclaimer lang="en_GB">Weather, radio and game browsing surfaces are intentionally omitted.</disclaimer>
 		<disclaimer lang="zh_CN">本皮肤有意省略天气、电台和游戏浏览界面。</disclaimer>
 	</extension>
