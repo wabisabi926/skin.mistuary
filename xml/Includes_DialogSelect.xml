@@ -7,16 +7,16 @@
 			<height>750</height>
 			<width>1220</width>
 			<include content="DialogBackgroundCommons">
-				<param name="header_left" value="40" />
+				<param name="header_left" value="56" />
 				<param name="width" value="1220" />
 				<param name="height" value="750" />
 				<param name="header_label" value="" />
 				<param name="header_id" value="1" />
 			</include>
 			<control type="list" id="3">
-				<left>20</left>
+				<left>36</left>
 				<top>100</top>
-				<width>880</width>
+				<width>864</width>
 				<bottom>20</bottom>
 				<onup>3</onup>
 				<ondown>3</ondown>
@@ -25,7 +25,7 @@
 				<pagecontrol>61</pagecontrol>
 				<scrolltime>200</scrolltime>
 				<include content="NaraSettingsSimpleListLayout">
-					<param name="width" value="880" />
+					<param name="width" value="864" />
 					<param name="selectedcolor" value="focus_indicator" />
 					<param name="focusedselectedcolor" value="text_primary" />
 					<param name="labelright" value="70" />
@@ -34,9 +34,9 @@
 				</include>
 			</control>
 			<control type="list" id="6">
-				<left>20</left>
+				<left>36</left>
 				<top>100</top>
-				<width>880</width>
+				<width>864</width>
 				<bottom>20</bottom>
 				<onup>6</onup>
 				<ondown>6</ondown>
@@ -44,7 +44,7 @@
 				<onright>61</onright>
 				<pagecontrol>61</pagecontrol>
 				<scrolltime>200</scrolltime>
-				<itemlayout height="125" width="880">
+				<itemlayout height="125" width="864">
 					<control type="image">
 						<left>12</left>
 						<top>7</top>
@@ -94,7 +94,7 @@
 						<label>$INFO[ListItem.Label2]</label>
 					</control>
 				</itemlayout>
-				<focusedlayout height="125" width="880">
+				<focusedlayout height="125" width="864">
 					<control type="image">
 						<left>0</left>
 						<top>0</top>

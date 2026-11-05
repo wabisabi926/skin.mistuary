@@ -779,6 +779,7 @@
 		<param name="right" default="60" />
 		<param name="top" default="36" />
 		<param name="size" default="32" />
+		<param name="visible" default="true" />
 		<definition>
 			<control type="image">
 				<right>$PARAM[right]</right>
@@ -786,6 +787,7 @@
 				<width>$PARAM[size]</width>
 				<height>$PARAM[size]</height>
 				<texture colordiffuse="text_primary">special://xbmc/media/vendor_icon.png</texture>
+				<visible>$PARAM[visible]</visible>
 			</control>
 		</definition>
 	</include>
@@ -821,9 +823,13 @@
 		<param name="header_id">1</param>
 		<!-- 标题左边距，按各弹窗正文的左距传，保证标题和内容左对齐 -->
 		<param name="header_left">48</param>
+		<!-- 标题纵向位置；个别弹窗需要单独下移时传值，默认 24 不影响其它 15 个窗口 -->
+		<param name="header_top">24</param>
 		<param name="header_icon_right">60</param>
 		<param name="header_icon_top">36</param>
 		<param name="header_icon_size">32</param>
+		<!-- 文件浏览器这类不需要 Kodi 厂商图标的弹窗传 false -->
+		<param name="header_icon_visible">true</param>
 		<param name="glass_style">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="darken_bg">true</param>
 		<param name="scrim">$VAR[NaraGlassFloatScrimVar]</param>
@@ -870,7 +876,7 @@
 				     原来 left 40 / top 0，文字几乎贴着圆角，看着像"超出面板"。 -->
 				<control type="label" id="$PARAM[header_id]">
 					<left>$PARAM[header_left]</left>
-					<top>24</top>
+					<top>$PARAM[header_top]</top>
 					<right>130</right>
 					<height>52</height>
 					<font>font28_title</font>
@@ -892,6 +898,7 @@
 					<param name="right" value="$PARAM[header_icon_right]" />
 					<param name="top" value="$PARAM[header_icon_top]" />
 					<param name="size" value="$PARAM[header_icon_size]" />
+					<param name="visible" value="$PARAM[header_icon_visible]" />
 				</include>
 			</control>
 		</definition>

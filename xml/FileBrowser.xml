@@ -3,21 +3,40 @@
 	<defaultcontrol always="true">450</defaultcontrol>
 	<include>Animation_DialogPopupOpenClose</include>
 	<controls>
+		<!-- 浮窗透明度调得很透时，下层窗口的标题 / 设置文字会透过玻璃变成"鬼影"。
+		     这里只铺一层**不透明的随机剧照**（与设置页 / 文件管理同一张、同一个
+		     乘法压暗系数 FFA8A8A8），把下层整个盖住。
+		     剧照本身不透明，所以**不能再垫纯色 / 中性底**——HANDOVER §5.11.1 第 4 条：
+		     垫底会让面板糊在背景上，玻璃感直接没了。没有剧照时这层隐藏，
+		     退回到普通页面背景（与文件管理 / 设置页行为一致）。 -->
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<aspectratio align="right">scale</aspectratio>
+			<fadetime>250</fadetime>
+			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
+		</control>
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<centertop>50%</centertop>
 			<width>1300</width>
-			<height>850</height>
+			<height>820</height>
 			<include content="DialogBackgroundCommons">
 				<param name="width" value="1300" />
-				<param name="height" value="850" />
+				<param name="height" value="820" />
+				<param name="header_left" value="56" />
+				<param name="header_top" value="40" />
 				<param name="header_label" value="" />
 				<param name="header_id" value="411" />
+				<param name="header_icon_visible" value="false" />
 			</include>
+			<!-- 右侧动作列：只放按钮。原来的 260×380 竖形预览框已删除
+			     —— C:\ 这类源图标是带白底的方形图，塞进竖框后上边空 120px，
+			     白底直接压在玻璃上；每行左侧已经有同款 36×36 图标，纯重复。 -->
 			<control type="grouplist" id="9000">
-				<left>1010</left>
-				<top>100</top>
-				<width>260</width>
+				<left>1020</left>
+				<top>112</top>
+				<width>240</width>
 				<height>400</height>
 				<include>NaraDialogButtonSpacing</include>
 				<orientation>vertical</orientation>
@@ -28,94 +47,79 @@
 				<include content="DefaultDialogButton">
 					<param name="id" value="413" />
 					<param name="label" value="$LOCALIZE[186]" />
-					<param name="width" value="260" />
+					<param name="width" value="240" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="414" />
 					<param name="label" value="$LOCALIZE[222]" />
-					<param name="width" value="260" />
+					<param name="width" value="240" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="415" />
 					<param name="label" value="$LOCALIZE[119]" />
 					<param name="visible" value="Control.IsEnabled(415)" />
-					<param name="width" value="260" />
+					<param name="width" value="240" />
 				</include>
 				<include content="DefaultDialogButton">
 					<param name="id" value="416" />
 					<param name="label" value="$LOCALIZE[749]" />
 					<param name="visible" value="Control.IsEnabled(416)" />
-					<param name="width" value="260" />
+					<param name="width" value="240" />
 				</include>
 			</control>
-			<control type="image">
-				<left>1010</left>
-				<top>420</top>
-				<width>260</width>
-				<height>380</height>
-				<aspectratio aligny="bottom">keep</aspectratio>
-				<texture background="true" diffuse="shapes/mask_260x380_r12.png">$INFO[ListItem.Icon]</texture>
-			</control>
-			<control type="image">
-				<left>0</left>
-				<top>80</top>
-				<width>980</width>
-				<height>740</height>
-				<include>NaraDialogInsetTexture</include>
-			</control>
 			<control type="panel" id="450">
-				<left>20</left>
-				<top>100</top>
-				<width>940</width>
-				<height>700</height>
+				<left>36</left>
+				<top>112</top>
+				<width>900</width>
+				<height>620</height>
 				<onleft>9000</onleft>
 				<onright>60</onright>
 				<onup>450</onup>
 				<ondown>450</ondown>
 				<pagecontrol>60</pagecontrol>
 				<scrolltime>200</scrolltime>
-				<itemlayout height="70" width="940">
+				<itemlayout height="64" width="900">
 					<control type="image">
-						<left>10</left>
-						<top>10</top>
-						<width>50</width>
-						<height>50</height>
+						<left>20</left>
+						<top>14</top>
+						<width>36</width>
+						<height>36</height>
 						<texture>$INFO[ListItem.Icon]</texture>
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
 						<textcolor>text_primary</textcolor>
-						<left>75</left>
+						<left>68</left>
 						<top>0</top>
-						<right>20</right>
-						<height>70</height>
+						<right>24</right>
+						<height>64</height>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</itemlayout>
-				<focusedlayout height="70" width="940">
+				<focusedlayout height="64" width="900">
 					<control type="image">
 						<left>0</left>
 						<top>0</top>
 						<right>0</right>
-						<height>70</height>
+						<bottom>0</bottom>
 						<visible>Control.HasFocus(450)</visible>
 						<include content="NaraDialogFocusTexture" />
 					</control>
 					<control type="image">
-						<left>10</left>
-						<top>10</top>
-						<width>50</width>
-						<height>50</height>
+						<left>20</left>
+						<top>14</top>
+						<width>36</width>
+						<height>36</height>
 						<texture>$INFO[ListItem.Icon]</texture>
 						<colordiffuse>$VAR[NaraDialogFocusLayoutTextColor450Var]</colordiffuse>
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
-						<left>75</left>
+						<left>68</left>
 						<top>0</top>
-						<right>20</right>
-						<height>70</height>
+						<right>24</right>
+						<height>64</height>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 						<textcolor>$VAR[NaraDialogFocusLayoutTextColor450Var]</textcolor>
@@ -124,58 +128,58 @@
 				</focusedlayout>
 			</control>
 			<control type="panel" id="451">
-				<left>20</left>
-				<top>100</top>
-				<width>940</width>
-				<height>700</height>
+				<left>36</left>
+				<top>112</top>
+				<width>900</width>
+				<height>620</height>
 				<onleft>9000</onleft>
 				<onright>60</onright>
 				<onup>451</onup>
 				<ondown>451</ondown>
 				<pagecontrol>60</pagecontrol>
 				<scrolltime>200</scrolltime>
-				<itemlayout height="70" width="940">
+				<itemlayout height="64" width="900">
 					<control type="image">
-						<left>10</left>
-						<top>10</top>
-						<width>50</width>
-						<height>50</height>
+						<left>20</left>
+						<top>14</top>
+						<width>36</width>
+						<height>36</height>
 						<texture>$INFO[ListItem.Icon]</texture>
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
 						<textcolor>text_primary</textcolor>
-						<left>75</left>
+						<left>68</left>
 						<top>0</top>
-						<right>20</right>
-						<height>70</height>
+						<right>24</right>
+						<height>64</height>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 					</control>
 				</itemlayout>
-				<focusedlayout height="70" width="940">
+				<focusedlayout height="64" width="900">
 					<control type="image">
 						<left>0</left>
 						<top>0</top>
 						<right>0</right>
-						<height>70</height>
+						<bottom>0</bottom>
 						<visible>Control.HasFocus(451)</visible>
 						<include content="NaraDialogFocusTexture" />
 					</control>
 					<control type="image">
-						<left>10</left>
-						<top>10</top>
-						<width>50</width>
-						<height>50</height>
+						<left>20</left>
+						<top>14</top>
+						<width>36</width>
+						<height>36</height>
 						<texture>$INFO[ListItem.Icon]</texture>
 						<colordiffuse>$VAR[NaraDialogFocusLayoutTextColor451Var]</colordiffuse>
 						<aspectratio>keep</aspectratio>
 					</control>
 					<control type="label">
-						<left>75</left>
+						<left>68</left>
 						<top>0</top>
-						<right>20</right>
-						<height>70</height>
+						<right>24</right>
+						<height>64</height>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
 						<textcolor>$VAR[NaraDialogFocusLayoutTextColor451Var]</textcolor>
@@ -184,19 +188,19 @@
 				</focusedlayout>
 			</control>
 			<control type="scrollbar" id="60">
-				<left>965</left>
-				<top>100</top>
+				<left>944</left>
+				<top>112</top>
 				<width>6</width>
-				<height>698</height>
+				<height>620</height>
 				<onleft>450</onleft>
 				<onright>9000</onright>
 				<orientation>vertical</orientation>
 			</control>
 			<control type="label" id="412">
 				<description>Path label</description>
-				<left>25</left>
-				<bottom>10</bottom>
-				<width>595</width>
+				<left>56</left>
+				<bottom>40</bottom>
+				<width>500</width>
 				<height>30</height>
 				<haspath>true</haspath>
 				<font>font12</font>
@@ -204,9 +208,9 @@
 				<textcolor>grey</textcolor>
 			</control>
 			<control type="label">
-				<left>0</left>
-				<bottom>10</bottom>
-				<width>1270</width>
+				<left>620</left>
+				<right>360</right>
+				<bottom>40</bottom>
 				<height>30</height>
 				<align>right</align>
 				<aligny>bottom</aligny>
@@ -214,13 +218,14 @@
 				<font>font12</font>
 				<label>$VAR[FileBrowserSelectLabel]</label>
 			</control>
+			<!-- 翻页箭头必须在对话框 group 内，坐标才跟着弹窗走；
+			     原来放在窗口层且带着 !System.HasActiveModalDialog，在模态框里恒为 false。 -->
+			<include content="UpDownArrows">
+				<param name="container_id" value="450" />
+				<param name="posx" value="888" />
+				<param name="up_posy" value="120" />
+				<param name="down_posy" value="700" />
+			</include>
 		</control>
-		<include content="UpDownArrows">
-			<param name="container_id" value="450" />
-			<param name="posx" value="830" />
-			<param name="up_posy" value="50" />
-			<param name="down_posy" value="980" />
-			<param name="visible" value="!System.HasActiveModalDialog" />
-		</include>
 	</controls>
 </window>
