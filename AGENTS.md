@@ -123,6 +123,7 @@ python tools/audit_skin.py --strict
 python tools/gen_techflag_icons.py --check
 python tools/gen_techflag_vars.py --check
 python tools/gen_resume_ring.py --check
+python tools/gen_fanart_overlay.py --check
 python tools/check_home_fanart_mask.py --check
 python -m unittest discover -s tools -p 'test_*.py'
 ```

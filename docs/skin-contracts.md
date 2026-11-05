@@ -325,6 +325,21 @@ height 又加 56 的结果。那两行设置比 PVR 页高 32px，用户一眼�
 最后 4 行被截断；`textbox id=30` 与 `group id=102` 的 `bottom` 曾是 545/80，
 内容溢出到 y=1000（超出面板 115px）。都已修正。
 
+## 六、弹窗表头标准（2026-11-05 统一）
+
+完整表格见 `docs/HANDOVER.md` §5.16。这里只记**不能违反的两条**：
+
+1. **标题左边距用 `header_left` 逐弹窗传**，不要写死一个值。各弹窗正文起点从 10 到 48 不等：
+   OK 弹窗 48、选择列表 **40**（不是 20 —— 要对齐的是行内文字，不是高亮块）、媒体源 32、
+   数字输入 44、视频管理 / 播放控制 20、PVR 全屏页 32。
+2. **改 `DialogBackgroundCommons` 一次影响 16 个窗口**。改完至少开两个不同尺寸的弹窗验收：
+   915×400 的 OK 弹窗 + 1220×750 的选择列表。
+
+标题字号 `font28_title`、top 24、右上 vendor 图标 32px @ `right 60 / top 36`。
+另外三套表头（`NaraSettingsDialogFrame` / `NaraStreamDialog*` / `DialogAddonInfo`）数值不同，别混着改。
+
+---
+
 ---
 
 # 附：环境、验证与素材规格（原 docs/HANDOVER.md 合并而来）
