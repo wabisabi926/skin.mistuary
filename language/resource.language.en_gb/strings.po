@@ -1145,12 +1145,12 @@ msgid "No subtitles available"
 msgstr ""
 
 msgctxt "#31719"
-msgid "Media library cover folder"
-msgstr "Media library cover folder"
+msgid "Custom library cover folder"
+msgstr "Custom library cover folder"
 
 msgctxt "#31720"
 msgid "Not set"
-msgstr "Using skin's built-in libraryart folder"
+msgstr "Auto: Emby first, built-in fallback"
 
 msgctxt "#31721"
 msgid "Skin settings"
@@ -1213,8 +1213,8 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "Auto-scroll long plots instead of paging. Off by default."
 
 msgctxt "#31737"
-msgid "Covers come from the skin's libraryart folder; custom art must match library names."
-msgstr "Covers come from the skin's libraryart folder; custom art must match library names."
+msgid "Library cover order: Emby for Kodi Next Gen → custom folder → skin built-in artwork. File names must match library names."
+msgstr "Library cover order: Emby for Kodi Next Gen → custom folder → skin built-in artwork. File names must match library names."
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
