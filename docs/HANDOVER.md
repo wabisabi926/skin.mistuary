@@ -53,12 +53,15 @@
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
 版本以 `addon.xml` 为准（当前 **1.9.0**，即最近一次发布）；历史发版记录见 §8.2。
-最近一次发布说明见 `changelog.txt` 顶部 1.9.0 段；上一轮改动上下文见
-[`docs/handover-2026-11-03.md`](handover-2026-11-03.md)。helper 0.3.7 已发布
-（文件播放记录：10003 续播圆环 + 续播询问）。`main` 与 `origin/main` 同步。
+最近一次发布说明见 `changelog.txt` 顶部 1.9.0 段，当轮改动见 §8.12；
+`handover-2026-11-03.md` 已归档，只作当时快照。helper 0.3.7 已发布（文件播放记录）。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
-工作区状态以 `git status` 为准（见 §8.1.2）。
-`Textures.xbt` **739 张 / 7.2 MB**（1.2.0 是 802 张 / 10.2 MB），单测 **86 项全过**。
+
+**接手时先看工作区状态**：`main` 领先 `origin/main` 4 个提交（全是文档 / 元数据，
+没有 XML 逻辑改动），工作区另有 **6 个 XML 未提交** —— 中性底色推广到 4 个页面，
+见 §8.13。两者都还没推送。具体以 `git status` / `git log origin/main..HEAD` 为准，
+本节不钉 hash 和提交数。
+`Textures.xbt` **843 张 / 7.5 MB**（1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **86 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -921,6 +924,36 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   `HomeVideoHeroFanartVar` 时**必须同步**；`tools/check_home_fanart_mask.py --check`
   会拦截漏掉的容器 id 和丢失的 `target_folder` 门
 
+#### 5.11.1 中性底色：半透明剧照不再发紫（2026-11-05 推广到 4 个页面）
+
+`primary.jpg` 的平均色约 `63,77,110`（偏蓝紫）。设置页 / 文件管理 / 搜索空查询 /
+首页「文件·收藏」的剧照是**半透明**叠在它上面的，于是剧照被染成紫灰。
+
+做法：真剧照出现时，先用一块全屏 `FF4D4D4D` 顶替 primary ——
+`NaraNeutralFanartBase`（定义在 `Includes.xml`）。它的亮度约 76/255，与 primary 接近，
+所以原有 alpha / 黑层都不用动。
+
+| 页面 | 表达式 | 定义在 |
+|---|---|---|
+| 设置页、文件管理器 | `nara_page_shared_fanart_visible` | `Includes.xml` |
+| 搜索（空查询随机剧照） | `nara_search_empty_fanart_visible` | `Includes.xml` |
+| 首页「文件 / 收藏」 | `nara_home_files_fanart_visible` | `Includes_Home.xml` |
+
+**三条硬约束**：
+
+1. 中性底和剧照层**必须共用同一条 expression**。写两套条件必然漂移，表现是切页时闪一下灰/紫。
+2. 中性底画在剧照层**之前**（下层）；首页那层还要 `<depth>DepthBackground</depth>`。
+3. 收藏详情弹窗打开时，中性底要跟剧照层用**同一条 `<animation>` 一起淡出**
+   （`condition="…favorites + Window.IsActive(movieinformation)"`），否则弹窗后面会剩一块灰。
+
+**还有哪些半透明剧照层**：全皮肤只有 4 处，就是上表这 4 个位置 ——
+
+```bash
+grep 'background="true" colordiffuse="[0-9A-F]\{2\}FFFFFF"' xml/
+```
+
+搜索结果剧照是不透明的，不需要中性底。加新的半透明剧照页时，先跑这条 grep 确认口径。
+
 ### 5.12 播放/暂停图标：音乐与视频共用一套（2026-10-31 定）
 
 - 视频 OSD（`NaraVideoOSDPlayButton`）和音乐 OSD（`NaraMusicOSDButtonPrimary`）
@@ -1415,4 +1448,33 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - `a990266`：设置页半透明剧照改用中性底 `FF4D4D4D`（`NaraNeutralFanartBase`），
   去掉 `primary.jpg` 平均色（约 `63,77,110`）带来的紫灰罩；显隐与剧照层共用
   `$EXP[nara_settings_shared_fanart_visible]`，避免两层条件漂移。
+  （该表达式 2026-11-05 已改名为 `nara_page_shared_fanart_visible` 并移入 `Includes.xml`，
+  见 §8.13）
 - helper 仓库 `bcc3656`：**release 0.3.7**（文件播放记录首次发布）。
+
+### 8.13 2026-11-05 未发改动：中性底色推广到 4 个页面
+
+> **工作区未提交**（写这段时 `git status` 里还有这 6 个文件）。代码已完成、
+> 静态检查全绿，**实机效果待确认**。方法见 §5.11.1。
+
+把设置页那一处中性底推广到全部半透明剧照页，并把设置页的私有表达式提成通用：
+
+| 文件 | 改动 |
+|---|---|
+| `Includes.xml` | 新增 `nara_page_shared_fanart_visible`（设置页 / 文件管理）、`nara_search_empty_fanart_visible`（搜索空查询） |
+| `Includes_Home.xml` | 新增 `nara_home_files_fanart_visible`（首页文件 / 收藏） |
+| `Includes_Settings.xml` | 删掉旧的 `nara_settings_shared_fanart_visible`，两处 `$EXP` 改用通用名 |
+| `FileManager.xml` / `Includes_Search.xml` | 加中性底 + 剧照层改用通用表达式 |
+| `Home.xml` | 文件 / 收藏的中性底，带 `DepthBackground`，并与剧照层共用收藏详情弹窗的淡出动画 |
+
+验证：`audit_skin.py --strict` EXIT=0、单测 86 项 OK、三条新表达式均被引用（`--dead` 无告警）。
+
+**这批没进 1.9.0 的包**：`release.yml` 只在 `addon.xml` 版本变化时打包，所以要让用户拿到，
+必须先升版本号（1.9.1 或 1.10.0）再 push。光 push 只跑测试。
+
+**下版 changelog 草稿**（升版本时贴到 `changelog.txt` 顶部，按 §6 的规矩再压一遍字数）：
+
+```
+[修复]
+- 文件管理、搜索与首页「文件 / 收藏」的半透明剧照不再被兜底背景染成紫灰
+```
