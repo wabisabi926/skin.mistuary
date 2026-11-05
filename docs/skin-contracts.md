@@ -362,7 +362,7 @@ robocopy $src $dst /MIR /XD .git .workbuddy-ai __pycache__ /XF *.pyc .gitignore 
 cd /d "<仓库根>"
 set PY="<python>"
 
-%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 86 项全绿
+%PY% -m unittest discover -s tools -p "test_*.py"     # 期望 91 项全绿
 %PY% tools/audit_skin.py --strict                      # 期望 EXIT=0
 %PY% tools/gen_techflag_vars.py --check                # 期望"与 map 同步"
 %PY% tools/xbt_tool.py unpack media/Textures.xbt -o %TEMP%\xbt_check   # 期望 739/739

@@ -61,7 +61,7 @@
 没有 XML 逻辑改动），工作区另有 **6 个 XML 未提交** —— 中性底色推广到 4 个页面，
 见 §8.13。两者都还没推送。具体以 `git status` / `git log origin/main..HEAD` 为准，
 本节不钉 hash 和提交数。
-`Textures.xbt` **843 张 / 7.5 MB**（1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **86 项全过**。
+`Textures.xbt` **843 张 / 7.5 MB**（1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **91 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -924,35 +924,52 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
   `HomeVideoHeroFanartVar` 时**必须同步**；`tools/check_home_fanart_mask.py --check`
   会拦截漏掉的容器 id 和丢失的 `target_folder` 门
 
-#### 5.11.1 中性底色：半透明剧照不再发紫（2026-11-05 推广到 4 个页面）
+#### 5.11.1 半透明剧照：乘法压暗，不再垫中性底（2026-11-05 定稿）
 
 `primary.jpg` 的平均色约 `63,77,110`（偏蓝紫）。设置页 / 文件管理 / 搜索空查询 /
-首页「文件·收藏」的剧照是**半透明**叠在它上面的，于是剧照被染成紫灰。
+首页「文件·收藏」的剧照曾经是半透明叠在它上面，于是被染成紫灰。
 
-做法：真剧照出现时，先用一块全屏 `FF4D4D4D` 顶替 primary ——
-`NaraNeutralFanartBase`（定义在 `Includes.xml`）。它的亮度约 76/255，与 primary 接近，
-所以原有 alpha / 黑层都不用动。
+**现行做法**：剧照用乘法压暗 —— `colordiffuse="FFA8A8A8"`（RGB ×0.66，alpha `FF` 不透明）。
 
-| 页面 | 表达式 | 定义在 |
+| 做法 | 合成亮度（剧照亮度 L） | 玻璃面板后面 |
+|---|---|---|
+| 55% + 20% 黑 + 10% 黑（设置页初版） | `0.495L + 24.9` | 灰雾，没层次 |
+| 50% 叠在 `#313131` 上（第二轮） | `0.5L + 24.5` | 同上 |
+| **×0.66 不透明（现行）** | `0.66L` | 照片的明暗和色彩都在 |
+
+三者在 L=150 时都约 99，亮度等价；但乘法压暗**不需要中性底那一层**，
+玻璃背后有真实的明暗过渡。**别再用纯色兜底图当背景** —— 面板会糊在背景上，玻璃感直接没了。
+
+**四条约束**（`tools/test_nara_neutral_fanart.py` 锁着）：
+
+1. 四页剧照必须是**同一个乘法系数**，分叉就会按页漂移；
+2. 必须**不透明**（alpha `FF`），否则 primary 的蓝紫会透上来；
+3. 系数必须是**中性**（R=G=B），带色偏等于换个方向染色；
+4. 不要再引入中性底 / 半透明叠灰这类额外图层。
+
+⚠️ **`colordiffuse` 是 `AARRGGBB`，不是 `RRGGBBAA`**。写成 `A8A8A8FF` 会被解释成
+「alpha `A8`（66% 半透明）+ 颜色 `(168,168,255)`」——蓝通道满值、红绿压掉，
+照片立刻发紫，而且半透明会把 primary 的蓝紫透上来。2026-11-05 踩过一次。
+
+| 页面 | 显隐表达式 | 定义在 |
 |---|---|---|
 | 设置页、文件管理器 | `nara_page_shared_fanart_visible` | `Includes.xml` |
 | 搜索（空查询随机剧照） | `nara_search_empty_fanart_visible` | `Includes.xml` |
 | 首页「文件 / 收藏」 | `nara_home_files_fanart_visible` | `Includes_Home.xml` |
 
-**三条硬约束**：
+**首页「文件 / 收藏」还有一条动画**：收藏详情弹窗打开时剧照要淡出
+（`condition="…favorites + Window.IsActive(movieinformation)"`），否则弹窗后面会剩一块图。
 
-1. 中性底和剧照层**必须共用同一条 expression**。写两套条件必然漂移，表现是切页时闪一下灰/紫。
-2. 中性底画在剧照层**之前**（下层）；首页那层还要 `<depth>DepthBackground</depth>`。
-3. 收藏详情弹窗打开时，中性底要跟剧照层用**同一条 `<animation>` 一起淡出**
-   （`condition="…favorites + Window.IsActive(movieinformation)"`），否则弹窗后面会剩一块灰。
+**音乐分区不叠阅读区**：音乐背景图本身亮度约 73，再叠遮罩 + 三条渐变纯属白画 4 层。
+判据写在遮罩组的 `visible` 里（`!String.IsEqual(Window(home).Property(Home.Section),music)`）。
 
-**还有哪些半透明剧照层**：全皮肤只有 4 处，就是上表这 4 个位置 ——
+**阅读区是一张烘焙图**：遮罩 + 顶部渐变 + 底部渐变 + 左侧 scrim 合成一张 720p overlay，
+由 `tools/gen_fanart_overlay.py` 生成（`--check` 进 CI）。改那四层的几何或透明度后必须重跑，
+否则画面和生成器不一致。三个变体：`hero`（电影/电视剧/搜索结果）、`list`（首页文件/收藏）、
+`empty`（搜索空查询）。烘焙后这些页面各少画 3 层。
 
-```bash
-grep 'background="true" colordiffuse="[0-9A-F]\{2\}FFFFFF"' xml/
-```
-
-搜索结果剧照是不透明的，不需要中性底。加新的半透明剧照页时，先跑这条 grep 确认口径。
+**还有哪些剧照层**：`grep 'background="true" colordiffuse="A8A8A8FF"' xml/` 应该正好 4 处。
+搜索结果剧照是不透明的，不参与这套。加新的半透明剧照页时先跑这条 grep 确认口径。
 
 ### 5.12 播放/暂停图标：音乐与视频共用一套（2026-10-31 定）
 
@@ -1310,7 +1327,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 86 项
+python -m unittest discover -s tools -p 'test_*.py'       # 91 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
@@ -1454,8 +1471,9 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 
 ### 8.13 2026-11-05 未发改动：中性底色推广到 4 个页面
 
-> **工作区未提交**（写这段时 `git status` 里还有这 6 个文件）。代码已完成、
-> 静态检查全绿，**实机效果待确认**。方法见 §5.11.1。
+> **工作区未提交**（`git status` 里就是这 6 个文件）。代码已完成，静态检查全绿，
+> **首页「文件 / 收藏」已实机确认**（2026-11-05 11:03，JSON-RPC 截图）；设置页 / 文件管理 /
+> 搜索空查询沿用设置页那套已验证的结构。方法见 §5.11.1。
 
 把设置页那一处中性底推广到全部半透明剧照页，并把设置页的私有表达式提成通用：
 
@@ -1467,14 +1485,52 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 | `FileManager.xml` / `Includes_Search.xml` | 加中性底 + 剧照层改用通用表达式 |
 | `Home.xml` | 文件 / 收藏的中性底，带 `DepthBackground`，并与剧照层共用收藏详情弹窗的淡出动画 |
 
-验证：`audit_skin.py --strict` EXIT=0、单测 86 项 OK、三条新表达式均被引用（`--dead` 无告警）。
+验证：`audit_skin.py --strict` 缺失项 0、`check_home_fanart_mask.py --check` 17/17、
+单测 91 项 OK、124 个 XML 全部可解析；6 个文件 md5 与 Kodi 目标一致；四条旧条件与新表达式
+**逐字相同**（只是提成命名表达式，显隐语义没变）。
+
+⚠️ **`--dead` 不检查 expression**（只查 include / 皮肤字符串 / 贴图），别拿它当"表达式没写错"的证据；
+三条新表达式是否有引用点，用 `grep -rn '\$EXP\[nara_' xml/` 确认。
+
+**收藏页的坑**：此前记成"`homemenunofavoritesbutton=true` 所以被隐藏"，实际是 **`false`**，
+按钮一直显示（`Home.xml:1703` 的判据是 `!Skin.HasSetting(HomeMenuNoFavoritesButton)`，
+Kodi 存储时设置名小写；`NaraHomeMenuDefaultsMusicTVOff` 标记已置位，首启默认值不会再覆盖）。收藏与「文件」共用同一张随机剧照，可用像素比对验收：
+同一区域最大通道差 0；详情弹窗开/关无灰块残留。
 
 **这批没进 1.9.0 的包**：`release.yml` 只在 `addon.xml` 版本变化时打包，所以要让用户拿到，
 必须先升版本号（1.9.1 或 1.10.0）再 push。光 push 只跑测试。
+
+**第三轮（定稿）：乘法压暗 + 烘焙阅读区**。
+
+1. **乘法压暗**：剧照改 `FFA8A8A8`（RGB ×0.66、不透明），照片的层次和色彩都保留，
+   **中性底整块删掉**（`NaraNeutralFanartBase` 已从 `Includes.xml` 移除），四页各少 1 层。
+2. **烘焙阅读区**：遮罩 + 顶部渐变 + 底部渐变 + 左侧 scrim 合成一张 720p overlay
+   （`tools/gen_fanart_overlay.py`，三个变体 hero / list / empty），每页少画 3 层。
+   做过受控 A/B：固定测试图分别用「4 层」和「烘焙 1 层」渲染，逐像素平均差 **0.5~3.9/255**
+   （最大 9），肉眼不可见。
+3. **音乐分区不吃阅读区**：背景图本身亮度约 73，遮罩 + 三条渐变纯属白画，6 层 → 2 层。
+
+| 页面状态 | 改前 | 改后 |
+|---|---|---|
+| 电影 / 电视剧 | 6 | **3** |
+| 搜索 · 有结果 | 6 | **3** |
+| 搜索 · 空查询 | 6 | **3** |
+| 文件 / 收藏 | 6 | **3** |
+| 文件管理 | 4 | 3 |
+| 设置页 | 3 | 2 |
+| 音乐 | 6 | 2 |
+| **合计** | **37** | **19** |
+
+**overlay 是 720p 不是 1080p**：四层都是平滑渐变，拉伸看不出差别；1080p RGBA 一张 8MB，
+720p 只要 3.5MB，三个变体合计 10.5MB，比原来的 3840×2160 遮罩（33MB）还省。
 
 **下版 changelog 草稿**（升版本时贴到 `changelog.txt` 顶部，按 §6 的规矩再压一遍字数）：
 
 ```
 [修复]
 - 文件管理、搜索与首页「文件 / 收藏」的半透明剧照不再被兜底背景染成紫灰
+- 这四个页面的背景亮度统一到设置页的水平（剧照一律 ×0.66 压暗，不再发灰）
+- 音乐页背景不再叠 4 层遮罩与渐变
+- 电影 / 电视剧 / 搜索的阅读区合并为一张贴图，滚动与切页更省
+
 ```
