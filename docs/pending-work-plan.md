@@ -170,7 +170,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 
 | 项 | 状态 | 说明 |
 |---|---|---|
-| `script.mistuary.helper` | **插件 0.3.4 已发布**（132 项单测），皮肤侧 M1b/M2/M1c 均已完成 | 独立仓库 `script.mistuary.helper`。M1d 已完成（演员/类型 + 首字母严格性），M5 播放列表补全已发 |
+| `script.mistuary.helper` | **插件 0.3.7 已发布**（197 项单测），皮肤侧 M1b/M2/M1c 均已完成 | 独立仓库 `script.mistuary.helper`。M1d 已完成（演员/类型 + 首字母严格性），M5 播放列表补全、文件播放记录已发 |
 | Kodi 21 实机 | **已放弃**（2026-10-30） | 双轨渲染至今只在 22 系列上验过。21 的库版本不兼容、便携环境也没有媒体库，详情页四项验不了；尝试时出过配置重置事故，详见 `HANDOVER.md` §8.7 |
 | 系统信息/事件日志底部文字区 | 待决策 | 建议保持现状（理由在 `skin-contracts.md`） |
 | `SettingsSystemInfo` 滚动条轨道 | ✅ 已改 | 644 → 357（`2cda76f`，含几何回归测试） |
