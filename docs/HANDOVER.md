@@ -1092,7 +1092,7 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 | 类别行 / 专辑行左边缘 | 差 18px（60 vs 78），用户明确说"不用统一" |
 | 专辑卡片长标题 | 卡宽 186，font12 只放得下 8 个汉字；超长靠聚焦时滚动 |
 | `tools/universalize.py` | 4.2.0 → 1.0.0 的一次性迁移脚本，已完成使命，留作参考 |
-| 文件管理器点 flac/wav 弹「游戏运行失败」 | **未解决**。Kodi 内核把音频条目判成 game（`CFileItem::IsGame()`），`PlayerCoreFactory` 在算完规则后 `if (item.IsGame()) players={"RetroPlayer"}` 直接覆盖，所以 `playercorefactory.xml` 规则**无效**（已实测并删除测试文件）。本机没有任何 game client，疑 nightly 判定 bug。下一步开 debug 日志复现，抓 `CPlayerCoreFactory::GetPlayers` / `RetroPlayer` / `FillInGameClient`。规避：从音乐库 / Emby 播放 |
+| 文件管理器点 flac/wav 弹「选择模拟器」 | **Kodi 侧行为，皮肤改不了**（2026-11-05 查清链条，见 §7.1）。`playercorefactory.xml` 这条路**已确认无效，别再试**。规避：从音乐库 / Emby 播放 |
 
 > **已修（2026-10-27）**：`ListItem.BMP` → `ListItem.BPM`（BPM 徽标现在能显示了）；
 > `ListItem.MusicBitsPerSample` 那条删掉了 —— Kodi 没有列表项位深标签，
@@ -1100,6 +1100,44 @@ token 从本机 git 凭据取：`git credential fill`（只放进变量，别打
 > 当时的判据是拿 Kodi 21.2 与 master 的 `xbmc/GUIInfoManager.cpp` 标签名总表逐条比对
 > `$INFO[...]`。**排查同类问题的方法**：把皮肤里所有 `$INFO[X]` 的 X 取出来，
 > 去掉 `(...)` 参数和 `$PARAM[...]` 前缀，取最后一段，与标签表求差集。
+
+### 7.1 文件管理器里的音频被当成游戏（2026-11-05 定论）
+
+**现象**：设置 → 文件管理器 点 `.flac` / `.wav`，弹「选择 .flac 文件的模拟器」，里面列着一个
+Sega 模拟器核心。
+
+**链条**：
+
+1. 官方仓库索引里 `game.libretro.blastem` 的 extensions 含 `flac|wav`（Genesis 核心支持 CD 音轨）
+2. `CFileItem::IsGame()` 在条目没有音视频标签时调 `CGameUtils::HasGameExtension()`，
+   而它**不只看已装核心，还扫「可安装」列表**（`LoadInstallableAddons()`）→ 返回 true
+3. 文件管理器列表项没有音乐标签 → `IsAudio()` 为假，音视频两个默认分支都进不去
+4. `CPlayerCoreFactory::GetPlayers()` 末尾是 `players = {"RetroPlayer"}` —— **赋值覆盖**，
+   规则里加进去的 PAPlayer 会被整条丢掉
+
+**实测日志**（2026-11-05，22.0-RC1，开 debug 后用 JSON-RPC 播 `D:\音乐\*.flac`）：
+
+```
+CPlayerSelectionRule::GetPlayers: matches rule: mistuary-audio-files
+CPlayerSelectionRule::GetPlayers: adding player: PAPlayer for rule: mistuary-audio-files
+CPlayerCoreFactory::GetPlayers: matched 1 rules with players
+CPlayerCoreFactory::GetPlayers: adding player: VideoPlayer
+CPlayerCoreFactory::GetPlayers: forcing retroplayer
+CPlayerCoreFactory::GetPlayers: added 1 players
+```
+
+**结论：`playercorefactory.xml` 这条路是死的。** 规则能命中，结果会被 `forcing retroplayer`
+覆盖。2026-10-30 试过一次、2026-11-05 又试了一次（两次都删了测试文件）——
+**不要试第三次**，直接看这一节。
+
+**能不能修**：只有让 `IsGame()` 变假，两条路都不通：
+
+- 条目带音乐标签 —— 文件管理器给不了，皮肤和配置都做不到
+- `HasGameExtension()` 变假 —— 需要「已装 + 可安装」里没人声明 flac；禁用
+  `repository.xbmc.org` 能做到，但会连带装不了 / 更新不了插件，代价太大
+
+**规避**：从音乐库 / Emby 播（有条目标签，不走这条判定）。上游 master 仍是
+`players = {"RetroPlayer"}`，2026-11-05 决定不提 issue。
 
 ---
 
