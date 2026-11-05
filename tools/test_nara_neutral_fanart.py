@@ -1,11 +1,11 @@
 """剧照层亮度的结构性约束（HANDOVER §5.11.1）。
 
 primary.jpg 的平均色偏蓝紫（约 63,77,110），让剧照半透明叠上去会被染成紫灰。
-现在五页统一用**乘法压暗**：`colordiffuse="FFA8A8A8"` —— RGB 乘 0.66、alpha 保持不透明。
+现在八页统一用**乘法压暗**：`colordiffuse="FFA8A8A8"` —— RGB 乘 0.66、alpha 保持不透明。
 照片不透明，所以不需要再垫一层中性底，玻璃面板背后照样有明暗层次。
 
 这套契约有三条，破了就会重新出现「某页发紫」或「某页过亮」：
-1. 五页的剧照层必须是同一个乘法系数（分叉就会按页漂移）；
+1. 八页的剧照层必须是同一个乘法系数（分叉就会按页漂移）；
 2. 必须不透明（alpha FF），否则 primary 的蓝紫会透上来；
 3. 不能再引入中性底 / 半透明叠灰这类额外图层。
 
@@ -54,10 +54,12 @@ class FanartDimTest(unittest.TestCase):
         cls.layers = fanart_layers()
         cls.expressions = all_expressions()
 
-    def test_fanart_layer_count_is_five(self):
+    def test_fanart_layer_count_is_eight(self):
         where = sorted(name for name, _, _ in self.layers)
-        self.assertEqual(len(self.layers), 5, where)
-        self.assertEqual(where, ['FileBrowser.xml', 'FileManager.xml', 'Home.xml',
+        self.assertEqual(len(self.layers), 8, where)
+        self.assertEqual(where, ['DialogAddonInfo.xml', 'DialogAddonSettings.xml',
+                                 'DialogMediaSource.xml', 'FileBrowser.xml',
+                                 'FileManager.xml', 'Home.xml',
                                  'Includes_Search.xml', 'Includes_Settings.xml'])
 
     def test_all_four_share_one_multiplier(self):

@@ -779,7 +779,7 @@
 		<param name="right" default="60" />
 		<param name="top" default="36" />
 		<param name="size" default="32" />
-		<param name="visible" default="true" />
+		<param name="visible" default="false" />
 		<definition>
 			<control type="image">
 				<right>$PARAM[right]</right>
@@ -828,8 +828,8 @@
 		<param name="header_icon_right">60</param>
 		<param name="header_icon_top">36</param>
 		<param name="header_icon_size">32</param>
-		<!-- 文件浏览器这类不需要 Kodi 厂商图标的弹窗传 false -->
-		<param name="header_icon_visible">true</param>
+		<!-- 2026-11-05 用户定：Kodi 厂商图标一律隐藏（所有弹窗） -->
+		<param name="header_icon_visible">false</param>
 		<param name="glass_style">$VAR[NaraGlassFloatTintVar]</param>
 		<param name="darken_bg">true</param>
 		<param name="scrim">$VAR[NaraGlassFloatScrimVar]</param>

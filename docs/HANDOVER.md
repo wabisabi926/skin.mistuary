@@ -761,8 +761,11 @@ E4K 不写票数，`ListItem.Votes(...)` 恒空；个人评分不进 `Ratings`�
 |---|---|
 | `DialogVideoInfo` | `primary.jpg` 原色（`primary_background_info`）+ fanart + 左侧压暗 |
 | `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图，再退到 primary |
-| `DialogAddonInfo` | `primary.jpg` 原色 + fanart；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
+| `DialogAddonInfo` | **共享真剧照**（`NaraFileManagerRandomFanartVar`，×0.66）+ 插件自己的 fanart；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
 | `DialogPVRInfo` / `DialogPictureInfo` | **故意透出直播画面 / 当前图片**，不铺不透明底图 |
+
+> 插件详情 2026-11-05 起不再用 `primary.jpg` 兜底：底层换成与设置页 / 文件管理同一张
+> 共享随机剧照（§5.11.1），插件自己有 fanart 时仍显示插件那张。
 
 > `primary_background`（`FF404040`）会把 `primary.jpg` 乘到 25% 亮度，详情页不要再用它；
 > 详情页统一用 `primary_background_info`（`FFFFFFFF`）。PVR / 图片详情不在此列。
@@ -927,8 +930,8 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 
 **四条约束**（`tools/test_nara_neutral_fanart.py` 锁着）：
 
-1. 七页剧照（设置页 / 文件管理 / 搜索空查询 / 首页文件·收藏 / 文件浏览器 /
-   添加文件源 / 插件设置）必须是**同一个乘法系数**，分叉就会按页漂移；
+1. 八页剧照（设置页 / 文件管理 / 搜索空查询 / 首页文件·收藏 / 文件浏览器 /
+   添加文件源 / 插件设置 / 插件详情）必须是**同一个乘法系数**，分叉就会按页漂移；
 2. 必须**不透明**（alpha `FF`），否则 primary 的蓝紫会透上来；
 3. 系数必须是**中性**（R=G=B），带色偏等于换个方向染色；
 4. 不要再引入中性底 / 半透明叠灰这类额外图层。

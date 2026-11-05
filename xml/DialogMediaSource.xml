@@ -3,13 +3,22 @@
 	<defaultcontrol>10</defaultcontrol>
 	<include>Animation_DialogPopupOpenClose</include>
 	<controls>
+		<!-- 添加文件源：弹窗叠在文件管理器上，两层半透明会把下层的行 / 标签
+		     透成一个鬼影。底下铺一层不透明随机剧照盖住下层，只让玻璃透出画面。 -->
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<aspectratio align="right">scale</aspectratio>
+			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
+		</control>
 		<control type="group">
 			<centertop>50%</centertop>
 			<height>630</height>
 			<centerleft>50%</centerleft>
 			<width>1200</width>
 			<include content="DialogBackgroundCommons">
-				<param name="header_left" value="32" />
+				<param name="header_left" value="58" />
+				<param name="header_top" value="40" />
 				<param name="width" value="1200" />
 				<param name="height" value="630" />
 				<param name="header_label" value="$LOCALIZE[13406]" />
