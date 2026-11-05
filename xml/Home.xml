@@ -58,63 +58,35 @@
 			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + [String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites) | [String.IsEqual(Window(home).Property(Home.Section),search) + String.IsEmpty(Control.GetLabel(16999).index(1))]]</visible>
 		</control>
 		<!-- Files and Favorites use the same dimmed shared backdrop. -->
+		<!-- 文件 / 收藏共享剧照下面的中性灰；显隐与剧照层共用同一条表达式。
+		     收藏详情弹窗打开时，跟着剧照一起淡出，避免弹窗后面剩一块灰。 -->
 		<control type="image">
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="CCFFFFFF">$VAR[NaraSharedRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraSharedRandomFanartVar]</texture>
 			<!-- Keep Favorites' backdrop resident so the detail close fade reveals it immediately. -->
 			<animation effect="fade" start="100" end="0" time="0" condition="String.IsEqual(Window(home).Property(Home.Section),favorites) + Window.IsActive(movieinformation)">Conditional</animation>
-			<visible>[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasAudio | Player.HasGame] + [String.IsEqual(Window(home).Property(Home.Section),favorites) | !Window.IsVisible(movieinformation)]</visible>
+			<visible>$EXP[nara_home_files_fanart_visible]</visible>
 		</control>
 		<!-- Standard sections match the movie/TV information pages. Files and
 		     Favorites omit the directional reading scrims below. -->
 		<control type="group">
-			<include>FullScreenDimensions</include>
-			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
-			<include content="NaraFanartReveal">
-				<!-- 遮罩只在「真图」上出现；走 primary.jpg 兜底时不压暗（判据见 Includes_Home.xml）。 -->
-				<param name="visible" value="!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]] | [[!String.IsEqual(Window(home).Property(Home.Section),files) + !String.IsEqual(Window(home).Property(Home.Section),favorites)] + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]]" />
-			</include>
-			<!-- Keep the navigation and clock legible over bright fanart. Reuse the
-			     lower scrim texture upside down so it fades from the top edge. -->
+			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !String.IsEqual(Window(home).Property(Home.Section),music)</visible>
+			<!-- 阅读区：遮罩 + 顶部渐变 + 底部渐变 + 左侧 scrim 烘成一张（见 tools/gen_fanart_overlay.py）。
+			     以前是 4 个控件，现在 1 个；只画在真图上，走 primary 兜底时不压暗。 -->
 			<control type="image">
-				<left>-120</left>
-				<right>-120</right>
-				<height>220</height>
+				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture flipy="true" colordiffuse="33FFFFFF">overlays/overlayfade.png</texture>
-			</control>
-			<!-- Give the focused file path a stable reading zone without drawing a separate bar. -->
-			<control type="image">
-				<top>860</top>
-				<left>-120</left>
-				<right>-120</right>
-				<height>220</height>
-				<aspectratio>stretch</aspectratio>
-				<texture colordiffuse="4DFFFFFF">overlays/overlayfade.png</texture>
-				<visible>String.IsEqual(Window(home).Property(Home.Section),files)</visible>
+				<texture>overlays/fanart-overlay-hero.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]] | [[!String.IsEqual(Window(home).Property(Home.Section),files) + !String.IsEqual(Window(home).Property(Home.Section),favorites)] + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]] + ![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
 			</control>
 			<control type="image">
-				<width>1200</width>
-				<height>1080</height>
+				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/detail-left-scrim.png</texture>
-				<include content="Animation_NaraScrimFocus">
-					<param name="condition" value="$EXP[NaraHomeFanartFocused]" />
-				</include>
-				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]</visible>
-			</control>
-			<control type="image">
-				<top>420</top>
-				<left>-120</left>
-				<right>-120</right>
-				<height>660</height>
-				<aspectratio>stretch</aspectratio>
-				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
-				<animation effect="slide" start="0,0" end="0,100" time="260" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoExpanded]">Conditional</animation>
-				<visible>![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]</visible>
+				<texture>overlays/fanart-overlay-list.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]] | [[!String.IsEqual(Window(home).Property(Home.Section),files) + !String.IsEqual(Window(home).Property(Home.Section),favorites)] + [$EXP[NaraHomeFanartSubItems] | $EXP[NaraHomeFanartSubHero] | $EXP[NaraHomeFanartSubOther]]] + [String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
 			</control>
 		</control>
 		<control type="group">

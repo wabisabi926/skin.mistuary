@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<expression name="NaraHomeFanartFocused">!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),movies) + ControlGroup(5001).HasFocus()] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + ControlGroup(6001).HasFocus()]]</expression>
+	<!-- 首页「文件 / 收藏」共享剧照的显隐。中性底色和剧照层共用同一条，
+	     收藏详情弹窗打开时由 Home.xml 的同一条动画一起淡出。 -->
+	<expression name="nara_home_files_fanart_visible">[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasAudio | Player.HasGame] + [String.IsEqual(Window(home).Property(Home.Section),favorites) | !Window.IsVisible(movieinformation)]</expression>
 	<expression name="NaraHomeFanartSettledRow">$EXP[NaraHomeFanartFocused] + [Control.HasFocus(5100) | Control.HasFocus(5200) | Control.HasFocus(5300) | Control.HasFocus(5800) | Control.HasFocus(5400) | Control.HasFocus(5600) | Control.HasFocus(6100) | Control.HasFocus(6200) | Control.HasFocus(6300) | Control.HasFocus(6700) | Control.HasFocus(6800)]</expression>
 	<!-- 下面三条是首页遮罩（Home.xml 全屏蒙层 / 左渐变 / 下渐变）的判据，判断
 	     「此刻画的背景是不是真图」：成立 → 加遮罩；不成立（走 primary.jpg 兜底）→ 不压暗。
