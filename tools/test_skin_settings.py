@@ -112,9 +112,9 @@ class RepoSkinSettingsTest(unittest.TestCase):
 class RatingSourcePrecedenceTest(unittest.TestCase):
     """主评分来源：四档（TMDb / IMDb / 豆瓣 / 自动）显式互斥。
 
-    回归理由：Emby 插件会把 `CommunityRating` 补写成 imdb 类型（`Rating(imdb)`
-    恒等于 `Rating`），类型字段不能当成「用户想显示什么」。所以手选三档只按开关
-    画图标，自动识别必须显式选「自动」才跑；TMDb 档同时是「都没选」时的兜底。
+    回归理由：E4K fork 会把 `CommunityRating` 归到具体类型（tmdb/imdb/trakt/douban），
+    皮肤优先读类型评分；官方 E4K 只有 `default`，读不到类型时退回 `ListItem.Rating`。
+    手选三档仍然显式互斥，自动识别必须选「自动」才跑；TMDb 档同时是「都没选」时的兜底。
     """
 
     AUTO_GUARD = "Skin.HasSetting(rating_src_auto)"
@@ -150,16 +150,21 @@ class RatingSourcePrecedenceTest(unittest.TestCase):
             ["flags/ratings/douban.png", "flags/ratings/imdb.png", "flags/ratings/tmdb.png"],
         )
 
-    def test_manual_branches_ignore_rating_types(self):
+    def test_manual_branches_prefer_typed_ratings(self):
+        """手选档位优先读对应类型；类型为空才退回 ListItem.Rating（官方 E4K 只有 default）。
+
+        手选组的 label 都是 `$INFO[...,Rating]`（兜底分支），因此这里检查它们同时带
+        “类型为空”和“默认值非空”两个判据；类型存在时由同源的 typed 分支接手。
+        """
         manual, _ = self._split()
         for _, p in manual:
-            for typed in ("Rating(tmdb)", "Rating(trakt)", "Rating(imdb)"):
-                self.assertNotIn(typed, p["visible"], f"手选分支不能依赖 {typed}")
+            self.assertIn("String.IsEmpty($PARAM[item_prefix].Rating", p["visible"])
+            self.assertIn("!String.IsEmpty($PARAM[item_prefix].Rating)", p["visible"])
 
     def test_auto_branches_require_explicit_auto(self):
         _, auto = self._split()
-        # TMDb / Trakt / IMDb 三条 + 都没匹配上的 TMDb 兜底
-        self.assertEqual(len(auto), 4)
+        # TMDb / themoviedb / Trakt / IMDb / 豆瓣 五条 + 类型都匹配不上时的中性兜底
+        self.assertEqual(len(auto), 6)
         for _, p in auto:
             self.assertIn(self.AUTO_GUARD, p["visible"])
             self.assertNotIn(f"!{self.AUTO_GUARD}", p["visible"])
