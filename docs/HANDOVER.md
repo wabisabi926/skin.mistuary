@@ -84,7 +84,7 @@
 
 | 主题 | 落点 |
 |---|---|
-| 主评分来源四档 + 手选优先 | 设置 707、`NaraOnlineRatingsRow`、`NaraDefaultRatingSourceVar`；Emby 补写 imdb 类型不再压过设置（§5.7） |
+| 主评分来源四档 + 手选优先 | 设置 707、`NaraOnlineRatingsRow`、`NaraDefaultRatingSourceVar`（2026-11-05 改为按类型读取，见 §5.7） |
 | 搜索首字母改前缀匹配 | `sorttitle` 用 `startswith`，并移除 `actor` / `director` / `genre`（§5.10） |
 | 帮助文案统一 | 三档透明度改名「弹窗透明度」，26 条帮助条改陈述式、双引号 |
 | 依赖插件规划 | 新增 `docs/helper-plugin-plan.md`（服务端搜索 / 豆瓣 / 代表集标识） |
@@ -673,57 +673,41 @@ Kodi 20+ 的视频信息标签支持**多个带类型的评分**：
 
 `CVideoInfoTag::SetRating` 会**丢弃 0 和 >10 的值**，所以 0-100 的分数必须先换算。
 
-**能直接拿到的评分类型，只有下面这些**（2026-10-27 按已安装插件源码逐条核对）：
+**可用的评分类型**（2026-11-05 按 E4K fork 与官方版源码核对）：
 
-| 数据源 | 类型名 | 来源字段 | 范围 |
+| 数据源 | 类型名 | 来源字段 | 覆盖 |
 |---|---|---|---|
-| Emby | `default`（`ListItem.Rating`） | `CommunityRating` | 电影 / 剧集 / 单集 / 音乐视频 |
-| Emby | `tomatometerallcritics` | `CriticRating / 10` | **只有电影**（`movies.py` / `videos.py`） |
-| Kodi 官方 TMDb 刮削器 | **`themoviedb`** | `vote_average` | 电影（`tmdb.py:140`） |
-| Kodi 官方 TMDb 刮削器 | **`tmdb`** | `vote_average` | 剧集 / 季 / 单集（剧集刮削器） |
-| Kodi 官方 TMDb 刮削器 | `imdb` | IMDb 网站 | 需把刮削器「评分来源」设为 IMDb，或勾「总是获取 IMDb 评分」 |
-| Kodi 官方 TMDb 刮削器 | `trakt` | Trakt | 需登录 + 勾选 |
+| E4K fork | 主评分类型（`tmdb` / `imdb` / `trakt` / `douban`，或 `default`） | `CommunityRating` | 电影 / 剧集 / 单集 / 音乐视频 / video |
+| E4K fork | `tomatometerallcritics` | `CriticRating / 10` | 同上，有影评人分时 |
+| E4K fork | `douban` | `ProviderIds.DoubanRating` | 同上，由 StrmAssistantPlus 写入 |
+| 官方 E4K | `default` | `CommunityRating` | 电影 / 剧集 / 单集 / 音乐视频 / video |
+| 官方 E4K | `tomatometerallcritics` | `CriticRating / 10` | 电影 |
+| Kodi TMDb 刮削器 | `themoviedb` / `tmdb` / `imdb` / `trakt` | 刮削器 | 本地库 |
 
-**两个坑**：
+E4K 不写票数，`ListItem.Votes(...)` 恒空；个人评分不进 `Ratings`，只走 `ListItem.UserRating`。
 
-1. **电影和剧集的 TMDB 类型名不一样** —— 电影写 `themoviedb`、剧集写 `tmdb`（两个刮削器各写各的）。
-   只读其中一个会漏一半。皮肤两个都读，标签直接拼接（同一条目只会命中一个）。
-2. Emby 默认只写 `default`；但 E4K 打开「Set imdb as default rating provider」
-   （默认开）时，会把 `CommunityRating` **补写成 `imdb` 类型**，`Rating(imdb)` 恒等于
-   `Rating`。所以类型字段不能拿来判断"用户想看哪个来源"。
+**评分行的规则**（2026-11-05）：
 
-Emby for Kodi（`plugin.service.emby-next-gen`）的写入点：`core/movies.py:91-92`，
-`videos.py` / `episode.py` / `series.py` / `musicvideo.py` 同构，都只有 `default` 一行
-（`videos.py` / `movies.py` 多一行 `tomatometerallcritics`）。
-
-Emby 库主评分固定 1 颗；次评分在详情页最多 1 颗（豆瓣或烂番茄）。
-
-**「烂番茄」明确指影评人新鲜度（Tomatometer，`tomatometerallcritics` = Emby 的 `CriticRating`），
-不是观众爆米花指数（Popcornmeter）；只有电影有，且设置里的选项也写作「烂番茄新鲜度」。**
-
-**评分行的规则**（2026-10-31 定稿，随 1.5.1）：
-
-- **主评分四档互斥、手选优先**（设置 707）：TMDb / IMDb / 豆瓣（神医助手覆盖）/
-  自动（仅本地刮削）。数值永远读 `ListItem.Rating`（Emby 的 `CommunityRating`），
-  图标按所选档位画；只有选「自动」才比对 `Rating(tmdb/trakt/imdb)`。TMDb 是默认档：
-  没选自动 / IMDb / 豆瓣时按 TMDb 画。自动识别不能排在设置前面——E4K 补写的 imdb
-  类型会让它永久命中 IMDb（2026-10-28 实测：怎么切都显示 IMDb）。
+- **主评分四档互斥、手选优先**（设置 707）：TMDb / IMDb / 豆瓣 / 自动。
+  手选时读对应类型，读不到才退回 `ListItem.Rating`（官方 E4K 只有 `default`）；
+  TMDb 档同时兼容本地电影的 `themoviedb`。自动档比对
+  `Rating(tmdb/themoviedb/trakt/imdb/douban)`，全部不匹配用中性图标。
+  条目没有 `DoubanRating` 时，E4K fork 把社区评分写回 `default`，不会标成豆瓣。
 - **次评分只保留一条**（设置 715，四档：自动 / 豆瓣 / 烂番茄 / 关闭）：
-  自动 = 详情页有插件豆瓣分（且与主分不同）→ 豆瓣，否则 → 烂番茄；
-  手选豆瓣/烂番茄固定来源，选关闭则整颗隐藏。主评分是豆瓣时次评分走烂番茄，
-  不会再出现「两颗都不显示」。**没有 TMDB 次评分**；列表 / 首页不显示豆瓣。
-  豆瓣分由 `script.mistuary.helper` 0.3.x 提供：优先读 Emby `/Douban/RatingsByImdb`
-  （与神医助手同源），失败回退豆瓣公开接口，写 `Window.Property(Mistuary.Rating.*)`。
+  豆瓣优先读 `Rating(douban)`（详情页、首页、列表均可）；读不到时**仅在详情页**
+  回退 `script.mistuary.helper`（先问 Emby `/Douban/RatingsByImdb`，失败再走豆瓣公开接口，
+  写 `Window.Property(Mistuary.Rating.*)`）。没有豆瓣才显示 `Rating(tomatometerallcritics)`；
+  手选关闭则整颗隐藏。
+- **烂番茄指影评人新鲜度**（Tomatometer，Emby 的 `CriticRating/10`），不是爆米花指数。
+  fork 给电影、剧集、单集都写；官方版只有电影。
 
 取不到的类型返回空字符串，所以"多列几种类型 + 用 `!String.IsEmpty` 控制可见"是安全的写法。
 **不要自己发明标签名**（`ListItem.NaraRating(x)` 这类是魔改内核的，官方 Kodi 恒空）。
 
 **TMDbHelper 的豆瓣分进不来**：它写在 list item 的 infoproperties（`douban_rating`），
-而且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
-皮肤没有用 TMDbHelper 的任何路径，所以详情页读不到；本项目改用
-`script.mistuary.helper`（摘要见 [`helper-plugin-plan.md`](helper-plugin-plan.md)，
-实现细节见插件仓库 `docs/contract.md`）。helper 已移除「评分同步」（写库无消费方）；
-列表 / 首页不显示豆瓣次评分。
+且要 URL 带 `?ratings=true` 才查，只存在于 TMDbHelper 自己生成的列表里。
+皮肤不依赖 TMDbHelper；豆瓣统一走 `Rating(douban)`，详情页读不到时才由
+`script.mistuary.helper` 联网兜底（实现细节见插件仓库 `docs/contract.md`）。
 
 ### 5.8 音乐播放页：歌词 / 评分 / 背景
 
@@ -857,25 +841,18 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 ### 5.9.2 评分圈按来源着色（已实施，2026-10-31）
 
 实现方式：`RatingCircle` 的环 `overlays/badge_ring.png` 加
-`colordiffuse="$VAR[NaraRatingRingColorVar]"`，按设置 707 的主评分来源取色
-（豆瓣绿 `FF2BB24C` / IMDb 黄 `FFF5C518` / TMDb 蓝 `FF01B4E4` / 自动或未知=白）；
+`colordiffuse="$VAR[NaraRatingRingColorVar]"`。手选档位优先；自动档比对
+`ListItem.Rating` 与 `Rating(tmdb/themoviedb/trakt/imdb/douban)`：豆瓣绿
+`FF2BB24C` / IMDb 黄 `FFF5C518` / TMDb 蓝 `FF01B4E4`，判不出来白色。
 数字仍用 `badge_foreground`，因为 `$VAR` 在 `<textcolor>` 里不生效。
 
 用户要求：为多评分源预留颜色区分（豆瓣绿 / IMDb 黄 / TMDb 蓝 / 烂番茄红）。
 
-**现在的数据现实**（2026-10-30 实测，742 部电影全查）：
-- 只有 `ratings.imdb` 有值，全部标 `default: true`
-- 约 80% 电影有 `ratings.tomatometerallcritics`（烂番茄）
-- **豆瓣、TMDb 字段根本不存在**
-- 所以**现在实施的话全部显示黄色**，这是预期效果，不是 bug
+**已验证的技术事实**：
 
-**两条已验证的技术事实**：
-
-1. **`ListItem.RatingSource` 是空的** —— 皮肤层拿不到"当前 default 是哪个源"，
-   必须自己排优先级
+1. **`ListItem.RatingSource` 是空的** —— 皮肤层拿不到"当前 default 是哪个源"，必须自己判断。
 2. **`ListItem.Rating(<source>)` 语法可用**（实测 `Rating(imdb)` 返回 7.5），
-   且 `RatingMap` 是 `std::map<std::string, CRating>` —— **任意字符串都能当源名**，
-   插件 `setRating("douban", 8.5, 0, True)` 皮肤就能读到 `Rating(douban)`
+   且 `RatingMap` 是 `std::map<std::string, CRating>` —— 任意字符串都能当源名。
 
 **实施步骤**：
 
@@ -950,7 +927,8 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 
 **四条约束**（`tools/test_nara_neutral_fanart.py` 锁着）：
 
-1. 四页剧照必须是**同一个乘法系数**，分叉就会按页漂移；
+1. 七页剧照（设置页 / 文件管理 / 搜索空查询 / 首页文件·收藏 / 文件浏览器 /
+   添加文件源 / 插件设置）必须是**同一个乘法系数**，分叉就会按页漂移；
 2. 必须**不透明**（alpha `FF`），否则 primary 的蓝紫会透上来；
 3. 系数必须是**中性**（R=G=B），带色偏等于换个方向染色；
 4. 不要再引入中性底 / 半透明叠灰这类额外图层。
@@ -1108,14 +1086,17 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 
 | 弹窗 | 正文 left | `header_left` |
 |---|---|---|
-| OK 弹窗 / 字幕 / 文本查看器 / 文件浏览器 | 48 | 48（默认） |
-| 选择列表 | 20（行内文字在 40） | **40** |
+| OK 弹窗 / 字幕 / 文本查看器 | 48 | 48（默认） |
+| 文件浏览器 | 列表 36 + 图标 20 = **56** | **56**（2026-11-05 用户定：标题对齐行图标列） |
+| 选择列表 | 列表 36（行内文字在 56） | **56** |
 | 媒体源 / PVR 分组 / 智能播放列表编辑器 | 32 | 32 |
 | 数字输入 | 44（输入框左边缘） | 44 |
 | 视频管理 / 播放控制 / 智能播放列表规则 / 颜色选择 | 20 | 20 |
 | PVR 频道管理 / PVR 搜索 | 10（1800 宽全屏页） | **32**（贴边太难看，故意不严格对齐） |
 
-⚠️ **选择列表是 40 不是 20**：列表行内部有 20px 文字缩进，标题要对齐的是**文字**，不是高亮块。
+⚠️ **文件浏览器按「图标列」对齐**：标题 56 与行图标左边缘共线；行文字在图标右侧
+（绝对 104），不可能与图标同时压到 56（会盖住图标）。底部路径 / 计数同样从 56 起。
+⚠️ **选择列表按「文字列」对齐**：列表 36 + 行内缩进 20 = 56。
 
 ⚠️ **改 `DialogBackgroundCommons` 一次影响 16 个窗口**：至少开两个不同尺寸的弹窗验收
 （915×400 的 OK 弹窗 + 1220×750 的选择列表）。

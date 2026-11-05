@@ -91,15 +91,12 @@ E4K 不导出库封面（没有 `library_icons` 或 `libraryart` 目录），别
 
 入口都在可达 UI：设置中心（`skinsettings`）4 个侧边栏页面，歌词插件在设置对话框。
 
-**主评分来源四档互斥**（`NaraOnlineRatingsRow`，2026-10-31 定稿）：
-TMDb / IMDb / 豆瓣（神医助手覆盖）/ 自动（仅本地刮削）。
-数值永远读 `ListItem.Rating`，图标按所选档位画；只有 `rating_src_auto` 才比对
-`Rating(tmdb/trakt/imdb)`。**TMDb 是默认档**：没选自动 / IMDb / 豆瓣时按 TMDb 画。
-**不要让自动识别排在设置前面**：E4K 打开「Set imdb as default rating provider」会把
-`CommunityRating` 补写成 imdb 类型，届时类型字段恒等于默认分，设置就失效了。
-次评分四档：自动 / 豆瓣 / 烂番茄 / 关闭（设置 715）。自动 = 详情页有插件豆瓣分
-（且与主分不同）→ 豆瓣，否则 → 烂番茄；手选固定来源，关闭则整颗隐藏。
-主评分是豆瓣时次评分走烂番茄，不会出现两颗都不显示。
+**主评分来源四档互斥**（`NaraOnlineRatingsRow`，2026-11-05）：
+TMDb / IMDb / 豆瓣 / 自动。手选时读对应类型，读不到才退回 `ListItem.Rating`
+（官方 E4K 只有 `default`）；TMDb 档兼容本地电影的 `themoviedb`。自动档比对
+`Rating(tmdb/themoviedb/trakt/imdb/douban)`，全部不匹配用中性图标。
+次评分四档：自动 / 豆瓣 / 烂番茄 / 关闭（设置 715）。豆瓣优先读 `Rating(douban)`
+（详情页、首页、列表）；读不到时仅详情页回退 helper 窗口属性；没有豆瓣才显示烂番茄。
 
 `circle_none`、`OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项，
 `rating_src_tmdb` / `rating_sec_auto` 是"默认档位"（变量用无条件 `<value>` 兜底），
@@ -119,9 +116,9 @@ TMDb / IMDb / 豆瓣（神医助手覆盖）/ 自动（仅本地刮削）。
   `plugin://script.mistuary.helper/?mode=search&type=movies|shows&query=<原始词>`
   （`query` 必须是最后一个参数）；开关 714 写 `helper_search_off`（反向，默认开），
   插件或 Emby 不可用时整行隐藏，容器回退本地 XSP。
-- **详情页豆瓣**：`DialogVideoInfo` 的 `onload` 调 `action=rating`；皮肤只读
-  `Window(home).Property(Mistuary.Rating.Douban / .Votes / .Status / .FetchedAt)`，
-  `Status != ok` 时隐藏胶囊。列表 / 首页不读这些属性。
+- **详情页豆瓣兜底**：`Rating(douban)` 为空时，`DialogVideoInfo` 的 `onload` 调
+  `action=rating`；皮肤只读 `Window(home).Property(Mistuary.Rating.Douban / .Votes / .Status / .FetchedAt)`，
+  `Status != ok` 时隐藏胶囊。列表 / 首页不触发联网。
 - 权威契约在插件仓库 `docs/contract.md`；改调用方式先改那边。
 
 ---
