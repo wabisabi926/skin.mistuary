@@ -8,7 +8,7 @@
 | [`handover-2026-11-03.md`](handover-2026-11-03.md) | **已归档的交接快照**（2026-11-03）。当天本地改动与遗留；其中的「未发」项已随 1.9.0 进包，只作当时记录 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
-| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b/M2/M1c 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
+| [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b–M7 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
 | [`techflag-icons-plan.md`](techflag-icons-plan.md) | 改影片技术标识（4K/HDR/Atmos…）的图标或布局前。图标规格、IconMap、评分行合并的取舍 |
 | [`techflag-icon-coverage.md`](techflag-icon-coverage.md) | 查某个格式/音轨到底有没有图标。97 张图标的覆盖盘点 |
 | [`kernel-extensions.md`](kernel-extensions.md) | **历史资料，不对应当前代码**。原魔改内核的 `material="glass"` / `slotlist` / 稳定选中项等扩展规格，本分支已全部移除，只留作对照 |
@@ -17,6 +17,7 @@
 | [`report-triage-2026-10-29.md`](report-triage-2026-10-29.md) | **外部校验报告怎么读**。456 errors / 448 warnings 的分诊：哪些是 CRLF 假阳性、哪些是 Kodi 22 双轨、哪些是真 bug；含修复批次、Kodi 21 回退点和待决策项 |
 | [`skin.mistuary_report.txt`](skin.mistuary_report.txt) | **历史外部报告原文**（2026-10-29）。只看分诊结论，不要按原文逐条修 |
 | [`repo-layout-plan.md`](repo-layout-plan.md) | **历史资料**。2026-10-27 把 `extras/` 归位成素材目录、构建工具移到 `tools/` 的整改记录 |
+| [`preview/`](preview/) | **2026-11-06 季视图改版排布预览**（1920×1080，进入态 / 集聚焦态） |
 
 ---
 
