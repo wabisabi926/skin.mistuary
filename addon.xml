@@ -30,8 +30,8 @@
 
 Mistuary Helper 提供：服务端中文搜索、详情页豆瓣评分、媒体库封面同步、
 播放列表补全（按季 / 按目录 / 跨季），以及文件播放记录 ——
-在文件管理器里播过的视频会记住进度，下次起播可选择「继续播放」，
-焦点行还有圆环显示已播比例（Kodi 原生只对库内条目续播）。
+只在文件管理器（10003）里生效，播过的视频会记住进度，下次起播可选择「继续播放」，
+焦点行还有圆环显示已播比例；不改动 Kodi 原生续播点。
 
 详情页评分支持 TMDb / IMDb / 豆瓣 / 烂番茄（同时最多两个），
 技术标识按分辨率 / HDR / 杜比视界档位 / 编码 / 声道图标化。
@@ -43,9 +43,9 @@ Kodi NextGen it natively follows dynamic nodes.
 
 Mistuary Helper provides server-side Chinese search, Douban ratings in the video info
 dialog, media-library cover sync, playlist completion (by season / by folder / next season),
-and file playback resume - videos played from the file manager remember their position,
-offer “resume from h:mm:ss” on the next start, and show a progress ring on the focused
-row (Kodi only resumes library items natively).
+and file playback resume - only for the file manager (10003): videos remember their position,
+offer “resume from h:mm:ss” on the next start, and show a progress ring on the focused row.
+Kodi's native resume points are not touched.
 
 Ratings from TMDb / IMDb / Douban / Rotten Tomatoes (up to two at a time); technical flags
 are shown as icons (resolution, HDR, Dolby Vision profile, codecs, channels).
