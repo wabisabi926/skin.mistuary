@@ -542,14 +542,12 @@
 			<aspectratio>stretch</aspectratio>
 			<texture colordiffuse="search_backdrop">special://skin/extras/backgrounds/primary.jpg</texture>
 		</control>
-		<!-- 空查询随机剧照是半透明层，下面先用中性灰顶替 primary，
-		     去掉蓝紫底；显隐与剧照层共用同一条表达式。 -->
 		<!-- ② 空查询随机剧照：照「文件 / 收藏夹」的写法，只是改成 stretch 铺满 -->
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio>stretch</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraSharedRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="fanart_dim_reading">$VAR[NaraSharedRandomFanartVar]</texture>
 			<visible>$EXP[nara_search_empty_fanart_visible]</visible>
 		</control>
 		<!-- 剧照必须铺满：Kodi 的 aspectratio 只有 keep/scale/center/stretch，

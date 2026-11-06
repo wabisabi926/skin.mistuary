@@ -5,12 +5,7 @@
 	<include name="NaraSettingsBackground">
 		<definition>
 			<include>DefaultBackground</include>
-			<!-- 有真剧照时，先用中性灰顶替 primary，去掉蓝紫底；
-			     显隐与下面的剧照层共用同一个表达式。
-			     它放在 20% 遮罩下面，所以原来的 20% / 10% 两层 alpha
-			     都不用改，亮度和现状一致。 -->
-			<!-- 兜底由 DefaultBackground 里的 primary.jpg 提供。20% 轻遮罩：
-			     有剧照时压中性底，无剧照时压 primary；两层都不过度压暗。 -->
+			<!-- 兜底由 DefaultBackground 里的 primary.jpg 提供。 -->
 			<!-- 通用版：与文件管理一致 —— 用随机影片 fanart 作背景，
 			     让上层的半透明面板（GlassTint_*）能看出层次。
 			     隐藏的 1x1 列表只在首页没有传递 fanart 时才去库里取一张。 -->
@@ -28,7 +23,7 @@
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraFileManagerRandomFanartVar]</texture>
+				<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
 				<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 			</control>
 		</definition>

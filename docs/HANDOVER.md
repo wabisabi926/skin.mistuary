@@ -785,9 +785,9 @@ E4K 不写票数，`ListItem.Votes(...)` 恒空；个人评分不进 `Ratings`�
 
 | 页面 | 兜底 |
 |---|---|
-| `DialogVideoInfo` | `primary.jpg` 原色（`primary_background_info`）+ fanart + 左侧压暗 |
-| `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图，再退到 primary |
-| `DialogAddonInfo` | **共享真剧照**（`NaraFileManagerRandomFanartVar`，×0.66）+ 插件自己的 fanart；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
+| `DialogVideoInfo` | `primary.jpg` 原色（`no_fanart`）/ `primary_dim` ×0.60（缺 fanart）+ fanart + 左侧压暗 |
+| `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图（`fanart_dim` ×0.50），再退到 primary |
+| `DialogAddonInfo` | **共享真剧照**（`NaraFileManagerRandomFanartVar`，×0.50）+ 插件自己的 fanart（×0.66）；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
 | `DialogPVRInfo` / `DialogPictureInfo` | **故意透出直播画面 / 当前图片**，不铺不透明底图 |
 
 > 插件详情 2026-11-05 起不再用 `primary.jpg` 兜底：底层换成与设置页 / 文件管理同一张
@@ -922,42 +922,56 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 **烂番茄的定位**（2026-10-31 定稿）：只做次评分，不进主评分优先级。
 详情页有插件豆瓣分时让位给豆瓣，否则显示烂番茄；主评分四档见 §5.7。
 
-### 5.11 背景遮罩：真图压暗、兜底不压（2026-10-31 定）
+### 5.11 背景遮罩：首页统一加阅读区（2026-11-06 定）
 
-- 首页 / 搜索 / 文件收藏夹统一口径：**真剧照加遮罩，`primary.jpg` 兜底不加**
-- 判据是 `xml/Includes_Home.xml` 的三条 `expression`：
-  - `NaraHomeFanartSubItems`：当前条目 fanart、文件夹行前一张卡、Emby 封面
-  - `NaraHomeFanartSubHero`：Hero 行 11 个容器 id（5100/5200/5300/5800/5400/5600、
-    6100/6200/6300/6700/6800），含 `target_folder` 前卡；导航聚焦且 Hero 为空时
-    走 `Container(5100)` / `Container(6100)`
-  - `NaraHomeFanartSubOther`：`Home.LastMovieFanart` / `Home.LastTVShowFanart` / 音乐分区
-  - Files / Favorites 另走「共享随机剧照存在」这一支
-- **不能只查 `Container.ListItem.Art(fanart)`**：Hero、文件夹行、`Last*Fanart`、
-  音乐背景、Emby 封面都会漏遮罩，表现为导航聚焦或文件夹行突然变亮
-- 改 `Variables.xml` 的 `HomeFanartVar` 或 `Includes_HomeVideo.xml` 的
-  `HomeVideoHeroFanartVar` 时**必须同步**；`tools/check_home_fanart_mask.py --check`
-  会拦截漏掉的容器 id 和丢失的 `target_folder` 门
+- **首页所有非搜索分区一律叠烘焙阅读遮罩**，不再区分「真剧照 / `primary.jpg` 兜底 / 音乐背景」；
+  电视（livetv）与音乐分区以前没有遮罩，看起来比电影/电视剧亮一档，现在统一
+- **搜索分区不叠这一组**：`NaraSearchBackground` 自带完整的遮罩栈，重复叠会二次压暗
+- 文件 / 收藏用 `list` 变体，其余分区用 `hero` 变体；`no_fanart` 打开时两张都不显示
+- 旧的三条 `Sub*` 判据（`NaraHomeFanartSubItems` / `SubHero` / `SubOther`）已删除：
+  统一后不再需要判断「背景是不是真图」，也就不存在「判据与变量分支漂移」这类问题
+- `tools/check_home_fanart_mask.py --check` 现在守三条：
+  遮罩组排除 `search`、不排除 `music`；两张遮罩都受 `no_fanart` 控制
 
 #### 5.11.1 半透明剧照：乘法压暗，不再垫中性底（2026-11-05 定稿）
 
 `primary.jpg` 的平均色约 `63,77,110`（偏蓝紫）。设置页 / 文件管理 / 搜索空查询 /
 首页「文件·收藏」的剧照曾经是半透明叠在它上面，于是被染成紫灰。
 
-**现行做法**：剧照用乘法压暗 —— `colordiffuse="FFA8A8A8"`（RGB ×0.66，alpha `FF` 不透明）。
+**现行做法**：剧照用乘法压暗，系数集中在 `colors/defaults.xml` 的两个 token，**不要再写死十六进制**：
+
+| token | 值 | 用在哪 |
+|---|---|---|
+| `fanart_dim` | `FF808080`（×0.50） | 设置 / 文件管理 / 文件浏览器 / 添加文件源 / 插件设置 / 插件详情底层 / 媒体库页；View_51 海报墙、MovieSet、音乐信息兜底 |
+| `fanart_dim_reading` | `FFA8A8A8`（×0.66） | 自带烘焙阅读遮罩的首页文件·收藏、搜索空查询，以及插件详情自己的 fanart |
+| `primary_dim` | `FF999999`（×0.60） | 缺 fanart 时的 `primary.jpg` 兜底层（View_51 / View_501 / DialogVideoInfo）；`no_fanart` 仍画原图 |
+
+改亮度只动这几行；全部保持不透明（alpha `FF`）。
+
+**全皮肤亮度阶梯**（2026-11-07 定）：
+
+| 位置 | 目标 |
+|---|---|
+| 媒体库内容页 / View_50（已有 40% 页遮罩） | 0.24–0.30 |
+| 八共享页 / View_51 海报墙 / MovieSet / 音乐信息兜底 | 0.40–0.50 |
+| 首页（真图 / primary 兜底 / 音乐，统一 hero 遮罩） | 0.44 |
+| 视频详情 / 音乐信息（stage mask + 左 scrim + 底部渐变） | 0.45–0.50 |
+| primary 兜底（缺 fanart） | 0.60 |
+| 音乐播放 / PVR / 图片信息 / 视频播放 | 原图 |
 
 | 做法 | 合成亮度（剧照亮度 L） | 玻璃面板后面 |
 |---|---|---|
 | 55% + 20% 黑 + 10% 黑（设置页初版） | `0.495L + 24.9` | 灰雾，没层次 |
 | 50% 叠在 `#313131` 上（第二轮） | `0.5L + 24.5` | 同上 |
-| **×0.66 不透明（现行）** | `0.66L` | 照片的明暗和色彩都在 |
+| **×0.50 / ×0.66 不透明（现行）** | `0.50L` / `0.66L` | 照片的明暗和色彩都在；无遮罩页 0.50，带烘焙遮罩页 0.66 |
 
 三者在 L=150 时都约 99，亮度等价；但乘法压暗**不需要中性底那一层**，
 玻璃背后有真实的明暗过渡。**别再用纯色兜底图当背景** —— 面板会糊在背景上，玻璃感直接没了。
 
 **四条约束**（`tools/test_nara_neutral_fanart.py` 锁着）：
 
-1. 八页剧照（设置页 / 文件管理 / 搜索空查询 / 首页文件·收藏 / 文件浏览器 /
-   添加文件源 / 插件设置 / 插件详情）必须是**同一个乘法系数**，分叉就会按页漂移；
+1. 八页剧照只允许两个 token：无阅读遮罩的页统一 `fanart_dim`（0.50），
+   自带烘焙遮罩的页统一 `fanart_dim_reading`（0.66）；同类分叉就会按页漂移；
 2. 必须**不透明**（alpha `FF`），否则 primary 的蓝紫会透上来；
 3. 系数必须是**中性**（R=G=B），带色偏等于换个方向染色；
 4. 不要再引入中性底 / 半透明叠灰这类额外图层。
@@ -975,16 +989,16 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 **首页「文件 / 收藏」还有一条动画**：收藏详情弹窗打开时剧照要淡出
 （`condition="…favorites + Window.IsActive(movieinformation)"`），否则弹窗后面会剩一块图。
 
-**音乐分区不叠阅读区**：音乐背景图本身亮度约 73，再叠遮罩 + 三条渐变纯属白画 4 层。
-判据写在遮罩组的 `visible` 里（`!String.IsEqual(Window(home).Property(Home.Section),music)`）。
+**音乐分区也吃阅读区**（2026-11-06 统一）：音乐背景图本身亮度约 73，以前为省 4 层不叠遮罩，
+结果比电影/电视剧亮一档；现在和其它分区一样叠 `hero` 变体，保证整个首页亮度一致。
 
 **阅读区是一张烘焙图**：遮罩 + 顶部渐变 + 底部渐变 + 左侧 scrim 合成一张 720p overlay，
 由 `tools/gen_fanart_overlay.py` 生成（`--check` 进 CI）。改那四层的几何或透明度后必须重跑，
-否则画面和生成器不一致。三个变体：`hero`（电影/电视剧/搜索结果）、`list`（首页文件/收藏）、
+否则画面和生成器不一致。三个变体：`hero`（电影/电视剧/音乐/电视/兜底）、`list`（首页文件/收藏）、
 `empty`（搜索空查询）。烘焙后这些页面各少画 3 层。
 
-**还有哪些剧照层**：`grep 'colordiffuse="FFA8A8A8"' xml/` 应该正好 4 处（注意是 AARRGGBB，见上面的警告）。
-搜索结果剧照是不透明的，不参与这套。加新的半透明剧照页时先跑这条 grep 确认口径。
+**还有哪些剧照层**：`grep -o 'colordiffuse="fanart_dim[^"]*"' xml/*.xml` 应能看到两个 token 的使用点。
+搜索结果剧照是不透明的，不参与这套。加新的半透明剧照页时先判断它属于哪一类（有无阅读遮罩）。
 
 ### 5.12 播放/暂停图标：音乐与视频共用一套（2026-10-31 定）
 
@@ -1567,6 +1581,7 @@ Kodi 存储时设置名小写；`NaraHomeMenuDefaultsMusicTVOff` 标记已置位
 
 1. **乘法压暗**：剧照改 `FFA8A8A8`（RGB ×0.66、不透明），照片的层次和色彩都保留，
    **中性底整块删掉**（`NaraNeutralFanartBase` 已从 `Includes.xml` 移除），四页各少 1 层。
+   （2026-11-06 调整为两档 token：无阅读遮罩的六页降到 `fanart_dim` 0.50，见 §5.11.1）
 2. **烘焙阅读区**：遮罩 + 顶部渐变 + 底部渐变 + 左侧 scrim 合成一张 720p overlay
    （`tools/gen_fanart_overlay.py`，三个变体 hero / list / empty），每页少画 3 层。
    做过受控 A/B：固定测试图分别用「4 层」和「烘焙 1 层」渲染，逐像素平均差 **0.5~3.9/255**

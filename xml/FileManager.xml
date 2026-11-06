@@ -16,13 +16,11 @@
 			<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
 			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))</visible>
 		</control>
-		<!-- 有真剧照时先用中性灰顶替 primary，去掉蓝紫底；
-		     显隐与下面的剧照层共用同一条表达式。 -->
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
 			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 		</control>
 		<control type="image">

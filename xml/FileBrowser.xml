@@ -5,7 +5,7 @@
 	<controls>
 		<!-- 浮窗透明度调得很透时，下层窗口的标题 / 设置文字会透过玻璃变成"鬼影"。
 		     这里只铺一层**不透明的随机剧照**（与设置页 / 文件管理同一张、同一个
-		     乘法压暗系数 FFA8A8A8），把下层整个盖住。
+		     乘法压暗系数 fanart_dim（FF808080）），把下层整个盖住。
 		     剧照本身不透明，所以**不能再垫纯色 / 中性底**——HANDOVER §5.11.1 第 4 条：
 		     垫底会让面板糊在背景上，玻璃感直接没了。没有剧照时这层隐藏，
 		     退回到普通页面背景（与文件管理 / 设置页行为一致）。 -->
@@ -25,7 +25,7 @@
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="FFA8A8A8">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
 			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 		</control>
 		<control type="group">

@@ -18,13 +18,19 @@
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
 				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
-				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+				<visible>Skin.HasSetting(no_fanart)</visible>
+			</control>
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true">$INFO[Container(51).ListItem.Art(fanart)]</texture>
+				<texture background="true" colordiffuse="fanart_dim">$INFO[Container(51).ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image">
@@ -413,7 +419,16 @@
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
 				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
-				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+				<visible>Skin.HasSetting(no_fanart)</visible>
+			</control>
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image">
 				<left>-120</left>

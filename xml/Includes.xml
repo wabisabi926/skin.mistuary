@@ -792,7 +792,7 @@
 		</definition>
 	</include>
 	<!-- 媒体库页面的背景压暗层。
-	     共享 fanart 是 artwork_background_opaque（FF808080 = 50% 亮度），
+	     共享 fanart 用 fanart_dim（FF808080 = 50% 亮度），
 	     但它仍然有颜色、有明暗，跟海报/封面抢视线。再压 40%，背景退成"底噪"。
 	     放在 DefaultBackground 之后、内容之前。
 	     Home 不用它 —— 首页的 fanart 是设计主体，不该压。 -->
@@ -802,8 +802,7 @@
 			<texture colordiffuse="66000000">colors/black.png</texture>
 		</control>
 	</include>
-	<!-- 共享剧照的显隐。中性底色和剧照层共用同一条，
-	     避免两套条件各自漂移，出现灰底/紫底闪一下。 -->
+	<!-- 共享剧照的显隐。显隐集中在一条表达式，避免各页条件各自漂移。 -->
 	<expression name="nara_page_shared_fanart_visible">!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</expression>
 	<!-- 搜索页空查询随机剧照的显隐。搜索结果剧照是不透明的，不需要中性底。 -->
 	<expression name="nara_search_empty_fanart_visible">String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]</expression>
@@ -1049,7 +1048,7 @@
 						<aspectratio align="$PARAM[fanart_align]">scale</aspectratio>
 						<fadetime>$PARAM[transition_time]</fadetime>
 						<animation effect="fade" time="$PARAM[transition_time]">VisibleChange</animation>
-						<texture background="true" colordiffuse="artwork_background_opaque">$VAR[MediaFanartVar]</texture>
+						<texture background="true" colordiffuse="fanart_dim">$VAR[MediaFanartVar]</texture>
 					</control>
 					<control type="image">
 						<left>-3</left>
