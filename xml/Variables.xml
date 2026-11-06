@@ -620,6 +620,12 @@
 		<value condition="String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set)">$LOCALIZE[1024]</value>
 		<value>$LOCALIZE[208]</value>
 	</variable>
+	<!-- 季页的播放键：本季有观看进度时显示“继续播放”，否则“播放”。
+	     季条目没有 tvshow 的 WatchedEpisodePercent 判断路径，单独用一个变量。 -->
+	<variable name="NaraSeasonPlayButtonLabelVar">
+		<value condition="Integer.IsGreater(Container(51).ListItem.Property(WatchedEpisodePercent),0)">$LOCALIZE[13362]</value>
+		<value>$LOCALIZE[208]</value>
+	</variable>
 	<variable name="PictureInfoMainLabelVar">
 		<value condition="Window.IsActive(Slideshow)">$INFO[SlideShow.Filename]</value>
 		<value>$INFO[ListItem.Label]</value>

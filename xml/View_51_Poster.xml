@@ -4,7 +4,7 @@
 	     foreground fade prevents Busy from exposing the shared primary artwork. -->
 	<include name="View_51_Poster_Background">
 		<control type="group">
-			<visible>Control.IsVisible(51) + [Container.Content(movies) | Container.Content(seasons) | Container.Content(sets) | Container.Content(tvshows) | $EXP[videoasset_true]]</visible>
+			<visible>Control.IsVisible(51) + [Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | $EXP[videoasset_true]]</visible>
 			<animation effect="fade" start="0" end="100" time="260" reversible="false" condition="!Window.Previous(home)">WindowOpen</animation>
 			<animation effect="fade" start="100" end="0" time="180" condition="!Window.Next(home)">WindowClose</animation>
 			<animation effect="fade" time="220">VisibleChange</animation>
@@ -262,19 +262,44 @@
 				<onleft condition="$EXP[nara_tv_hierarchy_sidebar_locked]">51</onleft>
 				<onleft condition="!$EXP[nara_tv_hierarchy_sidebar_locked]">9000</onleft>
 				<onright>51</onright>
+				<!-- 季标签必须是“第1季、第2季…”的升序；原生季列表可能被排成倒序。
+				     只在排序不对时修正，避免每次聚焦都重载容器。 -->
+				<onfocus condition="Container.Content(seasons) + !Container.SortMethod(24)">Container.SetSortMethod(24)</onfocus>
+				<onfocus condition="Container.Content(seasons) + Container.SortDirection(descending)">Container.SetSortDirection</onfocus>
+				<!-- 季页：上到播放键，下到本季集卡片；其他内容沿用原导航。 -->
+				<onup condition="Container.Content(seasons)">5110</onup>
 				<onup condition="$EXP[nara_tv_hierarchy_sidebar_locked]">51</onup>
 				<onup condition="!$EXP[nara_tv_hierarchy_sidebar_locked]">9000</onup>
+				<ondown condition="Container.Content(seasons)">5101</ondown>
 				<ondown>5198</ondown>
 				<visible>Container.Content(movies) | Container.Content(seasons) | Container.Content(sets) | Container.Content(tvshows) | $EXP[videoasset_true]</visible>
 				<viewtype label="20021">icon</viewtype>
-				<itemlayout width="420" height="630">
+				<itemlayout width="420" height="630" condition="!Container.Content(seasons)">
 					<!-- 季列表一次只显示聚焦卡片：未聚焦槽位不画 -->
 					<include content="NaraPosterDeckCard">
 						<param name="deck_on" value="false" />
 					</include>
 				</itemlayout>
-				<focusedlayout width="420" height="630">
+				<focusedlayout width="420" height="630" condition="!Container.Content(seasons)">
 					<include content="NaraPosterDeckCard" />
+				</focusedlayout>
+				<!-- 季内容改由图 1 版式承载：这里只保留一个透明焦点槽位，
+				     可见的季标签由 View_51_Seasons 的 grouplist 绘制。 -->
+				<itemlayout width="250" height="58" condition="Container.Content(seasons)">
+					<control type="label">
+						<width>250</width>
+						<height>52</height>
+						<textcolor>00FFFFFF</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</itemlayout>
+				<focusedlayout width="250" height="58" condition="Container.Content(seasons)">
+					<control type="label">
+						<width>250</width>
+						<height>52</height>
+						<textcolor>00FFFFFF</textcolor>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
 				</focusedlayout>
 			</control>
 
@@ -311,8 +336,394 @@
 				<top>260</top>
 				<width>725</width>
 				<height>620</height>
+				<visible>!Container.Content(seasons)</visible>
 				<animation effect="slide" start="55,0" end="0,0" time="360" tween="cubic" easing="out">WindowOpen</animation>
 				<include>NaraPosterDeckHero</include>
+			</control>
+		</control>
+	</include>
+
+	<!-- 季标签：容器 51 自己承接焦点，grouplist 只负责可见标签；
+	     和详情页 5100 的方案一致，最多同时显示 7 个季。 -->
+	<include name="View51SeasonTabVisualItem">
+		<definition>
+			<control type="button">
+				<width max="220">auto</width>
+				<height>52</height>
+				<font>font13</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx>0</textoffsetx>
+				<textcolor>text_secondary</textcolor>
+				<focusedcolor>text_secondary</focusedcolor>
+				<label>$INFO[Container(51).ListItemPosition($PARAM[position]).Label]</label>
+				<texturefocus />
+				<texturenofocus />
+				<hitrect x="0" y="0" w="0" h="0" />
+				<visible>!String.IsEmpty(Container(51).ListItemPosition($PARAM[position]).Label) + !Container(51).Position($PARAM[position])</visible>
+			</control>
+			<control type="button">
+				<width max="220">auto</width>
+				<height>52</height>
+				<font>font13</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx>0</textoffsetx>
+				<textcolor>text_primary</textcolor>
+				<focusedcolor>text_primary</focusedcolor>
+				<label>$INFO[Container(51).ListItemPosition($PARAM[position]).Label]</label>
+				<texturefocus border="0,0,0,3" infill="false" colordiffuse="80FFFFFF">colors/white.png</texturefocus>
+				<texturenofocus border="0,0,0,3" infill="false" colordiffuse="80FFFFFF">colors/white.png</texturenofocus>
+				<hitrect x="0" y="0" w="0" h="0" />
+				<visible>Container(51).Position($PARAM[position]) + !Control.HasFocus(51)</visible>
+			</control>
+			<control type="button">
+				<width max="220">auto</width>
+				<height>52</height>
+				<font>font13</font>
+				<align>center</align>
+				<aligny>center</aligny>
+				<textoffsetx>0</textoffsetx>
+				<textcolor>text_primary</textcolor>
+				<focusedcolor>text_primary</focusedcolor>
+				<label>$INFO[Container(51).ListItemPosition($PARAM[position]).Label]</label>
+				<texturefocus border="0,0,0,3" infill="false" colordiffuse="focus_media">colors/white.png</texturefocus>
+				<texturenofocus border="0,0,0,3" infill="false" colordiffuse="focus_media">colors/white.png</texturenofocus>
+				<hitrect x="0" y="0" w="0" h="0" />
+				<visible>Container(51).Position($PARAM[position]) + Control.HasFocus(51)</visible>
+			</control>
+		</definition>
+	</include>
+
+	<!-- 季页：点电视剧后进入的那一页，版式取自 12003 剧集详情页。
+	     电影/剧/合集仍走上面的封面 deck，本组只在 Container.Content(seasons) 时出现。 -->
+	<include name="View_51_Seasons">
+		<control type="group">
+			<visible>Control.IsVisible(51) + Container.Content(seasons)</visible>
+			<animation effect="fade" time="220">VisibleChange</animation>
+
+			<!-- 季页背景与详情页完全同一套参数：
+			     primary 兜底 → fanart（右对齐 scale）→ fanart-stage-mask 暗角
+			     → detail-left-scrim 左侧阅读压暗 → opacity_medium 底部渐变。
+			     View_51 原来的 deck 背景已在季内容时关闭，避免叠两层不同参数。 -->
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
+				<visible>Skin.HasSetting(no_fanart) | String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<left>-120</left>
+				<top>-80</top>
+				<right>-120</right>
+				<bottom>-80</bottom>
+				<aspectratio align="right">scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true">$INFO[Container(51).ListItem.Art(fanart)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<include content="NaraFanartReveal">
+				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))" />
+			</include>
+			<control type="image">
+				<left>-120</left>
+				<width>1320</width>
+				<height>1080</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/detail-left-scrim.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<top>420</top>
+				<left>-120</left>
+				<right>-120</right>
+				<height>660</height>
+				<aspectratio>stretch</aspectratio>
+				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
+			</control>
+
+			<!-- Hero：坐标沿用详情页 tvshow 版式（无 tagline 时整组上移 22、简介组再上移 38） -->
+			<control type="group">
+				<left>80</left>
+				<top>180</top>
+				<width>1180</width>
+				<height>640</height>
+				<control type="image">
+					<top>25</top>
+					<width>720</width>
+					<height>160</height>
+					<aspectratio align="left" aligny="center">keep</aspectratio>
+					<texture background="true">$VAR[NaraPosterHeroClearLogoVar]</texture>
+					<visible>!String.IsEmpty(Container(51).ListItem.Art(clearlogo)) | !String.IsEmpty(Container(51).ListItem.Art(tvshow.clearlogo))</visible>
+				</control>
+				<control type="label">
+					<top>33</top>
+					<width>800</width>
+					<height>104</height>
+					<font>font60</font>
+					<shadowcolor>shadow_hard</shadowcolor>
+					<aligny>center</aligny>
+					<scroll>true</scroll>
+					<label>$VAR[NaraPosterHeroTitleVar]</label>
+					<visible>String.IsEmpty(Container(51).ListItem.Art(clearlogo)) + String.IsEmpty(Container(51).ListItem.Art(tvshow.clearlogo))</visible>
+				</control>
+				<control type="label">
+					<top>165</top>
+					<width>790</width>
+					<height>40</height>
+					<font>font30_title</font>
+					<shadowcolor>shadow_hard</shadowcolor>
+					<textcolor>text_secondary</textcolor>
+					<scroll>true</scroll>
+					<label>$VAR[NaraPosterHeroEpisodeLabelVar]</label>
+				</control>
+				<control type="label">
+					<top>205</top>
+					<width>810</width>
+					<height>38</height>
+					<font>font13</font>
+					<shadowcolor>shadow_hard</shadowcolor>
+					<textcolor>text_secondary</textcolor>
+					<scroll>true</scroll>
+					<label>$INFO[Container(51).ListItem.Year]$INFO[Container(51).ListItem.Genre,  •  ]$INFO[Container(51).NumItems,  •  , $LOCALIZE[36905]]$INFO[Container(51).ListItem.Property(TotalEpisodes),  •  , $LOCALIZE[36907]]</label>
+				</control>
+				<control type="textbox">
+					<left>2</left>
+					<top>271</top>
+					<width>790</width>
+					<height>105</height>
+					<font>font13</font>
+					<shadowcolor>shadow_hard</shadowcolor>
+					<textcolor>text_secondary</textcolor>
+					<label fallback="19055">$VAR[NaraPosterHeroSynopsisVar]</label>
+					<autoscroll time="3000" delay="7000" repeat="5000">Skin.HasSetting(autoscroll) + !Window.IsActive(1102)</autoscroll>
+				</control>
+				<!-- 季条目没有剧集总评分，这里只显示本季第一集的技术标识 + 集号。 -->
+				<control type="group">
+					<top>400</top>
+					<include content="NaraOnlineRatingsRow">
+						<param name="item_prefix" value="Container(51).ListItem" />
+						<param name="inline_flags" value="true" />
+						<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />
+						<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />
+						<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />
+						<param name="technical_caption_visible" value="!String.IsEmpty(Container(5101).ListItemAbsolute(0).VideoResolution)" />
+					</include>
+				</control>
+			</control>
+
+			<!-- 主播放键：按剧集级“继续播放”，和详情页的播放语义一致 -->
+			<control type="group">
+				<left>80</left>
+				<top>676</top>
+				<width>220</width>
+				<height>70</height>
+				<include content="VideoInfoActionGlass">
+					<param name="button_id" value="5110" />
+					<param name="ring" value="shapes/ring_btn_220x70_r35.png" />
+					<param name="base" value="E6FFFFFF" />
+					<param name="focus" value="33000000" />
+				</include>
+				<control type="button" id="5110">
+					<width>220</width>
+					<height>70</height>
+					<font>font13</font>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$VAR[NaraSeasonPlayButtonLabelVar]</label>
+					<textcolor>ink_primary</textcolor>
+					<focusedcolor>ink_primary</focusedcolor>
+					<texturefocus />
+					<texturenofocus />
+					<onup>51</onup>
+					<ondown>51</ondown>
+					<onleft>5110</onleft>
+					<onright>5110</onright>
+					<onclick condition="!String.IsEmpty(Container(51).ListItem.TvShowDBID)">PlayMedia(videodb://tvshows/titles/$INFO[Container(51).ListItem.TvShowDBID]/,resume,tvshowtarget)</onclick>
+					<onclick condition="String.IsEmpty(Container(51).ListItem.TvShowDBID)">Action(Play)</onclick>
+				</control>
+			</control>
+
+			<!-- 季标签：容器 51 的焦点位置决定当前季 -->
+			<control type="grouplist">
+				<left>80</left>
+				<top>770</top>
+				<width>1760</width>
+				<height>52</height>
+				<orientation>horizontal</orientation>
+				<itemgap>36</itemgap>
+				<hitrect x="0" y="0" w="0" h="0" />
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="0" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="1" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="2" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="3" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="4" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="5" />
+				</include>
+				<include content="View51SeasonTabVisualItem">
+					<param name="position" value="6" />
+				</include>
+			</control>
+
+			<!-- 本季集卡片：内容跟随当前季；布局与详情页 5101 一致 -->
+			<control type="panel" id="5101">
+				<left>70</left>
+				<top>826</top>
+				<width>1780</width>
+				<height>243</height>
+				<orientation>horizontal</orientation>
+				<scrolltime>220</scrolltime>
+				<preloaditems>1</preloaditems>
+				<onleft>5101</onleft>
+				<onright>5101</onright>
+				<onup>51</onup>
+				<ondown>5101</ondown>
+				<onclick>Action(Play)</onclick>
+				<content sortby="episode" sortorder="ascending" target="videos" browse="never">$INFO[Container(51).ListItem.FolderPath]</content>
+				<itemlayout width="356" height="239">
+					<control type="group">
+						<left>10</left>
+						<top>6</top>
+						<width>336</width>
+						<height>227</height>
+						<control type="image">
+							<width>336</width>
+							<height>189</height>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_336x189_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+						</control>
+						<control type="image">
+							<top>150</top>
+							<width>336</width>
+							<height>39</height>
+							<aspectratio>stretch</aspectratio>
+							<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+						</control>
+						<control type="label">
+							<right>12</right>
+							<top>150</top>
+							<width>68</width>
+							<height>30</height>
+							<font>font10</font>
+							<align>right</align>
+							<textcolor>text_secondary</textcolor>
+							<label>$INFO[ListItem.Duration]</label>
+						</control>
+						<control type="label">
+							<left>0</left>
+							<top>197</top>
+							<width>336</width>
+							<height>30</height>
+							<font>font12</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>text_primary</textcolor>
+							<scroll>false</scroll>
+							<label>$INFO[ListItem.Episode,,  ]$INFO[ListItem.Title]</label>
+						</control>
+						<control type="progress">
+							<top>186</top>
+							<width>336</width>
+							<height>3</height>
+							<reveal>true</reveal>
+							<texturebg border="4,0,4,0" colordiffuse="progress_track">progress/card_progress_r4.png</texturebg>
+							<midtexture border="4,0,4,0" colordiffuse="progress_playback">progress/card_progress_r4.png</midtexture>
+							<info>ListItem.PercentPlayed</info>
+							<visible>Integer.IsGreater(ListItem.PercentPlayed,0)</visible>
+						</control>
+						<control type="image">
+							<left>296</left>
+							<top>12</top>
+							<width>28</width>
+							<height>28</height>
+							<texture colordiffuse="text_primary">icons/infodialogs/enabled.png</texture>
+							<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
+						</control>
+					</control>
+				</itemlayout>
+				<focusedlayout width="356" height="239">
+					<control type="group">
+						<left>10</left>
+						<top>6</top>
+						<width>336</width>
+						<height>227</height>
+						<animation center="168,95" effect="zoom" start="100" end="102" time="130" tween="sine">Focus</animation>
+						<control type="image">
+							<width>336</width>
+							<height>189</height>
+							<aspectratio scalediffuse="false">scale</aspectratio>
+							<texture background="true" diffuse="shapes/mask_336x189_r9.png">$VAR[NaraImgListItemArtThumbDefDefaultVideo]</texture>
+						</control>
+						<control type="image">
+							<top>150</top>
+							<width>336</width>
+							<height>39</height>
+							<aspectratio>stretch</aspectratio>
+							<texture colordiffuse="80FFFFFF">overlays/overlayfade.png</texture>
+						</control>
+						<control type="label">
+							<right>12</right>
+							<top>150</top>
+							<width>68</width>
+							<height>30</height>
+							<font>font10</font>
+							<align>right</align>
+							<textcolor>text_secondary</textcolor>
+							<label>$INFO[ListItem.Duration]</label>
+						</control>
+						<control type="label">
+							<left>0</left>
+							<top>197</top>
+							<width>336</width>
+							<height>30</height>
+							<font>font12</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>text_primary</textcolor>
+							<scroll>true</scroll>
+							<label>$INFO[ListItem.Episode,,  ]$INFO[ListItem.Title]</label>
+						</control>
+						<control type="progress">
+							<top>186</top>
+							<width>336</width>
+							<height>3</height>
+							<reveal>true</reveal>
+							<texturebg border="4,0,4,0" colordiffuse="progress_track">progress/card_progress_r4.png</texturebg>
+							<midtexture border="4,0,4,0" colordiffuse="progress_playback">progress/card_progress_r4.png</midtexture>
+							<info>ListItem.PercentPlayed</info>
+							<visible>Integer.IsGreater(ListItem.PercentPlayed,0)</visible>
+						</control>
+						<control type="image">
+							<left>296</left>
+							<top>12</top>
+							<width>28</width>
+							<height>28</height>
+							<texture colordiffuse="text_primary">icons/infodialogs/enabled.png</texture>
+							<visible>Integer.IsGreater(ListItem.PlayCount,0)</visible>
+						</control>
+						<control type="image">
+							<left>-1</left>
+							<top>-1</top>
+							<width>338</width>
+							<height>191</height>
+							<texture colordiffuse="focus_media">shapes/ring_card_338x191_r10.png</texture>
+						</control>
+					</control>
+				</focusedlayout>
 			</control>
 		</control>
 	</include>

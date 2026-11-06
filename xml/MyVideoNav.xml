@@ -30,6 +30,7 @@
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
 			<include>View_50_List</include>
 			<include>View_51_Poster</include>
+			<include>View_51_Seasons</include>
 			<include>View_52_IconWall</include>
 			<include>View_501_Poster</include>
 			<include>View_500_Wall</include>
