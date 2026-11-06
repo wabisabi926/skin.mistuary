@@ -7,6 +7,18 @@
 		     同一个乘法压暗系数），把下层整个盖住；玻璃面板照旧跟弹窗透明度走，
 		     透出来的是「一张图」，不是另一个窗口的行和文字。
 		     原来铺的是 primary.jpg 兜底图，2026-11-05 改成真剧照。 -->
+		<!-- 与设置页/文件管理同一张随机剧照：没有锁定图、首页也没有传递时，
+		     在这里自取一张，避免从插件浏览器直接打开时只剩下层窗口。 -->
+		<control type="list" id="16090">
+			<left>-2</left>
+			<top>-2</top>
+			<width>1</width>
+			<height>1</height>
+			<itemlayout width="1" height="1" />
+			<focusedlayout width="1" height="1" />
+			<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
+			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))</visible>
+		</control>
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
