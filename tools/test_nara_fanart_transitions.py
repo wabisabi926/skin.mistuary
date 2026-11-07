@@ -160,18 +160,31 @@ class FanartTransitionsTest(unittest.TestCase):
         # 通用版移除了魔改内核的 Follow 动画，镜头改由 VideoInfo.FanartSource 驱动。
         self.assertEqual(FOLLOW, [])
 
-    def test_standalone_entry_queues_zoom_before_onload_captures_source(self):
-        animation = INFO.find('.//control[@id="5900"]/animation[.="WindowOpen"]')
-        for page, section, expected in [('home', 'files', True), ('home', 'search', False),
-                                        ('home', 'movies', False), ('videos', 'movies', False)]:
-            with self.subTest(page=page, section=section):
-                stack = DialogStack(page, section)
-                self.assertEqual(stack.evaluate(animation.get('condition')), expected)
-                self.assertEqual(stack.open_info() == 'fallback', expected)
-        stack = DialogStack(section='files')
-        stack.visible.add('11111')
-        self.assertFalse(stack.evaluate(animation.get('condition')))
-        self.assertEqual(stack.open_info(), 'movieset')
+    def test_detail_fanart_zoom_is_unconditional_group_zoom(self):
+        """详情页背景只有一层 150% 放大，挂在包住 id=5900 的 group 上，且不带 condition。
+
+        2026-11-07 把「内层 104% zoom + 来源条件分支」换成了外层 group 的
+        100→150 / `center="0,25%"`（HANDOVER §5.11.2）。这里锁住三条契约：
+        1. 5900 自己不再挂动画 —— 否则内外两层会叠成二次放大；
+        2. 外层只有一条 zoom，参数就是定稿值；
+        3. zoom 不带 condition —— 有条件的动画会随打开时机漂移，
+           首页与详情页的构图高度就对不上了。
+        """
+        image = INFO.find('.//control[@id="5900"]')
+        self.assertIsNotNone(image, '详情页背景层 id=5900 不见了')
+        self.assertEqual(image.findall('animation'), [], '5900 自己不该再挂动画')
+        wrapper = next(control for control in INFO.iter('control')
+                       if control.find('control[@id="5900"]') is not None)
+        zooms = [node for node in wrapper.findall('animation') if node.get('effect') == 'zoom']
+        self.assertEqual(len(zooms), 1, '包住 5900 的 group 应只有一条 zoom')
+        zoom = zooms[0]
+        self.assertEqual((zoom.get('center'), zoom.get('start'), zoom.get('end'),
+                          zoom.get('time'), (zoom.text or '').strip()),
+                         ('0,25%', '100,100', '150,150', '1', 'WindowOpen'),
+                         '详情页背景放大的定稿参数变了（见 HANDOVER §5.11.2）')
+        self.assertIsNone(zoom.get('condition'), 'zoom 不能带 condition')
+        self.assertEqual((wrapper.findtext('include') or '').strip(), 'FullScreenDimensions',
+                         '外层 group 必须铺满屏幕，不能写死 1920')
 
 
 if __name__ == '__main__':
