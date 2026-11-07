@@ -29,6 +29,30 @@
 			</control>
 		</definition>
 	</include>
+	<!-- 浮窗的不透明底层：把下层页面的行和文字盖住，只透出一张压暗的剧照。
+	     与插件信息 / 插件设置 / 媒体源 / 文件浏览器 / 八个共享页同一张剧照、
+	     同一个 fanart_dim（×0.50）。播放中（Player.HasVideo / HasGame）与
+	     no_fanart 时整层隐藏，退回原来的纯遮蔽层。
+	     **只能放在窗口 <controls> 的顶层第一行**：放进居中的面板 group 里时
+	     FullScreenDimensions 会从面板左上角算起，铺不满屏幕。 -->
+	<include name="NaraDialogFanartBase">
+		<control type="list" id="16090">
+			<left>-2</left>
+			<top>-2</top>
+			<width>1</width>
+			<height>1</height>
+			<itemlayout width="1" height="1" />
+			<focusedlayout width="1" height="1" />
+			<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
+			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))</visible>
+		</control>
+		<control type="image">
+			<include>FullScreenDimensions</include>
+			<aspectratio align="right">scale</aspectratio>
+			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
+		</control>
+	</include>
 	<!-- 面板投影：不提高任何不透明度，靠「浮在背景之上」的暗示提升可读性感知。
 	     独立 include，由 NaraDialogGlassSurface 无条件注入 ——
 	     条件 include 的 condition 是**加载时**求值（GUIIncludes::ResolveIncludes），

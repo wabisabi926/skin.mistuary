@@ -3,6 +3,7 @@
 	<include>Animation_DialogPopupOpenClose</include>
 	<depth>DepthDialog+</depth>
 	<controls>
+		<include>NaraDialogFanartBase</include>
 		<control type="group">
 			<height>400</height>
 			<centertop>50%</centertop>

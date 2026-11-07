@@ -51,7 +51,11 @@
 		</control>
 		</control>
 		<!-- Search, Favorites and Files intentionally share one random movie provider.
-		     A persistent lock or a just-unlocked session path suppresses the query. -->
+		     A persistent lock or a just-unlocked session path suppresses the query.
+		     2026-11-07 起允许它在任意分区的焦点事件里都可用（不再只限 文件/收藏/搜索）：
+		     首页第一次有焦点时把抽到的这张图写进 SessionPath，之后设置页、各弹窗
+		     （依赖 / 版本变更 / 数字输入…）全部读同一个值 —— 背景不再每个窗口各抽一张，
+		     也不再每开一个窗口查一次库。 -->
 		<control type="list" id="16090">
 			<left>-2</left>
 			<top>-2</top>
@@ -60,7 +64,7 @@
 			<itemlayout width="1" height="1" />
 			<focusedlayout width="1" height="1" />
 			<content sortby="random" sortorder="ascending" limit="1" target="videos" browse="never">videodb://movies/titles/</content>
-			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + [String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites) | [String.IsEqual(Window(home).Property(Home.Section),search) + String.IsEmpty(Control.GetLabel(16999).index(1))]]</visible>
+			<visible>String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))</visible>
 		</control>
 		<!-- Files and Favorites use the same dimmed shared backdrop. -->
 		<!-- 文件 / 收藏共享剧照下面的中性灰；显隐与剧照层共用同一条表达式。
@@ -1555,6 +1559,7 @@
 						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + !$EXP[NaraSearchHasResults]">ClearProperty(Search.KeyboardHidden,home)</onfocus>
 						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + $EXP[NaraSearchHasResults]">SetProperty(Search.KeyboardHidden,true,home)</onfocus>
 						<onfocus>SetProperty(Home.Section,search,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchMoviesActive]">16101</ondown>
 						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</ondown>
@@ -1578,6 +1583,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),movies) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,movies,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown>5000</ondown>
 						<onclick condition="Library.HasContent(movies) + Skin.HasSetting(home_no_movies_categories_widget) + !System.GetBool(myvideos.flatten)">ActivateWindow(Videos,videodb://movies/,return)</onclick>
@@ -1601,6 +1607,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),tvshows) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,tvshows,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown>6000</ondown>
 						<onclick condition="Library.HasContent(tvshows) + Skin.HasSetting(home_no_tvshows_categories_widget) + !System.GetBool(myvideos.flatten)">ActivateWindow(Videos,videodb://tvshows/,return)</onclick>
@@ -1624,6 +1631,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),music) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,music,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown>7000</ondown>
 						<onclick>ActivateWindow(Music,root,return)</onclick>
@@ -1645,6 +1653,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),livetv) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,livetv,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown>12000</ondown>
 						<onclick>ActivateWindow(TVChannels)</onclick>
@@ -1666,6 +1675,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),favorites) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,favorites,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown>14000</ondown>
 						<onclick>noop</onclick>
@@ -1687,6 +1697,7 @@
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
 						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),files) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
 						<onfocus>SetProperty(Home.Section,files,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
 						<ondown condition="Integer.IsGreater(Container(15010).NumItems,0)">15010</ondown>
 						<ondown condition="!Integer.IsGreater(Container(15010).NumItems,0)">noop</ondown>
@@ -1741,6 +1752,7 @@
 							<onup>noop</onup>
 							<ondown>noop</ondown>
 							<onclick>SetFocus(8101)</onclick>
+							<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						</control>
 						<!-- The popover opens directly below the independent menu button. -->
 						<control type="group" id="8100">

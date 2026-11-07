@@ -5,6 +5,7 @@
 	<onunload>ClearProperty(settingsdialog_header,Home)</onunload>
 	<onunload>ClearProperty(settingsdialog_content,Home)</onunload>
 	<controls>
+		<include>NaraDialogFanartBase</include>
 		<include condition="$EXP[nara_skin_settings_dialog]">NaraSkinSettingsDialogLayout</include>
 		<include condition="!$EXP[nara_skin_settings_dialog]">SettingsDialogLayouts</include>
 	</controls>

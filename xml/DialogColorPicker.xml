@@ -4,6 +4,7 @@
 	<include>Animation_DialogPopupOpenClose</include>
 	<depth>DepthOSD</depth>
 	<controls>
+		<include>NaraDialogFanartBase</include>
 		<control type="group">
 			<centertop>50%</centertop>
 			<centerleft>50%</centerleft>

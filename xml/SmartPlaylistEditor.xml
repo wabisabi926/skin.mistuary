@@ -3,6 +3,7 @@
 	<defaultcontrol always="true">22</defaultcontrol>
 	<include>Animation_DialogPopupOpenClose</include>
 	<controls>
+		<include>NaraDialogFanartBase</include>
 		<control type="group">
 			<centerleft>50%</centerleft>
 			<width>1700</width>

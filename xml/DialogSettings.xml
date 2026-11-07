@@ -2,6 +2,7 @@
 <window>
 	<defaultcontrol>5</defaultcontrol>
 	<controls>
+		<include>NaraDialogFanartBase</include>
 		<include condition="$EXP[nara_settings_osd]">NaraOSDSettingsLayout</include>
 		<include condition="!$EXP[nara_settings_osd]">NaraSettingsDialogLayout</include>
 	</controls>

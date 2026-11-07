@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
 	<include name="DefaultDialogSelectLayout">
+		<!-- 不透明底层统一由 DialogSelect.xml 窗口级铺（NaraDialogFanartBase），
+		     否则设置上下文的 NaraSettingsSelectLayout 会漏掉。 -->
 		<control type="group">
 			<centertop>50%</centertop>
 			<centerleft>50%</centerleft>

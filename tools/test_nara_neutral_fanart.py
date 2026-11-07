@@ -9,7 +9,7 @@
 照片不透明，所以不需要再垫一层中性底，玻璃面板背后照样有明暗层次。
 
 这套契约有四条，破了就会重新出现「某页发紫」或「某页过亮」：
-1. 八页只允许这两个 token，同类必须是同一个值（分叉就会按页漂移）；
+1. 十层只允许这两个 token（八个共享页 + 选择列表 + 文本查看器的底层），同类必须是同一个值（分叉就会按页漂移）；
 2. 必须不透明（alpha FF），否则 primary 的蓝紫会透上来；
 3. 系数必须是中性（R=G=B），带色偏等于换个方向染色；
 4. 不能再引入中性底 / 半透明叠灰这类额外图层。
@@ -68,13 +68,57 @@ class FanartDimTest(unittest.TestCase):
         cls.layers = fanart_layers()
         cls.expressions = all_expressions()
 
-    def test_fanart_layer_count_is_eight(self):
+    def test_fanart_layer_count_is_ten(self):
         where = sorted(name for name, _, _ in self.layers)
-        self.assertEqual(len(self.layers), 8, where)
-        self.assertEqual(where, ['DialogAddonInfo.xml', 'DialogAddonSettings.xml',
-                                 'DialogMediaSource.xml', 'FileBrowser.xml',
-                                 'FileManager.xml', 'Home.xml',
-                                 'Includes_Search.xml', 'Includes_Settings.xml'])
+        self.assertEqual(len(self.layers), 10, where)
+        self.assertEqual(where, ['Custom_1102_TextViewer.xml', 'DialogAddonInfo.xml',
+                                 'DialogAddonSettings.xml', 'DialogMediaSource.xml',
+                                 'FileBrowser.xml', 'FileManager.xml', 'Home.xml',
+                                 'Includes_DialogGlass.xml', 'Includes_Search.xml',
+                                 'Includes_Settings.xml'])
+
+    def test_shared_dialog_base_is_wired_into_settings_dialogs(self):
+        """浮窗的不透明底层统一走 NaraDialogFanartBase（Includes_DialogGlass.xml）。
+
+        这一层必须放在窗口 <controls> 顶层第一行 —— 放进居中的面板 group 里时
+        FullScreenDimensions 会从面板左上角算起，在宽屏上右侧/下侧露底。
+        所以这里同时断言「引用了 include」和「它是 <controls> 的第一个孩子」。
+        """
+        expected = ['DialogSelect.xml', 'DialogSettings.xml',
+                    'Custom_1101_SettingsDialog.xml', 'DialogNumeric.xml',
+                    'DialogColorPicker.xml', 'DialogKeyboard.xml', 'DialogConfirm.xml',
+                    'DialogVideoManager.xml', 'DialogPVRGuideSearch.xml',
+                    'DialogPVRChannelManager.xml', 'DialogPVRGroupManager.xml',
+                    'DialogSubtitles.xml', 'SmartPlaylistEditor.xml',
+                    'SmartPlaylistRule.xml']
+        for name in expected:
+            with self.subTest(file=name):
+                controls = parse(name).find('controls')
+                self.assertIsNotNone(controls, f'{name} 没有 <controls>')
+                first = controls[0]
+                self.assertEqual(first.tag, 'include', f'{name} 第一行应是 include')
+                self.assertEqual((first.text or '').strip(), 'NaraDialogFanartBase',
+                                 f'{name} 缺不透明底层，或没放在 <controls> 第一行')
+
+    def test_home_publishes_one_session_fanart(self):
+        """首页把随机剧照写进 SessionPath，全站只抽一张（2026-11-07 定）。
+
+        否则设置页和每个弹窗各自查一次库、各自抽一张图，打开弹窗会看到背景换图。
+        写法要求：
+        1. 7 个分区按钮 + 左上角菜单按钮，各挂一次写入动作（首页的任何一次焦点移动都会补写，
+           首页默认焦点落下时容器可能还没查回来）；
+        2. Home 的 16090 取样不再限定分区 —— 否则停在 电影/电视剧 分区时容器为空，写不进。
+        """
+        text = (XML / 'Home.xml').read_text(encoding='utf-8')
+        action = ('SetProperty(Home.SharedRandomFanart.SessionPath,'
+                  '$ESCINFO[Container(16090).ListItem.Art(fanart)],home)')
+        self.assertEqual(text.count(action), 8, '首页应有 8 处 SessionPath 写入')
+        lists = [control for control in parse('Home.xml').iter('control')
+                 if control.get('type') == 'list' and control.get('id') == '16090']
+        self.assertEqual(len(lists), 1, 'Home.xml 应只有一个 16090 取样容器')
+        visible = lists[0].findtext('visible') or ''
+        self.assertNotIn('Home.Section', visible,
+                         '16090 取样不能再限定分区，否则停在电影分区时写不进 SessionPath')
 
     def test_each_page_uses_its_documented_token(self):
         tints = {name: texture.get('colordiffuse') for name, _, texture in self.layers}
