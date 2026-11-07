@@ -91,18 +91,16 @@
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
+			<control type="group">
+				<include>FullScreenDimensions</include>
+				<animation effect="zoom" center="0,25%" start="100,100" end="150,150" time="1">WindowOpen</animation>
 			<control type="image" id="5900">
-				<left>-120</left>
-				<top>-80</top>
-				<right>-120</right>
-				<bottom>-80</bottom>
+				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
-				<animation effect="zoom" start="100" end="104" center="80%,35%" time="500" tween="sine" easing="inout" condition="!Window.IsVisible(11111) + !$EXP[NaraVideoInfoFromHome] + !Window.IsVisible(videos)">WindowOpen</animation>
-				<!-- Preserve the completed entry zoom while the page fades out. -->
-				<animation effect="zoom" start="104" end="104" center="80%,35%" time="0" condition="String.IsEqual(Window.Property(VideoInfo.FanartSource),fallback)">WindowClose</animation>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
 			</control>
 			<include content="NaraFanartReveal">
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))" />
