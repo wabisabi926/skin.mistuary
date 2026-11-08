@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import sys
 import xml.etree.ElementTree as ET
+from collections import deque
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -36,6 +37,8 @@ OUTDIR = ROOT / "media" / "techflags" / "color"
 FUSE = Path(r"D:/Downloads/ai/skin.arctic.fuse.3/media/flags/color")
 AVDV = Path(r"D:/Downloads/ai/skin.arctic.fuse.3-avdvplus&p3i/media/flags/color")
 MART = Path(r"D:/Downloads/ai/skin.arctic.zephyr.martian/media/flags/color")
+# zephyr 2.core 的单色素材：tv / hdmv 这类在 color 目录里根本没有
+ZMONO = Path(r"D:/Downloads/ai/skin.arctic.zephyr.2.core/media/flags/monochrome")
 
 CANVAS_W, CANVAS_H = 96, 56          # 2:1 偏方一点，显示框 48x28 时留白最小
 FONT_PATH = ROOT / "fonts" / "Inter-Unicode-Regular.ttf"
@@ -117,9 +120,30 @@ RED = (252, 10, 10, 255)
 GREY = (168, 172, 178, 255)
 LGREY = (228, 230, 234, 255)
 
+# zephyr 2.core 的 tv / hdmv 是纯白线稿（彩色像素 0%），放在同排里明显脱节：
+# 同排 bluray / h264 / mpeg4 / prores / mjpeg 全是「青蓝图形 + 白字」。
+# 蓝值直接从这些真素材采样（高光 #80C0E0 / 暗部 #0070A0），不是另配一种蓝。
+FLAG_BLUE_HI = (128, 192, 224)
+FLAG_BLUE_DARK = (0, 112, 160)
+FLAG_WHITE = (238, 242, 246)
+
 
 def _blank():
     return Image.new("RGBA", (CANVAS_W, CANVAS_H), (0, 0, 0, 0))
+
+
+def _trim(im):
+    """裁掉透明边，返回只剩有效像素的图。"""
+    bbox = im.getbbox()
+    return im.crop(bbox) if bbox else im
+
+
+def _paste_fit(im, src, w, h, xy):
+    """把 src 等比缩到 (w,h) 的框内，贴到 xy。"""
+    k = min(w / src.width, h / src.height)
+    s = src.resize((max(1, round(src.width * k)), max(1, round(src.height * k))), Image.LANCZOS)
+    im.alpha_composite(s, xy)
+    return s
 
 
 def _font(size, ss=1):
@@ -196,50 +220,149 @@ def _draw_vhs():
     return im
 
 
+def _recolor_lineart(name: str) -> Image.Image:
+    """把 zephyr 单色线稿重配成「蓝图形 + 白字」，与同排 logo 同一套配色。
+
+    线稿本身是白色 alpha 图形，不能整张染一个蓝——那会变成一块死板的
+    实色。这里用连通域把主体图形和文字分开：文字要么是主体框里的独立
+    小块（tv 的 TV），要么落在下三分之一（hdmv 的 Blu-ray Disc）。
+    主体按 y 做亮→深渐变（同排 logo 都有这种金属渐变），文字保持白。
+    """
+    im = Image.open(ZMONO / "source" / f"{name}.png").convert("RGBA")
+    w, h = im.size
+    src = im.load()
+    seen = [[False] * w for _ in range(h)]
+    parts: list[tuple[list[tuple[int, int]], tuple[int, int, int, int]]] = []
+    for y in range(h):
+        for x in range(w):
+            if seen[y][x] or src[x, y][3] < 60:
+                continue
+            queue = deque([(x, y)])
+            seen[y][x] = True
+            pts = []
+            while queue:
+                a, b = queue.popleft()
+                pts.append((a, b))
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nx, ny = a + dx, b + dy
+                    if 0 <= nx < w and 0 <= ny < h and not seen[ny][nx] and src[nx, ny][3] >= 60:
+                        seen[ny][nx] = True
+                        queue.append((nx, ny))
+            xs = [p[0] for p in pts]
+            ys = [p[1] for p in pts]
+            parts.append((pts, (min(xs), min(ys), max(xs), max(ys))))
+    parts.sort(key=lambda c: len(c[0]), reverse=True)
+    main_box = parts[0][1]
+    bbox = im.getbbox()
+    y0, y1 = bbox[1], bbox[3]
+    span = max(1, y1 - y0 - 1)
+    text: set[tuple[int, int]] = set()
+    for pts, (x0, a0, x1, a1) in parts[1:]:
+        lower = a0 > y0 + 0.55 * span
+        inner = (x0 > main_box[0] and x1 < main_box[2]
+                 and a0 > main_box[1] and a1 < main_box[3]
+                 and len(pts) < len(parts[0][0]) * 0.6)
+        if lower or inner:
+            text.update(pts)
+
+    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    dst = out.load()
+    for y in range(h):
+        t = min(1.0, max(0.0, (y - y0) / span))
+        blue = tuple(round(FLAG_BLUE_HI[i] + (FLAG_BLUE_DARK[i] - FLAG_BLUE_HI[i]) * t)
+                     for i in range(3))
+        for x in range(w):
+            dst[x, y] = (*(FLAG_WHITE if (x, y) in text else blue), src[x, y][3])
+    return out
+
+
 def _draw_tv():
-    im = _blank(); d = ImageDraw.Draw(im)
-    d.ellipse([4, 14, 34, 44], fill=BLUE)
-    d.text((19, 29), "H", font=_font(20), fill=(255, 255, 255, 255), anchor="mm")
-    d.text((40, 29), "TV", font=_font(22), fill=GREY, anchor="lm")
-    return im
+    """TV：zephyr 2.core 的电视线稿，重配成蓝框 + 白 TV 字（照 h264）。
+
+    color 目录里没有 tv，fuse3 的 hdtv 是 20x20 的糊图，放大后一团。
+    zephyr 这张是干净的矢量级线条，缩到 48x28 仍然锐利。
+    """
+    return _recolor_lineart("tv")
 
 
 def _draw_hdmv():
-    im = _blank(); d = ImageDraw.Draw(im)
-    d.arc([10, 6, 76, 42], start=200, end=340, fill=BLUE, width=7)
-    d.text((43, 24), "BD", font=_font(18), fill=BLUE, anchor="mm")
-    d.text((43, 44), "HDMV", font=_font(11), fill=GREY, anchor="mm")
-    return im
+    """HDMV：蓝光电影模式，用蓝光官方图形，配色对齐同排 bluray。
+
+    HDMV 就是蓝光的电影模式，用蓝光标准标是对的；这张线稿比从
+    bluray.png 裁 45x19 的位图再放大清楚得多。
+    """
+    return _recolor_lineart("hdmv")
 
 
 def _draw_mjpeg():
-    im = _blank(); d = ImageDraw.Draw(im)
-    d.text((48, 20), "MJPEG", font=_font(19), fill=BLUE, anchor="mm")
-    d.text((48, 40), "MOTION JPEG", font=_font(9), fill=GREY, anchor="mm")
+    """MJPEG：照 mpeg4 的排版——上面彩色粗字，下面白色胶囊。
+
+    胶囊直接用 mpeg4 原图里的那个（里面本来就写着 MPEG4，语义也对），
+    只把上面的 DivX 换成 MJPEG。
+    """
+    im = _blank()
+    # 白胶囊实测 y 29..37 / x 11..61，上一版从 y=26 切，只切到胶囊上半截
+    oval = _trim(Image.open(FUSE / "source" / "mpeg4.png").convert("RGBA").crop((10, 28, 63, 39)))
+    o = _paste_fit(im, oval, 60, 13, (18, 38))
+    d = ImageDraw.Draw(im)
+    d.text((48, 22), "MJPEG", font=_font(20), fill=(0, 150, 205, 255), anchor="mm",
+           stroke_width=1, stroke_fill=(0, 150, 205, 255))
     return im
 
 
 def _draw_prores():
-    im = _blank(); d = ImageDraw.Draw(im)
-    d.ellipse([2, 15, 30, 43], outline=QT_BLUE, width=3)
-    d.text((16, 29), "Q", font=_font(14), fill=QT_BLUE, anchor="mm")
-    d.text((35, 29), "ProRes", font=_font(15), fill=LGREY, anchor="lm")
+    """ProRes：沿用 QuickTime 的 Q，下面换成 ProRes。"""
+    im = _blank()
+    # 蓝 Q 实测 x 25..45 / y 11..31
+    q = _trim(Image.open(FUSE / "source" / "quicktime.png").convert("RGBA").crop((24, 10, 46, 32)))
+    q = _paste_fit(im, q, 34, 34, (31, 2))
+    d = ImageDraw.Draw(im)
+    d.text((48, 45), "ProRes", font=_font(15), fill=(226, 226, 229, 255), anchor="mm",
+           stroke_width=1, stroke_fill=(226, 226, 229, 255))
     return im
 
 
+def _vivid_mark():
+    """菁彩视听（HDR Vivid / Audio Vivid）共用的官方三角标识。
+
+    从官方 VI 图里抠的：白底按「离白多远」估 alpha 去掉，红 #F8525E /
+    蓝 #0040B0 / 青三个色块都是原图像素。两个标识共用同一个 mark，
+    这正是官方的做法——图形相同，只有右侧文字不同。
+    """
+    return Image.open(ROOT / "tools" / "assets" / "vivid-mark.png").convert("RGBA")
+
+
 def _draw_av3a():
-    im = _blank(); d = ImageDraw.Draw(im)
-    d.arc([6, 10, 58, 46], start=120, end=300, fill=AAC_BROWN, width=6)
-    d.text((42, 29), "3A", font=_font(21), fill=AAC_BROWN, anchor="lm")
+    """AV3A = 三维菁彩声 / Audio Vivid。
+
+    官方标识是「三角 + ΛUDIO Vivid」，和 HDR Vivid 同一个图形，只有文字不同。
+    所以这里不再自己编图形，直接沿用官方那套。
+    """
+    im = _blank()
+    m = _vivid_mark()
+    k = 26 / m.height
+    m = m.resize((max(1, round(m.width * k)), 26), Image.LANCZOS)
+    im.alpha_composite(m, (2, 15))
+    d = ImageDraw.Draw(im)
+    d.text((m.width + 7, 19), "AUDIO", font=_font(14), fill=(242, 242, 242, 255), anchor="lm")
+    d.text((m.width + 7, 35), "Vivid", font=_font(15), fill=(242, 242, 242, 255), anchor="lm")
     return im
 
 
 def _draw_hdrvivid():
-    im = _blank(); d = ImageDraw.Draw(im)
-    for col, off in (((0, 190, 255, 255), 0), ((250, 200, 40, 255), 7), ((240, 70, 130, 255), 14)):
-        d.polygon([(8 + off, 10), (19 + off, 10), (10 + off, 48), (2 + off, 48)], fill=col)
-    d.text((60, 22), "HDR", font=_font(13), fill=(245, 245, 245, 255), anchor="mm")
-    d.text((60, 38), "VIVID", font=_font(13), fill=(245, 245, 245, 255), anchor="mm")
+    """HDR Vivid = 菁彩 HDR，官方标识「三角 + HDR Vivid」。
+
+    上一版是照 HDR10 的放射楔形画的，那是杜比的视觉语言，不是菁彩的。
+    现在换成官方三角，和 AV3A 共用同一个图形。
+    """
+    im = _blank()
+    m = _vivid_mark()
+    k = 26 / m.height
+    m = m.resize((max(1, round(m.width * k)), 26), Image.LANCZOS)
+    im.alpha_composite(m, (2, 15))
+    d = ImageDraw.Draw(im)
+    d.text((m.width + 7, 19), "HDR", font=_font(16), fill=(242, 242, 242, 255), anchor="lm")
+    d.text((m.width + 7, 36), "Vivid", font=_font(16), fill=(242, 242, 242, 255), anchor="lm")
     return im
 
 
