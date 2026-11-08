@@ -41,7 +41,7 @@
 			<texture colordiffuse="fanart_void">colors/black.png</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
-		<!-- 流光溢彩：helper 把当前剧照模糊成 0.40 亮度的色光底，铺在黑底与清晰图之间。
+		<!-- 流光溢彩：helper 把当前剧照模糊成 0.60 亮度的色光底，铺在黑底与清晰图之间。
 		     故意放在焦点 group **之外**：清晰图聚焦时会 zoom，色光跟着动会让边缘闪一下。
 		     属性为空 = helper 没更新 / PIL 缺失 / 开关关闭 / 无剧照，此层隐藏并露出纯黑，零回归。 -->
 		<control type="image">
@@ -86,7 +86,9 @@
 				<imagepath background="true">$VAR[HomeFanartVar]</imagepath>
 				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
 			</control>
-			<!-- 图左缘渐隐：宽度取图宽的 30%，从图的左边界（33.33%）向右淡出。 -->
+			<!-- 黑色渐隐常驻，不再吃色光属性：色光 jpg 是后台异步加载的，打开详情页 /
+			     换剧照那几帧纹理还没到位，若这层跟着隐藏，清晰图左缘会裸出一条硬切线
+			     （实机反馈的「一闪」）。有色光时它只负责遮边，色光层叠在它上面负责加色。 -->
 			<control type="image">
 				<depth>DepthBackground</depth>
 				<left>33.33%</left>
@@ -96,6 +98,19 @@
 				<aspectratio>stretch</aspectratio>
 				<texture>overlays/flixart-shade.png</texture>
 				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
+			</control>
+			<!-- 色光过渡：对齐 fuse3 的 diffuse（清晰图左缘透明、透出底下模糊色光）。
+			     multiimage 的 imagepath 不一定支持 diffuse，所以改成把同一张色光图
+			     用全屏 alpha 遮罩覆在清晰图左缘，效果等价且与底层色光严格对齐。
+			     只负责加色，遮边交给上面常驻的黑色渐隐（本层纹理异步加载期间不撤遮罩）。
+			     scalediffuse=false：diffuse 不跟着 scale 裁切，否则渐隐带会错位。 -->
+			<control type="image">
+				<depth>DepthBackground</depth>
+				<include>FullScreenDimensions</include>
+				<aspectratio scalediffuse="false">scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true" diffuse="overlays/flixart-edge-glow.png">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 		</control>
 		<!-- 底部渐变：把图的下缘压进黑里。 -->

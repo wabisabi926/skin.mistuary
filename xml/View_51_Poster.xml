@@ -467,6 +467,9 @@
 				<texture background="true">$INFO[Container(51).ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
+			<!-- 黑色渐隐常驻，不再吃色光属性：色光 jpg 是后台异步加载的，打开详情页 /
+			     换剧照那几帧纹理还没到位，若这层跟着隐藏，清晰图左缘会裸出一条硬切线
+			     （实机反馈的「一闪」）。有色光时它只负责遮边，色光层叠在它上面负责加色。 -->
 			<control type="image">
 				<left>33.33%</left>
 				<top>0</top>
@@ -475,6 +478,15 @@
 				<aspectratio>stretch</aspectratio>
 				<texture>overlays/flixart-shade.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<!-- 色光过渡：对齐 fuse3 的 diffuse，与 Home / DialogVideoInfo 同一套。
+			     只负责加色，遮边交给上面常驻的黑色渐隐（本层纹理异步加载期间不撤遮罩）。 -->
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio scalediffuse="false">scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true" diffuse="overlays/flixart-edge-glow.png">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>

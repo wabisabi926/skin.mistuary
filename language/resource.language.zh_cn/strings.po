@@ -1306,7 +1306,3 @@ msgstr "文件管理器中的视频记录播放进度，起播时提供继续播
 msgctxt "#31823"
 msgid "Fetch library covers from Emby; file names must match library names."
 msgstr "从 Emby 拉取媒体库封面；文件名须与库名一致。"
-
-msgctxt "#31824"
-msgid "Background colour glow"
-msgstr "背景流光溢彩色光（需 Mistuary Helper）"

@@ -352,6 +352,16 @@ height 又加 56 的结果。那两行设置比 PVR 页高 32px，用户一眼�
 标题字号 `font28_title`、top 24、右上 vendor 图标 32px @ `right 60 / top 36`。
 另外三套表头（`NaraSettingsDialogFrame` / `NaraStreamDialog*` / `DialogAddonInfo`）数值不同，别混着改。
 
+## 七、发版日志（changelog.txt）风格（2026-11-08 定）
+
+- **Kodi 风格：专业术语、简练**。面向用户只写「行为有什么变化」，一条一事；
+  按 `[新增]` / `[调整]` / `[修复]` / `[依赖]` / `[移除]` 分节。
+- **只写最终形态**：开发过程中反复修改、中间方案、试错历程一律不写，直接写最后那次的结果。
+- 不写开发内部内容：根因分析、与其他皮肤 / 插件的对照、实测数据、单测数量、校验清单——
+  这些属于提交说明或 `docs/`，不进 changelog。
+- 参照范例：本仓库 `2.1.1` 段；helper 侧参照 `script.mistuary.helper` 的 `0.4.0` 段
+  （行文规范详见其 `docs/release.md` §1.1）。
+
 ---
 
 ---

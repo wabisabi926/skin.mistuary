@@ -1,8 +1,12 @@
 """色光底层序与兜底约束。
 
-锁死 2026-11-08 定的结构：fanart_void 黑底 → 色光 → 清晰剧照 → 左缘渐隐
-→ 底部渐变。色光层必须「属性为空就整层消失」，保证 helper 没装/没更新/
-PIL 缺失时自动退回原来的纯黑，不出现色块。
+锁死 2026-11-08 定的结构：fanart_void 黑底 → 全屏色光 → 清晰剧照 →
+左缘过渡 → 底部渐变。色光层必须「属性为空就整层消失」，保证 helper 没装/
+没更新 / PIL 缺失时自动退回原来的纯黑，不出现色块。
+
+左缘两层叠用：黑色渐隐常驻负责遮边，属性非空时再叠一层 diffuse 色光负责加色。
+色光 jpg 是后台异步加载的，绝不能让遮边跟着色光属性一起消失 —— 换剧照 / 打开
+详情页那几帧纹理还没到位，清晰图左缘就会裸出一条硬切线（实机反馈的「一闪」）。
 """
 
 import unittest
@@ -24,8 +28,22 @@ def _controls(name):
 
 
 def _glow_layers(name):
+    """全屏底层色光：texture 绑 GLOW 且没有 diffuse。"""
     return [c for c in _controls(name)
-            if GLOW in (c.findtext('texture') or '')]
+            if GLOW in (c.findtext('texture') or '')
+            and not _texture_attr(c, 'diffuse')]
+
+
+def _edge_glow_layers(name):
+    """左缘色光过渡层：texture 绑 GLOW 且带 diffuse 遮罩。"""
+    return [c for c in _controls(name)
+            if GLOW in (c.findtext('texture') or '')
+            and _texture_attr(c, 'diffuse')]
+
+
+def _black_shade_layers(name):
+    return [c for c in _controls(name)
+            if (c.findtext('texture') or '').strip() == 'overlays/flixart-shade.png']
 
 
 def _text(node):
@@ -82,6 +100,58 @@ class LayerOrderTests(unittest.TestCase):
                                  'scale')
 
 
+class EdgeGlowTests(unittest.TestCase):
+    """对齐 fuse3 的左缘过渡：黑渐隐常驻遮边，色光 diffuse 叠在其上加色。"""
+
+    def test_exactly_one_edge_layer_on_each_page(self):
+        for name in PAGES:
+            with self.subTest(page=name):
+                self.assertEqual(len(_edge_glow_layers(name)), 1)
+
+    def test_edge_uses_diffuse_and_does_not_scale_it(self):
+        for name in PAGES:
+            with self.subTest(page=name):
+                layer = _edge_glow_layers(name)[0]
+                self.assertEqual(_texture_attr(layer, 'diffuse'),
+                                 'overlays/flixart-edge-glow.png')
+                aspect = layer.find('aspectratio')
+                self.assertEqual((aspect.text or '').strip(), 'scale')
+                self.assertEqual(aspect.get('scalediffuse'), 'false',
+                                 'diffuse 不能跟着 scale 裁切，否则渐隐带错位')
+                self.assertEqual((layer.findtext('include') or '').strip(),
+                                 'FullScreenDimensions')
+
+    def test_black_shade_is_always_present(self):
+        """遮边不能跟色光属性挂钩：色光 jpg 异步加载时会一闪露硬切线。"""
+        for name in PAGES:
+            with self.subTest(page=name):
+                shades = _black_shade_layers(name)
+                self.assertEqual(len(shades), 1, '黑色渐隐兜底层不能删')
+                visible = shades[0].findtext('visible') or ''
+                self.assertNotIn(GLOW, visible,
+                                 '黑色渐隐必须常驻，不能随色光属性隐藏')
+                edge_visible = _edge_glow_layers(name)[0].findtext('visible') or ''
+                self.assertIn('!String.IsEmpty(Window(home).Property(%s))' % GLOW,
+                              edge_visible, '色光层仍需属性非空才显示')
+
+    def test_edge_glow_sits_above_black_shade(self):
+        """色光要叠在黑渐隐之上才能加色；反过来会被压死。"""
+        for name in PAGES:
+            with self.subTest(page=name):
+                nodes = _controls(name)
+                shade = next(i for i, c in enumerate(nodes)
+                             if (c.findtext('texture') or '').strip()
+                             == 'overlays/flixart-shade.png')
+                edge = next(i for i, c in enumerate(nodes)
+                            if GLOW in (c.findtext('texture') or '')
+                            and _texture_attr(c, 'diffuse'))
+                self.assertLess(shade, edge, '色光过渡层必须在黑渐隐之上')
+
+    def test_diffuse_texture_exists(self):
+        self.assertTrue((ROOT / 'media' / 'overlays' /
+                         'flixart-edge-glow.png').exists())
+
+
 class FallbackTests(unittest.TestCase):
     def test_glow_hides_when_property_is_empty(self):
         """helper 旧版 / 关掉开关 / 无剧照 → 属性为空 → 整层消失露纯黑。"""
@@ -115,10 +185,14 @@ class FallbackTests(unittest.TestCase):
 
 class ScopeTests(unittest.TestCase):
     def test_only_the_three_video_pages_carry_glow(self):
-        """音乐页 / View_50 / View_501 一律不动。"""
-        touched = sorted(p.name for p in XML.glob('*.xml')
+        """色光层只在影视三页，音乐页等一律不动。"""
+        layers = sorted(p.name for p in XML.glob('*.xml')
+                        if '$INFO[Window(home).Property(%s)]' % GLOW
+                        in p.read_text(encoding='utf-8'))
+        self.assertEqual(layers, sorted(PAGES))
+        readers = sorted(p.name for p in XML.glob('*.xml')
                          if GLOW in p.read_text(encoding='utf-8'))
-        self.assertEqual(touched, sorted(PAGES))
+        self.assertEqual(readers, sorted(PAGES))
 
     def test_source_labels_are_unique_and_match_clear_fanart(self):
         expected = {
@@ -137,17 +211,16 @@ class ScopeTests(unittest.TestCase):
                 # 屏幕外 1x1，不能写 visible=false（隐藏控件可能不求值 label）
                 self.assertIsNone(matches[0].find('visible'))
 
-    def test_settings_toggle_routes_to_helper(self):
+    def test_glow_has_no_settings_toggle(self):
+        """色光无常开：设置页不得再出现 fanart_glow 开关与 helper 状态属性。"""
         settings = (XML / 'SkinSettings.xml').read_text(encoding='utf-8')
-        self.assertIn('action=toggle_setting,key=fanart_glow', settings)
-        self.assertIn('Mistuary.Helper.FanartGlow', settings)
-
-    def test_localised_string_exists_in_both_languages(self):
+        self.assertNotIn('fanart_glow', settings)
+        self.assertNotIn('Mistuary.Helper.FanartGlow', settings)
         for lang in ('resource.language.zh_cn', 'resource.language.en_gb'):
             with self.subTest(lang=lang):
                 po = (ROOT / 'language' / lang / 'strings.po').read_text(
                     encoding='utf-8')
-                self.assertIn('msgctxt "#31824"', po)
+                self.assertNotIn('"#31824"', po)
 
     def test_no_tmdbhelper_dependency_added(self):
         addon = (ROOT / 'addon.xml').read_text(encoding='utf-8')

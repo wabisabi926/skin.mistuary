@@ -4,9 +4,17 @@
 清晰图只占屏幕右上角 2/3，左边和下方交给黑底。缩了就必须配渐变，
 否则图片的底边和左边缘会是一条硬切线。
 
-两张图都是 RGBA 黑：
-  flixart-shade.png   512x8    左 alpha 255 → 右 0（水平，盖住图左缘）
-  flixart-bottom.png  8x512    上 0 → 下 255（垂直，盖住图底边并接到屏幕底）
+三张图：
+  flixart-shade.png      512x8       RGBA 黑，左 alpha 255 → 右 0（水平，盖住图左缘）
+  flixart-bottom.png     8x512       RGBA 黑，上 0 → 下 255（垂直，盖住图底边）
+  flixart-edge-glow.png 1920x1080   RGBA 白，左 1/3 全不透明、之后 20% 宽淡出
+
+edge-glow 是给「色光过渡层」用的 diffuse 遮罩：白色 RGB 不改变贴图颜色，
+alpha 决定色光覆盖清晰图左缘的范围。fuse3 是给清晰图贴 diffuse 让左缘透明，
+我们用同一张色光图 + 全屏 alpha 遮罩覆在清晰图上，效果等价，且不用依赖
+multiimage 的 imagepath 是否支持 diffuse。黑色渐隐层常驻、不与色光层互斥：
+色光 jpg 异步加载的那几帧由它兜住清晰图左缘，不会一闪露出硬切线，
+属性为空时也就是原来的纯黑渐隐，零回归。
 底部曲线比线性更陡：图片底边落在屏幕 2/3 处，那里要已经压到约 78%，
 否则「暗图 → 纯黑」还是一眼能看出台阶。
 
@@ -24,11 +32,17 @@ ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / 'media' / 'overlays'
 SHADE = MEDIA / 'flixart-shade.png'
 BOTTOM = MEDIA / 'flixart-bottom.png'
+EDGE_GLOW = MEDIA / 'flixart-edge-glow.png'
 
 SHADE_W, SHADE_H = 512, 8
 SIDE_GAMMA = 1.3
 
 BOTTOM_W, BOTTOM_H = 8, 512
+
+# 屏幕尺寸，diffuse 随控件全屏拉伸；清晰图从 1/3 开始，渐隐带占屏 20%。
+EDGE_W, EDGE_H = 1920, 1080
+EDGE_START = 1 / 3
+EDGE_WIDTH = 0.20
 
 
 def side_alpha(t):
@@ -70,12 +84,36 @@ def build_bottom():
     return img
 
 
+def edge_alpha(t):
+    """全屏横向：清晰图左侧全遮，左缘 20% 宽淡出，之后不遮。
+
+    与 side_alpha 用同一条 gamma 曲线，保证「色光版」和「黑色版」的渐隐
+    宽度、衰减手感完全一致，切换开关时构图不会跳。
+    """
+    if t <= EDGE_START:
+        return 255
+    k = (t - EDGE_START) / EDGE_WIDTH
+    if k >= 1:
+        return 0
+    return side_alpha(k)
+
+
+def build_edge_glow():
+    """白色 RGB + alpha 渐变，作 diffuse 用；先画一行再纵向复制，避免百万次循环。"""
+    row = Image.new('RGBA', (EDGE_W, 1))
+    px = row.load()
+    for x in range(EDGE_W):
+        px[x, 0] = (255, 255, 255, edge_alpha(x / (EDGE_W - 1)))
+    return row.resize((EDGE_W, EDGE_H), Image.NEAREST)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true', help='只校验，不写文件')
     args = parser.parse_args()
 
-    targets = [(SHADE, build_shade()), (BOTTOM, build_bottom())]
+    targets = [(SHADE, build_shade()), (BOTTOM, build_bottom()),
+               (EDGE_GLOW, build_edge_glow())]
 
     if args.check:
         failed = False
