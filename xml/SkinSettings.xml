@@ -437,6 +437,17 @@
 					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=file_resume)</onclick>
 					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.FileResume),true)</selected>
 				</control>
+				<!-- 外观项，但开关存在 helper 里，和上面几个 helper 开关放同一组省一列布局。
+				     关闭时 helper 会清空色光属性，三页色光层自行隐藏。 -->
+				<control type="radiobutton" id="726">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31824]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=toggle_setting,key=fanart_glow)</onclick>
+					<selected>String.IsEqual(Window(home).Property(Mistuary.Helper.FanartGlow),true)</selected>
+				</control>
 				<top>161</top>
 				<width>1315</width>
 				<height>708</height>

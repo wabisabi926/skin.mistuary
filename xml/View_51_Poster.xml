@@ -440,6 +440,23 @@
 				<texture colordiffuse="fanart_void">colors/black.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
+			<!-- 流光溢彩色光底：与 Home / 详情页共用同一属性；季页是 Home 窗口里的 view，
+			     所以隐藏 label 用 9097，不能和 Home.xml 的 9099 撞 id。 -->
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+			</control>
+			<control type="label" id="9097">
+				<left>-10</left>
+				<top>-10</top>
+				<width>1</width>
+				<height>1</height>
+				<textcolor>00FFFFFF</textcolor>
+				<label>$INFO[Container(51).ListItem.Art(fanart)]</label>
+			</control>
 			<control type="image">
 				<left>33.33%</left>
 				<top>0</top>

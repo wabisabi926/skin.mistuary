@@ -1527,3 +1527,7 @@ msgstr "Remember playback position for videos opened from the file manager."
 msgctxt "#31823"
 msgid "Fetch library covers from Emby; file names must match library names."
 msgstr "Fetch library covers from Emby; file names must match library names."
+
+msgctxt "#31824"
+msgid "Background colour glow"
+msgstr "Background colour glow (requires Mistuary Helper)"

@@ -99,6 +99,24 @@
 				<texture colordiffuse="fanart_void">colors/black.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
+			<!-- 流光溢彩色光底：与 Home.xml 同一套属性，helper 没装/关掉时属性为空，
+			     这层隐藏并露出 fanart_void 纯黑。层序必须在清晰图之前、黑底之后。 -->
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>scale</aspectratio>
+				<fadetime>250</fadetime>
+				<texture background="true">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+			</control>
+			<!-- 源图通道：详情页独立窗口，用 9098 避免与 Home 的 9099 撞。 -->
+			<control type="label" id="9098">
+				<left>-10</left>
+				<top>-10</top>
+				<width>1</width>
+				<height>1</height>
+				<textcolor>00FFFFFF</textcolor>
+				<label>$INFO[ListItem.Art(fanart)]</label>
+			</control>
 			<!-- 清晰图只占屏幕右上角 2/3（fuse3 的 flixart 是 1280x720 / 1080p）：
 			     aligny="top" 让图贴顶，多出来的高度交给底部渐变吃掉，不能垂直居中。 -->
 			<control type="image" id="5900">

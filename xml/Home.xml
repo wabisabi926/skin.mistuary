@@ -41,6 +41,28 @@
 			<texture colordiffuse="fanart_void">colors/black.png</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
+		<!-- 流光溢彩：helper 把当前剧照模糊成 0.25 亮度的色光底，铺在黑底与清晰图之间。
+		     故意放在焦点 group **之外**：清晰图聚焦时会 zoom，色光跟着动会让边缘闪一下。
+		     属性为空 = helper 没更新 / PIL 缺失 / 开关关闭 / 无剧照，此层隐藏并露出纯黑，零回归。 -->
+		<control type="image">
+			<depth>DepthBackground</depth>
+			<include>FullScreenDimensions</include>
+			<aspectratio>scale</aspectratio>
+			<fadetime>250</fadetime>
+			<texture background="true">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+		</control>
+		<!-- 源图通道：helper 读 Control.GetLabel(9099)，与 9090 绑同一个 HomeFanartVar，
+		     保证色光和清晰图是同一张剧照。屏幕外 1x1 + 全透明字，不写 visible=false
+		     （隐藏控件可能不求值 label）。 -->
+		<control type="label" id="9099">
+			<left>-10</left>
+			<top>-10</top>
+			<width>1</width>
+			<height>1</height>
+			<textcolor>00FFFFFF</textcolor>
+			<label>$VAR[HomeFanartVar]</label>
+		</control>
 		<!-- 图片和左遮罩必须包在同一个 group 里，zoom 挂在 group 上：
 		     聚焦时只放大图片、不放大遮罩的话，图片左缘会向左溢出，
 		     遮罩盖不到，就会在聚焦状态下露出一条竖边。 -->
