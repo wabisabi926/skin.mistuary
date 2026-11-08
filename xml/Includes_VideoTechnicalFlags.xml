@@ -105,6 +105,20 @@
 		<entry key="wmapro">audio/wmapro</entry>
 		<entry key="wmav2">audio/wmav2</entry>
 	</map>
+	<map name="NaraTechnicalChannelIconMap">
+		<entry key="1">channels/1</entry>
+		<entry key="2">channels/2</entry>
+		<entry key="3">channels/3</entry>
+		<entry key="4">channels/4</entry>
+		<entry key="5">channels/5</entry>
+		<entry key="6">channels/6</entry>
+		<entry key="7">channels/7</entry>
+		<entry key="8">channels/8</entry>
+		<entry key="10">channels/10</entry>
+		<entry key="12">channels/12</entry>
+		<entry key="14">channels/14</entry>
+		<entry key="16">channels/16</entry>
+	</map>
 	<!-- END generated: techflag icon maps -->
 
 	<!-- The shared row owns all display-name normalization. Unknown non-empty values fall back
@@ -182,6 +196,24 @@
 		<entry key="xvid">XVID</entry>
 	</map>
 
+	<!-- 声道：key 是 Kodi 的 AudioChannels 数字。label 只在素材缺失时被画成白字标，
+	     实际走的是 zephyr / fuse3 的 channels 图标。
+	     注意 AudioChannels(DefaultLayout) 是 Kodi 按声道数查表猜出来的布局：
+	     5.1.2 和 7.1 都算 8 声道，映射表里没有 5.1.2 —— 文字和图标都分不出来。 -->
+	<map name="NaraTechnicalChannelTextMap">
+		<entry key="1">1.0</entry>
+		<entry key="2">2.0</entry>
+		<entry key="3">2.1</entry>
+		<entry key="4">4.0</entry>
+		<entry key="5">4.1</entry>
+		<entry key="6">5.1</entry>
+		<entry key="7">6.1</entry>
+		<entry key="8">7.1</entry>
+		<entry key="10">9.1</entry>
+		<entry key="12">11.1</entry>
+		<entry key="14">13.1</entry>
+		<entry key="16">15.1</entry>
+	</map>
 	<map name="NaraTechnicalAudioCodecTextMap">
 		<entry key="aac">AAC</entry>
 		<entry key="aac_latm">AAC LATM</entry>
@@ -424,12 +456,13 @@
 				<param name="icon" value="audio/atmos" />
 			</include>
 			<!-- Language is intentionally omitted.
-			     声道只用文字，不做图标：素材按声道数命名，而 5.1.2 与 7.1 都是 8 声道、
-			     5.1.4 与 7.1.2 都是 10 声道，图标必然说谎。文字如实反映 Kodi 报的布局串。 -->
-			<include content="NaraTechnicalTextPill">
-				<param name="flag_visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_channels]) + !Skin.HasSetting(hide_techflag_icons)" />
-				<param name="flag_label" value="$INFO[$PARAM[audio_channels]]" />
-				<param name="font" value="font13" />
+			     声道改用图标（2026-11-08）。旧注释说「文字如实反映布局串」是错的：
+			     AudioChannels(DefaultLayout) 是 Kodi 用 StreamUtils::GetDefaultLayout
+			     按声道数查表猜的（8 → 7.1），映射表里没有 5.1.2 —— 文字同样是猜的，
+			     不比图标准确。所以图标 key 用 AudioChannels 的数字，不是布局串。 -->
+			<include content="NaraTechnicalFlag">
+				<param name="visible" value="$PARAM[visible] + !String.IsEmpty($PARAM[audio_channels])" />
+				<param name="icon" value="$MAP[NaraTechnicalChannelIconMap,$PARAM[audio_channels]]" />
 			</include>
 		</definition>
 	</include>
@@ -460,7 +493,7 @@
 				<param name="hdr_detail_2" value="$PARAM[item_prefix].Property(HdrDetail.2)" />
 				<param name="video_codec" value="$PARAM[item_prefix].VideoCodec" />
 				<param name="audio_codec" value="$PARAM[item_prefix].AudioCodec" />
-				<param name="audio_channels" value="$PARAM[item_prefix].AudioChannels(DefaultLayout)" />
+				<param name="audio_channels" value="$PARAM[item_prefix].AudioChannels" />
 			</include>
 
 			<include content="VideoTechnicalFlagsContent">
@@ -474,7 +507,7 @@
 				<param name="hdr_detail_2" value="$PARAM[episode_prefix].Property(HdrDetail.2)" />
 				<param name="video_codec" value="$PARAM[episode_prefix].VideoCodec" />
 				<param name="audio_codec" value="$PARAM[episode_prefix].AudioCodec" />
-				<param name="audio_channels" value="$PARAM[episode_prefix].AudioChannels(DefaultLayout)" />
+				<param name="audio_channels" value="$PARAM[episode_prefix].AudioChannels" />
 			</include>
 		</definition>
 	</include>

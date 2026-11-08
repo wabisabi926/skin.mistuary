@@ -54,6 +54,9 @@ CATEGORIES = {
                                        {"dtsma": "dtshd_ma", "mp3float": "mp3",
                                         "wmav2": "wma", "pcm_bluray": "pcm",
                                         "pcm_s32le": "pcm_s24le", "dca": "dts"}),
+    # 声道：zephyr 覆盖 0~16（fuse3 只到 10），所以 zephyr 在前、fuse3 补缺。
+    # key 是 AudioChannels 的数字，不是布局串 —— 5.1.2 与 7.1 都是 8，本来就分不出来。
+    "NaraTechnicalChannelIconMap": ("channels", [MART / "channels", FUSE / "channels"], {}),
 }
 
 CATEGORIES_BY_SUBDIR = {sub: (name, dirs, alias)
