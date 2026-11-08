@@ -1642,7 +1642,6 @@
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,alac)">ALAC</value>
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,ape)">APE</value>
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,av3a)">AV3A</value>
-		<value condition="String.IsEqual(VideoPlayer.AudioCodec,avc)">AVC</value>
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,cdda)">CDDA</value>
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dca)">DTS</value>
 		<value condition="String.IsEqual(VideoPlayer.AudioCodec,dolbydigital)">DOLBY DIGITAL</value>

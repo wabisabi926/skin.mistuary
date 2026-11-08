@@ -67,7 +67,6 @@
 		<entry key="alac">audio/alac</entry>
 		<entry key="ape">audio/ape</entry>
 		<entry key="av3a">audio/av3a</entry>
-		<entry key="avc">audio/avc</entry>
 		<entry key="cdda">audio/cdda</entry>
 		<entry key="dca">audio/dca</entry>
 		<entry key="dolbydigital">audio/dolbydigital</entry>
@@ -227,7 +226,6 @@
 		<entry key="alac">ALAC</entry>
 		<entry key="ape">APE</entry>
 		<entry key="av3a">AV3A</entry>
-		<entry key="avc">AVC</entry>
 		<entry key="cdda">CDDA</entry>
 		<entry key="dca">DTS</entry>
 		<entry key="dolbydigital">DOLBY DIGITAL</entry>
