@@ -41,7 +41,7 @@
 			<texture colordiffuse="fanart_void">colors/black.png</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
-		<!-- 流光溢彩：helper 把当前剧照模糊成 0.25 亮度的色光底，铺在黑底与清晰图之间。
+		<!-- 流光溢彩：helper 把当前剧照模糊成 0.40 亮度的色光底，铺在黑底与清晰图之间。
 		     故意放在焦点 group **之外**：清晰图聚焦时会 zoom，色光跟着动会让边缘闪一下。
 		     属性为空 = helper 没更新 / PIL 缺失 / 开关关闭 / 无剧照，此层隐藏并露出纯黑，零回归。 -->
 		<control type="image">
