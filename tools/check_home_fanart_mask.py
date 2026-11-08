@@ -9,7 +9,7 @@
 1. 遮罩组的可见条件排除 search、但不排除 music；
 2. hero 遮罩排除文件 / 收藏，list 遮罩只用于文件 / 收藏；
 3. 两张遮罩都受 no_fanart 控制；
-4. HomeFanartVar 的兜底仍是 primary.jpg。
+4. HomeFanartVar 的兜底必须为空（缺图露 fanart_void 黑底，不拿色块凑数）。
 
 用法：
     python tools/check_home_fanart_mask.py
@@ -103,8 +103,17 @@ def main() -> int:
         r'<variable name="HomeFanartVar">(.*?)</variable>', variables, re.S
     )
     check(
-        bool(fanart_var) and "special://skin/extras/backgrounds/primary.jpg" in fanart_var.group(1),
-        "HomeFanartVar 的兜底仍是 primary.jpg",
+        bool(fanart_var) and "special://skin/extras/backgrounds/primary.jpg" not in fanart_var.group(1),
+        "HomeFanartVar 的兜底不能再用 primary.jpg（会缩成右上角一块色块）",
+    )
+
+    hero_var = re.search(
+        r'<variable name="HomeVideoHeroFanartVar">(.*?)</variable>',
+        read("Includes_HomeVideo.xml"), re.S,
+    )
+    check(
+        bool(hero_var) and "special://skin/extras/backgrounds/primary.jpg" not in hero_var.group(1),
+        "HomeVideoHeroFanartVar 的兜底也不能用 primary.jpg（同上）",
     )
 
     print()

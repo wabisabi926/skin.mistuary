@@ -722,8 +722,10 @@
 		     直接复用「音乐播放器背景图」，和播放页共用同一张
 		     （也跟随 设置 → 外观 → 音乐背景，用户换图两边一起变）。 -->
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),music)">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</value>
-		<!-- 首页背景兜底：所有分支都不成立时用 primary.jpg（no_fanart 分支在前，仍返回空） -->
-		<value>special://skin/extras/backgrounds/primary.jpg</value>
+		<!-- 首页背景兜底（2026-11-08 改）：返回空，露出 fanart_void 黑底。
+		     背景现在是右上 2/3 的画幅，兜底图被缩进 2/3 就变成一块色块，比纯黑更难看。
+		     no_fanart 分支在最前面，本来就返回空。 -->
+		<value></value>
 	</variable>
 	<variable name="NaraWallFanartVar">
 		<value condition="!String.IsEmpty(Container(500).ListItem.Art(fanart))">$INFO[Container(500).ListItem.Art(fanart)]</value>

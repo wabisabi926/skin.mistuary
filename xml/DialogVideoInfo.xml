@@ -144,14 +144,6 @@
 				<texture>overlays/detail-left-scrim.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
-			<control type="image">
-				<top>420</top>
-				<left>-120</left>
-				<right>-120</right>
-				<height>660</height>
-				<aspectratio>stretch</aspectratio>
-				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
-			</control>
 			<control type="group">
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<control type="group">

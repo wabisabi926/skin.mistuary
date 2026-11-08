@@ -476,14 +476,6 @@
 				<texture>overlays/detail-left-scrim.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
-			<control type="image">
-				<top>420</top>
-				<left>-120</left>
-				<right>-120</right>
-				<height>660</height>
-				<aspectratio>stretch</aspectratio>
-				<texture colordiffuse="opacity_medium">overlays/overlayfade.png</texture>
-			</control>
 
 			<!-- Hero：坐标沿用详情页 tvshow 版式（无 tagline 时整组上移 22、简介组再上移 38） -->
 			<control type="group">
