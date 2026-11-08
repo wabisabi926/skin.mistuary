@@ -91,16 +91,43 @@
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
-			<control type="group">
+			<!-- 背景剧照不再做 150% 满屏放大（2026-11-08 改）：满屏清晰图 + 左侧黑渐变，
+			     构图对齐 fuse3 的 flixart。黑底先铺满，遮罩只压左边 25%；
+			     与 Home.xml 同一套参数，改一处必须同步另一处。 -->
+			<control type="image">
 				<include>FullScreenDimensions</include>
-				<animation effect="zoom" center="0,25%" start="100,100" end="150,150" time="1">WindowOpen</animation>
+				<texture colordiffuse="fanart_void">colors/black.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
+			<!-- 清晰图只占屏幕右上角 2/3（fuse3 的 flixart 是 1280x720 / 1080p）：
+			     aligny="top" 让图贴顶，多出来的高度交给底部渐变吃掉，不能垂直居中。 -->
 			<control type="image" id="5900">
-				<include>FullScreenDimensions</include>
-				<aspectratio align="right">scale</aspectratio>
+				<left>33.33%</left>
+				<top>0</top>
+				<width>66.67%</width>
+				<height>100%</height>
+				<aspectratio align="right" aligny="top">keep</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
+			<!-- 图左缘渐隐：宽度取图宽的 30%（fuse3 的 diffuse 也是 30%），
+			     从图的左边界开始向右淡出。 -->
+			<control type="image">
+				<left>33.33%</left>
+				<top>0</top>
+				<width>20%</width>
+				<height>100%</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/flixart-shade.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+			</control>
+			<!-- 底部渐变：把图的下缘压进黑里，图片底边（2/3 ~ 3/4 高度）处已约 70% 黑。 -->
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/flixart-bottom.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">
 				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))" />

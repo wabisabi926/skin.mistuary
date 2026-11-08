@@ -430,14 +430,39 @@
 				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
+			<!-- 2026-11-08：与详情页同一套「满屏 + 左侧渐隐」，不再单独走 150% 放大。 -->
 			<control type="image">
 				<left>-120</left>
 				<top>-80</top>
 				<right>-120</right>
 				<bottom>-80</bottom>
-				<aspectratio align="right">scale</aspectratio>
+				<aspectratio>scale</aspectratio>
+				<texture colordiffuse="fanart_void">colors/black.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<left>33.33%</left>
+				<top>0</top>
+				<width>66.67%</width>
+				<height>100%</height>
+				<aspectratio align="right" aligny="top">keep</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[Container(51).ListItem.Art(fanart)]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<left>33.33%</left>
+				<top>0</top>
+				<width>20%</width>
+				<height>100%</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/flixart-shade.png</texture>
+				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
+			</control>
+			<control type="image">
+				<include>FullScreenDimensions</include>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/flixart-bottom.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">

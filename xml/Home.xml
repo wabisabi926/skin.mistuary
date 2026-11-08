@@ -31,24 +31,58 @@
 			<visible allowhiddenfocus="true">Control.HasFocus(20001)</visible>
 		</control>
 		<include>DefaultBackground</include>
-		<!-- 背景剧照持续放大 150%，锚点左 25%：人物右移并略下移，左侧留白给文字 -->
-		<control type="group">
-			<include>FullScreenDimensions</include>
-			<animation effect="zoom" center="0,25%" start="100,100" end="150,150" time="1">WindowOpen</animation>
-		<control type="multiimage" id="9090">
+		<!-- 背景剧照不再做 150% 满屏放大（2026-11-08 改）：改成「满屏清晰图 + 左侧黑渐变」，
+		     构图对齐 fuse3 的 flixart —— 人物回到 100%，画面从左侧的纯黑里浮出来。
+		     黑底先铺满；遮罩只压左边 25%，不改 multiimage 的尺寸，
+		     这样 primary 兜底 / 音乐专辑图 / 8 套分辨率都不会因为「缩到 75%」而露馅。 -->
+		<control type="image">
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
-			<aspectratio align="right">scale</aspectratio>
-			<fadetime>350</fadetime>
-			<animation effect="zoom" center="auto" end="102,102" time="0" condition="Integer.IsGreater(System.StereoscopicMode,0)">conditional</animation>
-			<animation effect="fade" start="0" end="100" time="250" reversible="false" condition="Window.Previous(startup) | Window.Previous(fullscreenvideo) | Window.Previous(fullscreengame) | Window.Previous(visualisation)">WindowOpen</animation>
-			<animation effect="fade" time="400">VisibleChange</animation>
+			<texture colordiffuse="fanart_void">colors/black.png</texture>
+			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
+		</control>
+		<!-- 图片和左遮罩必须包在同一个 group 里，zoom 挂在 group 上：
+		     聚焦时只放大图片、不放大遮罩的话，图片左缘会向左溢出，
+		     遮罩盖不到，就会在聚焦状态下露出一条竖边。 -->
+		<control type="group">
+			<depth>DepthBackground</depth>
+			<include>FullScreenDimensions</include>
 			<include content="Animation_NaraFanartFocus">
 				<param name="condition" value="$EXP[NaraHomeFanartFocused]" />
 			</include>
-			<imagepath background="true">$VAR[HomeFanartVar]</imagepath>
-			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
+			<control type="multiimage" id="9090">
+				<depth>DepthBackground</depth>
+				<left>33.33%</left>
+				<top>0</top>
+				<width>66.67%</width>
+				<height>100%</height>
+				<aspectratio align="right" aligny="top">keep</aspectratio>
+				<fadetime>350</fadetime>
+				<animation effect="zoom" center="auto" end="102,102" time="0" condition="Integer.IsGreater(System.StereoscopicMode,0)">conditional</animation>
+				<animation effect="fade" start="0" end="100" time="250" reversible="false" condition="Window.Previous(startup) | Window.Previous(fullscreenvideo) | Window.Previous(fullscreengame) | Window.Previous(visualisation)">WindowOpen</animation>
+				<animation effect="fade" time="400">VisibleChange</animation>
+				<imagepath background="true">$VAR[HomeFanartVar]</imagepath>
+				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
+			</control>
+			<!-- 图左缘渐隐：宽度取图宽的 30%，从图的左边界（33.33%）向右淡出。 -->
+			<control type="image">
+				<depth>DepthBackground</depth>
+				<left>33.33%</left>
+				<top>0</top>
+				<width>20%</width>
+				<height>100%</height>
+				<aspectratio>stretch</aspectratio>
+				<texture>overlays/flixart-shade.png</texture>
+				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
+			</control>
 		</control>
+		<!-- 底部渐变：把图的下缘压进黑里。 -->
+		<control type="image">
+			<depth>DepthBackground</depth>
+			<include>FullScreenDimensions</include>
+			<aspectratio>stretch</aspectratio>
+			<texture>overlays/flixart-bottom.png</texture>
+			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
 		<!-- Search, Favorites and Files intentionally share one random movie provider.
 		     A persistent lock or a just-unlocked session path suppresses the query.

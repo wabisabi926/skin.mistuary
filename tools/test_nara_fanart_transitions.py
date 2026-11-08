@@ -160,31 +160,101 @@ class FanartTransitionsTest(unittest.TestCase):
         # 通用版移除了魔改内核的 Follow 动画，镜头改由 VideoInfo.FanartSource 驱动。
         self.assertEqual(FOLLOW, [])
 
-    def test_detail_fanart_zoom_is_unconditional_group_zoom(self):
-        """详情页背景只有一层 150% 放大，挂在包住 id=5900 的 group 上，且不带 condition。
+    def test_detail_fanart_uses_black_backing_and_left_shade(self):
+        """详情页背景：满屏清晰图 + 左侧黑渐变，不再 150% 放大（2026-11-08 改）。
 
-        2026-11-07 把「内层 104% zoom + 来源条件分支」换成了外层 group 的
-        100→150 / `center="0,25%"`（HANDOVER §5.11.2）。这里锁住三条契约：
-        1. 5900 自己不再挂动画 —— 否则内外两层会叠成二次放大；
-        2. 外层只有一条 zoom，参数就是定稿值；
-        3. zoom 不带 condition —— 有条件的动画会随打开时机漂移，
-           首页与详情页的构图高度就对不上了。
+        2026-11-07 是外层 group 的 100→150 放大（HANDOVER §5.11.2）。现在改成
+        「黑底 + 满屏清晰图 + 25% 左缘渐隐」，构图对齐 fuse3 的 flixart：
+        人物回到 100%，左侧从纯黑里浮出来，不需要真模糊。
+        这里锁三条契约：
+        1. 5900 自己不挂 animation；
+        2. 5900 之前有一层铺满屏幕的纯黑底；
+        3. 5900 之后有一条 25% 宽的 flixart-shade 遮罩，且同样受 no_fanart 控制。
         """
         image = INFO.find('.//control[@id="5900"]')
         self.assertIsNotNone(image, '详情页背景层 id=5900 不见了')
         self.assertEqual(image.findall('animation'), [], '5900 自己不该再挂动画')
-        wrapper = next(control for control in INFO.iter('control')
-                       if control.find('control[@id="5900"]') is not None)
-        zooms = [node for node in wrapper.findall('animation') if node.get('effect') == 'zoom']
-        self.assertEqual(len(zooms), 1, '包住 5900 的 group 应只有一条 zoom')
-        zoom = zooms[0]
-        self.assertEqual((zoom.get('center'), zoom.get('start'), zoom.get('end'),
-                          zoom.get('time'), (zoom.text or '').strip()),
-                         ('0,25%', '100,100', '150,150', '1', 'WindowOpen'),
-                         '详情页背景放大的定稿参数变了（见 HANDOVER §5.11.2）')
-        self.assertIsNone(zoom.get('condition'), 'zoom 不能带 condition')
-        self.assertEqual((wrapper.findtext('include') or '').strip(), 'FullScreenDimensions',
-                         '外层 group 必须铺满屏幕，不能写死 1920')
+        self.assertEqual((image.findtext('left') or '').strip(), '33.33%',
+                         '清晰图应从屏幕 1/3 处开始（右上 2/3）')
+        self.assertEqual((image.findtext('top') or '').strip(), '0')
+        self.assertEqual((image.findtext('width') or '').strip(), '66.67%',
+                         '清晰图宽度应为屏幕 2/3')
+        self.assertEqual((image.findtext('height') or '').strip(), '100%')
+        aspect = image.find('aspectratio')
+        self.assertEqual(aspect.get('aligny'), 'top', '贴顶，多出来的高度交给底部渐变')
+        self.assertEqual((aspect.text or '').strip(), 'keep',
+                         '必须 keep：框是 4:3，scale 会裁左边并留下亮竖条')
+
+        group = next(control for control in INFO.iter('control')
+                     if control.find('control[@id="5900"]') is not None)
+        children = group.findall('control')
+        index = next(i for i, child in enumerate(children) if child.get('id') == '5900')
+
+        blacks = [c for c in children[:index]
+                  if (c.findtext('texture') or '').strip() == 'colors/black.png']
+        self.assertTrue(blacks, '5900 之前应有一层纯黑底')
+        self.assertEqual((blacks[-1].findtext('include') or '').strip(), 'FullScreenDimensions',
+                         '黑底必须铺满屏幕，不能写死 1920')
+
+        shades = [c for c in children[index + 1:]
+                  if (c.findtext('texture') or '').strip() == 'overlays/flixart-shade.png']
+        self.assertTrue(shades, '5900 之后应有左缘渐隐遮罩')
+        shade = shades[0]
+        self.assertEqual((shade.findtext('width') or '').strip(), '20%', '遮罩宽度应为图宽的 30%')
+        self.assertEqual((shade.findtext('aspectratio') or '').strip(), 'stretch',
+                         '遮罩必须拉伸铺满，否则渐变会按贴图原始比例排版')
+        self.assertIn('no_fanart', shade.findtext('visible') or '',
+                      '遮罩也要受 no_fanart 控制')
+
+        bottoms = [c for c in children[index + 1:]
+                   if (c.findtext('texture') or '').strip() == 'overlays/flixart-bottom.png']
+        self.assertTrue(bottoms, '5900 之后应有底部渐变，否则图片下缘是硬切线')
+
+        zooms = [node for node in group.findall('animation') if node.get('effect') == 'zoom']
+        self.assertEqual(zooms, [], '详情页背景不再做 150% 放大')
+
+    def test_home_fanart_uses_black_backing_and_left_shade(self):
+        """首页：黑底 + 右上 2/3 清晰图 + 左缘遮罩，且 zoom 必须挂在包住两者的 group 上。
+
+        聚焦动画（Animation_NaraFanartFocus，100→104）只放大图片、不放大遮罩的话，
+        图片左缘会向左溢出，遮罩盖不到，就会在聚焦状态下露出一条竖边。
+        """
+        root = ET.parse(XML / 'Home.xml').getroot()
+        image = root.find('.//control[@id="9090"]')
+        self.assertIsNotNone(image, '首页背景 9090 不见了')
+        self.assertEqual((image.findtext('left') or '').strip(), '33.33%',
+                         '首页清晰图也应在右上 2/3')
+        self.assertEqual((image.findtext('top') or '').strip(), '0')
+        self.assertEqual((image.findtext('width') or '').strip(), '66.67%')
+        self.assertEqual((image.findtext('height') or '').strip(), '100%')
+        self.assertEqual(image.find('aspectratio').get('aligny'), 'top')
+        self.assertEqual((image.find('aspectratio').text or '').strip(), 'keep')
+
+        wrapper = next(c for c in root.iter('control')
+                       if c.find('control[@id="9090"]') is not None)
+        focus = [i for i in wrapper.findall('include')
+                 if (i.get('content') or '') == 'Animation_NaraFanartFocus']
+        self.assertEqual(len(focus), 1,
+                         '聚焦 zoom 必须挂在包住 9090 和遮罩的 group 上；只放图片会让聚焦时左缘溢出')
+        self.assertEqual([i for i in image.findall('include')
+                          if (i.get('content') or '') == 'Animation_NaraFanartFocus'], [],
+                         '聚焦 zoom 不该还留在 9090 自己身上')
+
+        shades = [c for c in wrapper.findall('control')
+                  if (c.findtext('texture') or '').strip() == 'overlays/flixart-shade.png']
+        self.assertTrue(shades, 'group 里应有左缘遮罩')
+        self.assertEqual((shades[0].findtext('width') or '').strip(), '20%')
+
+        all_controls = list(root.iter('control'))
+        self.assertTrue([c for c in all_controls
+                         if (c.findtext('texture') or '').strip() == 'colors/black.png'],
+                        '缺少纯黑底')
+        self.assertTrue([c for c in all_controls
+                         if (c.findtext('texture') or '').strip() == 'overlays/flixart-bottom.png'],
+                        '缺少底部渐变')
+
+        zooms150 = [node for node in root.iter('animation') if node.get('end') == '150,150']
+        self.assertEqual(zooms150, [], '首页不再做 150% 放大')
 
 
 if __name__ == '__main__':
