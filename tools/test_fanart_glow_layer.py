@@ -194,7 +194,7 @@ class VeilSettingTests(unittest.TestCase):
     """背景压暗：四档，乘在阅读遮罩 / 底缘渐变 / 详情·季页左遮罩上。"""
 
     TARGETS = {
-        'Home.xml': 2,
+        'Home.xml': 3,
         'Includes_Search.xml': 1,
         'DialogVideoInfo.xml': 2,
         'View_51_Poster.xml': 2,

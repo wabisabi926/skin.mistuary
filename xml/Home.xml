@@ -147,7 +147,7 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/fanart-overlay-list.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/fanart-overlay-list.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + [String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
 			</control>
 		</control>
