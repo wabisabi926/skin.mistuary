@@ -5,7 +5,7 @@
 	<controls>
 		<!-- 弹窗压在插件详情 / 详情页上时，只有遮蔽层 + 玻璃面板，下层窗口的行和文字
 		     会透成鬼影（「版本变更」叠在插件详情上最明显）。这里先铺一层不透明共享剧照
-		     （与插件信息 / 插件设置 / 依赖弹窗同一张、同一 fanart_dim），
+		     （与插件信息 / 插件设置 / 依赖弹窗同一张、同一 NaraFanartDimVar），
 		     透出来的是一张图，不是另一个窗口的文字。 -->
 		<control type="list" id="16090">
 			<left>-2</left>
@@ -20,7 +20,7 @@
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
-			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraFileManagerRandomFanartVar]</texture>
 			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 		</control>
 		<control type="image">

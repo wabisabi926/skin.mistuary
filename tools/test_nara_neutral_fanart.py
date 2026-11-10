@@ -1,15 +1,19 @@
 """剧照层亮度的结构性约束（HANDOVER §5.11.1）。
 
-现在分成两类基准，定义在 `colors/defaults.xml`，改亮度只动那两行：
+现在底层亮度跟随「背景压暗」四档（`NaraFanartDimVar`），定义在 `colors/defaults.xml`：
 
-- `fanart_dim` = `FF808080`（×0.50）：无阅读遮罩的共享页 + 媒体库页
-- `fanart_dim_reading` = `FFA8A8A8`（×0.66）：自带烘焙阅读遮罩的页
-  （首页文件·收藏 / 搜索空查询），以及插件详情里插件自己的 fanart
+- `fanart_dim_35` = `FF595959`（×0.35）
+- `fanart_dim_50` = `FF808080`（×0.50，默认）
+- `fanart_dim_60` = `FF999999`（×0.60）
+- `fanart_dim_100` = `FFFFFFFF`（×1.00）
+
+阅读遮罩另走 `NaraFanartVeilVar`，两个变量共用 `fanart_veil_*` 设置。
+`primary_dim` 仍然是缺 fanart 时 `primary.jpg` 的固定 0.60 兜底，不参与四档。
 
 照片不透明，所以不需要再垫一层中性底，玻璃面板背后照样有明暗层次。
 
 这套契约有四条，破了就会重新出现「某页发紫」或「某页过亮」：
-1. 十层只允许这两个 token（八个共享页 + 选择列表 + 文本查看器的底层），同类必须是同一个值（分叉就会按页漂移）；
+1. 十五个 fanart 底层统一用 `$VAR[NaraFanartDimVar]`，不再按页写死 0.50/0.66；
 2. 必须不透明（alpha FF），否则 primary 的蓝紫会透上来；
 3. 系数必须是中性（R=G=B），带色偏等于换个方向染色；
 4. 不能再引入中性底 / 半透明叠灰这类额外图层。
@@ -26,8 +30,6 @@ COLORS = Path(__file__).resolve().parents[1] / 'colors' / 'defaults.xml'
 EXP_ONLY = re.compile(r'^\$EXP\[([A-Za-z0-9_.]+)\]$')
 TINT = re.compile(r'^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$')
 
-# 自带烘焙阅读遮罩的两页，底图系数要更高一档（遮罩会再压暗）
-READING_PAGES = {'Home.xml', 'Includes_Search.xml'}
 
 
 def parse(name):
@@ -120,15 +122,28 @@ class FanartDimTest(unittest.TestCase):
         self.assertNotIn('Home.Section', visible,
                          '16090 取样不能再限定分区，否则停在电影分区时写不进 SessionPath')
 
-    def test_each_page_uses_its_documented_token(self):
+    def test_each_page_uses_the_dim_variable(self):
         tints = {name: texture.get('colordiffuse') for name, _, texture in self.layers}
         for name, tint in tints.items():
-            expected = 'fanart_dim_reading' if name in READING_PAGES else 'fanart_dim'
-            self.assertEqual(tint, expected, f'{name} 应使用 {expected}，实际 {tint}')
+            self.assertEqual(tint, '$VAR[NaraFanartDimVar]',
+                             f'{name} 应跟随四档变量，实际 {tint}')
+
+    def test_fanart_dim_variable_has_four_levels(self):
+        block = (XML / 'Variables.xml').read_text(encoding='utf-8')
+        block = block.split('name="NaraFanartDimVar"', 1)[1].split('</variable>', 1)[0]
+        for token in ('fanart_dim_35', 'fanart_dim_50', 'fanart_dim_60', 'fanart_dim_100'):
+            self.assertIn(token, block, f'NaraFanartDimVar 缺少 {token}')
+        self.assertIn('<value>fanart_dim_50</value>', block, '默认档应为 0.50')
 
     def test_tokens_are_neutral_opaque_and_in_range(self):
         palette = colors()
-        expected_red = {'fanart_dim': 0x80, 'fanart_dim_reading': 0xA8, 'primary_dim': 0x99}
+        expected_red = {
+            'fanart_dim_35': 0x59,
+            'fanart_dim_50': 0x80,
+            'fanart_dim_60': 0x99,
+            'fanart_dim_100': 0xFF,
+            'primary_dim': 0x99,
+        }
         for name, red_value in expected_red.items():
             self.assertIn(name, palette, f'colors/defaults.xml 缺少 {name}')
             match = TINT.match(palette[name])
@@ -140,9 +155,9 @@ class FanartDimTest(unittest.TestCase):
             self.assertEqual(red, green, f'{name} 必须是中性系数，不能带色偏')
             self.assertEqual(green, blue, f'{name} 必须是中性系数，不能带色偏')
             self.assertEqual(red, red_value, f'{name} 的压暗系数变了')
-            self.assertTrue(0x80 <= red <= 0xC0, f'{name} 偏离 0.5~0.75 的约定范围')
+            self.assertTrue(0x50 <= red <= 0xFF, f'{name} 偏离 0.35~1.00 的约定范围')
 
-    def test_addon_info_plugin_fanart_uses_reading_token(self):
+    def test_addon_info_plugin_fanart_uses_dim_variable(self):
         root = parse('DialogAddonInfo.xml')
         tints = []
         for control in root.iter('control'):
@@ -152,7 +167,8 @@ class FanartDimTest(unittest.TestCase):
             if (texture.text or '').strip() == '$INFO[ListItem.Art(fanart)]':
                 tints.append(texture.get('colordiffuse'))
         self.assertTrue(tints, '插件自己的 fanart 层不见了')
-        self.assertEqual(tints, ['fanart_dim_reading'], '插件 fanart 也要压暗，且和遮罩页同一档')
+        self.assertEqual(tints, ['$VAR[NaraFanartDimVar]'],
+                         '插件 fanart 也要跟随背景压暗四档')
 
     def test_primary_dim_layers_respect_no_fanart(self):
         layers = []

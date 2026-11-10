@@ -126,7 +126,7 @@
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="fanart_dim_reading">$VAR[NaraSharedRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraSharedRandomFanartVar]</texture>
 			<!-- Keep Favorites' backdrop resident so the detail close fade reveals it immediately. -->
 			<animation effect="fade" start="100" end="0" time="0" condition="String.IsEqual(Window(home).Property(Home.Section),favorites) + Window.IsActive(movieinformation)">Conditional</animation>
 			<visible>$EXP[nara_home_files_fanart_visible]</visible>

@@ -31,7 +31,7 @@
 	</include>
 	<!-- 浮窗的不透明底层：把下层页面的行和文字盖住，只透出一张压暗的剧照。
 	     与插件信息 / 插件设置 / 媒体源 / 文件浏览器 / 八个共享页同一张剧照、
-	     同一个 fanart_dim（×0.50）。播放中（Player.HasVideo / HasGame）与
+	     同一个 NaraFanartDimVar（跟随背景压暗四档）。播放中（Player.HasVideo / HasGame）与
 	     no_fanart 时整层隐藏，退回原来的纯遮蔽层。
 	     **只能放在窗口 <controls> 的顶层第一行**：放进居中的面板 group 里时
 	     FullScreenDimensions 会从面板左上角算起，铺不满屏幕。 -->
@@ -49,7 +49,7 @@
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
-			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraFileManagerRandomFanartVar]</texture>
 			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 		</control>
 	</include>

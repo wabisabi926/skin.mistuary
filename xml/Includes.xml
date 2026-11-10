@@ -792,7 +792,7 @@
 		</definition>
 	</include>
 	<!-- 媒体库页面的背景压暗层。
-	     共享 fanart 用 fanart_dim（FF808080 = 50% 亮度），
+	     共享 fanart 用 NaraFanartDimVar（跟随背景压暗四档），
 	     但它仍然有颜色、有明暗，跟海报/封面抢视线。再压 40%，背景退成"底噪"。
 	     放在 DefaultBackground 之后、内容之前。
 	     Home 不用它 —— 首页的 fanart 是设计主体，不该压。 -->
@@ -1048,7 +1048,7 @@
 						<aspectratio align="$PARAM[fanart_align]">scale</aspectratio>
 						<fadetime>$PARAM[transition_time]</fadetime>
 						<animation effect="fade" time="$PARAM[transition_time]">VisibleChange</animation>
-						<texture background="true" colordiffuse="fanart_dim">$VAR[MediaFanartVar]</texture>
+						<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[MediaFanartVar]</texture>
 					</control>
 					<control type="image">
 						<left>-3</left>

@@ -22,7 +22,7 @@
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
-			<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraFileManagerRandomFanartVar]</texture>
 			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 		</control>
 		<control type="group">

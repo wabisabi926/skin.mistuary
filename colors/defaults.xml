@@ -39,11 +39,13 @@
 
 	<!-- Artwork and dimming -->
 	<color name="artwork_background">66FFFFFF</color>
-	<!-- 全屏剧照统一压暗（HANDOVER §5.11.1），改亮度只动这两行：
-	     fanart_dim         0.50 —— 无阅读遮罩的共享页 + 媒体库页
-	     fanart_dim_reading 0.66 —— 自带烘焙阅读遮罩的页（首页文件·收藏 / 搜索空查询 / 插件详情自己的 fanart） -->
-	<color name="fanart_dim">FF808080</color>
-	<color name="fanart_dim_reading">FFA8A8A8</color>
+	<!-- 全屏剧照底层亮度：跟随「背景压暗」四档（NaraFanartDimVar）。
+	     35/50/60/100 是底层亮度系数；阅读遮罩另走 NaraFanartVeilVar，两处共用同一档。
+	     primary_dim 是缺 fanart 时 primary.jpg 的固定兜底，不参与四档。 -->
+	<color name="fanart_dim_35">FF595959</color>
+	<color name="fanart_dim_50">FF808080</color>
+	<color name="fanart_dim_60">FF999999</color>
+	<color name="fanart_dim_100">FFFFFFFF</color>
 	<!-- 缺 fanart 时的 primary.jpg 兜底：0.60；no_fanart 仍是原图 -->
 	<color name="primary_dim">FF999999</color>
 	<!-- 背景剧照缩小后露出来的「空场」。不用纯黑：纯黑和玻璃面板（gl_* 的 0F0F12）

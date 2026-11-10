@@ -547,7 +547,7 @@
 			<include>FullScreenDimensions</include>
 			<aspectratio>stretch</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true" colordiffuse="fanart_dim_reading">$VAR[NaraSharedRandomFanartVar]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraSharedRandomFanartVar]</texture>
 			<visible>$EXP[nara_search_empty_fanart_visible]</visible>
 		</control>
 		<!-- 剧照必须铺满：Kodi 的 aspectratio 只有 keep/scale/center/stretch，

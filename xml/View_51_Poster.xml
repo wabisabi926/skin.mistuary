@@ -30,7 +30,7 @@
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true" colordiffuse="fanart_dim">$INFO[Container(51).ListItem.Art(fanart)]</texture>
+				<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$INFO[Container(51).ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image">

@@ -39,7 +39,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture background="true" colordiffuse="fanart_dim">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</texture>
+				<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image">

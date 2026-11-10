@@ -69,7 +69,7 @@ class LayerOrderTests(unittest.TestCase):
                 glow = [i for i, c in enumerate(nodes)
                         if GLOW in (c.findtext('texture') or '')]
                 # 满屏清晰图：left 0 / width 100%。View_51 开头还有一层旧
-                # fanart_dim 共享剧照、primary 兜底和渐隐层的 visible 里也有
+                # NaraFanartDimVar 共享剧照、primary 兜底和渐隐层的 visible 里也有
                 # Art(fanart)，都不能算清晰图。
                 clear = [i for i, c in enumerate(nodes)
                          if (c.findtext('left') or '').strip() == '0'

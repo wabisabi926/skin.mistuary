@@ -32,14 +32,14 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
-				<texture background="true" colordiffuse="fanart_dim">$VAR[NaraFileManagerRandomFanartVar]</texture>
+				<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraFileManagerRandomFanartVar]</texture>
 				<visible>$EXP[nara_page_shared_fanart_visible]</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio align="right">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true" colordiffuse="fanart_dim_reading">$INFO[ListItem.Art(fanart)]</texture>
+				<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$INFO[ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<!-- 全屏遮罩：用 FullScreenDimensions 而不是写死 1920，

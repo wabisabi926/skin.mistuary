@@ -1791,6 +1791,15 @@
 		<value condition="Skin.HasSetting(fanart_veil_100)">veil_100</value>
 		<value>veil_50</value>
 	</variable>
+	<!-- 第二批（2026-11-10）：剧照底层也跟随同一档，避免 0.50/0.66 按页分叉。
+	     遮罩仍走 NaraFanartVeilVar；两个变量共用 fanart_veil_* 设置。 -->
+	<variable name="NaraFanartDimVar">
+		<value condition="Skin.HasSetting(fanart_veil_35)">fanart_dim_35</value>
+		<value condition="Skin.HasSetting(fanart_veil_50)">fanart_dim_50</value>
+		<value condition="Skin.HasSetting(fanart_veil_60)">fanart_dim_60</value>
+		<value condition="Skin.HasSetting(fanart_veil_100)">fanart_dim_100</value>
+		<value>fanart_dim_50</value>
+	</variable>
 	<variable name="NaraFanartVeilLabelVar">
 		<value condition="Skin.HasSetting(fanart_veil_35)">$LOCALIZE[31826]</value>
 		<value condition="Skin.HasSetting(fanart_veil_50)">$LOCALIZE[31827]</value>
