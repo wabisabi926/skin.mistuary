@@ -93,7 +93,7 @@
 
 ```bash
 python tools/sync_to_kodi.py            # 皮肤（开发期可加 --loose）
-cd D:/Downloads/AI/script.mistuary.helper && python tools/sync_to_kodi.py   # 插件
+cd "D:/下载/AI/script.mistuary.helper" && python tools/sync_to_kodi.py   # 插件
 ```
 
 目标路径按平台推导（`%APPDATA%\Kodi\addons\skin.mistuary` / `~/.kodi/addons/...`），
