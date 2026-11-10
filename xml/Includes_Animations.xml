@@ -27,12 +27,6 @@
 			<animation id="fanart-focus" effect="zoom" start="100" end="104" center="80%,35%" time="500" tween="sine" easing="inout" condition="$PARAM[condition]">Conditional</animation>
 		</definition>
 	</include>
-	<include name="Animation_NaraScrimFocus">
-		<param name="condition">true</param>
-		<definition>
-			<animation effect="zoom" start="100,100" end="94,100" center="0,0" time="600" tween="sine" easing="inout" condition="$PARAM[condition]">Conditional</animation>
-		</definition>
-	</include>
 	<include name="Animation_NaraFanartDetail">
 		<param name="source">library</param>
 		<param name="enabled">true</param>

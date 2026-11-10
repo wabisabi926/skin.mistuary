@@ -85,6 +85,8 @@ keep 下海报是 166×250 居中，遮罩跟图走（**不要写 `scalediffuse=
 
 ### A-4 `FileBrowser.xml` 右侧预览 · 260×380 · 1 处
 
+> 2026-11-10：该预览已从 FileBrowser 删除，`mask_260x380_r12` 随 2.2.1 清理。
+
 ```
 55–64  加 mask_260x380_r12，删 border="4" / bordertexture / bordersize
        aspectratio aligny="bottom" keep 不变

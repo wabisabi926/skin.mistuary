@@ -117,8 +117,6 @@ DIFFUSE_MASKS = (
     ("mask_250x250_r12.png", 250, 250, 12),
     # 书签弹窗缩略图 330×250（scale，遮罩写 scalediffuse="false"）
     ("mask_330x250_r12.png", 330, 250, 12),
-    # 文件浏览器右侧预览 260×380（keep aligny=bottom）
-    ("mask_260x380_r12.png", 260, 380, 12),
     # 图标墙缩略图 160×116（卡片本体是 round32，图是方角）
     ("mask_160x116_r9.png", 160, 116, 9),
     # 播放中 seek 封面 200²（短边 = 200，归 r12 档）
