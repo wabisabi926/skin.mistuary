@@ -60,7 +60,7 @@
 **接手时先看工作区状态**：截至 2026-11-07，`main` 已同步，**`v2.1.1` 已发布**
 （弹窗补齐不透明剧照底层、随机剧照改为一会话一张、背景亮度统一、首页与详情页 150% 构图）。
 具体以 `git status` / `git log origin/main..HEAD` 为准，本节不钉 hash 和提交数。
-`Textures.xbt` **846 张 / 8.6 MB**（1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **95 项全过**。
+`Textures.xbt` **846 张 / 8.6 MB**（1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **118 项全过**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -786,8 +786,8 @@ E4K 不写票数，`ListItem.Votes(...)` 恒空；个人评分不进 `Ratings`�
 | 页面 | 兜底 |
 |---|---|
 | `DialogVideoInfo` | `primary.jpg` 原色（`no_fanart`）/ `primary_dim` ×0.60（缺 fanart）+ fanart + 左侧压暗 |
-| `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图（`fanart_dim` ×0.50），再退到 primary |
-| `DialogAddonInfo` | **共享真剧照**（`NaraFileManagerRandomFanartVar`，×0.50）+ 插件自己的 fanart（×0.66）；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
+| `DialogMusicInfo` | 同上；无 fanart 时先用音乐背景图（`NaraFanartDimVar`），再退到 primary |
+| `DialogAddonInfo` | **共享真剧照** + 插件自己的 fanart，两处都走 `NaraFanartDimVar`；有 fanart 用页面档遮罩，无 fanart 固定 `sc_2`（27%） |
 | `DialogPVRInfo` / `DialogPictureInfo` | **故意透出直播画面 / 当前图片**，不铺不透明底图 |
 
 > 插件详情 2026-11-05 起不再用 `primary.jpg` 兜底：底层换成与设置页 / 文件管理同一张
@@ -938,15 +938,20 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 `primary.jpg` 的平均色约 `63,77,110`（偏蓝紫）。设置页 / 文件管理 / 搜索空查询 /
 首页「文件·收藏」的剧照曾经是半透明叠在它上面，于是被染成紫灰。
 
-**现行做法**：剧照用乘法压暗，系数集中在 `colors/defaults.xml` 的两个 token，**不要再写死十六进制**：
+**现行做法**（2026-11-10 第二批）：剧照底层跟随「背景压暗」四档，
+系数集中在 `colors/defaults.xml`，**不要再写死十六进制**：
 
 | token | 值 | 用在哪 |
 |---|---|---|
-| `fanart_dim` | `FF808080`（×0.50） | 设置 / 文件管理 / 文件浏览器 / 添加文件源 / 插件设置 / 插件详情底层 / 媒体库页；View_51 海报墙、MovieSet、音乐信息兜底 |
-| `fanart_dim_reading` | `FFA8A8A8`（×0.66） | 自带烘焙阅读遮罩的首页文件·收藏、搜索空查询，以及插件详情自己的 fanart |
+| `fanart_dim_35` | `FF595959`（×0.35） | `NaraFanartDimVar` 极透档 |
+| `fanart_dim_50` | `FF808080`（×0.50） | `NaraFanartDimVar` 通透档 / 默认 |
+| `fanart_dim_60` | `FF999999`（×0.60） | `NaraFanartDimVar` 平衡档 |
+| `fanart_dim_100` | `FFFFFFFF`（×1.00） | `NaraFanartDimVar` 原浓度 |
 | `primary_dim` | `FF999999`（×0.60） | 缺 fanart 时的 `primary.jpg` 兜底层（View_51 / View_501 / DialogVideoInfo）；`no_fanart` 仍画原图 |
 
-改亮度只动这几行；全部保持不透明（alpha `FF`）。
+实际扫到 **14 个 XML、16 处** `fanart_dim` / `fanart_dim_reading`，全部改成
+`$VAR[NaraFanartDimVar]`；阅读遮罩仍用 `$VAR[NaraFanartVeilVar]`，两个变量共用
+`fanart_veil_*` 设置。`primary_dim` 的 3 处是缺 fanart 兜底，不在本批。全部保持不透明（alpha `FF`）。
 
 **全皮肤亮度阶梯**（2026-11-07 定）：
 
@@ -963,15 +968,16 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 |---|---|---|
 | 55% + 20% 黑 + 10% 黑（设置页初版） | `0.495L + 24.9` | 灰雾，没层次 |
 | 50% 叠在 `#313131` 上（第二轮） | `0.5L + 24.5` | 同上 |
-| **×0.50 / ×0.66 不透明（现行）** | `0.50L` / `0.66L` | 照片的明暗和色彩都在；无遮罩页 0.50，带烘焙遮罩页 0.66 |
+| ×0.50 / ×0.66 不透明（第二批前） | `0.50L` / `0.66L` | 照片的明暗和色彩都在；无遮罩页 0.50，带烘焙遮罩页 0.66 |
+| **四档底层 + 同档遮罩（现行）** | `0.35L` ~ `1.00L` | 底层和遮罩共用 `fanart_veil_*`；默认 0.50 / 0.50 |
 
 三者在 L=150 时都约 99，亮度等价；但乘法压暗**不需要中性底那一层**，
 玻璃背后有真实的明暗过渡。**别再用纯色兜底图当背景** —— 面板会糊在背景上，玻璃感直接没了。
 
 **四条约束**（`tools/test_nara_neutral_fanart.py` 锁着）：
 
-1. 八页剧照只允许两个 token：无阅读遮罩的页统一 `fanart_dim`（0.50），
-   自带烘焙遮罩的页统一 `fanart_dim_reading`（0.66）；同类分叉就会按页漂移；
+1. 14 个 XML 的 16 处 fanart 底层统一用 `$VAR[NaraFanartDimVar]`，遮罩用 `$VAR[NaraFanartVeilVar]`；
+   两处共用 `fanart_veil_*` 四档，不要按页写死 0.50/0.66；
 2. 必须**不透明**（alpha `FF`），否则 primary 的蓝紫会透上来；
 3. 系数必须是**中性**（R=G=B），带色偏等于换个方向染色；
 4. 不要再引入中性底 / 半透明叠灰这类额外图层。
@@ -997,7 +1003,7 @@ Kodi 按当前宽高比选一组逻辑坐标渲染，4K 16:9 走的就是 1920×
 否则画面和生成器不一致。三个变体：`hero`（电影/电视剧/音乐/电视/兜底）、`list`（首页文件/收藏）、
 `empty`（搜索空查询）。烘焙后这些页面各少画 3 层。
 
-**还有哪些剧照层**：`grep -o 'colordiffuse="fanart_dim[^"]*"' xml/*.xml` 应能看到两个 token 的使用点。
+**还有哪些剧照层**：`grep -o 'colordiffuse="\$VAR\[NaraFanartDimVar\]"' xml/*.xml` 应能看到 16 个使用点。
 搜索结果剧照是不透明的，不参与这套。加新的半透明剧照页时先判断它属于哪一类（有无阅读遮罩）。
 
 #### 5.11.2 首页与详情页背景构图：150% 左 25% 锚点（2026-11-07 定）
@@ -1434,7 +1440,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 91 项
+python -m unittest discover -s tools -p 'test_*.py'       # 118 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 

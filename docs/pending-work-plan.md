@@ -121,7 +121,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 # 四、清理：文档失真（已全部处理）
 
 8 处已按实测值改写：README 的图标张数 / 透明度处数 / 单测项数，`skin-contracts`
-的 35 → 当前 84 项与 xbt 662 → 当前 749 张，HANDOVER 的去掉的提交号，工具表补 `scan_rounded.py`，
+的 35 → 当前 118 项与 xbt 662 → 当前 846 张，HANDOVER 的去掉的提交号，工具表补 `scan_rounded.py`，
 `addon.xml` 免责声明结尾分号 → 句号。
 
 **唯一遗留**：`addon.xml:19` 的 `<forum>` 仍指向 `http://forum.kodi.tv/` 首页。
@@ -241,7 +241,7 @@ VideoInfoSubLabelVar          WidgetPlaylistIconVar         WidgetStudioIconVar
 python tools/audit_skin.py --strict                      # EXIT=0
 python tools/audit_skin.py --orphans                     # 0 张
 python tools/audit_skin.py --dead                        # 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 84 项
+python -m unittest discover -s tools -p 'test_*.py'       # 118 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check \
   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 python tools/xbt_tool.py pack                            # 只有动过 media/
