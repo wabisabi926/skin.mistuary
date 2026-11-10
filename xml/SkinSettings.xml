@@ -202,6 +202,16 @@
 					<onclick>Skin.ToggleSetting(no_fanart)</onclick>
 					<selected>!Skin.HasSetting(no_fanart)</selected>
 				</control>
+<control type="button" id="726">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31825]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31825, 31826|fanart_veil_35, 31827|fanart_veil_50, 31828|fanart_veil_60, 31829|fanart_veil_100)</onclick>
+					<label2>$VAR[NaraFanartVeilLabelVar]</label2>
+					<enable>!Skin.HasSetting(no_fanart)</enable>
+				</control>
 <control type="radiobutton" id="702">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[20189]</label>

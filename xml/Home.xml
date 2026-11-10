@@ -31,18 +31,16 @@
 			<visible allowhiddenfocus="true">Control.HasFocus(20001)</visible>
 		</control>
 		<include>DefaultBackground</include>
-		<!-- 背景剧照不再做 150% 满屏放大（2026-11-08 改）：改成「满屏清晰图 + 左侧黑渐变」，
-		     构图对齐 fuse3 的 flixart —— 人物回到 100%，画面从左侧的纯黑里浮出来。
-		     黑底先铺满；遮罩只压左边 25%，不改 multiimage 的尺寸，
-		     这样 primary 兜底 / 音乐专辑图 / 8 套分辨率都不会因为「缩到 75%」而露馅。 -->
+		<!-- 背景剧照铺满全屏（2026-11-10 改）：图按 keep 右对齐，左缘不再单独压黑，
+		     左侧交给半透阅读遮罩 + 35% 淡色光。原 2/3 取景看图太小、四周死黑。 -->
 		<control type="image">
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
 			<texture colordiffuse="fanart_void">colors/black.png</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
-		<!-- 流光溢彩：helper 把当前剧照模糊成 0.60 亮度的色光底，铺在黑底与清晰图之间。
-		     故意放在焦点 group **之外**：清晰图聚焦时会 zoom，色光跟着动会让边缘闪一下。
+		<!-- 流光溢彩：helper 把当前剧照模糊成 0.85 亮度的色光底，铺在黑底与清晰图之间。
+		     满屏清晰图会盖住它，只在宽屏左侧图没铺到的条带里露出。
 		     属性为空 = helper 没更新 / PIL 缺失 / 开关关闭 / 无剧照，此层隐藏并露出纯黑，零回归。 -->
 		<control type="image">
 			<depth>DepthBackground</depth>
@@ -63,9 +61,8 @@
 			<textcolor>00FFFFFF</textcolor>
 			<label>$VAR[HomeFanartVar]</label>
 		</control>
-		<!-- 图片和左遮罩必须包在同一个 group 里，zoom 挂在 group 上：
-		     聚焦时只放大图片、不放大遮罩的话，图片左缘会向左溢出，
-		     遮罩盖不到，就会在聚焦状态下露出一条竖边。 -->
+		<!-- 图片和淡色光在同一 group 里：聚焦 zoom 挂在 group 上，
+		     让淡色光跟着图一起缩放，否则放大后边缘会错位。 -->
 		<control type="group">
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
@@ -74,9 +71,9 @@
 			</include>
 			<control type="multiimage" id="9090">
 				<depth>DepthBackground</depth>
-				<left>33.33%</left>
+				<left>0</left>
 				<top>0</top>
-				<width>66.67%</width>
+				<width>100%</width>
 				<height>100%</height>
 				<aspectratio align="right" aligny="top">keep</aspectratio>
 				<fadetime>350</fadetime>
@@ -86,24 +83,8 @@
 				<imagepath background="true">$VAR[HomeFanartVar]</imagepath>
 				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame]</visible>
 			</control>
-			<!-- 黑色渐隐常驻，不再吃色光属性：色光 jpg 是后台异步加载的，打开详情页 /
-			     换剧照那几帧纹理还没到位，若这层跟着隐藏，清晰图左缘会裸出一条硬切线
-			     （实机反馈的「一闪」）。有色光时它只负责遮边，色光层叠在它上面负责加色。 -->
-			<control type="image">
-				<depth>DepthBackground</depth>
-				<left>33.33%</left>
-				<top>0</top>
-				<width>20%</width>
-				<height>100%</height>
-				<aspectratio>stretch</aspectratio>
-				<texture>overlays/flixart-shade.png</texture>
-				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
-			</control>
-			<!-- 色光过渡：对齐 fuse3 的 diffuse（清晰图左缘透明、透出底下模糊色光）。
-			     multiimage 的 imagepath 不一定支持 diffuse，所以改成把同一张色光图
-			     用全屏 alpha 遮罩覆在清晰图左缘，效果等价且与底层色光严格对齐。
-			     只负责加色，遮边交给上面常驻的黑色渐隐（本层纹理异步加载期间不撤遮罩）。
-			     scalediffuse=false：diffuse 不跟着 scale 裁切，否则渐隐带会错位。 -->
+			<!-- 淡色光（35%）：同一张色光图用 35% 透明度的 alpha 遮罩覆在图左 1/3，
+			     只加一点彩色光晕，不替换清晰图。图满屏后这层是「流光」的唯一来源。 -->
 			<control type="image">
 				<depth>DepthBackground</depth>
 				<include>FullScreenDimensions</include>
@@ -118,7 +99,7 @@
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
 			<aspectratio>stretch</aspectratio>
-			<texture>overlays/flixart-bottom.png</texture>
+			<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/flixart-bottom.png</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart)</visible>
 		</control>
 		<!-- Search, Favorites and Files intentionally share one random movie provider.
@@ -160,7 +141,7 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/fanart-overlay-hero.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/fanart-overlay-hero.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + ![String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)]</visible>
 			</control>
 			<control type="image">

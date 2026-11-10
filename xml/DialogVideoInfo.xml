@@ -91,8 +91,7 @@
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
-			<!-- 背景剧照不再做 150% 满屏放大（2026-11-08 改）：满屏清晰图 + 左侧黑渐变，
-			     构图对齐 fuse3 的 flixart。黑底先铺满，遮罩只压左边 25%；
+			<!-- 背景剧照铺满全屏（2026-11-10 改）：满屏清晰图 + 半透阅读遮罩 + 35% 淡色光。
 			     与 Home.xml 同一套参数，改一处必须同步另一处。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
@@ -117,33 +116,20 @@
 				<textcolor>00FFFFFF</textcolor>
 				<label>$INFO[ListItem.Art(fanart)]</label>
 			</control>
-			<!-- 清晰图只占屏幕右上角 2/3（fuse3 的 flixart 是 1280x720 / 1080p）：
-			     aligny="top" 让图贴顶，多出来的高度交给底部渐变吃掉，不能垂直居中。 -->
+			<!-- 清晰图铺满全屏，右对齐 keep：宽屏上多出来的左侧条带由底层色光补。
+			     aligny="top" 保持构图稳定，非 16:9 时多出的高度交给底部渐变。 -->
 			<control type="image" id="5900">
-				<left>33.33%</left>
+				<left>0</left>
 				<top>0</top>
-				<width>66.67%</width>
+				<width>100%</width>
 				<height>100%</height>
 				<aspectratio align="right" aligny="top">keep</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
-			<!-- 黑色渐隐常驻，不再吃色光属性：色光 jpg 是后台异步加载的，打开详情页 /
-			     换剧照那几帧纹理还没到位，若这层跟着隐藏，清晰图左缘会裸出一条硬切线
-			     （实机反馈的「一闪」）。有色光时它只负责遮边，色光层叠在它上面负责加色。 -->
-			<control type="image">
-				<left>33.33%</left>
-				<top>0</top>
-				<width>20%</width>
-				<height>100%</height>
-				<aspectratio>stretch</aspectratio>
-				<texture>overlays/flixart-shade.png</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
-			</control>
-			<!-- 色光过渡：对齐 fuse3 的 diffuse，让图左缘透出彩色模糊光而不是压成死黑。
-			     只负责加色，遮边交给上面常驻的黑色渐隐（本层纹理异步加载期间不撤遮罩）。
-			     与 Home.xml 同一套 diffuse 与层序，改一处必须同步另一处。 -->
+			<!-- 淡色光（35%）：只给图左 1/3 加一层彩色光晕，不替换清晰图。
+			     与 Home.xml 同一套 diffuse，改一处必须同步另一处。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio scalediffuse="false">scale</aspectratio>
@@ -151,11 +137,11 @@
 				<texture background="true" diffuse="overlays/flixart-edge-glow.png">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
-			<!-- 底部渐变：把图的下缘压进黑里，图片底边（2/3 ~ 3/4 高度）处已约 70% 黑。 -->
+			<!-- 底部渐变：把图的下缘压进黑里（浓度由「背景压暗」设置缩放）。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/flixart-bottom.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/flixart-bottom.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">
@@ -170,7 +156,7 @@
 				<width>1320</width>
 				<height>1080</height>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/detail-left-scrim.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/detail-left-scrim.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
 			</control>
 			<control type="group">

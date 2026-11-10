@@ -364,6 +364,7 @@
 		<value condition="Control.HasFocus(713)">$LOCALIZE[31743]</value>
 		<!-- 艺术图片 -->
 		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
+		<value condition="Control.HasFocus(726)">$LOCALIZE[31830]</value>
 		<value condition="Control.HasFocus(6067)">$LOCALIZE[31745]</value>
 		<value condition="Control.HasFocus(714)">$LOCALIZE[31781]</value>
 		<value condition="Control.HasFocus(720)">$LOCALIZE[31812]</value>
@@ -1780,6 +1781,22 @@
 		<value condition="Skin.HasSetting(glass_play_op_5)">$LOCALIZE[31727]</value>
 		<value condition="Skin.HasSetting(glass_play_op_6)">$LOCALIZE[31728]</value>
 		<value>$LOCALIZE[31724]</value>
+	</variable>
+	<!-- 背景压暗：只缩阅读遮罩/底缘渐变的 alpha，不改形状和色光浓度。
+	     默认 0.50（实机验收档）；1.00 = 2.2.0 原浓度，作为回退。 -->
+	<variable name="NaraFanartVeilVar">
+		<value condition="Skin.HasSetting(fanart_veil_35)">veil_35</value>
+		<value condition="Skin.HasSetting(fanart_veil_50)">veil_50</value>
+		<value condition="Skin.HasSetting(fanart_veil_60)">veil_60</value>
+		<value condition="Skin.HasSetting(fanart_veil_100)">veil_100</value>
+		<value>veil_50</value>
+	</variable>
+	<variable name="NaraFanartVeilLabelVar">
+		<value condition="Skin.HasSetting(fanart_veil_35)">$LOCALIZE[31826]</value>
+		<value condition="Skin.HasSetting(fanart_veil_50)">$LOCALIZE[31827]</value>
+		<value condition="Skin.HasSetting(fanart_veil_60)">$LOCALIZE[31828]</value>
+		<value condition="Skin.HasSetting(fanart_veil_100)">$LOCALIZE[31829]</value>
+		<value>$LOCALIZE[31827]</value>
 	</variable>
 	<!-- 设置对话框：播放中跟播放中档，否则跟浮窗档。
 	     视频/音乐 OSD 设置、播放中的设置选择框都走这里；

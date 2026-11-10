@@ -567,7 +567,7 @@
 		<control type="image">
 			<include>FullScreenDimensions</include>
 			<aspectratio>stretch</aspectratio>
-			<texture>overlays/fanart-overlay-hero.png</texture>
+			<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/fanart-overlay-hero.png</texture>
 			<visible>!String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + [[$EXP[NaraSearchMoviesActive] + !String.IsEmpty(Container(16101).ListItem.Art(fanart))] | [$EXP[NaraSearchTVShowsActive] + !String.IsEmpty(Container(16102).ListItem.Art(fanart))]]</visible>
 		</control>
 		<control type="image">

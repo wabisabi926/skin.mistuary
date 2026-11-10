@@ -1,12 +1,11 @@
 """色光底层序与兜底约束。
 
-锁死 2026-11-08 定的结构：fanart_void 黑底 → 全屏色光 → 清晰剧照 →
-左缘过渡 → 底部渐变。色光层必须「属性为空就整层消失」，保证 helper 没装/
-没更新 / PIL 缺失时自动退回原来的纯黑，不出现色块。
+锁死 2026-11-10 定的结构：fanart_void 黑底 → 全屏色光 → 满屏清晰剧照 →
+35% 淡色光（diffuse）→ 阅读遮罩 / 底缘渐变。色光层必须「属性为空就整层消失」，
+保证 helper 没装 / 没更新 / PIL 缺失时自动退回纯黑，不出现色块。
 
-左缘两层叠用：黑色渐隐常驻负责遮边，属性非空时再叠一层 diffuse 色光负责加色。
-色光 jpg 是后台异步加载的，绝不能让遮边跟着色光属性一起消失 —— 换剧照 / 打开
-详情页那几帧纹理还没到位，清晰图左缘就会裸出一条硬切线（实机反馈的「一闪」）。
+2.2.0 的黑色左缘渐隐（flixart-shade）已删除：背景图铺满后左侧没有硬切线，
+左侧只保留半透阅读遮罩；淡色光以 35% 透明度覆在图左 1/3，不再替换清晰图。
 """
 
 import unittest
@@ -69,11 +68,12 @@ class LayerOrderTests(unittest.TestCase):
                         if _texture_attr(c, 'colordiffuse') == 'fanart_void']
                 glow = [i for i, c in enumerate(nodes)
                         if GLOW in (c.findtext('texture') or '')]
-                # 只认「右上 2/3」那一层：View_51 文件开头还有一层旧的
-                # fanart_dim 共享剧照，primary 兜底和渐隐层的 visible 里也有
+                # 满屏清晰图：left 0 / width 100%。View_51 开头还有一层旧
+                # fanart_dim 共享剧照、primary 兜底和渐隐层的 visible 里也有
                 # Art(fanart)，都不能算清晰图。
                 clear = [i for i, c in enumerate(nodes)
-                         if (c.findtext('left') or '').strip() == '33.33%'
+                         if (c.findtext('left') or '').strip() == '0'
+                         and (c.findtext('width') or '').strip() == '100%'
                          and ('Art(fanart)' in (c.findtext('texture') or '')
                               or 'HomeFanartVar' in (c.findtext('imagepath') or ''))]
                 self.assertTrue(void, '找不到黑底层')
@@ -87,9 +87,11 @@ class LayerOrderTests(unittest.TestCase):
         root = _root('Home.xml')
         parent = {child: p for p in root.iter() for child in p}
         nodes = list(root.iter('control'))
-        glow = next(c for c in nodes if GLOW in (c.findtext('texture') or ''))
+        glow = next(c for c in nodes
+                    if GLOW in (c.findtext('texture') or '')
+                    and not _texture_attr(c, 'diffuse'))
         clear = next(c for c in nodes if c.get('id') == '9090')
-        self.assertNotEqual(parent[glow].get('type'), 'group')
+        self.assertNotIn(parent[glow].get('type'), ('group',))
         self.assertEqual(parent[clear].get('type'), 'group')
 
     def test_glow_stretches_full_screen(self):
@@ -101,7 +103,7 @@ class LayerOrderTests(unittest.TestCase):
 
 
 class EdgeGlowTests(unittest.TestCase):
-    """对齐 fuse3 的左缘过渡：黑渐隐常驻遮边，色光 diffuse 叠在其上加色。"""
+    """35% 淡色光：同一张色光图用 alpha 遮罩覆在清晰图左 1/3，只加色不替换图。"""
 
     def test_exactly_one_edge_layer_on_each_page(self):
         for name in PAGES:
@@ -121,31 +123,30 @@ class EdgeGlowTests(unittest.TestCase):
                 self.assertEqual((layer.findtext('include') or '').strip(),
                                  'FullScreenDimensions')
 
-    def test_black_shade_is_always_present(self):
-        """遮边不能跟色光属性挂钩：色光 jpg 异步加载时会一闪露硬切线。"""
+    def test_black_shade_control_is_gone(self):
+        """满屏后左侧没有硬切线，2.2.0 的黑色左缘渐隐不应再出现。"""
         for name in PAGES:
             with self.subTest(page=name):
-                shades = _black_shade_layers(name)
-                self.assertEqual(len(shades), 1, '黑色渐隐兜底层不能删')
-                visible = shades[0].findtext('visible') or ''
-                self.assertNotIn(GLOW, visible,
-                                 '黑色渐隐必须常驻，不能随色光属性隐藏')
+                self.assertEqual(_black_shade_layers(name), [],
+                                 '满屏构图不应再有 flixart-shade 控件')
                 edge_visible = _edge_glow_layers(name)[0].findtext('visible') or ''
                 self.assertIn('!String.IsEmpty(Window(home).Property(%s))' % GLOW,
-                              edge_visible, '色光层仍需属性非空才显示')
+                              edge_visible, '淡色光仍需属性非空才显示')
 
-    def test_edge_glow_sits_above_black_shade(self):
-        """色光要叠在黑渐隐之上才能加色；反过来会被压死。"""
+    def test_edge_glow_sits_above_clear_fanart(self):
+        """淡色光必须叠在清晰图之上，才能在图左 1/3 加色。"""
         for name in PAGES:
             with self.subTest(page=name):
                 nodes = _controls(name)
-                shade = next(i for i, c in enumerate(nodes)
-                             if (c.findtext('texture') or '').strip()
-                             == 'overlays/flixart-shade.png')
+                clear = next(i for i, c in enumerate(nodes)
+                             if (c.findtext('left') or '').strip() == '0'
+                             and (c.findtext('width') or '').strip() == '100%'
+                             and ('Art(fanart)' in (c.findtext('texture') or '')
+                                  or 'HomeFanartVar' in (c.findtext('imagepath') or '')))
                 edge = next(i for i, c in enumerate(nodes)
                             if GLOW in (c.findtext('texture') or '')
                             and _texture_attr(c, 'diffuse'))
-                self.assertLess(shade, edge, '色光过渡层必须在黑渐隐之上')
+                self.assertLess(clear, edge, '淡色光层必须在清晰图之上')
 
     def test_diffuse_texture_exists(self):
         self.assertTrue((ROOT / 'media' / 'overlays' /
@@ -172,15 +173,59 @@ class FallbackTests(unittest.TestCase):
             with self.subTest(page=name):
                 self.assertNotIn('primary.jpg', _text(_glow_layers(name)[0]))
 
-    def test_clear_fanart_two_thirds_layout_unchanged(self):
-        """色光是新插的一层，不改变已递交的 2/3 清晰图构图。"""
+    def test_clear_fanart_fills_the_screen(self):
+        """2026-11-10 起三页清晰图铺满全屏，不再保留右上 2/3。"""
         for name in PAGES:
             with self.subTest(page=name):
                 nodes = _controls(name)
                 clear = [c for c in nodes
-                         if (c.findtext('left') or '').strip() == '33.33%'
-                         and (c.findtext('width') or '').strip() == '66.67%']
-                self.assertTrue(clear, '%s 的右上 2/3 清晰图不见了' % name)
+                         if (c.findtext('left') or '').strip() == '0'
+                         and (c.findtext('width') or '').strip() == '100%'
+                         and (c.findtext('height') or '').strip() == '100%'
+                         and ('Art(fanart)' in (c.findtext('texture') or '')
+                              or 'HomeFanartVar' in (c.findtext('imagepath') or ''))]
+                self.assertTrue(clear, '%s 的满屏清晰图不见了' % name)
+                self.assertFalse(
+                    [c for c in nodes if (c.findtext('left') or '').strip() == '33.33%'],
+                    '%s 仍残留右上 2/3 的定位' % name)
+
+
+class VeilSettingTests(unittest.TestCase):
+    """背景压暗：四档，乘在阅读遮罩 / 底缘渐变 / 详情·季页左遮罩上。"""
+
+    TARGETS = {
+        'Home.xml': 2,
+        'Includes_Search.xml': 1,
+        'DialogVideoInfo.xml': 2,
+        'View_51_Poster.xml': 2,
+    }
+
+    def test_every_shared_scrim_reads_the_veil_variable(self):
+        for name, count in self.TARGETS.items():
+            with self.subTest(page=name):
+                hits = [c for c in _controls(name)
+                        if '$VAR[NaraFanartVeilVar]'
+                        in _texture_attr(c, 'colordiffuse')]
+                self.assertEqual(len(hits), count,
+                                 '%s 应恰好有 %d 个控件吃 NaraFanartVeilVar' % (name, count))
+
+    def test_settings_row_offers_four_levels(self):
+        settings = (XML / 'SkinSettings.xml').read_text(encoding='utf-8')
+        for name in ('fanart_veil_35', 'fanart_veil_50',
+                     'fanart_veil_60', 'fanart_veil_100'):
+            self.assertIn('|%s' % name, settings)
+        self.assertIn('$VAR[NaraFanartVeilLabelVar]', settings)
+
+    def test_default_is_half(self):
+        variables = (XML / 'Variables.xml').read_text(encoding='utf-8')
+        block = variables.split('name="NaraFanartVeilVar"', 1)[1].split('</variable>', 1)[0]
+        self.assertIn('<value>veil_50</value>', block)
+
+    def test_veil_colors_scale_alpha_only(self):
+        colors = (ROOT / 'colors' / 'defaults.xml').read_text(encoding='utf-8')
+        for name, alpha in (('veil_35', '59'), ('veil_50', '80'),
+                            ('veil_60', '99'), ('veil_100', 'FF')):
+            self.assertIn('<color name="%s">%sFFFFFF</color>' % (name, alpha), colors)
 
 
 class ScopeTests(unittest.TestCase):

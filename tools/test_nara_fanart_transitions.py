@@ -160,30 +160,30 @@ class FanartTransitionsTest(unittest.TestCase):
         # 通用版移除了魔改内核的 Follow 动画，镜头改由 VideoInfo.FanartSource 驱动。
         self.assertEqual(FOLLOW, [])
 
-    def test_detail_fanart_uses_black_backing_and_left_shade(self):
-        """详情页背景：满屏清晰图 + 左侧黑渐变，不再 150% 放大（2026-11-08 改）。
+    def test_detail_fanart_fills_screen_with_black_backing(self):
+        """详情页背景：黑底 + 满屏清晰图（2026-11-10 改）。
 
-        2026-11-07 是外层 group 的 100→150 放大（HANDOVER §5.11.2）。现在改成
-        「黑底 + 满屏清晰图 + 25% 左缘渐隐」，构图对齐 fuse3 的 flixart：
-        人物回到 100%，左侧从纯黑里浮出来，不需要真模糊。
-        这里锁三条契约：
+        2026-11-07 是外层 group 的 100→150 放大（HANDOVER §5.11.2），
+        2026-11-08 改成右上 2/3，2026-11-10 再改为铺满全屏：
+        左侧不再需要黑色渐隐（图左缘已在屏外），只保留半透阅读遮罩
+        + 35% 淡色光。这里锁三条契约：
         1. 5900 自己不挂 animation；
         2. 5900 之前有一层铺满屏幕的纯黑底；
-        3. 5900 之后有一条 25% 宽的 flixart-shade 遮罩，且同样受 no_fanart 控制。
+        3. 5900 之后没有 flixart-shade 控件（满屏构图不应再有左缘黑边）。
         """
         image = INFO.find('.//control[@id="5900"]')
         self.assertIsNotNone(image, '详情页背景层 id=5900 不见了')
         self.assertEqual(image.findall('animation'), [], '5900 自己不该再挂动画')
-        self.assertEqual((image.findtext('left') or '').strip(), '33.33%',
-                         '清晰图应从屏幕 1/3 处开始（右上 2/3）')
+        self.assertEqual((image.findtext('left') or '').strip(), '0',
+                         '清晰图应铺满全屏')
         self.assertEqual((image.findtext('top') or '').strip(), '0')
-        self.assertEqual((image.findtext('width') or '').strip(), '66.67%',
-                         '清晰图宽度应为屏幕 2/3')
+        self.assertEqual((image.findtext('width') or '').strip(), '100%',
+                         '清晰图宽度应为屏幕宽度')
         self.assertEqual((image.findtext('height') or '').strip(), '100%')
         aspect = image.find('aspectratio')
         self.assertEqual(aspect.get('aligny'), 'top', '贴顶，多出来的高度交给底部渐变')
         self.assertEqual((aspect.text or '').strip(), 'keep',
-                         '必须 keep：框是 4:3，scale 会裁左边并留下亮竖条')
+                         '必须 keep：scale 会拉伸非 16:9 画面')
 
         group = next(control for control in INFO.iter('control')
                      if control.find('control[@id="5900"]') is not None)
@@ -198,13 +198,7 @@ class FanartTransitionsTest(unittest.TestCase):
 
         shades = [c for c in children[index + 1:]
                   if (c.findtext('texture') or '').strip() == 'overlays/flixart-shade.png']
-        self.assertTrue(shades, '5900 之后应有左缘渐隐遮罩')
-        shade = shades[0]
-        self.assertEqual((shade.findtext('width') or '').strip(), '20%', '遮罩宽度应为图宽的 30%')
-        self.assertEqual((shade.findtext('aspectratio') or '').strip(), 'stretch',
-                         '遮罩必须拉伸铺满，否则渐变会按贴图原始比例排版')
-        self.assertIn('no_fanart', shade.findtext('visible') or '',
-                      '遮罩也要受 no_fanart 控制')
+        self.assertEqual(shades, [], '满屏构图不应再有左缘黑色渐隐')
 
         bottoms = [c for c in children[index + 1:]
                    if (c.findtext('texture') or '').strip() == 'overlays/flixart-bottom.png']
@@ -213,19 +207,19 @@ class FanartTransitionsTest(unittest.TestCase):
         zooms = [node for node in group.findall('animation') if node.get('effect') == 'zoom']
         self.assertEqual(zooms, [], '详情页背景不再做 150% 放大')
 
-    def test_home_fanart_uses_black_backing_and_left_shade(self):
-        """首页：黑底 + 右上 2/3 清晰图 + 左缘遮罩，且 zoom 必须挂在包住两者的 group 上。
+    def test_home_fanart_fills_screen(self):
+        """首页：黑底 + 满屏清晰图，且聚焦 zoom 挂在包住图片和淡色光的 group 上。
 
-        聚焦动画（Animation_NaraFanartFocus，100→104）只放大图片、不放大遮罩的话，
-        图片左缘会向左溢出，遮罩盖不到，就会在聚焦状态下露出一条竖边。
+        聚焦动画（Animation_NaraFanartFocus，100→104）必须和图片同组缩放，
+        否则淡色光和图片会错位。2026-11-10 起不再有 2/3 构图和左缘黑色渐隐。
         """
         root = ET.parse(XML / 'Home.xml').getroot()
         image = root.find('.//control[@id="9090"]')
         self.assertIsNotNone(image, '首页背景 9090 不见了')
-        self.assertEqual((image.findtext('left') or '').strip(), '33.33%',
-                         '首页清晰图也应在右上 2/3')
+        self.assertEqual((image.findtext('left') or '').strip(), '0',
+                         '首页清晰图应铺满全屏')
         self.assertEqual((image.findtext('top') or '').strip(), '0')
-        self.assertEqual((image.findtext('width') or '').strip(), '66.67%')
+        self.assertEqual((image.findtext('width') or '').strip(), '100%')
         self.assertEqual((image.findtext('height') or '').strip(), '100%')
         self.assertEqual(image.find('aspectratio').get('aligny'), 'top')
         self.assertEqual((image.find('aspectratio').text or '').strip(), 'keep')
@@ -235,15 +229,14 @@ class FanartTransitionsTest(unittest.TestCase):
         focus = [i for i in wrapper.findall('include')
                  if (i.get('content') or '') == 'Animation_NaraFanartFocus']
         self.assertEqual(len(focus), 1,
-                         '聚焦 zoom 必须挂在包住 9090 和遮罩的 group 上；只放图片会让聚焦时左缘溢出')
+                         '聚焦 zoom 必须挂在包住 9090 和淡色光的 group 上')
         self.assertEqual([i for i in image.findall('include')
                           if (i.get('content') or '') == 'Animation_NaraFanartFocus'], [],
                          '聚焦 zoom 不该还留在 9090 自己身上')
 
         shades = [c for c in wrapper.findall('control')
                   if (c.findtext('texture') or '').strip() == 'overlays/flixart-shade.png']
-        self.assertTrue(shades, 'group 里应有左缘遮罩')
-        self.assertEqual((shades[0].findtext('width') or '').strip(), '20%')
+        self.assertEqual(shades, [], '满屏构图不应再有左缘黑色渐隐')
 
         all_controls = list(root.iter('control'))
         self.assertTrue([c for c in all_controls

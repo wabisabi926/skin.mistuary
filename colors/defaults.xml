@@ -49,6 +49,14 @@
 	<!-- 背景剧照缩小后露出来的「空场」。不用纯黑：纯黑和玻璃面板（gl_* 的 0F0F12）
 	     并排会显得像被切掉一块，用同一个深色基准才有「画面沉进暗处」的感觉。 -->
 	<color name="fanart_void">FF0F0F12</color>
+
+	<!-- ===== 背景压暗档位（四档，乘在阅读遮罩/底缘渐变的 alpha 上）=====
+	     1.00 是 2.2.0 的原浓度；0.50 是实机验收的默认档。
+	     只缩透明度，不改遮罩形状与色光浓度。 -->
+	<color name="veil_35">59FFFFFF</color>
+	<color name="veil_50">80FFFFFF</color>
+	<color name="veil_60">99FFFFFF</color>
+	<color name="veil_100">FFFFFFFF</color>
 	<color name="opacity_medium">A0FFFFFF</color>
 	<color name="opacity_high">CCFFFFFF</color>
 	<color name="opacity_strong">E6FFFFFF</color>

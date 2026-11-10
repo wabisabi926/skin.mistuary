@@ -409,8 +409,8 @@
 			<animation effect="fade" time="220">VisibleChange</animation>
 
 			<!-- 季页背景与详情页完全同一套参数：
-			     primary 兜底 → fanart（右对齐 scale）→ fanart-stage-mask 暗角
-			     → detail-left-scrim 左侧阅读压暗 → opacity_medium 底部渐变。
+			     primary 兜底 → fanart_void → 色光底 → 满屏 fanart → 35% 淡色光
+			     → detail-left-scrim 左侧阅读压暗 → 底缘渐变。
 			     View_51 原来的 deck 背景已在季内容时关闭，避免叠两层不同参数。 -->
 			<control type="image">
 				<left>-120</left>
@@ -457,30 +457,18 @@
 				<textcolor>00FFFFFF</textcolor>
 				<label>$INFO[Container(51).ListItem.Art(fanart)]</label>
 			</control>
+			<!-- 清晰图铺满全屏（2026-11-10）：与详情页同一套 keep 右对齐 + 35% 淡色光。 -->
 			<control type="image">
-				<left>33.33%</left>
+				<left>0</left>
 				<top>0</top>
-				<width>66.67%</width>
+				<width>100%</width>
 				<height>100%</height>
 				<aspectratio align="right" aligny="top">keep</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true">$INFO[Container(51).ListItem.Art(fanart)]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
-			<!-- 黑色渐隐常驻，不再吃色光属性：色光 jpg 是后台异步加载的，打开详情页 /
-			     换剧照那几帧纹理还没到位，若这层跟着隐藏，清晰图左缘会裸出一条硬切线
-			     （实机反馈的「一闪」）。有色光时它只负责遮边，色光层叠在它上面负责加色。 -->
-			<control type="image">
-				<left>33.33%</left>
-				<top>0</top>
-				<width>20%</width>
-				<height>100%</height>
-				<aspectratio>stretch</aspectratio>
-				<texture>overlays/flixart-shade.png</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
-			</control>
-			<!-- 色光过渡：对齐 fuse3 的 diffuse，与 Home / DialogVideoInfo 同一套。
-			     只负责加色，遮边交给上面常驻的黑色渐隐（本层纹理异步加载期间不撤遮罩）。 -->
+			<!-- 淡色光（35%）：只加色，不替换清晰图；与 Home / DialogVideoInfo 同一套。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio scalediffuse="false">scale</aspectratio>
@@ -491,7 +479,7 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/flixart-bottom.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/flixart-bottom.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 			<include content="NaraFanartReveal">
@@ -502,7 +490,7 @@
 				<width>1320</width>
 				<height>1080</height>
 				<aspectratio>stretch</aspectratio>
-				<texture>overlays/detail-left-scrim.png</texture>
+				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/detail-left-scrim.png</texture>
 				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(Container(51).ListItem.Art(fanart))</visible>
 			</control>
 

@@ -1527,3 +1527,27 @@ msgstr "Remember playback position for videos opened from the file manager."
 msgctxt "#31823"
 msgid "Fetch library covers from Emby; file names must match library names."
 msgstr "Fetch library covers from Emby; file names must match library names."
+
+msgctxt "#31825"
+msgid "Background dimming"
+msgstr "Background dimming"
+
+msgctxt "#31826"
+msgid "Lightest"
+msgstr "Lightest"
+
+msgctxt "#31827"
+msgid "Light"
+msgstr "Light"
+
+msgctxt "#31828"
+msgid "Balanced"
+msgstr "Balanced"
+
+msgctxt "#31829"
+msgid "Original"
+msgstr "Original"
+
+msgctxt "#31830"
+msgid "How strongly background artwork is dimmed behind text on Home, Info, Seasons and Search. Lower values show more of the artwork."
+msgstr "How strongly background artwork is dimmed behind text on Home, Info, Seasons and Search. Lower values show more of the artwork."

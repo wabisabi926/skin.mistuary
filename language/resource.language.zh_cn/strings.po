@@ -1306,3 +1306,27 @@ msgstr "文件管理器中的视频记录播放进度，起播时提供继续播
 msgctxt "#31823"
 msgid "Fetch library covers from Emby; file names must match library names."
 msgstr "从 Emby 拉取媒体库封面；文件名须与库名一致。"
+
+msgctxt "#31825"
+msgid "Background dimming"
+msgstr "背景压暗"
+
+msgctxt "#31826"
+msgid "Lightest"
+msgstr "极透"
+
+msgctxt "#31827"
+msgid "Light"
+msgstr "通透"
+
+msgctxt "#31828"
+msgid "Balanced"
+msgstr "平衡"
+
+msgctxt "#31829"
+msgid "Original"
+msgstr "原浓度"
+
+msgctxt "#31830"
+msgid "How strongly background artwork is dimmed behind text on Home, Info, Seasons and Search. Lower values show more of the artwork."
+msgstr "首页、详情页、季页与搜索页背景遮罩的浓度。档位越低，剧照透出得越多；原浓度等于 2.2.0 的观感。"
