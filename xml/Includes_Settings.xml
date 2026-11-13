@@ -426,29 +426,6 @@
 					<height>1</height>
 					<texture colordiffuse="30FFFFFF">colors/white.png</texture>
 				</control>
-				<!-- 平台标识只做显示，不可聚焦、没有点击动作。 -->
-				<control type="label">
-					<left>1110</left>
-					<top>32</top>
-					<width>170</width>
-					<height>48</height>
-					<font>font24</font>
-					<label>LibreELEC</label>
-					<visible>System.AddonIsEnabled(service.libreelec.settings)</visible>
-					<aligny>center</aligny>
-					<textcolor>text_primary</textcolor>
-				</control>
-				<control type="label">
-					<left>1110</left>
-					<top>32</top>
-					<width>170</width>
-					<height>48</height>
-					<font>font24</font>
-					<label>CoreELEC</label>
-					<visible>System.AddonIsEnabled(service.coreelec.settings)</visible>
-					<aligny>center</aligny>
-					<textcolor>text_primary</textcolor>
-				</control>
 			</control>
 		</definition>
 	</include>
