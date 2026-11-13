@@ -69,11 +69,11 @@
 					<param name="text" value="text_primary" />
 				</include>
 		</control>
-		<!-- 分隔/分组标题也必须与行高 76 一致，否则断点会随分类漂移、仍然切出半截 -->
-		<control type="image" id="11">
-			<height>76</height>
-			<texture />
-		</control>
+		<!-- 分组标题必须与行高 76 一致。id=11（组间分隔）已移除：
+		     Kodi 会在每个分组之间克隆这个模板，渲染成一整行空白；
+		     把它设成 76 会让组间距多出一整行（2026-11-13 用户反馈「组与组距离太大」），
+		     设成 22 又会让断点每组漂移 6px、重新切出半截。
+		     删掉模板后 Kodi 找不到就跳过，组间只剩标题行 —— 间距与行距一致，且严格整行对齐。 -->
 		<control type="label" id="14">
 			<left>0</left>
 			<top>0</top>

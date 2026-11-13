@@ -72,13 +72,8 @@
 					<description>Default SpinControlex</description>
 					<include>DefaultSettingButton</include>
 				</control>
-				<control type="image" id="11">
-					<description>separator image</description>
-					<!-- Kodi 22 的 settings.xml 里没有 type="sep"，这个控件实际不渲染；
-					     高度统一成 70 只为保证「任何项都是行高的整数倍」，防止将来出现 sep 时破坏对齐 -->
-					<height>70</height>
-					<texture colordiffuse="separator" border="3">dialogs/separator-grey.png</texture>
-				</control>
+				<!-- 组间分隔（原 id=11）已移除：Kodi 会在分组之间克隆它、渲染成整行空白，
+				     高度不是行高整数倍就会撑大组间距或切出半截。删掉后组间只剩标题行。 -->
 				<control type="edit" id="12">
 					<include>DefaultSettingButton</include>
 				</control>
