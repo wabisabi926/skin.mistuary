@@ -140,8 +140,8 @@ WRITE_BUILTINS_DOC = (
 RESET_ONLY_SETTINGS = {"circle_none", "OriginalTitleFormat_Default"}
 # 默认档位：它是变量里那条**无 condition** 的兜底 value，所以不会出现在
 # Skin.HasSetting(...) 里。属于"写了但按设计没人直接读"。
-# rating_src_tmdb / rating_sec_auto = 主/次评分来源的默认档。
-DEFAULT_ONLY_SETTINGS: set[str] = {"rating_src_tmdb", "rating_sec_auto"}
+# rating_src_tmdb = 主评分来源的默认档。
+DEFAULT_ONLY_SETTINGS: set[str] = {"rating_src_tmdb"}
 
 # ---------------------------------------------------------------------------
 # 浮窗不透明度检查（docs/glass-opacity-plan.md）

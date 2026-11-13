@@ -602,13 +602,6 @@
 						<aspectratio aligny="bottom">keep</aspectratio>
 						<texture background="true">$VAR[InfoWallThumbVar]</texture>
 					</control>
-					<control type="group">
-						<left>291</left>
-						<top>920</top>
-						<include content="RatingCircle">
-							<param name="animation" value="True" />
-						</include>
-					</control>
 				</control>
 				<control type="group">
 					<visible>Control.IsVisible(503) + Window.IsActive(musicplaylist)</visible>
@@ -804,6 +797,7 @@
 				<control type="group">
 					<left>273</left>
 					<top>530</top>
+					<visible>!String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,album)</visible>
 					<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 					<animation effect="slide" end="0,-140" time="0" condition="String.IsEqual(ListItem.DbType,episode)">conditional</animation>
 				</control>

@@ -918,11 +918,6 @@
 					<align>center</align>
 				</control>
 			</control>
-			<control type="group">
-				<left>78</left>
-				<top>-1</top>
-				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-			</control>
 			<control type="image">
 				<left>-1</left>
 				<top>-1</top>

@@ -201,13 +201,6 @@
 		<value condition="Skin.HasSetting(rating_src_auto)">$LOCALIZE[31767]</value>
 		<value>TMDb</value>
 	</variable>
-	<!-- 次评分来源（设置 715）：自动 = 有豆瓣分先豆瓣、否则烂番茄；也可固定或关闭 -->
-	<variable name="NaraSecondaryRatingSourceVar">
-		<value condition="Skin.HasSetting(rating_sec_douban)">$LOCALIZE[31765]</value>
-		<value condition="Skin.HasSetting(rating_sec_rt)">$LOCALIZE[31783]</value>
-		<value condition="Skin.HasSetting(rating_sec_off)">$LOCALIZE[31792]</value>
-		<value>$LOCALIZE[31767]</value>
-	</variable>
 	<!-- 主评分环的颜色：手选档位优先；自动档按“默认值等于哪个类型”判断（本地电影是 themoviedb），
 	     都判不出来用白色。 -->
 	<variable name="NaraRatingRingColorVar">

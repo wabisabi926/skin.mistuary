@@ -178,6 +178,7 @@
 			<control type="group">
 				<left>158</left>
 				<top>92</top>
+				<visible>!String.IsEqual(ListItem.DBType,song) + !String.IsEqual(ListItem.DBType,album)</visible>
 				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 			</control>
 			<control type="progress">

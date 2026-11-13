@@ -131,11 +131,6 @@
 					<align>center</align>
 				</control>
 			</control>
-			<control type="group">
-				<left>133</left>
-				<top>2</top>
-				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
-			</control>
 		</definition>
 	</include>
 	<include name="InfoWallEpisodeLayout">

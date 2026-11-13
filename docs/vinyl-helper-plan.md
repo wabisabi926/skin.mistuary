@@ -162,7 +162,7 @@ script.mistuary.helper/
 │   │                          中文 / & / ? 才不会截断（# 是已知限制）
 │   ├── config.py              读插件设置 + 定位 Emby 服务器（server_id 空 = 第一个）
 │   ├── http.py                urllib 封装：超时 6s、UA、失败返回 None 不抛到 UI
-│   ├── cache.py               磁盘缓存：搜索 300s、豆瓣 7 天；json + mtime，写在 addon_data
+│   ├── cache.py               磁盘缓存：搜索 300s、豆瓣 30 天；json + mtime，写在 addon_data
 │   ├── log.py                 debug_log 开关，前缀 MISTUARY.HELPER，**绝不打印 token**
 │   ├── emby.py                Emby 客户端：/Items?searchTerm=、/Users、图片地址拼装
 │   └── douban.py              P1 才填，先留空壳

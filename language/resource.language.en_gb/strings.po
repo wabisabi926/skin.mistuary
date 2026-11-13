@@ -129,8 +129,8 @@ msgstr ""
 #: /xml/SkinSettings.xml
 
 msgctxt "#31024"
-msgid "Rating circle"
-msgstr "Rating circle"
+msgid "Video card rating"
+msgstr "Video card rating"
 
 #: /xml/Home.xml
 #: /xml/MyFavourites.xml
@@ -1221,8 +1221,8 @@ msgid "Show resolution, audio and subtitle badges in media info. On by default."
 msgstr "Show resolution, audio and subtitle badges in media info. On by default."
 
 msgctxt "#31739"
-msgid "Card badge: My rating (yours), Media rating (library source), or None. None by default."
-msgstr "Card badge: My rating (yours), Media rating (library source), or None. None by default."
+msgid "Video card badge: My rating (yours), Library rating (library default rating), or None. None by default; music cards show no rating badge."
+msgstr "Video card badge: My rating (yours), Library rating (library default rating), or None. None by default; music cards show no rating badge."
 
 msgctxt "#31740"
 msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
@@ -1389,20 +1389,12 @@ msgid "Search via Emby for original titles, pinyin and initials. Cast and genre 
 msgstr "Search via Emby for original titles, pinyin and initials. Cast and genre need Chinese input."
 
 msgctxt "#31782"
-msgid "Secondary rating source"
-msgstr "Secondary rating source"
-
-msgctxt "#31783"
-msgid "Rotten Tomatoes"
-msgstr "Tomatometer"
+msgid "Show Douban rating on info page"
+msgstr "Show Douban rating on info page"
 
 msgctxt "#31784"
-msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
-msgstr "Secondary rating: Douban first, then Rotten Tomatoes; source can be fixed."
-
-msgctxt "#31792"
-msgid "Off"
-msgstr "Off"
+msgid "Show a Douban rating capsule on the info page. On by default."
+msgstr "Show a Douban rating capsule on the info page. On by default."
 
 msgctxt "#31785"
 msgid "Enabled"
@@ -1465,8 +1457,8 @@ msgid "Delay before the music OSD hides. 4 seconds by default."
 msgstr "Delay before the music OSD hides. 4 seconds by default."
 
 msgctxt "#31807"
-msgid "Media rating"
-msgstr "Media rating"
+msgid "Library rating"
+msgstr "Library rating"
 
 msgctxt "#31808"
 msgid "Douban rating"
@@ -1485,8 +1477,8 @@ msgid "Playlist: next season"
 msgstr "Playlist: next season"
 
 msgctxt "#31812"
-msgid "Show Douban rating capsules on the info page; stop requesting when off."
-msgstr "Fetch Douban for the secondary rating on the info page; on by default, skipped when already stored."
+msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
+msgstr "Fetch the Douban rating online on the info page when the library has none. On by default."
 
 msgctxt "#31813"
 msgid "Queue the rest of the season when a library episode starts."

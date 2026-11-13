@@ -78,7 +78,7 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
 
     def test_default_only_options_are_declared(self):
         """默认档位没有显式读取，必须留在 DEFAULT_ONLY 白名单里。"""
-        self.assertEqual(DEFAULT_ONLY_SETTINGS, {"rating_src_tmdb", "rating_sec_auto"})
+        self.assertEqual(DEFAULT_ONLY_SETTINGS, {"rating_src_tmdb"})
 
 
 class RepoSkinSettingsTest(unittest.TestCase):
@@ -193,30 +193,29 @@ class IncludeParamDefinitionTest(unittest.TestCase):
         self.assertEqual(bad, [], "带 param 却没有 definition 的 include: %s" % bad)
 
 
-class SecondaryRatingSourceTest(unittest.TestCase):
-    """次评分来源（设置 715）：自动 / 豆瓣 / 烂番茄 / 关闭，手动优先。"""
+class SecondaryDoubanToggleTest(unittest.TestCase):
+    """详情页豆瓣次评分（设置 715）：开关，默认开；不再有来源四档。"""
 
-    def test_select_bool_has_four_options(self):
+    def test_setting_is_toggle(self):
         settings = (XML_DIR / "SkinSettings.xml").read_text(encoding="utf-8")
-        for setting in ("rating_sec_auto", "rating_sec_douban", "rating_sec_rt", "rating_sec_off"):
-            self.assertIn("|%s" % setting, settings)
+        row = settings.split('id="715"', 1)[1].split("</control>", 1)[0]
+        self.assertIn("Skin.ToggleSetting(hide_sec_douban)", row)
+        self.assertIn("<selected>!Skin.HasSetting(hide_sec_douban)</selected>", row)
+        for old in ("rating_sec_auto", "rating_sec_douban", "rating_sec_rt", "rating_sec_off"):
+            self.assertNotIn(old, row)
 
-    def test_douban_branch_respects_manual_choice(self):
+    def test_douban_branch_respects_toggle(self):
         hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
-        douban = hero.split("次评分 ①：豆瓣", 1)[1].split("次评分 ②", 1)[0]
+        douban = hero.split("次评分：豆瓣", 1)[1].split("<!-- 可选元数据", 1)[0]
         self.assertIn("Window.IsVisible(12003)", douban)
-        self.assertIn("rating_sec_rt", douban)
-        self.assertIn("rating_sec_off", douban)
-        # 手选豆瓣时即使与主评分同值也显示；自动档才用“不同值”去重
-        self.assertIn("[Skin.HasSetting(rating_sec_douban) |", douban)
+        self.assertIn("!Skin.HasSetting(hide_sec_douban)", douban)
+        self.assertIn("!Skin.HasSetting(douban_rating)", douban)
 
-    def test_rotten_tomatoes_no_longer_blocked_by_main_douban(self):
-        """主评分是豆瓣时也必须能显示烂番茄，否则两颗都不出现。"""
+    def test_rotten_tomatoes_secondary_removed(self):
+        """次评分只剩豆瓣；烂番茄不再占第二颗。"""
         hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
-        rt = hero.split("次评分 ②：烂番茄", 1)[1].split("</include>", 1)[0]
-        self.assertNotIn("!Skin.HasSetting(douban_rating)", rt)
-        self.assertIn("rating_sec_douban", rt)
-        self.assertIn("rating_sec_off", rt)
+        self.assertNotIn("rtfresh.png", hero)
+        self.assertNotIn("次评分 ②：烂番茄", hero)
 
 
 class VideoInfoAutoScrollTest(unittest.TestCase):

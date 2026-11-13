@@ -93,8 +93,8 @@ msgid "Viewtype"
 msgstr "视图类型"
 
 msgctxt "#31024"
-msgid "Rating circle"
-msgstr "卡片评分"
+msgid "Video card rating"
+msgstr "视频卡片评分"
 
 msgctxt "#31025"
 msgid "No favourites found. You can add items from media and other views by using the context menu."
@@ -1000,8 +1000,8 @@ msgid "Show resolution, audio and subtitle badges in media info. On by default."
 msgstr "在媒体信息中显示分辨率、音轨与字幕标识。默认开启。"
 
 msgctxt "#31739"
-msgid "Card badge: My rating (yours), Media rating (library source), or None. None by default."
-msgstr "卡片角标：我的评分（自己打的）、媒体评分（媒体库来源），或无。默认无。"
+msgid "Video card badge: My rating (yours), Library rating (library default rating), or None. None by default; music cards show no rating badge."
+msgstr "视频卡片角标：我的评分（自己打的）、媒体库评分（媒体库默认评分），或无。默认无；音乐卡片不显示评分角标。"
 
 msgctxt "#31740"
 msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
@@ -1168,20 +1168,12 @@ msgid "Search via Emby for original titles, pinyin and initials. Cast and genre 
 msgstr "经 Emby 服务端检索原名、全拼与首字母；演员、类型须中文输入。"
 
 msgctxt "#31782"
-msgid "Secondary rating source"
-msgstr "次评分来源"
-
-msgctxt "#31783"
-msgid "Rotten Tomatoes"
-msgstr "烂番茄新鲜度"
+msgid "Show Douban rating on info page"
+msgstr "详情页显示豆瓣评分"
 
 msgctxt "#31784"
-msgid "Secondary rating beside the main one: Auto uses Douban (helper) when available, otherwise the Rotten Tomatoes Tomatometer; or fix a source."
-msgstr "次评分显示在主评分旁：优先豆瓣，其次烂番茄；可固定来源。"
-
-msgctxt "#31792"
-msgid "Off"
-msgstr "关闭"
+msgid "Show a Douban rating capsule on the info page. On by default."
+msgstr "详情页显示豆瓣评分胶囊；关闭后只显示主评分。默认开启。"
 
 msgctxt "#31785"
 msgid "Enabled"
@@ -1244,8 +1236,8 @@ msgid "Delay before the music OSD hides. 4 seconds by default."
 msgstr "音乐 OSD 自动隐藏前的等待时间，默认 4 秒。"
 
 msgctxt "#31807"
-msgid "Media rating"
-msgstr "媒体评分"
+msgid "Library rating"
+msgstr "媒体库评分"
 
 msgctxt "#31808"
 msgid "Douban rating"
@@ -1264,8 +1256,8 @@ msgid "Playlist: next season"
 msgstr "播放列表：跨季继续"
 
 msgctxt "#31812"
-msgid "Show Douban rating capsules on the info page; stop requesting when off."
-msgstr "次评分用豆瓣或自动时，详情页联网补分，默认开启；库里已有不请求。"
+msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
+msgstr "详情页显示豆瓣评分且库里没有时联网补分；关闭后不请求。默认开启。"
 
 msgctxt "#31813"
 msgid "Queue the rest of the season when a library episode starts."

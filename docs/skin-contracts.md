@@ -75,7 +75,7 @@ Kodi 的皮肤设置名是**大小写敏感的字符串**。本皮肤踩过 `aut
 | `library_art_folder` | `SkinSettings.xml:41` | `SetPath` |
 | `LyricScript_Path` | `Includes_SettingsDialog.xml:242` | `SetAddon` |
 | `rating_src_auto` / `rating_src_tmdb` / `rating_src_imdb` / `douban_rating` | `SkinSettings.xml:243`（媒体页 707，主评分来源四档） | `SelectBool` |
-| `rating_sec_auto` / `rating_sec_douban` / `rating_sec_rt` / `rating_sec_off` | `SkinSettings.xml:252`（媒体页 715，次评分来源四档） | `SelectBool` |
+| `hide_sec_douban`（反向开关） | `SkinSettings.xml`（媒体页 715，详情页显示豆瓣） | `ToggleSetting` |
 | `helper_search_off` | `SkinSettings.xml:331`（媒体页 714，反向开关） | `ToggleSetting` |
 | `glass_page_op_1..6` / `glass_float_op_1..6` / `glass_play_op_1..6` | `SkinSettings.xml:711/712/713` | `SelectBool` |
 
@@ -95,11 +95,18 @@ E4K 不导出库封面（没有 `library_icons` 或 `libraryart` 目录），别
 TMDb / IMDb / 豆瓣 / 自动。手选时读对应类型，读不到才退回 `ListItem.Rating`
 （官方 E4K 只有 `default`）；TMDb 档兼容本地电影的 `themoviedb`。自动档比对
 `Rating(tmdb/themoviedb/trakt/imdb/douban)`，全部不匹配用中性图标。
-次评分四档：自动 / 豆瓣 / 烂番茄 / 关闭（设置 715）。豆瓣优先读 `Rating(douban)`
-（详情页、首页、列表）；读不到时仅详情页回退 helper 窗口属性；没有豆瓣才显示烂番茄。
+次评分只剩豆瓣：设置 715 是开关（默认开）。豆瓣优先读 `Rating(douban)`
+（详情页；首页 / 列表仅当该类型是默认分时可读）；读不到时仅详情页回退 helper 窗口属性；
+关闭或主评分已选豆瓣时整颗隐藏；烂番茄不再显示。
+
+**Kodi 22 评分读取限制（2026-11-13 实测 22.0-RC12）**：库列表 / 卡片里的 ListItem 只带
+默认评分，非默认类型（`Rating(douban)` / `Rating(imdb)` 等）在列表 / 卡片上恒空；
+详情页（视频信息窗口）同样只带默认评分，非默认类型只有它是默认评分时才可读。
+视频卡片评分因此只读 `ListItem.Rating`，墙上不显示第二颗评分；详情页的豆瓣第二颗靠助手
+联网窗口属性。上游 v23 起才在库列表 / 小组件填充类型评分。
 
 `circle_none`、`OriginalTitleFormat_Default` 是 `SelectBool` 里的"恢复默认"选项，
-`rating_src_tmdb` / `rating_sec_auto` 是"默认档位"（变量用无条件 `<value>` 兜底），
+`rating_src_tmdb` 是"默认档位"（变量用无条件 `<value>` 兜底），
 它们都不会出现在 `Skin.HasSetting(...)` 里，因此分别列入 `audit_skin.py` 的
 `RESET_ONLY_SETTINGS` 与 `DEFAULT_ONLY_SETTINGS` 白名单。
 
@@ -122,7 +129,7 @@ TMDb / IMDb / 豆瓣 / 自动。手选时读对应类型，读不到才退回 `L
 - **详情页联网取豆瓣 720**：`RunScript(script.mistuary.helper,action=toggle_setting,key=douban_enabled)`
   （`SkinSettings.xml:261`），皮肤读 `Mistuary.Helper.DoubanEnabled`。关闭后 helper 的
   `lib/douban.py` 直接返回、不写 `Mistuary.Rating.*`；库里已有的 `Rating(douban)` 不受影响。
-  715 选烂番茄/关闭或主评分选豆瓣时，该行隐藏（`!rating_sec_rt + !rating_sec_off + !douban_rating`）。
+  715 关闭或主评分选豆瓣时，该行隐藏（`!hide_sec_douban + !douban_rating`）。
 - 权威契约在插件仓库 `docs/contract.md`；改调用方式先改那边。
 
 ---
