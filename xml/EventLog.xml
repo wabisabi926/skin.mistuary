@@ -23,7 +23,9 @@
 					<left>525</left>
 					<top>193</top>
 					<width>1315</width>
-					<height>644</height>
+					<!-- 行高 76（itemlayout）、无 itemgap → 8 行 = 608。
+					     原来 644（=76×8.47）会让第 9 行在 644 处被切断、露出半截文字。 -->
+					<height>608</height>
 					<onleft>9000</onleft>
 					<onright>60</onright>
 					<onup>50</onup>
@@ -213,7 +215,8 @@
 				<left>1874</left>
 				<top>193</top>
 				<width>8</width>
-				<height>644</height>
+				<!-- 与 fixedlist id=50 高度保持一致 -->
+				<height>608</height>
 				<onleft>50</onleft>
 				<onright>9000</onright>
 				<orientation>vertical</orientation>

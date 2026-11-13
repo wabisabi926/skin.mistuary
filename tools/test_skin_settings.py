@@ -298,7 +298,27 @@ class SettingsPageGeometryTest(unittest.TestCase):
     """
 
     PANEL = {"left": "505", "top": "145", "width": "1355", "height": "740"}
+    # 内容矩形的**位置**是跨页契约（525/193/1315）；**高度**不是——
+    # 它必须是各页「整行高度」的整数倍，否则最后一行会被容器底边切断、露出半截文字
+    # （2026-11-13 用户报的就是这个：644 = 78×8.25，第 9 行只露出文字上半截）。
     CONTENT = {"left": "525", "top": "193", "width": "1315", "height": "644"}
+    # 行高与行间距：NaraSettingsRow 默认 76 + itemgap 2
+    ROW = 76
+    GAP = 2
+    # fixedlist 的 itemlayout 高 76，无 itemgap
+    PLAIN_ROW = 76
+
+    def _assert_whole_rows(self, geom, row, gap, name):
+        """容器高度必须正好装下整数行，否则底部会切出半截。
+
+        n 行占 `n*row + (n-1)*gap`，所以判据是 `(height + gap) % (row + gap) == 0`。
+        例：76 + 2 的行，8 行 = 622，(622+2) % 78 = 0。
+        """
+        height = int(geom["height"])
+        self.assertEqual((height + gap) % (row + gap), 0,
+                         f"{name}: 高度 {height} 装不下整数行（行高 {row} + 间距 {gap}），"
+                         f"最后一行会被切断")
+        self.assertGreaterEqual(height, row, f"{name}: 高度 {height} 装不下一行")
 
     def _root(self, name):
         return ET.parse(XML_DIR / name).getroot()
@@ -326,13 +346,16 @@ class SettingsPageGeometryTest(unittest.TestCase):
             self.assertEqual(self._geom(panel), self.PANEL, name)
 
     def test_content_rect_follows_the_pvr_baseline(self):
-        # 基准：原生设置分类页（播放器 / 媒体 / 界面 / 网络 / 系统 / PVR 与直播电视）
-        cat = self._root("SettingsCategory.xml")
-        self.assertEqual(self._geom(self._find(cat, "grouplist", "5")), self.CONTENT)
+        # 位置契约：525/193/1315（跨页一致）；高度按各自行高取整行
+        cat = self._geom(self._find(self._root("SettingsCategory.xml"), "grouplist", "5"))
+        self.assertEqual((cat["left"], cat["top"], cat["width"]), ("525", "193", "1315"))
+        self._assert_whole_rows(cat, self.ROW, self.GAP, "SettingsCategory.xml")
 
-        # 用户配置：设置行容器带 NaraSettingsRow，横向 525/1315，纵向仍是 193/644
+        # 用户配置：设置行容器带 NaraSettingsRow，横向 525/1315，纵向仍是 193
         prof = self._root("SettingsProfile.xml")
-        self.assertEqual(self._geom(self._find(prof, "grouplist", "9001")), self.CONTENT)
+        rows = self._geom(self._find(prof, "grouplist", "9001"))
+        self.assertEqual((rows["left"], rows["top"], rows["width"]), ("525", "193", "1315"))
+        self._assert_whole_rows(rows, self.ROW, self.GAP, "SettingsProfile.xml")
 
         # 用户配置：卡片容器没有行 include，直接 553/1259；卡片自带 top 5，188+5=193
         cards = self._geom(self._find(prof, "panel", "2"))
@@ -340,14 +363,15 @@ class SettingsPageGeometryTest(unittest.TestCase):
         self.assertEqual(int(cards["top"]) + 5, 193)
         self.assertEqual(int(cards["top"]) + int(cards["height"]), 837)
 
-        # 系统信息：纯 label 页，容器 553/1259
+        # 系统信息：纯 label 页，容器 553/1259（没有"行"的概念，保持 644）
         info = self._find(self._root("SettingsSystemInfo.xml"), "grouplist", width="1259")
         self.assertIsNotNone(info)
         self.assertEqual(self._geom(info), {**self.CONTENT, "left": "553", "width": "1259"})
 
         # 事件日志：列表 525/1315，行内首个控件 left=28 → 视觉落在 553
-        log = self._root("EventLog.xml")
-        self.assertEqual(self._geom(self._find(log, "fixedlist", "50")), self.CONTENT)
+        log = self._geom(self._find(self._root("EventLog.xml"), "fixedlist", "50"))
+        self.assertEqual((log["left"], log["top"], log["width"]), ("525", "193", "1315"))
+        self._assert_whole_rows(log, self.PLAIN_ROW, 0, "EventLog.xml")
 
     def test_help_bar_sits_at_the_same_place(self):
         for name in ("SettingsCategory.xml", "SettingsProfile.xml"):
@@ -359,15 +383,15 @@ class SettingsPageGeometryTest(unittest.TestCase):
     def test_scrollbar_track_matches_the_content_rect(self):
         """轨道高度必须等于**它服务的那个控件**的高度，否则滑块比例是错的。
 
-        三页的列表/分组都是 644 高；`SettingsSystemInfo` 例外——它的滚动条服务的是
-        「捐赠页」那个 `textbox id=30`（193→550，高 357），2026-10-29 之前写 644，
-        滑块按 644 算比例，看起来永远"还有很多内容"。
+        设置分类页 / 用户配置页：8 整行 = 622（76+2）；事件日志：8 整行 = 608（行高 76、无间距）。
+        `SettingsSystemInfo` 例外——它的滚动条服务的是「捐赠页」那个 `textbox id=30`
+        （193→550，高 357），2026-10-29 之前写 644，滑块按 644 算比例，看起来永远"还有很多内容"。
         """
         expect = {
-            "SettingsCategory.xml": "644",
-            "SettingsProfile.xml": "644",
+            "SettingsCategory.xml": "622",
+            "SettingsProfile.xml": "622",
             "SettingsSystemInfo.xml": "357",
-            "EventLog.xml": "644",
+            "EventLog.xml": "608",
         }
         for name, height in expect.items():
             bar = self._find(self._root(name), "scrollbar", "60")

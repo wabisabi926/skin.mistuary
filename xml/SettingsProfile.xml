@@ -144,7 +144,8 @@
 				<left>1874</left>
 				<top>193</top>
 				<width>8</width>
-				<height>644</height>
+				<!-- 与 grouplist id=9001 高度保持一致 -->
+				<height>622</height>
 				<orientation>vertical</orientation>
 				<texturesliderbackground />
 				<animation effect="slide" end="6,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
@@ -161,8 +162,11 @@
 				     height 加 56，两行设置比 PVR 页高 32px，用户一眼看出来没对齐）。 -->
 				<left>525</left>
 				<width>1315</width>
-				<height>644</height>
+				<!-- 与 PVR 页同一套行：NaraSettingsRow 76 + itemgap 2 = 78，8 行 = 622。
+				     644 不是 78 的整数倍，最后一行会被容器底边切断（和 SettingsCategory 同一个 bug）。 -->
+				<height>622</height>
 				<top>193</top>
+				<itemgap>2</itemgap>
 				<onleft>9000</onleft>
 				<onright>9000</onright>
 				<onup>9001</onup>
