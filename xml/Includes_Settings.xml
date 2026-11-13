@@ -583,7 +583,10 @@
 					<left>40</left>
 					<top>110</top>
 					<width>1170</width>
-					<height>615</height>
+					<!-- 必须是整行高的倍数：行高 72 + itemgap 2 = 74，8 行 = 590。
+					     原来 615（=74×8.3）会让第 9 行在 615 处被硬切断，露出半截文字。
+					     改行高时必须同步重算这里和下面的 scrollbar。 -->
+					<height>590</height>
 					<itemgap>2</itemgap>
 					<pagecontrol>60</pagecontrol>
 					<onleft>9000</onleft>
@@ -627,12 +630,13 @@
 						<param name="focuscolor" value="glass_focus_medium" />
 					</include>
 				</control>
+				<!-- 分隔/分组标题也必须与行高 72 一致，否则断点会随内容漂移、仍然切出半截 -->
 				<control type="image" id="11">
-					<height>18</height>
+					<height>72</height>
 					<texture />
 				</control>
 				<control type="label" id="14">
-					<height>56</height>
+					<height>72</height>
 					<font>font24</font>
 					<textcolor>text_secondary</textcolor>
 					<align>left</align>
@@ -643,7 +647,8 @@
 					<left>1222</left>
 					<top>118</top>
 					<width>6</width>
-					<height>595</height>
+					<!-- 保持与 grouplist 底部同样 12px 的余量：118 + 570 = 688，列表底 700 -->
+					<height>570</height>
 					<orientation>vertical</orientation>
 					<onleft>5</onleft>
 					<onright>9000</onright>

@@ -136,7 +136,8 @@
 	<include name="DefaultSettingLabel">
 		<left>0</left>
 		<top>0</top>
-		<height>75</height>
+		<!-- 必须等于 DefaultSettingButton 的行高（70），否则 OSD 设置列表的断点会漂移、切出半截 -->
+		<height>70</height>
 		<label></label>
 		<align>center</align>
 		<aligny>center</aligny>

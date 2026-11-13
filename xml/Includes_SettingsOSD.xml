@@ -3,7 +3,10 @@
 	<include name="NaraOSDSettingsLayout">
 		<definition>
 			<control type="group">
-				<top>105</top>
+				<!-- 面板 820 高：top 取 (1080-820)/2 = 130，上下留白对称。
+				     原来面板 870 时 top=105（上 105 / 下 105）。列表缩短 50px 后若不动 top，
+				     面板会明显偏上（下留 155）。 -->
+				<top>130</top>
 				<centerleft>50%</centerleft>
 				<width>1520</width>
 				<include>Animation_DialogPopupVisible</include>
@@ -23,7 +26,8 @@
 					<left>0</left>
 					<top>0</top>
 					<width>1520</width>
-					<height>870</height>
+					<!-- 870 → 820：列表高度从 750 收到 700（10 整行）后，面板同步收 50 -->
+					<height>820</height>
 					<texture colordiffuse="$VAR[NaraPlaybackDialogTintVar]" border="20">shapes/glass20.png</texture>
 				</control>
 				<!-- 标题：id=2 由 Kodi 的设置窗口填入分组名 -->
@@ -44,7 +48,10 @@
 					<left>29</left>
 					<top>100</top>
 					<width>1160</width>
-					<height>750</height>
+					<!-- 必须是行高的整数倍：行高 70、itemgap 0 → 10 行 = 700。
+					     原来 750（=70×10.7）会让第 11 行在 750 处被硬切断，露出半截文字。
+					     改行高时必须同步重算这里和下面的 scrollbar。 -->
+					<height>700</height>
 					<pagecontrol>60</pagecontrol>
 					<onleft>9000</onleft>
 					<onright>60</onright>
@@ -67,7 +74,9 @@
 				</control>
 				<control type="image" id="11">
 					<description>separator image</description>
-					<height>3</height>
+					<!-- Kodi 22 的 settings.xml 里没有 type="sep"，这个控件实际不渲染；
+					     高度统一成 70 只为保证「任何项都是行高的整数倍」，防止将来出现 sep 时破坏对齐 -->
+					<height>70</height>
 					<texture colordiffuse="separator" border="3">dialogs/separator-grey.png</texture>
 				</control>
 				<control type="edit" id="12">
@@ -113,7 +122,8 @@
 					<left>1189</left>
 					<top>100</top>
 					<width>6</width>
-					<height>750</height>
+					<!-- 与 grouplist id=5 高度保持一致 -->
+					<height>700</height>
 					<orientation>vertical</orientation>
 					<onleft>5</onleft>
 					<onright>9000</onright>

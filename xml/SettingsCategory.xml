@@ -31,7 +31,10 @@
 			<left>525</left>
 			<top>193</top>
 			<width>1315</width>
-			<height>644</height>
+			<!-- 必须等于「整行高 × 8」：行高 76 + itemgap 2 = 78，8 项 = 622。
+			     原来 644（=78×8.25）会让第 9 行在 644 处被硬切断，露出半截中文。
+			     改行高/间距时必须同步重算这里和下面的 scrollbar。 -->
+			<height>622</height>
 			<itemgap>2</itemgap>
 			<pagecontrol>60</pagecontrol>
 			<onleft>3</onleft>
@@ -66,15 +69,16 @@
 					<param name="text" value="text_primary" />
 				</include>
 		</control>
+		<!-- 分隔/分组标题也必须与行高 76 一致，否则断点会随分类漂移、仍然切出半截 -->
 		<control type="image" id="11">
-			<height>22</height>
+			<height>76</height>
 			<texture />
 		</control>
 		<control type="label" id="14">
 			<left>0</left>
 			<top>0</top>
 			<width>1315</width>
-			<height>60</height>
+			<height>76</height>
 			<textoffsetx>28</textoffsetx>
 			<align>left</align>
 			<aligny>center</aligny>
@@ -128,7 +132,8 @@
 			<left>1874</left>
 			<top>193</top>
 			<width>8</width>
-			<height>644</height>
+			<!-- 与 grouplist id=5 高度保持一致 -->
+			<height>622</height>
 			<onleft>5</onleft>
 			<onright>3</onright>
 			<orientation>vertical</orientation>

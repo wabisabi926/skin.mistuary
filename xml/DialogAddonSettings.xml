@@ -142,12 +142,13 @@
 					<param name="text" value="text_primary" />
 				</include>
 			</control>
+			<!-- 分隔/分组标题也必须与行高 72 一致，否则断点会随内容漂移、仍然切出半截 -->
 			<control type="image" id="11">
-				<height>18</height>
+				<height>72</height>
 				<texture />
 			</control>
 			<control type="label" id="14">
-				<height>56</height>
+				<height>72</height>
 				<font>font24</font>
 				<textcolor>text_secondary</textcolor>
 				<align>left</align>
