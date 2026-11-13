@@ -147,7 +147,20 @@ Kodi 的 `SetFocus(id)` / `onleft/onright` 都按数字 ID 找控件，改名或
 | `50`/`51`/`501` | 列表/海报视图容器 | 技术标识行用 `Container(50).ListItem` 之类的前缀 |
 | `5100`…`6800` | 首页各小组件容器 | `HomeVideoHeroDetails` 通过 `list_id` 参数拿到 |
 | `16090` | 搜索结果的共享 fanart 容器 | `onunload` 里读它的 `Art(fanart)` |
+| `16997` | 搜索页「输入」按钮 | 点 `SendClick(16999)` 打开系统键盘，手机 App 才有文本注入落点 |
+| `16998` | 搜索输入框（可见按钮） | 点击 `SetFocus(16992)` 回自绘键盘；`onright` 指向 `16997` |
+| `16999` | 隐藏 edit（1×1，屏幕外） | **所有搜索路径的唯一 query 来源**：`Control.GetLabel(16999).index(1)` |
 | `804` | 顶部导航的"文件"按钮 | `onfocus` 写 `Home.Section=files` |
+
+**搜索输入的三件套**（`xml/Includes_Search.xml` 的 `NaraSearchKeyboard`）：
+
+- 文本唯一来源是隐藏 `edit 16999` 的 `label.index(1)`，`NaraSearchMoviesPathVar` / `NaraSearchTVShowsPathVar` 都读它，所以任何新输入方式都必须最终落到这个控件上。
+- 自绘 T9 键盘走「`SetFocus(16999)` → 发 `Number2`–`Number9` → 立刻 `SetFocus(16992)`」，焦点从不停在 edit 上。
+- 「输入」按钮（`16997`）走「`SetFocus(16999)` → `Action(Select)`」，让 Kodi 弹出 `DialogKeyboard.xml`。**这是手机遥控 App 唯一的落点**：`Input.SendText` 的官方语义是「关闭一个已打开的输入对话框」，不会直接写进普通 `CGUIEditControl`；键盘没弹出时 Kodi 会**丢弃**文本（Kodi 论坛实证）。
+- **别用 `SendClick(16999)`**（2026-11-13 踩过）：它发的是 `GUI_MSG_CLICKED`，而 `CGUIButtonControl::OnMessage` 只处理 LABEL 类消息，不会转成 `OnClick()`，按了完全没反应（Kodi 22 源码 `GUIButtonControl.cpp` 确认）。能走通的是 `OnAction` 里的 `ACTION_SELECT_ITEM → OnClick()`。
+- 按钮文本宽度要留够：64 宽时「输入」两字会被 Kodi 截成「输…」，现在 88 宽 + `textoffsetx=0`。
+- 2026-11-13 实机（Kodi 22.0-RC2）：`SetFocus(16999)` + `Action(Select)` 弹出 `DialogKeyboard.xml`（QWERTY + 空格 + 确定/取消）；`Input.SendText` 注入「诺兰」后文本写回 16999，约 4–7 秒后容器出现结果，整条链路成立。注意 `Input.SendText` 是**追加**不是替换，`done=true` 也不保证关闭对话框。
+- **键盘标题固定是「输入数值」**：`CGUIEditControl` 把 `m_inputHeading` 初始化为内置串 16028（"Enter value"），`GUIControlFactory` 只解析 `password`，没有 `heading` / `inputtype` 标签，皮肤 XML 改不了。要自定义标题只能走插件的 `xbmcgui.Dialog().input(heading=...)`。
 
 **已删除的 ID**：`15020`（常用文件夹 8 槽位 panel，2026-10-26 移除，因为没有写入入口）。
 如果以后要恢复，`git log -S"HomeFileShortcutItems"` 能找到原实现。

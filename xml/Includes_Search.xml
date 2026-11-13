@@ -175,9 +175,15 @@
 			<onleft>noop</onleft><onright>noop</onright>
 		</control>
 		<control type="group">
+			<!-- 输入框让出右侧 104px 给「输入」按钮（16997）。按钮点 SendClick(16999)，
+			     由 Kodi 自己弹出 DialogKeyboard.xml：手机 App 的 Input.SendText 只认
+			     已打开的键盘对话框，所以文本注入必须先有这一步。
+			     五处宽度成对改（16998 / label / 两条下划线 / 16997 的 left），只改一处会错位。
+			     按钮必须留够文本宽度：64 宽时「输入」两字会被 Kodi 截成「输…」，
+			     现在 88 宽 + textoffsetx=0。 -->
 			<centerleft>50%</centerleft><top>24</top><width>1008</width><height>64</height>
 			<control type="button" id="16998">
-				<width>1008</width><height>64</height>
+				<width>904</width><height>64</height>
 				<label></label><texturefocus /><texturenofocus />
 				<include>NaraSearchKeyboardNavigation</include>
 				<onup>SetProperty(Search.KeyboardHidden,true,home)</onup>
@@ -186,24 +192,51 @@
 				<onup condition="$EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</onup>
 				<onup condition="!$EXP[NaraSearchHasResults]">9011</onup>
 				<ondown>16992</ondown>
-				<onleft>noop</onleft><onright>noop</onright>
+				<onleft>noop</onleft><onright>16997</onright>
 				<onclick>SetFocus(16992)</onclick>
 			</control>
 			<control type="label">
-				<width>1008</width><height>60</height>
+				<width>904</width><height>60</height>
 				<font>font34_search</font>
 				<label>$INFO[Control.GetLabel(16999).index(1)]</label>
 				<textcolor>text_primary</textcolor>
 				<align>center</align><aligny>center</aligny><scroll>true</scroll>
 			</control>
 			<control type="image">
-				<centerleft>50%</centerleft><bottom>0</bottom><width>1008</width><height>1</height>
+				<left>0</left><bottom>0</bottom><width>904</width><height>1</height>
 				<texture colordiffuse="text_secondary">colors/white.png</texture>
 			</control>
 			<control type="image">
-				<centerleft>50%</centerleft><bottom>0</bottom><width>1008</width><height>3</height>
+				<left>0</left><bottom>0</bottom><width>904</width><height>3</height>
 				<texture colordiffuse="glass_focus_heavy">colors/white.png</texture>
 				<visible>Control.HasFocus(16998)</visible>
+			</control>
+			<control type="button" id="16997">
+				<left>920</left><top>0</top><width>88</width><height>64</height>
+				<label>$LOCALIZE[31831]</label>
+				<font>font24_search_bold</font>
+				<textoffsetx>0</textoffsetx>
+				<textcolor>text_secondary</textcolor>
+				<focusedcolor>text_primary</focusedcolor>
+				<align>center</align><aligny>center</aligny>
+				<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
+				<texturenofocus />
+				<include>NaraSearchKeyboardNavigation</include>
+				<onup>SetProperty(Search.KeyboardHidden,true,home)</onup>
+				<onup>ClearProperty(Search.NumbersVisible,home)</onup>
+				<onup condition="$EXP[NaraSearchHasResults] + $EXP[NaraSearchMoviesActive]">16101</onup>
+				<onup condition="$EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</onup>
+				<onup condition="!$EXP[NaraSearchHasResults]">9011</onup>
+				<ondown>16992</ondown>
+				<onleft>16998</onleft><onright>noop</onright>
+				<!-- 不能写 SendClick(16999)：它发的是 GUI_MSG_CLICKED，而 button 的
+				     OnMessage 只处理 LABEL 类消息，不会转成 OnClick()（Kodi 22 源码
+				     GUIButtonControl.cpp 确认）。必须走 OnAction：先给 edit 焦点，
+				     再发 Select，触发 CGUIButtonControl::OnAction → OnClick() → 弹键盘。
+				     最后一行是兜底：若键盘没弹，焦点立刻回自绘键盘，不会卡在隐藏 edit 上。 -->
+				<onclick>SetFocus(16999)</onclick>
+				<onclick>Action(Select)</onclick>
+				<onclick>SetFocus(16992)</onclick>
 			</control>
 		</control>
 		<control type="panel" id="16992">

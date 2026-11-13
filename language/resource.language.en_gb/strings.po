@@ -1543,3 +1543,7 @@ msgstr "Original"
 msgctxt "#31830"
 msgid "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
 msgstr "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
+
+msgctxt "#31831"
+msgid "Text input"
+msgstr "Text input"

@@ -631,7 +631,7 @@ Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装�
 `gen_corner_masks.py` 的 `MASKS` 表已清空（函数保留，只是不再有实色遮盖产物）。
 **新视图一律只写 `DIFFUSE_MASKS`。**
 
-### 5.5 六个反复踩过的坑
+### 5.5 七个反复踩过的坑
 
 1. **`<include condition="X">` 是加载时求值的** —— 按运行时状态切外观只能用
    `<visible>` 或 `$VAR`。曾导致"播放中打开的对话框永远不跟设置"。
@@ -668,6 +668,18 @@ Kodi 21 会在**安装时被拒绝**（依赖不满足），不会出现「装�
    渲染成一整行空白，设 76 组间多一行、设 22 断点漂移 6px、设 0 仍占 itemgap。
    `label id="14"`（分组标题）高度也必须等于行高。
    详见 `skin-contracts.md` §5.0，回归测试 `test_skin_settings.py::_assert_whole_rows`。
+7. **系统键盘只能靠 `OnAction` 弹，`SendClick` 是死路**（2026-11-13）——
+   想让隐藏 edit（16999）弹出 `DialogKeyboard.xml`，写 `<onclick>SendClick(16999)</onclick>`
+   **完全没反应**：它发的是 `GUI_MSG_CLICKED`，而 `CGUIButtonControl::OnMessage` 只处理
+   LABEL 类消息，不会转成 `OnClick()`（Kodi 22 源码 `GUIButtonControl.cpp`）。
+   能走通的只有 `OnAction`：`SetFocus(16999)` → `Action(Select)` → `CGUIButtonControl::OnAction`
+   → `OnClick()` → `CGUIKeyboardFactory::ShowAndGetInput()`；后面再补一条 `SetFocus(16992)`
+   兜底，键盘没弹时焦点不会卡在隐藏 edit 上。
+   **键盘标题固定是「输入数值」**：`CGUIEditControl` 把 `m_inputHeading` 初始化成内置串
+   16028（"Enter value"），`GUIControlFactory` 只解析 `password`，皮肤 XML 没有
+   `heading` / `inputtype` 标签可改。
+   三条手机输入的实机行为（Kodi 22.0-RC2）：`Input.SendText` 是**追加**不是替换；
+   `done=true` 不保证关闭对话框；容器刷新有 **4–7 秒延迟**，验收别只看 2 秒。
 
 
 ### 5.6 排查顺序
@@ -1752,3 +1764,23 @@ Kodi 存储时设置名小写；`NaraHomeMenuDefaultsMusicTVOff` 标记已置位
 - `aa8a75b` 集卡片标题移到缩略图下方 + 聚焦滚动（随 2.1.0）。
 - `5c6afbe` 最低 Helper 依赖 0.3.9；本轮 helper 已发布 0.3.11（0.3.10 搜索跳库 / 0.3.11 未同步剧集浏览）。
 - 拼音排序排查：`SortTitle` 为拼音首字母（`RJZDSCS`），`videonavtvshows` 用 29；4 部仍是中文；Home/分类另有排序，首字母≠全拼。
+
+### 8.17 2026-11-13 搜索页「输入」按钮：接上系统键盘（未发版）
+
+**改动**
+
+- `Includes_Search.xml`：输入框 group 让出右侧 104px，新增 `16997`「输入」按钮；`16998` / label / 两条下划线宽 904（五处成对改）。
+- 按钮 `onclick` = `SetFocus(16999)` → `Action(Select)` → `SetFocus(16992)` 兜底。
+- `strings.po` zh/en 各加 `#31831`（输入 / Text input）。
+- `skin-contracts.md` §三补 16997/16998/16999 三行 + 系统键盘契约；§5.5 加第 7 个坑。
+
+**为什么不是 SendClick**
+
+`SendClick(16999)` 发的是 `GUI_MSG_CLICKED`，`CGUIButtonControl::OnMessage` 只处理 LABEL 类消息，不会转 `OnClick()`（Kodi 22 `GUIButtonControl.cpp`）。必须走 `OnAction` 的 `ACTION_SELECT_ITEM → OnClick()`。
+
+**实机（Kodi 22.0-RC2，JSON-RPC + 截图验证）**
+
+- 按钮 → 弹 `DialogKeyboard.xml`（窗口 10103，QWERTY + 空格 + 确定/取消）。
+- `Input.SendText` 注入「诺兰」→ 回填 16999 → 约 4–7 秒后容器出结果；`Tom Hanks` / `NOLAN` 仍空（英文人名匹配待查，helper 侧）。
+- 键盘标题固定「输入数值」：`m_inputHeading` 默认内置串 16028，皮肤 XML 无 `heading` / `inputtype` 标签。
+- `Input.SendText` 是追加不是替换；`done=true` 不保证关对话框。

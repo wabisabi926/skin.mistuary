@@ -1322,3 +1322,7 @@ msgstr "原浓度"
 msgctxt "#31830"
 msgid "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
 msgstr "首页、详情页、媒体库、设置、文件管理、插件页与搜索页背景的压暗浓度。档位越低，剧照透出得越多；原浓度等于 2.2.0 的观感。"
+
+msgctxt "#31831"
+msgid "Text input"
+msgstr "输入"
