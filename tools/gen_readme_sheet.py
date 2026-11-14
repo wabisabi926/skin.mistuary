@@ -19,9 +19,10 @@ ACCENT = (120, 200, 255, 255)
 
 ROWS = [
     ("分辨率", "resolution", ["8K", "4K", "1080", "720", "576", "480"]),
-    ("视频", "video", ["bluray", "h265", "h264", "av1", "xvid", "dvd"]),
+    ("视频", "video", ["bluray", "h265", "h264", "av1", "prores", "dvd"]),
     ("HDR", "hdr", ["dolbyvision", "hdr10", "hdr10plus", "hdr_vivid", "hlg"]),
-    ("音频", "audio", ["truehd_atmos", "dtshd_ma", "dtshd_hra", "eac3", "ac3", "aac", "flac"]),
+    ("音频", "audio", ["truehd_atmos", "dtshd_ma", "eac3", "ac3", "aac", "flac"]),
+    ("声道", "channels", ["2", "6", "8"]),
 ]
 
 ICON_H = 46          # 图标统一高度
@@ -48,12 +49,17 @@ def load(name, folder):
 canvas = Image.new("RGBA", (W, H), BG)
 d = ImageDraw.Draw(canvas)
 
+TOTAL = sum(
+    len([f for f in os.listdir(os.path.join(TECH, cat)) if f.lower().endswith(".png")])
+    for cat in os.listdir(TECH) if os.path.isdir(os.path.join(TECH, cat))
+)
+
 f_title = ImageFont.truetype(FONT, 30)
 f_label = ImageFont.truetype(FONT, 22)
 f_small = ImageFont.truetype(FONT, 17)
 
 # 标题
-d.text((PAD, PAD - 6), "技术标识 · 97 枚图标", font=f_title, fill=FG)
+d.text((PAD, PAD - 6), "技术标识 · %d 枚图标" % TOTAL, font=f_title, fill=FG)
 d.text((PAD, PAD + 34), "详情页 / OSD / 列表用同一套，按片源实际规格显示", font=f_small, fill=DIM)
 
 y = PAD + 86

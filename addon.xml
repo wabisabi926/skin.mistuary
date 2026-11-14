@@ -26,38 +26,39 @@
 		<summary lang="zh">雾汐｜Kodi 22 轻量透明皮肤，需 Mistuary Helper；搭配 Emby for Kodi NextGen 可自动同步媒体库</summary>
 		<summary lang="en">Lightweight transparent skin for Kodi 22, requires Mistuary Helper; syncs your Emby library with Emby for Kodi NextGen</summary>
 		<description lang="zh">基于 Estuary N 改造的小而美皮肤，需要 Kodi 22 及以上。
-依赖插件 Mistuary Helper，请先安装插件再切换皮肤。
+硬依赖 Mistuary Helper，请先安装插件再切换皮肤。
 
-搭配 Emby for Kodi NextGen 并登录后，媒体库会直接同步到 Kodi：
-电影、剧集、季、集、评分与媒体库封面开箱即用，不需要手动整理或额外配置。
+搭配 Emby for Kodi Next Gen（E4KNG）并登录，媒体库整体同步进 Kodi：
+电影、剧集、季、集、评分与库封面开箱即用。
 
-Mistuary Helper 提供：服务端中文搜索、详情页豆瓣评分、媒体库封面同步、
-播放列表补全（按季 / 按目录 / 跨季），以及文件播放记录 ——
-只在文件管理器（10003）里生效，播过的视频会记住进度，下次起播可选择「继续播放」，
-焦点行还有圆环显示已播比例；不改动 Kodi 原生续播点。
+Mistuary Helper 提供：详情页豆瓣评分、媒体库封面同步、
+播放列表补全（按季 / 按目录 / 跨季）与文件播放记录（不写 Kodi 原生续播点）。
 
-详情页评分支持 TMDb / IMDb / 豆瓣 / 烂番茄（同时最多两个），
+搜索走 Emby 服务端，支持中文 / 原名 / 全拼 / 首字母 / 英文人名 / 类型；
+搜索页支持全键盘输入与手机 App 文本注入。
+评分胶囊支持 TMDb / IMDb / 豆瓣，主评分四档可选，一行最多两颗；
 技术标识按分辨率 / HDR / 杜比视界档位 / 编码 / 声道图标化。
-电视剧季视图直接呈现剧集详情版式：季标签与本季集卡片同屏，所有电视剧入口一致。
-透黑、透白双主题，页面 / 浮窗 / 播放中三档透明度各 6 级可调；
-8 套屏幕比例自适应（16:9 / 18:9 / 21:9 等），另有音乐黑胶模式与电源菜单。</description>
+
+电视剧季视图即剧集详情版式，季标签与本季集卡片同屏。
+透黑 / 透白双主题，页面 / 弹窗 / 播放中三档透明度各 6 级；
+8 套屏幕比例自适应，另有音乐黑胶模式与电源菜单。</description>
 		<description lang="en">A compact, polished skin built on Estuary N. Requires Kodi 22 or newer.
-Requires the Mistuary Helper add-on - install it before switching skins.
+Hard dependency on the Mistuary Helper add-on - install it before switching skins.
 
-With Emby for Kodi NextGen installed and signed in, your media library syncs directly
-into Kodi: movies, shows, seasons, episodes, ratings and library covers work out of the
-box without manual setup.
+With Emby for Kodi Next Gen installed and signed in, your library syncs into Kodi:
+movies, shows, seasons, episodes, ratings and library covers work out of the box.
 
-Mistuary Helper provides server-side Chinese search, Douban ratings in the video info
-dialog, media-library cover sync, playlist completion (by season / by folder / next season),
-and file playback resume - only for the file manager (10003): videos remember their position,
-offer “resume from h:mm:ss” on the next start, and show a progress ring on the focused row.
-Kodi's native resume points are not touched.
+Mistuary Helper provides Douban ratings in the video info dialog, library cover sync,
+playlist completion (by season / folder / next season) and file playback resume
+(Kodi's native resume points are not touched).
 
-Ratings from TMDb / IMDb / Douban / Rotten Tomatoes (up to two at a time); technical flags
-are shown as icons (resolution, HDR, Dolby Vision profile, codecs, channels).
-TV seasons open in a detail-style page with season tabs and the current season's episode
-cards on one screen, consistently from every library entry.
+Search runs on the Emby server and matches Chinese titles, original titles, full pinyin,
+initials, English names and genres; the search page supports full keyboard input and
+text injection from mobile apps.
+Ratings from TMDb / IMDb / Douban, up to two capsules per row; technical flags are shown
+as icons (resolution, HDR, Dolby Vision profile, codecs, channels).
+
+TV seasons open in a detail-style page with season tabs and episode cards on one screen.
 Dark and light transparent themes with six levels each for pages, popups and playback;
 eight aspect ratios supported, plus a vinyl mode and a power menu.</description>
 		<disclaimer lang="en_GB">Weather, radio and game browsing surfaces are intentionally omitted.</disclaimer>
