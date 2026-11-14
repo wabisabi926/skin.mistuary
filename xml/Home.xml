@@ -75,7 +75,7 @@
 				<top>0</top>
 				<width>100%</width>
 				<height>100%</height>
-				<aspectratio align="right" aligny="top">keep</aspectratio>
+				<aspectratio>scale</aspectratio>
 				<fadetime>350</fadetime>
 				<animation effect="zoom" center="auto" end="102,102" time="0" condition="Integer.IsGreater(System.StereoscopicMode,0)">conditional</animation>
 				<animation effect="fade" start="0" end="100" time="250" reversible="false" condition="Window.Previous(startup) | Window.Previous(fullscreenvideo) | Window.Previous(fullscreengame) | Window.Previous(visualisation)">WindowOpen</animation>
