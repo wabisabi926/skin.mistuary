@@ -1771,6 +1771,7 @@ Kodi 存储时设置名小写；`NaraHomeMenuDefaultsMusicTVOff` 标记已置位
 
 - `Includes_Search.xml`：输入框 group 让出右侧 104px，新增 `16997`「输入」按钮；`16998` / label / 两条下划线宽 904（五处成对改）。
 - 按钮 `onclick` = `SetFocus(16999)` → `Action(Select)` → `SetFocus(16992)` 兜底。
+- 2026-11-14：「输入」两个字换成全键盘图标（`media/icons/keyboard/keyboard.png`，48×30 LA，比原两字略高、同心；`16997` 的 label 留空，图标由紧随其后的两个 image 画，focus 时叠 `text_primary`）。`#31831` 随之从 zh/en 两个 po 删除（单测拦未引用串）。
 - `strings.po` zh/en 各加 `#31831`（输入 / Text input）。
 - `skin-contracts.md` §三补 16997/16998/16999 三行 + 系统键盘契约；§5.5 加第 7 个坑。
 

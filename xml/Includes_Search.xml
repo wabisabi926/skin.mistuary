@@ -178,9 +178,7 @@
 			<!-- 输入框让出右侧 104px 给「输入」按钮（16997）。按钮点 SendClick(16999)，
 			     由 Kodi 自己弹出 DialogKeyboard.xml：手机 App 的 Input.SendText 只认
 			     已打开的键盘对话框，所以文本注入必须先有这一步。
-			     五处宽度成对改（16998 / label / 两条下划线 / 16997 的 left），只改一处会错位。
-			     按钮必须留够文本宽度：64 宽时「输入」两字会被 Kodi 截成「输…」，
-			     现在 88 宽 + textoffsetx=0。 -->
+			     五处宽度成对改（16998 / label / 两条下划线 / 16997 的 left），只改一处会错位。 -->
 			<centerleft>50%</centerleft><top>24</top><width>1008</width><height>64</height>
 			<control type="button" id="16998">
 				<width>904</width><height>64</height>
@@ -211,14 +209,13 @@
 				<texture colordiffuse="glass_focus_heavy">colors/white.png</texture>
 				<visible>Control.HasFocus(16998)</visible>
 			</control>
+			<!-- 「输入」按钮的形态是图标，不是文字：16997 只留焦点与点击，图标由紧跟其后的
+			     两个 image 画（48x30，940/17 即 88x64 按钮内的居中位）。常态
+			     text_secondary、focus 时叠一层 text_primary，和下面输入框下划线的写法同源，
+			     不会出现两个控件各画一半的闪缝。 -->
 			<control type="button" id="16997">
 				<left>920</left><top>0</top><width>88</width><height>64</height>
-				<label>$LOCALIZE[31831]</label>
-				<font>font24_search_bold</font>
-				<textoffsetx>0</textoffsetx>
-				<textcolor>text_secondary</textcolor>
-				<focusedcolor>text_primary</focusedcolor>
-				<align>center</align><aligny>center</aligny>
+				<label></label>
 				<texturefocus colordiffuse="glass_focus_light" border="14">shapes/round14.png</texturefocus>
 				<texturenofocus />
 				<include>NaraSearchKeyboardNavigation</include>
@@ -237,6 +234,15 @@
 				<onclick>SetFocus(16999)</onclick>
 				<onclick>Action(Select)</onclick>
 				<onclick>SetFocus(16992)</onclick>
+			</control>
+			<control type="image">
+				<left>940</left><top>17</top><width>48</width><height>30</height>
+				<texture colordiffuse="text_secondary">icons/keyboard/keyboard.png</texture>
+			</control>
+			<control type="image">
+				<left>940</left><top>17</top><width>48</width><height>30</height>
+				<texture colordiffuse="text_primary">icons/keyboard/keyboard.png</texture>
+				<visible>Control.HasFocus(16997)</visible>
 			</control>
 		</control>
 		<control type="panel" id="16992">
