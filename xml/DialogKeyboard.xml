@@ -4,6 +4,9 @@
 	<include>Keyboard_Slide_Up</include>
 	<depth>DepthDialog+</depth>
 	<controls>
+		<!-- 搜索分区弹出时，下面那套背景（剧照 + 遮蔽 + 底部渐变）整层让位，
+		     直接透出 Home 的搜索背景栈 —— 见 Includes.xml 的 nara_keyboard_search_backdrop。
+		     其它调用方（设置、插件、输入数值）仍走原来的四层。 -->
 		<include>NaraDialogFanartBase</include>
 		<!-- 键盘面板原本只有一层 50% 玻璃 → 补遮蔽层 -->
 		<include content="NaraDialogScrim">
@@ -15,12 +18,16 @@
 			<width>100%</width>
 			<visible>!Window.IsVisible(numericinput)</visible>
 			<include>Animation_DialogPopupVisible</include>
+			<!-- 底部上翻渐变：屏幕范围内几乎是 80–97% 的黑，搜索分区不画 ——
+			     否则下面的搜索页背景被压成一片黑，和 T9 键盘背后完全不是一回事。
+			     搜索页自己的 fanart-overlay-hero 已经带了底部渐变。 -->
 			<control type="image">
 				<left>0</left>
 				<bottom>0</bottom>
 				<width>100%</width>
 				<height>300%</height>
 				<texture flipy="true">frame/osdfade.png</texture>
+				<visible>!$EXP[nara_keyboard_search_backdrop]</visible>
 			</control>
 			<control type="image">
 				<left>0</left>

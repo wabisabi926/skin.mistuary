@@ -806,6 +806,16 @@
 	<expression name="nara_page_shared_fanart_visible">!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</expression>
 	<!-- 搜索页空查询随机剧照的显隐。搜索结果剧照是不透明的，不需要中性底。 -->
 	<expression name="nara_search_empty_fanart_visible">String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]</expression>
+	<!-- 系统键盘弹窗（DialogKeyboard）从搜索页弹出时，弹窗自绘的背景整层让位：
+	     Home 的搜索分区本来就有自己的背景栈（兜底渐变 → 随机剧照 → 结果剧照 → 蒙层），
+	     弹窗再画一遍不但更暗（剧照 ×0.5 → sc_* 遮蔽 → osdfade 近乎全黑的底部渐变，
+	     三层下来只剩 ~5% 亮度），而且拿不到「当前聚焦条目」那张结果剧照 ——
+	     于是键盘背后的画面和 T9 键盘背后既不是同一张、也不是同一档亮度（2026-11-14）。
+	     Window.IsActive 的限定很关键：否则所有弹窗在搜索页打开都会误让位。
+	     窗口名必须是 virtualkeyboard（= 10103）。dialogkeyboard / keyboard 都解析不到，
+	     前者还会让 log 刷 Window Translator 报错、条件恒假 —— 2026-11-14 实机踩过。 -->
+	<expression name="nara_keyboard_search_backdrop">String.IsEqual(Window(home).Property(Home.Section),search) + Window.IsActive(virtualkeyboard)</expression>
+	<expression name="nara_dialog_fanart_visible">$EXP[nara_page_shared_fanart_visible] + !$EXP[nara_keyboard_search_backdrop]</expression>
 	<include name="DialogBackgroundCommons">
 		<!-- darken_bg 以前从未声明默认值、也没有调用点传它，遮蔽层能显示纯属运气：
 		     Kodi 的 CGUIControlFactory::GetConditionalVisibility 用 `if (!node->NoChildren())`

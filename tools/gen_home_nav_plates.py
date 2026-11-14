@@ -29,6 +29,9 @@ HOME = os.path.join(ROOT, "xml", "Home.xml")
 FONT = os.path.join(ROOT, "fonts", "Inter-Unicode-Regular.ttf")
 SIZE = 26
 PADDING = 60          # textoffsetx 30 × 2
+# 搜索页弹出系统键盘时整条导航条让位：弹窗是模态的，导航条既点不到、
+# 又会和弹窗标题（约 top 50–150）挤在同一条带子里。表达式见 Includes.xml。
+HIDE = " + !$EXP[nara_keyboard_search_backdrop]"
 BEGIN = "<!-- BEGIN generated: home nav plates"
 END = "<!-- END generated: home nav plates -->"
 T = "\t"
@@ -53,6 +56,8 @@ COMMENT = [
     T * 4 + "     改标签文字、字号或增删开关后重新跑它（加 check 参数可校验）。",
     T * 4 + "     电影 / 电视剧 / 文件 固定显示（2026-10-31 用户决定），所以组合只有 4 个开关。",
     T * 4 + "     以后想让某个标签也能隐藏：把它从 ALWAYS 挪进 TOGGLE 重跑本脚本即可。",
+    T * 4 + "     每条底板末尾都带 !$EXP[nara_keyboard_search_backdrop]：搜索页弹出系统键盘时整条让位，",
+    T * 4 + "     与 grouplist 9000 的 visible 保持同一条件（2026-11-14）。",
     T * 4 + "     定位用 centerleft 50%：父 group 已显式给 width 100%，任何分辨率都自动居中。 -->",
 ]
 
@@ -98,7 +103,7 @@ def build():
             T * 5 + "<width>%d</width>" % w_zh,
             T * 5 + "<height>60</height>",
             T * 5 + '<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>',
-            T * 5 + "<visible>String.StartsWith(System.Language,Chinese) + %s</visible>" % cond,
+            T * 5 + "<visible>String.StartsWith(System.Language,Chinese) + %s%s</visible>" % (cond, HIDE),
             T * 4 + "</control>",
             T * 4 + '<control type="image">',
             T * 5 + "<centerleft>50%</centerleft>",
@@ -106,7 +111,7 @@ def build():
             T * 5 + "<width>%d</width>" % w_en,
             T * 5 + "<height>60</height>",
             T * 5 + '<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>',
-            T * 5 + "<visible>!String.StartsWith(System.Language,Chinese) + %s</visible>" % cond,
+            T * 5 + "<visible>!String.StartsWith(System.Language,Chinese) + %s%s</visible>" % (cond, HIDE),
             T * 4 + "</control>",
         ]
     return out

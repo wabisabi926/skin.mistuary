@@ -1306,6 +1306,8 @@
 				     改标签文字、字号或增删开关后重新跑它（加 check 参数可校验）。
 				     电影 / 电视剧 / 文件 固定显示（2026-10-31 用户决定），所以组合只有 4 个开关。
 				     以后想让某个标签也能隐藏：把它从 ALWAYS 挪进 TOGGLE 重跑本脚本即可。
+				     每条底板末尾都带 !$EXP[nara_keyboard_search_backdrop]：搜索页弹出系统键盘时整条让位，
+				     与 grouplist 9000 的 visible 保持同一条件（2026-11-14）。
 				     定位用 centerleft 50%：父 group 已显式给 width 100%，任何分辨率都自动居中。 -->
 				<!-- 全部显示 -->
 				<control type="image">
@@ -1314,7 +1316,7 @@
 					<width>836</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1322,7 +1324,7 @@
 					<width>998</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 电视 -->
 				<control type="image">
@@ -1331,7 +1333,7 @@
 					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1339,7 +1341,7 @@
 					<width>903</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 音乐 -->
 				<control type="image">
@@ -1348,7 +1350,7 @@
 					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1356,7 +1358,7 @@
 					<width>865</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索 -->
 				<control type="image">
@@ -1365,7 +1367,7 @@
 					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1373,7 +1375,7 @@
 					<width>851</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 收藏夹 -->
 				<control type="image">
@@ -1382,7 +1384,7 @@
 					<width>698</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1390,7 +1392,7 @@
 					<width>808</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 音乐、电视 -->
 				<control type="image">
@@ -1399,7 +1401,7 @@
 					<width>612</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1407,7 +1409,7 @@
 					<width>770</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、电视 -->
 				<control type="image">
@@ -1416,7 +1418,7 @@
 					<width>612</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1424,7 +1426,7 @@
 					<width>756</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、音乐 -->
 				<control type="image">
@@ -1433,7 +1435,7 @@
 					<width>612</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1441,7 +1443,7 @@
 					<width>718</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 电视、收藏夹 -->
 				<control type="image">
@@ -1450,7 +1452,7 @@
 					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1458,7 +1460,7 @@
 					<width>713</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 音乐、收藏夹 -->
 				<control type="image">
@@ -1467,7 +1469,7 @@
 					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1475,7 +1477,7 @@
 					<width>675</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、收藏夹 -->
 				<control type="image">
@@ -1484,7 +1486,7 @@
 					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1492,7 +1494,7 @@
 					<width>661</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、音乐、电视 -->
 				<control type="image">
@@ -1501,7 +1503,7 @@
 					<width>500</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1509,7 +1511,7 @@
 					<width>623</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 音乐、电视、收藏夹 -->
 				<control type="image">
@@ -1518,7 +1520,7 @@
 					<width>474</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1526,7 +1528,7 @@
 					<width>580</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、电视、收藏夹 -->
 				<control type="image">
@@ -1535,7 +1537,7 @@
 					<width>474</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1543,7 +1545,7 @@
 					<width>566</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、音乐、收藏夹 -->
 				<control type="image">
@@ -1552,7 +1554,7 @@
 					<width>474</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1560,7 +1562,7 @@
 					<width>528</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- 搜索、音乐、电视、收藏夹 -->
 				<control type="image">
@@ -1569,7 +1571,7 @@
 					<width>362</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<control type="image">
 					<centerleft>50%</centerleft>
@@ -1577,7 +1579,7 @@
 					<width>433</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
-					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton)</visible>
+					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
 				</control>
 				<!-- END generated: home nav plates -->
 				<control type="grouplist" id="9000">
@@ -1586,6 +1588,9 @@
 					<!-- 与上面 8 条底板同步：两边都 100% + 居中，任何分辨率下都对齐。 -->
 					<width>100%</width>
 					<height>60</height>
+					<!-- 搜索页弹出系统键盘时整条导航让位（与底板同条件）：弹窗是模态的，
+					     导航既点不到，又会和弹窗标题挤在同一条带子里。 -->
+					<visible>!$EXP[nara_keyboard_search_backdrop]</visible>
 					<orientation>horizontal</orientation>
 					<align>center</align>
 					<itemgap>0</itemgap>

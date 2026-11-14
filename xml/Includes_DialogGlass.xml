@@ -26,6 +26,8 @@
 				<height>6000</height>
 				<texture colordiffuse="$PARAM[tint]">colors/black.png</texture>
 				<animation effect="fade" time="300">VisibleChange</animation>
+				<!-- 搜索页弹出的系统键盘不叠这层：让它后面的搜索背景栈原样透出来（见 Includes.xml）。 -->
+				<visible>!$EXP[nara_keyboard_search_backdrop]</visible>
 			</control>
 		</definition>
 	</include>
@@ -50,7 +52,7 @@
 			<include>FullScreenDimensions</include>
 			<aspectratio align="right">scale</aspectratio>
 			<texture background="true" colordiffuse="$VAR[NaraFanartDimVar]">$VAR[NaraFileManagerRandomFanartVar]</texture>
-			<visible>$EXP[nara_page_shared_fanart_visible]</visible>
+			<visible>$EXP[nara_dialog_fanart_visible]</visible>
 		</control>
 	</include>
 	<!-- 面板投影：不提高任何不透明度，靠「浮在背景之上」的暗示提升可读性感知。
