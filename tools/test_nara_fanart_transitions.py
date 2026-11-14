@@ -221,8 +221,10 @@ class FanartTransitionsTest(unittest.TestCase):
         self.assertEqual((image.findtext('top') or '').strip(), '0')
         self.assertEqual((image.findtext('width') or '').strip(), '100%')
         self.assertEqual((image.findtext('height') or '').strip(), '100%')
-        self.assertEqual(image.find('aspectratio').get('aligny'), 'top')
-        self.assertEqual((image.find('aspectratio').text or '').strip(), 'keep')
+        self.assertIsNone(image.find('aspectratio').get('aligny'),
+                         'scale 铺满后不应保留 keep 取景的 align 对齐')
+        self.assertEqual((image.find('aspectratio').text or '').strip(), 'scale',
+                         '首页背景必须 scale 铺满：keep+右对齐在非 16:9 画布会左露黑底（2026-11-14 修复）')
 
         wrapper = next(c for c in root.iter('control')
                        if c.find('control[@id="9090"]') is not None)
