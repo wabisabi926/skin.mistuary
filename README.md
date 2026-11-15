@@ -17,10 +17,8 @@
 | ![首页](docs/screenshots/home.jpg) | ![电影详情页](docs/screenshots/info.jpg) |
 | **海报墙** | **剧集详情页** |
 | ![海报墙](docs/screenshots/wall.jpg) | ![剧集详情页](docs/screenshots/episodes.jpg) |
-
-![搜索页](docs/screenshots/search.jpg)
-
-![音乐播放页](docs/screenshots/music.jpg)
+| **搜索页** | **音乐播放页** |
+| ![搜索页](docs/screenshots/search.jpg) | ![音乐播放页](docs/screenshots/music.jpg) |
 
 ![技术标识图标](docs/screenshots/techflags.png)
 
