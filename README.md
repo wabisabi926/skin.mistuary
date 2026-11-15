@@ -12,6 +12,14 @@
 
 ## 界面预览
 
+| 首页 | 电影详情页 |
+|---|---|
+| ![首页](docs/screenshots/home.jpg) | ![电影详情页](docs/screenshots/info.jpg) |
+| **海报墙** | **剧集详情页** |
+| ![海报墙](docs/screenshots/wall.jpg) | ![剧集详情页](docs/screenshots/episodes.jpg) |
+
+![搜索页](docs/screenshots/search.jpg)
+
 ![技术标识图标](docs/screenshots/techflags.png)
 
 > 技术标识：108 枚随包图标（分辨率 / 视频编码 / HDR / 音轨 / 声道），按片源实际规格显示，不从外部拉取。上图为 `media/techflags/` 实拍拼图（`tools/gen_readme_sheet.py` 生成）。
