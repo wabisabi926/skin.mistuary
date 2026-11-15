@@ -30,7 +30,7 @@
   手机 App 文本注入，由 Mistuary Helper 统一提供。
 - **一键接入 Emby**：E4KNG 登录即同步，与 Emby 应用内观感一致；神医助手（StrmAssistantPlus）  
   写入的豆瓣类型评分同样被读取。
-- **免魔改内核**：全部用标准控件 + 贴图实现，Windows / Linux / CoreELEC / Android 通用。
+- **免魔改内核**：全部用标准控件 + 贴图实现，Windows / Libreelec / CoreELEC / Android 通用。
 - **小而快**：极度精简，焦点移动无拖影，切视图不掉帧。
 - **皮肤零脚本**：皮肤本体只有 XML 与贴图，HTTP / JSON 全部在 Mistuary Helper。
 - **三档透明度互不影响**：页面管全屏页面与卡片，弹窗管对话框、菜单、键盘，播放中管 OSD、  
