@@ -20,6 +20,8 @@
 
 ![搜索页](docs/screenshots/search.jpg)
 
+![音乐播放页](docs/screenshots/music.jpg)
+
 ![技术标识图标](docs/screenshots/techflags.png)
 
 > 技术标识：108 枚随包图标（分辨率 / 视频编码 / HDR / 音轨 / 声道），按片源实际规格显示，不从外部拉取。上图为 `media/techflags/` 实拍拼图（`tools/gen_readme_sheet.py` 生成）。
