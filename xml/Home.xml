@@ -250,13 +250,19 @@
 						<left>0</left><top>0</top><width>100%</width><height>50</height>
 						<font>font27</font><align>center</align>
 						<label>$LOCALIZE[31835]</label>
-						<visible>!System.AddonIsEnabled(plugin.service.emby-next-gen)</visible>
+						<visible>!System.AddonIsEnabled(plugin.service.emby-next-gen) + !Library.HasContent(movies) + !Library.HasContent(tvshows)</visible>
+					</control>
+					<control type="label">
+						<left>0</left><top>0</top><width>100%</width><height>50</height>
+						<font>font27</font><align>center</align>
+						<label>$LOCALIZE[31849]</label>
+						<visible>System.AddonIsEnabled(plugin.service.emby-next-gen) + !Library.HasContent(movies) + !Library.HasContent(tvshows)</visible>
 					</control>
 					<control type="label">
 						<left>0</left><top>0</top><width>100%</width><height>50</height>
 						<font>font27</font><align>center</align>
 						<label>$LOCALIZE[31836]</label>
-						<visible>System.AddonIsEnabled(plugin.service.emby-next-gen)</visible>
+						<visible>Library.HasContent(movies) | Library.HasContent(tvshows)</visible>
 					</control>
 				</control>
 			</control>

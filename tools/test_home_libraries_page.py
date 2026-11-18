@@ -105,6 +105,21 @@ class HomeLibrariesPageTest(unittest.TestCase):
             '!Container(18010).IsUpdating + !Integer.IsGreater(Container(18012).NumItems,0) + !Container(18012).IsUpdating',
             self.home)
 
+    def test_empty_state_distinguishes_local_library(self):
+        self.assertIn(
+            '!Library.HasContent(movies) + !Library.HasContent(tvshows)',
+            self.home)
+        self.assertIn(
+            'Library.HasContent(movies) | Library.HasContent(tvshows)',
+            self.home)
+        self.assertIn('$LOCALIZE[31849]', self.home)
+        for cid in (31835, 31836, 31849):
+            for lang in ("zh_cn", "en_gb"):
+                with self.subTest(id=cid, lang=lang):
+                    po = (ROOT / "language" / ("resource.language.%s" % lang) / "strings.po").read_text(
+                        encoding="utf-8")
+                    self.assertIn('msgctxt "#%d"' % cid, po)
+
     def test_fanart_fallbacks(self):
         self.assertIn('Container.ListItem.Art(landscape)', self.variables)
         self.assertIn('Container.ListItem.Art(thumb)', self.variables)

@@ -1324,12 +1324,12 @@ msgid "How strongly background artwork is dimmed on Home, Info, library, setting
 msgstr "首页、详情页、媒体库、设置、文件管理、插件页与搜索页背景的压暗浓度。档位越低，剧照透出得越多；原浓度等于 2.2.0 的观感。"
 
 msgctxt "#31835"
-msgid "No in-progress items. Install the Emby add-on and sync your library first."
-msgstr "没有正在观看的内容，请先安装 Emby 插件并同步媒体库"
+msgid "No media library found. Add a local video library or install the Emby add-on and sync."
+msgstr "还没有媒体库，请先添加本地视频库或安装 Emby 插件并同步"
 
 msgctxt "#31836"
-msgid "Emby is connected, but nothing is in progress yet. Start watching something."
-msgstr "Emby 已连接，但还没有正在观看的内容，先播放一些影片吧"
+msgid "Nothing is in progress yet. Start watching something."
+msgstr "还没有正在观看的内容，先播放一些影片吧"
 
 msgctxt "#31837"
 msgid "Home background rotation"
@@ -1378,3 +1378,7 @@ msgstr "当前"
 msgctxt "#31848"
 msgid "No versions available"
 msgstr "没有可用的版本"
+
+msgctxt "#31849"
+msgid "Emby is connected, but the library is still empty. Sync your library first."
+msgstr "Emby 已连接，但媒体库还没有内容，请先同步媒体库"

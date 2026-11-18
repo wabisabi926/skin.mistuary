@@ -1545,12 +1545,12 @@ msgid "How strongly background artwork is dimmed on Home, Info, library, setting
 msgstr "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
 
 msgctxt "#31835"
-msgid "No in-progress items. Install the Emby add-on and sync your library first."
-msgstr "No in-progress items. Install the Emby add-on and sync your library first."
+msgid "No media library found. Add a local video library or install the Emby add-on and sync."
+msgstr "No media library found. Add a local video library or install the Emby add-on and sync."
 
 msgctxt "#31836"
-msgid "Emby is connected, but nothing is in progress yet. Start watching something."
-msgstr "Emby is connected, but nothing is in progress yet. Start watching something."
+msgid "Nothing is in progress yet. Start watching something."
+msgstr "Nothing is in progress yet. Start watching something."
 
 msgctxt "#31837"
 msgid "Home background rotation"
@@ -1599,3 +1599,7 @@ msgstr "Current"
 msgctxt "#31848"
 msgid "No versions available"
 msgstr "No versions available"
+
+msgctxt "#31849"
+msgid "Emby is connected, but the library is still empty. Sync your library first."
+msgstr "Emby is connected, but the library is still empty. Sync your library first."
