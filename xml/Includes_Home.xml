@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<expression name="NaraHomeFanartFocused">!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),movies) + ControlGroup(5001).HasFocus()] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + ControlGroup(6001).HasFocus()]]</expression>
+	<expression name="NaraHomeFanartFocused">!Skin.HasSetting(no_fanart) + [[String.IsEqual(Window(home).Property(Home.Section),movies) + ControlGroup(5001).HasFocus()] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + ControlGroup(6001).HasFocus()] | [String.IsEqual(Window(home).Property(Home.Section),libraries) + [Control.HasFocus(18010) | Control.HasFocus(18012)]]]</expression>
 	<!-- 首页「文件 / 收藏」共享剧照的显隐，
 	     收藏详情弹窗打开时由 Home.xml 的同一条动画一起淡出。 -->
 	<expression name="nara_home_files_fanart_visible">[String.IsEqual(Window(home).Property(Home.Section),files) | String.IsEqual(Window(home).Property(Home.Section),favorites)] + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasAudio | Player.HasGame] + [String.IsEqual(Window(home).Property(Home.Section),favorites) | !Window.IsVisible(movieinformation)]</expression>
-	<expression name="NaraHomeFanartSettledRow">$EXP[NaraHomeFanartFocused] + [Control.HasFocus(5100) | Control.HasFocus(5200) | Control.HasFocus(5300) | Control.HasFocus(5800) | Control.HasFocus(5400) | Control.HasFocus(5600) | Control.HasFocus(6100) | Control.HasFocus(6200) | Control.HasFocus(6300) | Control.HasFocus(6700) | Control.HasFocus(6800)]</expression>
+	<expression name="NaraHomeFanartSettledRow">$EXP[NaraHomeFanartFocused] + [Control.HasFocus(5100) | Control.HasFocus(5200) | Control.HasFocus(5300) | Control.HasFocus(5800) | Control.HasFocus(5400) | Control.HasFocus(5600) | Control.HasFocus(6100) | Control.HasFocus(6200) | Control.HasFocus(6300) | Control.HasFocus(6700) | Control.HasFocus(6800) | Control.HasFocus(18010) | Control.HasFocus(18012)]</expression>
 	<expression name="NaraVideoInfoFromHome">Window.IsVisible(Home) + !Skin.HasSetting(no_fanart) + [String.IsEqual(Window(home).Property(Home.Section),movies) | String.IsEqual(Window(home).Property(Home.Section),tvshows) | String.IsEqual(Window(home).Property(Home.Section),search)]</expression>
 	<expression name="home_widget_group_scrolled">[String.IsEqual(Window(home).Property(Home.Section),music) + Container(7001).HasPrevious] | [String.IsEqual(Window(home).Property(Home.Section),livetv) + Container(12001).HasPrevious]</expression>
 	<variable name="HomeFocusedFilePathVar">
@@ -121,12 +121,20 @@
 	</include>
 	<include name="HomeFocusedItemHero">
 		<param name="visible">true</param>
+		<!-- 2026-11-18：Hero 内容整体下移量。电影/电视剧页传 200（配合拉开后的内部间距），首页默认 0。 -->
+		<param name="hero_top">0</param>
+		<!-- 评分/技术标识行与简介的 Y 坐标。电影/电视剧页传 215/282；首页保持 202/258。 -->
+		<param name="ratings_top">202</param>
+		<param name="plot_top">258</param>
+		<!-- 简介框高：默认 91（电影/电视剧页）；首页传 60 显示两行。 -->
+		<param name="plot_height">91</param>
 		<param name="collection">false</param>
 		<!-- 剧集分区传一个静态数字（如 620095），电影分区用默认 0 = 不生成代表集探针 -->
 		<param name="season_id"></param>
 		<param name="episode_id"></param>
 		<definition>
 			<control type="group" id="$PARAM[id]">
+				<top>$PARAM[hero_top]</top>
 				<height>528</height>
 				<enable>false</enable>
 				<visible>$PARAM[visible]</visible>
@@ -183,7 +191,7 @@
 					     评分 0 / 1 / 2 颗都能自动补位，不再写死 left 580 / right 900。 -->
 					<control type="group">
 						<left>80</left>
-						<top>202</top>
+						<top>$PARAM[ratings_top]</top>
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
 						<include content="NaraOnlineRatingsRow">
 							<param name="top" value="0" />
@@ -196,12 +204,12 @@
 					</control>
 					<control type="textbox">
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
-					<!-- 只把简介整体上移 8px（266 → 258），字号和框高保持原样。 -->
+					<!-- 默认 258（相对 266 上移 8px）；电影/电视剧页由 plot_top 参数控制。 -->
 						<animation effect="fade" time="180">VisibleChange</animation>
 						<left>80</left>
-						<top>258</top>
+						<top>$PARAM[plot_top]</top>
 						<width>820</width>
-						<height>91</height>
+						<height>$PARAM[plot_height]</height>
 						<font>font12_large</font>
 						<textcolor>text_secondary</textcolor>
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
@@ -217,6 +225,8 @@
 		</definition>
 	</include>
 	<include name="HomeContinueWatchingRail">
+		<!-- 2026-11-18：rail_visible=false 只隐藏 label/panel，容器仍加载内容供 Hero 用。 -->
+		<param name="rail_visible">true</param>
 		<param name="navigation">WidgetListCommon</param>
 		<param name="section"></param>
 		<param name="page"></param>
@@ -243,14 +253,14 @@
 				<height>150</height>
 				<font>font27</font>
 				<label>$PARAM[widget_header]</label>
-				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
+				<visible>$PARAM[rail_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
 			</control>
 			<control type="panel" id="$PARAM[list_id]">
 					<left>0</left>
 					<top>60</top>
 					<right>0</right>
 					<height>250</height>
-					<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
+					<visible>$PARAM[rail_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
 					<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
 					<include content="$PARAM[navigation]">
 						<param name="list_id" value="$PARAM[list_id]"/>
@@ -491,12 +501,12 @@
 			<include content="HomeRailSpacer">
 				<param name="id" value="$PARAM[list_id]668"/>
 				<param name="height" value="327"/>
-				<param name="visible" value="$PARAM[media_row_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
+				<param name="visible" value="$PARAM[rail_visible] + $PARAM[media_row_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
 			</include>
 			<include content="HomeRailSpacer">
 				<param name="id" value="$PARAM[list_id]669"/>
 				<param name="height" value="256"/>
-				<param name="visible" value="![$PARAM[media_row_visible]] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
+				<param name="visible" value="$PARAM[rail_visible] + ![$PARAM[media_row_visible]] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]"/>
 			</include>
 		</definition>
 	</include>
@@ -594,6 +604,9 @@
 		<param name="icon">$VAR[NaraImgIconOrFolder]</param>
 		<param name="background_art_condition">false</param>
 		<param name="browse_mode">auto</param>
+		<!-- 2026-11-18：rail_visible 默认 true；电影/电视剧页内嵌行传 false 隐藏但保留容器。
+		     媒体库 tab 不用这个 rail（另用 wraplist 支持双行），见 Home.xml 的 18020。 -->
+		<param name="rail_visible">true</param>
 		<definition>
 			<control type="label" id="$PARAM[list_id]667">
 					<left>55</left>
@@ -602,14 +615,14 @@
 					<height>150</height>
 					<font>font27</font>
 					<label>$PARAM[widget_header]</label>
-					<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
+					<visible>$PARAM[rail_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
 				</control>
 				<control type="panel" id="$PARAM[list_id]">
 					<left>0</left>
 					<top>60</top>
 					<right>0</right>
 					<height>250</height>
-					<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
+					<visible>$PARAM[rail_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
 					<include content="$PARAM[navigation]">
 						<param name="list_id" value="$PARAM[list_id]"/>
 						<param name="section" value="$PARAM[section]"/>
@@ -1612,6 +1625,20 @@
 		<onback condition="$EXP[home_widget_group_scrolled] + String.IsEqual(Window(home).Property(Home.Section),livetv)">SetFocus(12001)</onback>
 		<onback condition="!$EXP[home_widget_group_scrolled] + !Container($PARAM[list_id]).Position(0)">SetFocus($PARAM[list_id],0,absolute)</onback>
 		<onback condition="!$EXP[home_widget_group_scrolled] + Container($PARAM[list_id]).Position(0)">9000</onback>
+		<preloaditems>2</preloaditems>
+	</include>
+	<include name="HomeLibNavigation">
+		<!-- 2026-11-18：首页两行续播专用。焦点进任何一行写 Home.LibHero，
+			     Hero 实例按这个 property 分流，背景/详情始终跟随聚焦行。 -->
+		<scrolltime tween="cubic" easing="out">350</scrolltime>
+		<orientation>horizontal</orientation>
+		<onleft>noop</onleft>
+		<onright>noop</onright>
+		<onup>$PARAM[onup]</onup>
+		<ondown>$PARAM[ondown]</ondown>
+		<onback condition="!Container($PARAM[list_id]).Position(0)">SetFocus($PARAM[list_id],0,absolute)</onback>
+		<onback>9000</onback>
+		<onfocus>SetProperty(Home.LibHero,$PARAM[list_id],home)</onfocus>
 		<preloaditems>2</preloaditems>
 	</include>
 	<include name="BusyListSpinner">

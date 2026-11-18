@@ -1,8 +1,10 @@
 # 交接说明（Mistuary 2.3.1）
 
-> ⚠️ **短期交接快照看 [`docs/handover-2026-10-30.md`](handover-2026-10-30.md)** ——
-> 那份是 2026-10-30 夜的短期交接（当时改了什么、还剩哪三件事、分辨率约束、
-> 踩过的坑）；本文是长期文档，讲依赖、工具链与发版，现状以 `addon.xml` / `git status` 为准。
+> ⚠️ **当前交接快照看 [`docs/handover-2026-11-18.md`](handover-2026-11-18.md)** ——
+> 2026-11-18 晚已实施方案 B：新页签「首页」放两行跨类型续播，库墙回电影/电视剧页，
+> Hero 间距 30/31/42、背景轮播与色光三档已落地；三态设置已删。工作区改动未提交、
+> 未推送、未发版。**接手先读它**。
+> 本文是长期文档，讲依赖、工具链与发版，现状以 `addon.xml` / `git status` 为准。
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
@@ -326,7 +328,7 @@ CI（`.github/workflows/release.yml`）在发版前会把这三条跑一遍，�
 
 | 脚本 | 校验 |
 |---|---|
-| `gen_home_nav_plates.py --check` | `Home.xml` 导航底板是否与「文字宽 + 60、100% 居中」的生成结果一致 |
+| `gen_home_nav_plates.py --check` | `Home.xml` 导航底板是否与「文字宽 + 60、100% 居中」的生成结果一致（2026-11-18 首页页签加入后基准宽 474/558） |
 | `check_home_fanart_mask.py --check` | 首页遮罩三条 `expression` 与 `HomeFanartVar` / `HomeVideoHeroFanartVar` 的容器分支是否一致；表达式里是否混进了 `$EXP` 等非法写法 |
 | `dedupe_favourites.py` | 收藏夹同名条目去重（维护脚本，不进 CI） |
 
@@ -1779,7 +1781,7 @@ Kodi 存储时设置名小写；`NaraHomeMenuDefaultsMusicTVOff` 标记已置位
 - 按钮 `onclick` = `SetFocus(16999)` → `Action(Select)` → `SetFocus(16992)` 兜底。
 - 2026-11-14：「输入」两个字换成全键盘图标（`media/icons/keyboard/keyboard.png`，48×30 LA，比原两字略高、同心；`16997` 的 label 留空，图标由紧随其后的两个 image 画，focus 时叠 `text_primary`）。`#31831` 随之从 zh/en 两个 po 删除（单测拦未引用串）。
 - 2026-11-14：`DialogKeyboard.xml` 在搜索分区弹出时不再画自己的背景栈（剧照 / `NaraDialogScrim` / 底部 `osdfade` 整层让位，表达式 `nara_keyboard_search_backdrop` + `nara_dialog_fanart_visible` 定义在 `Includes.xml`），直接透出 Home 的搜索背景栈，和 T9 键盘背后同一张图、同一档亮度。玻璃面板 `gl_*` 保留。其它调用方（设置、插件、输入数值）行为不变。
-- 2026-11-14：同一条件下 Home 顶部导航条（32 条底板 + `grouplist 9000`）整条让位——弹窗是模态的，导航点不到，又会和弹窗标题「输入数值」挤在同一条带子里；左上汉堡与右上时钟保留。底板的可见条件由 `tools/gen_home_nav_plates.py` 统一生成，`--check` 会校验。
+- 2026-11-14：同一条件下 Home 顶部导航条（`grouplist 9000` 与底板）整条让位——弹窗是模态的，导航点不到，又会和弹窗标题「输入数值」挤在同一条带子里；左上汉堡与右上时钟保留。当时底板由 `gen_home_nav_plates.py` 生成；2026-11-18 仍是 32 条生成底板，两处仍共用 `!$EXP[nara_keyboard_search_backdrop]` 同一条件。
 - `strings.po` zh/en 各加 `#31831`（输入 / Text input）。
 - `skin-contracts.md` §三补 16997/16998/16999 三行 + 系统键盘契约；§5.5 加第 7 个坑。
 

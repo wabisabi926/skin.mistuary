@@ -78,12 +78,15 @@ def main() -> int:
     failures = []
     for percent in range(0, 101):
         path = OUT_DIR / ("ring_%03d.png" % percent)
-        data = png_bytes(render(percent))
+        expected = render(percent).tobytes()
         if args.check:
-            if not path.exists() or path.read_bytes() != data:
+            # 比像素不比 PNG 文件字节：optimize=True 的压缩输出随 Pillow 版本变，
+            # 旧帧是旧 Pillow 生成的，逐字节比会误报（2026-11-18 修）。
+            # 与 gen_fanart_overlay.py --check 保持同一套判据。
+            if not path.exists() or Image.open(path).convert('RGBA').tobytes() != expected:
                 failures.append(path.name)
             continue
-        path.write_bytes(data)
+        render(percent).save(path, "PNG", optimize=True)
 
     if args.check:
         if failures:

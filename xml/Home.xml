@@ -10,7 +10,7 @@
 	<onload condition="!Skin.HasSetting(NaraHomeMenuDefaultsMusicTVOff)">Skin.SetBool(NaraHomeMenuDefaultsMusicTVOff)</onload>
 	<!-- Only choose the initial section once. Returning from a child window must
 	     leave Kodi's remembered home control intact. -->
-	<onload condition="String.IsEmpty(Window(home).Property(Home.Section))">SetFocus(9012)</onload>
+	<onload condition="String.IsEmpty(Window(home).Property(Home.Section))">SetFocus(9018)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),15010)">SetFocus(15010)</onload>
 	<onload condition="Window.Previous(filemanager) + String.IsEqual(Window(home).Property(Home.Section),files) + String.IsEqual(Window(home).Property(Home.FileReturnControl),9017)">SetFocus(9017)</onload>
 	<onload>ClearProperty(Home.FileReturnControl,home)</onload>
@@ -47,7 +47,7 @@
 			<include>FullScreenDimensions</include>
 			<aspectratio>scale</aspectratio>
 			<fadetime>250</fadetime>
-			<texture background="true">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+			<texture background="true" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
 			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 		</control>
 		<!-- 源图通道：helper 读 Control.GetLabel(9099)，与 9090 绑同一个 HomeFanartVar，
@@ -90,7 +90,7 @@
 				<include>FullScreenDimensions</include>
 				<aspectratio scalediffuse="false">scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true" diffuse="overlays/flixart-edge-glow.png">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
+				<texture background="true" diffuse="overlays/flixart-edge-glow.png" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
 				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 		</control>
@@ -159,6 +159,107 @@
 		<control type="group">
 			<animation effect="fade" start="100" end="0" time="100">WindowClose</animation>
 			<animation effect="fade" start="100" end="0" time="200" tween="sine" condition="$EXP[infodialog_active]">Conditional</animation>
+			<control type="group" id="18000">
+				<!-- 其他分区都在 group 2000（top=100）里，本组直挂外层，需自己补 100。 -->
+				<left>0</left>
+				<top>100</top>
+				<width>100%</width>
+				<height>100%</height>
+				<visible>String.IsEqual(Window(home).Property(Home.Section),libraries)</visible>
+				<include>Visible_Fade</include>
+
+				<!-- 2026-11-18：媒体库页签 → 首页。两行跨类型续播，Hero 跟随聚焦行，
+					Hero 详情 + 两行续播，背景由 HomeFanartVar 跟随聚焦/兜底第 1 项。 -->
+
+				<!-- 2026-11-18：首页 Hero 跟随聚焦行。两个实例按 Home.LibHero 互斥，
+					     property 为空时默认 18010；两行各有内容判据防空列表。 -->
+				<include content="HomeFocusedItemHero">
+					<param name="id" value="1801001"/>
+					<param name="hero_top" value="0"/>
+					<param name="plot_height" value="60"/>
+					<param name="list_id" value="18010"/>
+					<param name="metadata" value="$INFO[Container(18010).ListItem.Year]$INFO[Container(18010).ListItem.Duration,  &#183;  ]$INFO[Container(18010).ListItem.Genre,  &#183;  ]"/>
+					<param name="visible" value="[String.IsEmpty(Window(home).Property(Home.LibHero)) | String.IsEqual(Window(home).Property(Home.LibHero),18010) | !Integer.IsGreater(Container(18012).NumItems,0)] + Integer.IsGreater(Container(18010).NumItems,0)"/>
+				</include>
+				<include content="HomeFocusedItemHero">
+					<param name="id" value="1801201"/>
+					<param name="hero_top" value="0"/>
+					<param name="plot_height" value="60"/>
+					<param name="list_id" value="18012"/>
+					<param name="metadata" value="$INFO[Container(18012).ListItem.Year]$INFO[Container(18012).ListItem.Genre,  &#183;  ]"/>
+					<param name="visible" value="[String.IsEqual(Window(home).Property(Home.LibHero),18012) | [String.IsEmpty(Window(home).Property(Home.LibHero)) + !Integer.IsGreater(Container(18010).NumItems,0)]] + Integer.IsGreater(Container(18012).NumItems,0)"/>
+				</include>
+
+				<!-- 背景轮播源：正在观看的电影随机 10 项，5 秒一张；焦点进卡片时暂停；设置里可关。 -->
+				<control type="wraplist" id="18011">
+					<left>-2</left><top>-2</top><width>1</width><height>1</height>
+					<orientation>horizontal</orientation>
+					<itemlayout width="1" height="1"><control type="group"><width>1</width><height>1</height></control></itemlayout>
+					<focusedlayout width="1" height="1"><control type="group"><width>1</width><height>1</height></control></focusedlayout>
+					<autoscroll time="5000">String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !Skin.HasSetting(no_home_fanart_rotation) + Integer.IsGreater(Container(18011).NumItems,1)</autoscroll>
+					<content sortby="random" sortorder="ascending" limit="10" target="videos" browse="never">special://skin/extras/playlists/home_inprogress_movies.xsp</content>
+				</control>
+				<!-- 第一行：正在观看的电影（皮肤播放列表）。Hero 下 350px。 -->
+				<control type="group">
+					<left>0</left><top>350</top><width>100%</width><height>310</height>
+
+					<!-- 第一行：正在观看的电影（皮肤播放列表），两档都显示。 -->
+					<include content="HomeContinueWatchingRail">
+						<param name="content_path" value="special://skin/extras/playlists/home_inprogress_movies.xsp"/>
+						<param name="widget_header" value="$LOCALIZE[31010]"/>
+						<param name="widget_target" value="videos"/>
+						<param name="list_id" value="18010"/>
+						<param name="widget_limit" value="20"/>
+						<param name="browse_mode" value="never"/>
+						<param name="navigation" value="HomeLibNavigation"/>
+						<param name="section" value="libraries"/>
+						<param name="onup" value="9018"/>
+						<param name="ondown" value="18012"/>
+					</include>
+				</control>
+
+				<!-- 第二行：正在观看的剧集（E4K 节点）。 -->
+				<control type="group">
+					<left>0</left><top>650</top><width>100%</width><height>310</height>
+
+					<!-- 第二行：正在观看的剧集（E4K 节点），两档都显示。 -->
+					<include content="HomeContinueWatchingRail">
+						<param name="content_path" value="videodb://inprogresstvshows"/>
+						<param name="widget_header" value="$LOCALIZE[626]"/>
+						<param name="widget_target" value="videos"/>
+						<param name="list_id" value="18012"/>
+						<param name="widget_limit" value="20"/>
+						<param name="sortby" value="lastplayed"/>
+						<param name="sortorder" value="descending"/>
+						<param name="sub_label" value="$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes),/]"/>
+						<param name="sub_label_visible" value="!String.IsEmpty(ListItem.Property(TotalEpisodes))"/>
+						<param name="progress_info" value="ListItem.Property(WatchedEpisodePercent)"/>
+						<param name="navigation" value="HomeLibNavigation"/>
+						<param name="section" value="libraries"/>
+						<param name="onup" value="18010"/>
+						<param name="ondown" value="noop"/>
+					</include>
+				</control>
+
+
+				<!-- 空状态：两行全空时居中提示，区分「没装 Emby」与「装了没同步」。 -->
+				<control type="group">
+					<left>0</left><top>420</top><width>100%</width><height>120</height>
+					<visible>!Integer.IsGreater(Container(18010).NumItems,0) + !Container(18010).IsUpdating + !Integer.IsGreater(Container(18012).NumItems,0) + !Container(18012).IsUpdating</visible>
+					<control type="label">
+						<left>0</left><top>0</top><width>100%</width><height>50</height>
+						<font>font27</font><align>center</align>
+						<label>$LOCALIZE[31835]</label>
+						<visible>!System.AddonIsEnabled(plugin.service.emby-next-gen)</visible>
+					</control>
+					<control type="label">
+						<left>0</left><top>0</top><width>100%</width><height>50</height>
+						<font>font27</font><align>center</align>
+						<label>$LOCALIZE[31836]</label>
+						<visible>System.AddonIsEnabled(plugin.service.emby-next-gen)</visible>
+					</control>
+				</control>
+			</control>
 			<control type="group" id="16000">
 				<visible>String.IsEqual(Window(home).Property(Home.Section),search)</visible>
 				<include>Visible_Fade</include>
@@ -176,27 +277,24 @@
 				</animation>
 				<include>OpenClose_Right</include>
 				<control type="group" id="5000">
-					<top>0</top>
 					<visible>String.IsEqual(Window(home).Property(Home.Section),movies)</visible>
 					<include>Visible_Fade</include>
-					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_inprogress_widget)">
-						<param name="id" value="5001001"/>
-						<param name="list_id" value="5100"/>
-						<param name="season_id" value="510095"/>
-						<param name="episode_id" value="510096"/>
-						<param name="metadata" value="$INFO[Container(5100).ListItem.Year]$INFO[Container(5100).ListItem.Duration,  &#183;  ]$INFO[Container(5100).ListItem.Genre,  &#183;  ]"/>
-						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.movies.Hero)) | String.IsEqual(Window(home).Property(Home.movies.Hero),5100)"/>
-					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
 						<param name="id" value="5200001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5200"/>
 						<param name="season_id" value="520095"/>
 						<param name="episode_id" value="520096"/>
-						<param name="visible" value="String.IsEqual(Window(home).Property(Home.movies.Hero),5200)"/>
+						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.movies.Hero)) | String.IsEqual(Window(home).Property(Home.movies.Hero),5200)"/>
 						<param name="metadata" value="$INFO[Container(5200).ListItem.Year]$INFO[Container(5200).ListItem.Duration,  &#183;  ]$INFO[Container(5200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_premieres_widget)">
 						<param name="id" value="5800001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5800"/>
 						<param name="season_id" value="580095"/>
 						<param name="episode_id" value="580096"/>
@@ -205,6 +303,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + Skin.HasSetting(home_movies_unwatched_widget)">
 						<param name="id" value="5750001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5750"/>
 						<param name="season_id" value="575095"/>
 						<param name="episode_id" value="575096"/>
@@ -213,6 +314,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_highrated_widget)">
 						<param name="id" value="5300001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5300"/>
 						<param name="season_id" value="530095"/>
 						<param name="episode_id" value="530096"/>
@@ -221,6 +325,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_random_widget)">
 						<param name="id" value="5400001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5400"/>
 						<param name="season_id" value="540095"/>
 						<param name="episode_id" value="540096"/>
@@ -229,6 +336,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_sets_widget)">
 						<param name="id" value="5600001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="5600"/>
 						<param name="season_id" value="560095"/>
 						<param name="episode_id" value="560096"/>
@@ -250,10 +360,12 @@
 									<ondown>5201</ondown>
 									<include content="HomeRailSpacer">
 										<param name="id" value="5002001"/>
-										<param name="height" value="528"/>
-										<param name="visible" value="Integer.IsGreater(Container(5100).NumItems,0)"/>
+										<param name="height" value="775"/>
+										<param name="visible" value="true"/>
 									</include>
-									<include content="HomeContinueWatchingRail" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_inprogress_widget)">
+									<!-- 正在观看已挪到首页：本行隐藏显示但保留 5100 容器，Hero/背景/spacer 仍读它的数据。 -->
+								<include content="HomeContinueWatchingRail" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_inprogress_widget)">
+										<param name="rail_visible" value="false"/>
 										<param name="content_path" value="special://skin/extras/playlists/home_inprogress_movies.xsp"/>
 										<param name="widget_limit" value="20"/>
 										<param name="widget_header" value="$LOCALIZE[31010]"/>
@@ -269,8 +381,9 @@
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
 										<param name="hero_id" value="5100"/>
-										<param name="update_hero" value="true"/>
+										<param name="update_hero" value="false"/>
 									</include>
+									<!-- 2026-11-18：首页改为跨类型续播，库墙回到电影页正常显示。 -->
 									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
 										<param name="content_path" value="videodb://movies/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
@@ -285,7 +398,7 @@
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
 										<param name="hero_id" value="5100"/>
-										<param name="update_hero" value="true"/>
+										<param name="update_hero" value="false"/>
 									</include>
 								</control>
 							</include>
@@ -532,27 +645,24 @@
 					</include>
 				</control>
 				<control type="group" id="6000">
-					<top>0</top>
 					<visible>String.IsEqual(Window(home).Property(Home.Section),tvshows)</visible>
 					<include>Visible_Fade</include>
-					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_inprogress_widget)">
-						<param name="id" value="6001001"/>
-						<param name="list_id" value="6100"/>
-						<param name="season_id" value="610095"/>
-						<param name="episode_id" value="610096"/>
-						<param name="metadata" value="$INFO[Container(6100).ListItem.Year]$INFO[Container(6100).ListItem.Genre,  &#183;  ]"/>
-						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.tvshows.Hero)) | String.IsEqual(Window(home).Property(Home.tvshows.Hero),6100)"/>
-					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
 						<param name="id" value="6200001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="6200"/>
 						<param name="season_id" value="620095"/>
 						<param name="episode_id" value="620096"/>
-						<param name="visible" value="String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)"/>
+						<param name="visible" value="String.IsEmpty(Window(home).Property(Home.tvshows.Hero)) | String.IsEqual(Window(home).Property(Home.tvshows.Hero),6200)"/>
 						<param name="metadata" value="$INFO[Container(6200).ListItem.Year]$INFO[Container(6200).ListItem.Genre,  &#183;  ]"/>
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_premieres_widget)">
 						<param name="id" value="6700001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="6700"/>
 						<param name="season_id" value="670095"/>
 						<param name="episode_id" value="670096"/>
@@ -561,6 +671,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + Skin.HasSetting(home_tvshows_unwatched_widget)">
 						<param name="id" value="6750001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="6750"/>
 						<param name="season_id" value="675095"/>
 						<param name="episode_id" value="675096"/>
@@ -569,6 +682,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_highrated_widget)">
 						<param name="id" value="6300001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="6300"/>
 						<param name="season_id" value="630095"/>
 						<param name="episode_id" value="630096"/>
@@ -577,6 +693,9 @@
 					</include>
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_random_widget)">
 						<param name="id" value="6800001"/>
+						<param name="hero_top" value="200"/>
+						<param name="ratings_top" value="215"/>
+						<param name="plot_top" value="282"/>
 						<param name="list_id" value="6800"/>
 						<param name="season_id" value="680095"/>
 						<param name="episode_id" value="680096"/>
@@ -597,10 +716,12 @@
 									<ondown>6201</ondown>
 									<include content="HomeRailSpacer">
 										<param name="id" value="6002001"/>
-										<param name="height" value="528"/>
-										<param name="visible" value="Integer.IsGreater(Container(6100).NumItems,0)"/>
+										<param name="height" value="775"/>
+										<param name="visible" value="true"/>
 									</include>
-									<include content="HomeContinueWatchingRail" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_inprogress_widget)">
+									<!-- 正在观看已挪到首页：本行隐藏显示但保留 6100 容器，Hero/背景/spacer 仍读它的数据。 -->
+								<include content="HomeContinueWatchingRail" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_inprogress_widget)">
+										<param name="rail_visible" value="false"/>
 										<param name="content_path" value="videodb://inprogresstvshows"/>
 										<param name="widget_limit" value="20"/>
 										<param name="sortby" value="lastplayed"/>
@@ -621,8 +742,9 @@
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
 										<param name="hero_id" value="6100"/>
-										<param name="update_hero" value="true"/>
+										<param name="update_hero" value="false"/>
 									</include>
+									<!-- 2026-11-18：首页改为跨类型续播，库墙回到电视剧页正常显示。 -->
 									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
 										<param name="content_path" value="videodb://tvshows/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
@@ -637,7 +759,7 @@
 										<param name="ondown" value="0"/>
 										<param name="page" value="first"/>
 										<param name="hero_id" value="6100"/>
-										<param name="update_hero" value="true"/>
+										<param name="update_hero" value="false"/>
 									</include>
 								</control>
 							</include>
@@ -1289,7 +1411,7 @@
 			</control>
 			<control type="group">
 				<depth>DepthBars</depth>
-				<!-- 必须给宽度：下面 8 条底板用 centerleft 50% 居中，
+				<!-- 父容器给宽度：下面胶囊底板用 centerleft 50% 居中，
 				     父容器没有 width 时百分比会解析成 0、条会跑到屏幕外。 -->
 				<width>100%</width>
 				<animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
@@ -1297,14 +1419,14 @@
 				     sections collapse without any width or position bookkeeping. -->
 				<!-- BEGIN generated: home nav plates (tools/gen_home_nav_plates.py) -->
 				<!-- 导航条背景。宽度 = 当前可见标签的总宽。
-				     固定显示：电影 / 电视剧 / 文件；可隐藏：搜索 / 音乐 / 电视 / 收藏夹 → 16 种组合 × 中英文 = 32 条。
+				     固定显示：首页 / 电影 / 电视剧 / 文件；可隐藏：搜索 / 音乐 / 电视 / 收藏夹 → 16 种组合 × 中英文 = 32 条。
 				     每个标签的宽度 = 文本宽 + textoffsetx×2(60)，实测（font_home_tabs 26px）：
-				       中文 搜索112 电影112 电视剧138 音乐112 电视112 收藏夹138 文件112
-				       英文 Search147 Movies149 TV shows182 Music133 TV95 Favourites190 File102
-				     中文 5 个 612 / +音乐 724 / +电视 724 / 都有 836；英文 770 / 903 / 865 / 998。
+				       中文 首页112 搜索112 电影112 电视剧138 音乐112 电视112 收藏夹138 文件112
+				       英文 Home125 Search147 Movies149 TV shows182 Music133 TV95 Favourites190 File102
+				     固定基准（首页+电影+电视剧+文件）：中文 474 / 英文 558，再按可见的搜索/音乐/电视/收藏夹加宽。
 				     **这一段由 tools/gen_home_nav_plates.py 生成，不要手改**；
 				     改标签文字、字号或增删开关后重新跑它（加 check 参数可校验）。
-				     电影 / 电视剧 / 文件 固定显示（2026-10-31 用户决定），所以组合只有 4 个开关。
+				     首页 / 电影 / 电视剧 / 文件 固定显示（首页 2026-11-18 由媒体库改名），所以组合只有 4 个开关。
 				     以后想让某个标签也能隐藏：把它从 ALWAYS 挪进 TOGGLE 重跑本脚本即可。
 				     每条底板末尾都带 !$EXP[nara_keyboard_search_backdrop]：搜索页弹出系统键盘时整条让位，
 				     与 grouplist 9000 的 visible 保持同一条件（2026-11-14）。
@@ -1313,7 +1435,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>836</width>
+					<width>948</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1321,7 +1443,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>998</width>
+					<width>1131</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1330,7 +1452,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>724</width>
+					<width>836</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1338,7 +1460,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>903</width>
+					<width>1036</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1347,7 +1469,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>724</width>
+					<width>836</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1355,7 +1477,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>865</width>
+					<width>998</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1364,7 +1486,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>724</width>
+					<width>836</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1372,7 +1494,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>851</width>
+					<width>984</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1381,7 +1503,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>698</width>
+					<width>810</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1389,7 +1511,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>808</width>
+					<width>941</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1398,7 +1520,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>612</width>
+					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1406,7 +1528,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>770</width>
+					<width>903</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1415,7 +1537,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>612</width>
+					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1423,7 +1545,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>756</width>
+					<width>889</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1432,7 +1554,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>612</width>
+					<width>724</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1440,7 +1562,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>718</width>
+					<width>851</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1449,7 +1571,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>586</width>
+					<width>698</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1457,7 +1579,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>713</width>
+					<width>846</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1466,7 +1588,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>586</width>
+					<width>698</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1474,7 +1596,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>675</width>
+					<width>808</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1483,7 +1605,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>586</width>
+					<width>698</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1491,7 +1613,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>661</width>
+					<width>794</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1500,7 +1622,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>500</width>
+					<width>612</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1508,7 +1630,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>623</width>
+					<width>756</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + !Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1517,7 +1639,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>474</width>
+					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1525,7 +1647,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>580</width>
+					<width>713</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + !Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1534,7 +1656,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>474</width>
+					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1542,7 +1664,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>566</width>
+					<width>699</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + !Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1551,7 +1673,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>474</width>
+					<width>586</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1559,7 +1681,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>528</width>
+					<width>661</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + !Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1568,7 +1690,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>362</width>
+					<width>474</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1576,7 +1698,7 @@
 				<control type="image">
 					<centerleft>50%</centerleft>
 					<top>20</top>
-					<width>433</width>
+					<width>566</width>
 					<height>60</height>
 					<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="26">shapes/round26.png</texture>
 					<visible>!String.StartsWith(System.Language,Chinese) + Skin.HasSetting(HomeMenuNoSearchButton) + Skin.HasSetting(HomeMenuNoMusicButton) + Skin.HasSetting(HomeMenuNoTVButton) + Skin.HasSetting(HomeMenuNoFavoritesButton) + !$EXP[nara_keyboard_search_backdrop]</visible>
@@ -1585,7 +1707,7 @@
 				<control type="grouplist" id="9000">
 					<left>0</left>
 					<top>20</top>
-					<!-- 与上面 8 条底板同步：两边都 100% + 居中，任何分辨率下都对齐。 -->
+					<!-- 底板与 grouplist 同为 100% 铺满，任何分辨率都对齐。 -->
 					<width>100%</width>
 					<height>60</height>
 					<!-- 搜索页弹出系统键盘时整条导航让位（与底板同条件）：弹窗是模态的，
@@ -1598,31 +1720,30 @@
 					<onfocus>ClearProperty(Search.NumbersVisible,home)</onfocus>
 					<onleft>804</onleft>
 					<onright>804</onright>
-					<control type="togglebutton" id="9011">
+					<control type="togglebutton" id="9018">
 						<width min="80" max="240">auto</width>
 						<height>60</height>
-						<label>$LOCALIZE[137]</label>
+						<label>$LOCALIZE[31769]</label>
 						<font>font_home_tabs</font>
 						<align>center</align>
 						<aligny>center</aligny>
 						<textoffsetx>30</textoffsetx>
-						<textcolor>$VAR[HomeNavSearchTextColorVar]</textcolor>
+						<textcolor>$VAR[HomeNavLibrariesTextColorVar]</textcolor>
 						<focusedcolor>text_primary</focusedcolor>
 						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
 						<texturenofocus />
 						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
 						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
-						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),search) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
-						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + !$EXP[NaraSearchHasResults]">ClearProperty(Search.KeyboardHidden,home)</onfocus>
-						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + $EXP[NaraSearchHasResults]">SetProperty(Search.KeyboardHidden,true,home)</onfocus>
-						<onfocus>SetProperty(Home.Section,search,home)</onfocus>
+						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
+						<onfocus>SetProperty(Home.Section,libraries,home)</onfocus>
 						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
 						<onup>noop</onup>
-						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchMoviesActive]">16101</ondown>
-						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</ondown>
-						<ondown>16992</ondown>
-						<onclick>SetFocus(16992)</onclick>
-						<visible>!Skin.HasSetting(HomeMenuNoSearchButton)</visible>
+						<!-- 首页固定两行续播：按内容落到第一/第二行；两行都空时 noop。 -->
+						<ondown condition="Integer.IsGreater(Container(18010).NumItems,0)">18010</ondown>
+						<ondown condition="!Integer.IsGreater(Container(18010).NumItems,0) + Integer.IsGreater(Container(18012).NumItems,0)">18012</ondown>
+						<ondown>noop</ondown>
+						<onclick condition="Integer.IsGreater(Container(18010).NumItems,0)">SetFocus(18010)</onclick>
+						<onclick condition="!Integer.IsGreater(Container(18010).NumItems,0) + Integer.IsGreater(Container(18012).NumItems,0)">SetFocus(18012)</onclick>
 					</control>
 					<control type="togglebutton" id="9012">
 						<width min="80" max="240">auto</width>
@@ -1761,6 +1882,32 @@
 						<!-- 不再写显式 onclick：内容源已声明 target=filemanager，
 						     交给 Kodi 默认导航按源路径打开（原来的 $ROOT 是无效标记，会打开错误目录） -->
 					</control>
+					<control type="togglebutton" id="9011">
+						<width min="80" max="240">auto</width>
+						<height>60</height>
+						<label>$LOCALIZE[137]</label>
+						<font>font_home_tabs</font>
+						<align>center</align>
+						<aligny>center</aligny>
+						<textoffsetx>30</textoffsetx>
+						<textcolor>$VAR[HomeNavSearchTextColorVar]</textcolor>
+						<focusedcolor>text_primary</focusedcolor>
+						<texturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</texturefocus>
+						<texturenofocus />
+						<alttexturefocus colordiffuse="glass_focus_heavy" border="26">shapes/round26.png</alttexturefocus>
+						<alttexturenofocus colordiffuse="glass_focus_light" border="26">shapes/round26.png</alttexturenofocus>
+						<usealttexture>String.IsEqual(Window(home).Property(Home.Section),search) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus</usealttexture>
+						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + !$EXP[NaraSearchHasResults]">ClearProperty(Search.KeyboardHidden,home)</onfocus>
+						<onfocus condition="!String.IsEqual(Window(home).Property(Home.Section),search) + $EXP[NaraSearchHasResults]">SetProperty(Search.KeyboardHidden,true,home)</onfocus>
+						<onfocus>SetProperty(Home.Section,search,home)</onfocus>
+						<onfocus>SetProperty(Home.SharedRandomFanart.SessionPath,$ESCINFO[Container(16090).ListItem.Art(fanart)],home)</onfocus>
+						<onup>noop</onup>
+						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchMoviesActive]">16101</ondown>
+						<ondown condition="$EXP[NaraSearchKeyboardHidden] + $EXP[NaraSearchHasResults] + $EXP[NaraSearchTVShowsActive]">16102</ondown>
+						<ondown>16992</ondown>
+						<onclick>SetFocus(16992)</onclick>
+						<visible>!Skin.HasSetting(HomeMenuNoSearchButton)</visible>
+					</control>
 				</control>
 					<control type="group" id="700">
 						<left>40</left>
@@ -1804,8 +1951,10 @@
 							<focusedcolor>00FFFFFF</focusedcolor>
 							<texturefocus />
 							<texturenofocus />
-							<onleft>9017</onleft>
-							<onright>9011</onright>
+							<!-- 菜单按钮的左右环绕：左边接最右 tab（搜索 9011），右边接最左 tab（首页 9018）。
+							     2026-11-18 导航改序后跟着改，别写死成旧顺序。 -->
+							<onleft>9011</onleft>
+							<onright>9018</onright>
 							<onup>noop</onup>
 							<ondown>noop</ondown>
 							<onclick>SetFocus(8101)</onclick>

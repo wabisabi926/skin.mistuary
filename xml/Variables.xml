@@ -358,6 +358,8 @@
 		<!-- 艺术图片 -->
 		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
 		<value condition="Control.HasFocus(726)">$LOCALIZE[31830]</value>
+		<value condition="Control.HasFocus(729)">$LOCALIZE[31838]</value>
+		<value condition="Control.HasFocus(730)">$LOCALIZE[31843]</value>
 		<value condition="Control.HasFocus(6067)">$LOCALIZE[31745]</value>
 		<value condition="Control.HasFocus(714)">$LOCALIZE[31781]</value>
 		<value condition="Control.HasFocus(720)">$LOCALIZE[31812]</value>
@@ -654,6 +656,10 @@
 		<value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
 		<value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
 	</variable>
+	<variable name="HomeNavLibrariesTextColorVar">
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus">text_primary</value>
+		<value>E6FFFFFF</value>
+	</variable>
 	<variable name="HomeNavSearchTextColorVar">
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),search) + !Control.HasFocus(804) + !ControlGroup(8100).HasFocus">text_primary</value>
 		<value>E6FFFFFF</value>
@@ -701,7 +707,17 @@
 		<value condition="Skin.HasSetting(no_fanart)"></value>
 		<value condition="Window.IsActive(musicinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo)">$INFO[Window(home).Property(infobackground)]</value>
 		<value condition="$EXP[NaraHomeFanartSettledRow] + String.IsEqual(Container.ListItem.Property(node.type),target_folder)">$INFO[Container.ListItem(-1).Art(fanart)]</value>
-		<value condition="$EXP[NaraHomeFanartSettledRow]">$INFO[Container.ListItem.Art(fanart)]</value>
+		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
+		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(landscape))">$INFO[Container.ListItem.Art(landscape)]</value>
+		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(thumb))">$INFO[Container.ListItem.Art(thumb)]</value>
+		<!-- 2026-11-18 首页背景：焦点不在两行卡片上时，轮播开就跟随 18011 当前项
+		     （正在观看的电影随机 10 项，5 秒一张）；轮播关/18011 无图则取 18010 第 1 项。 -->
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !Skin.HasSetting(no_home_fanart_rotation) + !String.IsEmpty(Container(18011).ListItem.Art(fanart))">$INFO[Container(18011).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !String.IsEmpty(Container(18010).ListItemAbsolute(0).Art(fanart))">$INFO[Container(18010).ListItemAbsolute(0).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !String.IsEmpty(Container(18010).ListItemAbsolute(0).Art(landscape))">$INFO[Container(18010).ListItemAbsolute(0).Art(landscape)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !String.IsEmpty(Container(18012).ListItemAbsolute(0).Art(fanart))">$INFO[Container(18012).ListItemAbsolute(0).Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !String.IsEmpty(Container(18012).ListItemAbsolute(0).Art(landscape))">$INFO[Container(18012).ListItemAbsolute(0).Art(landscape)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !String.IsEmpty(Container(18011).ListItem.Art(fanart))">$INFO[Container(18011).ListItem.Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + ControlGroup(5001).HasFocus() + String.IsEqual(Container.ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container.ListItemNoWrap(-1).Art(fanart))">$INFO[Container.ListItemNoWrap(-1).Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + ControlGroup(6001).HasFocus() + String.IsEqual(Container.ListItem.Property(node.type),target_folder) + !String.IsEmpty(Container.ListItemNoWrap(-1).Art(fanart))">$INFO[Container.ListItemNoWrap(-1).Art(fanart)]</value>
 		<value condition="[Control.HasFocus(9012) + !String.IsEmpty(Window(home).Property(Home.movies.Hero))] | [Control.HasFocus(9013) + !String.IsEmpty(Window(home).Property(Home.tvshows.Hero))]">$VAR[HomeVideoHeroFanartVar]</value>
@@ -709,8 +725,8 @@
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + Control.HasFocus(9013) + !String.IsEmpty(Container(6100).ListItem.Art(fanart))">$INFO[Container(6100).ListItem.Art(fanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + [Control.HasFocus(5500) | Control.HasFocus(5700) | Control.HasFocus(5900)] + !String.IsEmpty(Window(home).Property(Home.LastMovieFanart))">$INFO[Window(home).Property(Home.LastMovieFanart)]</value>
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + [Control.HasFocus(6400) | Control.HasFocus(6600) | Control.HasFocus(6900)] + !String.IsEmpty(Window(home).Property(Home.LastTVShowFanart))">$INFO[Window(home).Property(Home.LastTVShowFanart)]</value>
-		<value condition="Container.ListItem.Property(emby.library.art) + !String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
-		<value condition="Container.ListItem.Property(emby.library.art) + !String.IsEmpty(Container.ListItem.Art(thumb))">$INFO[Container.ListItem.Art(thumb)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),movies) + Control.HasFocus(5700) + !String.IsEmpty(Container(5200).ListItem.Art(fanart))">$INFO[Container(5200).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(Window(home).Property(Home.Section),tvshows) + Control.HasFocus(6600) + !String.IsEmpty(Container(6200).ListItem.Art(fanart))">$INFO[Container(6200).ListItem.Art(fanart)]</value>
 		<value condition="!String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
 		<!-- 音乐页兜底：专辑条目只有 thumb、没有 fanart，前面所有分支都不成立 →
 		     直接复用「音乐播放器背景图」，和播放页共用同一张
@@ -1792,6 +1808,18 @@
 		<value condition="Skin.HasSetting(fanart_veil_60)">fanart_dim_60</value>
 		<value condition="Skin.HasSetting(fanart_veil_100)">fanart_dim_100</value>
 		<value>fanart_dim_50</value>
+	</variable>
+	<variable name="NaraFanartGlowAlphaVar">
+		<value condition="Skin.HasSetting(fanart_glow_off)">00FFFFFF</value>
+		<value condition="Skin.HasSetting(fanart_glow_weak)">66FFFFFF</value>
+		<value condition="Skin.HasSetting(fanart_glow_standard)">FFFFFFFF</value>
+		<value>FFFFFFFF</value>
+	</variable>
+	<variable name="NaraFanartGlowLabelVar">
+		<value condition="Skin.HasSetting(fanart_glow_off)">$LOCALIZE[31840]</value>
+		<value condition="Skin.HasSetting(fanart_glow_weak)">$LOCALIZE[31841]</value>
+		<value condition="Skin.HasSetting(fanart_glow_standard)">$LOCALIZE[31842]</value>
+		<value>$LOCALIZE[31842]</value>
 	</variable>
 	<variable name="NaraFanartVeilLabelVar">
 		<value condition="Skin.HasSetting(fanart_veil_35)">$LOCALIZE[31826]</value>

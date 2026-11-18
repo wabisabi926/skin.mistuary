@@ -256,11 +256,21 @@ class ScopeTests(unittest.TestCase):
                 # 屏幕外 1x1，不能写 visible=false（隐藏控件可能不求值 label）
                 self.assertIsNone(matches[0].find('visible'))
 
-    def test_glow_has_no_settings_toggle(self):
-        """色光无常开：设置页不得再出现 fanart_glow 开关与 helper 状态属性。"""
+    def test_glow_has_three_levels(self):
+        """色光三档（关 / 弱 / 标准）；标准是默认，必须作用在全部六个色光层上。"""
         settings = (XML / 'SkinSettings.xml').read_text(encoding='utf-8')
-        self.assertNotIn('fanart_glow', settings)
+        for name in ('fanart_glow_off', 'fanart_glow_weak', 'fanart_glow_standard'):
+            self.assertIn('|%s' % name, settings)
+        self.assertIn('$VAR[NaraFanartGlowLabelVar]', settings)
         self.assertNotIn('Mistuary.Helper.FanartGlow', settings)
+        variables = (XML / 'Variables.xml').read_text(encoding='utf-8')
+        for alpha in ('00FFFFFF', '66FFFFFF', 'FFFFFFFF'):
+            self.assertIn(alpha, variables)
+        for page in PAGES:
+            with self.subTest(page=page):
+                text = (XML / page).read_text(encoding='utf-8')
+                self.assertEqual(
+                    text.count('colordiffuse="$VAR[NaraFanartGlowAlphaVar]"'), 2)
         for lang in ('resource.language.zh_cn', 'resource.language.en_gb'):
             with self.subTest(lang=lang):
                 po = (ROOT / 'language' / lang / 'strings.po').read_text(

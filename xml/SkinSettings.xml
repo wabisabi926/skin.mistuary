@@ -212,6 +212,26 @@
 					<label2>$VAR[NaraFanartVeilLabelVar]</label2>
 					<enable>!Skin.HasSetting(no_fanart)</enable>
 				</control>
+<control type="radiobutton" id="729">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31837]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.ToggleSetting(no_home_fanart_rotation)</onclick>
+					<selected>!Skin.HasSetting(no_home_fanart_rotation)</selected>
+					<enable>!Skin.HasSetting(no_fanart)</enable>
+				</control>
+<control type="button" id="730">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31839]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31839, 31840|fanart_glow_off, 31841|fanart_glow_weak, 31842|fanart_glow_standard)</onclick>
+					<label2>$VAR[NaraFanartGlowLabelVar]</label2>
+					<enable>!Skin.HasSetting(no_fanart)</enable>
+				</control>
 <control type="radiobutton" id="702">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[20189]</label>

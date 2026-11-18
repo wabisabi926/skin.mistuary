@@ -1543,3 +1543,39 @@ msgstr "Original"
 msgctxt "#31830"
 msgid "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
 msgstr "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
+
+msgctxt "#31835"
+msgid "No in-progress items. Install the Emby add-on and sync your library first."
+msgstr "No in-progress items. Install the Emby add-on and sync your library first."
+
+msgctxt "#31836"
+msgid "Emby is connected, but nothing is in progress yet. Start watching something."
+msgstr "Emby is connected, but nothing is in progress yet. Start watching something."
+
+msgctxt "#31837"
+msgid "Home background rotation"
+msgstr "Home background rotation"
+
+msgctxt "#31838"
+msgid "When nothing on Home is focused, rotate through in-progress movie fanart every 5 seconds. Turn off to stay on the first item."
+msgstr "When nothing on Home is focused, rotate through in-progress movie fanart every 5 seconds. Turn off to stay on the first item."
+
+msgctxt "#31839"
+msgid "Artwork glow strength"
+msgstr "Artwork glow strength"
+
+msgctxt "#31840"
+msgid "Off"
+msgstr "Off"
+
+msgctxt "#31841"
+msgid "Soft"
+msgstr "Soft"
+
+msgctxt "#31842"
+msgid "Standard"
+msgstr "Standard"
+
+msgctxt "#31843"
+msgid "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
+msgstr "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."

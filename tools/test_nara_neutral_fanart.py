@@ -107,14 +107,14 @@ class FanartDimTest(unittest.TestCase):
 
         否则设置页和每个弹窗各自查一次库、各自抽一张图，打开弹窗会看到背景换图。
         写法要求：
-        1. 7 个分区按钮 + 左上角菜单按钮，各挂一次写入动作（首页的任何一次焦点移动都会补写，
-           首页默认焦点落下时容器可能还没查回来）；
+        1. 8 个分区按钮 + 左上角菜单按钮，各挂一次写入动作（首页的任何一次焦点移动都会补写，
+           首页默认焦点落下时容器可能还没查回来）；媒体库分区 2026-11-18 加入。
         2. Home 的 16090 取样不再限定分区 —— 否则停在 电影/电视剧 分区时容器为空，写不进。
         """
         text = (XML / 'Home.xml').read_text(encoding='utf-8')
         action = ('SetProperty(Home.SharedRandomFanart.SessionPath,'
                   '$ESCINFO[Container(16090).ListItem.Art(fanart)],home)')
-        self.assertEqual(text.count(action), 8, '首页应有 8 处 SessionPath 写入')
+        self.assertEqual(text.count(action), 9, '首页应有 9 处 SessionPath 写入')
         lists = [control for control in parse('Home.xml').iter('control')
                  if control.get('type') == 'list' and control.get('id') == '16090']
         self.assertEqual(len(lists), 1, 'Home.xml 应只有一个 16090 取样容器')
