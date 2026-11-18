@@ -49,6 +49,12 @@ def _text(node):
     return ' '.join(node.itertext()) if node is not None else ''
 
 
+def _is_clear_texture(control):
+    text = control.findtext('texture') or ''
+    return any(token in text for token in (
+        'Art(fanart)', 'VideoInfoArtVar', 'NaraWallArtVar'))
+
+
 def _texture_attr(node, key):
     texture = node.find('texture')
     return (texture.get(key) or '') if texture is not None else ''
@@ -74,7 +80,7 @@ class LayerOrderTests(unittest.TestCase):
                 clear = [i for i, c in enumerate(nodes)
                          if (c.findtext('left') or '').strip() == '0'
                          and (c.findtext('width') or '').strip() == '100%'
-                         and ('Art(fanart)' in (c.findtext('texture') or '')
+                         and (_is_clear_texture(c)
                               or 'HomeFanartVar' in (c.findtext('imagepath') or ''))]
                 self.assertTrue(void, '找不到黑底层')
                 self.assertTrue(glow, '找不到色光层')
@@ -141,7 +147,7 @@ class EdgeGlowTests(unittest.TestCase):
                 clear = next(i for i, c in enumerate(nodes)
                              if (c.findtext('left') or '').strip() == '0'
                              and (c.findtext('width') or '').strip() == '100%'
-                             and ('Art(fanart)' in (c.findtext('texture') or '')
+                             and (_is_clear_texture(c)
                                   or 'HomeFanartVar' in (c.findtext('imagepath') or '')))
                 edge = next(i for i, c in enumerate(nodes)
                             if GLOW in (c.findtext('texture') or '')
@@ -182,7 +188,7 @@ class FallbackTests(unittest.TestCase):
                          if (c.findtext('left') or '').strip() == '0'
                          and (c.findtext('width') or '').strip() == '100%'
                          and (c.findtext('height') or '').strip() == '100%'
-                         and ('Art(fanart)' in (c.findtext('texture') or '')
+                         and (_is_clear_texture(c)
                               or 'HomeFanartVar' in (c.findtext('imagepath') or ''))]
                 self.assertTrue(clear, '%s 的满屏清晰图不见了' % name)
                 self.assertFalse(
@@ -242,8 +248,8 @@ class ScopeTests(unittest.TestCase):
     def test_source_labels_are_unique_and_match_clear_fanart(self):
         expected = {
             'Home.xml': ('9099', '$VAR[HomeFanartVar]'),
-            'DialogVideoInfo.xml': ('9098', '$INFO[ListItem.Art(fanart)]'),
-            'View_51_Poster.xml': ('9097', '$INFO[Container(51).ListItem.Art(fanart)]'),
+            'DialogVideoInfo.xml': ('9098', '$VAR[VideoInfoArtVar]'),
+            'View_51_Poster.xml': ('9097', '$VAR[NaraWallArtVar]'),
         }
         used = set()
         for name, (cid, label) in expected.items():

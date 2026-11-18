@@ -703,13 +703,21 @@
 		<value condition="!String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath))">$INFO[Window(home).Property(Home.SharedRandomFanart.SessionPath)]</value>
 		<value>$INFO[Container(16090).ListItem.Art(fanart)]</value>
 	</variable>
+	<!-- 满屏背景只吃宽图：fanart → landscape；竖版 thumb 只给卡片，不做满屏背景。 -->
+	<variable name="VideoInfoArtVar">
+		<value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+	</variable>
+	<variable name="NaraWallArtVar">
+		<value condition="!String.IsEmpty(Container(51).ListItem.Art(fanart))">$INFO[Container(51).ListItem.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(Container(51).ListItem.Art(landscape))">$INFO[Container(51).ListItem.Art(landscape)]</value>
+	</variable>
 	<variable name="HomeFanartVar">
 		<value condition="Skin.HasSetting(no_fanart)"></value>
 		<value condition="Window.IsActive(musicinformation) | Window.IsActive(movieinformation) | Window.IsActive(addoninformation) | Window.IsActive(pvrguideinfo) | Window.IsActive(pvrrecordinginfo) | Window.IsActive(pictureinfo)">$INFO[Window(home).Property(infobackground)]</value>
 		<value condition="$EXP[NaraHomeFanartSettledRow] + String.IsEqual(Container.ListItem.Property(node.type),target_folder)">$INFO[Container.ListItem(-1).Art(fanart)]</value>
 		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(fanart))">$INFO[Container.ListItem.Art(fanart)]</value>
 		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(landscape))">$INFO[Container.ListItem.Art(landscape)]</value>
-		<value condition="$EXP[NaraHomeFanartSettledRow] + !String.IsEmpty(Container.ListItem.Art(thumb))">$INFO[Container.ListItem.Art(thumb)]</value>
 		<!-- 2026-11-18 首页背景：焦点不在两行卡片上时，轮播开就跟随 18011 当前项
 		     （正在观看的电影随机 10 项，5 秒一张）；轮播关/18011 无图则取 18010 第 1 项。 -->
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),libraries) + !Control.HasFocus(18010) + !Control.HasFocus(18012) + !Skin.HasSetting(no_home_fanart_rotation) + !String.IsEmpty(Container(18011).ListItem.Art(fanart))">$INFO[Container(18011).ListItem.Art(fanart)]</value>
@@ -732,6 +740,7 @@
 		     直接复用「音乐播放器背景图」，和播放页共用同一张
 		     （也跟随 设置 → 外观 → 音乐背景，用户换图两边一起变）。 -->
 		<value condition="String.IsEqual(Window(home).Property(Home.Section),music)">$VAR[NaraImgSkinStringNaraMusicBackgroundDefMusicBackground]</value>
+		<value condition="!String.IsEmpty(Container.ListItem.Art(landscape))">$INFO[Container.ListItem.Art(landscape)]</value>
 		<!-- 首页背景兜底（2026-11-08 改）：返回空，露出 fanart_void 黑底。
 		     背景现在是右上 2/3 的画幅，兜底图被缩进 2/3 就变成一块色块，比纯黑更难看。
 		     no_fanart 分支在最前面，本来就返回空。 -->

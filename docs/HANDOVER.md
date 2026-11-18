@@ -1816,6 +1816,10 @@ FanartFocus 放大盖住缝隙，音乐分区无聚焦不放大才暴露；真�
 描述收紧（移除烂番茄次评分表述）、技术标识一览图重生成（108 枚，`tools/gen_readme_sheet.py`
 标题枚数动态统计）、`docs/screenshots/README.md` 补图清单。
 
+**2026-11-19 延伸**：详情页 `5900` / `View_51_Poster` 清晰图同样从 `keep` 改为 `scale`，
+18:9 铺满裁切；满屏背景只吃 `fanart → landscape`，竖版 `thumb` 只给卡片；
+首页色光加 `Control.GetLabel(9099)` 护栏，无图时不再只剩色光。
+
 ### 8.19 2026-11-16 与远端对齐：两笔本地键盘重写被 force-push 取代
 
 **事实**：`fetch` 时 `origin/main` 报 `forced update`。11-13 18:38 / 18:42 的两笔提交

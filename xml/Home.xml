@@ -48,7 +48,7 @@
 			<aspectratio>scale</aspectratio>
 			<fadetime>250</fadetime>
 			<texture background="true" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
-			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+			<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Control.GetLabel(9099)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 		</control>
 		<!-- 源图通道：helper 读 Control.GetLabel(9099)，与 9090 绑同一个 HomeFanartVar，
 		     保证色光和清晰图是同一张剧照。屏幕外 1x1 + 全透明字，不写 visible=false
@@ -91,7 +91,7 @@
 				<aspectratio scalediffuse="false">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true" diffuse="overlays/flixart-edge-glow.png" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
-				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+				<visible>![Player.HasVideo | Player.HasAudio | Player.HasGame] + !Skin.HasSetting(no_fanart) + !String.IsEmpty(Control.GetLabel(9099)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 		</control>
 		<!-- 底部渐变：把图的下缘压进黑里。 -->

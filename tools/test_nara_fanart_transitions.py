@@ -161,7 +161,7 @@ class FanartTransitionsTest(unittest.TestCase):
         self.assertEqual(FOLLOW, [])
 
     def test_detail_fanart_fills_screen_with_black_backing(self):
-        """详情页背景：黑底 + 满屏清晰图（2026-11-10 改）。
+        """详情页背景：黑底 + 满屏清晰图（2026-11-19 改为 scale 铺满裁切）。
 
         2026-11-07 是外层 group 的 100→150 放大（HANDOVER §5.11.2），
         2026-11-08 改成右上 2/3，2026-11-10 再改为铺满全屏：
@@ -181,9 +181,10 @@ class FanartTransitionsTest(unittest.TestCase):
                          '清晰图宽度应为屏幕宽度')
         self.assertEqual((image.findtext('height') or '').strip(), '100%')
         aspect = image.find('aspectratio')
-        self.assertEqual(aspect.get('aligny'), 'top', '贴顶，多出来的高度交给底部渐变')
-        self.assertEqual((aspect.text or '').strip(), 'keep',
-                         '必须 keep：scale 会拉伸非 16:9 画面')
+        self.assertIsNone(aspect.get('aligny'),
+                          'scale 铺满裁切，不保留 keep 取景的 align 对齐')
+        self.assertEqual((aspect.text or '').strip(), 'scale',
+                         '2026-11-19：scale = 铺满裁切（cover），不是拉伸')
 
         group = next(control for control in INFO.iter('control')
                      if control.find('control[@id="5900"]') is not None)

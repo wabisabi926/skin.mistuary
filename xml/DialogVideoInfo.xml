@@ -92,14 +92,14 @@
 				<aspectratio>scale</aspectratio>
 				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
-				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(landscape))</visible>
 			</control>
-			<!-- 背景剧照铺满全屏（2026-11-10 改）：满屏清晰图 + 半透阅读遮罩 + 35% 淡色光。
-			     与 Home.xml 同一套参数，改一处必须同步另一处。 -->
+			<!-- 2026-11-19：清晰图改为 scale 铺满裁切（16:9 正好，18:9 上下裁），不再 keep 留左侧色光条。
+			     宽图优先：fanart → landscape；竖版 thumb 只给卡片，不做满屏背景。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<texture colordiffuse="fanart_void">colors/black.png</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))]</visible>
 			</control>
 			<!-- 流光溢彩色光底：与 Home.xml 同一套属性，helper 没装/关掉时属性为空，
 			     这层隐藏并露出 fanart_void 纯黑。层序必须在清晰图之前、黑底之后。 -->
@@ -108,7 +108,7 @@
 				<aspectratio>scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))] + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 			<!-- 源图通道：详情页独立窗口，用 9098 避免与 Home 的 9099 撞。 -->
 			<control type="label" id="9098">
@@ -117,19 +117,18 @@
 				<width>1</width>
 				<height>1</height>
 				<textcolor>00FFFFFF</textcolor>
-				<label>$INFO[ListItem.Art(fanart)]</label>
+				<label>$VAR[VideoInfoArtVar]</label>
 			</control>
-			<!-- 清晰图铺满全屏，右对齐 keep：宽屏上多出来的左侧条带由底层色光补。
-			     aligny="top" 保持构图稳定，非 16:9 时多出的高度交给底部渐变。 -->
+			<!-- 2026-11-19：scale = 铺满裁切（cover），不是拉伸；16:9 正好，18:9 上下各裁约 60px。 -->
 			<control type="image" id="5900">
 				<left>0</left>
 				<top>0</top>
 				<width>100%</width>
 				<height>100%</height>
-				<aspectratio align="right" aligny="top">keep</aspectratio>
+				<aspectratio>scale</aspectratio>
 				<fadetime>250</fadetime>
-				<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+				<texture background="true">$VAR[VideoInfoArtVar]</texture>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))]</visible>
 			</control>
 			<!-- 淡色光（35%）：只给图左 1/3 加一层彩色光晕，不替换清晰图。
 			     与 Home.xml 同一套 diffuse，改一处必须同步另一处。 -->
@@ -138,17 +137,17 @@
 				<aspectratio scalediffuse="false">scale</aspectratio>
 				<fadetime>250</fadetime>
 				<texture background="true" diffuse="overlays/flixart-edge-glow.png" colordiffuse="$VAR[NaraFanartGlowAlphaVar]">$INFO[Window(home).Property(Mistuary.FanartGlow)]</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart)) + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))] + !String.IsEmpty(Window(home).Property(Mistuary.FanartGlow))</visible>
 			</control>
 			<!-- 底部渐变：把图的下缘压进黑里（浓度由「背景压暗」设置缩放）。 -->
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/flixart-bottom.png</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))]</visible>
 			</control>
 			<include content="NaraFanartReveal">
-				<param name="visible" value="!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))" />
+				<param name="visible" value="!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))]" />
 			</include>
 			<!-- Detail-only left reading scrim. A dedicated horizontal texture
 			     keeps its dark edge deterministic and lighter than Fuse.
@@ -160,7 +159,7 @@
 				<height>1080</height>
 				<aspectratio>stretch</aspectratio>
 				<texture colordiffuse="$VAR[NaraFanartVeilVar]">overlays/detail-left-scrim.png</texture>
-				<visible>!Skin.HasSetting(no_fanart) + !String.IsEmpty(ListItem.Art(fanart))</visible>
+				<visible>!Skin.HasSetting(no_fanart) + [!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(landscape))]</visible>
 			</control>
 			<control type="group">
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>

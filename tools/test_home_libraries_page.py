@@ -121,8 +121,9 @@ class HomeLibrariesPageTest(unittest.TestCase):
                     self.assertIn('msgctxt "#%d"' % cid, po)
 
     def test_fanart_fallbacks(self):
-        self.assertIn('Container.ListItem.Art(landscape)', self.variables)
-        self.assertIn('Container.ListItem.Art(thumb)', self.variables)
+        fanart = self.variables.split('name="HomeFanartVar"', 1)[1].split('</variable>', 1)[0]
+        self.assertIn('Container.ListItem.Art(landscape)', fanart)
+        self.assertNotIn('Container.ListItem.Art(thumb)', fanart)
         self.assertIn('Container(5200).ListItem.Art(fanart)', self.variables)
         self.assertIn('Container(6200).ListItem.Art(fanart)', self.variables)
         self.assertIn('Container(18012).ListItemAbsolute(0).Art(fanart)', self.variables)
