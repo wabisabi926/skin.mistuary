@@ -77,14 +77,20 @@ Save-Icon 'filemanager' {
 }
 Save-Icon 'addons' {
   param($g, $p)
-  Draw-Lines $g $p @(9, 24, 9, 12, 24, 12)
-  $g.DrawArc($p, 23, 4, 16, 16, 150, 240)
-  Draw-Lines $g $p @(38, 12, 51, 12, 51, 26)
-  $g.DrawArc($p, 43, 25, 16, 16, 240, 240)
-  Draw-Lines $g $p @(51, 40, 51, 53, 37, 53)
-  $g.DrawArc($p, 23, 45, 16, 16, 210, 240)
-  Draw-Lines $g $p @(24, 53, 9, 53, 9, 39)
-  $g.DrawArc($p, 1, 24, 16, 16, 300, 240)
+  # 单一拼图块：上方 + 右侧各一个卡扣，去掉原来 8 段拼图的密集线条。
+  $gp = New-Object System.Drawing.Drawing2D.GraphicsPath
+  try {
+    $gp.AddLine(10, 18, 22, 18)
+    $gp.AddArc(22, 10, 16, 16, 180, 180)
+    $gp.AddLine(38, 18, 48, 18)
+    $gp.AddLine(48, 18, 48, 26)
+    $gp.AddArc(40, 26, 16, 16, 270, 180)
+    $gp.AddLine(48, 42, 48, 54)
+    $gp.AddLine(48, 54, 10, 54)
+    $gp.AddLine(10, 54, 10, 18)
+    $gp.CloseFigure()
+    $g.DrawPath($p, $gp)
+  } finally { if ($gp) { $gp.Dispose() } }
 }
 Save-Icon 'network' {
   param($g, $p)
