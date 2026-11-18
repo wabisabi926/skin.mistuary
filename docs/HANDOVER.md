@@ -58,10 +58,13 @@
 （服务端搜索的英文人名扩展与同名误命中修正）；皮肤 import 下限保持 **0.5.0**（本版未用 helper 新能力）。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 
-**接手时先看工作区状态**：截至 2026-11-14，`main` 已同步，**`v2.3.1` 已发布**
+**接手时先看工作区状态**：截至 2026-11-16，`main` 已与 `origin/main` 对齐，**`v2.3.1` 已发布**
 （首页背景 scale 铺满：非 16:9 画布左露黑底修复；插件描述与 README 同步刷新）。
 具体以 `git status` / `git log origin/main..HEAD` 为准，本节不钉 hash 和提交数。
-`Textures.xbt` **859 张 / 8.8 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **118 项全过**。
+`Textures.xbt` **859 张 / 8.8 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **118 项全过**、`audit_skin.py --strict` 0 问题。
+
+> **未合并的本地分支**：`backup/keyboard-nov13`（2026-11-13 的系统键盘 T9 尺寸重写，
+> 远程已用另一套表达式方案取代，见 §8.19）。**别默认把它当待合并工作**。
 
 > 推送 / 工作区状态以 §8.1 的 `git status -sb` 为准，本文不钉提交号和领先数。
 
@@ -1346,13 +1349,13 @@ git status -sb              # 与远端的关系 + 工作区
 
 稳定的只有这几项：
 
-> 下表是 **2026-10-30 的发版快照**；当前版本、贴图数量和测试项数以 §1 与 `git` 为准。
+> 下表是 **2026-11-16 与远端对齐后的快照**；当前版本、贴图数量和测试项数以 §1 与 `git` 为准。
 
 | 项 | 值 |
 |---|---|
-| 版本 | `addon.xml` = 1.4.0，本次发版 |
-| 贴图 | `Textures.xbt` 749 张 / 7.2 MB；`media/` 是 748 张 PNG + 1 张 JPG（另有 `LICENSE.txt`） |
-| 打包状态 | `xbt` 与 `media/` 一致（`unpack` 749/749），改过 png 才需要重打包 |
+| 版本 | `addon.xml` = 2.3.1，已发布（`v2.3.1` tag） |
+| 贴图 | `Textures.xbt` 859 张 / 8.8 MB；`media/` 是 858 张 PNG + 1 张 JPG（另有 `LICENSE.txt`） |
+| 打包状态 | `xbt` 与 `media/` 一致（改过 png 才需要重打包） |
 
 > 要发新版才升 `addon.xml`（§6）。
 
@@ -1396,7 +1399,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码。helper **0.3.11 已发布**，皮肤 **2.1.0 已发布**。
+> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码。helper **0.5.3 已发布**，皮肤 **2.3.1 已发布**。
 
 ### 8.2 发版记录
 
@@ -1447,7 +1450,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含 Helper 契约 §2（2026-11-05 起为硬依赖） |
-| **helper 插件落地** | 独立仓库 `<插件仓库根>`，**0.3.11 已发布**（229 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全 + 文件播放记录（10003）+ 媒体库封面 + 未同步剧集浏览（0.3.10 搜索剧集跳库 / 0.3.11 插件自己的季/集列表）。皮肤侧 M1b / M2 / M1c 已完成；M1d 演员/类型已完成（0.3.3 仅非 ASCII，2026-11-13 起英文 ≥5 位连写 / 含空格也并入）；M3 不做 |
+| **helper 插件落地** | 独立仓库 `<插件仓库根>`，**0.5.3 已发布**（229 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全 + 文件播放记录（10003）+ 媒体库封面 + 未同步剧集浏览（0.3.10 搜索剧集跳库 / 0.3.11 插件自己的季/集列表）。皮肤侧 M1b / M2 / M1c 已完成；M1d 演员/类型已完成（0.3.3 仅非 ASCII，2026-11-13 起英文 ≥5 位连写 / 含空格也并入）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1558,9 +1561,9 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
 - **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。
   **但同步实机不用问**：改完自己跑 `sync_to_kodi.py --loose`（§0 第 4 条）。
 
-### 8.9 helper：接入状态（2026-11-05 更新）
+### 8.9 helper：接入状态（2026-11-16 更新）
 
-- 插件 `script.mistuary.helper` **0.5.0 已发布**（229 项单测）：服务端搜索 +
+- 插件 `script.mistuary.helper` **0.5.3 已发布**（229 项单测）：服务端搜索 +
   详情页豆瓣评分 + 播放列表补全 + 文件播放记录 + 媒体库封面 + 未同步剧集浏览。
   0.3.10 修搜索剧集跳转（按标题 + tmdb/tvdb 在 Kodi 库里定位）；0.3.11 让库里没有的
   剧集进插件自己的季/集列表（子列表只拉一层，ParentId + Limit 500，缓存 5 分钟；
@@ -1810,3 +1813,30 @@ FanartFocus 放大盖住缝隙，音乐分区无聚焦不放大才暴露；真�
 **文档**：README 重写（定位 / 评分设置 / Helper 0.5.3 / 一键接入 Emby）、addon.xml 中英
 描述收紧（移除烂番茄次评分表述）、技术标识一览图重生成（108 枚，`tools/gen_readme_sheet.py`
 标题枚数动态统计）、`docs/screenshots/README.md` 补图清单。
+
+### 8.19 2026-11-16 与远端对齐：两笔本地键盘重写被 force-push 取代
+
+**事实**：`fetch` 时 `origin/main` 报 `forced update`。11-13 18:38 / 18:42 的两笔提交
+（`04e9ef0` 系统键盘尺寸与背景对齐 T9、`00238e3` 背景层回到浮窗契约）**当时推送成功过**
+（`origin/main` reflog 有 `update by push` 记录），11-15 远端被重写后不再包含它们；
+远端取而代之的是 11-14 的 `9d77036`（作者 foxmail 邮箱）——**同一问题、另一套解法**。
+
+| | 本地被丢的两笔 | 远端现行方案 |
+|---|---|---|
+| 落点 | `xml/DialogKeyboard.xml` 重写（+515/−150）+ 新贴图 `shapes/kbd_key_50x50.png` | `xml/DialogKeyboard.xml` 只 +7 行，改表达式分流 |
+| 做法 | 52 个键直写 `<control>`、键位统一 50×50 + `itemgap 12`、删玻璃/遮蔽/osdfade 三层 | 新增 `nara_keyboard_search_backdrop` / `nara_dialog_fanart_visible`，搜索分区弹出时剧照/遮蔽/osdfade 让位，玻璃面板保留 |
+| 连带 | `Includes_Buttons.xml` −19/+19 | `Includes.xml` +10、`Includes_DialogGlass.xml` +4/−1、`Home.xml` 导航条让位、`gen_home_nav_plates.py` 统一出条件 |
+
+**处理**：两笔留在 `backup/keyboard-nov13`（指向 `00238e3`），`main` 已 `reset --hard` 到
+`1809641`（2.3.1 现状）。**没有做 merge** —— 两边在 `DialogKeyboard.xml` 上是大改 vs 小改，
+硬合并等于把 653 行重写强行叠回表达式方案，风险远大于收益。
+
+**遗留判断**：本地重写里「按键重叠 / 变形 / 左侧大留白」的根因分析（`DialogKeyboard.xml`
+从未 include `Includes_Buttons.xml`，按钮定义没解析 → Kodi 退回按文字宽度自适应）**目前仍成立**，
+远端方案没碰这部分。要捡回来只挑这条，别整笔 cherry-pick；捡之前先在 Kodi 22 实机确认
+现行键盘的键位是否真的还有问题。
+
+**教训**：`fetch` 看到 `forced update` 先别 `pull`/`reset`，先 `git log origin/main..HEAD`
+和 `git log HEAD..origin/main` 两边对一遍——这次是「远端更新更多但丢了本地两笔」，
+只看 `behind 16` 会以为纯落后。
+
