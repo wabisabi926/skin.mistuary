@@ -196,7 +196,7 @@
 						<onleft>5001</onleft>
 						<onright condition="!String.IsEmpty(ListItem.SetID)">5005</onright>
 						<onright condition="String.IsEmpty(ListItem.SetID)">5003</onright>
-						<onclick>SendClick(14)</onclick>
+						<onclick>SetFocus(5215)</onclick>
 					</control>
 					<control type="image">
 						<left>12</left>

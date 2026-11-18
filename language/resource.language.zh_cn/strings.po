@@ -1362,3 +1362,19 @@ msgstr "剧照边缘的彩色光晕强度。标准为当前观感；柔和降低
 msgctxt "#31844"
 msgid "Similar titles"
 msgstr "相似影片"
+
+msgctxt "#31845"
+msgid "Select version"
+msgstr "选择版本"
+
+msgctxt "#31846"
+msgid "Manage versions"
+msgstr "管理版本"
+
+msgctxt "#31847"
+msgid "Current"
+msgstr "当前"
+
+msgctxt "#31848"
+msgid "No versions available"
+msgstr "没有可用的版本"

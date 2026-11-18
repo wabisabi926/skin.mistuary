@@ -2,6 +2,7 @@
 <window>
 	<defaultcontrol always="true">5000</defaultcontrol>
 	<onload>ClearProperty(VideoInfo.More,home)</onload>
+	<onload>ClearProperty(VideoInfo.Versions,home)</onload>
 	<onload>Skin.Reset(nara_cast_open)</onload>
 	<onload>SetFocus(5000)</onload>
 	<onload>SetProperty(infobackground,$ESCINFO[ListItem.Art(fanart)],home)</onload>
@@ -19,6 +20,8 @@
 	<onunload>ClearProperty(Mistuary.Rating.Year,home)</onunload>
 	<onunload>ClearProperty(infobackground,home)</onunload>
 	<onunload>ClearProperty(VideoInfo.More,home)</onunload>
+	<onunload>CancelAlarm(VideoInfoVersionsFocus,true)</onunload>
+	<onunload>ClearProperty(VideoInfo.Versions,home)</onunload>
 	<controls>
 		<!-- Kodi's built-in video-information actions. Visible skin controls
 		     forward to these IDs instead of duplicating playback, library or
@@ -316,5 +319,6 @@
 				</content>
 			</control>
 		</control>
+		<include>VideoInfoVersionPicker</include>
 	</controls>
 </window>

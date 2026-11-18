@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<!-- 版本卡片：一行一个源文件。只用官方 K22 属性，不依赖魔改的 cornerradius。 -->
+	<include name="VideoInfoVersionCard">
+		<param name="scroll">false</param>
+		<param name="background">3318171E</param>
+		<definition>
+			<control type="image">
+				<width>992</width>
+				<height>112</height>
+				<texture border="12" colordiffuse="$PARAM[background]">shapes/round12.png</texture>
+			</control>
+			<control type="label">
+				<left>24</left>
+				<top>4</top>
+				<width>820</width>
+				<height>37</height>
+				<font>font24</font>
+				<textcolor>text_primary</textcolor>
+				<scroll>$PARAM[scroll]</scroll>
+				<label>$INFO[ListItem.Label]</label>
+			</control>
+			<control type="label">
+				<right>24</right>
+				<top>4</top>
+				<width>100</width>
+				<height>37</height>
+				<font>font12</font>
+				<align>right</align>
+				<textcolor>text_secondary</textcolor>
+				<label>$LOCALIZE[31847]</label>
+				<visible>ListItem.IsSelected</visible>
+			</control>
+			<control type="label">
+				<left>24</left>
+				<top>45</top>
+				<width>944</width>
+				<height>28</height>
+				<font>font12_large</font>
+				<textcolor>text_secondary</textcolor>
+				<label>$MAP[NaraTechnicalResolutionTextMap,ListItem.VideoResolution]$MAP[NaraTechnicalVideoCodecTextMap,ListItem.VideoCodec,  &#183;  ]$MAP[NaraTechnicalHdrTextMap,ListItem.HdrType,  &#183;  ]$MAP[NaraTechnicalAudioCodecTextMap,ListItem.AudioCodec,  &#183;  ]$INFO[ListItem.AudioChannels(DefaultLayout),  &#183;  ]</label>
+			</control>
+			<control type="label">
+				<left>24</left>
+				<top>77</top>
+				<width>944</width>
+				<height>26</height>
+				<font>font12</font>
+				<textcolor>text_secondary</textcolor>
+				<scroll>$PARAM[scroll]</scroll>
+				<label>$INFO[ListItem.DecodedFileNameAndPath]</label>
+			</control>
+		</definition>
+	</include>
+
+	<include name="VideoInfoVersionPicker">
+		<!-- 打开继电器：从 5004 进来，先写属性，再延时把焦点送进列表。 -->
+		<control type="button" id="5215">
+			<include>HiddenObject</include>
+			<onfocus>SetProperty(VideoInfo.Versions,true,home)</onfocus>
+			<onfocus>AlarmClock(VideoInfoVersionsFocus,SetFocus(5212),00:00,silent)</onfocus>
+			<onback>5216</onback>
+		</control>
+		<!-- 关闭继电器：清属性并把焦点还给版本按钮。 -->
+		<control type="button" id="5216">
+			<include>HiddenObject</include>
+			<onfocus>CancelAlarm(VideoInfoVersionsFocus,true)</onfocus>
+			<onfocus>ClearProperty(VideoInfo.Versions,home)</onfocus>
+			<onfocus>SetFocus(5004)</onfocus>
+		</control>
+
+		<control type="group">
+			<include>FullScreenDimensions</include>
+			<visible>String.IsEqual(Window(Home).Property(VideoInfo.Versions),true) + String.IsEqual(ListItem.DBType,movie)</visible>
+			<animation effect="fade" start="0" end="100" time="160">Visible</animation>
+			<animation effect="fade" start="100" end="0" time="120">Hidden</animation>
+
+			<control type="button" id="5210">
+				<include>FullScreenDimensions</include>
+				<label />
+				<texturefocus colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texturefocus>
+				<texturenofocus colordiffuse="$VAR[NaraGlassScrimTintVar]">colors/black.png</texturenofocus>
+				<onclick>SetFocus(5216)</onclick>
+				<onback>5216</onback>
+				<onup>5212</onup>
+				<ondown>5212</ondown>
+				<onleft>5212</onleft>
+				<onright>5212</onright>
+			</control>
+
+			<control type="group" id="5211">
+				<defaultcontrol always="true">5212</defaultcontrol>
+				<centerleft>50%</centerleft>
+				<centertop>50%</centertop>
+				<width>1040</width>
+				<height>660</height>
+				<control type="image">
+					<width>1040</width>
+					<height>660</height>
+					<texture border="20" colordiffuse="$VAR[NaraGlassFloatTintVar]">shapes/glass20.png</texture>
+				</control>
+				<control type="label">
+					<left>24</left>
+					<top>12</top>
+					<width>992</width>
+					<height>40</height>
+					<font>font27</font>
+					<align>center</align>
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31845]</label>
+				</control>
+
+				<control type="list" id="5212">
+					<left>24</left>
+					<top>68</top>
+					<width>992</width>
+					<height>496</height>
+					<orientation>vertical</orientation>
+					<scrolltime>180</scrolltime>
+					<preloaditems>1</preloaditems>
+					<onup>5212</onup>
+					<ondown>5213</ondown>
+					<onleft>5212</onleft>
+					<onright>5213</onright>
+					<onback>5216</onback>
+					<onclick>Action(Play)</onclick>
+					<itemlayout width="992" height="124">
+						<include>VideoInfoVersionCard</include>
+					</itemlayout>
+					<focusedlayout width="992" height="124">
+						<include content="VideoInfoVersionCard">
+							<param name="scroll" value="true" />
+							<param name="background" value="glass_focus_light" />
+						</include>
+					</focusedlayout>
+					<content browse="never">videodb://movies/titles/$INFO[ListItem.DBID]/1/</content>
+				</control>
+
+				<!-- 空节点也要有焦点落点，Back 才能回到详情页。 -->
+				<control type="button" id="5214">
+					<left>24</left>
+					<top>68</top>
+					<width>992</width>
+					<height>496</height>
+					<label>$LOCALIZE[31848]</label>
+					<font>font24</font>
+					<textcolor>text_secondary</textcolor>
+					<texturefocus />
+					<texturenofocus />
+					<visible>Integer.IsEqual(Container(5212).NumItems,0)</visible>
+					<onclick>noop</onclick>
+					<onback>5216</onback>
+					<onup>5214</onup>
+					<ondown>5213</ondown>
+					<onleft>5214</onleft>
+					<onright>5213</onright>
+				</control>
+
+				<control type="image">
+					<left>24</left>
+					<top>584</top>
+					<width>992</width>
+					<height>1</height>
+					<texture colordiffuse="33FFFFFF">colors/white.png</texture>
+				</control>
+
+				<control type="button" id="5213">
+					<right>24</right>
+					<top>598</top>
+					<width>160</width>
+					<height>44</height>
+					<label>$LOCALIZE[31846]</label>
+					<font>font13</font>
+					<aligny>center</aligny>
+					<textcolor>text_secondary</textcolor>
+					<focusedcolor>text_primary</focusedcolor>
+					<texturefocus border="12" colordiffuse="glass_focus_light">shapes/round12.png</texturefocus>
+					<texturenofocus />
+					<onup>5212</onup>
+					<ondown>5213</ondown>
+					<onleft>5212</onleft>
+					<onright>5213</onright>
+					<onback>5216</onback>
+					<onclick>SendClick(14)</onclick>
+				</control>
+			</control>
+		</control>
+	</include>
+</includes>
