@@ -1579,3 +1579,7 @@ msgstr "Standard"
 msgctxt "#31843"
 msgid "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
 msgstr "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
+
+msgctxt "#31844"
+msgid "Similar titles"
+msgstr "Similar titles"

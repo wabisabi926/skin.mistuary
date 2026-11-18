@@ -224,19 +224,19 @@
 				<onclick>SetFocus(5003)</onclick>
 			</control>
 			<!-- Match DialogContextMenu's glass surface and keep its 12 px content inset
-			     clear of the rounded border: 349 = 325 px list + 24 px padding. -->
+			     clear of the rounded border: 414 = 390 px list (6 × 65) + 24 px padding. -->
 			<control type="image">
 				<centerleft>50%</centerleft>
 				<centertop>50%</centertop>
 				<width>480</width>
-				<height>349</height>
+				<height>414</height>
 				<texture colordiffuse="$VAR[NaraGlassFloatTintVar]" border="20">shapes/glass20.png</texture>
 			</control>
 			<control type="list" id="5199">
 				<centerleft>50%</centerleft>
-				<top>377.5</top>
+				<top>345</top>
 				<width>456</width>
-				<height>325</height>
+				<height>390</height>
 				<orientation>vertical</orientation>
 				<scrolltime>150</scrolltime>
 				<onleft>5199</onleft>
@@ -298,6 +298,13 @@
 						<onclick>SetFocus(5003)</onclick>
 						<onclick>SendClick(10)</onclick>
 						<visible>Control.IsEnabled(10)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[31844]</label>
+						<onclick>ClearProperty(VideoInfo.More,home)</onclick>
+						<onclick>SetFocus(5003)</onclick>
+						<onclick>ActivateWindow(Videos,plugin://script.mistuary.helper/?mode=similar&amp;type=$INFO[ListItem.DBType]&amp;dbid=$INFO[ListItem.DBID],return)</onclick>
+						<visible>[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + Integer.IsGreater(ListItem.DBID,0) + System.AddonIsEnabled(script.mistuary.helper)</visible>
 					</item>
 					<item>
 						<label>$LOCALIZE[184]</label>

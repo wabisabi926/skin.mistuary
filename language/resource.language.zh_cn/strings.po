@@ -1358,3 +1358,7 @@ msgstr "标准"
 msgctxt "#31843"
 msgid "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
 msgstr "剧照边缘的彩色光晕强度。标准为当前观感；柔和降低；关闭只保留剧照与压暗。"
+
+msgctxt "#31844"
+msgid "Similar titles"
+msgstr "相似影片"
