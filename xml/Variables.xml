@@ -768,7 +768,7 @@
 	<variable name="ListWatchedIconVar">
 		<value condition="ListItem.IsRecording">windows/pvr/record.png</value>
 		<value condition="ListItem.IsCollection">overlays/set.png</value>
-		<value condition="ListItem.HasVideoVersions + !$EXP[videoasset_true]">overlays/versions.png</value>
+		<value condition="ListItem.HasVideoVersions + !$EXP[videoasset_true] + !System.GetBool(videolibrary.flattenversions)">overlays/versions.png</value>
 		<value condition="ListItem.IsPlaying">overlays/watched/OverlayPlaying-List.png</value>
 		<value condition="ListItem.IsResumable + Integer.IsGreater(ListItem.Playcount,0)">overlays/watched/OverlayWatchedResume.png</value>
 		<value condition="ListItem.IsResumable">overlays/watched/OverlayResume.png</value>
@@ -817,7 +817,7 @@
 	</variable>
 	<variable name="ItemTypeIconVar">
 		<value condition="ListItem.IsCollection">overlays/set.png</value>
-		<value condition="ListItem.HasVideoVersions + !$EXP[videoasset_true]">overlays/versions.png</value>
+		<value condition="ListItem.HasVideoVersions + !$EXP[videoasset_true] + !System.GetBool(videolibrary.flattenversions)">overlays/versions.png</value>
 		<value condition="ListItem.HasVideoExtras + !$EXP[videoasset_true]">overlays/extras.png</value>
 	</variable>
 	<variable name="ListPVRRecordingsIconVar">
