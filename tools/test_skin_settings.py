@@ -81,6 +81,18 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
         self.assertEqual(DEFAULT_ONLY_SETTINGS, {"rating_src_tmdb"})
 
 
+class HomeSettingsOrderTest(unittest.TestCase):
+    def test_search_toggle_is_last_on_home_page(self):
+        """主导航把搜索放在最后，设置页也要跟着走，不能第一行又是搜索。"""
+        root = ET.parse(XML_DIR / "SkinSettings.xml").getroot()
+        group = next(
+            c for c in root.iter("control")
+            if c.get("type") == "grouplist" and c.get("id") == "700")
+        ids = [c.get("id") for c in group.findall("control")]
+        self.assertEqual(ids[-1], "6110")
+        self.assertLess(ids.index("619"), ids.index("6110"))
+
+
 class RepoSkinSettingsTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
