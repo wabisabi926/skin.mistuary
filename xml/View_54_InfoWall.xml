@@ -304,14 +304,33 @@
 		<param name="focus_top">-1</param>
 		<param name="focus_width">238</param>
 		<param name="focus_height">342</param>
+		<!-- 海报几何：默认 236×340（View_54 / 片单弹窗原样），View_500 传 224×336（2:3，加宽左右缝）。 -->
+		<param name="poster_left">12</param>
+		<param name="poster_width">236</param>
+		<param name="poster_height">340</param>
+		<param name="poster_mask">shapes/mask_236x340_r12.png</param>
+		<param name="poster_ring">shapes/ring_card_238x342_r13.png</param>
+		<param name="badge_left_1">24</param>
+		<param name="badge_left_2">58</param>
+		<param name="badge_left_3">92</param>
+		<param name="badge_label_left">96</param>
+		<param name="badge_top">301</param>
+		<param name="badge_label_top">302</param>
+		<param name="rating_left">188</param>
+		<param name="progress_left">22</param>
+		<param name="progress_top">323</param>
+		<param name="progress_width">216</param>
+		<param name="caption_left">12</param>
+		<param name="caption_top">340</param>
+		<param name="caption_width">236</param>
 		<definition>
 			<control type="group">
 				<visible>String.IsEmpty(ListItem.Art(poster))</visible>
 				<control type="image">
-					<left>12</left>
+					<left>$PARAM[poster_left]</left>
 					<top>0</top>
-					<width>236</width>
-					<height>340</height>
+					<width>$PARAM[poster_width]</width>
+					<height>$PARAM[poster_height]</height>
 					<texture colordiffuse="selection_surface" border="12">shapes/round12.png</texture>
 				</control>
 				<control type="image">
@@ -319,7 +338,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-					<texture colordiffuse="focus_card_surface">shapes/ring_card_238x342_r13.png</texture>
+					<texture colordiffuse="focus_card_surface">$PARAM[poster_ring]</texture>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
@@ -330,11 +349,11 @@
 				     的遮罩，海报四角就是真透明 —— 背景透出来，不是盖一块深色。
 				     遮罩尺寸必须和控件完全一致（244×352），否则会被拉伸、圆角变形。 -->
 				<control type="image">
-					<left>12</left>
+					<left>$PARAM[poster_left]</left>
 					<top>0</top>
-					<width>236</width>
-					<height>340</height>
-					<texture background="true" diffuse="shapes/mask_236x340_r12.png">$INFO[ListItem.Art(poster)]</texture>
+					<width>$PARAM[poster_width]</width>
+					<height>$PARAM[poster_height]</height>
+					<texture background="true" diffuse="$PARAM[poster_mask]">$INFO[ListItem.Art(poster)]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 				</control>
 				<control type="image">
@@ -342,7 +361,7 @@
 					<top>$PARAM[focus_top]</top>
 					<width>$PARAM[focus_width]</width>
 					<height>$PARAM[focus_height]</height>
-					<texture colordiffuse="focus_media">shapes/ring_card_238x342_r13.png</texture>
+					<texture colordiffuse="focus_media">$PARAM[poster_ring]</texture>
 					<visible>$PARAM[focused]</visible>
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
@@ -350,8 +369,8 @@
 			<control type="group">
 				<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBType,season) | ListItem.IsRecording | ListItem.HasReminder | ListItem.HasTimer | ListItem.IsCollection | ListItem.HasVideoVersions | ListItem.IsPlaying | ListItem.IsResumable | ListItem.HasVideoExtras | ListItem.HasArchive | Integer.IsGreater(ListItem.Playcount,0)</visible>
 				<control type="image">
-					<left>58</left>
-					<top>301</top>
+					<left>$PARAM[badge_left_2]</left>
+					<top>$PARAM[badge_top]</top>
 					<width>28</width>
 					<height>28</height>
 					<align>left</align>
@@ -359,8 +378,8 @@
 					<texture>$VAR[ItemTypeIconVar]</texture>
 				</control>
 				<control type="image">
-					<left>92</left>
-					<top>301</top>
+					<left>$PARAM[badge_left_3]</left>
+					<top>$PARAM[badge_top]</top>
 					<width>28</width>
 					<height>28</height>
 					<align>left</align>
@@ -369,8 +388,8 @@
 					<visible>ListItem.HasVideoVersions + ListItem.HasVideoExtras + !$EXP[videoasset_true]</visible>
 				</control>
 				<control type="label">
-					<left>96</left>
-					<top>302</top>
+					<left>$PARAM[badge_label_left]</left>
+					<top>$PARAM[badge_label_top]</top>
 					<width>140</width>
 					<label>$VAR[WatchedStatusVar]</label>
 					<font>font20_title</font>
@@ -378,22 +397,22 @@
 					<visible>String.IsEqual(ListItem.DBtype,tvshow) | String.IsEqual(ListItem.DBtype,set) | String.IsEqual(ListItem.DBType,season)</visible>
 				</control>
 				<control type="image">
-					<left>24</left>
-					<top>301</top>
+					<left>$PARAM[badge_left_1]</left>
+					<top>$PARAM[badge_top]</top>
 					<width>28</width>
 					<height>28</height>
 					<texture colordiffuse="$VAR[StatusIconColorVar]">$VAR[ItemStatusIconVar]</texture>
 				</control>
 			</control>
 			<control type="group">
-				<left>188</left>
+				<left>$PARAM[rating_left]</left>
 				<top>12</top>
 				<include condition="Skin.HasSetting(circle_rating) | Skin.HasSetting(circle_userrating)">RatingCircle</include>
 			</control>
 			<control type="progress">
-				<left>22</left>
-				<top>323</top>
-				<width>216</width>
+				<left>$PARAM[progress_left]</left>
+				<top>$PARAM[progress_top]</top>
+				<width>$PARAM[progress_width]</width>
 				<height>$PARAM[progress_height]</height>
 				<reveal>true</reveal>
 				<texturebg border="8,0,8,0" colordiffuse="progress_track">progress/card_progress_r8.png</texturebg>
@@ -403,6 +422,9 @@
 			</control>
 			<include content="PosterCardCaption" condition="$PARAM[show_caption]">
 				<param name="focused" value="$PARAM[focused]" />
+				<param name="left" value="$PARAM[caption_left]" />
+				<param name="top" value="$PARAM[caption_top]" />
+				<param name="width" value="$PARAM[caption_width]" />
 				<param name="title_color" value="$PARAM[caption_title_color]" />
 				<param name="year_color" value="$PARAM[caption_year_color]" />
 			</include>

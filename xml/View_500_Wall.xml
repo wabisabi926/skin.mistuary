@@ -31,7 +31,30 @@
 				<itemlayout height="418" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
 					<control type="group">
 						<top>10</top>
-						<include>InfoWallMovieLayout</include>
+						<include content="InfoWallMovieLayout">
+							<param name="poster_left" value="18" />
+							<param name="poster_width" value="224" />
+							<param name="poster_height" value="336" />
+							<param name="poster_mask" value="shapes/mask_224x336_r12.png" />
+							<param name="poster_ring" value="shapes/ring_card_226x338_r13.png" />
+							<param name="focus_left" value="17" />
+							<param name="focus_top" value="-1" />
+							<param name="focus_width" value="226" />
+							<param name="focus_height" value="338" />
+							<param name="badge_left_1" value="30" />
+							<param name="badge_left_2" value="64" />
+							<param name="badge_left_3" value="98" />
+							<param name="badge_label_left" value="92" />
+							<param name="badge_top" value="297" />
+							<param name="badge_label_top" value="298" />
+							<param name="rating_left" value="182" />
+							<param name="progress_left" value="28" />
+							<param name="progress_top" value="319" />
+							<param name="progress_width" value="204" />
+							<param name="caption_left" value="18" />
+							<param name="caption_top" value="336" />
+							<param name="caption_width" value="224" />
+						</include>
 					</control>
 				</itemlayout>
 				<focusedlayout height="418" width="260" condition="Container.Content(movies) | Container.Content(sets) | Container.Content(tvshows) | [Container.Content(musicvideos) + Skin.HasSetting(show_musicvideoposter)]">
@@ -43,6 +66,28 @@
 						<include content="InfoWallMovieLayout">
 							<param name="focused" value="true" />
 							<param name="progress_visible_condition" value="[!Control.HasFocus(500) | !Integer.IsEqual(ListItem.CurrentItem,Container(500).CurrentItem)]" />
+							<param name="poster_left" value="18" />
+							<param name="poster_width" value="224" />
+							<param name="poster_height" value="336" />
+							<param name="poster_mask" value="shapes/mask_224x336_r12.png" />
+							<param name="poster_ring" value="shapes/ring_card_226x338_r13.png" />
+							<param name="focus_left" value="17" />
+							<param name="focus_top" value="-1" />
+							<param name="focus_width" value="226" />
+							<param name="focus_height" value="338" />
+							<param name="badge_left_1" value="30" />
+							<param name="badge_left_2" value="64" />
+							<param name="badge_left_3" value="98" />
+							<param name="badge_label_left" value="92" />
+							<param name="badge_top" value="297" />
+							<param name="badge_label_top" value="298" />
+							<param name="rating_left" value="182" />
+							<param name="progress_left" value="28" />
+							<param name="progress_top" value="319" />
+							<param name="progress_width" value="204" />
+							<param name="caption_left" value="18" />
+							<param name="caption_top" value="336" />
+							<param name="caption_width" value="224" />
 						</include>
 					</control>
 				</focusedlayout>
