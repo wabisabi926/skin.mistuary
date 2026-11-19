@@ -106,8 +106,8 @@
 				<control type="textbox">
 					<top>62</top>
 					<width>820</width>
-					<height>105</height>
-					<font>font13</font>
+					<height>88</height>
+					<font>font12_large</font>
 					<textcolor>text_secondary</textcolor>
 					<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 				</control>
@@ -131,7 +131,7 @@
 				<control type="group">
 					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 					<include content="NaraOnlineRatingsRow">
-						<param name="top" value="191" />
+						<param name="top" value="174" />
 						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 						<param name="inline_flags" value="true" />
 						<param name="technical_visible" value="true" />
@@ -142,7 +142,7 @@
 				<control type="group">
 					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 					<include content="NaraOnlineRatingsRow">
-						<param name="top" value="191" />
+						<param name="top" value="174" />
 						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 						<param name="inline_flags" value="true" />
 						<param name="technical_visible" value="Integer.IsGreater(Container($PARAM[episode_id]).NumItems,0)" />
