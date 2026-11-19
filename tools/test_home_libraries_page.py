@@ -3,7 +3,7 @@
 
 锁 2026-11-18 最终形态：
 - 导航默认落在「首页」(9018)，两行分别是电影/剧集续播；
-- 电影/电视剧页隐藏续播行，媒体库行回到今天之前的位置（spacer 775）；
+- 电影/电视剧页隐藏续播行，媒体库行与首页剧集行同一 y（spacer 818）；
 - 电影/电视剧页 Hero 下移 200，内部间距 215/282；首页 Hero 保持 202/258；
 - 背景轮播源必须是带 fanart 的续播电影，不再是库 tag；
 - 不再使用魔改内核的 ListItemSettled。
@@ -70,11 +70,11 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertEqual(self.home.count('<param name="ratings_top" value="215"/>'), 11)
         self.assertEqual(self.home.count('<param name="plot_top" value="282"/>'), 11)
         self.assertEqual(self.home.count('<param name="hero_top" value="0"/>'), 2)
-        # 媒体库行回到今天之前的位置
+        # 媒体库行与首页「正在观看的电视剧」同高（spacer 818）
         for sid in ("5002001", "6002001"):
             with self.subTest(spacer=sid):
                 block = self.home.split('value="%s"' % sid, 1)[1].split("</include>", 1)[0]
-                self.assertIn('<param name="height" value="775"/>', block)
+                self.assertIn('<param name="height" value="818"/>', block)
 
     def test_hidden_rail_does_not_leave_trailing_spacer(self):
         self.assertIn(

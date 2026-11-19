@@ -366,7 +366,7 @@
 									<ondown>5201</ondown>
 									<include content="HomeRailSpacer">
 										<param name="id" value="5002001"/>
-										<param name="height" value="775"/>
+										<param name="height" value="818"/>
 										<param name="visible" value="true"/>
 									</include>
 									<!-- 正在观看已挪到首页：本行隐藏显示但保留 5100 容器，Hero/背景/spacer 仍读它的数据。 -->
@@ -722,7 +722,7 @@
 									<ondown>6201</ondown>
 									<include content="HomeRailSpacer">
 										<param name="id" value="6002001"/>
-										<param name="height" value="775"/>
+										<param name="height" value="818"/>
 										<param name="visible" value="true"/>
 									</include>
 									<!-- 正在观看已挪到首页：本行隐藏显示但保留 6100 容器，Hero/背景/spacer 仍读它的数据。 -->
