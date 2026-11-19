@@ -876,8 +876,8 @@
 	     单独一份的原因：原尺寸走 InfoWallMusicLayout，那是音乐库视图也在用的共享布局，
 	     直接改会把库里的专辑网格一起缩小。
 	     焦点框**完全照抄海报墙**那套：图片 → 角部遮盖 → 描边环。
-	     几何：封面 221×221（遮盖 r9）+ 环 227×227 r12（外扩 3px、描边 3px →
-	     环内缘半径正好 9，与遮盖弧度对齐），描边正好填满那 3px，视觉上紧贴图片。 -->
+	     几何：封面 222×222（遮盖 r9）+ 环 224×224 r10（外扩 1px、内缘压进 2px，
+	     与海报墙一致），描边正好填满外扩，视觉上紧贴图片。 -->
 	<include name="HomeWidgetAlbumCard">
 		<param name="main_label">$INFO[ListItem.Artist]</param>
 		<param name="sub_label">$INFO[ListItem.Title]</param>
@@ -892,15 +892,15 @@
 			<control type="image">
 				<left>0</left>
 				<top>0</top>
-				<width>186</width>
-				<height>186</height>
-				<texture background="true" diffuse="shapes/mask_186x186_r9.png">$VAR[NaraAlbumCardThumbVar]</texture>
+				<width>222</width>
+				<height>222</height>
+				<texture background="true" diffuse="shapes/mask_222x222_r9.png">$VAR[NaraAlbumCardThumbVar]</texture>
 				<aspectratio scalediffuse="false">scale</aspectratio>
 			</control>
 			<control type="textbox">
 				<left>0</left>
-				<top>190</top>
-				<width>186</width>
+				<top>226</top>
+				<width>222</width>
 				<height>44</height>
 				<font>font12</font>
 				<textcolor>$PARAM[textcolor]</textcolor>
@@ -916,8 +916,8 @@
 				<visible>String.IsEqual(ListItem.DBType,album)</visible>
 				<control type="label">
 					<left>0</left>
-					<top>192</top>
-					<width>186</width>
+					<top>228</top>
+					<width>222</width>
 					<label>$PARAM[sub_label]</label>
 					<font>font20_title</font>
 					<textcolor>$PARAM[textcolor]</textcolor>
@@ -926,8 +926,8 @@
 				</control>
 				<control type="label">
 					<left>0</left>
-					<top>224</top>
-					<width>186</width>
+					<top>260</top>
+					<width>222</width>
 					<label>$PARAM[main_label]</label>
 					<font>font10</font>
 					<textcolor>$PARAM[subtextcolor]</textcolor>
@@ -938,9 +938,9 @@
 			<control type="image">
 				<left>-1</left>
 				<top>-1</top>
-				<width>188</width>
-				<height>188</height>
-				<texture colordiffuse="focus_media">shapes/ring_card_188x188_r10.png</texture>
+				<width>224</width>
+				<height>224</height>
+				<texture colordiffuse="focus_media">shapes/ring_card_224x224_r10.png</texture>
 				<visible>$PARAM[focused]</visible>
 				<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 			</control>
@@ -962,6 +962,9 @@
 				<param name="label">$PARAM[widget_header]</param>
 				<param name="list_id" value="$PARAM[list_id]"/>
 				<param name="visible" value="$PARAM[visible]"/>
+				<!-- 标题与卡片间距压紧：原来用默认 top=80/height=90，卡片在 120，中间空 40+ -->
+				<param name="top" value="0"/>
+				<param name="height" value="36"/>
 			</include>
 			<include content="BusyListSpinner">
 				<param name="list_id" value="$PARAM[list_id]"/>
@@ -970,9 +973,9 @@
 			</include>
 			<control type="panel" id="$PARAM[list_id]">
 				<left>70</left>
-				<top>120</top>
-				<right>0</right>
-				<height>358</height>
+				<top>6</top>
+				<right>70</right>
+				<height>290</height>
 				<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
 				<onclick condition="$PARAM[onclick_condition_2]">$PARAM[onclick_action_2]</onclick>
 				<include content="WidgetListCommon">
@@ -980,10 +983,10 @@
 				</include>
 				<visible>$PARAM[visible]</visible>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
-				<itemlayout width="207" height="358">
+				<itemlayout width="258" height="290">
 					<control type="group">
 						<left>8</left>
-						<top>6</top>
+						<top>0</top>
 						<include content="HomeWidgetAlbumCard">
 							<param name="main_label" value="$PARAM[main_label]" />
 							<param name="single_label" value="$PARAM[single_label]" />
@@ -992,16 +995,16 @@
 						</include>
 					</control>
 				</itemlayout>
-				<focusedlayout width="207" height="358">
+				<focusedlayout width="258" height="290">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<left>8</left>
-						<top>6</top>
+						<top>0</top>
 						<animation type="Focus">
-							<effect type="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="93,116" />
+							<effect type="zoom" start="100" end="106" time="200" tween="sine" easing="inout" center="111,140" />
 						</animation>
 						<animation type="Unfocus">
-							<effect type="zoom" start="106" end="100" time="200" tween="sine" easing="inout" center="93,116" />
+							<effect type="zoom" start="106" end="100" time="200" tween="sine" easing="inout" center="111,140" />
 						</animation>
 						<include content="HomeWidgetAlbumCard">
 							<param name="main_label" value="$PARAM[main_label]" />
@@ -1022,6 +1025,20 @@
 		<param name="panel_top">110</param>
 		<param name="panel_height">290</param>
 		<param name="item_height">340</param>
+		<param name="item_width">308</param>
+		<param name="card_width">276</param>
+		<param name="card_height">160</param>
+		<param name="card_mask">shapes/mask_276x160_r9.png</param>
+		<param name="icon_width">200</param>
+		<param name="zoom_center">228,70</param>
+		<param name="icon_left">58</param>
+		<param name="icon_centertop">74</param>
+		<param name="label_left">38</param>
+		<param name="label_width">240</param>
+		<param name="label_top">106</param>
+		<param name="label_top_alt">136</param>
+		<param name="label_height">70</param>
+		<param name="item_top">20</param>
 		<param name="navigation">WidgetListCommon</param>
 		<param name="section"></param>
 		<param name="page"></param>
@@ -1072,40 +1089,40 @@
 				</include>
 				<visible>$PARAM[visible]</visible>
 				<visible>Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating</visible>
-				<itemlayout width="308" height="$PARAM[item_height]">
+				<itemlayout width="$PARAM[item_width]" height="$PARAM[item_height]">
 					<control type="group">
 						<left>60</left>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
 							<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
-							<texture background="true" diffuse="shapes/mask_276x160_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
+							<texture background="true" diffuse="$PARAM[card_mask]">$INFO[ListItem.Art(thumb)]</texture>
 							<aspectratio scalediffuse="false">scale</aspectratio>
 							<visible>$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
-							<centertop>74</centertop>
-							<left>58</left>
-							<width>200</width>
+							<centertop>$PARAM[icon_centertop]</centertop>
+							<left>$PARAM[icon_left]</left>
+							<width>$PARAM[icon_width]</width>
 							<height>$PARAM[icon_height]</height>
 							<texture>$PARAM[icon]</texture>
 							<aspectratio>keep</aspectratio>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="textbox">
-							<left>38</left>
-							<top>106</top>
-							<width>240</width>
-							<height>70</height>
+							<left>$PARAM[label_left]</left>
+							<top>$PARAM[label_top]</top>
+							<width>$PARAM[label_width]</width>
+							<height>$PARAM[label_height]</height>
 							<label>$INFO[ListItem.Label]</label>
 							<font>$PARAM[label_font]</font>
 							<align>center</align>
@@ -1113,9 +1130,9 @@
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="textbox">
-							<left>38</left>
-							<top>136</top>
-							<width>240</width>
+							<left>$PARAM[label_left]</left>
+							<top>$PARAM[label_top_alt]</top>
+							<width>$PARAM[label_width]</width>
 							<height>44</height>
 							<label>$INFO[ListItem.Label]</label>
 							<font>$PARAM[label_font]</font>
@@ -1125,54 +1142,54 @@
 						</control>
 					</control>
 				</itemlayout>
-				<focusedlayout width="308" height="$PARAM[item_height]">
+				<focusedlayout width="$PARAM[item_width]" height="$PARAM[item_height]">
 					<control type="group">
 						<depth>DepthContentPopout</depth>
 						<left>60</left>
 						<animation type="Focus">
-							<effect type="zoom" start="100" end="$PARAM[focus_zoom]" time="200" tween="sine" easing="inout" center="228,70" />
+							<effect type="zoom" start="100" end="$PARAM[focus_zoom]" time="200" tween="sine" easing="inout" center="$PARAM[zoom_center]" />
 						</animation>
 						<animation type="Unfocus">
-							<effect type="zoom" start="$PARAM[focus_zoom]" end="100" time="80" tween="sine" easing="inout" center="228,70" />
+							<effect type="zoom" start="$PARAM[focus_zoom]" end="100" time="80" tween="sine" easing="inout" center="$PARAM[zoom_center]" />
 						</animation>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
 							<texture colordiffuse="$VAR[NaraGlassPageTintVar]" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
-							<texture background="true" diffuse="shapes/mask_276x160_r9.png">$INFO[ListItem.Art(thumb)]</texture>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
+							<texture background="true" diffuse="$PARAM[card_mask]">$INFO[ListItem.Art(thumb)]</texture>
 							<aspectratio scalediffuse="false">scale</aspectratio>
 							<visible>$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
 							<texture colordiffuse="glass_focus_light" border="32">shapes/round32.png</texture>
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="image">
 							<left>20</left>
-							<top>20</top>
-							<width>276</width>
-							<height>160</height>
+							<top>$PARAM[item_top]</top>
+							<width>$PARAM[card_width]</width>
+							<height>$PARAM[card_height]</height>
 							<texture colordiffuse="glass_focus_light" border="12">shapes/round12.png</texture>
 							<visible>$PARAM[background_art_condition]</visible>
 							<include>Animation_FocusTextureFade</include>
 						</control>
 						<control type="image">
-							<centertop>74</centertop>
-							<left>58</left>
-							<width>200</width>
+							<centertop>$PARAM[icon_centertop]</centertop>
+							<left>$PARAM[icon_left]</left>
+							<width>$PARAM[icon_width]</width>
 							<height>$PARAM[icon_height]</height>
 							<texture>$PARAM[icon]</texture>
 							<colordiffuse>focus_card_foreground</colordiffuse>
@@ -1180,10 +1197,10 @@
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="textbox">
-							<left>38</left>
-							<top>106</top>
-							<width>240</width>
-							<height>70</height>
+							<left>$PARAM[label_left]</left>
+							<top>$PARAM[label_top]</top>
+							<width>$PARAM[label_width]</width>
+							<height>$PARAM[label_height]</height>
 							<label>$INFO[ListItem.Label]</label>
 							<font>$PARAM[label_font]</font>
 							<textcolor>focus_card_foreground</textcolor>
@@ -1192,9 +1209,9 @@
 							<visible>!$PARAM[background_art_condition]</visible>
 						</control>
 						<control type="textbox">
-							<left>38</left>
-							<top>136</top>
-							<width>240</width>
+							<left>$PARAM[label_left]</left>
+							<top>$PARAM[label_top_alt]</top>
+							<width>$PARAM[label_width]</width>
 							<height>44</height>
 							<label>$INFO[ListItem.Label]</label>
 							<font>$PARAM[label_font]</font>

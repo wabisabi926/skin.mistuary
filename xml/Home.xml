@@ -989,14 +989,49 @@
 					<visible>String.IsEqual(Window(home).Property(Home.Section),music)</visible>
 					<include>Visible_Fade</include>
 					<control type="grouplist" id="7001">
-						<include>WidgetGroupListCommon</include>
+						<!-- 内联 WidgetGroupListCommon 的属性（不参数化共享 include：它被电视页无参调用）。
+						     itemgap 40：三行完整、第4行出屏，用正常行距；三行(类别+最近播放+最近加入)完整，
+						     第 4 行随机专辑标题落在 1080 外。 -->
+						<orientation>vertical</orientation>
+						<height>100%</height>
+						<scrolltime tween="cubic" easing="out">500</scrolltime>
+						<itemgap>28</itemgap>
+						<defaultcontrol always="true">0</defaultcontrol>
+						<onup>9000</onup>
+						<ondown>20001</ondown>
+						<usecontrolcoords>true</usecontrolcoords>
 						<pagecontrol>7010</pagecontrol>
 						<include content="WidgetListCategories" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_music_categories_widget)">
 							<param name="widget_header" value="$LOCALIZE[31148]"/>
 							<param name="widget_target" value="music"/>
 							<param name="list_id" value="7900"/>
 							<param name="additional_music_items" value="true"/>
+							<!-- 只放 7 个分类(类型/歌手/专辑/单曲/歌曲/年份/Top100)，第8个「最近加入的专辑」不占类别行 -->
+							<param name="widget_limit" value="7"/>
 							<param name="dynamic_content" value="false"/>
+							<!-- 类别行：标题与卡片间距压紧（原来 header 56/panel 86 + panel 高 290/340 留下大块空白） -->
+							<param name="header_top" value="0"/>
+							<param name="header_height" value="30"/>
+							<param name="panel_top" value="6"/>
+							<param name="panel_height" value="130"/>
+							<param name="item_height" value="130"/>
+							<param name="item_top" value="0"/>
+							<!-- 8 张类别卡(200×116 / 槽224)：1920 下 8 张完整、第9张出屏；文字框收到卡片内 -->
+							<param name="item_width" value="262"/>
+							<param name="card_width" value="200"/>
+							<param name="card_height" value="116"/>
+							<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
+							<param name="icon_width" value="145"/>
+							<param name="icon_height" value="77"/>
+							<param name="icon_left" value="42"/>
+							<param name="icon_centertop" value="40"/>
+							<param name="label_left" value="28"/>
+							<param name="label_width" value="174"/>
+							<param name="label_font" value="font22"/>
+							<param name="label_top" value="66"/>
+							<param name="label_height" value="42"/>
+							<param name="label_top_alt" value="98"/>
+							<param name="zoom_center" value="165,50"/>
 						</include>
 						<include content="WidgetListSquare" condition="Library.HasContent(music) + !Skin.HasSetting(home_no_music_recentlyplayedalbums_widget)">
 							<param name="content_path" value="musicdb://recentlyplayedalbums"/>

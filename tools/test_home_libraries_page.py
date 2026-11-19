@@ -76,6 +76,36 @@ class HomeLibrariesPageTest(unittest.TestCase):
                 block = self.home.split('value="%s"' % sid, 1)[1].split("</include>", 1)[0]
                 self.assertIn('<param name="height" value="818"/>', block)
 
+    def test_music_album_grid_option_a(self):
+        card = self.includes.split('<include name="HomeWidgetAlbumCard">', 1)[1]
+        card = card.split('<include name="WidgetListSquare">', 1)[0]
+        self.assertIn('<width>222</width>', card)
+        self.assertIn('<height>222</height>', card)
+        self.assertIn('mask_222x222_r9.png', card)
+        self.assertIn('ring_card_224x224_r10.png', card)
+        self.assertIn('<top>226</top>', card)
+        self.assertIn('<top>228</top>', card)
+        self.assertIn('<top>260</top>', card)
+
+        square = self.includes.split('<include name="WidgetListSquare">', 1)[1]
+        square = square.split('<include name="WidgetListCategories">', 1)[0]
+        self.assertIn('<right>70</right>', square)
+        self.assertIn('<itemlayout width="258" height="290">', square)
+        self.assertIn('<focusedlayout width="258" height="290">', square)
+
+    def test_music_categories_scaled_down(self):
+        # 音乐页 7 张类别卡等比缩小，其他页走默认尺寸
+        home = self.home
+        for token in ('<param name="item_width" value="262"/>',
+                      '<param name="card_width" value="200"/>',
+                      '<param name="card_mask" value="shapes/mask_200x116_r9.png"/>'):
+            self.assertIn(token, home)
+        # 音乐 grouplist 内联 itemgap 20（三行完整、第4行随机专辑出屏）；共享 include 默认仍 -160
+        self.assertIn('<itemgap>-160</itemgap>', self.includes)
+        music = self.home.split('<control type="grouplist" id="7001">', 1)[1]
+        music = music.split('<pagecontrol>7010</pagecontrol>', 1)[0]
+        self.assertIn('<itemgap>28</itemgap>', music)
+
     def test_hidden_rail_does_not_leave_trailing_spacer(self):
         self.assertIn(
             '$PARAM[rail_visible] + $PARAM[media_row_visible]', self.includes)
