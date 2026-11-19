@@ -3,6 +3,7 @@
 	<defaultcontrol always="true">5000</defaultcontrol>
 	<onload>ClearProperty(VideoInfo.More,home)</onload>
 	<onload>ClearProperty(VideoInfo.Versions,home)</onload>
+	<onload>ClearProperty(VideoInfo.SimilarPath,home)</onload>
 	<onload>Skin.Reset(nara_cast_open)</onload>
 	<onload>SetFocus(5000)</onload>
 	<onload>SetProperty(infobackground,$ESCINFO[ListItem.Art(fanart)],home)</onload>
@@ -22,6 +23,7 @@
 	<onunload>ClearProperty(VideoInfo.More,home)</onunload>
 	<onunload>CancelAlarm(VideoInfoVersionsFocus,true)</onunload>
 	<onunload>ClearProperty(VideoInfo.Versions,home)</onunload>
+	<onunload>ClearProperty(VideoInfo.SimilarPath,home)</onunload>
 	<controls>
 		<!-- Kodi's built-in video-information actions. Visible skin controls
 		     forward to these IDs instead of duplicating playback, library or
@@ -303,9 +305,9 @@
 					</item>
 					<item>
 						<label>$LOCALIZE[31844]</label>
-						<onclick>ClearProperty(VideoInfo.More,home)</onclick>
-						<onclick>SetFocus(5003)</onclick>
-						<onclick>ActivateWindow(Videos,plugin://script.mistuary.helper/?mode=similar&amp;type=$INFO[ListItem.DBType]&amp;dbid=$INFO[ListItem.DBID],return)</onclick>
+						<!-- 2026-11-19：详情是模态窗口，不能直接 ActivateWindow；
+						     交给 5230 继电器：先存 URL，再关详情，最后打开完整相似列表。 -->
+						<onclick>SetFocus(5230)</onclick>
 						<visible>[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + Integer.IsGreater(ListItem.DBID,0) + System.AddonIsEnabled(script.mistuary.helper)</visible>
 					</item>
 					<item>
@@ -319,5 +321,15 @@
 			</control>
 		</control>
 		<include>VideoInfoVersionPicker</include>
+		<!-- 2026-11-19：相似影片继电器。必须在详情上下文里先把 URL 存进属性，
+		     再 Action(Back) 关模态详情，最后 ActivateWindow；顺序不能调换。 -->
+		<control type="button" id="5230">
+			<include>HiddenObject</include>
+			<onfocus>SetProperty(VideoInfo.SimilarPath,plugin://script.mistuary.helper/?mode=similar&amp;type=$INFO[ListItem.DBType]&amp;dbid=$INFO[ListItem.DBID],home)</onfocus>
+			<onfocus>ClearProperty(VideoInfo.More,home)</onfocus>
+			<onfocus>Action(Back)</onfocus>
+			<onfocus>ActivateWindow(Videos,$INFO[Window(home).Property(VideoInfo.SimilarPath)],return)</onfocus>
+			<onback>SetFocus(5003)</onback>
+		</control>
 	</controls>
 </window>

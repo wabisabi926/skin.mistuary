@@ -84,6 +84,14 @@ class BackgroundStyleTest(unittest.TestCase):
         for name in ("VideoInfoArtVar", "NaraWallArtVar"):
             self.assertIn('name="%s"' % name, variables)
 
+    def test_home_nav_falls_back_to_default_hero(self):
+        variables = (XML / "Variables.xml").read_text(encoding="utf-8")
+        block = variables.split('name="HomeFanartVar"', 1)[1].split("</variable>", 1)[0]
+        self.assertIn("Control.HasFocus(9012)", block)
+        self.assertIn("Container(5200).ListItem.Art(fanart)", block)
+        self.assertIn("Control.HasFocus(9013)", block)
+        self.assertIn("Container(6200).ListItem.Art(fanart)", block)
+
 
 if __name__ == "__main__":
     unittest.main()
