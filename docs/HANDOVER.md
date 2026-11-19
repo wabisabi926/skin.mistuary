@@ -56,15 +56,15 @@
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
 版本以 `addon.xml` 为准（当前 **2.4.0**）；历史发版记录见 §8.2。
 最近一次发版说明见 `changelog.txt` 顶部 2.4.0 段。
-`handover-2026-11-03.md` 已归档，只作当时快照。helper **0.5.4** 待发布
-（相似影片列表 `mode=similar`）；皮肤 import 下限提到 **0.5.4**（相似入口只查 AddonIsEnabled 不查版本，
-旧 helper 会点了没反应，故用硬依赖挡住）。**必须先发 helper 0.5.4 再发皮肤 2.4.0**。
+`handover-2026-11-03.md` 已归档，只作当时快照。helper **0.5.4 已发布**（11-19，`v0.5.4` Release），
+提供相似影片列表 `mode=similar`；皮肤 import 下限已提到 **0.5.4**（相似入口只查 AddonIsEnabled 不查版本，
+旧 helper 会点了没反应，故用硬依赖挡住）。**发版顺序是 helper 0.5.4 → 皮肤 2.4.0，两者均已发布**。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 
-**接手时先看工作区状态**：截至 2026-11-16，`main` 已与 `origin/main` 对齐，**`v2.3.1` 已发布**
-（首页背景 scale 铺满：非 16:9 画布左露黑底修复；插件描述与 README 同步刷新）。
+**接手时先看工作区状态**：截至 2026-11-19，`main` 已与 `origin/main` 对齐，**`v2.4.0` 已发布**
+（首页两行续播、详情页多版本与相似影片、影视背景统一 scale、海报墙 2:3、音乐页与界面打磨）。
 具体以 `git status` / `git log origin/main..HEAD` 为准，本节不钉 hash 和提交数。
-`Textures.xbt` **859 张 / 8.8 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **118 项全过**、`audit_skin.py --strict` 0 问题。
+`Textures.xbt` **867 张 / 8.9 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **157 项全过**、`audit_skin.py --strict` 0 问题。
 
 > **未合并的本地分支**：`backup/keyboard-nov13`（2026-11-13 的系统键盘 T9 尺寸重写，
 > 远程已用另一套表达式方案取代，见 §8.19）。**别默认把它当待合并工作**。
@@ -1353,12 +1353,12 @@ git status -sb              # 与远端的关系 + 工作区
 
 稳定的只有这几项：
 
-> 下表是 **2026-11-16 与远端对齐后的快照**；当前版本、贴图数量和测试项数以 §1 与 `git` 为准。
+> 下表是 **2026-11-19 与远端对齐后的快照**（随 2.4.0 发布）；当前版本、贴图数量和测试项数以 §1 与 `git` 为准。
 
 | 项 | 值 |
 |---|---|
-| 版本 | `addon.xml` = 2.3.1，已发布（`v2.3.1` tag） |
-| 贴图 | `Textures.xbt` 859 张 / 8.8 MB；`media/` 是 858 张 PNG + 1 张 JPG（另有 `LICENSE.txt`） |
+| 版本 | `addon.xml` = 2.4.0，已发布（`v2.4.0` tag） |
+| 贴图 | `Textures.xbt` 867 张 / 8.9 MB；`media/` 是 866 张 PNG + 1 张 JPG（另有 `LICENSE.txt`） |
 | 打包状态 | `xbt` 与 `media/` 一致（改过 png 才需要重打包） |
 
 > 要发新版才升 `addon.xml`（§6）。
@@ -1403,7 +1403,7 @@ git status -sb              # 与远端的关系 + 工作区
 - 测试：`tools/test_nara_douban_rating.py`
 
 > 提交前用 `git diff --cached --name-only` 核对，不要把两个仓库混在一起。
-> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码。helper **0.5.3 已发布**，皮肤 **2.3.1 已发布**。
+> 另一个仓库 `script.mistuary.helper` 独立发布；1.4.0 时未包含其代码。helper **0.5.4 已发布**，皮肤 **2.4.0 已发布**。
 
 ### 8.2 发版记录
 
@@ -1433,8 +1433,9 @@ git status -sb              # 与远端的关系 + 工作区
 | **v2.2.1** | 背景剧照铺满全屏 + 35% 淡色光 + 四档压暗扩到 14 个 XML / 16 处 + 文件/收藏 list 遮罩同档；清理 1 张孤儿贴图、1 个死 include |
 | **v2.3.0** | 搜索页全键盘输入（系统虚拟键盘 + 手机文本注入）+ 键盘透出搜索背景、弹出时隐藏导航条 + 设置页整行对齐与组间距 + 评分设置收敛 |
 | **v2.3.1** | 首页背景 keep+右对齐改 scale 铺满（非 16:9 画布左露黑底修复）+ 插件描述与 README 刷新 |
+| **v2.4.0** | 首页两行跨类型续播 + 背景轮播/色光三档 + 详情页多版本面板/相似影片 + 影视背景统一 scale + 海报墙 2:3 + 音乐页类别行与专辑卡重做；最低 Helper 0.5.4 |
 
-> **当前版本以 `addon.xml` 为准（2.3.1，已发布）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
+> **当前版本以 `addon.xml` 为准（2.4.0，已发布）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1454,7 +1455,7 @@ git status -sb              # 与远端的关系 + 工作区
 | 死资源清理 | 22 + 33 张零引用贴图删除，包体 −29%（`d29a225` / `0ebccc5`） |
 | 自检补反向检查 | `audit_skin.py --orphans` / `--dead`（§4） |
 | 插件规划 | `docs/helper-plugin-plan.md`（摘要），含 Helper 契约 §2（2026-11-05 起为硬依赖） |
-| **helper 插件落地** | 独立仓库 `<插件仓库根>`，**0.5.3 已发布**（229 项单测）：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全 + 文件播放记录（10003）+ 媒体库封面 + 未同步剧集浏览（0.3.10 搜索剧集跳库 / 0.3.11 插件自己的季/集列表）。皮肤侧 M1b / M2 / M1c 已完成；M1d 演员/类型已完成（0.3.3 仅非 ASCII，2026-11-13 起英文 ≥5 位连写 / 含空格也并入）；M3 不做 |
+| **helper 插件落地** | 独立仓库 `<插件仓库根>`，**0.5.4 已发布**：服务端搜索 + 详情页豆瓣评分（优先读 Emby `/Douban/RatingsByImdb`）+ 播放列表补全 + 文件播放记录（10003）+ 媒体库封面 + 未同步剧集浏览（0.3.10 搜索剧集跳库 / 0.3.11 插件自己的季/集列表）。皮肤侧 M1b / M2 / M1c 已完成；M1d 演员/类型已完成（0.3.3 仅非 ASCII，2026-11-13 起英文 ≥5 位连写 / 含空格也并入）；M3 不做 |
 | 黑胶唱片模式 | OSD 最右按钮切换，素材 `tools/gen_vinyl.py`（§8.9 之后的新条目） |
 | 音乐库背景兜底 | 无 fanart 时用音乐页背景图，`6c357c4` |
 | 死代码清零 | 21 死变量 + 6 死 include；`--dead` 现在 0/0 |
@@ -1467,12 +1468,12 @@ git status -sb              # 与远端的关系 + 工作区
 
 ### 8.4 发版前检查（2026-11-14 更新）
 
-> 2.3.0 已发。当前版本以 `addon.xml` 为准。
+> 2.4.0 已发。当前版本以 `addon.xml` 为准。
 
 | # | 事项 | 材料在哪 | 需要什么 |
 |---|---|---|---|
-| 1 | **2.3.0**（已发布） | `changelog.txt` 2.3.0 段、§6 发版流程 | `v2.3.0` tag/Release 已生成 |
-| 2 | **helper 0.5.3**（已发布） | helper 仓 `docs/release.md` §6 | 皮肤 import 下限保持 0.5.0 |
+| 1 | **2.4.0**（已发布） | `changelog.txt` 2.4.0 段、§6 发版流程 | `v2.4.0` tag/Release 已生成 |
+| 2 | **helper 0.5.4**（已发布） | helper 仓 `docs/release.md` §6 | 皮肤 import 下限 0.5.4 |
 | 3 | 首字母严格性 | — | ✅ 已完成 |
 
 > **Kodi 21 实机验证已放弃**（2026-10-30，用户决定），原因与事故记录见 §8.7。
@@ -1485,7 +1486,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 118 项
+python -m unittest discover -s tools -p 'test_*.py'       # 157 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
@@ -1560,14 +1561,14 @@ error: CSettings: unable to load settings from special://masterprofile/guisettin
   **递交 / 发版前**才 `python tools/xbt_tool.py pack` + 普通 `sync_to_kodi.py`。
   ⚠️ `--loose` 要把目标端 `Textures.xbt` 挪成 `.off`，**Kodi 开着时挪不动**，会只同步散文件。
 - **版本号没升 = 没发版**：push 会触发发版，"提交"和"发版"要分开确认（§6）。
-- 圆角机制只有一条正确路子：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件一致
+- **圆角机制只有一条正确路子**：`<texture diffuse="shapes/mask_<w>x<h>_r<N>.png">` + 遮罩尺寸与控件一致
   （§5.4.1）；`scale` 才写 `scalediffuse="false"`，`keep` **不要写**（写了等于没圆角）。
 - **不要擅自 commit / push / 发版**：改完先说明什么 + 验证结果，等指令。
   **但同步实机不用问**：改完自己跑 `sync_to_kodi.py --loose`（§0 第 4 条）。
 
-### 8.9 helper：接入状态（2026-11-16 更新）
+### 8.9 helper：接入状态（2026-11-19 更新）
 
-- 插件 `script.mistuary.helper` **0.5.3 已发布**（229 项单测）：服务端搜索 +
+- 插件 `script.mistuary.helper` **0.5.4 已发布**：服务端搜索 +
   详情页豆瓣评分 + 播放列表补全 + 文件播放记录 + 媒体库封面 + 未同步剧集浏览。
   0.3.10 修搜索剧集跳转（按标题 + tmdb/tvdb 在 Kodi 库里定位）；0.3.11 让库里没有的
   剧集进插件自己的季/集列表（子列表只拉一层，ParentId + Limit 500，缓存 5 分钟；

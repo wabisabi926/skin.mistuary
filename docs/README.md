@@ -5,7 +5,7 @@
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
-| [`handover-2026-11-18.md`](handover-2026-11-18.md) | **当前快照，优先级高于 HANDOVER.md 的现状描述**。首页两行续播 + B 布局（媒体库 615/665）+ Hero 间距 30/31/42 + 轮播/色光设置；未提交、未推送、未发版 |
+| [`handover-2026-11-19.md`](handover-2026-11-19.md) | **当前快照，优先级高于 HANDOVER.md 的现状描述**。2.4.0 已发布：两行续播、详情页多版本/相似、背景统一 scale、海报墙 2:3、音乐页重做；含遗留与待办 |
 | [`handover-2026-11-03.md`](handover-2026-11-03.md) | **已归档的交接快照**（2026-11-03）。当天本地改动与遗留；其中的「未发」项已随 1.9.0 进包，只作当时记录 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
@@ -73,7 +73,7 @@ python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/gen_resume_ring.py --check                  # 续播圆环 101 帧与生成器一致
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
-python -m unittest discover -s tools -p 'test_*.py'      # 118 项
+python -m unittest discover -s tools -p 'test_*.py'      # 157 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 
