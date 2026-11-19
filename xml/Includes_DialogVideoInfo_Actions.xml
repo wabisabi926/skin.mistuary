@@ -26,6 +26,12 @@
 			</control>
 		</definition>
 	</include>
+	<!-- 动作栏按上：直接打开完整简介，不用先移动到简介控件再点一次。 -->
+	<include name="VideoInfoOpenSynopsis">
+		<onup>SetProperty(TextViewer_Header,$LOCALIZE[207],home)</onup>
+		<onup>SetProperty(TextViewer_Text,$ESCVAR[VideoInfoPlotVar],home)</onup>
+		<onup>ActivateWindow(1102)</onup>
+	</include>
 	<!-- Action bar: the primary extension point for movie and television variants. -->
 	<include name="VideoInfoActionBar">
 		<control type="grouplist">
@@ -63,7 +69,7 @@
 						<focusedcolor>ink_primary</focusedcolor>
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft>5003</onleft>
@@ -94,7 +100,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft>5000</onleft>
@@ -142,7 +148,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft>5001</onleft>
@@ -189,7 +195,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft condition="String.IsEqual(ListItem.DBType,movie) + Integer.IsGreater(ListItem.DBID,0)">5006</onleft>
@@ -227,7 +233,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft condition="ListItem.HasVideoVersions">5004</onleft>
@@ -268,7 +274,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="String.IsEqual(ListItem.DBType,tvshow) + Integer.IsGreater(ListItem.DBID,0)">5100</ondown>
 						<ondown>50</ondown>
 						<onleft condition="!String.IsEmpty(ListItem.SetID)">5005</onleft>
@@ -321,7 +327,7 @@
 						<label />
 						<texturefocus />
 						<texturenofocus />
-						<onup>138</onup>
+						<include>VideoInfoOpenSynopsis</include>
 						<ondown condition="Skin.HasSetting(nara_cast_open)">50</ondown>
 						<ondown>5107</ondown>
 						<onleft>5003</onleft>

@@ -92,6 +92,20 @@ class BackgroundStyleTest(unittest.TestCase):
         self.assertIn("Control.HasFocus(9013)", block)
         self.assertIn("Container(6200).ListItem.Art(fanart)", block)
 
+    def test_scalediffuse_only_on_aspectratio(self):
+        """scalediffuse 是 <aspectratio> 的属性，写在 <texture> 上会被忽略。"""
+        for path in XML.glob("*.xml"):
+            root = ET.parse(path).getroot()
+            for texture in root.iter("texture"):
+                self.assertIsNone(
+                    texture.get("scalediffuse"),
+                    "%s: <texture> 不接受 scalediffuse" % path.name)
+            for aspect in root.iter("aspectratio"):
+                if aspect.get("scalediffuse") == "false":
+                    self.assertIn(
+                        (aspect.text or "").strip(), ("scale", "stretch"),
+                        "%s: 只有 scale/stretch 才写 scalediffuse=false" % path.name)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -458,9 +458,9 @@
 					<top>36</top>
 					<width>318</width>
 					<height>318</height>
-					<aspectratio>scale</aspectratio>
+					<aspectratio scalediffuse="false">scale</aspectratio>
 					<fadetime>200</fadetime>
-					<texture background="true" diffuse="shapes/mask_318x318_r12.png" scalediffuse="false">$VAR[NaraList50PreviewThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_318x318_r12.png">$VAR[NaraList50PreviewThumbVar]</texture>
 					<visible>String.IsEqual(Container(50).ListItem.DBType,song) | String.IsEqual(Container(50).ListItem.DBType,album) | String.IsEqual(Container(50).ListItem.DBType,artist)</visible>
 				</control>
 				<control type="textbox">
@@ -610,9 +610,9 @@
 						<top>80</top>
 						<width>470</width>
 						<height>470</height>
-						<aspectratio>scale</aspectratio>
+						<aspectratio scalediffuse="false">scale</aspectratio>
 						<fadetime>300</fadetime>
-						<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[NaraImgPlayerIconDefDefaultAudio]</texture>
+						<texture background="true" diffuse="shapes/mask_470x470_r12.png">$VAR[NaraImgPlayerIconDefDefaultAudio]</texture>
 					</control>
 					<control type="group">
 						<left>301</left>
@@ -769,9 +769,9 @@
 					<top>80</top>
 					<width>470</width>
 					<height>470</height>
-					<aspectratio>scale</aspectratio>
+					<aspectratio scalediffuse="false">scale</aspectratio>
 					<fadetime>300</fadetime>
-					<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_470x470_r12.png">$VAR[IconWallThumbVar]</texture>
 					<visible>!String.IsEqual(ListItem.DbType,episode) + !String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="image">
@@ -789,9 +789,9 @@
 					<top>80</top>
 					<width>470</width>
 					<height>470</height>
-					<aspectratio>scale</aspectratio>
+					<aspectratio scalediffuse="false">scale</aspectratio>
 					<fadetime>300</fadetime>
-					<texture background="true" diffuse="shapes/mask_470x470_r12.png" scalediffuse="false">$VAR[IconWallThumbVar]</texture>
+					<texture background="true" diffuse="shapes/mask_470x470_r12.png">$VAR[IconWallThumbVar]</texture>
 					<visible>String.IsEqual(ListItem.DBType,song)</visible>
 				</control>
 				<control type="group">

@@ -1203,6 +1203,16 @@
 									<aspectratio>keep</aspectratio>
 									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
 								</control>
+								<!-- 没有横版/剧照/缩略图时，先用自己的 Icon；Icon 也没有才露星标 -->
+								<control type="image">
+									<left>124</left>
+									<top>54</top>
+									<width>72</width>
+									<height>72</height>
+									<aspectratio>keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + [String.IsEmpty(ListItem.Art(thumb)) | String.Contains(ListItem.Art(thumb),noimage)] + !String.IsEmpty(ListItem.Icon)</visible>
+								</control>
 								<control type="image">
 									<width>320</width>
 									<height>180</height>
@@ -1275,6 +1285,16 @@
 									<height>72</height>
 									<aspectratio>keep</aspectratio>
 									<texture>$VAR[NaraImgListItemIconDefDefaultFavourites]</texture>
+								</control>
+								<!-- 没有横版/剧照/缩略图时，先用自己的 Icon；Icon 也没有才露星标 -->
+								<control type="image">
+									<left>124</left>
+									<top>54</top>
+									<width>72</width>
+									<height>72</height>
+									<aspectratio>keep</aspectratio>
+									<texture background="true">$INFO[ListItem.Icon]</texture>
+									<visible>String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(fanart)) + [String.IsEmpty(ListItem.Art(thumb)) | String.Contains(ListItem.Art(thumb),noimage)] + !String.IsEmpty(ListItem.Icon)</visible>
 								</control>
 								<control type="image">
 									<width>320</width>
