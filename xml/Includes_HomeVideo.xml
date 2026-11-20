@@ -87,7 +87,7 @@
 				<animation effect="slide" start="0,0" end="0,20" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoSingleRow]">Conditional</animation>
 				<control type="label">
 					<width>820</width>
-					<height>38</height>
+					<height>32</height>
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
@@ -96,7 +96,7 @@
 				</control>
 				<control type="label">
 					<width>820</width>
-					<height>38</height>
+					<height>32</height>
 					<font>font13</font>
 					<textcolor>text_secondary</textcolor>
 					<scroll>true</scroll>
@@ -104,7 +104,7 @@
 					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 				</control>
 				<control type="textbox">
-					<top>62</top>
+					<top>58</top>
 					<width>820</width>
 					<height>88</height>
 					<font>font12_large</font>
@@ -131,7 +131,7 @@
 				<control type="group">
 					<visible>!String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 					<include content="NaraOnlineRatingsRow">
-						<param name="top" value="174" />
+						<param name="top" value="170" />
 						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 						<param name="inline_flags" value="true" />
 						<param name="technical_visible" value="true" />
@@ -142,7 +142,7 @@
 				<control type="group">
 					<visible>String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
 					<include content="NaraOnlineRatingsRow">
-						<param name="top" value="174" />
+						<param name="top" value="170" />
 						<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 						<param name="inline_flags" value="true" />
 						<param name="technical_visible" value="Integer.IsGreater(Container($PARAM[episode_id]).NumItems,0)" />
