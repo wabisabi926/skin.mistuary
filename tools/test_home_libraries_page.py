@@ -145,37 +145,29 @@ class HomeLibrariesPageTest(unittest.TestCase):
 
     def test_local_libraries_fall_back_to_helper_sources(self):
         """媒体库来源三档互斥：自动按 E4K 启用状态，Emby/本地可强制指定。
-        helper 的 mode=libraries 不分电影/剧集，所以只在电影页列一次；
-        电视剧页保留 E4K 的 tag 行，本地档没有重复列表。
-        """
+        本地档两页都列，helper 按 MyVideos 入库类型分电影/剧集。"""
         home = self.home
-        self.assertIn(
-            'condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]"',
-            home,
-        )
-        self.assertIn(
-            'condition="Library.HasContent(movies) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]"',
-            home,
-        )
-        self.assertIn(
-            '<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=movies"/>',
-            home,
-        )
-        self.assertNotIn('type=tvshows"/>', home)
-        self.assertNotIn(
-            'System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]',
-            home.split('id="6000"', 1)[1],
-        )
-        self.assertIn('<param name="list_id" value="5700"/>', home)
+        for kind, list_id, media in (("movies", "5700", "movies"),
+                                     ("tvshows", "6600", "tvshows")):
+            with self.subTest(kind=kind):
+                self.assertIn(
+                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]"' % kind,
+                    home,
+                )
+                self.assertIn(
+                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]"' % kind,
+                    home,
+                )
+                self.assertIn(
+                    '<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=%s"/>' % media,
+                    home,
+                )
+                self.assertIn('<param name="list_id" value="%s"/>' % list_id, home)
 
         inc = read("Includes_HomeVideo.xml")
         self.assertEqual(
             inc.count('[System.AddonIsEnabled(plugin.service.emby-next-gen) | System.AddonIsEnabled(script.mistuary.helper)]'),
-            1,
-        )
-        self.assertIn(
-            '<expression name="NaraHomeTVShowLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]</expression>',
-            inc,
+            2,
         )
 
     def test_library_source_setting(self):

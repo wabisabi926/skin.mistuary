@@ -814,8 +814,24 @@
 										<param name="hero_id" value="6100"/>
 										<param name="update_hero" value="false"/>
 									</include>
-									<!-- 本地档不重复列：helper 的 mode=libraries 不区分电影/剧集，
-									     两个页面会得到同一份 sources 列表，所以只在电影页列一次。 -->
+									<!-- 本地档，或自动档且无 E4K：helper 按 MyVideos 的入库类型分电影/剧集，
+									     未设类型的源只在电影页兜底出现。 -->
+									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]">
+										<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=tvshows"/>
+										<param name="widget_header" value="$LOCALIZE[31616]"/>
+										<param name="widget_target" value="videos"/>
+										<param name="list_id" value="6600"/>
+										<param name="item_limit" value="30"/>
+										<param name="background_art_condition" value="false"/>
+										<param name="navigation" value="HomeVideoRowNavigation"/>
+										<param name="section" value="tvshows"/>
+										<param name="pages_id" value="6001"/>
+										<param name="onup" value="0"/>
+										<param name="ondown" value="0"/>
+										<param name="page" value="first"/>
+										<param name="hero_id" value="6100"/>
+										<param name="update_hero" value="false"/>
+									</include>
 								</control>
 							</include>
 						</include>

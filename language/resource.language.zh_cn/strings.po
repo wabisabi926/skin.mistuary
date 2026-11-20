@@ -1400,5 +1400,5 @@ msgid "Local Kodi"
 msgstr "本地 Kodi"
 
 msgctxt "#31854"
-msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are listed once, on the Movies page."
-msgstr "装了 E4K 选 Emby，纯本地刮削库选本地 Kodi；默认自动。本地档只在电影页列一次。"
+msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a type appear on the Movies page."
+msgstr "装了 E4K 选 Emby，纯本地刮削库选本地 Kodi；默认自动。本地档按 Kodi 入库类型分电影/剧集，未设类型的源归入电影页。"
