@@ -21,8 +21,8 @@ msgid "Now playing"
 msgstr "正在播放"
 
 msgctxt "#31002"
-msgid "Show media fanart as background"
-msgstr "显示媒体背景图为背景"
+msgid "Show media fanart"
+msgstr "显示媒体背景图"
 
 msgctxt "#31004"
 msgid "Change mode"
@@ -287,8 +287,8 @@ msgid "Enter text here..."
 msgstr "此处输入文本..."
 
 msgctxt "#31104"
-msgid "Your library is currently empty. In order to populate it with your personal media, enter \"Files\" section, add a media source and configure it. After the source has been added and indexed you will be able to browse your library."
-msgstr "你的资料库为空。要从你的媒体生成资料库，请进入“文件”区，添加媒体源并设置，当源被添加并索引后，你就能在资料库中浏览了。"
+msgid "Your media library is empty. Add a media source in Files, then scan it to browse your library."
+msgstr "媒体库为空。请在“文件”中添加媒体源并扫描，完成后即可在媒体库中浏览。"
 
 #. viewtype name
 
@@ -393,8 +393,8 @@ msgid "Numeric pad"
 msgstr "数字键盘"
 
 msgctxt "#31163"
-msgid "Show Fanart background"
-msgstr "显示背景图背景"
+msgid "Show fanart"
+msgstr "显示背景图"
 
 #. Label of a setting
 
@@ -449,7 +449,7 @@ msgstr "电视剧的默认打开方式"
 
 msgctxt "#31176"
 msgid "Default action for movie sets"
-msgstr "电影系列的默认打开方式"
+msgstr "电影集的默认打开方式"
 
 msgctxt "#31177"
 msgid "Radio is not available in this skin."
@@ -774,13 +774,13 @@ msgstr "范围"
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31685"
-msgid "Cover"
-msgstr "封面"
+msgid "Poster"
+msgstr "海报"
 
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31686"
-msgid "Row"
+msgid "Poster row"
 msgstr "海报行"
 
 #: /xml/Includes_MediaMenu.xml
@@ -808,7 +808,7 @@ msgstr "加入时间"
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31692"
-msgid "Wall"
+msgid "Poster wall"
 msgstr "海报墙"
 
 #: /xml/Home.xml
@@ -830,8 +830,8 @@ msgid "Favourites as landscape cards"
 msgstr "收藏夹横版卡片"
 
 msgctxt "#31698"
-msgid "Favourites as landscape"
-msgstr "收藏夹用横版卡片显示。关掉是竖版海报，和电影 / 电视剧一致"
+msgid "Favourites layout: landscape cards; off shows vertical posters, consistent with Movies/TV shows."
+msgstr "收藏夹用横版卡片显示；关掉是竖版海报，和电影/电视剧一致。"
 
 #: /xml/MusicVisualisation.xml
 
@@ -873,7 +873,7 @@ msgstr "收录影片"
 
 msgctxt "#31709"
 msgid "In progress"
-msgstr "观看中"
+msgstr "正在观看"
 
 #: /xml/Home.xml
 #: /xml/Includes_SettingsDialog.xml
@@ -992,8 +992,8 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "长剧情自动滚动，替代手动翻页。默认关闭。"
 
 msgctxt "#31737"
-msgid "Cover order: custom folder → Helper sync → fallback; file name must match library."
-msgstr "封面读取顺序：自定义目录 → Helper 同步 → 兜底图，文件名须同库名。"
+msgid "Cover order: custom folder → Mistuary Helper sync → fallback; file name must match library."
+msgstr "封面读取顺序：自定义目录 → Mistuary Helper 同步 → 兜底图，文件名须同库名。"
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
@@ -1012,8 +1012,8 @@ msgid "Follows the language setting; or fixes the original title, or the order o
 msgstr "默认跟随语言设置；也可固定原始标题，或调整原名/译名的先后顺序。"
 
 msgctxt "#31742"
-msgid "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
-msgstr "页面、设置中心/侧栏与卡片的不透明度；档位越高越不透明。默认平衡。"
+msgid "Opacity for pages, the settings page/sidebar and cards; higher is more opaque. Balanced by default."
+msgstr "页面、设置页/侧栏与卡片的不透明度；档位越高越不透明。默认平衡。"
 
 msgctxt "#31743"
 msgid "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
@@ -1021,7 +1021,7 @@ msgstr "播放 OSD 与播放控制条的不透明度；档位越高越不透明�
 
 msgctxt "#31744"
 msgid "Use item fanart as the page background; the default image is used when missing. On by default."
-msgstr "使用作品背景图；缺图时用默认背景。默认开启。"
+msgstr "使用媒体背景图；缺图时用默认背景。默认开启。"
 
 msgctxt "#31745"
 msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
@@ -1104,16 +1104,16 @@ msgid "Brand icons by default. Turn off to show plain text instead."
 msgstr "默认用品牌图标显示。图标看不清就关掉，改用文字。"
 
 msgctxt "#31759"
-msgid "Popup transparency"
-msgstr "弹窗透明度"
+msgid "Dialog transparency"
+msgstr "对话框透明度"
 
 msgctxt "#31760"
-msgid "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
-msgstr "弹窗透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
+msgid "Dialog transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "对话框透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
 
 msgctxt "#31761"
-msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
-msgstr "控制对话框、菜单、键盘与非播放时的设置弹窗。档位越高越不透明，默认“偏实”。"
+msgid "Controls dialogs, menus, the keyboard and settings dialogs outside playback. Higher levels are more opaque. Dense by default."
+msgstr "控制对话框、菜单、键盘与非播放时的设置对话框。档位越高越不透明，默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
@@ -1196,7 +1196,7 @@ msgid "Music OSD hide delay (seconds)"
 msgstr "音乐 OSD 隐藏延迟（秒）"
 
 msgctxt "#31795"
-msgid "Favorites cover folder"
+msgid "Favourites cover folder"
 msgstr "收藏夹封面目录"
 
 msgctxt "#31796"
@@ -1240,36 +1240,36 @@ msgid "Library rating"
 msgstr "媒体库评分"
 
 msgctxt "#31808"
-msgid "Douban rating"
-msgstr "详情页联网取豆瓣"
+msgid "Fetch Douban rating online"
+msgstr "联网获取豆瓣评分"
 
 msgctxt "#31809"
-msgid "Playlist: rest of season"
-msgstr "播放列表：按季补全"
+msgid "Rest of season"
+msgstr "按季补全"
 
 msgctxt "#31810"
-msgid "Playlist: rest of folder"
-msgstr "播放列表：按目录补全"
+msgid "Rest of folder"
+msgstr "按目录补全"
 
 msgctxt "#31811"
-msgid "Playlist: next season"
-msgstr "播放列表：跨季继续"
+msgid "Next season"
+msgstr "跨季继续"
 
 msgctxt "#31812"
 msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
 msgstr "详情页显示豆瓣评分且库里没有时联网补分；关闭后不请求。默认开启。"
 
 msgctxt "#31813"
-msgid "Queue the rest of the season when a library episode starts."
-msgstr "剧集起播时将本季其余集入队，不打断播放。"
+msgid "When a library episode starts, queue the rest of the season; playback is not interrupted."
+msgstr "剧集起播时，把本季其余剧集加入队列；不打断播放。"
 
 msgctxt "#31814"
-msgid "Queue the rest of the folder when playback starts from a folder."
-msgstr "文件夹起播时将同目录其余条目入队；默认开启。"
+msgid "When playback starts from a folder, queue the rest of the folder; playback is not interrupted."
+msgstr "从文件夹起播时，把同目录其余条目加入队列；不打断播放。"
 
 msgctxt "#31815"
-msgid "Queue the first episode of the next season after the last one starts."
-msgstr "末集起播时将下一季首集入队，需配合按季补全。"
+msgid "When the last episode of a season starts, queue the first episode of the next season; use with Rest of season."
+msgstr "本季最后一集起播时，把下一季第一集加入队列；需配合按季补全。"
 
 msgctxt "#31816"
 msgid "Power"
@@ -1292,12 +1292,12 @@ msgid "Sync library covers now"
 msgstr "立即同步媒体库封面"
 
 msgctxt "#31822"
-msgid "Remember playback position for videos opened from the file manager."
-msgstr "文件管理器中的视频记录播放进度，起播时提供继续播放。"
+msgid "Remember the playback position of file-manager videos and prompt to continue."
+msgstr "记录文件管理器中的视频进度，起播时提示继续播放。"
 
 msgctxt "#31823"
-msgid "Fetch library covers from Emby; file names must match library names."
-msgstr "从 Emby 拉取媒体库封面；文件名须与库名一致。"
+msgid "Sync library covers from Emby; file names must match library names."
+msgstr "从 Emby 同步媒体库封面到本地；文件名须与库名一致。"
 
 msgctxt "#31825"
 msgid "Background dimming"
@@ -1305,15 +1305,15 @@ msgstr "背景压暗"
 
 msgctxt "#31826"
 msgid "Lightest"
-msgstr "极透"
+msgstr "最轻"
 
 msgctxt "#31827"
 msgid "Light"
-msgstr "通透"
+msgstr "较轻"
 
 msgctxt "#31828"
 msgid "Balanced"
-msgstr "平衡"
+msgstr "适中"
 
 msgctxt "#31829"
 msgid "Original"
@@ -1321,7 +1321,7 @@ msgstr "原浓度"
 
 msgctxt "#31830"
 msgid "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
-msgstr "首页、详情页、媒体库、设置、文件管理、插件页与搜索页背景的压暗浓度。档位越低，剧照透出得越多；原浓度等于 2.2.0 的观感。"
+msgstr "首页、详情页、媒体库、设置、文件管理、插件页与搜索页背景的压暗浓度。档位越低，背景图透出得越多；原浓度等于 2.2.0 的观感。"
 
 msgctxt "#31835"
 msgid "No media library found. Add a local video library or install the Emby add-on and sync."
@@ -1329,7 +1329,7 @@ msgstr "还没有媒体库，请先添加本地视频库或安装 Emby 插件并
 
 msgctxt "#31836"
 msgid "Nothing is in progress yet. Start watching something."
-msgstr "还没有正在观看的内容，先播放一些影片吧"
+msgstr "还没有正在观看的内容，先播放一些视频吧"
 
 msgctxt "#31837"
 msgid "Home background rotation"
@@ -1337,7 +1337,7 @@ msgstr "首页背景轮播"
 
 msgctxt "#31838"
 msgid "When nothing on Home is focused, rotate through in-progress movie fanart every 5 seconds. Turn off to stay on the first item."
-msgstr "首页没有焦点时，背景每 5 秒在正在观看的电影剧照之间轮换；关闭后停在第一项。"
+msgstr "首页没有焦点时，背景每 5 秒在正在观看的电影背景图之间轮换；关闭后停在第一项。"
 
 msgctxt "#31839"
 msgid "Artwork glow strength"
@@ -1357,7 +1357,7 @@ msgstr "标准"
 
 msgctxt "#31843"
 msgid "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
-msgstr "剧照边缘的彩色光晕强度。标准为当前观感；柔和降低；关闭只保留剧照与压暗。"
+msgstr "背景图边缘的彩色光晕强度。标准为当前观感；柔和降低；关闭只保留背景图与压暗。"
 
 msgctxt "#31844"
 msgid "Similar titles"
@@ -1400,5 +1400,9 @@ msgid "Local Kodi"
 msgstr "本地 Kodi"
 
 msgctxt "#31854"
-msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a type appear on the Movies page."
-msgstr "装了 E4K 选 Emby，纯本地刮削库选本地 Kodi；默认自动。本地档按 Kodi 入库类型分电影/剧集，未设类型的源归入电影页。"
+msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a content type appear on the Movies page."
+msgstr "装了 E4K 选 Emby，纯本地媒体库选本地 Kodi；默认自动。本地档按 Kodi 入库类型分电影/电视剧，未设置内容类型的源归入电影页。"
+
+msgctxt "#31855"
+msgid "Description"
+msgstr "简介"

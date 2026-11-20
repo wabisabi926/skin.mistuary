@@ -273,7 +273,7 @@
 					<height>26</height>
 					<font>font12</font>
 					<textcolor>text_secondary</textcolor>
-					<label>简介</label>
+					<label>$LOCALIZE[31855]</label>
 					<visible>[String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.Comment) + !String.StartsWith(ListItem.Comment,EmbyLibraryId-)] | [String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.Property(Album_Description))] | [String.IsEqual(ListItem.DBType,artist) + !String.IsEmpty(ListItem.Property(Artist_Description))]</visible>
 				</control>
 				<control type="textbox">

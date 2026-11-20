@@ -25,8 +25,8 @@ msgstr ""
 #: /xml/SkinSettings.xml
 
 msgctxt "#31002"
-msgid "Show media fanart as background"
-msgstr ""
+msgid "Show media fanart"
+msgstr "Show media fanart"
 
 #: /xml/VideoOSD.xml
 
@@ -439,8 +439,8 @@ msgstr ""
 #: /xml/Home.xml
 
 msgctxt "#31104"
-msgid "Your library is currently empty. In order to populate it with your personal media, enter \"Files\" section, add a media source and configure it. After the source has been added and indexed you will be able to browse your library."
-msgstr ""
+msgid "Your media library is empty. Add a media source in Files, then scan it to browse your library."
+msgstr "Your media library is empty. Add a media source in Files, then scan it to browse your library."
 
 #: /xml/Variables.xml
 
@@ -596,8 +596,8 @@ msgstr ""
 #: /xml/Custom_1105_MusicOSDSettings.xml
 
 msgctxt "#31163"
-msgid "Show Fanart background"
-msgstr ""
+msgid "Show fanart"
+msgstr "Show fanart"
 
 #. Label of a setting
 #: /xml/SkinSettings.xml
@@ -995,14 +995,14 @@ msgstr ""
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31685"
-msgid "Cover"
-msgstr ""
+msgid "Poster"
+msgstr "Poster"
 
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31686"
-msgid "Row"
-msgstr ""
+msgid "Poster row"
+msgstr "Poster row"
 
 #: /xml/Includes_MediaMenu.xml
 
@@ -1029,8 +1029,8 @@ msgstr ""
 #: /xml/Includes_MediaMenu.xml
 
 msgctxt "#31692"
-msgid "Wall"
-msgstr ""
+msgid "Poster wall"
+msgstr "Poster wall"
 
 #: /xml/Home.xml
 
@@ -1051,8 +1051,8 @@ msgid "Favourites as landscape cards"
 msgstr "Favourites as landscape cards"
 
 msgctxt "#31698"
-msgid "Favourites as landscape"
-msgstr "Show favourites as 16:9 cards. Off keeps the portrait poster layout."
+msgid "Favourites layout: landscape cards; off shows vertical posters, consistent with Movies/TV shows."
+msgstr "Favourites layout: landscape cards; off shows vertical posters, consistent with Movies/TV shows."
 
 #: /xml/MusicVisualisation.xml
 
@@ -1213,8 +1213,8 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "Auto-scroll long plots instead of paging. Off by default."
 
 msgctxt "#31737"
-msgid "Cover order: custom folder → Helper sync → fallback; file name must match library."
-msgstr "Cover order: custom folder → Helper sync → fallback; file name must match library."
+msgid "Cover order: custom folder → Mistuary Helper sync → fallback; file name must match library."
+msgstr "Cover order: custom folder → Mistuary Helper sync → fallback; file name must match library."
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
@@ -1233,8 +1233,8 @@ msgid "Follows the language setting; or fixes the original title, or the order o
 msgstr "Follows the language setting; or fixes the original title, or the order of original/localised titles."
 
 msgctxt "#31742"
-msgid "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
-msgstr "Opacity for pages, the settings hub/sidebar and cards; higher is more opaque. Balanced by default."
+msgid "Opacity for pages, the settings page/sidebar and cards; higher is more opaque. Balanced by default."
+msgstr "Opacity for pages, the settings page/sidebar and cards; higher is more opaque. Balanced by default."
 
 msgctxt "#31743"
 msgid "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
@@ -1325,16 +1325,16 @@ msgid "Brand icons by default. Turn off to show plain text instead."
 msgstr "Brand icons by default. Turn off to show plain text instead."
 
 msgctxt "#31759"
-msgid "Popup transparency"
-msgstr "Popup transparency"
+msgid "Dialog transparency"
+msgstr "Dialog transparency"
 
 msgctxt "#31760"
-msgid "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
-msgstr "Popup transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgid "Dialog transparency — levels are tuned for the dark theme; the light theme looks lighter."
+msgstr "Dialog transparency — levels are tuned for the dark theme; the light theme looks lighter."
 
 msgctxt "#31761"
-msgid "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
-msgstr "Controls dialogs, menus, the keyboard and settings popups outside playback. Higher levels are more opaque. Dense by default."
+msgid "Controls dialogs, menus, the keyboard and settings dialogs outside playback. Higher levels are more opaque. Dense by default."
+msgstr "Controls dialogs, menus, the keyboard and settings dialogs outside playback. Higher levels are more opaque. Dense by default."
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
@@ -1417,8 +1417,8 @@ msgid "Music OSD hide delay (seconds)"
 msgstr "Music OSD hide delay (seconds)"
 
 msgctxt "#31795"
-msgid "Favorites cover folder"
-msgstr "Favorites cover folder"
+msgid "Favourites cover folder"
+msgstr "Favourites cover folder"
 
 msgctxt "#31796"
 msgid "Not set"
@@ -1461,36 +1461,36 @@ msgid "Library rating"
 msgstr "Library rating"
 
 msgctxt "#31808"
-msgid "Douban rating"
-msgstr "Fetch Douban on the info page"
+msgid "Fetch Douban rating online"
+msgstr "Fetch Douban rating online"
 
 msgctxt "#31809"
-msgid "Playlist: rest of season"
-msgstr "Playlist: rest of season"
+msgid "Rest of season"
+msgstr "Rest of season"
 
 msgctxt "#31810"
-msgid "Playlist: rest of folder"
-msgstr "Playlist: rest of folder"
+msgid "Rest of folder"
+msgstr "Rest of folder"
 
 msgctxt "#31811"
-msgid "Playlist: next season"
-msgstr "Playlist: next season"
+msgid "Next season"
+msgstr "Next season"
 
 msgctxt "#31812"
 msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
 msgstr "Fetch the Douban rating online on the info page when the library has none. On by default."
 
 msgctxt "#31813"
-msgid "Queue the rest of the season when a library episode starts."
-msgstr "Queue the rest of the season when a library episode starts."
+msgid "When a library episode starts, queue the rest of the season; playback is not interrupted."
+msgstr "When a library episode starts, queue the rest of the season; playback is not interrupted."
 
 msgctxt "#31814"
-msgid "Queue the rest of the folder when playback starts from a folder."
-msgstr "Queue the rest of the folder when playback starts from a folder. On by default."
+msgid "When playback starts from a folder, queue the rest of the folder; playback is not interrupted."
+msgstr "When playback starts from a folder, queue the rest of the folder; playback is not interrupted."
 
 msgctxt "#31815"
-msgid "Queue the first episode of the next season after the last one starts."
-msgstr "Queue the first episode of the next season after the last one starts."
+msgid "When the last episode of a season starts, queue the first episode of the next season; use with Rest of season."
+msgstr "When the last episode of a season starts, queue the first episode of the next season; use with Rest of season."
 
 msgctxt "#31816"
 msgid "Power"
@@ -1513,12 +1513,12 @@ msgid "Sync library covers now"
 msgstr "Sync library covers now"
 
 msgctxt "#31822"
-msgid "Remember playback position for videos opened from the file manager."
-msgstr "Remember playback position for videos opened from the file manager."
+msgid "Remember the playback position of file-manager videos and prompt to continue."
+msgstr "Remember the playback position of file-manager videos and prompt to continue."
 
 msgctxt "#31823"
-msgid "Fetch library covers from Emby; file names must match library names."
-msgstr "Fetch library covers from Emby; file names must match library names."
+msgid "Sync library covers from Emby; file names must match library names."
+msgstr "Sync library covers from Emby; file names must match library names."
 
 msgctxt "#31825"
 msgid "Background dimming"
@@ -1621,5 +1621,9 @@ msgid "Local Kodi"
 msgstr "Local Kodi"
 
 msgctxt "#31854"
-msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a type appear on the Movies page."
-msgstr "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a type appear on the Movies page."
+msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a content type appear on the Movies page."
+msgstr "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a content type appear on the Movies page."
+
+msgctxt "#31855"
+msgid "Description"
+msgstr "Description"
