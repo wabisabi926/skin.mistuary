@@ -585,7 +585,7 @@
 							<param name="always_first_row" value="true"/>
 							<param name="visible" value="[Integer.IsGreater(Container(5500).NumItems,0) | Container(5500).IsUpdating] | [System.AddonIsEnabled(plugin.service.emby-next-gen) + [[Integer.IsGreater(Container(5900).NumItems,0) | Container(5900).IsUpdating]]]"/>
 							<include content="HomeVideoPageContent">
-								<param name="top" value="368"/>
+								<param name="top" value="570"/>
 								<param name="active" value="String.IsEqual(Window(home).Property(Home.movies.Page),tail)"/>
 								<control type="grouplist" id="5005">
 									<include>HomeVideoTailListCommon</include>
@@ -600,7 +600,6 @@
 											<param name="widget_target" value="videos"/>
 											<param name="list_id" value="5500"/>
 											<param name="icon" value="$VAR[WidgetGenreIconVar]"/>
-											<param name="icon_height" value="50"/>
 											<param name="navigation" value="HomeVideoRowNavigation"/>
 											<param name="section" value="movies"/>
 											<param name="pages_id" value="5001"/>
@@ -609,10 +608,25 @@
 											<param name="page" value="tail"/>
 											<param name="header_left" value="80"/>
 											<param name="header_top" value="0"/>
-											<param name="header_height" value="44"/>
-											<param name="panel_top" value="48"/>
-											<param name="panel_height" value="200"/>
-											<param name="item_height" value="200"/>
+											<param name="header_height" value="30"/>
+											<param name="panel_top" value="70"/>
+											<param name="panel_height" value="116"/>
+											<param name="item_height" value="130"/>
+											<param name="item_width" value="262"/>
+											<param name="card_width" value="200"/>
+											<param name="card_height" value="116"/>
+											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
+											<param name="icon_width" value="145"/>
+											<param name="icon_left" value="42"/>
+											<param name="icon_height" value="77"/>
+											<param name="icon_centertop" value="40"/>
+											<param name="item_top" value="0"/>
+											<param name="label_left" value="28"/>
+											<param name="label_width" value="174"/>
+											<param name="label_font" value="font22"/>
+											<param name="label_top" value="66"/>
+											<param name="label_height" value="42"/>
+											<param name="label_top_alt" value="98"/>
 										</include>
 									</include>
 									<include content="HomeVideoTailRow">
@@ -633,10 +647,25 @@
 											<param name="page" value="tail"/>
 											<param name="header_left" value="80"/>
 											<param name="header_top" value="0"/>
-											<param name="header_height" value="44"/>
-											<param name="panel_top" value="48"/>
-											<param name="panel_height" value="200"/>
-											<param name="item_height" value="200"/>
+											<param name="header_height" value="30"/>
+											<param name="panel_top" value="70"/>
+											<param name="panel_height" value="116"/>
+											<param name="item_height" value="130"/>
+											<param name="item_width" value="262"/>
+											<param name="card_width" value="200"/>
+											<param name="card_height" value="116"/>
+											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
+											<param name="icon_width" value="145"/>
+											<param name="icon_left" value="42"/>
+											<param name="icon_height" value="77"/>
+											<param name="icon_centertop" value="40"/>
+											<param name="item_top" value="0"/>
+											<param name="label_left" value="28"/>
+											<param name="label_width" value="174"/>
+											<param name="label_font" value="font22"/>
+											<param name="label_top" value="66"/>
+											<param name="label_height" value="42"/>
+											<param name="label_top_alt" value="98"/>
 										</include>
 									</include>
 								</control>
@@ -920,7 +949,7 @@
 							<param name="always_first_row" value="true"/>
 							<param name="visible" value="[Integer.IsGreater(Container(6400).NumItems,0) | Container(6400).IsUpdating] | [System.AddonIsEnabled(plugin.service.emby-next-gen) + [[Integer.IsGreater(Container(6900).NumItems,0) | Container(6900).IsUpdating]]]"/>
 							<include content="HomeVideoPageContent">
-								<param name="top" value="368"/>
+								<param name="top" value="570"/>
 								<param name="active" value="String.IsEqual(Window(home).Property(Home.tvshows.Page),tail)"/>
 								<control type="grouplist" id="6005">
 									<include>HomeVideoTailListCommon</include>
@@ -935,7 +964,6 @@
 											<param name="widget_target" value="videos"/>
 											<param name="list_id" value="6400"/>
 											<param name="icon" value="$VAR[WidgetGenreIconVar]"/>
-											<param name="icon_height" value="50"/>
 											<param name="navigation" value="HomeVideoRowNavigation"/>
 											<param name="section" value="tvshows"/>
 											<param name="pages_id" value="6001"/>
@@ -944,10 +972,25 @@
 											<param name="page" value="tail"/>
 											<param name="header_left" value="80"/>
 											<param name="header_top" value="0"/>
-											<param name="header_height" value="44"/>
-											<param name="panel_top" value="48"/>
-											<param name="panel_height" value="200"/>
-											<param name="item_height" value="200"/>
+											<param name="header_height" value="30"/>
+											<param name="panel_top" value="70"/>
+											<param name="panel_height" value="116"/>
+											<param name="item_height" value="130"/>
+											<param name="item_width" value="262"/>
+											<param name="card_width" value="200"/>
+											<param name="card_height" value="116"/>
+											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
+											<param name="icon_width" value="145"/>
+											<param name="icon_left" value="42"/>
+											<param name="icon_height" value="77"/>
+											<param name="icon_centertop" value="40"/>
+											<param name="item_top" value="0"/>
+											<param name="label_left" value="28"/>
+											<param name="label_width" value="174"/>
+											<param name="label_font" value="font22"/>
+											<param name="label_top" value="66"/>
+											<param name="label_height" value="42"/>
+											<param name="label_top_alt" value="98"/>
 										</include>
 									</include>
 									<include content="HomeVideoTailRow">
@@ -968,10 +1011,25 @@
 											<param name="page" value="tail"/>
 											<param name="header_left" value="80"/>
 											<param name="header_top" value="0"/>
-											<param name="header_height" value="44"/>
-											<param name="panel_top" value="48"/>
-											<param name="panel_height" value="200"/>
-											<param name="item_height" value="200"/>
+											<param name="header_height" value="30"/>
+											<param name="panel_top" value="70"/>
+											<param name="panel_height" value="116"/>
+											<param name="item_height" value="130"/>
+											<param name="item_width" value="262"/>
+											<param name="card_width" value="200"/>
+											<param name="card_height" value="116"/>
+											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
+											<param name="icon_width" value="145"/>
+											<param name="icon_left" value="42"/>
+											<param name="icon_height" value="77"/>
+											<param name="icon_centertop" value="40"/>
+											<param name="item_top" value="0"/>
+											<param name="label_left" value="28"/>
+											<param name="label_width" value="174"/>
+											<param name="label_font" value="font22"/>
+											<param name="label_top" value="66"/>
+											<param name="label_height" value="42"/>
+											<param name="label_top_alt" value="98"/>
 										</include>
 									</include>
 								</control>

@@ -106,6 +106,42 @@ class HomeLibrariesPageTest(unittest.TestCase):
         music = music.split('<pagecontrol>7010</pagecontrol>', 1)[0]
         self.assertIn('<itemgap>28</itemgap>', music)
 
+    def test_video_tail_categories_match_music_spec(self):
+        """电影/电视剧页 tail 类型/类别行：卡片/图标/文字规格与音乐页 7900 完全一致。
+        音乐页已实机验过：card 200×116、icon 145×77 @left42/centertop40、
+        label 28/174/font22 @top66/h42。影视页仅 panel_top 保留 70（外层固定行高，
+        与音乐页 grouplist 的 38px 布局偏移不同，照搬 6 会盖住标题）。
+        """
+        home = self.home
+        # 下列规格音乐页(1处) + 影视页(4处) = 5；panel_top 仅影视页 4（音乐页是 6）
+        for token, n in (
+                ('<param name="panel_top" value="70"/>', 4),
+                ('<param name="panel_height" value="116"/>', 4),  # 影视页4（音乐页是130）
+                ('<param name="card_height" value="116"/>', 5),
+                ('<param name="card_mask" value="shapes/mask_200x116_r9.png"/>', 5),
+                ('<param name="icon_width" value="145"/>', 5),
+                ('<param name="icon_height" value="77"/>', 5),
+                ('<param name="icon_left" value="42"/>', 5),
+                ('<param name="label_left" value="28"/>', 5),
+                ('<param name="label_top" value="66"/>', 5),
+                ('<param name="icon_centertop" value="40"/>', 5),
+                ('<param name="top" value="570"/>', 2)):
+            self.assertEqual(home.count(token), n, token)
+
+    def test_video_tail_genres_icons_wide_landscape(self):
+        """影视页类型行图标改用横版（白色图案横向铺满 145×77 框），与音乐页视觉一致。
+        原 genres/*.png 是 256×256 方图，keep 进 145×77 只显示 77×77（显小）；
+        新 genres_wide/*.png 为 290×154（=145×77 的 2 倍超采样），图案已去透明边横向铺开。
+        """
+        variables = self.variables
+        self.assertEqual(variables.count('genres_wide/'), 27)
+        self.assertNotIn('>genres/', variables.split('<variable name="WidgetGenreIconVar">', 1)[1]
+                         .split('</variable>', 1)[0])
+        # 上移：行高 200→186、itemgap 20→4（吃掉卡片下方空白 + 收紧两行间隙）
+        inc = read("Includes_HomeVideo.xml")
+        self.assertIn('<height>186</height>', inc)
+        self.assertIn('<itemgap>4</itemgap>', inc)
+
     def test_hidden_rail_does_not_leave_trailing_spacer(self):
         self.assertIn(
             '$PARAM[rail_visible] + $PARAM[media_row_visible]', self.includes)

@@ -213,13 +213,13 @@
 		<orientation>vertical</orientation>
 		<height min="540" max="540">auto</height>
 		<scrolltime tween="cubic" easing="out">300</scrolltime>
-		<itemgap>20</itemgap>
+		<itemgap>4</itemgap>
 	</include>
 	<include name="HomeVideoTailRow">
 		<param name="visible">true</param>
 		<definition>
 			<control type="group" id="$PARAM[id]">
-				<height>260</height>
+				<height>186</height>
 				<visible>[$PARAM[visible]] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
 				<nested />
 			</control>
