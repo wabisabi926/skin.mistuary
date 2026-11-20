@@ -74,7 +74,8 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
 
     def test_reset_only_options_are_declared(self):
         """恢复默认选项必须留在白名单里，否则会一直被报成有写无读。"""
-        self.assertEqual(RESET_ONLY_SETTINGS, {"circle_none", "OriginalTitleFormat_Default"})
+        self.assertEqual(RESET_ONLY_SETTINGS,
+                         {"circle_none", "OriginalTitleFormat_Default", "nara_libsrc_auto"})
 
     def test_default_only_options_are_declared(self):
         """默认档位没有显式读取，必须留在 DEFAULT_ONLY 白名单里。"""

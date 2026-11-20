@@ -390,13 +390,31 @@
 										<param name="update_hero" value="false"/>
 									</include>
 									<!-- 2026-11-18：首页改为跨类型续播，库墙回到电影页正常显示。 -->
-									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
+									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]">
 										<param name="content_path" value="videodb://movies/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="5700"/>
 										<param name="item_limit" value="30"/>
 										<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
+										<param name="navigation" value="HomeVideoRowNavigation"/>
+										<param name="section" value="movies"/>
+										<param name="pages_id" value="5001"/>
+										<param name="onup" value="0"/>
+										<param name="ondown" value="0"/>
+										<param name="page" value="first"/>
+										<param name="hero_id" value="5100"/>
+										<param name="update_hero" value="false"/>
+									</include>
+									<!-- 本地档，或自动档且无 E4K：helper 把 sources.xml 的 video source 列成媒体库。
+									     与上面的 E4K include 互斥，避免同 id 容器重复。 -->
+									<include content="HomeMediaLibraryRail" condition="Library.HasContent(movies) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]">
+										<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=movies"/>
+										<param name="widget_header" value="$LOCALIZE[31616]"/>
+										<param name="widget_target" value="videos"/>
+										<param name="list_id" value="5700"/>
+										<param name="item_limit" value="30"/>
+										<param name="background_art_condition" value="false"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
 										<param name="section" value="movies"/>
 										<param name="pages_id" value="5001"/>
@@ -780,13 +798,30 @@
 										<param name="update_hero" value="false"/>
 									</include>
 									<!-- 2026-11-18：首页改为跨类型续播，库墙回到电视剧页正常显示。 -->
-									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen)">
+									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]">
 										<param name="content_path" value="videodb://tvshows/tags/"/>
 										<param name="widget_header" value="$LOCALIZE[31616]"/>
 										<param name="widget_target" value="videos"/>
 										<param name="list_id" value="6600"/>
 										<param name="item_limit" value="30"/>
 										<param name="background_art_condition" value="ListItem.Property(emby.library.art)"/>
+										<param name="navigation" value="HomeVideoRowNavigation"/>
+										<param name="section" value="tvshows"/>
+										<param name="pages_id" value="6001"/>
+										<param name="onup" value="0"/>
+										<param name="ondown" value="0"/>
+										<param name="page" value="first"/>
+										<param name="hero_id" value="6100"/>
+										<param name="update_hero" value="false"/>
+									</include>
+									<!-- 本地档，或自动档且无 E4K：helper 把 sources.xml 的 video source 列成媒体库。 -->
+									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]">
+										<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=tvshows"/>
+										<param name="widget_header" value="$LOCALIZE[31616]"/>
+										<param name="widget_target" value="videos"/>
+										<param name="list_id" value="6600"/>
+										<param name="item_limit" value="30"/>
+										<param name="background_art_condition" value="false"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
 										<param name="section" value="tvshows"/>
 										<param name="pages_id" value="6001"/>

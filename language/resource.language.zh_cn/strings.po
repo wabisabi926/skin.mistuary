@@ -992,8 +992,8 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "长剧情自动滚动，替代手动翻页。默认关闭。"
 
 msgctxt "#31737"
-msgid "Library cover order: custom folder → Mistuary Helper sync → default artwork. File names must match library names."
-msgstr "媒体库封面读取顺序：自定义目录 → Mistuary Helper 同步 → 兜底图。文件名须与媒体库同名。"
+msgid "Cover order: custom folder → Helper sync → fallback; file name must match library."
+msgstr "封面读取顺序：自定义目录 → Helper 同步 → 兜底图，文件名须同库名。"
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
@@ -1382,3 +1382,23 @@ msgstr "没有可用的版本"
 msgctxt "#31849"
 msgid "Emby is connected, but the library is still empty. Sync your library first."
 msgstr "Emby 已连接，但媒体库还没有内容，请先同步媒体库"
+
+msgctxt "#31850"
+msgid "Media library source"
+msgstr "媒体库来源"
+
+msgctxt "#31851"
+msgid "Auto"
+msgstr "自动"
+
+msgctxt "#31852"
+msgid "Emby (E4K)"
+msgstr "Emby（E4K）"
+
+msgctxt "#31853"
+msgid "Local Kodi"
+msgstr "本地 Kodi"
+
+msgctxt "#31854"
+msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto."
+msgstr "装了 E4K 选 Emby，纯本地刮削库选本地 Kodi；默认自动。"

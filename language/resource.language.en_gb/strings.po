@@ -1213,8 +1213,8 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "Auto-scroll long plots instead of paging. Off by default."
 
 msgctxt "#31737"
-msgid "Library cover order: custom folder → Mistuary Helper sync → default artwork. File names must match library names."
-msgstr "Library cover order: custom folder → Mistuary Helper sync → default artwork. File names must match library names."
+msgid "Cover order: custom folder → Helper sync → fallback; file name must match library."
+msgstr "Cover order: custom folder → Helper sync → fallback; file name must match library."
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
@@ -1603,3 +1603,23 @@ msgstr "No versions available"
 msgctxt "#31849"
 msgid "Emby is connected, but the library is still empty. Sync your library first."
 msgstr "Emby is connected, but the library is still empty. Sync your library first."
+
+msgctxt "#31850"
+msgid "Media library source"
+msgstr "Media library source"
+
+msgctxt "#31851"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "#31852"
+msgid "Emby (E4K)"
+msgstr "Emby (E4K)"
+
+msgctxt "#31853"
+msgid "Local Kodi"
+msgstr "Local Kodi"
+
+msgctxt "#31854"
+msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto."
+msgstr "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto."

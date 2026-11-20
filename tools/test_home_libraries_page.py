@@ -142,6 +142,67 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertIn('<height>186</height>', inc)
         self.assertIn('<itemgap>4</itemgap>', inc)
 
+    def test_local_libraries_fall_back_to_helper_sources(self):
+        """媒体库来源三档互斥：自动按 E4K 启用状态，Emby/本地可强制指定。"""
+        home = self.home
+        for kind, list_id, media in (("movies", "5700", "movies"),
+                                     ("tvshows", "6600", "tvshows")):
+            with self.subTest(kind=kind):
+                self.assertIn(
+                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]"' % kind,
+                    home,
+                )
+                self.assertIn(
+                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]"' % kind,
+                    home,
+                )
+                self.assertIn(
+                    '<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=%s"/>' % media,
+                    home,
+                )
+                self.assertIn('<param name="list_id" value="%s"/>' % list_id, home)
+
+        inc = read("Includes_HomeVideo.xml")
+        self.assertEqual(
+            inc.count('[System.AddonIsEnabled(plugin.service.emby-next-gen) | System.AddonIsEnabled(script.mistuary.helper)]'),
+            2,
+        )
+
+    def test_library_source_setting(self):
+        settings = read("SkinSettings.xml")
+        media_group = settings.split('<control type="grouplist" id="610">', 1)[1]
+        media_group = media_group.split('<control type="grouplist" id="622">', 1)[0]
+        self.assertIn('<control type="button" id="628">', media_group)
+        # 媒体库三项必须置顶，且内部顺序固定：来源 → 封面目录 → 同步封面
+        self.assertLess(media_group.index('<control type="button" id="628">'),
+                        media_group.index('<control type="button" id="710">'))
+        self.assertLess(media_group.index('<control type="button" id="710">'),
+                        media_group.index('<control type="button" id="725">'))
+        self.assertLess(media_group.index('<control type="button" id="725">'),
+                        media_group.index('<control type="button" id="707">'))
+        home_group = settings.split('<control type="grouplist" id="700">', 1)[1]
+        home_group = home_group.split('<control type="grouplist" id="600">', 1)[0]
+        self.assertNotIn('id="628"', home_group)
+        self.assertIn(
+            '<onclick>Skin.SelectBool(31850, 31851|nara_libsrc_auto, 31852|nara_libsrc_emby, 31853|nara_libsrc_local)</onclick>',
+            settings,
+        )
+        self.assertIn('<onclick>ReloadSkin()</onclick>', settings)
+        source_var = self.variables.split('<variable name="NaraHomeLibrarySourceLabelVar">', 1)[1]
+        source_var = source_var.split('</variable>', 1)[0]
+        self.assertIn('Skin.HasSetting(nara_libsrc_local)', source_var)
+        self.assertIn('Skin.HasSetting(nara_libsrc_emby)', source_var)
+        self.assertIn('<value>$LOCALIZE[31851]</value>', source_var)
+        help_var = self.variables.split('<variable name="SkinSettingsHelpTextVar">', 1)[1]
+        help_var = help_var.split('</variable>', 1)[0]
+        self.assertIn(
+            '<value condition="Control.HasFocus(628)">$LOCALIZE[31854]</value>',
+            help_var,
+        )
+        first_category = help_var.find('<value condition="Container(9000).HasFocus(')
+        self.assertGreater(first_category, -1)
+        self.assertLess(help_var.find('Control.HasFocus(628)'), first_category)
+
     def test_hidden_rail_does_not_leave_trailing_spacer(self):
         self.assertIn(
             '$PARAM[rail_visible] + $PARAM[media_row_visible]', self.includes)

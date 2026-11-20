@@ -4,8 +4,8 @@
 		<value condition="String.IsEmpty(ListItem.Art(poster))">focus_card_surface</value>
 		<value>focus_media</value>
 	</variable>
-	<expression name="NaraHomeMovieLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(5700).NumItems,0) | Container(5700).IsUpdating]</expression>
-	<expression name="NaraHomeTVShowLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]</expression>
+	<expression name="NaraHomeMovieLibrariesVisible">[System.AddonIsEnabled(plugin.service.emby-next-gen) | System.AddonIsEnabled(script.mistuary.helper)] + [Integer.IsGreater(Container(5700).NumItems,0) | Container(5700).IsUpdating]</expression>
+	<expression name="NaraHomeTVShowLibrariesVisible">[System.AddonIsEnabled(plugin.service.emby-next-gen) | System.AddonIsEnabled(script.mistuary.helper)] + [Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]</expression>
 	<expression name="NaraHomeVideoSingleRow">[String.IsEqual(Window(home).Property(Home.Section),movies) + [String.IsEmpty(Window(home).Property(Home.movies.Page)) | String.IsEqual(Window(home).Property(Home.movies.Page),first)] + !$EXP[NaraHomeMovieLibrariesVisible]] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + [String.IsEmpty(Window(home).Property(Home.tvshows.Page)) | String.IsEqual(Window(home).Property(Home.tvshows.Page),first)] + !$EXP[NaraHomeTVShowLibrariesVisible]]</expression>
 	<expression name="NaraHomeVideoExpanded">$EXP[NaraHomeVideoSingleRow] | [String.IsEqual(Window(home).Property(Home.Section),movies) + String.IsEqual(Window(home).Property(Home.movies.Page),poster)] | [String.IsEqual(Window(home).Property(Home.Section),tvshows) + String.IsEqual(Window(home).Property(Home.tvshows.Page),poster)]</expression>
 	<include name="HomeVideoPage">

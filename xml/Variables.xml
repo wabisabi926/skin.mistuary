@@ -201,6 +201,13 @@
 		<value condition="Skin.HasSetting(rating_src_auto)">$LOCALIZE[31767]</value>
 		<value>TMDb</value>
 	</variable>
+	<!-- 媒体库来源三档的当前值。自动档没有独立 setting（SelectBool 的恢复默认档），
+	     由「emby/local 都没设」表示，所以兜底 value 必须是自动。 -->
+	<variable name="NaraHomeLibrarySourceLabelVar">
+		<value condition="Skin.HasSetting(nara_libsrc_local)">$LOCALIZE[31853]</value>
+		<value condition="Skin.HasSetting(nara_libsrc_emby)">$LOCALIZE[31852]</value>
+		<value>$LOCALIZE[31851]</value>
+	</variable>
 	<!-- 主评分环的颜色：手选档位优先；自动档按“默认值等于哪个类型”判断（本地电影是 themoviedb），
 	     都判不出来用白色。 -->
 	<variable name="NaraRatingRingColorVar">
@@ -341,6 +348,7 @@
 	     变量自上而下取第一条成立的 value，分类条件会一直成立，放前面就轮不到行级了。
 	     行级覆盖 40 个设置行；其余页仍回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
+		<value condition="Control.HasFocus(628)">$LOCALIZE[31854]</value>
 		<value condition="Control.HasFocus(719)">$LOCALIZE[31799]</value>
 		<value condition="Control.HasFocus(702)">$LOCALIZE[31736]</value>
 		<value condition="Control.HasFocus(716)">$LOCALIZE[31698]</value>

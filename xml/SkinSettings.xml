@@ -264,6 +264,33 @@
 				<height>708</height>
 			</control>
 			<control type="grouplist" id="610">
+				<control type="button" id="628">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31850]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SelectBool(31850, 31851|nara_libsrc_auto, 31852|nara_libsrc_emby, 31853|nara_libsrc_local)</onclick>
+					<onclick>ReloadSkin()</onclick>
+					<label2>$VAR[NaraHomeLibrarySourceLabelVar]</label2>
+				</control>
+				<control type="button" id="710">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31719]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetPath(library_art_folder)</onclick>
+					<label2>$VAR[LibraryArtFolderLabel]</label2>
+				</control>
+				<control type="button" id="725">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31821]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>RunScript(script.mistuary.helper,action=library_icons_sync)</onclick>
+				</control>
 <control type="button" id="707">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31733]</label>
@@ -344,23 +371,6 @@
 				<pagecontrol>60</pagecontrol>
 				<ondown>610</ondown>
 				<visible>Container(9000).HasFocus(2)</visible>
-				<control type="button" id="710">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31719]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>Skin.SetPath(library_art_folder)</onclick>
-					<label2>$VAR[LibraryArtFolderLabel]</label2>
-				</control>
-				<control type="button" id="725">
-					<textcolor>text_primary</textcolor>
-					<label>$LOCALIZE[31821]</label>
-					<include content="NaraSettingsRow">
-					<param name="text" value="text_primary" />
-				</include>
-					<onclick>RunScript(script.mistuary.helper,action=library_icons_sync)</onclick>
-				</control>
 				<!-- helper 转必需后并入「媒体」页：服务端搜索 / 豆瓣评分 / 高级设置 -->
 				<control type="radiobutton" id="714">
 					<textcolor>text_primary</textcolor>
