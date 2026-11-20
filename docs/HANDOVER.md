@@ -2,7 +2,9 @@
 
 > ⚠️ **当前交接快照看 [`docs/handover-2026-11-20.md`](handover-2026-11-20.md)** ——
 > 2026-11-20 在 2.4.0 基础上做视觉修整：Hero 评分行→简介间距统一 56px（已推送 `3ff6e21`）、
-> 电影/电视剧页「类型/类别」行修复 Hero 重叠并缩卡留白（未递交）。
+> 电影/电视剧页「类型/类别」行修复 Hero 重叠并缩卡留白、本地 Kodi 媒体库来源三档
+> （已递交 `84e329e` / `d8db9cd`，**未推送**）；第二轮把本地档收敛成电影页单行、
+> 类别卡居中 +5px、续播弹窗加「询问方式」并修正超时语义。
 > 另含轮播/闪描边/剧集多版本等「已判定不做」的结论与真机踩坑，**接手先读它**。
 > 上一份：[`docs/handover-2026-11-19.md`](handover-2026-11-19.md)（2.4.0 发版快照）。
 > 本文是长期文档，讲依赖、工具链与发版，现状以 `addon.xml` / `git status` 为准。
@@ -1132,6 +1134,9 @@ Home 上 zoom 到 150%（133% / 120%），乘完正好 1920×1080，**稳态等�
   文案「从 01:07 继续播放」/「从头播放」；时间补两位分钟（超过 1 小时仍 `1:23:45`）。
   `<onload>SetFocus(10)</onload>` 保证默认焦点在「继续播放」。
   返回/点空白 = 取消：停止播放并保留记录；从头播放 = 删除该文件记录并 seek 到 0。无 vendor 图标、无圆环预览。
+  **超时（180 秒无操作）按「继续播放」处理**，不再当成取消停播（2026-11-20 修）。
+  报告里把 1115 说成「设置中心 / `Custom_1115_SettingsHub.xml`」是误判：
+  该窗口在 `89127c2` 已删，1115 自 `49cc54c` 起专属于本续播弹窗。
   `FileResumeDialogButton` 里的 `<label>$PARAM[label]</label>` 不能省，否则按钮只剩空底板（2026-11-04 实机）。
   原通用 `DialogSelect`（1220×750）不再用于这里。
   播放开始后 helper 先暂停、再弹窗；选完才 seek / 恢复 / 停止。
@@ -1139,6 +1144,11 @@ Home 上 zoom 到 150%（133% / 120%），乘完正好 1920×1080，**稳态等�
   遮蔽与档位走 `NaraGlassFloatScrimVar` / `NaraGlassFloatTintVar`（浮窗档，合成 83.5%），
   因为这是必须做选择的模态窗，不是边看边调的 OSD。要与 OSD 完全一致时改用
   `NaraSettingsDialogTintVar` / `NaraSettingsDialogScrimVar`（播放中档 61.5%）。
+- **续播询问方式**（helper 设置 `file_resume_prompt`，2026-11-20 加）：
+  `ask`（默认，弹 1115）/ `continue`（不弹窗，直接 seek 到断点）/ `off`（不弹窗也不跳转，从头播）。
+  未知/空值一律按 `ask`。判断只看「有没有记录 + 起播 180 秒阈值 + 末尾 8%」，
+  与 advancedsettings 的 `ignoresecondsatstart` / `ignorepercentatend` 一致；
+  用户把 `ignoresecondsatstart` 设成 0 时看 10 秒就会入库，下次播放必然询问——这是配置行为，不是弹窗故障。
 - **10003 焦点行圆环**：helper 仅在 `Window.IsActive(10003)` 时每 0.1 秒读当前焦点项（只查内存字典），把 `Mistuary.FileResume.HasResume / Percent / PercentKey` 写到 `Window(home)`；皮肤聚焦行读属性。
   - 位置：文件名与修改时间之间，40px。文件名列统一 1000，日期列从 1170 移到 **1213**（宽 160），
     文件名末尾到日期的距离由 85 增到 **128**（+50%）；圆环 left **1129**，正好在 44 / 44 中间。
@@ -1160,7 +1170,7 @@ Home 上 zoom 到 150%（133% / 120%），乘完正好 1920×1080，**稳态等�
 
 **落点**
 
-- helper（随 0.3.7 发布）：`lib/file_resume.py`、`service.py`、`resources/settings.xml`（`file_resume` 默认开）、`lib/skin_bridge.py`、`lib/i18n.py`、`tests/test_file_resume.py`
+- helper（随 0.3.7 发布；询问方式与 `mode=libraries` 待 **0.6.0**）：`lib/file_resume.py`、`service.py`、`resources/settings.xml`（`file_resume` 默认开、`file_resume_prompt` 默认 `ask`）、`lib/skin_bridge.py`、`lib/i18n.py`、`resources/language/*`、`tests/test_file_resume.py`
 - 皮肤（随 1.9.0 发布）：`xml/FileManager.xml`、`xml/Includes_FileResume.xml`、`xml/Includes.xml`、`xml/Custom_1115_FileResume.xml`、`xml/Variables.xml`（`FileResumeRingVar`）、`tools/gen_resume_ring.py`、`media/progress/resume_ring/*.png`（101 帧）
 
 **限制**

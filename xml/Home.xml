@@ -635,11 +635,11 @@
 											<param name="card_height" value="116"/>
 											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
 											<param name="icon_width" value="145"/>
-											<param name="icon_left" value="42"/>
+											<param name="icon_left" value="47"/>
 											<param name="icon_height" value="77"/>
 											<param name="icon_centertop" value="40"/>
 											<param name="item_top" value="0"/>
-											<param name="label_left" value="28"/>
+											<param name="label_left" value="33"/>
 											<param name="label_width" value="174"/>
 											<param name="label_font" value="font22"/>
 											<param name="label_top" value="66"/>
@@ -674,11 +674,11 @@
 											<param name="card_height" value="116"/>
 											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
 											<param name="icon_width" value="145"/>
-											<param name="icon_left" value="42"/>
+											<param name="icon_left" value="47"/>
 											<param name="icon_height" value="77"/>
 											<param name="icon_centertop" value="40"/>
 											<param name="item_top" value="0"/>
-											<param name="label_left" value="28"/>
+											<param name="label_left" value="33"/>
 											<param name="label_width" value="174"/>
 											<param name="label_font" value="font22"/>
 											<param name="label_top" value="66"/>
@@ -814,23 +814,8 @@
 										<param name="hero_id" value="6100"/>
 										<param name="update_hero" value="false"/>
 									</include>
-									<!-- 本地档，或自动档且无 E4K：helper 把 sources.xml 的 video source 列成媒体库。 -->
-									<include content="HomeMediaLibraryRail" condition="Library.HasContent(tvshows) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]">
-										<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=tvshows"/>
-										<param name="widget_header" value="$LOCALIZE[31616]"/>
-										<param name="widget_target" value="videos"/>
-										<param name="list_id" value="6600"/>
-										<param name="item_limit" value="30"/>
-										<param name="background_art_condition" value="false"/>
-										<param name="navigation" value="HomeVideoRowNavigation"/>
-										<param name="section" value="tvshows"/>
-										<param name="pages_id" value="6001"/>
-										<param name="onup" value="0"/>
-										<param name="ondown" value="0"/>
-										<param name="page" value="first"/>
-										<param name="hero_id" value="6100"/>
-										<param name="update_hero" value="false"/>
-									</include>
+									<!-- 本地档不重复列：helper 的 mode=libraries 不区分电影/剧集，
+									     两个页面会得到同一份 sources 列表，所以只在电影页列一次。 -->
 								</control>
 							</include>
 						</include>
@@ -1016,11 +1001,11 @@
 											<param name="card_height" value="116"/>
 											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
 											<param name="icon_width" value="145"/>
-											<param name="icon_left" value="42"/>
+											<param name="icon_left" value="47"/>
 											<param name="icon_height" value="77"/>
 											<param name="icon_centertop" value="40"/>
 											<param name="item_top" value="0"/>
-											<param name="label_left" value="28"/>
+											<param name="label_left" value="33"/>
 											<param name="label_width" value="174"/>
 											<param name="label_font" value="font22"/>
 											<param name="label_top" value="66"/>
@@ -1055,11 +1040,11 @@
 											<param name="card_height" value="116"/>
 											<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
 											<param name="icon_width" value="145"/>
-											<param name="icon_left" value="42"/>
+											<param name="icon_left" value="47"/>
 											<param name="icon_height" value="77"/>
 											<param name="icon_centertop" value="40"/>
 											<param name="item_top" value="0"/>
-											<param name="label_left" value="28"/>
+											<param name="label_left" value="33"/>
 											<param name="label_width" value="174"/>
 											<param name="label_font" value="font22"/>
 											<param name="label_top" value="66"/>
@@ -1116,9 +1101,9 @@
 							<param name="card_mask" value="shapes/mask_200x116_r9.png"/>
 							<param name="icon_width" value="145"/>
 							<param name="icon_height" value="77"/>
-							<param name="icon_left" value="42"/>
+							<param name="icon_left" value="47"/>
 							<param name="icon_centertop" value="40"/>
-							<param name="label_left" value="28"/>
+							<param name="label_left" value="33"/>
 							<param name="label_width" value="174"/>
 							<param name="label_font" value="font22"/>
 							<param name="label_top" value="66"/>

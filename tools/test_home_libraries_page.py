@@ -107,9 +107,10 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertIn('<itemgap>28</itemgap>', music)
 
     def test_video_tail_categories_match_music_spec(self):
-        """电影/电视剧页 tail 类型/类别行：卡片/图标/文字规格与音乐页 7900 完全一致。
-        音乐页已实机验过：card 200×116、icon 145×77 @left42/centertop40、
-        label 28/174/font22 @top66/h42。影视页仅 panel_top 保留 70（外层固定行高，
+        """电影/电视剧页 tail 类型/类别行：卡片/图标/文字规格与音乐页 7900 一致。
+        音乐页已实机验过：card 200×116、icon 145×77 @left47/centertop40、
+        label 33/174/font22 @top66/h42；left 47/33 让图标与文字相对卡片正中。
+        影视页仅 panel_top 保留 70（外层固定行高，
         与音乐页 grouplist 的 38px 布局偏移不同，照搬 6 会盖住标题）。
         """
         home = self.home
@@ -121,8 +122,8 @@ class HomeLibrariesPageTest(unittest.TestCase):
                 ('<param name="card_mask" value="shapes/mask_200x116_r9.png"/>', 5),
                 ('<param name="icon_width" value="145"/>', 5),
                 ('<param name="icon_height" value="77"/>', 5),
-                ('<param name="icon_left" value="42"/>', 5),
-                ('<param name="label_left" value="28"/>', 5),
+                ('<param name="icon_left" value="47"/>', 5),
+                ('<param name="label_left" value="33"/>', 5),
                 ('<param name="label_top" value="66"/>', 5),
                 ('<param name="icon_centertop" value="40"/>', 5),
                 ('<param name="top" value="570"/>', 2)):
@@ -143,29 +144,38 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertIn('<itemgap>4</itemgap>', inc)
 
     def test_local_libraries_fall_back_to_helper_sources(self):
-        """媒体库来源三档互斥：自动按 E4K 启用状态，Emby/本地可强制指定。"""
+        """媒体库来源三档互斥：自动按 E4K 启用状态，Emby/本地可强制指定。
+        helper 的 mode=libraries 不分电影/剧集，所以只在电影页列一次；
+        电视剧页保留 E4K 的 tag 行，本地档没有重复列表。
+        """
         home = self.home
-        for kind, list_id, media in (("movies", "5700", "movies"),
-                                     ("tvshows", "6600", "tvshows")):
-            with self.subTest(kind=kind):
-                self.assertIn(
-                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]"' % kind,
-                    home,
-                )
-                self.assertIn(
-                    'condition="Library.HasContent(%s) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]"' % kind,
-                    home,
-                )
-                self.assertIn(
-                    '<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=%s"/>' % media,
-                    home,
-                )
-                self.assertIn('<param name="list_id" value="%s"/>' % list_id, home)
+        self.assertIn(
+            'condition="Library.HasContent(movies) + System.AddonIsEnabled(plugin.service.emby-next-gen) + [Skin.HasSetting(nara_libsrc_emby) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local)]]"',
+            home,
+        )
+        self.assertIn(
+            'condition="Library.HasContent(movies) + System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]"',
+            home,
+        )
+        self.assertIn(
+            '<param name="content_path" value="plugin://script.mistuary.helper/?mode=libraries&amp;type=movies"/>',
+            home,
+        )
+        self.assertNotIn('type=tvshows"/>', home)
+        self.assertNotIn(
+            'System.AddonIsEnabled(script.mistuary.helper) + [Skin.HasSetting(nara_libsrc_local) | [!Skin.HasSetting(nara_libsrc_emby) + !Skin.HasSetting(nara_libsrc_local) + !System.AddonIsEnabled(plugin.service.emby-next-gen)]]',
+            home.split('id="6000"', 1)[1],
+        )
+        self.assertIn('<param name="list_id" value="5700"/>', home)
 
         inc = read("Includes_HomeVideo.xml")
         self.assertEqual(
             inc.count('[System.AddonIsEnabled(plugin.service.emby-next-gen) | System.AddonIsEnabled(script.mistuary.helper)]'),
-            2,
+            1,
+        )
+        self.assertIn(
+            '<expression name="NaraHomeTVShowLibrariesVisible">System.AddonIsEnabled(plugin.service.emby-next-gen) + [Integer.IsGreater(Container(6600).NumItems,0) | Container(6600).IsUpdating]</expression>',
+            inc,
         )
 
     def test_library_source_setting(self):
