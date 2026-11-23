@@ -248,9 +248,16 @@ class VideoInfoTechFlagsCaptionTest(unittest.TestCase):
         """
         hero = (XML_DIR / "Includes_DialogVideoInfo_Hero.xml").read_text(encoding="utf-8")
         variables = (XML_DIR / "Variables.xml").read_text(encoding="utf-8")
-        self.assertIn('<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />', hero)
-        self.assertIn('<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />', hero)
-        self.assertIn('<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />', hero)
+        # 详情页走参数默认值：代表集仍是 5101（当前季第一集），行尾标 SxxExx。
+        # 2026-11-20 起这四个值被参数化，媒体库视图各自传自己的隐藏探针容器。
+        self.assertIn('<param name="technical_episode_prefix">Container(5101).ListItemAbsolute(0)</param>', hero)
+        self.assertIn('<param name="technical_episode_visible">Integer.IsGreater(Container(5101).NumItems,0)</param>', hero)
+        self.assertIn('<param name="technical_caption">$VAR[NaraRepCaptionVar]</param>', hero)
+        # tv 分支必须消费这些参数，防止「定义了默认值却没接上」。
+        self.assertIn('<param name="technical_item_prefix" value="$PARAM[technical_episode_prefix]" />', hero)
+        self.assertIn('<param name="technical_visible" value="$PARAM[technical_episode_visible]" />', hero)
+        self.assertIn('<param name="technical_caption" value="$PARAM[technical_caption]" />', hero)
+        self.assertIn('<param name="technical_caption_visible" value="$PARAM[technical_caption_visible]" />', hero)
         self.assertIn('<variable name="NaraRepCaptionVar">', variables)
         self.assertIn('>S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]<', variables)
         self.assertIn('<value condition="String.IsEqual(Container(5101).ListItemAbsolute(0).Season,1)">01</value>', variables)

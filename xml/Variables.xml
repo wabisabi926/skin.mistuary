@@ -1897,6 +1897,68 @@
 		<value condition="!String.IsEmpty(Container(5101).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5101).ListItemAbsolute(0).Episode)">S$VAR[NaraRepSeasonVar]E$VAR[NaraRepEpisodeVar]</value>
 		<value>代表集</value>
 	</variable>
+	<!-- 媒体库 50 视图代表集补零：跟随集探针 5301，与详情页 5101 同构。 -->
+	<variable name="NaraLibrary50RepSeasonVar">
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,0)">00</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,1)">01</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,2)">02</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,3)">03</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,4)">04</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,5)">05</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,6)">06</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,7)">07</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,8)">08</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Season,9)">09</value>
+		<value>$INFO[Container(5301).ListItemAbsolute(0).Season]</value>
+	</variable>
+	<variable name="NaraLibrary50RepEpisodeVar">
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,0)">00</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,1)">01</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,2)">02</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,3)">03</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,4)">04</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,5)">05</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,6)">06</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,7)">07</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,8)">08</value>
+		<value condition="String.IsEqual(Container(5301).ListItemAbsolute(0).Episode,9)">09</value>
+		<value>$INFO[Container(5301).ListItemAbsolute(0).Episode]</value>
+	</variable>
+	<variable name="NaraLibrary50RepCaptionVar">
+		<value condition="!String.IsEmpty(Container(5301).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5301).ListItemAbsolute(0).Episode)">S$VAR[NaraLibrary50RepSeasonVar]E$VAR[NaraLibrary50RepEpisodeVar]</value>
+		<value>代表集</value>
+	</variable>
+	<!-- 媒体库 501 视图代表集补零：跟随集探针 5311，与详情页 5101 同构。 -->
+	<variable name="NaraLibrary501RepSeasonVar">
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,0)">00</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,1)">01</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,2)">02</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,3)">03</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,4)">04</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,5)">05</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,6)">06</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,7)">07</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,8)">08</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Season,9)">09</value>
+		<value>$INFO[Container(5311).ListItemAbsolute(0).Season]</value>
+	</variable>
+	<variable name="NaraLibrary501RepEpisodeVar">
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,0)">00</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,1)">01</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,2)">02</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,3)">03</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,4)">04</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,5)">05</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,6)">06</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,7)">07</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,8)">08</value>
+		<value condition="String.IsEqual(Container(5311).ListItemAbsolute(0).Episode,9)">09</value>
+		<value>$INFO[Container(5311).ListItemAbsolute(0).Episode]</value>
+	</variable>
+	<variable name="NaraLibrary501RepCaptionVar">
+		<value condition="!String.IsEmpty(Container(5311).ListItemAbsolute(0).Season) + !String.IsEmpty(Container(5311).ListItemAbsolute(0).Episode)">S$VAR[NaraLibrary501RepSeasonVar]E$VAR[NaraLibrary501RepEpisodeVar]</value>
+		<value>代表集</value>
+	</variable>
 	<variable name="FileResumeRingVar">
 		<value condition="String.IsEqual(Window(home).Property(Mistuary.FileResume.PercentKey),&quot;000&quot;)">progress/resume_ring/ring_000.png</value>
 		<value condition="String.IsEqual(Window(home).Property(Mistuary.FileResume.PercentKey),&quot;001&quot;)">progress/resume_ring/ring_001.png</value>

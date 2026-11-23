@@ -269,6 +269,12 @@
 		<param name="rating_item_prefix">ListItem</param>
 		<param name="technical_visible">true</param>
 		<param name="technical_item_prefix">ListItem</param>
+		<!-- 电视剧代表集来源。默认沿用详情页 5101（第一季第一集），媒体库视图各自传
+		     自己的隐藏探针容器。四个参数必须一起传，否则电视分支会读回默认 5101。 -->
+		<param name="technical_episode_prefix">Container(5101).ListItemAbsolute(0)</param>
+		<param name="technical_episode_visible">Integer.IsGreater(Container(5101).NumItems,0)</param>
+		<param name="technical_caption">$VAR[NaraRepCaptionVar]</param>
+		<param name="technical_caption_visible">!String.IsEmpty(Container(5101).ListItemAbsolute(0).VideoResolution)</param>
 		<param name="tagline_visible">!String.IsEmpty(ListItem.Tagline)</param>
 		<param name="tagline_missing">String.IsEmpty(ListItem.Tagline)</param>
 		<param name="tagline_label">[I]$INFO[ListItem.Tagline][/I]</param>
@@ -397,10 +403,10 @@
 							<param name="top" value="0" />
 							<param name="item_prefix" value="$PARAM[rating_item_prefix]" />
 							<param name="inline_flags" value="true" />
-							<param name="technical_visible" value="Integer.IsGreater(Container(5101).NumItems,0)" />
-							<param name="technical_item_prefix" value="Container(5101).ListItemAbsolute(0)" />
-							<param name="technical_caption" value="$VAR[NaraRepCaptionVar]" />
-							<param name="technical_caption_visible" value="!String.IsEmpty(Container(5101).ListItemAbsolute(0).VideoResolution)" />
+							<param name="technical_visible" value="$PARAM[technical_episode_visible]" />
+							<param name="technical_item_prefix" value="$PARAM[technical_episode_prefix]" />
+							<param name="technical_caption" value="$PARAM[technical_caption]" />
+							<param name="technical_caption_visible" value="$PARAM[technical_caption_visible]" />
 						</include>
 					</control>
 				</control>

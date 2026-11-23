@@ -237,6 +237,16 @@
 				<centertop>50%</centertop>
 				<width>802</width>
 				<height>570</height>
+				<!-- 电视剧代表集探针（两级隐藏列表）：季 → 第一季第一集。
+				     和首页/详情页同构，仅 id 不同（5300/5301），供技术标识读流信息。 -->
+				<include content="HomeHeroSeasonProbe">
+					<param name="list_id" value="50" />
+					<param name="season_id" value="5300" />
+				</include>
+				<include content="HomeHeroEpisodeProbe">
+					<param name="season_id" value="5300" />
+					<param name="episode_id" value="5301" />
+				</include>
 				<!-- Reuse the exact movie/TV detail Hero composition and MediaFlag
 				     controls; this view only adapts the settled container data source. -->
 				<include content="VideoInfoHeroContent">
@@ -257,6 +267,10 @@
 					<param name="rating_item_prefix" value="Container(50).ListItem" />
 					<param name="technical_visible" value="true" />
 					<param name="technical_item_prefix" value="Container(50).ListItem" />
+					<param name="technical_episode_prefix" value="Container(5301).ListItemAbsolute(0)" />
+					<param name="technical_episode_visible" value="Integer.IsGreater(Container(5301).NumItems,0)" />
+					<param name="technical_caption" value="$VAR[NaraLibrary50RepCaptionVar]" />
+					<param name="technical_caption_visible" value="!String.IsEmpty(Container(5301).ListItemAbsolute(0).VideoResolution)" />
 					<param name="tagline_visible" value="!String.IsEqual(Container(50).ListItem.DBType,tvshow) + !String.IsEmpty(Container(50).ListItem.Tagline)" />
 					<param name="tagline_missing" value="String.IsEqual(Container(50).ListItem.DBType,tvshow) | String.IsEmpty(Container(50).ListItem.Tagline)" />
 					<param name="tagline_label" value="[I]$INFO[Container(50).ListItem.Tagline][/I]" />
