@@ -81,7 +81,9 @@
 			</control>
 			<control type="group" id="200">
 				<include>Animation_BottomSlide</include>
-        <!-- 主控组：上一章 / 播放 / 下一章 / 停止，屏幕居中 -->
+        <!-- 主控组：上一章 / 播放 / 下一章 / 停止 / 音轨 / 字幕，屏幕居中。
+		     音轨与字幕放在停止右侧：电影/电视剧无章节时只剩播放+停止+音轨+字幕四颗，
+		     比原来两颗居中好看；有章节或直播时六颗，仍在屏幕中间放得下。 -->
         <control type="grouplist" id="201">
           <left>0</left>
           <right>0</right>
@@ -94,7 +96,7 @@
           <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">ActivateWindow(1116)</ondown>
           <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
           <onleft>87</onleft>
-          <onright>70046</onright>
+          <onright>70042</onright>
 					<control type="radiobutton" id="600">
 						<include content="NaraVideoOSDButton">
 							<param name="texture" value="osd/nara/previous.png"/>
@@ -121,22 +123,6 @@
 						</include>
 						<onclick>PlayerControl(Stop)</onclick>
 					</control>
-        </control>
-
-        <!-- 功能组：音频/字幕/列表/书签/信息/设置/菜单/频道/EPG/录制/图文/3D，靠右 -->
-        <control type="grouplist" id="202">
-          <right>80</right>
-          <width>800</width>
-          <align>right</align>
-          <itemgap>16</itemgap>
-          <top>68</top>
-          <height>56</height>
-          <orientation>horizontal</orientation>
-          <onup>87</onup>
-          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">ActivateWindow(1116)</ondown>
-          <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
-          <onleft>603</onleft>
-          <onright>70046</onright>
 					<control type="radiobutton" id="70046">
 						<include content="NaraVideoOSDButton">
 							<param name="texture" value="osd/nara/audio.png"/>
@@ -151,6 +137,23 @@
 						<onclick>DialogSelectSubtitle</onclick>
 						<enable>VideoPlayer.HasSubtitles</enable>
 					</control>
+        </control>
+
+        <!-- 功能组：列表/书签/信息/设置/菜单/频道/EPG/录制/图文/3D，靠右。
+		     音轨/字幕已移到主控组（停止右侧），让电影播放时主控组不只剩两颗。 -->
+        <control type="grouplist" id="202">
+          <right>80</right>
+          <width>800</width>
+          <align>right</align>
+          <itemgap>16</itemgap>
+          <top>68</top>
+          <height>56</height>
+          <orientation>horizontal</orientation>
+          <onup>87</onup>
+          <ondown condition="Integer.IsGreater(Playlist.Length(video),1) + !VideoPlayer.Content(livetv)">ActivateWindow(1116)</ondown>
+          <ondown condition="!Integer.IsGreater(Playlist.Length(video),1) | VideoPlayer.Content(livetv)">noop</ondown>
+          <onleft>603</onleft>
+          <onright>70042</onright>
 					<control type="radiobutton" id="70042">
 						<include content="NaraVideoOSDButton">
 							<param name="texture" value="osd/nara/playlist.png"/>
