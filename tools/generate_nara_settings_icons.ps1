@@ -67,10 +67,6 @@ Save-Icon 'interface' {
   $g.DrawBezier($p, 27, 37, 14, 30, 22, 49, 9, 52)
   $g.DrawBezier($p, 9, 52, 22, 60, 37, 50, 33, 42)
 }
-Save-Icon 'additionalfeatures' {
-  param($g, $p)
-  Draw-Lines $g $p @(10, 52, 10, 10, 16, 7, 44, 36, 44, 10, 50, 7, 55, 12, 55, 54, 49, 57, 21, 28, 21, 53, 15, 57, 10, 52)
-}
 Save-Icon 'filemanager' {
   param($g, $p)
   Draw-Lines $g $p @(7, 19, 7, 14, 23, 14, 29, 20, 55, 20, 57, 24, 57, 48, 53, 52, 10, 52, 7, 49, 7, 19)
