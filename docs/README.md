@@ -5,8 +5,11 @@
 | 文件 | 什么时候读 |
 |---|---|
 | [`HANDOVER.md`](HANDOVER.md) | **接手第一份**。现状、运行时依赖、仓库结构、开发工具、发版流程、必须知道的约定、已知遗留 |
-| [`handover-2026-11-19.md`](handover-2026-11-19.md) | **当前快照，优先级高于 HANDOVER.md 的现状描述**。2.4.0 已发布：两行续播、详情页多版本/相似、背景统一 scale、海报墙 2:3、音乐页重做；含遗留与待办 |
+| [`handover-2026-11-23.md`](handover-2026-11-23.md) | **当前快照，优先级高于 HANDOVER.md 的现状描述**。2.4.1 之后：媒体库 50/501 视图电视剧技术参数与代表集集号、首页影视页紧凑态评分与技术参数同行、间距 30px |
+| [`handover-2026-11-20.md`](handover-2026-11-20.md) | 2.4.0 之后的视觉修整：本地媒体库三档、类型/类别行修复、续播询问与暂停；含「已判定不做」的结论 |
+| [`handover-2026-11-19.md`](handover-2026-11-19.md) | 2.4.0 发版快照：两行续播、详情页多版本/相似、背景统一 scale、海报墙 2:3、音乐页重做；含遗留与待办 |
 | [`handover-2026-11-03.md`](handover-2026-11-03.md) | **已归档的交接快照**（2026-11-03）。当天本地改动与遗留；其中的「未发」项已随 1.9.0 进包，只作当时记录 |
+| [`handover-douban-rating-list.md`](handover-douban-rating-list.md) | **待开发需求**：首页/媒体库显示豆瓣评分。含已确认的 Kodi 硬限制、失败方案、helper service 侧实现路径、验收标准。皮肤侧改动已回滚，接手从零开工 |
 | [`skin-contracts.md`](skin-contracts.md) | 改任何窗口/设置前。窗口属性、皮肤设置、跨窗口控件 ID 的隐式契约清单，外加环境路径、验证命令、素材规格 |
 | [`glass-opacity-plan.md`](glass-opacity-plan.md) | 改玻璃面板、不透明度、圆角、描边环前。含数值推导、实测锚点、踩过的坑 |
 | [`helper-plugin-plan.md`](helper-plugin-plan.md) | 改 helper 接线前。**皮肤侧摘要**：调用方式、降级表、版本要求；M1b–M7 已完成。实现细节、进度表、测试在插件仓库 `D://下载//AI//script.mistuary.helper//docs//` |
@@ -73,7 +76,7 @@ python tools/gen_corner_masks.py --check                 # 圆角遮罩是否齐
 python tools/gen_rings.py --check                        # 焦点环是否齐全（8 环 + 1 细边）
 python tools/gen_resume_ring.py --check                  # 续播圆环 101 帧与生成器一致
 python tools/scan_rounded.py                             # 列「应圆角但没挂 diffuse」的控件
-python -m unittest discover -s tools -p 'test_*.py'      # 157 项
+python -m unittest discover -s tools -p 'test_*.py'      # 161 项
 python tools/xbt_tool.py pack                            # 改过 media/ 之后必须重打包
 ```
 

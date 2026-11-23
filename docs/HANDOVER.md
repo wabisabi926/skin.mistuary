@@ -1,13 +1,17 @@
-# 交接说明（Mistuary 2.4.0）
+# 交接说明（Mistuary 2.4.1）
 
-> ⚠️ **当前交接快照看 [`docs/handover-2026-11-20.md`](handover-2026-11-20.md)** ——
-> 2026-11-20 在 2.4.0 基础上做视觉修整：Hero 评分行→简介间距统一 56px（已推送 `3ff6e21`）、
-> 电影/电视剧页「类型/类别」行修复 Hero 重叠并缩卡留白、本地 Kodi 媒体库来源三档
-> （已递交 `84e329e` / `d8db9cd`，**未推送**）；后续把本地档按 Kodi 入库类型分电影/剧集两页、
-> 类别卡居中 +5px、续播弹窗加「询问方式」并修正超时与暂停。
+> ⚠️ **当前交接快照看 [`docs/handover-2026-11-23.md`](handover-2026-11-23.md)** ——
+> 2.4.1 之后新增媒体库 50/501 视图电视剧首屏技术参数与代表集集号、首页电影/电视剧页
+> 紧凑态评分与技术参数同行、简介到该行间距 30px（本轮 3 笔已递交）。
+> 上一份：[`docs/handover-2026-11-20.md`](handover-2026-11-20.md)（2.4.0 之后的视觉修整，
+> 含本地媒体库三档、类型/类别行修复、续播询问与暂停修正）；再上一份
+> [`docs/handover-2026-11-19.md`](handover-2026-11-19.md)（2.4.0 发版快照）。
 > 另含轮播/闪描边/剧集多版本等「已判定不做」的结论与真机踩坑，**接手先读它**。
-> 上一份：[`docs/handover-2026-11-19.md`](handover-2026-11-19.md)（2.4.0 发版快照）。
 > 本文是长期文档，讲依赖、工具链与发版，现状以 `addon.xml` / `git status` 为准。
+>
+> 📌 **待开发需求**：[`docs/handover-douban-rating-list.md`](handover-douban-rating-list.md) ——
+> 首页/媒体库显示豆瓣评分。已确认纯皮肤侧走不通（Kodi 的 focusedlayout onfocus 不触发），
+> 必须由 helper 后台 service 主动补分；皮肤侧只差放开显示条件 + 防错配。当前代码已回滚。
 
 > 读这个之前先读 `.workbuddy-ai/memory/MEMORY.md`（长期约定）。
 > 本文只讲**现状、依赖、工具链、发版**，不讲历史。
@@ -57,17 +61,19 @@
 ## 1. 一句话现状
 
 `main` 分支上的通用版皮肤，**Kodi 22 及以上**可用（1.5.2 起不再支持 21，见 §5.2），
-版本以 `addon.xml` 为准（当前 **2.4.0**）；历史发版记录见 §8.2。
-最近一次发版说明见 `changelog.txt` 顶部 2.4.0 段。
-`handover-2026-11-03.md` 已归档，只作当时快照。helper **0.5.4 已发布**（11-19，`v0.5.4` Release），
-提供相似影片列表 `mode=similar`；皮肤 import 下限已提到 **0.5.4**（相似入口只查 AddonIsEnabled 不查版本，
-旧 helper 会点了没反应，故用硬依赖挡住）。**发版顺序是 helper 0.5.4 → 皮肤 2.4.0，两者均已发布**。
+版本以 `addon.xml` 为准（当前 **2.4.1**）；历史发版记录见 §8.2。
+最近一次发版说明见 `changelog.txt` 顶部 2.4.1 段。
+`handover-2026-11-03.md` 已归档，只作当时快照。helper **0.6.0 已发布**（11-20，`v0.6.0` Release），
+新增本地媒体库来源 `mode=libraries` 与文件续播询问 `file_resume_prompt`；皮肤 import 下限已提到 **0.6.0**。
+提供相似影片列表 `mode=similar` 是 0.5.4 的能力，已含在 0.6.0 内。
+**发版顺序是 helper 0.6.0 → 皮肤 2.4.1，两者均已发布**。
 原计划单独发布的 1.4.1 与 1.5.0（两个 tag/Release 均已撤回）已合并进 1.5.1。
 
-**接手时先看工作区状态**：截至 2026-11-19，`main` 已与 `origin/main` 对齐，**`v2.4.0` 已发布**
-（首页两行续播、详情页多版本与相似影片、影视背景统一 scale、海报墙 2:3、音乐页与界面打磨）。
+**接手时先看工作区状态**：截至 2026-11-23，`v2.4.1` 已发布
+（双轨媒体库、本地库按入库类型分页、文件续播询问与暂停修复、文案统一）；
+其后本轮 3 笔已递交的媒体库技术参数 / 首页 Hero 布局改动见 `handover-2026-11-23.md`。
 具体以 `git status` / `git log origin/main..HEAD` 为准，本节不钉 hash 和提交数。
-`Textures.xbt` **867 张 / 8.9 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **157 项全过**、`audit_skin.py --strict` 0 问题。
+`Textures.xbt` **867 张 / 8.9 MB**（2.3.0 加入全键盘图标；1.2.0 是 802 张 / 10.2 MB，1.9.0 因续播圆环 101 帧增加），单测 **161 项全过**、`audit_skin.py --strict` 0 问题。
 
 > **未合并的本地分支**：`backup/keyboard-nov13`（2026-11-13 的系统键盘 T9 尺寸重写，
 > 远程已用另一套表达式方案取代，见 §8.19）。**别默认把它当待合并工作**。
@@ -1473,8 +1479,9 @@ git status -sb              # 与远端的关系 + 工作区
 | **v2.3.0** | 搜索页全键盘输入（系统虚拟键盘 + 手机文本注入）+ 键盘透出搜索背景、弹出时隐藏导航条 + 设置页整行对齐与组间距 + 评分设置收敛 |
 | **v2.3.1** | 首页背景 keep+右对齐改 scale 铺满（非 16:9 画布左露黑底修复）+ 插件描述与 README 刷新 |
 | **v2.4.0** | 首页两行跨类型续播 + 背景轮播/色光三档 + 详情页多版本面板/相似影片 + 影视背景统一 scale + 海报墙 2:3 + 音乐页类别行与专辑卡重做；最低 Helper 0.5.4 |
+| **v2.4.1** | 本地 Kodi 媒体库来源三档并按入库类型分电影/剧集页 + 文件续播询问方式三档与暂停修复 + 类型类别行修复与缩卡 + 文案术语统一；最低 Helper 0.6.0 |
 
-> **当前版本以 `addon.xml` 为准（2.4.0，已发布）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
+> **当前版本以 `addon.xml` 为准（2.4.1，已发布）**；本节是历史发版记录，1.5.2 行的“待发”保留为当时状态。
 
 > **1.2.0 卡过一次**：升版本号后 CI 的 `test` job 因 `xbt_tool` 缺 Pillow 失败，
 > 当时只修了 CI 没再升版本 → 工作流判定「版本号未变化」跳过，Release 一直没生成。
@@ -1525,7 +1532,7 @@ git status -sb              # 与远端的关系 + 工作区
 python tools/audit_skin.py --strict                      # 必须 EXIT=0
 python tools/audit_skin.py --orphans                     # 应报 0 张
 python tools/audit_skin.py --dead                        # 应为 0 变量 / 0 include
-python -m unittest discover -s tools -p 'test_*.py'       # 157 项
+python -m unittest discover -s tools -p 'test_*.py'       # 161 项
 python tools/gen_corner_masks.py --check && python tools/gen_rings.py --check   && python tools/gen_glass_plates.py --check && python tools/gen_techflag_vars.py --check
 ```
 
