@@ -69,6 +69,9 @@ def texture_exists(tex: str) -> bool:
 INCLUDE_REF = re.compile(r"<include(?:\s+content=\"([^\"]+)\"|\s*>([^<]+)</include>)")
 VAR_REF = re.compile(r"\$VAR\[([^\]]+)\]")
 LOC_REF = re.compile(r"\$LOCALIZE\[(\d+)\]")
+# <viewtype label="31099"> 是 Kodi 标准的视图名引用形式（数字 = 皮肤字符串 id），
+# 不走 $LOCALIZE。2026-11-23 恢复 31099-31102 时发现这里曾被漏掉。
+VIEWTYPE_LABEL_REF = re.compile(r'<viewtype\s+label="(\d+)"')
 FONT_REF = re.compile(r"<font>([^<]+)</font>")
 TEXTURE_REF = re.compile(
     r"<(?:texture|texturefocus|texturenofocus|bordertexture|alttexturefocus"
@@ -123,8 +126,10 @@ SELECT_BOOL_IDS = re.compile(r"(?<![_\w])(\d+)\s*[|,]")
 
 
 def string_refs(text: str) -> set[str]:
-    """一条 XML 文本里引用到的全部字符串 id（$LOCALIZE + Skin.SelectBool）。"""
+    """一条 XML 文本里引用到的全部字符串 id
+    （$LOCALIZE + Skin.SelectBool + viewtype 的 label 属性）。"""
     refs: set[str] = set(LOC_REF.findall(text))
+    refs |= set(VIEWTYPE_LABEL_REF.findall(text))
     for m in SELECT_BOOL_ARGS.finditer(text):
         refs |= set(SELECT_BOOL_IDS.findall(m.group(1)))
     return refs

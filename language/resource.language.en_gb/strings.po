@@ -420,15 +420,27 @@ msgstr ""
 
 #. viewtype name
 #: /xml/View_52_IconWall.xml
+msgctxt "#31099"
+msgid "IconWall"
+msgstr ""
 
 #. viewtype name
 #: /xml/View_53_Shift.xml
+msgctxt "#31100"
+msgid "Shift"
+msgstr ""
 
 #. viewtype name
 #: /xml/View_54_InfoWall.xml
+msgctxt "#31101"
+msgid "InfoWall"
+msgstr ""
 
 #. viewtype name
 #: /xml/View_500_Wall.xml
+msgctxt "#31102"
+msgid "Wall"
+msgstr ""
 
 #: /xml/SmartPlaylistRule.xml
 

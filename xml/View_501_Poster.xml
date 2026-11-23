@@ -142,7 +142,7 @@
 				<onup>9000</onup>
 				<ondown condition="$EXP[poster_row_alphabet_active]">50160</ondown>
 				<ondown condition="!$EXP[poster_row_alphabet_active]">5199</ondown>
-				<viewtype label="31100">icon</viewtype>
+				<viewtype label="20021">icon</viewtype>
 				<itemlayout width="240" height="410">
 					<include content="NaraSearchPosterLayout">
 						<param name="show_year" value="true" />

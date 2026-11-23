@@ -28,6 +28,13 @@ class StringRefsTest(unittest.TestCase):
     def test_localize_is_detected(self):
         self.assertEqual(string_refs("<label>$LOCALIZE[31782]</label>"), {"31782"})
 
+    def test_viewtype_label_attr_is_detected(self):
+        """<viewtype label="31099"> 也是字符串引用，不是无人引用。
+
+        2026-11-23：31099-31102 曾被当成死字符串删掉，导致视图切换器显示数字。
+        """
+        self.assertEqual(string_refs('<viewtype label="31099">icon</viewtype>'), {"31099"})
+
     def test_selectbool_header_id_is_detected(self):
         """SelectBool 第一个参数是头部标签的字符串 id。"""
         text = '<onclick>Skin.SelectBool(31730, 31723|glass_page_op_1)</onclick>'

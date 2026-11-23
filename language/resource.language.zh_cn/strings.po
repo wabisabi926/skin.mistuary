@@ -275,12 +275,24 @@ msgid "Select your Kodi user profile[CR]to login and continue"
 msgstr "选择 Kodi 用户配置文件[CR]登录并继续"
 
 #. viewtype name
+msgctxt "#31099"
+msgid "IconWall"
+msgstr "图标墙"
 
 #. viewtype name
+msgctxt "#31100"
+msgid "Shift"
+msgstr "平移"
 
 #. viewtype name
+msgctxt "#31101"
+msgid "InfoWall"
+msgstr "信息墙"
 
 #. viewtype name
+msgctxt "#31102"
+msgid "Wall"
+msgstr "墙"
 
 msgctxt "#31103"
 msgid "Enter text here..."
