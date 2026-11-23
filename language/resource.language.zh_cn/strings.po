@@ -331,8 +331,8 @@ msgid "Show icons"
 msgstr "显示图标"
 
 msgctxt "#31129"
-msgid "Choose which entries the main menu shows and what each row displays."
-msgstr "设置主菜单显示哪些入口，以及每一行显示什么内容。"
+msgid "Main menu entries and what each row shows."
+msgstr "设置主菜单入口与各行显示内容。"
 
 msgctxt "#31130"
 msgid "How media info is shown: badges, ratings, titles and artwork."
@@ -411,8 +411,8 @@ msgstr "音乐视频显示海报"
 #. Description label for skin settings area
 
 msgctxt "#31169"
-msgid "Glass transparency, page background and text scrolling."
-msgstr "设置玻璃透明度、页面背景和文字滚动。"
+msgid "Glass opacity, page background, dimming and text scrolling."
+msgstr "设置玻璃透明度、页面背景、压暗与文字滚动。"
 
 #. Label for OSD settings category
 #. Helper text for the label of OSD settings category
@@ -830,8 +830,8 @@ msgid "Favourites as landscape cards"
 msgstr "收藏夹横版卡片"
 
 msgctxt "#31698"
-msgid "Favourites layout: landscape cards; off shows vertical posters, consistent with Movies/TV shows."
-msgstr "收藏夹用横版卡片显示；关掉是竖版海报，和电影/电视剧一致。"
+msgid "Favourites shown as landscape cards; off switches to portrait posters, matching movies and TV shows."
+msgstr "收藏夹以横版卡片显示；关闭后为竖版海报，与电影/电视剧一致。"
 
 #: /xml/MusicVisualisation.xml
 
@@ -992,20 +992,20 @@ msgid "Auto-scroll long plots instead of paging. Off by default."
 msgstr "长剧情自动滚动，替代手动翻页。默认关闭。"
 
 msgctxt "#31737"
-msgid "Cover order: custom folder → Mistuary Helper sync → fallback; file name must match library."
-msgstr "封面读取顺序：自定义目录 → Mistuary Helper 同步 → 兜底图，文件名须同库名。"
+msgid "Cover order: custom folder → add-on sync → fallback; file name must match the library name."
+msgstr "封面读取顺序：自定义目录 → 插件同步 → 兜底图，文件名须与库名一致。"
 
 msgctxt "#31738"
 msgid "Show resolution, audio and subtitle badges in media info. On by default."
 msgstr "在媒体信息中显示分辨率、音轨与字幕标识。默认开启。"
 
 msgctxt "#31739"
-msgid "Video card badge: My rating (yours), Library rating (library default rating), or None. None by default; music cards show no rating badge."
-msgstr "视频卡片角标：我的评分（自己打的）、媒体库评分（媒体库默认评分），或无。默认无；音乐卡片不显示评分角标。"
+msgid "Card badge shows My rating, Library rating or None; music cards show none. Default None."
+msgstr "卡片角标显示我的评分、媒体库评分或无；音乐卡片不显示。默认无。"
 
 msgctxt "#31740"
-msgid "Auto detects the rating type from library metadata (TMDb / IMDb); falls back to TMDb when unknown."
-msgstr "按库内评分类型显示 TMDb 或 IMDb；无法判断时用 TMDb。"
+msgid "Source of the main rating: TMDb, IMDb, Douban or Auto. Default TMDb."
+msgstr "主评分取值来源：TMDb、IMDb、豆瓣或自动；默认 TMDb。"
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
@@ -1020,8 +1020,8 @@ msgid "Opacity for the playback OSD and player controls; higher is more opaque. 
 msgstr "播放 OSD 与播放控制条的不透明度；档位越高越不透明。默认通透。"
 
 msgctxt "#31744"
-msgid "Use item fanart as the page background; the default image is used when missing. On by default."
-msgstr "使用媒体背景图；缺图时用默认背景。默认开启。"
+msgid "Media pages use fanart as background, other pages use the fallback image. On by default."
+msgstr "影视页面以剧照为背景，其余页面使用兜底图。默认开启。"
 
 msgctxt "#31745"
 msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
@@ -1032,8 +1032,8 @@ msgid "Show Movies in the main menu. On by default."
 msgstr "在主菜单显示“电影”。默认开启。"
 
 msgctxt "#31747"
-msgid "Content shown in this row: recently added, continue watching, random, etc."
-msgstr "该行显示的内容：最近添加、继续观看、随机等。"
+msgid "Choose what this row shows: recently added, continue watching, random, etc."
+msgstr "选择该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31748"
 msgid "Default action: Browse. Alternatively play or queue the item."
@@ -1044,8 +1044,8 @@ msgid "Show TV shows in the main menu. On by default."
 msgstr "在主菜单显示“电视剧”。默认开启。"
 
 msgctxt "#31750"
-msgid "Content shown in this row: recently added, continue watching, random, etc."
-msgstr "该行显示的内容：最近添加、继续观看、随机等。"
+msgid "Choose what this row shows: recently added, continue watching, random, etc."
+msgstr "选择该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31751"
 msgid "Default action: Browse. Alternatively play or queue the episode."
@@ -1056,8 +1056,8 @@ msgid "Show Music in the main menu. On by default."
 msgstr "在主菜单显示“音乐”。默认开启。"
 
 msgctxt "#31753"
-msgid "Content shown in this row: recently added, continue watching, random, etc."
-msgstr "该行显示的内容：最近添加、继续观看、随机等。"
+msgid "Choose what this row shows: recently added, continue watching, random, etc."
+msgstr "选择该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31754"
 msgid "Default action: Browse. Alternatively play or queue the album."
@@ -1068,8 +1068,8 @@ msgid "Show TV in the main menu. On by default."
 msgstr "在主菜单显示“电视”。默认开启。"
 
 msgctxt "#31756"
-msgid "Content shown in this row: recently added, continue watching, random, etc."
-msgstr "该行显示的内容：最近添加、继续观看、随机等。"
+msgid "Choose what this row shows: recently added, continue watching, random, etc."
+msgstr "选择该行显示的内容：最近添加、继续观看、随机等。"
 
 msgctxt "#31757"
 msgid "Hide the OSD automatically during playback. Off by default."
@@ -1100,8 +1100,8 @@ msgid "Home"
 msgstr "首页"
 
 msgctxt "#31773"
-msgid "Brand icons by default. Turn off to show plain text instead."
-msgstr "默认用品牌图标显示。图标看不清就关掉，改用文字。"
+msgid "Technical flags show brand icons; turn off to use text if they are hard to read."
+msgstr "技术标识默认显示品牌图标；不易辨识时关闭，改用文字。"
 
 msgctxt "#31759"
 msgid "Dialog transparency"
@@ -1112,8 +1112,8 @@ msgid "Dialog transparency — levels are tuned for the dark theme; the light th
 msgstr "对话框透明度 — 档位以透黑主题调校，透白主题下观感更浅。"
 
 msgctxt "#31761"
-msgid "Controls dialogs, menus, the keyboard and settings dialogs outside playback. Higher levels are more opaque. Dense by default."
-msgstr "控制对话框、菜单、键盘与非播放时的设置对话框。档位越高越不透明，默认“偏实”。"
+msgid "Opacity of dialogs, menus, keyboard and settings popups; higher levels are more opaque. Default Dense."
+msgstr "对话框、菜单、键盘与设置弹窗的不透明度；档位越高越不透明。默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
@@ -1164,16 +1164,16 @@ msgid "Use Emby server search"
 msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
-msgid "Search via Emby for original titles, pinyin and initials. Cast and genre need Chinese input."
-msgstr "经 Emby 服务端检索原名、全拼与首字母；演员、类型须中文输入。"
+msgid "Search original titles, full pinyin and initials via Emby; cast and genre need Chinese input. On by default."
+msgstr "经 Emby 服务端检索原名、全拼与首字母；演员、类型须中文输入。默认开启。"
 
 msgctxt "#31782"
 msgid "Show Douban rating on info page"
 msgstr "详情页显示豆瓣评分"
 
 msgctxt "#31784"
-msgid "Show a Douban rating capsule on the info page. On by default."
-msgstr "详情页显示豆瓣评分胶囊；关闭后只显示主评分。默认开启。"
+msgid "Shows the Douban rating pill on the info page; off shows only the main rating. On by default."
+msgstr "详情页显示豆瓣评分胶囊；关闭后仅显示主评分。默认开启。"
 
 msgctxt "#31785"
 msgid "Enabled"
@@ -1208,8 +1208,8 @@ msgid "All unwatched"
 msgstr "全部未看"
 
 msgctxt "#31799"
-msgid "Add-on options: server, cache, rating sync and cleanup."
-msgstr "插件高级选项：服务器、缓存、评分同步与清理。"
+msgid "Opens the add-on settings: server, cache, rating sync and cleanup."
+msgstr "打开插件设置：服务器、缓存、评分同步与清理。"
 
 msgctxt "#31800"
 msgid "Advanced settings"
@@ -1260,16 +1260,16 @@ msgid "Fetch the Douban rating online on the info page when the library has none
 msgstr "详情页显示豆瓣评分且库里没有时联网补分；关闭后不请求。默认开启。"
 
 msgctxt "#31813"
-msgid "When a library episode starts, queue the rest of the season; playback is not interrupted."
-msgstr "剧集起播时，把本季其余剧集加入队列；不打断播放。"
+msgid "When an episode starts, queue the rest of the season without interrupting playback."
+msgstr "剧集起播时将本季其余剧集加入队列，不中断播放。"
 
 msgctxt "#31814"
-msgid "When playback starts from a folder, queue the rest of the folder; playback is not interrupted."
-msgstr "从文件夹起播时，把同目录其余条目加入队列；不打断播放。"
+msgid "When playback starts from a folder, queue the other items in it without interrupting playback."
+msgstr "文件夹起播时将同目录其余条目加入队列，不中断播放。"
 
 msgctxt "#31815"
-msgid "When the last episode of a season starts, queue the first episode of the next season; use with Rest of season."
-msgstr "本季最后一集起播时，把下一季第一集加入队列；需配合按季补全。"
+msgid "When the last episode of a season starts, queue the first episode of the next season; requires season completion."
+msgstr "本季末集起播时将下一季首集加入队列；需配合按季补全。"
 
 msgctxt "#31816"
 msgid "Power"
@@ -1316,12 +1316,12 @@ msgid "Balanced"
 msgstr "适中"
 
 msgctxt "#31829"
-msgid "Original"
-msgstr "原浓度"
+msgid "Heaviest"
+msgstr "最重"
 
 msgctxt "#31830"
-msgid "How strongly background artwork is dimmed on Home, Info, library, settings, file manager, add-on and search pages. Lower values show more of the artwork."
-msgstr "首页、详情页、媒体库、设置、文件管理、插件页与搜索页背景的压暗浓度。档位越低，背景图透出得越多；原浓度等于 2.2.0 的观感。"
+msgid "Dimming of background artwork on all pages; higher levels dim more. Default Light."
+msgstr "所有页面背景的压暗浓度；档位越高压暗越强。默认较轻。"
 
 msgctxt "#31835"
 msgid "No media library found. Add a local video library or install the Emby add-on and sync."
@@ -1336,8 +1336,8 @@ msgid "Home background rotation"
 msgstr "首页背景轮播"
 
 msgctxt "#31838"
-msgid "When nothing on Home is focused, rotate through in-progress movie fanart every 5 seconds. Turn off to stay on the first item."
-msgstr "首页没有焦点时，背景每 5 秒在正在观看的电影背景图之间轮换；关闭后停在第一项。"
+msgid "With nothing focused on Home, the background switches every 5 seconds; off keeps the first item."
+msgstr "首页无焦点时背景每 5 秒切换一次；关闭后保持首项。"
 
 msgctxt "#31839"
 msgid "Artwork glow strength"
@@ -1356,8 +1356,8 @@ msgid "Standard"
 msgstr "标准"
 
 msgctxt "#31843"
-msgid "Strength of the colored edge glow on artwork. Standard is the current look; Soft reduces it; Off keeps only the artwork and dimming."
-msgstr "背景图边缘的彩色光晕强度。标准为当前观感；柔和降低；关闭只保留背景图与压暗。"
+msgid "Strength of the colored edge glow; Soft lowers it, Off keeps only artwork and dimming. Default Standard."
+msgstr "背景图边缘的彩色光晕强度；柔和档降低强度，关闭后仅保留背景图与压暗。默认标准。"
 
 msgctxt "#31844"
 msgid "Similar titles"
@@ -1400,8 +1400,8 @@ msgid "Local Kodi"
 msgstr "本地 Kodi"
 
 msgctxt "#31854"
-msgid "With E4K installed choose Emby; for local libraries choose Local Kodi. Default: Auto. Local sources are split by Kodi library type; sources without a content type appear on the Movies page."
-msgstr "装了 E4K 选 Emby，纯本地媒体库选本地 Kodi；默认自动。本地档按 Kodi 入库类型分电影/电视剧，未设置内容类型的源归入电影页。"
+msgid "Choose Emby when E4K is installed, Local Kodi for a local library. Default Auto."
+msgstr "安装 E4K 时选 Emby，纯本地库选本地 Kodi；默认自动。"
 
 msgctxt "#31855"
 msgid "Description"
