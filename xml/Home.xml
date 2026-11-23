@@ -291,7 +291,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5200"/>
 						<param name="season_id" value="520095"/>
 						<param name="episode_id" value="520096"/>
@@ -304,7 +304,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5800"/>
 						<param name="season_id" value="580095"/>
 						<param name="episode_id" value="580096"/>
@@ -317,7 +317,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5750"/>
 						<param name="season_id" value="575095"/>
 						<param name="episode_id" value="575096"/>
@@ -330,7 +330,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5300"/>
 						<param name="season_id" value="530095"/>
 						<param name="episode_id" value="530096"/>
@@ -343,7 +343,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5400"/>
 						<param name="season_id" value="540095"/>
 						<param name="episode_id" value="540096"/>
@@ -356,7 +356,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="5600"/>
 						<param name="season_id" value="560095"/>
 						<param name="episode_id" value="560096"/>
@@ -718,7 +718,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="6200"/>
 						<param name="season_id" value="620095"/>
 						<param name="episode_id" value="620096"/>
@@ -731,7 +731,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="6700"/>
 						<param name="season_id" value="670095"/>
 						<param name="episode_id" value="670096"/>
@@ -744,7 +744,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="6750"/>
 						<param name="season_id" value="675095"/>
 						<param name="episode_id" value="675096"/>
@@ -757,7 +757,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="6300"/>
 						<param name="season_id" value="630095"/>
 						<param name="episode_id" value="630096"/>
@@ -770,7 +770,7 @@
 						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
-						<param name="tech_top" value="374"/>
+						<param name="tech_top" value="392"/>
 						<param name="list_id" value="6800"/>
 						<param name="season_id" value="680095"/>
 						<param name="episode_id" value="680096"/>
