@@ -288,8 +288,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_recentlyadded_widget)">
 						<param name="id" value="5200001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5200"/>
 						<param name="season_id" value="520095"/>
 						<param name="episode_id" value="520096"/>
@@ -299,8 +301,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_premieres_widget)">
 						<param name="id" value="5800001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5800"/>
 						<param name="season_id" value="580095"/>
 						<param name="episode_id" value="580096"/>
@@ -310,8 +314,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + Skin.HasSetting(home_movies_unwatched_widget)">
 						<param name="id" value="5750001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5750"/>
 						<param name="season_id" value="575095"/>
 						<param name="episode_id" value="575096"/>
@@ -321,8 +327,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_highrated_widget)">
 						<param name="id" value="5300001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5300"/>
 						<param name="season_id" value="530095"/>
 						<param name="episode_id" value="530096"/>
@@ -332,8 +340,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_random_widget)">
 						<param name="id" value="5400001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5400"/>
 						<param name="season_id" value="540095"/>
 						<param name="episode_id" value="540096"/>
@@ -343,8 +353,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(movies) + !Skin.HasSetting(home_no_movies_sets_widget)">
 						<param name="id" value="5600001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="5600"/>
 						<param name="season_id" value="560095"/>
 						<param name="episode_id" value="560096"/>
@@ -703,8 +715,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_recentlyaddedepisodes_widget)">
 						<param name="id" value="6200001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="6200"/>
 						<param name="season_id" value="620095"/>
 						<param name="episode_id" value="620096"/>
@@ -714,8 +728,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_premieres_widget)">
 						<param name="id" value="6700001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="6700"/>
 						<param name="season_id" value="670095"/>
 						<param name="episode_id" value="670096"/>
@@ -725,8 +741,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + Skin.HasSetting(home_tvshows_unwatched_widget)">
 						<param name="id" value="6750001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="6750"/>
 						<param name="season_id" value="675095"/>
 						<param name="episode_id" value="675096"/>
@@ -736,8 +754,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_highrated_widget)">
 						<param name="id" value="6300001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="6300"/>
 						<param name="season_id" value="630095"/>
 						<param name="episode_id" value="630096"/>
@@ -747,8 +767,10 @@
 					<include content="HomeFocusedItemHero" condition="Library.HasContent(tvshows) + !Skin.HasSetting(home_no_tvshows_random_widget)">
 						<param name="id" value="6800001"/>
 						<param name="hero_top" value="200"/>
+						<param name="compact_split" value="true"/>
 						<param name="ratings_top" value="215"/>
 						<param name="plot_top" value="271"/>
+						<param name="tech_top" value="374"/>
 						<param name="list_id" value="6800"/>
 						<param name="season_id" value="680095"/>
 						<param name="episode_id" value="680096"/>

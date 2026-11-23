@@ -65,10 +65,15 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertIn('<param name="plot_top">258</param>', self.includes)
         self.assertIn('<top>$PARAM[ratings_top]</top>', self.includes)
         self.assertIn('<top>$PARAM[plot_top]</top>', self.includes)
-        # 电影/电视剧页 11 个 Hero：200 / 215 / 271（2026-11-20 简介上移 11px，评分行→简介间距 56 对齐首页）
+        # 电影/电视剧页 11 个 Hero：200 / 215 / 271
+        # （2026-11-23：顶部元数据 215、简介 271、「评分+技术参数」合并行 374）
         self.assertEqual(self.home.count('<param name="hero_top" value="200"/>'), 11)
         self.assertEqual(self.home.count('<param name="ratings_top" value="215"/>'), 11)
         self.assertEqual(self.home.count('<param name="plot_top" value="271"/>'), 11)
+        self.assertEqual(self.home.count('<param name="tech_top" value="374"/>'), 11)
+        # 新布局开关只有电影/电视剧页 11 实例开启；首页 2 实例保持默认（原样顶部评分行）
+        self.assertEqual(self.home.count('<param name="compact_split" value="true"/>'), 11)
+        self.assertIn('<param name="compact_split">false</param>', self.includes)
         self.assertEqual(self.home.count('<param name="hero_top" value="0"/>'), 2)
         # 媒体库行与首页「正在观看的电视剧」同高（spacer 818）
         for sid in ("5002001", "6002001"):

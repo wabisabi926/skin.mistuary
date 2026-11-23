@@ -111,19 +111,8 @@
 					<textcolor>text_secondary</textcolor>
 					<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
 				</control>
-				<!-- 剧集代表集探针：每个英雄区都会生成，但只有剧集分区的 <visible> 成立才会加载内容
-				     （不可见的容器不取数据，电影分区零开销）。season_id / episode_id 由 Home.xml
-				     逐处传字面量 —— include 上**不能**用 condition="!String.IsEmpty($PARAM[...])"：
-				     解析 include 时 $PARAM 还没替换，String.IsEmpty 拿到空串，整个 include 会被跳过，
-				     容器根本不存在（诊断行显示 S= E= 都是空的，就是这个原因）。 -->
-				<include content="HomeHeroSeasonProbe">
-					<param name="list_id" value="$PARAM[list_id]" />
-					<param name="season_id" value="$PARAM[season_id]" />
-				</include>
-				<include content="HomeHeroEpisodeProbe">
-					<param name="season_id" value="$PARAM[season_id]" />
-					<param name="episode_id" value="$PARAM[episode_id]" />
-				</include>
+				<!-- 代表集探针已上移到 HomeFocusedItemHero 外层（Includes_Home.xml），
+				     紧凑态与展开态共用同一组容器，避免同窗口 id 重复。 -->
 				<!-- 两条评分行用**外层 group 的 visible** 分流，不能用 include 的 condition：
 				     condition 属性里 $PARAM 不替换，条件求值失败 → 电影那条永远 true、剧集那条永远
 				     false，结果剧集用的是电影参数（episode_prefix 退回 ListItem）→ 标识全空。 -->

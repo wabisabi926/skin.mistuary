@@ -132,6 +132,12 @@
 		<!-- 剧集分区传一个静态数字（如 620095），电影分区用默认 0 = 不生成代表集探针 -->
 		<param name="season_id"></param>
 		<param name="episode_id"></param>
+		<!-- 紧凑态技术参数行 Y：电影/电视剧页传 374（plot_top 271 + 简介高 91 + 12）；
+		     首页两实例用默认 322，但 compact_split=false 时不显示该行。 -->
+		<param name="tech_top">322</param>
+		<!-- 新布局开关：电影/电视剧页 11 实例传 true（顶部只留元数据、评分+参数同行放简介下）；
+		     首页导航条两实例保持 false = 原样（顶部评分+元数据同行、无下方行）。 -->
+		<param name="compact_split">false</param>
 		<definition>
 			<control type="group" id="$PARAM[id]">
 				<top>$PARAM[hero_top]</top>
@@ -149,6 +155,16 @@
 					<animation effect="fade" time="140">VisibleChange</animation>
 					<animation effect="slide" start="0,0" end="0,38" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoExpanded]">Conditional</animation>
 					<animation effect="slide" start="0,0" end="0,112" time="320" tween="cubic" easing="out" condition="$EXP[NaraHomeVideoSingleRow]">Conditional</animation>
+					<!-- 剧集代表集探针（两级）：从展开态上移到这一层，紧凑态也能读到第一季第一集。
+				         电影分区 season_id/episode_id 为空 → 空 id 容器且 visible 不成立，零开销。 -->
+					<include content="HomeHeroSeasonProbe">
+						<param name="list_id" value="$PARAM[list_id]" />
+						<param name="season_id" value="$PARAM[season_id]" />
+					</include>
+					<include content="HomeHeroEpisodeProbe">
+						<param name="season_id" value="$PARAM[season_id]" />
+						<param name="episode_id" value="$PARAM[episode_id]" />
+					</include>
 					<control type="image">
 						<left>80</left>
 						<top>40</top>
@@ -191,20 +207,31 @@
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Label]</label>
 						<visible>String.IsEmpty(Container($PARAM[list_id]).ListItem.Title) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(clearlogo)) + String.IsEmpty(Container($PARAM[list_id]).ListItem.Art(tvshow.clearlogo))</visible>
 					</control>
-					<!-- 紧凑态元数据 + 评分：同一条横向 grouplist，评分在前、年份/时长/类型在后。
-					     评分 0 / 1 / 2 颗都能自动补位，不再写死 left 580 / right 900。 -->
+				<!-- 紧凑态顶部。首页（compact_split=false）保持原样：评分 + 元数据同一行。 -->
 					<control type="group">
 						<left>80</left>
-						<top>$PARAM[ratings_top]</top>
-						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
+						<visible>!$PARAM[compact_split] + !$EXP[NaraHomeVideoExpanded]</visible>
 						<include content="NaraOnlineRatingsRow">
-							<param name="top" value="0" />
+							<param name="top" value="$PARAM[ratings_top]" />
 							<param name="width" value="820" />
 							<param name="align" value="left" />
 							<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
 							<param name="metadata" value="$PARAM[metadata]" />
 							<param name="metadata_visible" value="true" />
 						</include>
+					</control>
+					<!-- 电影/电视剧页（compact_split=true）：顶部只放元数据，评分抽到简介下方和技术参数同行。 -->
+					<control type="label">
+						<left>80</left>
+						<top>$PARAM[ratings_top]</top>
+						<width>820</width>
+						<height>36</height>
+						<font>font13</font>
+						<textcolor>text_secondary</textcolor>
+						<aligny>center</aligny>
+						<scroll>true</scroll>
+						<label>$PARAM[metadata]</label>
+						<visible>$PARAM[compact_split] + !$EXP[NaraHomeVideoExpanded]</visible>
 					</control>
 					<control type="textbox">
 						<visible>!$EXP[NaraHomeVideoExpanded]</visible>
@@ -217,6 +244,32 @@
 						<font>font12_large</font>
 						<textcolor>text_secondary</textcolor>
 						<label>$INFO[Container($PARAM[list_id]).ListItem.Plot]</label>
+					</control>
+					<!-- 紧凑态「评分 + 技术参数」同一行，放在简介下方（和详情页一致）。
+				         NaraOnlineRatingsRow 本身就是 grouplist，评分 + 图标自动横向排开。
+				         电影读条目自身流信息；剧集借代表集探针第一集。两条靠外层 group 的 visible 互斥。 -->
+					<!-- 电影 -->
+					<control type="group">
+						<left>80</left>
+						<top>$PARAM[tech_top]</top>
+						<visible>$PARAM[compact_split] + !$EXP[NaraHomeVideoExpanded] + !String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
+						<include content="NaraOnlineRatingsRow">
+							<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+							<param name="inline_flags" value="true" />
+							<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+						</include>
+					</control>
+					<!-- 剧集 -->
+					<control type="group">
+						<left>80</left>
+						<top>$PARAM[tech_top]</top>
+						<visible>$PARAM[compact_split] + !$EXP[NaraHomeVideoExpanded] + String.IsEqual(Container($PARAM[list_id]).ListItem.DBType,tvshow)</visible>
+						<include content="NaraOnlineRatingsRow">
+							<param name="item_prefix" value="Container($PARAM[list_id]).ListItem" />
+							<param name="inline_flags" value="true" />
+							<param name="technical_item_prefix" value="Container($PARAM[list_id]).ListItem" />
+							<param name="technical_episode_prefix" value="Container($PARAM[episode_id]).ListItemAbsolute(0)" />
+						</include>
 					</control>
 					<include content="HomeVideoHeroDetails" condition="!$PARAM[collection]">
 						<param name="list_id" value="$PARAM[list_id]" />
