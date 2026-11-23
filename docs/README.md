@@ -54,9 +54,14 @@ helper 的契约见 [`helper-plugin-plan.md`](helper-plugin-plan.md)（摘要）
   （内缘压进海报 2px，环才贴得住）。**不要给环加 `bordersize`**（会走九宫格）。
 - **`Window.Property(NaraMusic.*)` 已清理**：原先无写入方的下一首/歌词状态死属性 UI
   已在 2026-11-01 删除；以后要恢复，先补写入方（helper service 或 CU LRC 补丁）。
-- **背景遮罩**：真剧照压暗、`primary.jpg` 兜底不压；判据在 `Includes_Home.xml` 的三条
+- **背景遮罩**：真剧照压暗、兜底图不压；判据在 `Includes_Home.xml` 的三条
   `expression`，改 `HomeFanartVar` / `HomeVideoHeroFanartVar` 必须同步，
   `check_home_fanart_mask.py --check` 会拦。见 HANDOVER §5.11。
+- **兜底背景图**：全站 17 处走 `$VAR[NaraFallbackBackgroundVar]`，默认 `primary.jpg`；
+  用户可在设置 → 界面 → 自定义兜底背景图换图（没设时右侧显示「默认」），
+  设过图后下方才出现「恢复默认背景」清回渐变。
+  工具页/浮窗不放随机电影剧照（人脸透玻璃），
+  只剩首页文件·收藏与搜索空查询用随机图。见 HANDOVER §5.11.3。
 - **`<include condition="X">` 是加载时求值的**，按运行时状态切外观只能用 `<visible>` / `$VAR`。
 - **panel 不裁剪子控件**：想让行尾不露半张卡，得让"下一张起点 ≥ 1920"。
 - **排查「某窗口不跟设置走」**：① grep 写死的 `AARRGGBB` 板 → ② grep `<include condition=`

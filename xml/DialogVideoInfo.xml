@@ -82,7 +82,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background_info">$VAR[NaraFallbackBackgroundVar]</texture>
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>Skin.HasSetting(no_fanart)</visible>
 			</control>
@@ -92,7 +92,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_dim">$VAR[NaraFallbackBackgroundVar]</texture>
 				<animation effect="fade" start="0" end="100" time="260">WindowOpen</animation>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(landscape))</visible>
 			</control>

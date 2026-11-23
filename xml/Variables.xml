@@ -346,7 +346,7 @@
 	</variable>
 	<!-- 皮肤设置页的帮助条。**行级条件必须放在分类级前面** ——
 	     变量自上而下取第一条成立的 value，分类条件会一直成立，放前面就轮不到行级了。
-	     行级覆盖 40 个设置行；其余页仍回落到分类说明。 -->
+	     行级条件 40 个设置行 + 6 个 OSD 按钮；未覆盖的行回落到分类说明。 -->
 	<variable name="SkinSettingsHelpTextVar">
 		<value condition="Control.HasFocus(628)">$LOCALIZE[31854]</value>
 		<value condition="Control.HasFocus(719)">$LOCALIZE[31799]</value>
@@ -365,6 +365,8 @@
 		<value condition="Control.HasFocus(713)">$LOCALIZE[31743]</value>
 		<!-- 艺术图片 -->
 		<value condition="Control.HasFocus(605)">$LOCALIZE[31744]</value>
+		<value condition="Control.HasFocus(731)">$LOCALIZE[31857]</value>
+		<value condition="Control.HasFocus(732)">$LOCALIZE[31858]</value>
 		<value condition="Control.HasFocus(726)">$LOCALIZE[31830]</value>
 		<value condition="Control.HasFocus(729)">$LOCALIZE[31838]</value>
 		<value condition="Control.HasFocus(730)">$LOCALIZE[31843]</value>
@@ -1648,6 +1650,20 @@
 	<variable name="NaraImgSkinStringNaraMusicBackgroundDefMusicBackground">
 		<value condition="!String.IsEmpty(Skin.String(Nara.MusicBackground))">$INFO[Skin.String(Nara.MusicBackground)]</value>
 		<value>osd/nara/music-background.jpg</value>
+	</variable>
+	<!-- 全站兜底背景图（2026-11-23）：用户可在 设置→界面→兜底背景图 自选图片，
+	     替换所有原本铺 primary.jpg 的地方（设置页/浮窗/详情页缺图/海报墙兜底等）。
+	     不判路径是否仍存在（Kodi 变量无法判文件），失效时显示空白，用户重选即可。
+	     no_fanart 只关「媒体剧照」，不影响这张兜底图。 -->
+	<variable name="NaraFallbackBackgroundVar">
+		<value condition="!String.IsEmpty(Skin.String(NaraFallbackBackground))">$INFO[Skin.String(NaraFallbackBackground)]</value>
+		<value>special://skin/extras/backgrounds/primary.jpg</value>
+	</variable>
+	<!-- 设置行 731 右侧的值：选了显示路径，没选显示「默认」——
+	     否则 label2 空着，用户看不出当前是默认还是没设。 -->
+	<variable name="NaraFallbackBackgroundLabelVar">
+		<value condition="!String.IsEmpty(Skin.String(NaraFallbackBackground))">$INFO[Skin.String(NaraFallbackBackground)]</value>
+		<value>$LOCALIZE[31859]</value>
 	</variable>
 	<!-- BEGIN generated: technical flag maps -->
 	<variable name="NaraTechHdrPlayer">

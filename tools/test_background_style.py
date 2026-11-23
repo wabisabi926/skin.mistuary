@@ -48,8 +48,10 @@ class BackgroundStyleTest(unittest.TestCase):
         for name, prefix in (("DialogVideoInfo.xml", "ListItem"),
                              ("View_51_Poster.xml", "Container(51).ListItem")):
             with self.subTest(page=name):
+                # 2026-11-23：兜底图改走 NaraFallbackBackgroundVar（默认仍是 primary.jpg，
+                # 用户可在设置里换成自己的图），不能再按固定路径判。
                 primaries = [c for c in _controls(name)
-                             if "primary.jpg" in _texture(c)
+                             if "NaraFallbackBackgroundVar" in _texture(c)
                              and "!Skin.HasSetting(no_fanart)" in (c.findtext("visible") or "")]
                 self.assertTrue(primaries)
                 for primary in primaries:

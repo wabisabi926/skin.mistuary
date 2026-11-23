@@ -202,6 +202,27 @@
 					<onclick>Skin.ToggleSetting(no_fanart)</onclick>
 					<selected>!Skin.HasSetting(no_fanart)</selected>
 				</control>
+<control type="button" id="731">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31856]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.SetImage(NaraFallbackBackground)</onclick>
+					<label2>$VAR[NaraFallbackBackgroundLabelVar]</label2>
+				</control>
+<control type="button" id="732">
+					<textcolor>text_primary</textcolor>
+					<label>$LOCALIZE[31714]</label>
+					<include content="NaraSettingsRow">
+					<param name="text" value="text_primary" />
+				</include>
+					<onclick>Skin.Reset(NaraFallbackBackground)</onclick>
+					<onclick>SetFocus(731)</onclick>
+					<!-- 只在设过自定义图时出现：默认状态下这行无意义，
+					     而 731 的 label2 已经显示「默认」把状态说清了。 -->
+					<visible>!String.IsEmpty(Skin.String(NaraFallbackBackground))</visible>
+				</control>
 <control type="button" id="726">
 					<textcolor>text_primary</textcolor>
 					<label>$LOCALIZE[31825]</label>

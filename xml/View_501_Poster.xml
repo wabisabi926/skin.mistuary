@@ -15,13 +15,13 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>Skin.HasSetting(no_fanart)</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_dim">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(501).ListItem.Art(fanart))</visible>
 			</control>
 			<control type="image" id="5090">

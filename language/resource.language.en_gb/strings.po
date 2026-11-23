@@ -1627,3 +1627,19 @@ msgstr "With E4K installed choose Emby; for local libraries choose Local Kodi. D
 msgctxt "#31855"
 msgid "Description"
 msgstr "Description"
+
+msgctxt "#31856"
+msgid "Custom fallback background image"
+msgstr "Custom fallback background image"
+
+msgctxt "#31857"
+msgid "Used on pages without background artwork; built-in gradient when unset. Not affected by Show media fanart."
+msgstr "Used on pages without background artwork; built-in gradient when unset. Not affected by Show media fanart."
+
+msgctxt "#31858"
+msgid "Clears the chosen image and restores the built-in gradient."
+msgstr "Clears the chosen image and restores the built-in gradient."
+
+msgctxt "#31859"
+msgid "Default"
+msgstr "Default"

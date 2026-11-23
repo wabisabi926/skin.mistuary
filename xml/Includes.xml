@@ -1000,7 +1000,7 @@
 			<depth>DepthBackground</depth>
 			<include>FullScreenDimensions</include>
 			<aspectratio>scale</aspectratio>
-			<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+			<texture colordiffuse="primary_background">$VAR[NaraFallbackBackgroundVar]</texture>
 		</control>
 	</include>
 	<include name="DefaultBackground">

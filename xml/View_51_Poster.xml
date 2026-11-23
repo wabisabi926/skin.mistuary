@@ -17,13 +17,13 @@
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>Skin.HasSetting(no_fanart)</visible>
 			</control>
 			<control type="image">
 				<include>FullScreenDimensions</include>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_dim">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(51).ListItem.Art(fanart)) + String.IsEmpty(Container(51).ListItem.Art(landscape))</visible>
 			</control>
 			<control type="image">
@@ -418,7 +418,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_background_info">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_background_info">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>Skin.HasSetting(no_fanart)</visible>
 			</control>
 			<control type="image">
@@ -427,7 +427,7 @@
 				<right>-120</right>
 				<bottom>-80</bottom>
 				<aspectratio>scale</aspectratio>
-				<texture colordiffuse="primary_dim">special://skin/extras/backgrounds/primary.jpg</texture>
+				<texture colordiffuse="primary_dim">$VAR[NaraFallbackBackgroundVar]</texture>
 				<visible>!Skin.HasSetting(no_fanart) + String.IsEmpty(Container(51).ListItem.Art(fanart)) + String.IsEmpty(Container(51).ListItem.Art(landscape))</visible>
 			</control>
 			<!-- 2026-11-19：与详情页统一为 scale 铺满裁切；fanart → landscape，竖版 thumb 不做满屏。 -->

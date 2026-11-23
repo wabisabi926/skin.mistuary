@@ -1406,3 +1406,19 @@ msgstr "装了 E4K 选 Emby，纯本地媒体库选本地 Kodi；默认自动。
 msgctxt "#31855"
 msgid "Description"
 msgstr "简介"
+
+msgctxt "#31856"
+msgid "Custom fallback background image"
+msgstr "自定义兜底背景图"
+
+msgctxt "#31857"
+msgid "Used on pages without background artwork; built-in gradient when unset. Not affected by Show media fanart."
+msgstr "无背景图的页面使用此图；未设置时使用内置渐变。不受“显示媒体背景图”影响。"
+
+msgctxt "#31858"
+msgid "Clears the chosen image and restores the built-in gradient."
+msgstr "清除已选图片，恢复内置渐变。"
+
+msgctxt "#31859"
+msgid "Default"
+msgstr "默认"

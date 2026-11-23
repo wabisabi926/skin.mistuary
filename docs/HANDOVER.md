@@ -1079,6 +1079,34 @@ Home 上 zoom 到 150%（133% / 120%），乘完正好 1920×1080，**稳态等�
 `zoom` 的 `end` 不支持 `$VAR`，所以目前不做「居中 / 偏右」运行时开关：
 要做只能复制整组背景并用 `Skin.HasSetting()` 互斥显隐，层数和维护成本都会上去。
 
+#### 5.11.3 工具页背景与自定义兜底图（2026-11-23 定）
+
+**工具页不再用随机电影剧照**（人脸透过半透明玻璃影响阅读，而且这些页面与具体影视无关）：
+- 全屏页：`NaraSettingsBackground`（设置七页 / AddonBrowser / EventLog）与 `FileManager.xml`
+  删掉 16090 随机列表 + 剧照层，只剩 `DefaultBackground` 的兜底图。
+- 浮窗：`NaraDialogFanartBase`（15 个对话框共用）、插件详情 / 插件设置、文件浏览器、
+  媒体源对话框、文本查看器 —— **保留不透明底层**（删了会让浮窗互透成鬼影），
+  贴图从随机剧照换成兜底图。插件自己的 fanart 层照旧盖在上面。
+- 仍用随机剧照的只剩两处：首页「文件·收藏」（`Home.xml:129`）与搜索空查询
+  （`Includes_Search.xml:589`），它们是首页全屏页，视觉要与其他分区一致。
+- `no_fanart` 之前那条"纯 primary.jpg 会糊"的结论是 2026-11-05 特定条件下的产物，
+  现已证伪：实测纯兜底图配玻璃面板层次清楚。别再拿旧结论反对这个方案。
+
+**用户可自定义兜底图**：设置 → 界面 → 自定义兜底背景图（id 731，`Skin.SetImage(NaraFallbackBackground)`）；
+紧接其下的「恢复默认背景」（id 732，`Skin.Reset(NaraFallbackBackground)` + `SetFocus(731)`）清掉自定义图回到内置渐变。
+**732 用 `<visible>` 只在设过图时出现，不是 `enable` 占位**：默认状态下这行没有可执行的事，
+而 731 的 `label2` 已经显示「默认」把状态讲清楚了；`SetFocus(731)` 是因为点完自己就消失，
+不给焦点目标会落到相邻行。（音乐背景图那一对用 `enable` 占位，两处不一样，别再互相对齐。）
+- 变量 `NaraFallbackBackgroundVar`（`Variables.xml`）：有 `Skin.String(NaraFallbackBackground)`
+  就用它，否则用 `special://skin/extras/backgrounds/primary.jpg`。
+- 变量 `NaraFallbackBackgroundLabelVar`：只给 731 的 `label2` 用——选了显示路径，
+  没选显示「默认」（`#31859`），否则 label2 空着分不清"没设"和"设了空的"。
+- **全站生效**：17 处原本写死 primary.jpg 的 `<texture>` 全部换成该变量
+  （`ColoredBackgroundImages`、详情页兜底、View_51/501、搜索、本轮工具页与浮窗）。
+- 不受 `no_fanart` 影响：那个开关只管"媒体剧照"，兜底图始终显示。
+- 不做路径失效回退：Kodi 变量判不了文件是否存在，图被移走会显示空白，用户重选或点恢复默认即可。
+- 测试锁死：`test_background_style` 与 `test_nara_neutral_fanart` 按变量名断言，不再按路径。
+
 ### 5.12 播放/暂停图标：音乐与视频共用一套（2026-10-31 定）
 
 - 视频 OSD（`NaraVideoOSDPlayButton`）和音乐 OSD（`NaraMusicOSDButtonPrimary`）

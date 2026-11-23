@@ -95,20 +95,21 @@ class FanartDimTest(unittest.TestCase):
                                  f'{name} 还在用随机剧照，应改 primary.jpg')
 
     def test_dialog_base_is_opaque_primary(self):
-        """浮窗不透明底层必须是 primary.jpg + primary_background，挡住下层窗口文字。"""
+        """浮窗不透明底层必须是兜底背景变量 + primary_background，挡住下层窗口文字。
+        2026-11-23：贴图从固定 primary.jpg 改为 NaraFallbackBackgroundVar（用户可自定义）。"""
         root = parse('Includes_DialogGlass.xml')
         for include in root.iter('include'):
             if include.get('name') != 'NaraDialogFanartBase':
                 continue
             textures = [c.findtext('texture') or ''
                         for c in include.iter('control') if c.find('texture') is not None]
-            self.assertTrue(any('primary.jpg' in t for t in textures),
-                            'NaraDialogFanartBase 底层应铺 primary.jpg')
+            self.assertTrue(any('NaraFallbackBackgroundVar' in t for t in textures),
+                            'NaraDialogFanartBase 底层应铺兜底背景变量')
             for c in include.iter('control'):
                 texture = c.find('texture')
-                if texture is not None and 'primary.jpg' in (texture.text or ''):
+                if texture is not None and 'NaraFallbackBackgroundVar' in (texture.text or ''):
                     self.assertEqual(texture.get('colordiffuse'), 'primary_background',
-                                     'primary.jpg 必须不透明，否则浮窗互透鬼影')
+                                     '兜底背景必须不透明，否则浮窗互透鬼影')
             return
         self.fail('NaraDialogFanartBase 不存在')
 
