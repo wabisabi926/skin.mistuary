@@ -803,8 +803,8 @@
 			<texture colordiffuse="66000000">colors/black.png</texture>
 		</control>
 	</include>
-	<!-- 共享剧照的显隐。显隐集中在一条表达式，避免各页条件各自漂移。 -->
-	<expression name="nara_page_shared_fanart_visible">!Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))] + ![Player.HasVideo | Player.HasGame]</expression>
+	<!-- 2026-11-23：nara_page_shared_fanart_visible 已删除（工具页背景改 primary.jpg，
+	     只剩首页文件/收藏与搜索空查询用随机剧照，它们的显隐写在各自 group 的 visible 里）。 -->
 	<!-- 搜索页空查询随机剧照的显隐。搜索结果剧照是不透明的，不需要中性底。 -->
 	<expression name="nara_search_empty_fanart_visible">String.IsEmpty(Control.GetLabel(16999).index(1)) + !Skin.HasSetting(no_fanart) + ![String.IsEmpty(Skin.String(Nara.SharedRandomFanart.LockedPath)) + String.IsEmpty(Window(home).Property(Home.SharedRandomFanart.SessionPath)) + String.IsEmpty(Container(16090).ListItem.Art(fanart))]</expression>
 	<!-- 系统键盘弹窗（DialogKeyboard）从搜索页弹出时，弹窗自绘的背景整层让位：
@@ -816,7 +816,7 @@
 	     窗口名必须是 virtualkeyboard（= 10103）。dialogkeyboard / keyboard 都解析不到，
 	     前者还会让 log 刷 Window Translator 报错、条件恒假 —— 2026-11-14 实机踩过。 -->
 	<expression name="nara_keyboard_search_backdrop">String.IsEqual(Window(home).Property(Home.Section),search) + Window.IsActive(virtualkeyboard)</expression>
-	<expression name="nara_dialog_fanart_visible">$EXP[nara_page_shared_fanart_visible] + !$EXP[nara_keyboard_search_backdrop]</expression>
+	<!-- 2026-11-23：nara_dialog_fanart_visible 已删除（浮窗不透明底改 primary.jpg，无条件显示）。 -->
 	<include name="DialogBackgroundCommons">
 		<!-- darken_bg 以前从未声明默认值、也没有调用点传它，遮蔽层能显示纯属运气：
 		     Kodi 的 CGUIControlFactory::GetConditionalVisibility 用 `if (!node->NoChildren())`

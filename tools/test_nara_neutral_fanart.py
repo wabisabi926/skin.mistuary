@@ -13,10 +13,15 @@
 照片不透明，所以不需要再垫一层中性底，玻璃面板背后照样有明暗层次。
 
 这套契约有四条，破了就会重新出现「某页发紫」或「某页过亮」：
-1. 十五个 fanart 底层统一用 `$VAR[NaraFanartDimVar]`，不再按页写死 0.50/0.66；
+1. 仍用随机剧照的层统一用 `$VAR[NaraFanartDimVar]`，不再按页写死 0.50/0.66；
 2. 必须不透明（alpha FF），否则 primary 的蓝紫会透上来；
 3. 系数必须是中性（R=G=B），带色偏等于换个方向染色；
 4. 不能再引入中性底 / 半透明叠灰这类额外图层。
+
+2026-11-23：工具页（设置七页 / 文件管理 / 各浮窗 / 插件详情·设置）的随机电影剧照
+全部换成 primary.jpg，只剩首页「文件·收藏」与搜索空查询两处保留随机剧照。
+原因：人脸透过玻璃影响阅读，而这些页面与具体影视无关。
+浮窗的不透明底层结构必须保留（否则下层窗口文字透成鬼影），只是贴图换成 primary.jpg。
 
 这些约束 audit_skin.py 发现不了（它不检查 expression），所以用测试锁住。
 """
@@ -50,7 +55,8 @@ def all_expressions():
 
 
 def fanart_layers():
-    """剧照层：background="true" 且纹理是共享随机剧照变量（不是固定路径）。"""
+    """随机剧照层：background="true" 且纹理是共享随机剧照变量（不是固定路径）。
+    2026-11-23 起只剩首页文件/收藏与搜索空查询两处；其余工具页改 primary.jpg。"""
     layers = []
     for path in sorted(XML.glob('*.xml')):
         for control in parse(path.name).iter('control'):
@@ -70,18 +76,47 @@ class FanartDimTest(unittest.TestCase):
         cls.layers = fanart_layers()
         cls.expressions = all_expressions()
 
-    def test_fanart_layer_count_is_ten(self):
+    def test_fanart_layer_count_is_two(self):
+        """工具页已改 primary.jpg，只剩首页文件/收藏与搜索空查询用随机剧照。"""
         where = sorted(name for name, _, _ in self.layers)
-        self.assertEqual(len(self.layers), 10, where)
-        self.assertEqual(where, ['Custom_1102_TextViewer.xml', 'DialogAddonInfo.xml',
-                                 'DialogAddonSettings.xml', 'DialogMediaSource.xml',
-                                 'FileBrowser.xml', 'FileManager.xml', 'Home.xml',
-                                 'Includes_DialogGlass.xml', 'Includes_Search.xml',
-                                 'Includes_Settings.xml'])
+        self.assertEqual(len(self.layers), 2, where)
+        self.assertEqual(where, ['Home.xml', 'Includes_Search.xml'])
+
+    def test_tool_pages_use_primary_jpg_not_random_fanart(self):
+        """设置七页 / 文件管理 / 各浮窗 / 插件详情·设置不得再引用随机剧照变量。"""
+        tool_pages = ['Includes_Settings.xml', 'FileManager.xml', 'FileBrowser.xml',
+                      'DialogMediaSource.xml', 'Custom_1102_TextViewer.xml',
+                      'Includes_DialogGlass.xml', 'DialogAddonInfo.xml',
+                      'DialogAddonSettings.xml']
+        for name in tool_pages:
+            with self.subTest(file=name):
+                text = (XML / name).read_text(encoding='utf-8')
+                self.assertNotIn('RandomFanartVar', text,
+                                 f'{name} 还在用随机剧照，应改 primary.jpg')
+
+    def test_dialog_base_is_opaque_primary(self):
+        """浮窗不透明底层必须是 primary.jpg + primary_background，挡住下层窗口文字。"""
+        root = parse('Includes_DialogGlass.xml')
+        for include in root.iter('include'):
+            if include.get('name') != 'NaraDialogFanartBase':
+                continue
+            textures = [c.findtext('texture') or ''
+                        for c in include.iter('control') if c.find('texture') is not None]
+            self.assertTrue(any('primary.jpg' in t for t in textures),
+                            'NaraDialogFanartBase 底层应铺 primary.jpg')
+            for c in include.iter('control'):
+                texture = c.find('texture')
+                if texture is not None and 'primary.jpg' in (texture.text or ''):
+                    self.assertEqual(texture.get('colordiffuse'), 'primary_background',
+                                     'primary.jpg 必须不透明，否则浮窗互透鬼影')
+            return
+        self.fail('NaraDialogFanartBase 不存在')
 
     def test_shared_dialog_base_is_wired_into_settings_dialogs(self):
         """浮窗的不透明底层统一走 NaraDialogFanartBase（Includes_DialogGlass.xml）。
 
+        2026-11-23 起这层铺 primary.jpg（不再是随机剧照），但仍必须保留：
+        否则浮窗叠在别的窗口上会透出下层的行和文字。
         这一层必须放在窗口 <controls> 顶层第一行 —— 放进居中的面板 group 里时
         FullScreenDimensions 会从面板左上角算起，在宽屏上右侧/下侧露底。
         所以这里同时断言「引用了 include」和「它是 <controls> 的第一个孩子」。
