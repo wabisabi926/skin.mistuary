@@ -26,7 +26,7 @@ msgstr "显示媒体背景图"
 
 msgctxt "#31004"
 msgid "Change mode"
-msgstr "改变模式"
+msgstr "切换模式"
 
 msgctxt "#31005"
 msgid "Watch as 2D"
@@ -849,7 +849,7 @@ msgstr "收藏夹以横版卡片显示；关闭后为竖版海报，与电影/�
 
 msgctxt "#31701"
 msgid "No lyrics for this track"
-msgstr "这首歌暂无歌词"
+msgstr "当前曲目暂无歌词"
 
 #: /xml/Custom_1113_MusicAudioDialog.xml
 
@@ -1033,7 +1033,7 @@ msgstr "播放 OSD 与播放控制条的不透明度；档位越高越不透明�
 
 msgctxt "#31744"
 msgid "Media pages use fanart as background, other pages use the fallback image. On by default."
-msgstr "影视页面以剧照为背景，其余页面使用兜底图。默认开启。"
+msgstr "影视页面以背景图为底，其余页面使用兜底图。默认开启。"
 
 msgctxt "#31745"
 msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
@@ -1125,7 +1125,7 @@ msgstr "对话框透明度 — 档位以透黑主题调校，透白主题下观�
 
 msgctxt "#31761"
 msgid "Opacity of dialogs, menus, keyboard and settings popups; higher levels are more opaque. Default Dense."
-msgstr "对话框、菜单、键盘与设置弹窗的不透明度；档位越高越不透明。默认“偏实”。"
+msgstr "对话框、菜单、键盘与浮层的不透明度；档位越高越不透明。默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
@@ -1337,11 +1337,11 @@ msgstr "所有页面背景的压暗浓度；档位越高压暗越强。默认较
 
 msgctxt "#31835"
 msgid "No media library found. Add a local video library or install the Emby add-on and sync."
-msgstr "还没有媒体库，请先添加本地视频库或安装 Emby 插件并同步"
+msgstr "媒体库为空。请添加本地视频库，或安装 Emby 插件并同步。"
 
 msgctxt "#31836"
 msgid "Nothing is in progress yet. Start watching something."
-msgstr "还没有正在观看的内容，先播放一些视频吧"
+msgstr "暂无续播内容。播放视频后将在此显示。"
 
 msgctxt "#31837"
 msgid "Home background rotation"
@@ -1389,11 +1389,11 @@ msgstr "当前"
 
 msgctxt "#31848"
 msgid "No versions available"
-msgstr "没有可用的版本"
+msgstr "无可用版本"
 
 msgctxt "#31849"
 msgid "Emby is connected, but the library is still empty. Sync your library first."
-msgstr "Emby 已连接，但媒体库还没有内容，请先同步媒体库"
+msgstr "Emby 已连接，媒体库为空。请同步媒体库。"
 
 msgctxt "#31850"
 msgid "Media library source"

@@ -57,7 +57,7 @@ class VersionsPanelTest(unittest.TestCase):
         for cid, zh, en in ((31845, "选择版本", "Select version"),
                             (31846, "管理版本", "Manage versions"),
                             (31847, "当前", "Current"),
-                            (31848, "没有可用的版本", "No versions available")):
+                            (31848, "无可用版本", "No versions available")):
             with self.subTest(id=cid):
                 po_zh = (ROOT / "language" / "resource.language.zh_cn" / "strings.po").read_text(encoding="utf-8")
                 po_en = (ROOT / "language" / "resource.language.en_gb" / "strings.po").read_text(encoding="utf-8")
