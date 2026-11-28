@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""详情页「更多 → 相似影片」入口契约。
+"""详情页「更多 → 相似内容」入口契约。
 
 - 只对库里的 movie/tvshow 出现（DBID>0）；
 - 详情是模态窗口：More 项交给 5230 继电器，先存 URL、关详情，再 ActivateWindow；
@@ -52,7 +52,7 @@ class SimilarEntryTest(unittest.TestCase):
         self.assertIn("<top>345</top>", self.info)
 
     def test_string_exists_in_both_languages(self):
-        for lang, text in (("zh_cn", "相似影片"), ("en_gb", "Similar titles")):
+        for lang, text in (("zh_cn", "相似内容"), ("en_gb", "Similar titles")):
             with self.subTest(lang=lang):
                 po = (ROOT / "language" / ("resource.language.%s" % lang) / "strings.po").read_text(
                     encoding="utf-8")

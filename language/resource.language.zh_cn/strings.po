@@ -188,11 +188,11 @@ msgstr "原始标题"
 
 msgctxt "#31050"
 msgid "Original title (Localised title)"
-msgstr "原标题（本地化标题）"
+msgstr "原始标题（本地化标题）"
 
 msgctxt "#31051"
 msgid "Localised title (Original title)"
-msgstr "本地化标题（原标题）"
+msgstr "本地化标题（原始标题）"
 
 msgctxt "#31052"
 msgid "filtered"
@@ -418,7 +418,7 @@ msgstr "动态背景"
 
 msgctxt "#31168"
 msgid "Music video posters"
-msgstr "音乐视频显示海报"
+msgstr "音乐视频海报"
 
 #. Description label for skin settings area
 
@@ -449,7 +449,7 @@ msgstr "视频 OSD 隐藏延迟（秒）"
 
 msgctxt "#31174"
 msgid "Default action for music albums"
-msgstr "音乐专辑的默认打开方式"
+msgstr "音乐专辑默认动作"
 
 #. Setting to control the default action for a TV show
 
@@ -457,7 +457,7 @@ msgstr "音乐专辑的默认打开方式"
 
 msgctxt "#31176"
 msgid "Default action for movie sets"
-msgstr "电影集的默认打开方式"
+msgstr "电影集默认动作"
 
 msgctxt "#31177"
 msgid "Radio is not available in this skin."
@@ -735,7 +735,7 @@ msgstr "修改时间"
 
 msgctxt "#31677"
 msgid "Disc image"
-msgstr "镜像"
+msgstr "光盘镜像"
 
 #: /xml/Variables.xml
 
@@ -839,7 +839,7 @@ msgstr "收藏夹横版卡片"
 
 msgctxt "#31698"
 msgid "Favourites shown as landscape cards; off switches to portrait posters, matching movies and TV shows."
-msgstr "收藏夹以横版卡片显示；关闭后为竖版海报，与电影/电视剧一致。"
+msgstr "收藏夹以横版卡片显示；关闭后为竖版海报，与电影和电视剧一致。"
 
 #: /xml/MusicVisualisation.xml
 
@@ -857,19 +857,19 @@ msgstr "静音"
 
 msgctxt "#31705"
 msgid "Movies in library"
-msgstr "馆藏影片"
+msgstr "媒体库影片"
 
 #: /xml/Includes_HomeVideo.xml
 
 msgctxt "#31706"
 msgid "Average movie rating"
-msgstr "影片均分"
+msgstr "影片平均评分"
 
 #: /xml/Includes_HomeVideo.xml
 
 msgctxt "#31707"
 msgid "Latest movie year"
-msgstr "最新年份"
+msgstr "最新影片年份"
 
 #: /xml/Includes_HomeVideo.xml
 
@@ -957,7 +957,7 @@ msgstr "通透"
 
 msgctxt "#31725"
 msgid "Balanced"
-msgstr "平衡"
+msgstr "均衡"
 
 msgctxt "#31726"
 msgid "Dense"
@@ -989,7 +989,7 @@ msgstr "主评分来源"
 
 msgctxt "#31734"
 msgid "Show the login screen before entering the main menu, so you can pick a user."
-msgstr "启动 Kodi 时先选择用户，再进入主界面。"
+msgstr "进入主菜单前显示登录界面，以便选择用户。"
 
 msgctxt "#31735"
 msgid "Log in as the selected user at startup and skip the login screen."
@@ -997,7 +997,7 @@ msgstr "启动时以选定用户自动登录，跳过用户选择界面。"
 
 msgctxt "#31736"
 msgid "Auto-scroll long plots instead of paging. Off by default."
-msgstr "长剧情自动滚动，替代手动翻页。默认关闭。"
+msgstr "长剧情简介自动滚动，无需手动翻页。默认关闭。"
 
 msgctxt "#31737"
 msgid "Cover order: custom folder → add-on sync → fallback; file name must match the library name."
@@ -1017,11 +1017,11 @@ msgstr "主评分取值来源：TMDb、IMDb、豆瓣或自动；默认 TMDb。"
 
 msgctxt "#31741"
 msgid "Follows the language setting; or fixes the original title, or the order of original/localised titles."
-msgstr "默认跟随语言设置；也可固定原始标题，或调整原名/译名的先后顺序。"
+msgstr "跟随语言设置；也可固定显示原始标题，或调整原始标题与本地化标题的顺序。"
 
 msgctxt "#31742"
 msgid "Opacity for pages, the settings page/sidebar and cards; higher is more opaque. Balanced by default."
-msgstr "页面、设置页/侧栏与卡片的不透明度；档位越高越不透明。默认平衡。"
+msgstr "页面、设置页面、侧栏与卡片的不透明度；档位越高越不透明。默认均衡。"
 
 msgctxt "#31743"
 msgid "Opacity for the playback OSD and player controls; higher is more opaque. Light by default."
@@ -1029,7 +1029,7 @@ msgstr "播放 OSD 与播放控制条的不透明度；档位越高越不透明�
 
 msgctxt "#31744"
 msgid "Media pages use fanart as background, other pages use the fallback image. On by default."
-msgstr "影视页面以背景图为底，其余页面使用兜底图。默认开启。"
+msgstr "媒体页面以背景图为底，其余页面使用兜底图。默认开启。"
 
 msgctxt "#31745"
 msgid "Show posters for music videos in lists; off shows thumbnails. Off by default."
@@ -1045,7 +1045,7 @@ msgstr "选择该行显示的内容：最近添加、继续观看、随机等。
 
 msgctxt "#31748"
 msgid "Default action: Browse. Alternatively play or queue the item."
-msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
+msgstr "默认动作：浏览；也可播放或加入播放队列。"
 
 msgctxt "#31749"
 msgid "Show TV shows in the main menu. On by default."
@@ -1065,7 +1065,7 @@ msgstr "选择该行显示的内容：最近添加、继续观看、随机等。
 
 msgctxt "#31754"
 msgid "Default action: Browse. Alternatively play or queue the album."
-msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
+msgstr "默认动作：浏览；也可播放或加入播放队列。"
 
 msgctxt "#31755"
 msgid "Show TV in the main menu. On by default."
@@ -1105,7 +1105,7 @@ msgstr "首页"
 
 msgctxt "#31773"
 msgid "Technical flags show brand icons; turn off to use text if they are hard to read."
-msgstr "技术标识默认显示品牌图标；不易辨识时关闭，改用文字。"
+msgstr "技术标识显示品牌图标；难以辨认时可关闭并改用文字。"
 
 msgctxt "#31759"
 msgid "Dialog transparency"
@@ -1117,7 +1117,7 @@ msgstr "对话框透明度 — 档位以透黑主题调校，透白主题下观�
 
 msgctxt "#31761"
 msgid "Opacity of dialogs, menus, keyboard and settings popups; higher levels are more opaque. Default Dense."
-msgstr "对话框、菜单、键盘与浮层的不透明度；档位越高越不透明。默认“偏实”。"
+msgstr "对话框、菜单、键盘与弹出窗口的不透明度；档位越高越不透明。默认“偏实”。"
 
 msgctxt "#31762"
 msgid "Technical flags as icons"
@@ -1169,7 +1169,7 @@ msgstr "使用 Emby 服务端搜索"
 
 msgctxt "#31781"
 msgid "Search original titles, full pinyin and initials via Emby; cast and genre need Chinese input. On by default."
-msgstr "经 Emby 服务端检索原名、全拼与首字母；演员、类型须中文输入。默认开启。"
+msgstr "经 Emby 服务端检索原始标题、全拼与首字母；演员、类型须中文输入。默认开启。"
 
 msgctxt "#31782"
 msgid "Show Douban rating on info page"
@@ -1185,7 +1185,7 @@ msgstr "已启用"
 
 msgctxt "#31790"
 msgid "Douban (StrmAssistant)"
-msgstr "豆瓣（神医助手）"
+msgstr "豆瓣（StrmAssistant）"
 
 msgctxt "#31791"
 msgid "Auto"
@@ -1261,7 +1261,7 @@ msgstr "跨季补全"
 
 msgctxt "#31812"
 msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
-msgstr "详情页显示豆瓣评分且库里没有时联网补分；关闭后不请求。默认开启。"
+msgstr "媒体库无豆瓣评分时，在详情页联网获取。默认开启。"
 
 msgctxt "#31813"
 msgid "From the current episode, add later episodes in the same season to the playlist. Earlier episodes are not added."
@@ -1269,7 +1269,7 @@ msgstr "从当前集开始，将本季后续剧集加入播放列表；不加入
 
 msgctxt "#31814"
 msgid "File manager only: add later episode files or music tracks to the playlist. Movies are not supported."
-msgstr "仅文件管理器：将后续剧集或音乐加入播放列表；电影不适用。"
+msgstr "仅文件管理器：将后续剧集文件或音乐曲目加入播放列表；不支持电影。"
 
 msgctxt "#31815"
 msgid "Requires Rest of season. After the season ends, add the first unwatched episode of the next season."
@@ -1281,7 +1281,7 @@ msgstr "电源"
 
 msgctxt "#31817"
 msgid "Reboot to Android"
-msgstr "重启到安卓"
+msgstr "重启至 Android"
 
 msgctxt "#31818"
 msgid "File playback resume"
@@ -1297,7 +1297,7 @@ msgstr "立即同步媒体库封面"
 
 msgctxt "#31822"
 msgid "Remember the playback position of file-manager videos and prompt to continue."
-msgstr "记录文件管理器中的视频进度，起播时提示继续播放。"
+msgstr "记录文件管理器中的视频播放位置，开始播放时提示继续播放。"
 
 msgctxt "#31823"
 msgid "Sync library covers from Emby; file names must match library names."
@@ -1325,11 +1325,11 @@ msgstr "最重"
 
 msgctxt "#31830"
 msgid "Dimming of background artwork on all pages; higher levels dim more. Default Light."
-msgstr "所有页面背景的压暗浓度；档位越高压暗越强。默认较轻。"
+msgstr "所有页面背景图的压暗程度；档位越高，压暗越强。默认较轻。"
 
 msgctxt "#31835"
 msgid "No media library found. Add a local video library or install the Emby add-on and sync."
-msgstr "媒体库为空。请添加本地视频库，或安装 Emby 插件并同步。"
+msgstr "未找到媒体库。请添加本地视频媒体库，或安装 Emby 插件并同步。"
 
 msgctxt "#31836"
 msgid "Nothing is in progress yet. Start watching something."
@@ -1341,11 +1341,11 @@ msgstr "首页背景轮播"
 
 msgctxt "#31838"
 msgid "With nothing focused on Home, the background switches every 5 seconds; off keeps the first item."
-msgstr "首页无焦点时背景每 5 秒切换一次；关闭后保持首项。"
+msgstr "首页未选中任何项目时，背景每 5 秒切换一次；关闭后保持首项。"
 
 msgctxt "#31839"
 msgid "Artwork glow strength"
-msgstr "色光强度"
+msgstr "图片光晕强度"
 
 msgctxt "#31840"
 msgid "Off"
@@ -1365,7 +1365,7 @@ msgstr "背景图边缘的彩色光晕强度；柔和档降低强度，关闭后
 
 msgctxt "#31844"
 msgid "Similar titles"
-msgstr "相似影片"
+msgstr "相似内容"
 
 msgctxt "#31845"
 msgid "Select version"
@@ -1405,7 +1405,7 @@ msgstr "本地 Kodi"
 
 msgctxt "#31854"
 msgid "Choose Emby when E4K is installed, Local Kodi for a local library. Default Auto."
-msgstr "安装 E4K 时选 Emby，纯本地库选本地 Kodi；默认自动。"
+msgstr "安装 E4K 时选择 Emby；使用本地媒体库时选择本地 Kodi。默认自动。"
 
 msgctxt "#31855"
 msgid "Description"
@@ -1429,4 +1429,4 @@ msgstr "默认"
 
 msgctxt "#31860"
 msgid "Home"
-msgstr "主页"
+msgstr "首页"
