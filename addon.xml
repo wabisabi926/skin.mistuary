@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.mistuary" name="Mistuary" version="2.4.3" provider-name="wabisabi926">
+<addon id="skin.mistuary" name="Mistuary" version="2.4.4" provider-name="wabisabi926">
 	<requires>
 		<import addon="xbmc.gui" version="5.18.0"/>
-		<import addon="script.mistuary.helper" version="0.6.0"/>
+		<import addon="script.mistuary.helper" version="0.6.2"/>
 	</requires>
 	<extension point="xbmc.gui.skin" debugging="false">
 		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
@@ -26,7 +26,8 @@
 电影、剧集、季、集、评分与库封面开箱即用。
 
 Mistuary Helper 提供：详情页豆瓣评分、媒体库封面同步、
-播放列表补全（按季 / 按目录 / 跨季）与文件播放记录（不写 Kodi 原生续播点）。
+播放列表补全（媒体库剧集按季 / 跨季，文件管理器只补剧集 / 音乐，电影不补全）
+与文件播放记录（不写 Kodi 原生续播点）。自定义电影 / 电视剧面板服从 Kodi 原生选择与播放动作。
 
 搜索走 Emby 服务端，支持中文 / 原名 / 全拼 / 首字母 / 英文人名 / 类型；
 搜索页支持全键盘输入与手机 App 文本注入。
@@ -43,8 +44,9 @@ With Emby for Kodi Next Gen installed and signed in, your library syncs into Kod
 movies, shows, seasons, episodes, ratings and library covers work out of the box.
 
 Mistuary Helper provides Douban ratings in the video info dialog, library cover sync,
-playlist completion (by season / folder / next season) and file playback resume
-(Kodi's native resume points are not touched).
+playlist completion (library episodes by season / next season; file-manager episodes and
+music by folder; movies are never completed), and file playback resume without touching
+Kodi's native resume points. Custom movie and TV panels follow Kodi's native select and play actions.
 
 Search runs on the Emby server and matches Chinese titles, original titles, full pinyin,
 initials, English names and genres; the search page supports full keyboard input and
