@@ -95,8 +95,9 @@ class FanartDimTest(unittest.TestCase):
                                  f'{name} 还在用随机剧照，应改 primary.jpg')
 
     def test_dialog_base_is_opaque_primary(self):
-        """浮窗不透明底层必须是兜底背景变量 + primary_background，挡住下层窗口文字。
-        2026-11-23：贴图从固定 primary.jpg 改为 NaraFallbackBackgroundVar（用户可自定义）。"""
+        """非播放时浮窗底层必须是兜底背景变量 + primary_background，挡住下层窗口文字。
+        2026-11-23：贴图从固定 primary.jpg 改为 NaraFallbackBackgroundVar（用户可自定义）；
+        视频 / 音乐 / 游戏播放中必须隐藏，直接透出播放画面。"""
         root = parse('Includes_DialogGlass.xml')
         for include in root.iter('include'):
             if include.get('name') != 'NaraDialogFanartBase':
@@ -110,14 +111,17 @@ class FanartDimTest(unittest.TestCase):
                 if texture is not None and 'NaraFallbackBackgroundVar' in (texture.text or ''):
                     self.assertEqual(texture.get('colordiffuse'), 'primary_background',
                                      '兜底背景必须不透明，否则浮窗互透鬼影')
+                    self.assertEqual(c.findtext('visible'),
+                                     '![Player.HasVideo | Player.HasAudio | Player.HasGame]',
+                                     '播放中必须隐藏兜底图，直接透出播放画面')
             return
         self.fail('NaraDialogFanartBase 不存在')
 
     def test_shared_dialog_base_is_wired_into_settings_dialogs(self):
         """浮窗的不透明底层统一走 NaraDialogFanartBase（Includes_DialogGlass.xml）。
 
-        2026-11-23 起这层铺 primary.jpg（不再是随机剧照），但仍必须保留：
-        否则浮窗叠在别的窗口上会透出下层的行和文字。
+        2026-11-23 起这层铺兜底图（不再是随机剧照），非播放时仍必须保留：
+        否则浮窗叠在别的窗口上会透出下层的行和文字；播放中由 visible 条件隐藏。
         这一层必须放在窗口 <controls> 顶层第一行 —— 放进居中的面板 group 里时
         FullScreenDimensions 会从面板左上角算起，在宽屏上右侧/下侧露底。
         所以这里同时断言「引用了 include」和「它是 <controls> 的第一个孩子」。
