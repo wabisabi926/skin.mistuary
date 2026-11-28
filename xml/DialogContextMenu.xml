@@ -27,7 +27,6 @@
 			<onclick>Action(close)</onclick>
 		</control>
 		<control type="group">
-			<animation effect="slide" end="0,175" time="0" condition="Window.IsActive(home) + !$EXP[infodialog_active] + !String.IsEqual(Window(home).Property(Home.Section),favorites)">conditional</animation>
 			<control type="image" id="999">
 				<description>background image</description>
 				<left>0</left>

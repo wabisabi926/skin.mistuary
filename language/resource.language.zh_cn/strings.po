@@ -453,10 +453,6 @@ msgstr "音乐专辑的默认打开方式"
 
 #. Setting to control the default action for a TV show
 
-msgctxt "#31175"
-msgid "Default action for TV shows"
-msgstr "电视剧的默认打开方式"
-
 #. Setting to control the default action for a movie set
 
 msgctxt "#31176"
@@ -1059,10 +1055,6 @@ msgctxt "#31750"
 msgid "Choose what this row shows: recently added, continue watching, random, etc."
 msgstr "选择该行显示的内容：最近添加、继续观看、随机等。"
 
-msgctxt "#31751"
-msgid "Default action: Browse. Alternatively play or queue the episode."
-msgstr "默认动作：浏览；也可直接播放或加入播放列表。"
-
 msgctxt "#31752"
 msgid "Show Music in the main menu. On by default."
 msgstr "在主菜单显示“音乐”。默认开启。"
@@ -1260,28 +1252,28 @@ msgid "Rest of season"
 msgstr "按季补全"
 
 msgctxt "#31810"
-msgid "Rest of folder"
-msgstr "按目录补全"
+msgid "Rest of folder (episodes / music)"
+msgstr "按目录补全（剧集 / 音乐）"
 
 msgctxt "#31811"
 msgid "Next season"
-msgstr "跨季继续"
+msgstr "跨季补全"
 
 msgctxt "#31812"
 msgid "Fetch the Douban rating online on the info page when the library has none. On by default."
 msgstr "详情页显示豆瓣评分且库里没有时联网补分；关闭后不请求。默认开启。"
 
 msgctxt "#31813"
-msgid "When an episode starts, queue the rest of the season without interrupting playback."
-msgstr "剧集起播时将本季其余剧集加入队列，不中断播放。"
+msgid "From the current episode, add later episodes in the same season to the playlist. Earlier episodes are not added."
+msgstr "从当前集开始，将本季后续剧集加入播放列表；不加入当前集之前的剧集。"
 
 msgctxt "#31814"
-msgid "When playback starts from a folder, queue the other items in it without interrupting playback."
-msgstr "文件夹起播时将同目录其余条目加入队列，不中断播放。"
+msgid "File manager only: add later episode files or music tracks to the playlist. Movies are not supported."
+msgstr "仅文件管理器：将后续剧集或音乐加入播放列表；电影不适用。"
 
 msgctxt "#31815"
-msgid "When the last episode of a season starts, queue the first episode of the next season; requires season completion."
-msgstr "本季末集起播时将下一季首集加入队列；需配合按季补全。"
+msgid "Requires Rest of season. After the season ends, add the first unwatched episode of the next season."
+msgstr "需开启按季补全；本季结束后加入下一季首个未观看剧集。"
 
 msgctxt "#31816"
 msgid "Power"
@@ -1434,3 +1426,7 @@ msgstr "清除已选图片，恢复内置渐变。"
 msgctxt "#31859"
 msgid "Default"
 msgstr "默认"
+
+msgctxt "#31860"
+msgid "Home"
+msgstr "主页"

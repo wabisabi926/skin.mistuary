@@ -665,10 +665,6 @@ msgstr ""
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a TV show
 
-msgctxt "#31175"
-msgid "Default action for TV shows"
-msgstr ""
-
 #: /xml/SkinSettings.xml
 #. Setting to control the default action for a movie set
 
@@ -1280,10 +1276,6 @@ msgctxt "#31750"
 msgid "Choose what this row shows: recently added, continue watching, random, etc."
 msgstr "Choose what this row shows: recently added, continue watching, random, etc."
 
-msgctxt "#31751"
-msgid "Default action: Browse. Alternatively play or queue the episode."
-msgstr "Default action: Browse. Alternatively play or queue the episode."
-
 msgctxt "#31752"
 msgid "Show Music in the main menu. On by default."
 msgstr "Show Music in the main menu. On by default."
@@ -1481,8 +1473,8 @@ msgid "Rest of season"
 msgstr "Rest of season"
 
 msgctxt "#31810"
-msgid "Rest of folder"
-msgstr "Rest of folder"
+msgid "Rest of folder (episodes / music)"
+msgstr "Rest of folder (episodes / music)"
 
 msgctxt "#31811"
 msgid "Next season"
@@ -1493,16 +1485,16 @@ msgid "Fetch the Douban rating online on the info page when the library has none
 msgstr "Fetch the Douban rating online on the info page when the library has none. On by default."
 
 msgctxt "#31813"
-msgid "When an episode starts, queue the rest of the season without interrupting playback."
-msgstr "When an episode starts, queue the rest of the season without interrupting playback."
+msgid "From the current episode, add later episodes in the same season to the playlist. Earlier episodes are not added."
+msgstr "From the current episode, add later episodes in the same season to the playlist. Earlier episodes are not added."
 
 msgctxt "#31814"
-msgid "When playback starts from a folder, queue the other items in it without interrupting playback."
-msgstr "When playback starts from a folder, queue the other items in it without interrupting playback."
+msgid "File manager only: add later episode files or music tracks to the playlist. Movies are not supported."
+msgstr "File manager only: add later episode files or music tracks to the playlist. Movies are not supported."
 
 msgctxt "#31815"
-msgid "When the last episode of a season starts, queue the first episode of the next season; requires season completion."
-msgstr "When the last episode of a season starts, queue the first episode of the next season; requires season completion."
+msgid "Requires Rest of season. After the season ends, add the first unwatched episode of the next season."
+msgstr "Requires Rest of season. After the season ends, add the first unwatched episode of the next season."
 
 msgctxt "#31816"
 msgid "Power"
@@ -1655,3 +1647,7 @@ msgstr "Clears the chosen image and restores the built-in gradient."
 msgctxt "#31859"
 msgid "Default"
 msgstr "Default"
+
+msgctxt "#31860"
+msgid "Home"
+msgstr "Home"

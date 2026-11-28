@@ -83,6 +83,16 @@ class SkinSettingWriteBuiltinsTest(unittest.TestCase):
 
 
 class HomeSettingsOrderTest(unittest.TestCase):
+    def test_settings_home_category_uses_separate_label(self):
+        settings = ET.parse(XML_DIR / "SkinSettings.xml").getroot()
+        item = settings.find(".//control[@id='9000']/content/item[@id='1']")
+        self.assertEqual(item.findtext("label"), "$LOCALIZE[31860]")
+        home = ET.parse(XML_DIR / "Home.xml").getroot()
+        self.assertEqual(
+            home.find(".//control[@id='9018']/label").text,
+            "$LOCALIZE[31769]",
+        )
+
     def test_search_toggle_is_last_on_home_page(self):
         """主导航把搜索放在最后，设置页也要跟着走，不能第一行又是搜索。"""
         root = ET.parse(XML_DIR / "SkinSettings.xml").getroot()
@@ -120,6 +130,40 @@ class RepoSkinSettingsTest(unittest.TestCase):
             set(self.writes) - set(self.reads) - RESET_ONLY_SETTINGS - DEFAULT_ONLY_SETTINGS
         )
         self.assertEqual(orphan, [], f"这些设置写了没人读: {orphan}")
+
+
+class ContextMenuPositionTest(unittest.TestCase):
+    def test_home_context_menu_has_no_forced_down_offset(self):
+        root = ET.parse(XML_DIR / "DialogContextMenu.xml").getroot()
+        group = root.find(".//control[@type='group']")
+        self.assertIsNotNone(group)
+        for animation in group.findall("animation"):
+            condition = animation.get("condition", "")
+            self.assertFalse(
+                animation.get("effect") == "slide"
+                and animation.get("end") == "0,175"
+                and "Window.IsActive(home)" in condition,
+                "首页上下文菜单不应再额外下移 175px",
+            )
+
+
+class PlaylistSettingDependencyTest(unittest.TestCase):
+    def test_playback_completion_order(self):
+        root = ET.parse(XML_DIR / "SkinSettings.xml").getroot()
+        group = root.find(".//control[@id='622']")
+        self.assertIsNotNone(group)
+        ids = [row.get("id") for row in group.findall("control")
+               if row.get("id") in {"721", "722", "723", "724"}]
+        self.assertEqual(ids, ["721", "723", "722", "724"])
+
+    def test_next_season_requires_season_completion(self):
+        root = ET.parse(XML_DIR / "SkinSettings.xml").getroot()
+        row = root.find(".//control[@id='723']")
+        self.assertIsNotNone(row)
+        self.assertEqual(
+            row.findtext("enable"),
+            "String.IsEqual(Window(home).Property(Mistuary.Helper.PlaylistSeason),true)",
+        )
 
 
 class RatingSourcePrecedenceTest(unittest.TestCase):
