@@ -293,7 +293,10 @@
 		<param name="update_hero">false</param>
 		<param name="hero_id"></param>
 		<param name="onclick_condition">false</param>
+		<param name="onclick_action0">noop</param>
 		<param name="onclick_action">noop</param>
+		<param name="onclick_action2">noop</param>
+		<param name="onclick_action3">noop</param>
 		<param name="sortby"></param>
 		<param name="sortorder">ascending</param>
 		<param name="browse_mode">auto</param>
@@ -318,7 +321,11 @@
 					<right>0</right>
 					<height>250</height>
 					<visible>$PARAM[rail_visible] + [Integer.IsGreater(Container($PARAM[list_id]).NumItems,0) | Container($PARAM[list_id]).IsUpdating]</visible>
+					<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action0]</onclick>
 					<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action]</onclick>
+					<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action2]</onclick>
+					<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action3]</onclick>
+					<onunfocus>SetProperty(Mistuary.VideoAction.Cancel,true,home)</onunfocus>
 					<include content="$PARAM[navigation]">
 						<param name="list_id" value="$PARAM[list_id]"/>
 						<param name="section" value="$PARAM[section]"/>

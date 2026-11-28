@@ -215,6 +215,11 @@
 						<param name="section" value="libraries"/>
 						<param name="onup" value="9018"/>
 						<param name="ondown" value="18012"/>
+						<param name="onclick_condition" value="true"/>
+						<param name="onclick_action0" value="SetProperty(Mistuary.VideoAction.Cancel,false,home)"/>
+						<param name="onclick_action" value="SetProperty(Mistuary.VideoAction.Path,$INFO[ListItem.Path],home)"/>
+						<param name="onclick_action2" value="SetProperty(Mistuary.VideoAction.DBID,$INFO[ListItem.DBID],home)"/>
+						<param name="onclick_action3" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 					</include>
 				</control>
 
@@ -238,6 +243,11 @@
 						<param name="section" value="libraries"/>
 						<param name="onup" value="18010"/>
 						<param name="ondown" value="noop"/>
+						<param name="onclick_condition" value="true"/>
+						<param name="onclick_action0" value="SetProperty(Mistuary.VideoAction.Cancel,false,home)"/>
+						<param name="onclick_action" value="SetProperty(Mistuary.VideoAction.Path,$INFO[ListItem.Path],home)"/>
+						<param name="onclick_action2" value="SetProperty(Mistuary.VideoAction.DBID,$INFO[ListItem.DBID],home)"/>
+						<param name="onclick_action3" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 					</include>
 				</control>
 
@@ -809,7 +819,7 @@
 										<param name="sub_label_visible" value="!String.IsEmpty(ListItem.Property(TotalEpisodes))"/>
 										<param name="progress_info" value="ListItem.Property(WatchedEpisodePercent)"/>
 										<param name="onclick_condition" value="true"/>
-										<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+										<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 										<param name="navigation" value="HomeVideoRowNavigation"/>
 										<param name="section" value="tvshows"/>
 										<param name="pages_id" value="6001"/>
@@ -873,7 +883,7 @@
 									<param name="widget_target" value="videos"/>
 									<param name="list_id" value="6200"/>
 									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_recent_unwatched_tvshows.xsp,return)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
@@ -902,7 +912,7 @@
 									<param name="widget_target" value="videos"/>
 									<param name="list_id" value="6700"/>
 									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_recent_premieres_tvshows.xsp,return)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
@@ -931,7 +941,7 @@
 									<param name="widget_target" value="videos"/>
 									<param name="list_id" value="6750"/>
 									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_unwatched_tvshows.xsp,return)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
@@ -960,7 +970,7 @@
 									<param name="widget_target" value="videos"/>
 									<param name="list_id" value="6300"/>
 									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 									<param name="onclick_condition_2" value="String.IsEqual(ListItem.Property(node.type),target_folder)"/>
 									<param name="onclick_action_2" value="ActivateWindow(videos,special://skin/extras/playlists/all_highrated_unwatched_tvshows.xsp,return)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
@@ -990,7 +1000,7 @@
 									<param name="browse_mode" value="never"/>
 									<param name="list_id" value="6800"/>
 									<param name="onclick_condition" value="!String.IsEqual(ListItem.Property(node.type),target_folder)"/>
-									<param name="onclick_action" value="$VAR[TVShowOnClickActionVar]"/>
+									<param name="onclick_action" value="RunScript(script.mistuary.helper,action=video_item_action)"/>
 									<param name="navigation" value="HomeVideoRowNavigation"/>
 									<param name="section" value="tvshows"/>
 									<param name="pages_id" value="6001"/>

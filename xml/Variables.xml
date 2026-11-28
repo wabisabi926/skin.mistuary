@@ -234,23 +234,6 @@
 		<value condition="Skin.HasSetting(album_onclick_queue)">QueueMedia(musicdb://albums/$INFO[ListItem.DBID]/)</value>
 		<value>ActivateWindow(music,musicdb://albums/$INFO[ListItem.DBID]/,return)</value>
 	</variable>
-	<variable name="TVShowOnClickActionLabel2Var">
-		<value condition="Skin.HasSetting(tvshow_onclick_browse)">$LOCALIZE[37015]</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_continuewatching)">$LOCALIZE[13362]</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_playfrombeginning)">$LOCALIZE[12021]</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_playnext)">$LOCALIZE[10008]</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_queue)">$LOCALIZE[13347]</value>
-		<value>$LOCALIZE[37015]</value>
-	</variable>
-	<variable name="TVShowOnClickActionVar">
-		<value condition="String.IsEqual(ListItem.Property(node.type),target_folder)">ActivateWindow(videos,$INFO[ListItem.FilenameAndPath],return)</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_browse)">Action(Info)</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_continuewatching)">PlayMedia(videodb://tvshows/titles/$INFO[ListItem.DBID]/,resume)</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_playfrombeginning)">PlayMedia(videodb://tvshows/titles/$INFO[ListItem.DBID]/,noresume)</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_playnext)">QueueMedia(videodb://tvshows/titles/$INFO[ListItem.DBID]/,playnext)</value>
-		<value condition="Skin.HasSetting(tvshow_onclick_queue)">QueueMedia(videodb://tvshows/titles/$INFO[ListItem.DBID]/)</value>
-		<value>Action(Info)</value>
-	</variable>
 	<variable name="MovieSetOnClickActionLabel2Var">
 		<value condition="Skin.HasSetting(movieset_onclick_browse)">$LOCALIZE[37015]</value>
 		<value condition="Skin.HasSetting(movieset_onclick_continuewatching)">$LOCALIZE[13362]</value>
@@ -385,7 +368,6 @@
 		<value condition="Control.HasFocus(627)">$LOCALIZE[31748]</value>
 		<value condition="Control.HasFocus(612)">$LOCALIZE[31749]</value>
 		<value condition="Control.HasFocus(6121)">$LOCALIZE[31750]</value>
-		<value condition="Control.HasFocus(626)">$LOCALIZE[31751]</value>
 		<value condition="Control.HasFocus(613)">$LOCALIZE[31752]</value>
 		<value condition="Control.HasFocus(6132)">$LOCALIZE[31753]</value>
 		<value condition="Control.HasFocus(625)">$LOCALIZE[31754]</value>

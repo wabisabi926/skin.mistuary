@@ -35,6 +35,60 @@ class HomeLibrariesPageTest(unittest.TestCase):
         self.assertIn('<control type="togglebutton" id="9018">', self.home)
         self.assertIn('<label>$LOCALIZE[31769]</label>', self.home)
 
+    def test_home_continue_rows_use_kodi_native_action(self):
+        """首页续播两行统一走 Helper 的 Kodi 原生动作，不再有皮肤重复设置。"""
+        rails = self.home.split('<include content="HomeContinueWatchingRail">')[1:]
+        for list_id in ("18010", "18012"):
+            with self.subTest(list_id=list_id):
+                block = next(part for part in rails
+                             if '<param name="list_id" value="%s"/>' % list_id in part)
+                block = block.split("</include>", 1)[0]
+                self.assertIn('<param name="onclick_condition" value="true"/>', block)
+                self.assertIn(
+                    '<param name="onclick_action0" value="SetProperty(Mistuary.VideoAction.Cancel,false,home)"/>',
+                    block,
+                )
+                self.assertIn(
+                    '<param name="onclick_action" value="SetProperty(Mistuary.VideoAction.Path,$INFO[ListItem.Path],home)"/>',
+                    block,
+                )
+                self.assertIn(
+                    '<param name="onclick_action2" value="SetProperty(Mistuary.VideoAction.DBID,$INFO[ListItem.DBID],home)"/>',
+                    block,
+                )
+                self.assertIn(
+                    '<param name="onclick_action3" value="RunScript(script.mistuary.helper,action=video_item_action)"/>',
+                    block,
+                )
+        self.assertNotIn("TVShowOnClickActionVar", self.home)
+        self.assertNotIn("TVShowOnClickActionVar", self.variables)
+        self.assertNotIn('id="626"', read("SkinSettings.xml"))
+        self.assertNotIn("tvshow_onclick_", self.variables)
+
+    def test_continue_rail_supports_four_actions_and_cancel(self):
+        inc = read("Includes_Home.xml")
+        rail = inc.split('<include name="HomeContinueWatchingRail">', 1)[1]
+        rail = rail.split("<definition>", 1)[0]
+        self.assertIn('<param name="onclick_action0">noop</param>', rail)
+        self.assertIn('<param name="onclick_action2">noop</param>', rail)
+        self.assertIn('<param name="onclick_action3">noop</param>', rail)
+        self.assertIn(
+            '<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action0]</onclick>',
+            inc,
+        )
+        self.assertIn(
+            '<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action2]</onclick>',
+            inc,
+        )
+        self.assertIn(
+            '<onclick condition="$PARAM[onclick_condition]">$PARAM[onclick_action3]</onclick>',
+            inc,
+        )
+        self.assertIn(
+            '<onunfocus>SetProperty(Mistuary.VideoAction.Cancel,true,home)</onunfocus>',
+            inc,
+        )
+
     def test_two_continue_watching_rows(self):
         self.assertIn('<param name="list_id" value="18010"/>', self.home)
         self.assertIn('<param name="list_id" value="18012"/>', self.home)
