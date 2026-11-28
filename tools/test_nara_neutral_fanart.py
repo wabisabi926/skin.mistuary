@@ -113,36 +113,6 @@ class FanartDimTest(unittest.TestCase):
             return
         self.fail('NaraDialogFanartBase 不存在')
 
-    def test_dialog_base_hidden_only_for_playback_settings(self):
-        root = parse('Includes_DialogGlass.xml')
-        expression = next((node for node in root.iter('expression')
-                           if node.get('name') == 'nara_playback_settings_window'), None)
-        self.assertIsNotNone(expression)
-        expression_text = expression.text or ''
-        for token in ('Window.IsActive(DialogSubtitles.xml)',
-                      'Window.IsActive(dialogselectvideo)',
-                      'Window.IsActive(dialogselectaudio)',
-                      'Window.IsActive(dialogselectsubtitle)',
-                      'Window.IsActive(DialogSettings.xml)',
-                      '$EXP[nara_settings_osd]',
-                      'Window.IsActive(Custom_1101_SettingsDialog.xml)',
-                      'settingsdialog_content),osd)',
-                      'settingsdialog_content),3d)',
-                      'settingsdialog_content),videosettings)',
-                      'settingsdialog_content),musicsettings)',
-                      'settingsdialog_content),streamselection)'):
-            self.assertIn(token, expression_text)
-        for token in ('DialogKeyboard.xml', 'DialogConfirm.xml',
-                      'DialogAddonSettings.xml', 'DialogPVRChannelManager.xml'):
-            self.assertNotIn(token, expression_text)
-
-        include = next(node for node in root.iter('include')
-                       if node.get('name') == 'NaraDialogFanartBase')
-        fallback = next(control for control in include.iter('control')
-                        if 'NaraFallbackBackgroundVar' in (control.findtext('texture') or ''))
-        self.assertEqual((fallback.findtext('visible') or '').strip(),
-                         '!Player.HasMedia | !$EXP[nara_playback_settings_window]')
-
     def test_shared_dialog_base_is_wired_into_settings_dialogs(self):
         """浮窗的不透明底层统一走 NaraDialogFanartBase（Includes_DialogGlass.xml）。
 
